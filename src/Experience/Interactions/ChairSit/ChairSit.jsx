@@ -1,0 +1,79 @@
+import { useFrame, useThree } from '@react-three/fiber'
+import { useContext, useEffect, useRef, useState } from 'react'
+import * as THREE from 'three'
+import gsap from 'gsap'
+import Message from '../../Message/Message'
+import { ModelContext } from '../../../Contexts/ModelContext/ModelContext'
+import { InteractionContext } from '../../../Contexts/InteractionContext/InteractionContext'
+
+const ChairSit = () => {
+  const { chairRef } = useContext(ModelContext)
+  const {hasSat} = useContext(InteractionContext)
+
+  const { camera } = useThree()
+
+  const [show, setShow] = useState(false)
+
+  const chairPosition = useRef(new THREE.Vector3())
+
+  useFrame(() => {
+    if (!chairRef.current) return
+
+    chairRef.current.getWorldPosition(chairPosition.current)
+
+    const distance = camera.position.distanceTo(
+      chairPosition.current
+    )
+
+    setShow(distance < 10 && !hasSat.current)
+  })
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.code !== 'KeyE') return
+      if (!show) return
+      if (!chairRef.current) return
+      if (hasSat.current) return
+
+
+      gsap.to(camera.position, {
+        x: chairPosition.current.x,
+        y: chairPosition.current.y -5,
+        z: chairPosition.current.z + 0.5,
+        duration: 1.5,
+        ease: 'power2.inOut'
+      })
+
+      gsap.to(camera.rotation, {
+        x: 0,
+        y: 0,
+        z: 0,
+        duration: 1.5,
+        ease: 'power2.inOut'
+      })
+        hasSat.current = true
+
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [show, camera])
+
+  if (!show) return null
+
+  return (
+    <Message
+      position={[
+        chairPosition.current.x,
+        chairPosition.current.y + 2,
+        chairPosition.current.z
+      ]}
+      message="Press E to Sit"
+    />
+  )
+}
+
+export default ChairSit
