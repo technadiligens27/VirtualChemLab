@@ -5,13 +5,13 @@ import ChairSlide from '../Interactions/ChairSlide/ChairSlide';
 
 const ChemEnvironment = () => {
 
-  const {chairRef} = useContext(ModelContext)
+  const {chairRef,gogglesRef} = useContext(ModelContext)
 
   const { scene } = useGLTF('/VirtualChemLab.glb');
 
   useEffect(() => {
     chairRef.current = scene.getObjectByName('main-chair-head')
-
+    gogglesRef.current = scene.getObjectByName('Goggles')
   }, [scene])
 
   return (

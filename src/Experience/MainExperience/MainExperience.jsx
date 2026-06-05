@@ -4,8 +4,16 @@ import { Environment, OrbitControls, PointerLockControls } from '@react-three/dr
 import PlayerController from '../PlayerController/PlayerController'
 import ChairSlide from '../Interactions/ChairSlide/ChairSlide'
 import GogglesPut from '../Interactions/GogglesPut/GogglesPut'
+import { useContext } from 'react'
+import { InteractionContext } from '../../Contexts/InteractionContext/InteractionContext'
+import { ModelContext } from '../../Contexts/ModelContext/ModelContext'
 
 const MainExperience = () => {
+
+  const {hasSat} = useContext(InteractionContext);
+  const {isSitting} = useContext(ModelContext)
+  
+
   return (
     <Canvas
       camera={{
@@ -24,7 +32,8 @@ const MainExperience = () => {
       {/* <OrbitControls/> */}
       <Environment preset='city'/>
       <PlayerController/>
-      <PointerLockControls/>
+
+      {!isSitting && <PointerLockControls/>}
 
       <ChairSlide/>
       <GogglesPut/>

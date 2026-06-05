@@ -7,9 +7,9 @@ import { ModelContext } from '../../../Contexts/ModelContext/ModelContext'
 import { InteractionContext } from '../../../Contexts/InteractionContext/InteractionContext'
 
 const ChairSit = () => {
-  const { chairRef } = useContext(ModelContext)
-  const {hasSat} = useContext(InteractionContext)
-
+  const { chairRef, setIsSitting } = useContext(ModelContext);
+  const {hasSat} = useContext(InteractionContext);
+  
   const { camera } = useThree()
 
   const [show, setShow] = useState(false)
@@ -36,6 +36,7 @@ const ChairSit = () => {
       if (hasSat.current) return
 
 
+
       gsap.to(camera.position, {
         x: chairPosition.current.x,
         y: chairPosition.current.y -5,
@@ -52,6 +53,7 @@ const ChairSit = () => {
         ease: 'power2.inOut'
       })
         hasSat.current = true
+        setIsSitting(true)
 
     }
 
