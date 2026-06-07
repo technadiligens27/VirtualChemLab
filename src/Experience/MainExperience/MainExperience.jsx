@@ -4,23 +4,32 @@ import { Environment, OrbitControls, PointerLockControls } from '@react-three/dr
 import PlayerController from '../PlayerController/PlayerController'
 import ChairSlide from '../Interactions/ChairSlide/ChairSlide'
 import GogglesPut from '../Interactions/GogglesPut/GogglesPut'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { InteractionContext } from '../../Contexts/InteractionContext/InteractionContext'
 import { ModelContext } from '../../Contexts/ModelContext/ModelContext'
+import Interaction from '../Interactions/Interaction'
 
 const MainExperience = () => {
 
   const {hasSat} = useContext(InteractionContext);
   const {isSitting} = useContext(ModelContext)
   
+  useEffect(() => {
+    if (!isSitting) return
+
+    if (document.pointerLockElement) {
+      document.exitPointerLock()
+    }
+  }, [isSitting])
+
 
   return (
     <Canvas
       camera={{
-        fov: 45,
+        fov: 75,
         near: 0.1,
         far: 100,
-        position: [-5, 0,25]
+        position: [-5, 0,45]
       }}
       gl={{
         antialias: true,
@@ -35,8 +44,7 @@ const MainExperience = () => {
 
       {!isSitting && <PointerLockControls/>}
 
-      <ChairSlide/>
-      <GogglesPut/>
+      <Interaction/>
 
 
     </Canvas>

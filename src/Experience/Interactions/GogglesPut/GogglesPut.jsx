@@ -49,7 +49,7 @@ const GogglesPut = () => {
 
       gsap.to(goggles.position, {
         y:goggles.position.y +3.5,
-        z: goggles.position.z +7,
+        z: goggles.position.z +8,
         duration: 1,
         ease: "power2.inOut",
         onComplete: () => {
