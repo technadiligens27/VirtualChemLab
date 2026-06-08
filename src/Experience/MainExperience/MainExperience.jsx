@@ -43,6 +43,7 @@ const MainExperience = () => {
       <PlayerController/>
 
       {!isSitting && <PointerLockControls/>}
+      {/* <PointerLockControls/> */}
 
       <Interaction/>
 

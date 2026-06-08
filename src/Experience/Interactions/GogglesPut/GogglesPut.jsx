@@ -15,7 +15,7 @@ const GogglesPut = () => {
   const gogglePosition = useRef(new THREE.Vector3())
   const isAnimating = useRef(false)
 
-  const { camera } = useThree()
+  const { camera,gl } = useThree()
 
   useFrame(() => {
     if (!gogglesRef.current) return
@@ -28,44 +28,59 @@ const GogglesPut = () => {
     setShow(distance < 10 && hasSat.current)
   })
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.code !== "KeyG") return
-      if (!gogglesRef.current) return
-      if (gogglesOn.current) return
-      if (!hasSat.current) return
-      if (isAnimating.current) return
+useEffect(() => {
+  const raycaster = new THREE.Raycaster()
+  const mouse = new THREE.Vector2()
 
-      isAnimating.current = true
-      setShow(false)
+  const handleClick = (event) => {
+    if (!show) return
+    if (!gogglesRef.current) return
+    if (gogglesOn.current) return
+    if (!hasSat.current) return
+    if (isAnimating.current) return
 
-      const goggles = gogglesRef.current
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
 
-      gsap.to(goggles.rotation, {
-        z: goggles.rotation.y + Math.PI,
-        duration: 1,
-        ease: "power2.inOut",
-      })
+    raycaster.setFromCamera(mouse, camera)
 
-      gsap.to(goggles.position, {
-        y:goggles.position.y +3.5,
-        z: goggles.position.z +8,
-        duration: 1,
-        ease: "power2.inOut",
-        onComplete: () => {
-          goggles.visible = false
-          gogglesOn.current = true
-          isAnimating.current = false
-        },
-      })
-    }
+    const intersects = raycaster.intersectObject(
+      gogglesRef.current,
+      true
+    )
 
-    window.addEventListener("keydown", handleKeyDown)
+    if (intersects.length === 0) return
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [gogglesRef, gogglesOn, hasSat])
+    isAnimating.current = true
+    setShow(false)
+
+    const goggles = gogglesRef.current
+
+    gsap.to(goggles.rotation, {
+      z: goggles.rotation.z + Math.PI,
+      duration: 1,
+      ease: "power2.inOut",
+    })
+
+    gsap.to(goggles.position, {
+      y: goggles.position.y + 3.5,
+      z: goggles.position.z + 8,
+      duration: 1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        goggles.visible = false
+        gogglesOn.current = true
+        isAnimating.current = false
+      },
+    })
+  }
+
+  gl.domElement.addEventListener("click", handleClick)
+
+  return () => {
+    gl.domElement.removeEventListener("click", handleClick)
+  }
+}, [show, gogglesRef, gogglesOn, hasSat, camera, gl])
 
   if (!show) return null
 

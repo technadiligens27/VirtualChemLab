@@ -39,8 +39,8 @@ const ChairSit = () => {
 
       gsap.to(camera.position, {
         x: chairPosition.current.x,
-        y: chairPosition.current.y -5,
-        z: chairPosition.current.z + 0.5,
+        y: chairPosition.current.y -4,
+        z: chairPosition.current.z ,
         duration: 1.5,
         ease: 'power2.inOut'
       })

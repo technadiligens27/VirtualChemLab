@@ -1,16 +1,24 @@
-import { createContext, useRef } from 'react'
+import { createContext, useRef, useState } from 'react'
 
 export const InteractionContext = createContext()
 
 export const InteractionProvider = ({ children }) => {
   const hasSat = useRef(null);
-  const gogglesOn = useRef(false)
+  const gogglesOn = useRef(false);
+  const glovesOn = useRef(false)
+
+  const [selectedLeftHand,setSelectedLeftHand] = useState(false)
+  const [selectedRightHand,setSelectedRightHand] = useState(false)
+
 
   return (
     <InteractionContext.Provider
       value={{
         hasSat,
-        gogglesOn
+        gogglesOn,
+        glovesOn,
+        selectedLeftHand,setSelectedLeftHand,
+        selectedRightHand,setSelectedRightHand
       }}
     >
       {children}
