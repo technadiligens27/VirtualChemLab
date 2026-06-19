@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber'
+import { Perf } from "r3f-perf";
 import ChemEnvironment from '../ChemEnvironment/ChemEnvironment'
 import { Environment, OrbitControls, PointerLockControls } from '@react-three/drei'
 import PlayerController from '../PlayerController/PlayerController'
@@ -8,6 +9,7 @@ import { useContext, useEffect } from 'react'
 import { InteractionContext } from '../../Contexts/InteractionContext/InteractionContext'
 import { ModelContext } from '../../Contexts/ModelContext/ModelContext'
 import Interaction from '../Interactions/Interaction'
+import FillBeakerBox from '../Interactions/FillBeakerBox/FillBeakerBox'
 
 const MainExperience = () => {
 
@@ -46,7 +48,7 @@ const MainExperience = () => {
       {/* <PointerLockControls/> */}
 
       <Interaction/>
-
+      <Perf position="top-right" />
 
     </Canvas>
   )

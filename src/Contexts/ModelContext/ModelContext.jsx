@@ -10,7 +10,10 @@ export const ModelProvider = ({ children }) => {
   const normalBeakerRef = useRef(null);
   const conicalBeakerRef = useRef(null);
   const roundBeakerRef = useRef(null);
-  const graduatedBeakerRef = useRef(null)
+  const graduatedBeakerRef = useRef(null);
+
+  const normalBeakerLiquidRef = useRef(null);
+  const conicalBeakerLiquidRef = useRef(null);
 
   const [isSitting, setIsSitting] = useState(false);
 
@@ -21,7 +24,8 @@ export const ModelProvider = ({ children }) => {
         gogglesRef,
         gloverightRef,gloveleftRef,
         normalBeakerRef,conicalBeakerRef,roundBeakerRef,graduatedBeakerRef,
-        isSitting, setIsSitting
+        isSitting, setIsSitting,
+        normalBeakerLiquidRef,conicalBeakerLiquidRef
       }}
     >
       {children}

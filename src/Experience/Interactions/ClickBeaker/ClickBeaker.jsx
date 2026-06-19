@@ -7,6 +7,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import HoldLeft from "../HoldLeft/HoldLeft"
 import HoldRight from "../HoldRight/HoldRight"
+import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 
 const ClickObject = () => {
   const {
@@ -14,6 +15,11 @@ const ClickObject = () => {
     setSelectedLeftHand,
     selectedRightHand,
     setSelectedRightHand,
+    isFillBeakerBoxOpen,setIsFillBeakerBoxOpen,
+    isFillUpBeaker,setIsFillUpBeaker,
+    fillBeakerHand,setFillBeakerHand,
+    isDragging,setIsDragging
+
   } = useContext(InteractionContext)
 
   const {
@@ -65,31 +71,35 @@ const ClickObject = () => {
     return false
   }
 
-  const keepBackOnTable = (hand) => {
-    const handData =
-      hand === "left" ? selectedLeftHand : selectedRightHand
+    const keepBackOnTable = (hand) => {
+      const handData =
+        hand === "left" ? selectedLeftHand : selectedRightHand
 
-    if (!handData?.ref?.current) return
+      if (!handData?.ref?.current) return
 
-    const object = handData.ref.current
-    const originalPosition = handData.originalPosition.clone()
-    const originalRotation = handData.originalRotation.clone()
+      const object = handData.ref.current
 
-    if (hand === "left") {
-      setSelectedLeftHand(null)
+      if (handData.originalParent) {
+        handData.originalParent.add(object)
+      } else {
+        scene.add(object)
+      }
+
+      object.position.copy(handData.originalPosition)
+      object.rotation.copy(handData.originalRotation)
+      object.scale.set(1, 1, 1)
+      object.visible = true
+
+      if (hand === "left") {
+        setSelectedLeftHand(null)
+      }
+
+      if (hand === "right") {
+        setSelectedRightHand(null)
+      }
+
+      setSelectedObject(null)
     }
-
-    if (hand === "right") {
-      setSelectedRightHand(null)
-    }
-
-    setSelectedObject(null)
-
-    requestAnimationFrame(() => {
-      object.position.copy(originalPosition)
-      object.rotation.copy(originalRotation)
-    })
-  }
 
   useEffect(() => {
     const raycaster = new THREE.Raycaster()
@@ -202,11 +212,13 @@ const ClickObject = () => {
     selectedRightHand,
     setSelectedLeftHand,
     setSelectedRightHand,
+    isFillBeakerBoxOpen,
+    setIsFillBeakerBoxOpen,
   ])
 
   return (
     <>
-      {selectedObject && (
+      {selectedObject && !isFillBeakerBoxOpen && (
         <Html position={selectedObject.position} center>
           <div
             style={{
@@ -218,15 +230,28 @@ const ClickObject = () => {
               alignItems: "center",
             }}
           >
-            {selectedObject.isHolding ? (
-              <button
-                onClick={() => {
-                  keepBackOnTable(selectedObject.hand)
-                }}
-              >
-                Keep Back On Table
-              </button>
-            ) : (
+              {selectedObject.isHolding ? (
+                <>
+                  <button
+                    onClick={() => {
+                      keepBackOnTable(selectedObject.hand)
+                    }}
+                  >
+                    Keep Back On Table
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setSelectedObject(null)
+                      setIsFillUpBeaker(false)
+                      setFillBeakerHand(selectedObject.hand)
+                      setIsFillBeakerBoxOpen(true)
+                    }}
+                  >
+                    Fill Beaker
+                  </button>
+                </>
+              ) : (
               <>
                 {!selectedLeftHand && (
                   <button
@@ -235,10 +260,9 @@ const ClickObject = () => {
                         hand: "left",
                         name: selectedObject.name,
                         ref: selectedObject.ref,
-                        originalPosition:
-                          selectedObject.ref.current.position.clone(),
-                        originalRotation:
-                          selectedObject.ref.current.rotation.clone(),
+                        originalParent: selectedObject.ref.current.parent,
+                        originalPosition: selectedObject.ref.current.position.clone(),
+                        originalRotation: selectedObject.ref.current.rotation.clone(),
                       })
 
                       setSelectedObject(null)
@@ -255,10 +279,9 @@ const ClickObject = () => {
                         hand: "right",
                         name: selectedObject.name,
                         ref: selectedObject.ref,
-                        originalPosition:
-                          selectedObject.ref.current.position.clone(),
-                        originalRotation:
-                          selectedObject.ref.current.rotation.clone(),
+                        originalParent: selectedObject.ref.current.parent,
+                        originalPosition: selectedObject.ref.current.position.clone(),
+                        originalRotation: selectedObject.ref.current.rotation.clone(),
                       })
 
                       setSelectedObject(null)
@@ -279,13 +302,15 @@ const ClickObject = () => {
         </Html>
       )}
 
-      {selectedLeftHand && (
+      {selectedLeftHand && !isDragging && (
         <HoldLeft modeldata={selectedLeftHand} />
       )}
 
       {selectedRightHand && (
         <HoldRight modeldata={selectedRightHand} />
       )}
+
+
     </>
   )
 }
