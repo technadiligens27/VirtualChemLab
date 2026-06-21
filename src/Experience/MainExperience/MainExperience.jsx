@@ -38,10 +38,10 @@ const MainExperience = () => {
       }}
     //   dpr={[1, 2]}
     >
-      <ambientLight intensity={1.5} />
+      <ambientLight intensity={1} />
       <ChemEnvironment/>
       {/* <OrbitControls/> */}
-      <Environment preset='city'/>
+      <Environment preset='sunset'/>
       <PlayerController/>
 
       {!isSitting && <PointerLockControls/>}

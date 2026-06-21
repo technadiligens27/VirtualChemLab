@@ -18,7 +18,8 @@ const ClickObject = () => {
     isFillBeakerBoxOpen,setIsFillBeakerBoxOpen,
     isFillUpBeaker,setIsFillUpBeaker,
     fillBeakerHand,setFillBeakerHand,
-    isDragging,setIsDragging
+    isDragging,setIsDragging,
+    selectedBeakerBoxHand,setSelectedBeakerBoxHand
 
   } = useContext(InteractionContext)
 
@@ -27,6 +28,7 @@ const ClickObject = () => {
     conicalBeakerRef,
     roundBeakerRef,
     graduatedBeakerRef,
+    spoonRef
   } = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
@@ -51,6 +53,10 @@ const ClickObject = () => {
         name: "main-graduated-cylinder",
         ref: graduatedBeakerRef,
       },
+      {
+        name:"main-spoon",
+        ref:spoonRef
+      }
     ],
     [
       normalBeakerRef,

@@ -1,9 +1,17 @@
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
+import PouringMode from "../PouringMode/PouringMode"
 
 const HoldLeft = ({ modeldata }) => {
+
+  const {isFillUpBeaker,selectedLeftHand,
+    fillBeakerHand,setIsPouring,
+    selectedRightHand} = useContext(InteractionContext)
+
   const { camera, gl, scene } = useThree()
 
 
@@ -59,19 +67,19 @@ const HoldLeft = ({ modeldata }) => {
       }
     }
 
-    const handleMouseUp = () => {
-      if (!isDraggingRef.current) return
-      isDraggingRef.current = false
-      setIsPouring(false)
-    }
+    // const handleMouseUp = () => {
+    //   if (!isDraggingRef.current) return
+    //   isDraggingRef.current = false
+    //   setIsPouring(false)
+    // }
 
     canvas.addEventListener("mousedown", handleMouseDown)
-    window.addEventListener("mouseup", handleMouseUp)
+    // window.addEventListener("mouseup", handleMouseUp)
     window.addEventListener("wheel", handleWheel, { passive: false })
 
     return () => {
       canvas.removeEventListener("mousedown", handleMouseDown)
-      window.removeEventListener("mouseup", handleMouseUp)
+      // window.removeEventListener("mouseup", handleMouseUp)
       window.removeEventListener("wheel", handleWheel)
     }
   }, [camera, gl, modeldata])
@@ -104,6 +112,16 @@ const HoldLeft = ({ modeldata }) => {
 
   return (
     <>
+      {isFillUpBeaker &&
+        fillBeakerHand === "left" &&
+         (
+          <FillUpBeaker
+            beakerRef={selectedLeftHand.ref}
+            hand="left"
+          />
+        )}
+
+      {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)}
 
     </>
   )

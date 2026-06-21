@@ -6,7 +6,7 @@ import ChairSlide from '../Interactions/ChairSlide/ChairSlide';
 const ChemEnvironment = () => {
 
   const {chairRef,gogglesRef,gloveleftRef,gloverightRef,normalBeakerRef,conicalBeakerRef,
-         roundBeakerRef,graduatedBeakerRef,normalBeakerLiquidRef,conicalBeakerLiquidRef
+         roundBeakerRef,graduatedBeakerRef,normalBeakerLiquidRef,conicalBeakerLiquidRef,spoonRef
   } = useContext(ModelContext)
 
   const { scene } = useGLTF('/VirtualChemLab.glb');
@@ -20,6 +20,7 @@ const ChemEnvironment = () => {
     conicalBeakerRef.current = scene.getObjectByName('main-Conical-Flask');
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
     graduatedBeakerRef.current = scene.getObjectByName('main-graduated-cylinder');
+    spoonRef.current = scene.getObjectByName('main-spoon');
 
     normalBeakerLiquidRef.current = scene.getObjectByName('main-normal-beaker-liquid');
     if (normalBeakerLiquidRef.current) {

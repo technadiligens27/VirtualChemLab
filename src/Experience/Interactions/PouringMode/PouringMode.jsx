@@ -37,7 +37,10 @@ const PouringMode = ({ hand }) => {
     const handleKeyDown = (e) => {
       if (e.key.toLowerCase() !== "p") return
 
+      // Right hand = P
       if (hand === "right" && e.shiftKey) return
+
+      // Left hand = Shift + P
       if (hand === "left" && !e.shiftKey) return
 
       const targetObject =
@@ -104,7 +107,9 @@ const PouringMode = ({ hand }) => {
       }
     }
 
-    window.addEventListener("wheel", handleWheel, { passive: false })
+    window.addEventListener("wheel", handleWheel, {
+      passive: false,
+    })
 
     return () => {
       window.removeEventListener("wheel", handleWheel)
@@ -127,7 +132,10 @@ const PouringMode = ({ hand }) => {
   return (
     <>
       {isPouring && activeObject && (
-        <PouringLiquid modelRef={{ current: activeObject }} />
+        <PouringLiquid
+          modelRef={{ current: activeObject }}
+          hand={hand}
+        />
       )}
     </>
   )

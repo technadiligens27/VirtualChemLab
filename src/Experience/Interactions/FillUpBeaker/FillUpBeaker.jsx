@@ -3,7 +3,11 @@ import { useFrame } from "@react-three/fiber"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const FillUpBeaker = ({ beakerRef, hand }) => {
-  const { pourAmount } = useContext(InteractionContext)
+  const { leftBeakerFillData, rightBeakerFillData } =
+    useContext(InteractionContext)
+
+  const fillData =
+    hand === "left" ? leftBeakerFillData : rightBeakerFillData
 
   const liquidRef = useRef(null)
 
@@ -16,40 +20,35 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       if (child.name?.toLowerCase().includes("liquid")) {
         liquidRef.current = child
 
-        liquidRef.current.visible = true
+        child.material = child.material.clone()
 
-        console.log(`${hand} hand beaker liquid found`)
+        if (fillData?.color) {
+          child.material.color.set(fillData.color)
+        }
+
+        child.visible = true
       }
     })
-  }, [beakerRef, hand])
+  }, [beakerRef, hand, fillData])
 
   let amount = 0
 
   if (beakerRef?.current?.name === "main-normal-beaker") {
-    amount = pourAmount * 0.75
+    amount = fillData.amount * 0.75
   }
 
   if (beakerRef?.current?.name === "main-Conical-Flask") {
-    amount = pourAmount * 0.15
+    amount = fillData.amount * 0.15
   }
 
   useFrame((state, delta) => {
     if (!liquidRef.current) return
 
-    // if (liquidRef.current.scale.y < amount) {
-    //   liquidRef.current.scale.y = Math.min(
-    //     liquidRef.current.scale.y + delta * 25.5,
-    //     amount
-    //   )
-    // } else if (liquidRef.current.scale.y > amount) {
-    //   liquidRef.current.scale.y = Math.max(
-    //     liquidRef.current.scale.y - delta * 25.5,
-    //     amount
-    //   )
-    // }
-
-    if(liquidRef.current.scale.y < amount){
-      liquidRef.current.scale.y +=25 * delta
+    if (liquidRef.current.scale.y < amount) {
+      liquidRef.current.scale.y = Math.min(
+        liquidRef.current.scale.y + 25 * delta,
+        amount
+      )
     }
   })
 

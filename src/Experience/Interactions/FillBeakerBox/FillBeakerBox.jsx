@@ -1,34 +1,50 @@
-import { Html } from "@react-three/drei";
-import "./FillBeakerBox.css";
-import { useContext, useState } from "react";
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import "./FillBeakerBox.css"
+import { useContext, useState } from "react"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const FillBeakerBox = () => {
+  const {
+    setIsFillBeakerBoxOpen,
+    setIsFillUpBeaker,
+    fillBeakerHand,
+    setLeftBeakerFillData,
+    setRightBeakerFillData,
+  } = useContext(InteractionContext)
 
-  const {setIsFillBeakerBoxOpen,isFillUpBeaker,setIsFillUpBeaker,setPourAmount} = useContext(InteractionContext);
+  const [selectedAcidData, setSelectedAcidData] = useState({
+    name: "",
+    color: "",
+  })
 
-  const [selectedAcid, setSelectedAcid] = useState("");
-  const [selectedAmount, setSelectedAmount] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("")
 
   const acids = [
-    "Hydrochloric Acid (HCl)",
-    "Sulfuric Acid (H₂SO₄)",
-    "Nitric Acid (HNO₃)",
-    "Acetic Acid (CH₃COOH)",
-  ];
+    { name: "Salt (NaCl)", color: "#FFFFFF" },
+    { name: "Water (H2O)", color: "#87CEEB" },
+    { name: "Nitric Acid (HNO₃)", color: "#FFFACD" },
+    { name: "Acetic Acid (CH₃COOH)", color: "#F5F5F5" },
+  ]
 
-  const amounts = [10, 25 , 50 , 100];
+  const amounts = [10, 25, 50, 100]
 
   const handleConfirm = () => {
-    if (!selectedAcid || !selectedAmount) return;
+    if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) return
 
-    onConfirm?.({
-      acid: selectedAcid,
+    const fillData = {
+      name: selectedAcidData.name,
+      color: selectedAcidData.color,
       amount: selectedAmount,
-    });
+    }
 
-    onClose?.();
-  };
+    if (fillBeakerHand === "left") {
+      setLeftBeakerFillData(fillData)
+    } else if (fillBeakerHand === "right") {
+      setRightBeakerFillData(fillData)
+    }
+
+    setIsFillBeakerBoxOpen(false)
+    setIsFillUpBeaker(true)
+  }
 
   return (
     <div className="fill-dialog-overlay">
@@ -37,17 +53,17 @@ const FillBeakerBox = () => {
 
         <div className="fill-dialog-content">
           <div className="fill-dialog-section">
-            <h3>Select Acid</h3>
+            <h3>Select Chemical</h3>
 
             {acids.map((acid) => (
               <button
-                key={acid}
+                key={acid.name}
                 className={`option-btn ${
-                  selectedAcid === acid ? "selected" : ""
+                  selectedAcidData.name === acid.name ? "selected" : ""
                 }`}
-                onClick={() => setSelectedAcid(acid)}
+                onClick={() => setSelectedAcidData(acid)}
               >
-                {acid}
+                {acid.name}
               </button>
             ))}
           </div>
@@ -61,9 +77,9 @@ const FillBeakerBox = () => {
                 className={`option-btn ${
                   selectedAmount === amount ? "selected" : ""
                 }`}
-                onClick={() => {setSelectedAmount(amount);setPourAmount(amount);}}   
+                onClick={() => setSelectedAmount(amount)}
               >
-                {`${amount} ml`}
+                {amount} ml
               </button>
             ))}
           </div>
@@ -71,31 +87,30 @@ const FillBeakerBox = () => {
 
         <div className="selection-info">
           <p>
-            <strong>Acid:</strong>{" "}
-            {selectedAcid || "Not Selected"}
+            <strong>Hand:</strong> {fillBeakerHand || "Not Selected"}
+          </p>
+
+          <p>
+            <strong>Chemical:</strong>{" "}
+            {selectedAcidData.name || "Not Selected"}
           </p>
 
           <p>
             <strong>Amount:</strong>{" "}
-            {selectedAmount || "Not Selected"}
+            {selectedAmount ? `${selectedAmount} ml` : "Not Selected"}
           </p>
         </div>
 
         <button
-            className="confirm-btn"
-            disabled={!selectedAcid || !selectedAmount}
-            onClick={() => {
-                setIsFillBeakerBoxOpen(false)
-                setIsFillUpBeaker(true)
-            }}
-            >
-            Confirm
-        
+          className="confirm-btn"
+          disabled={!selectedAcidData.name || !selectedAmount || !fillBeakerHand}
+          onClick={handleConfirm}
+        >
+          Confirm
         </button>
       </div>
     </div>
+  )
+}
 
-  );
-};
-
-export default FillBeakerBox;
+export default FillBeakerBox

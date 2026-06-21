@@ -4,10 +4,11 @@ import * as THREE from "three"
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import PouringMode from "../PouringMode/PouringMode"
+import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 
 const HoldRight = ({ modeldata }) => {
 
-  const {isPouringMode,setIsPouringMode} = useContext(InteractionContext)
+  const {isPouringMode,setIsPouringMode,isFillUpBeaker,selectedRightHand,selectedLeftHand} = useContext(InteractionContext)
 
   const { camera, gl,scene } = useThree()
 
@@ -117,7 +118,6 @@ const HoldRight = ({ modeldata }) => {
 
 
   useEffect(() => {
-
     if (!modeldata?.ref?.current) return
 
     if (!scene.children.includes(camera)) {
@@ -130,11 +130,17 @@ const HoldRight = ({ modeldata }) => {
 
     object.position.copy(defaultOffsetRef.current)
     object.rotation.set(0, 0, 0)
-    object.scale.set(1, 1, 1)
+
+    if (object.name === "main-spoon") {
+      object.scale.set(0.6, 0.6, 0.6)
+    } else {
+      object.scale.set(1, 1, 1)
+    }
+
     object.visible = true
     object.frustumCulled = false
 
-    }, [camera, scene, modeldata])
+  }, [camera, scene, modeldata])
 
     useFrame(() => {
       if (!modeldata?.ref?.current) return
@@ -152,6 +158,17 @@ const HoldRight = ({ modeldata }) => {
 
   return (
     <>
+      {isFillUpBeaker &&
+        
+        (
+          <FillUpBeaker
+            beakerRef={selectedRightHand.ref}
+            hand="right"
+          />
+        )}
+
+      {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'right'}/>)}
+
 
 
     </>

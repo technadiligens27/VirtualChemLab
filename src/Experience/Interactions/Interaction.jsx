@@ -24,26 +24,26 @@ const Interaction = () => {
       <GlovesPut />
       <ClickObject />
 
-      {isFillUpBeaker &&
+      {/* {isFillUpBeaker &&
         fillBeakerHand === "right" &&
         selectedRightHand && (
           <FillUpBeaker
             beakerRef={selectedRightHand.ref}
             hand="right"
           />
-        )}
+        )} */}
 
-      {isFillUpBeaker &&
+      {/* {isFillUpBeaker &&
         fillBeakerHand === "left" &&
         selectedLeftHand && (
           <FillUpBeaker
             beakerRef={selectedLeftHand.ref}
             hand="left"
           />
-        )}
+        )} */}
 
       {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)}
-      {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)}
+      {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
 
 
     </>
