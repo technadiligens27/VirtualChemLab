@@ -3,56 +3,74 @@ import { useFrame } from "@react-three/fiber"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const FillUpBeaker = ({ beakerRef, hand }) => {
-  const { leftBeakerFillData, rightBeakerFillData } =
+  const { leftBeakerFillData, rightBeakerFillData,isReaction,
+    setIsReaction,pouredFromLeft,selectedLeftHand,
+    selectedRightHand } =
     useContext(InteractionContext)
 
-  const fillData =
-    hand === "left" ? leftBeakerFillData : rightBeakerFillData
+  const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
 
-  const liquidRef = useRef(null)
+  const liquidMeshesRef = useRef([])
+  const amountRef = useRef(0)
 
   useEffect(() => {
     if (!beakerRef?.current) return
+    if (!fillData?.amount) return
 
-    liquidRef.current = null
+    liquidMeshesRef.current = []
 
     beakerRef.current.traverse((child) => {
-      if (child.name?.toLowerCase().includes("liquid")) {
-        liquidRef.current = child
+      if (!child.name?.toLowerCase().includes("liquid")) return
 
-        child.material = child.material.clone()
+      // IMPORTANT: parent group must be visible too
+      child.visible = true
 
-        if (fillData?.color) {
-          child.material.color.set(fillData.color)
+      child.traverse((innerChild) => {
+        innerChild.visible = true
+
+        if (!innerChild.isMesh || !innerChild.material) return
+
+        liquidMeshesRef.current.push(innerChild)
+
+        if (Array.isArray(innerChild.material)) {
+          innerChild.material = innerChild.material.map((mat) => mat.clone())
+          innerChild.material.forEach((mat) => {
+            mat?.color?.set(fillData.color)
+          })
+        } else {
+          innerChild.material = innerChild.material.clone()
+          innerChild.material.color?.set(fillData.color)
         }
 
-        child.visible = true
-      }
+        innerChild.scale.y = 0
+      })
     })
-  }, [beakerRef, hand, fillData])
 
-  let amount = 0
+    const beakerName = beakerRef.current.name
 
-  if (beakerRef?.current?.name === "main-normal-beaker") {
-    amount = fillData.amount * 0.75
-  }
+    if (beakerName.includes("normal-beaker")) {
+      amountRef.current = Number(fillData.amount) * 0.55
+    } else if (beakerName.includes("Conical-Flask")) {
+      amountRef.current = Number(fillData.amount) * 0.15
+    } else {
+      amountRef.current = Number(fillData.amount) * 0.2
+    }
 
-  if (beakerRef?.current?.name === "main-Conical-Flask") {
-    amount = fillData.amount * 0.15
-  }
+
+  }, [beakerRef, hand, fillData?.color, fillData?.amount])
 
   useFrame((state, delta) => {
-    if (!liquidRef.current) return
-
-    if (liquidRef.current.scale.y < amount) {
-      liquidRef.current.scale.y = Math.min(
-        liquidRef.current.scale.y + 25 * delta,
-        amount
+    liquidMeshesRef.current.forEach((mesh) => {
+      mesh.scale.y = Math.min(
+        mesh.scale.y + 25 * delta,
+        amountRef.current
       )
-    }
+    })
   })
 
-  return null
+  return(
+   null
+  ) 
 }
 
 export default FillUpBeaker

@@ -7,7 +7,7 @@ import * as THREE from "three"
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
 
-  const { selectedRightHand, selectedLeftHand } =
+  const { selectedRightHand, selectedLeftHand,setPouredFromLeft } =
     useContext(InteractionContext)
 
   const emptyRef = useRef(null)
@@ -126,19 +126,21 @@ const PouringMode = ({ hand }) => {
 
     if (pouringNow !== isPouring) {
       setIsPouring(pouringNow)
+
     }
   })
 
-  return (
-    <>
-      {isPouring && activeObject && (
-        <PouringLiquid
-          modelRef={{ current: activeObject }}
-          hand={hand}
-        />
-      )}
-    </>
-  )
+return (
+  <>
+    {activeObject && (
+      <PouringLiquid
+        modelRef={{ current: activeObject }}
+        hand={hand}
+        isPouring={isPouring}
+      />
+    )}
+  </>
+)
 }
 
 export default PouringMode

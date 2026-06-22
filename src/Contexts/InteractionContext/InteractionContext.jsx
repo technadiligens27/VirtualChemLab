@@ -18,6 +18,7 @@ export const InteractionProvider = ({ children }) => {
 
   const [isDragging,setIsDragging] = useState(null);
   const [isPouringMode,setIsPouringMode] = useState(false);
+  const [pouredFromLeft,setPouredFromLeft] = useState(false);
 
   const [pourAmount,setPourAmount] = useState(null);
   const [rightBeakerFillData, setRightBeakerFillData] = useState({
@@ -31,6 +32,9 @@ export const InteractionProvider = ({ children }) => {
     color: "",
     amount: 0,
   })
+
+  const [isReaction,setIsReaction] = useState(false)
+
 
   return (
     <InteractionContext.Provider
@@ -48,7 +52,9 @@ export const InteractionProvider = ({ children }) => {
         pourAmount,setPourAmount,
         rightBeakerFillData, setRightBeakerFillData,
         leftBeakerFillData, setLeftBeakerFillData,
-        selectedBeakerBoxHand,setSelectedBeakerBoxHand
+        selectedBeakerBoxHand,setSelectedBeakerBoxHand,
+        pouredFromLeft,setPouredFromLeft,
+        isReaction,setIsReaction
       }}
     >
       {children}

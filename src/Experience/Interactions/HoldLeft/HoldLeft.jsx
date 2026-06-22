@@ -10,7 +10,7 @@ const HoldLeft = ({ modeldata }) => {
 
   const {isFillUpBeaker,selectedLeftHand,
     fillBeakerHand,setIsPouring,
-    selectedRightHand} = useContext(InteractionContext)
+    selectedRightHand,setPouredFromLeft} = useContext(InteractionContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -66,12 +66,6 @@ const HoldLeft = ({ modeldata }) => {
         )
       }
     }
-
-    // const handleMouseUp = () => {
-    //   if (!isDraggingRef.current) return
-    //   isDraggingRef.current = false
-    //   setIsPouring(false)
-    // }
 
     canvas.addEventListener("mousedown", handleMouseDown)
     // window.addEventListener("mouseup", handleMouseUp)
