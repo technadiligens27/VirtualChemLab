@@ -5,10 +5,13 @@ import PouringLiquid from "../PouringLiquid/PouringLiquid"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import PouringMode from "../PouringMode/PouringMode"
 import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
+import StirMode from "../StirMode/StirMode"
 
 const HoldRight = ({ modeldata }) => {
 
-  const {isPouringMode,setIsPouringMode,isFillUpBeaker,selectedRightHand,selectedLeftHand} = useContext(InteractionContext)
+  const {isPouringMode,setIsPouringMode,isFillUpBeaker,
+    selectedRightHand,selectedLeftHand,isStirMode
+  } = useContext(InteractionContext)
 
   const { camera, gl,scene } = useThree()
 
@@ -51,28 +54,7 @@ const HoldRight = ({ modeldata }) => {
       previousMouseRef.current = { x: e.clientX, y: e.clientY }
     }
 
-    const handleMouseMove = (e) => {
-      // if (!isDraggingRef.current) return
 
-      // const rect = canvas.getBoundingClientRect()
-      // const screenMiddleX = rect.left + rect.width / 1.7
-
-      // if (e.clientX < screenMiddleX) {
-      //   previousMouseRef.current = {
-      //     x: screenMiddleX,
-      //     y: e.clientY,
-      //   }
-      //   return
-      // }
-
-      // const deltaX = e.clientX - previousMouseRef.current.x
-      // const deltaY = e.clientY - previousMouseRef.current.y
-
-      // previousMouseRef.current = { x: e.clientX, y: e.clientY }
-
-      // offsetRef.current.x += deltaX * 0.01
-      // offsetRef.current.y -= deltaY * 0.01
-    }
 
     const handleWheel = (e) => {
       // if (!isDraggingRef.current) return
@@ -102,7 +84,7 @@ const HoldRight = ({ modeldata }) => {
     // }
 
     canvas.addEventListener("mousedown", handleMouseDown)
-    window.addEventListener("mousemove", handleMouseMove)
+    // window.addEventListener("mousemove", handleMouseMove)
     // window.addEventListener("mouseup", handleMouseUp)
     window.addEventListener("wheel", handleWheel, {
       passive: false,
@@ -110,7 +92,7 @@ const HoldRight = ({ modeldata }) => {
 
     return () => {
       canvas.removeEventListener("mousedown", handleMouseDown)
-      window.removeEventListener("mousemove", handleMouseMove)
+      // window.removeEventListener("mousemove", handleMouseMove)
       // window.removeEventListener("mouseup", handleMouseUp)
       window.removeEventListener("wheel", handleWheel)
     }
@@ -132,10 +114,12 @@ const HoldRight = ({ modeldata }) => {
     object.rotation.set(0, 0, 0)
 
     if (object.name === "main-spoon") {
-      object.scale.set(0.6, 0.6, 0.6)
-    } else {
+      object.rotation.x = Math.PI/2
+            object.rotation.z = Math.PI/6
+
+    } 
       object.scale.set(1, 1, 1)
-    }
+  
 
     object.visible = true
     object.frustumCulled = false
@@ -168,6 +152,8 @@ const HoldRight = ({ modeldata }) => {
         )}
 
       {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'right'}/>)}
+      {isStirMode && selectedLeftHand && selectedRightHand && 
+        <StirMode spoonRef={selectedRightHand.ref} beakerRef={selectedLeftHand.ref} hand={"right"}/>};
 
 
 

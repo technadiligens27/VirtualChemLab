@@ -19,8 +19,8 @@ const FillBeakerBox = () => {
   const [selectedAmount, setSelectedAmount] = useState("")
 
   const acids = [
-    { name: "Salt (NaCl)", color: "#FFFFFF" },
-    { name: "Water (H2O)", color: "#87CEEB" },
+    { name: "Salt (NaCl)", color: "#F5F5F5" },
+    { name: "Water (H2O)", color: "#0073a0" },
     { name: "Nitric Acid (HNO₃)", color: "#FFFACD" },
     { name: "Acetic Acid (CH₃COOH)", color: "#F5F5F5" },
   ]
@@ -28,7 +28,8 @@ const FillBeakerBox = () => {
   const amounts = [10, 25, 50, 100]
 
   const handleConfirm = () => {
-    if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) return
+    if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) 
+    return
 
     const fillData = {
       name: selectedAcidData.name,

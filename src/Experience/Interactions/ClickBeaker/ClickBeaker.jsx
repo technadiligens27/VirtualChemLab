@@ -19,7 +19,8 @@ const ClickObject = () => {
     isFillUpBeaker,setIsFillUpBeaker,
     fillBeakerHand,setFillBeakerHand,
     isDragging,setIsDragging,
-    selectedBeakerBoxHand,setSelectedBeakerBoxHand
+    selectedBeakerBoxHand,setSelectedBeakerBoxHand,
+    setIsStirMode,isStirMode
 
   } = useContext(InteractionContext)
 
@@ -248,13 +249,19 @@ const ClickObject = () => {
 
                   <button
                     onClick={() => {
+                      if (selectedObject.name === "main-spoon") {
+                        setIsStirMode(true)
+                        setSelectedObject(null)
+                        return
+                      }
+
                       setSelectedObject(null)
                       setIsFillUpBeaker(false)
                       setFillBeakerHand(selectedObject.hand)
                       setIsFillBeakerBoxOpen(true)
                     }}
                   >
-                    Fill Beaker
+                    {selectedObject.name === "main-spoon" ? "Stir" : "Fill Beaker"}
                   </button>
                 </>
               ) : (

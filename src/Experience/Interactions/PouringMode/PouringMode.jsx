@@ -57,7 +57,7 @@ const PouringMode = ({ hand }) => {
         emptyRef.current.getWorldPosition(worldPosition)
 
         const localPosition = camera.worldToLocal(worldPosition.clone())
-        localPosition.add(new THREE.Vector3(1, -0.5, 0))
+        localPosition.add(new THREE.Vector3(2.7, 3.1, 0))
 
         targetObject.position.copy(localPosition)
       }

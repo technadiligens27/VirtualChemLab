@@ -18,7 +18,9 @@ export const InteractionProvider = ({ children }) => {
 
   const [isDragging,setIsDragging] = useState(null);
   const [isPouringMode,setIsPouringMode] = useState(false);
+
   const [pouredFromLeft,setPouredFromLeft] = useState(false);
+  const [pouredFromRight,setPouredFromRight] = useState(false);
 
   const [pourAmount,setPourAmount] = useState(null);
   const [rightBeakerFillData, setRightBeakerFillData] = useState({
@@ -33,7 +35,9 @@ export const InteractionProvider = ({ children }) => {
     amount: 0,
   })
 
-  const [isReaction,setIsReaction] = useState(false)
+  const [isReaction,setIsReaction] = useState(false);
+  const [isStirMode,setIsStirMode] = useState(false);
+  const [isStirring,setIsStirring] = useState(false);
 
 
   return (
@@ -54,7 +58,10 @@ export const InteractionProvider = ({ children }) => {
         leftBeakerFillData, setLeftBeakerFillData,
         selectedBeakerBoxHand,setSelectedBeakerBoxHand,
         pouredFromLeft,setPouredFromLeft,
-        isReaction,setIsReaction
+        isReaction,setIsReaction,
+        pouredFromRight,setPouredFromRight,
+        isStirMode,setIsStirMode,
+        isStirring,setIsStirring
       }}
     >
       {children}

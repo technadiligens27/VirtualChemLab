@@ -4,7 +4,8 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import Reaction from "../Reaction/Reaction"
 
 const PouringLiquid = ({ modelRef, hand, isPouring}) => {
-  const { leftBeakerFillData, rightBeakerFillData, setPouredFromLeft,pouredFromLeft } =
+  const { leftBeakerFillData, rightBeakerFillData, setPouredFromLeft,
+    pouredFromLeft,pouredFromRight,setPouredFromRight } =
     useContext(InteractionContext)
 
   const pourLiquidRef = useRef(null)
@@ -48,7 +49,12 @@ const PouringLiquid = ({ modelRef, hand, isPouring}) => {
     console.log("Pouring from left side")
     setPouredFromLeft(true)
   }
-}, [hand, isPouring, setPouredFromLeft])
+
+  if (hand === "right" && isPouring) {
+    console.log("Pouring from right side")
+    setPouredFromRight(true)
+  }
+}, [hand, isPouring, setPouredFromLeft,setPouredFromRight])
 
   useEffect(() => {
     if (!pourLiquidRef.current || !fillData?.color) return
@@ -98,6 +104,8 @@ const PouringLiquid = ({ modelRef, hand, isPouring}) => {
       <>
         
         {pouredFromLeft && <Reaction/>}
+        {pouredFromRight && <Reaction/>}
+
 
       </>
     )
