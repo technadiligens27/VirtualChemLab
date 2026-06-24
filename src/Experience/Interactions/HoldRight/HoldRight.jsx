@@ -118,6 +118,10 @@ const HoldRight = ({ modeldata }) => {
             object.rotation.z = Math.PI/6
 
     } 
+
+    if (object.name === "main-red-litmus" || object.name === "main-blue-litmus" ) {
+      object.rotation.x = Math.PI/2
+    }     
       object.scale.set(1, 1, 1)
   
 

@@ -17,27 +17,86 @@ const Reaction = () => {
   const {
     isSaltWaterReaction,
     setIsSaltWaterReaction,
+
+    isHclUniversal,
+    setIsHclUniversal,
+
+    isNaohUniversal,
+    setIsNaohUniversal,
+
+    isStarchIodine,
+    setIsStarchIodine,
+
+    isCopperSulfateNaoh,
+    setIsCopperSulfateNaoh,
+
     stirrLiquidRef,
   } = useContext(ReactionContext)
 
   const liquidRef = useRef(null)
   const targetColorRef = useRef(null)
+  const activeReactionRef = useRef(null)
 
   const reactions = [
     {
       name: "salt-water",
       chemicals: ["Water (H2O)", "Salt (NaCl)"],
       color: "#62b3f0",
-      run: () => setIsSaltWaterReaction(true),
+      run: () => {
+        setIsSaltWaterReaction(true)
+        setIsHclUniversal(false)
+      },
+    },
+    {
+      name: "hcl-universal",
+      chemicals: ["Hydrochloric Acid (HCl)", "Universal indicator"],
+      color: "#ef4444",
+      run: () => {
+        setIsHclUniversal(true)
+        setIsSaltWaterReaction(false)
+      },
     },
 
-    // Add acid reactions here later
-    // {
-    //   name: "acid-base",
-    //   chemicals: ["Hydrochloric Acid (HCl)", "Sodium Hydroxide (NaOH)"],
-    //   color: "#FFD6A5",
-    //   run: () => console.log("Acid reaction started"),
-    // },
+    // ================================
+    // FUTURE REACTIONS TEMPLATE
+    // Copy one block, uncomment it, then change:
+    // name, chemicals, color, and state setters.
+    // ================================
+
+    {
+      name: "naoh-universal",
+      chemicals: ["Sodium Hydroxide (NaOH)", "Universal indicator"],
+      color: "#8b5cf6",
+      run: () => {
+        setIsNaohUniversal(true)
+
+        setIsSaltWaterReaction(false)
+        setIsHclUniversal(false)
+      },
+    },
+
+    {
+      name: "iodine-starch",
+      chemicals: ["Iodine solution", "Starch solution"],
+      color: "#0f172a",
+      run: () => {
+        setIsStarchIodine(true)
+        setIsSaltWaterReaction(false)
+        setIsHclUniversal(false)
+      },
+    },
+
+    {
+      name: "copper-sulfate-naoh",
+      chemicals: ["Copper Sulfate (CuSO4)", "Sodium Hydroxide (NaOH)"],
+      color: "#7dd3fc",
+      run: () => {
+        setIsCopperSulfateNaoh(true)
+
+        setIsSaltWaterReaction(false)
+        setIsHclUniversal(false)
+      },
+    },
   ]
 
   useEffect(() => {
@@ -46,13 +105,17 @@ const Reaction = () => {
     const left = leftBeakerFillData?.name
     const right = rightBeakerFillData?.name
 
-    const reaction = reactions.find((r) =>
-      r.chemicals.includes(left) && r.chemicals.includes(right)
+    const reaction = reactions.find(
+      (r) =>
+        r.chemicals.includes(left) &&
+        r.chemicals.includes(right)
     )
 
     if (!reaction) return
 
     reaction.run()
+
+    activeReactionRef.current = reaction.name
     targetColorRef.current = new THREE.Color(reaction.color)
 
     const targetBeaker = pouredFromLeft
@@ -80,18 +143,30 @@ const Reaction = () => {
     pouredFromRight,
     leftBeakerFillData,
     rightBeakerFillData,
+    selectedLeftHand,
+    selectedRightHand,
   ])
 
   useFrame((_, delta) => {
     if (!liquidRef.current || !targetColorRef.current) return
-    if (!isSaltWaterReaction) return
+
+    const canLerp =
+      isSaltWaterReaction ||
+      isHclUniversal ||
+      isNaohUniversal ||
+      isCopperSulfateNaoh ||
+      activeReactionRef.current
+
+    if (!canLerp) return
 
     const materials = Array.isArray(liquidRef.current.material)
       ? liquidRef.current.material
       : [liquidRef.current.material]
 
     materials.forEach((mat) => {
-      mat.color?.lerp(targetColorRef.current, delta * 0.8)
+      if (!mat.color) return
+
+      mat.color.lerp(targetColorRef.current, delta * 0.8)
       mat.needsUpdate = true
     })
   })

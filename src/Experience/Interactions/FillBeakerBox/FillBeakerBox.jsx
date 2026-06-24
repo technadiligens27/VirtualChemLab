@@ -21,8 +21,13 @@ const FillBeakerBox = () => {
   const acids = [
     { name: "Salt (NaCl)", color: "#F5F5F5" },
     { name: "Water (H2O)", color: "#0073a0" },
-    { name: "Nitric Acid (HNO₃)", color: "#FFFACD" },
-    { name: "Acetic Acid (CH₃COOH)", color: "#F5F5F5" },
+    { name: "Universal indicator", color: "#4ade80" },
+    { name: "Hydrochloric Acid (HCl)", color: "#f8fafc" },
+    { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe" },
+    { name: "Starch solution", color: "#e5e7eb" },
+    { name: "Iodine solution", color: "#92400e" },    
+    { name: "Copper Sulfate (CuSO4)", color: "#2563eb" },    
+
   ]
 
   const amounts = [10, 25, 50, 100]

@@ -29,7 +29,7 @@ const ClickObject = () => {
     conicalBeakerRef,
     roundBeakerRef,
     graduatedBeakerRef,
-    spoonRef
+    spoonRef,redLitmusRef,blueLitmusRef
   } = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
@@ -57,13 +57,25 @@ const ClickObject = () => {
       {
         name:"main-spoon",
         ref:spoonRef
-      }
+      },
+      {
+        name:"main-red-litmus",
+        ref:redLitmusRef
+      },
+      {
+        name:"main-blue-litmus",
+        ref:blueLitmusRef
+      },          
+
     ],
     [
       normalBeakerRef,
       conicalBeakerRef,
       roundBeakerRef,
       graduatedBeakerRef,
+      spoonRef,
+      redLitmusRef,
+      blueLitmusRef
     ]
   )
 
