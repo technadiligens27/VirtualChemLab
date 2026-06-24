@@ -6,11 +6,12 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import PouringMode from "../PouringMode/PouringMode"
 import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 import StirMode from "../StirMode/StirMode"
+import LitmusMode from "../LitmusMode/LitmusMode"
 
 const HoldRight = ({ modeldata }) => {
 
   const {isPouringMode,setIsPouringMode,isFillUpBeaker,
-    selectedRightHand,selectedLeftHand,isStirMode
+    selectedRightHand,selectedLeftHand,isStirMode,isLitmusMode
   } = useContext(InteractionContext)
 
   const { camera, gl,scene } = useThree()
@@ -116,13 +117,17 @@ const HoldRight = ({ modeldata }) => {
     if (object.name === "main-spoon") {
       object.rotation.x = Math.PI/2
             object.rotation.z = Math.PI/6
-
     } 
 
     if (object.name === "main-red-litmus" || object.name === "main-blue-litmus" ) {
       object.rotation.x = Math.PI/2
     }     
+
+    if(object.name === "main-testube-01" || object.name === "main-testube-02" || object.name === "main-testube-03"){
+      object.scale.set(1.8, 1.8, 1.8)
+    }else{
       object.scale.set(1, 1, 1)
+    }
   
 
     object.visible = true
@@ -159,7 +164,8 @@ const HoldRight = ({ modeldata }) => {
       {isStirMode && selectedLeftHand && selectedRightHand && 
         <StirMode spoonRef={selectedRightHand.ref} beakerRef={selectedLeftHand.ref} hand={"right"}/>};
 
-
+      {isLitmusMode && selectedLeftHand && selectedRightHand && <LitmusMode 
+        litmusRef={selectedRightHand.ref} beakerRef={selectedLeftHand.ref} hand={"right"}/>}
 
     </>
   )

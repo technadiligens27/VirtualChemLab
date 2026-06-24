@@ -7,11 +7,20 @@ import * as THREE from "three"
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
 
-  const { selectedRightHand, selectedLeftHand,setPouredFromLeft } =
-    useContext(InteractionContext)
+  const {
+    selectedRightHand,
+    selectedLeftHand,
+    setPouredFromLeft,
+  } = useContext(InteractionContext)
 
   const emptyRef = useRef(null)
   const rotationZRef = useRef(0)
+
+  const originalPositionRef = useRef(null)
+  const originalRotationRef = useRef(null)
+
+  const otherOriginalPositionRef = useRef(null)
+  const otherOriginalRotationRef = useRef(null)
 
   const [isPouring, setIsPouring] = useState(false)
   const [activeObject, setActiveObject] = useState(null)
@@ -27,7 +36,7 @@ const PouringMode = ({ hand }) => {
     if (!sourceObject) return
 
     sourceObject.traverse((child) => {
-      if (child.name?.toLowerCase().includes("empty")) {
+      if (child.name?.toLowerCase().includes("mouth")) {
         emptyRef.current = child
       }
     })
@@ -37,10 +46,10 @@ const PouringMode = ({ hand }) => {
     const handleKeyDown = (e) => {
       if (e.key.toLowerCase() !== "p") return
 
-      // Right hand = P
+      // Right hand pouring = P
       if (hand === "right" && e.shiftKey) return
 
-      // Left hand = Shift + P
+      // Left hand pouring = Shift + P
       if (hand === "left" && !e.shiftKey) return
 
       const targetObject =
@@ -48,22 +57,68 @@ const PouringMode = ({ hand }) => {
           ? selectedRightHand?.ref?.current
           : selectedLeftHand?.ref?.current
 
+      const otherObject =
+        hand === "right"
+          ? selectedLeftHand?.ref?.current
+          : selectedRightHand?.ref?.current
+
       if (!emptyRef.current || !targetObject) return
 
+      // If already pouring, pressing P again returns objects back
+      if (activeObject === targetObject) {
+        if (originalPositionRef.current) {
+          targetObject.position.copy(originalPositionRef.current)
+        }
+
+        if (originalRotationRef.current) {
+          targetObject.rotation.copy(originalRotationRef.current)
+        }
+
+        if (otherObject && otherOriginalPositionRef.current) {
+          otherObject.position.copy(otherOriginalPositionRef.current)
+        }
+
+        if (otherObject && otherOriginalRotationRef.current) {
+          otherObject.rotation.copy(otherOriginalRotationRef.current)
+        }
+
+        rotationZRef.current = 0
+        setIsPouring(false)
+        setActiveObject(null)
+
+        originalPositionRef.current = null
+        originalRotationRef.current = null
+        otherOriginalPositionRef.current = null
+        otherOriginalRotationRef.current = null
+
+        return
+      }
+
+      // Save original positions before moving
+      originalPositionRef.current = targetObject.position.clone()
+      originalRotationRef.current = targetObject.rotation.clone()
+
+      if (otherObject) {
+        otherOriginalPositionRef.current = otherObject.position.clone()
+        otherOriginalRotationRef.current = otherObject.rotation.clone()
+      }
+
       if (hand === "right") {
-        selectedLeftHand?.ref?.current?.position.set(-1, -0.5, -5)
+        // Move left hand object slightly aside
+        otherObject?.position.set(-1, -0.5, -5)
 
         const worldPosition = new THREE.Vector3()
         emptyRef.current.getWorldPosition(worldPosition)
 
         const localPosition = camera.worldToLocal(worldPosition.clone())
-        localPosition.add(new THREE.Vector3(2.7, 3.1, 0))
+        localPosition.add(new THREE.Vector3(1, -0.3, -0.5))
 
         targetObject.position.copy(localPosition)
       }
 
       if (hand === "left") {
-        selectedRightHand?.ref?.current?.position.set(1, -1, -5)
+        // Move right hand object slightly aside
+        otherObject?.position.set(1, -0.5, -5)
 
         const worldPosition = new THREE.Vector3()
         emptyRef.current.getWorldPosition(worldPosition)
@@ -75,6 +130,8 @@ const PouringMode = ({ hand }) => {
       }
 
       rotationZRef.current = 0
+      targetObject.rotation.set(0, 0, 0)
+
       setIsPouring(false)
       setActiveObject(targetObject)
     }
@@ -84,7 +141,13 @@ const PouringMode = ({ hand }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [hand, selectedRightHand, selectedLeftHand, camera])
+  }, [
+    hand,
+    selectedRightHand,
+    selectedLeftHand,
+    camera,
+    activeObject,
+  ])
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -127,20 +190,23 @@ const PouringMode = ({ hand }) => {
     if (pouringNow !== isPouring) {
       setIsPouring(pouringNow)
 
+      if (pouringNow && hand === "right") {
+        setPouredFromLeft?.(true)
+      }
     }
   })
 
-return (
-  <>
-    {activeObject && (
-      <PouringLiquid
-        modelRef={{ current: activeObject }}
-        hand={hand}
-        isPouring={isPouring}
-      />
-    )}
-  </>
-)
+  return (
+    <>
+      {activeObject && (
+        <PouringLiquid
+          modelRef={{ current: activeObject }}
+          hand={hand}
+          isPouring={isPouring}
+        />
+      )}
+    </>
+  )
 }
 
 export default PouringMode

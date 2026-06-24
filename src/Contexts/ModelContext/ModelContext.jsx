@@ -14,6 +14,9 @@ export const ModelProvider = ({ children }) => {
   const spoonRef = useRef(null);
   const redLitmusRef = useRef(null);
   const blueLitmusRef = useRef(null);
+  const testube01Ref = useRef(null);
+  const testube02Ref = useRef(null);
+  const testube03Ref = useRef(null);
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -32,7 +35,8 @@ export const ModelProvider = ({ children }) => {
         isSitting, setIsSitting,
         normalBeakerLiquidRef,conicalBeakerLiquidRef,
         spoonRef,saltRef,
-        redLitmusRef,blueLitmusRef
+        redLitmusRef,blueLitmusRef,
+        testube01Ref,testube02Ref,testube03Ref
       }}
     >
       {children}

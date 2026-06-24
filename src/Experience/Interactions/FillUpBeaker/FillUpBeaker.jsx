@@ -52,8 +52,11 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       amountRef.current = Number(fillData.amount) * 0.55
     } else if (beakerName.includes("Conical-Flask")) {
       amountRef.current = Number(fillData.amount) * 0.15
-    } else {
+    } else if(beakerName.includes("testube")) {
+      amountRef.current = Number(fillData.amount) * 1.2
+    }else{
       amountRef.current = Number(fillData.amount) * 0.2
+
     }
 
 

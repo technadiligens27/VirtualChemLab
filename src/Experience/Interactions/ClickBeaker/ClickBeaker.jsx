@@ -7,7 +7,6 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import HoldLeft from "../HoldLeft/HoldLeft"
 import HoldRight from "../HoldRight/HoldRight"
-import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 
 const ClickObject = () => {
   const {
@@ -15,13 +14,18 @@ const ClickObject = () => {
     setSelectedLeftHand,
     selectedRightHand,
     setSelectedRightHand,
-    isFillBeakerBoxOpen,setIsFillBeakerBoxOpen,
-    isFillUpBeaker,setIsFillUpBeaker,
-    fillBeakerHand,setFillBeakerHand,
-    isDragging,setIsDragging,
-    selectedBeakerBoxHand,setSelectedBeakerBoxHand,
-    setIsStirMode,isStirMode
 
+    isFillBeakerBoxOpen,
+    setIsFillBeakerBoxOpen,
+
+    setIsFillUpBeaker,
+    setFillBeakerHand,
+
+    isDragging,
+
+    setIsStirMode,
+    setIsLitmusMode,
+    isLitmusMode
   } = useContext(InteractionContext)
 
   const {
@@ -29,14 +33,21 @@ const ClickObject = () => {
     conicalBeakerRef,
     roundBeakerRef,
     graduatedBeakerRef,
-    spoonRef,redLitmusRef,blueLitmusRef
+
+    spoonRef,
+    redLitmusRef,
+    blueLitmusRef,
+
+    testube01Ref,
+    testube02Ref,
+    testube03Ref,
   } = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
 
   const [selectedObject, setSelectedObject] = useState(null)
 
-  const beakers = useMemo(
+  const selectableObjects = useMemo(
     () => [
       {
         name: "main-normal-beaker",
@@ -55,18 +66,29 @@ const ClickObject = () => {
         ref: graduatedBeakerRef,
       },
       {
-        name:"main-spoon",
-        ref:spoonRef
+        name: "main-spoon",
+        ref: spoonRef,
       },
       {
-        name:"main-red-litmus",
-        ref:redLitmusRef
+        name: "main-red-litmus",
+        ref: redLitmusRef,
       },
       {
-        name:"main-blue-litmus",
-        ref:blueLitmusRef
-      },          
-
+        name: "main-blue-litmus",
+        ref: blueLitmusRef,
+      },
+      {
+        name: "main-testube-01",
+        ref: testube01Ref,
+      },
+      {
+        name: "main-testube-02",
+        ref: testube02Ref,
+      },
+      {
+        name: "main-testube-03",
+        ref: testube03Ref,
+      },
     ],
     [
       normalBeakerRef,
@@ -75,9 +97,16 @@ const ClickObject = () => {
       graduatedBeakerRef,
       spoonRef,
       redLitmusRef,
-      blueLitmusRef
+      blueLitmusRef,
+      testube01Ref,
+      testube02Ref,
+      testube03Ref,
     ]
   )
+
+  const isSpoon = (name) => name === "main-spoon"
+
+  const isLitmus = (name) => name?.includes("litmus")
 
   const isClickedInsideObject = (clickedObject, mainObject) => {
     let current = clickedObject
@@ -90,35 +119,34 @@ const ClickObject = () => {
     return false
   }
 
-    const keepBackOnTable = (hand) => {
-      const handData =
-        hand === "left" ? selectedLeftHand : selectedRightHand
+  const keepBackOnTable = (hand) => {
+    const handData = hand === "left" ? selectedLeftHand : selectedRightHand
 
-      if (!handData?.ref?.current) return
+    if (!handData?.ref?.current) return
 
-      const object = handData.ref.current
+    const object = handData.ref.current
 
-      if (handData.originalParent) {
-        handData.originalParent.add(object)
-      } else {
-        scene.add(object)
-      }
-
-      object.position.copy(handData.originalPosition)
-      object.rotation.copy(handData.originalRotation)
-      object.scale.set(1, 1, 1)
-      object.visible = true
-
-      if (hand === "left") {
-        setSelectedLeftHand(null)
-      }
-
-      if (hand === "right") {
-        setSelectedRightHand(null)
-      }
-
-      setSelectedObject(null)
+    if (handData.originalParent) {
+      handData.originalParent.add(object)
+    } else {
+      scene.add(object)
     }
+
+    object.position.copy(handData.originalPosition)
+    object.rotation.copy(handData.originalRotation)
+    object.scale.set(1, 1, 1)
+    object.visible = true
+
+    if (hand === "left") {
+      setSelectedLeftHand(null)
+    }
+
+    if (hand === "right") {
+      setSelectedRightHand(null)
+    }
+
+    setSelectedObject(null)
+  }
 
   useEffect(() => {
     const raycaster = new THREE.Raycaster()
@@ -130,25 +158,26 @@ const ClickObject = () => {
 
       raycaster.setFromCamera(mouse, camera)
 
-      const intersects = raycaster.intersectObjects(scene.children, true)
+      const clickableObjects = selectableObjects
+        .map((item) => item.ref?.current)
+        .filter(Boolean)
 
-      if (intersects.length === 0) return
+      const intersects = raycaster.intersectObjects(clickableObjects, true)
+
+      if (intersects.length === 0) {
+        setSelectedObject(null)
+        return
+      }
 
       const clickedObject = intersects[0].object
 
       const isLeftHoldingClickedObject =
         selectedLeftHand?.ref?.current &&
-        isClickedInsideObject(
-          clickedObject,
-          selectedLeftHand.ref.current
-        )
+        isClickedInsideObject(clickedObject, selectedLeftHand.ref.current)
 
       const isRightHoldingClickedObject =
         selectedRightHand?.ref?.current &&
-        isClickedInsideObject(
-          clickedObject,
-          selectedRightHand.ref.current
-        )
+        isClickedInsideObject(clickedObject, selectedRightHand.ref.current)
 
       if (isLeftHoldingClickedObject) {
         const worldPosition = new THREE.Vector3()
@@ -157,11 +186,7 @@ const ClickObject = () => {
         setSelectedObject({
           name: selectedLeftHand.name,
           ref: selectedLeftHand.ref,
-          position: [
-            worldPosition.x,
-            worldPosition.y + 1,
-            worldPosition.z,
-          ],
+          position: [worldPosition.x, worldPosition.y + 1, worldPosition.z],
           isHolding: true,
           hand: "left",
         })
@@ -176,11 +201,7 @@ const ClickObject = () => {
         setSelectedObject({
           name: selectedRightHand.name,
           ref: selectedRightHand.ref,
-          position: [
-            worldPosition.x,
-            worldPosition.y + 1,
-            worldPosition.z,
-          ],
+          position: [worldPosition.x, worldPosition.y + 1, worldPosition.z],
           isHolding: true,
           hand: "right",
         })
@@ -188,31 +209,24 @@ const ClickObject = () => {
         return
       }
 
-      const selectedBeaker = beakers.find((beaker) => {
-        if (!beaker.ref?.current) return false
+      const selectedItem = selectableObjects.find((item) => {
+        if (!item.ref?.current) return false
 
-        return isClickedInsideObject(
-          clickedObject,
-          beaker.ref.current
-        )
+        return isClickedInsideObject(clickedObject, item.ref.current)
       })
 
-      if (!selectedBeaker) {
+      if (!selectedItem) {
         setSelectedObject(null)
         return
       }
 
       const worldPosition = new THREE.Vector3()
-      selectedBeaker.ref.current.getWorldPosition(worldPosition)
+      selectedItem.ref.current.getWorldPosition(worldPosition)
 
       setSelectedObject({
-        name: selectedBeaker.name,
-        ref: selectedBeaker.ref,
-        position: [
-          worldPosition.x,
-          worldPosition.y + 1,
-          worldPosition.z,
-        ],
+        name: selectedItem.name,
+        ref: selectedItem.ref,
+        position: [worldPosition.x, worldPosition.y + 1, worldPosition.z],
         isHolding: false,
       })
     }
@@ -225,15 +239,15 @@ const ClickObject = () => {
   }, [
     camera,
     gl,
-    scene,
-    beakers,
+    selectableObjects,
     selectedLeftHand,
     selectedRightHand,
-    setSelectedLeftHand,
-    setSelectedRightHand,
-    isFillBeakerBoxOpen,
-    setIsFillBeakerBoxOpen,
   ])
+
+  useEffect(()=>{
+    console.log("Limus:",isLitmusMode)
+  },[isLitmusMode])
+
 
   return (
     <>
@@ -249,34 +263,44 @@ const ClickObject = () => {
               alignItems: "center",
             }}
           >
-              {selectedObject.isHolding ? (
-                <>
-                  <button
-                    onClick={() => {
-                      keepBackOnTable(selectedObject.hand)
-                    }}
-                  >
-                    Keep Back On Table
-                  </button>
+            {selectedObject.isHolding ? (
+              <>
+                <button
+                  onClick={() => {
+                    keepBackOnTable(selectedObject.hand)
+                  }}
+                >
+                  Keep Back On Table
+                </button>
 
-                  <button
-                    onClick={() => {
-                      if (selectedObject.name === "main-spoon") {
-                        setIsStirMode(true)
-                        setSelectedObject(null)
-                        return
-                      }
-
+                <button
+                  onClick={() => {
+                    if (isSpoon(selectedObject.name)) {
+                      setIsStirMode(true)
                       setSelectedObject(null)
-                      setIsFillUpBeaker(false)
-                      setFillBeakerHand(selectedObject.hand)
-                      setIsFillBeakerBoxOpen(true)
-                    }}
-                  >
-                    {selectedObject.name === "main-spoon" ? "Stir" : "Fill Beaker"}
-                  </button>
-                </>
-              ) : (
+                      return
+                    }
+
+                    if (isLitmus(selectedObject.name)) {
+                      setIsLitmusMode(true)
+                      setSelectedObject(null)
+                      return
+                    }
+
+                    setSelectedObject(null)
+                    setIsFillUpBeaker(false)
+                    setFillBeakerHand(selectedObject.hand)
+                    setIsFillBeakerBoxOpen(true)
+                  }}
+                >
+                  {isSpoon(selectedObject.name)
+                    ? "Stir"
+                    : isLitmus(selectedObject.name)
+                    ? "Test Liquid"
+                    : "Fill Beaker"}
+                </button>
+              </>
+            ) : (
               <>
                 {!selectedLeftHand && (
                   <button
@@ -286,8 +310,10 @@ const ClickObject = () => {
                         name: selectedObject.name,
                         ref: selectedObject.ref,
                         originalParent: selectedObject.ref.current.parent,
-                        originalPosition: selectedObject.ref.current.position.clone(),
-                        originalRotation: selectedObject.ref.current.rotation.clone(),
+                        originalPosition:
+                          selectedObject.ref.current.position.clone(),
+                        originalRotation:
+                          selectedObject.ref.current.rotation.clone(),
                       })
 
                       setSelectedObject(null)
@@ -305,8 +331,10 @@ const ClickObject = () => {
                         name: selectedObject.name,
                         ref: selectedObject.ref,
                         originalParent: selectedObject.ref.current.parent,
-                        originalPosition: selectedObject.ref.current.position.clone(),
-                        originalRotation: selectedObject.ref.current.rotation.clone(),
+                        originalPosition:
+                          selectedObject.ref.current.position.clone(),
+                        originalRotation:
+                          selectedObject.ref.current.rotation.clone(),
                       })
 
                       setSelectedObject(null)
@@ -317,9 +345,7 @@ const ClickObject = () => {
                 )}
 
                 {selectedLeftHand && selectedRightHand && (
-                  <p style={{ margin: 0 }}>
-                    Both hands are full
-                  </p>
+                  <p style={{ margin: 0 }}>Both hands are full</p>
                 )}
               </>
             )}
@@ -331,11 +357,7 @@ const ClickObject = () => {
         <HoldLeft modeldata={selectedLeftHand} />
       )}
 
-      {selectedRightHand && (
-        <HoldRight modeldata={selectedRightHand} />
-      )}
-
-
+      {selectedRightHand && <HoldRight modeldata={selectedRightHand} />}
     </>
   )
 }

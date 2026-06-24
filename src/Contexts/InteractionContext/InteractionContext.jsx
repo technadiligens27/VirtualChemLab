@@ -39,6 +39,8 @@ export const InteractionProvider = ({ children }) => {
   const [isStirMode,setIsStirMode] = useState(false);
   const [isStirring,setIsStirring] = useState(false);
 
+  const [isLitmusMode,setIsLitmusMode] = useState(false);
+
 
   return (
     <InteractionContext.Provider
@@ -61,7 +63,8 @@ export const InteractionProvider = ({ children }) => {
         isReaction,setIsReaction,
         pouredFromRight,setPouredFromRight,
         isStirMode,setIsStirMode,
-        isStirring,setIsStirring
+        isStirring,setIsStirring,
+        isLitmusMode,setIsLitmusMode
       }}
     >
       {children}

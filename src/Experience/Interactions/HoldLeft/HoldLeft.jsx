@@ -6,11 +6,12 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 import PouringMode from "../PouringMode/PouringMode"
 import StirMode from "../StirMode/StirMode"
+import LitmusMode from "../LitmusMode/LitmusMode"
 
 const HoldLeft = ({ modeldata }) => {
 
   const {isFillUpBeaker,selectedLeftHand,
-    fillBeakerHand,setIsPouring,isStirMode,rightBeakerFillData,
+    fillBeakerHand,setIsPouring,isStirMode,rightBeakerFillData,isLitmusMode,
     selectedRightHand,setPouredFromLeft} = useContext(InteractionContext)
 
   const { camera, gl, scene } = useThree()
@@ -132,7 +133,8 @@ const HoldLeft = ({ modeldata }) => {
       {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)};
       {isStirMode && selectedLeftHand && selectedRightHand && <StirMode spoonRef={selectedLeftHand.ref} beakerRef={selectedRightHand.ref} hand={"left"}/>};
 
-
+      {isLitmusMode && selectedLeftHand && selectedRightHand && <LitmusMode 
+      litmusRef={selectedLeftHand.ref} beakerRef={selectedRightHand.ref} hand={"left"}/>}
 
     </>
   )
