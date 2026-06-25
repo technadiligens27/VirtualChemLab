@@ -1,17 +1,53 @@
-import { useEffect, useRef } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import LitmusReaction from "../LitmusReaction/LitmusReaction"
 
-const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
+const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
   const { camera, gl } = useThree()
+  const { rightBeakerFillData, leftBeakerFillData } =
+    useContext(InteractionContext)
 
-  const stirPointRef = useRef(null)
+  const [colorChangeAcid, setColorChangeAcid] = useState(false)
+  const [colorChangeBase, setColorChangeBase] = useState(false)
 
-  const centerWorldRef = useRef(new THREE.Vector3())
+  // acids list
+  const acids = [
+    "Hydrochloric Acid (HCl)",
+    "Sulfuric Acid (H2SO4)",
+    "Nitric Acid (HNO3)",
+    "Acetic Acid (CH3COOH)",
+    "Citric Acid",
+    "Carbonic Acid (H2CO3)",
+  ]
+
+  // bases list
+  const bases = [
+    "Sodium Hydroxide (NaOH)",
+    "Potassium Hydroxide (KOH)",
+    "Calcium Hydroxide (Ca(OH)2)",
+    "Ammonia (NH3)",
+    "Magnesium Hydroxide (Mg(OH)2)",
+    "Sodium Carbonate (Na2CO3)",
+    "Sodium Bicarbonate (NaHCO3)",
+  ]
+
+  // top child = touch/contact point
+  const topPointRef = useRef(null)
+
+  // stir child = lowest scroll limit
+  const limitPointRef = useRef(null)
+
+  const topWorldRef = useRef(new THREE.Vector3())
   const targetLocalRef = useRef(new THREE.Vector3())
+
+  const limitWorldRef = useRef(new THREE.Vector3())
+  const limitLocalRef = useRef(new THREE.Vector3())
 
   const hasTouchedRef = useRef(false)
 
+  // starts above the top point
   const yOffsetRef = useRef(3.4)
 
   const originalLitmusPositionRef = useRef(null)
@@ -39,18 +75,14 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
     originalBeakerRotationRef.current = beakerObject.rotation.clone()
     originalBeakerScaleRef.current = beakerObject.scale.clone()
 
-    // center of screen in front of camera
     const centerWorldPosition = new THREE.Vector3(0, -0.5, -5)
 
-    // convert from camera local space to world space
     camera.localToWorld(centerWorldPosition)
 
-    // convert world position to beaker parent's local space
     if (beakerObject.parent) {
       beakerObject.parent.worldToLocal(centerWorldPosition)
     }
 
-    // move beaker to center
     beakerObject.position.copy(centerWorldPosition)
     beakerObject.rotation.set(0, 0, 0)
     beakerObject.scale.set(1, 1, 1)
@@ -58,13 +90,29 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
     return () => {
       if (!litmusRef?.current || !beakerRef?.current) return
 
-      litmusRef.current.position.copy(originalLitmusPositionRef.current)
-      litmusRef.current.rotation.copy(originalLitmusRotationRef.current)
-      litmusRef.current.scale.copy(originalLitmusScaleRef.current)
+      if (originalLitmusPositionRef.current) {
+        litmusRef.current.position.copy(originalLitmusPositionRef.current)
+      }
 
-      beakerRef.current.position.copy(originalBeakerPositionRef.current)
-      beakerRef.current.rotation.copy(originalBeakerRotationRef.current)
-      beakerRef.current.scale.copy(originalBeakerScaleRef.current)
+      if (originalLitmusRotationRef.current) {
+        litmusRef.current.rotation.copy(originalLitmusRotationRef.current)
+      }
+
+      if (originalLitmusScaleRef.current) {
+        litmusRef.current.scale.copy(originalLitmusScaleRef.current)
+      }
+
+      if (originalBeakerPositionRef.current) {
+        beakerRef.current.position.copy(originalBeakerPositionRef.current)
+      }
+
+      if (originalBeakerRotationRef.current) {
+        beakerRef.current.rotation.copy(originalBeakerRotationRef.current)
+      }
+
+      if (originalBeakerScaleRef.current) {
+        beakerRef.current.scale.copy(originalBeakerScaleRef.current)
+      }
 
       litmusRef.current.visible = true
       beakerRef.current.visible = true
@@ -86,7 +134,7 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
 
       yOffsetRef.current = THREE.MathUtils.clamp(
         yOffsetRef.current,
-        1.5,
+        -10,
         3.4
       )
     }
@@ -103,27 +151,35 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
   useFrame(() => {
     if (!litmusRef?.current || !beakerRef?.current) return
 
-    stirPointRef.current = null
+    topPointRef.current = null
+    limitPointRef.current = null
 
     beakerRef.current.traverse((child) => {
-      if (child.name?.toLowerCase().includes("stir")) {
-        stirPointRef.current = child
+      const name = child.name?.toLowerCase()
+
+      if (name?.includes("top")) {
+        topPointRef.current = child
+      }
+
+      if (name?.includes("stir")) {
+        limitPointRef.current = child
       }
     })
 
-    if (!stirPointRef.current) return
+    if (!topPointRef.current || !limitPointRef.current) return
 
     const litmusObject = litmusRef.current
 
-    stirPointRef.current.getWorldPosition(centerWorldRef.current)
+    topPointRef.current.getWorldPosition(topWorldRef.current)
+    limitPointRef.current.getWorldPosition(limitWorldRef.current)
 
-    targetLocalRef.current.copy(centerWorldRef.current)
+    targetLocalRef.current.copy(topWorldRef.current)
 
     if (litmusObject.parent) {
       litmusObject.parent.worldToLocal(targetLocalRef.current)
     } else {
       targetLocalRef.current.copy(
-        camera.worldToLocal(centerWorldRef.current.clone())
+        camera.worldToLocal(topWorldRef.current.clone())
       )
     }
 
@@ -134,6 +190,20 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
         zOffset
       )
     )
+
+    limitLocalRef.current.copy(limitWorldRef.current)
+
+    if (litmusObject.parent) {
+      litmusObject.parent.worldToLocal(limitLocalRef.current)
+    } else {
+      limitLocalRef.current.copy(
+        camera.worldToLocal(limitWorldRef.current.clone())
+      )
+    }
+
+    if (targetLocalRef.current.y < limitLocalRef.current.y) {
+      targetLocalRef.current.y = limitLocalRef.current.y
+    }
 
     litmusObject.position.lerp(targetLocalRef.current, 0.2)
 
@@ -150,19 +220,31 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
     const litmusWorldPosition = new THREE.Vector3()
     litmusObject.getWorldPosition(litmusWorldPosition)
 
-    const distance = litmusWorldPosition.distanceTo(centerWorldRef.current)
+    const distance = litmusWorldPosition.distanceTo(topWorldRef.current)
 
     if (distance < 1.6 && !hasTouchedRef.current) {
       hasTouchedRef.current = true
       console.log("Litmus touched liquid/beaker")
 
-      litmusObject.traverse((child) => {
-        if (!child.isMesh || !child.material) return
+      const chemicalName = beakerFillData?.name?.toLowerCase()
 
-        child.material = child.material.clone()
-        child.material.color.set("#000000")
-        child.material.needsUpdate = true
-      })
+      const isAcid = acids.some(
+        (acid) => acid.toLowerCase() === chemicalName
+      )
+
+      const isBase = bases.some(
+        (base) => base.toLowerCase() === chemicalName
+      )
+
+      if (isAcid) {
+        setColorChangeAcid(true)
+        setColorChangeBase(false)
+      }
+
+      if (isBase) {
+        setColorChangeBase(true)
+        setColorChangeAcid(false)
+      }
     }
 
     if (distance > 1.6) {
@@ -170,7 +252,23 @@ const LitmusMode = ({ litmusRef, beakerRef, hand }) => {
     }
   })
 
-  return null
+  return (
+    <>
+      {colorChangeAcid && (
+        <LitmusReaction
+          litmusRef={litmusRef}
+          type="acid"
+        />
+      )}
+
+      {colorChangeBase && (
+        <LitmusReaction
+          litmusRef={litmusRef}
+          type="base"
+        />
+      )}
+    </>
+  )
 }
 
 export default LitmusMode

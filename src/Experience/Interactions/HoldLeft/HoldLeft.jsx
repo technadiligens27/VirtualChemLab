@@ -11,8 +11,8 @@ import LitmusMode from "../LitmusMode/LitmusMode"
 const HoldLeft = ({ modeldata }) => {
 
   const {isFillUpBeaker,selectedLeftHand,
-    fillBeakerHand,setIsPouring,isStirMode,rightBeakerFillData,isLitmusMode,
-    selectedRightHand,setPouredFromLeft} = useContext(InteractionContext)
+    fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
+    selectedRightHand,setPouredFromLeft,rightBeakerFillData} = useContext(InteractionContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -162,6 +162,7 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
           litmusRef={selectedLeftHand.ref}
           beakerRef={selectedRightHand.ref}
           hand="left"
+          beakerFillData={rightBeakerFillData}
         />
       )}
     </>
