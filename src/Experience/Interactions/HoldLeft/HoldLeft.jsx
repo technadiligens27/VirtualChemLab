@@ -91,18 +91,32 @@ const HoldLeft = ({ modeldata }) => {
 
     camera.add(object)
 
-    object.position.copy(defaultOffsetRef.current)
-    object.rotation.set(0, 0, 0)
-    if (object.name === "main-spoon") {
-      object.rotation.x = Math.PI/2
-      object.rotation.z = -Math.PI/6
-    } 
+    object.position.copy(defaultOffsetRef.current);
+    object.rotation.set(0, 0, 0);
 
-    if (object.name === "main-red-litmus" || object.name === "main-blue-litmus" ) {
-      object.rotation.x = Math.PI/2
-    }   
-        
-    object.scale.set(1, 1, 1)
+    if (object.name === "main-spoon") {
+      object.rotation.x = Math.PI / 2
+      object.rotation.z = Math.PI / 6
+      object.scale.set(1, 1, 1)
+    } 
+    else if (
+      object.name === "main-red-litmus" ||
+      object.name === "main-blue-litmus"
+    ) {
+      object.rotation.x = Math.PI / 2
+      object.scale.set(1.5, 1.5, 1.5)
+    } 
+    else if (
+      object.name === "main-testube-01" ||
+      object.name === "main-testube-02" ||
+      object.name === "main-testube-03"
+    ) {
+      object.scale.set(1.8, 1.8, 1.8)
+    } 
+    else {
+      object.scale.set(1, 1, 1)
+    }
+    
     object.visible = true
     object.frustumCulled = false
   }, [camera, scene, modeldata])
@@ -118,24 +132,38 @@ const HoldLeft = ({ modeldata }) => {
   useEffect(()=>{
     console.log("stirMode:",isStirMode)
   },[isStirMode])
-
+const isLitmus = (name) => name?.toLowerCase().includes("litmus")
   return (
     <>
-      {isFillUpBeaker &&
-        fillBeakerHand === "left" &&
-         (
-          <FillUpBeaker
-            beakerRef={selectedLeftHand.ref}
-            hand="left"
-          />
-        )}
+      {isFillUpBeaker && fillBeakerHand === "left" && (
+        <FillUpBeaker
+          beakerRef={selectedLeftHand.ref}
+          hand="left"
+        />
+      )}
 
-      {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)};
-      {isStirMode && selectedLeftHand && selectedRightHand && <StirMode spoonRef={selectedLeftHand.ref} beakerRef={selectedRightHand.ref} hand={"left"}/>};
+      {!isStirMode && !isLitmusMode && selectedLeftHand && selectedRightHand && (
+        <PouringMode hand="left" />
+      )}
 
-      {isLitmusMode && selectedLeftHand && selectedRightHand && <LitmusMode 
-      litmusRef={selectedLeftHand.ref} beakerRef={selectedRightHand.ref} hand={"left"}/>}
+      {isStirMode && selectedLeftHand && selectedRightHand && (
+        <StirMode
+          spoonRef={selectedLeftHand.ref}
+          beakerRef={selectedRightHand.ref}
+          hand="left"
+        />
+      )}
 
+      {isLitmusMode &&
+      selectedLeftHand &&
+      selectedRightHand &&
+      isLitmus(selectedLeftHand.name) && (
+        <LitmusMode
+          litmusRef={selectedLeftHand.ref}
+          beakerRef={selectedRightHand.ref}
+          hand="left"
+        />
+      )}
     </>
   )
 }

@@ -25,7 +25,7 @@ const ClickObject = () => {
 
     setIsStirMode,
     setIsLitmusMode,
-    isLitmusMode
+    isLitmusMode,
   } = useContext(InteractionContext)
 
   const {
@@ -106,7 +106,7 @@ const ClickObject = () => {
 
   const isSpoon = (name) => name === "main-spoon"
 
-  const isLitmus = (name) => name?.includes("litmus")
+  const isLitmus = (name) => name?.toLowerCase().includes("litmus")
 
   const isClickedInsideObject = (clickedObject, mainObject) => {
     let current = clickedObject
@@ -136,6 +136,14 @@ const ClickObject = () => {
     object.rotation.copy(handData.originalRotation)
     object.scale.set(1, 1, 1)
     object.visible = true
+
+    if (isLitmus(handData.name)) {
+      setIsLitmusMode(false)
+    }
+
+    if (isSpoon(handData.name)) {
+      setIsStirMode(false)
+    }
 
     if (hand === "left") {
       setSelectedLeftHand(null)
@@ -211,7 +219,6 @@ const ClickObject = () => {
 
       const selectedItem = selectableObjects.find((item) => {
         if (!item.ref?.current) return false
-
         return isClickedInsideObject(clickedObject, item.ref.current)
       })
 
@@ -236,18 +243,7 @@ const ClickObject = () => {
     return () => {
       gl.domElement.removeEventListener("click", handleClick)
     }
-  }, [
-    camera,
-    gl,
-    selectableObjects,
-    selectedLeftHand,
-    selectedRightHand,
-  ])
-
-  useEffect(()=>{
-    console.log("Limus:",isLitmusMode)
-  },[isLitmusMode])
-
+  }, [camera, gl, selectableObjects, selectedLeftHand, selectedRightHand])
 
   return (
     <>
@@ -276,16 +272,27 @@ const ClickObject = () => {
                 <button
                   onClick={() => {
                     if (isSpoon(selectedObject.name)) {
+                      setIsLitmusMode(false)
                       setIsStirMode(true)
                       setSelectedObject(null)
                       return
                     }
 
                     if (isLitmus(selectedObject.name)) {
-                      setIsLitmusMode(true)
+                      setIsStirMode(false)
+
+                      if (isLitmusMode) {
+                        setIsLitmusMode(false)
+                      } else {
+                        setIsLitmusMode(true)
+                      }
+
                       setSelectedObject(null)
                       return
                     }
+
+                    setIsLitmusMode(false)
+                    setIsStirMode(false)
 
                     setSelectedObject(null)
                     setIsFillUpBeaker(false)
@@ -296,7 +303,9 @@ const ClickObject = () => {
                   {isSpoon(selectedObject.name)
                     ? "Stir"
                     : isLitmus(selectedObject.name)
-                    ? "Test Liquid"
+                    ? isLitmusMode
+                      ? "Stop Test"
+                      : "Test Liquid"
                     : "Fill Beaker"}
                 </button>
               </>

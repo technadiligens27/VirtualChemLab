@@ -114,20 +114,28 @@ const HoldRight = ({ modeldata }) => {
     object.position.copy(defaultOffsetRef.current)
     object.rotation.set(0, 0, 0)
 
-    if (object.name === "main-spoon") {
-      object.rotation.x = Math.PI/2
-            object.rotation.z = Math.PI/6
-    } 
-
-    if (object.name === "main-red-litmus" || object.name === "main-blue-litmus" ) {
-      object.rotation.x = Math.PI/2
-    }     
-
-    if(object.name === "main-testube-01" || object.name === "main-testube-02" || object.name === "main-testube-03"){
-      object.scale.set(1.8, 1.8, 1.8)
-    }else{
-      object.scale.set(1, 1, 1)
-    }
+if (object.name === "main-spoon") {
+  object.rotation.x = Math.PI / 2
+  object.rotation.z = Math.PI / 6
+  object.scale.set(1, 1, 1)
+} 
+else if (
+  object.name === "main-red-litmus" ||
+  object.name === "main-blue-litmus"
+) {
+  object.rotation.x = Math.PI / 2
+  object.scale.set(1.5, 1.5, 1.5)
+} 
+else if (
+  object.name === "main-testube-01" ||
+  object.name === "main-testube-02" ||
+  object.name === "main-testube-03"
+) {
+  object.scale.set(1.8, 1.8, 1.8)
+} 
+else {
+  object.scale.set(1, 1, 1)
+}
   
 
     object.visible = true
@@ -149,6 +157,8 @@ const HoldRight = ({ modeldata }) => {
 
     })
 
+    const isLitmus = (name) => name?.toLowerCase().includes("litmus")
+
   return (
     <>
       {isFillUpBeaker &&
@@ -160,12 +170,21 @@ const HoldRight = ({ modeldata }) => {
           />
         )}
 
-      {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'right'}/>)}
+      {!isStirMode && !isLitmusMode && selectedLeftHand &&selectedRightHand && (<PouringMode hand={'right'}/>)}
+
       {isStirMode && selectedLeftHand && selectedRightHand && 
         <StirMode spoonRef={selectedRightHand.ref} beakerRef={selectedLeftHand.ref} hand={"right"}/>};
 
-      {isLitmusMode && selectedLeftHand && selectedRightHand && <LitmusMode 
-        litmusRef={selectedRightHand.ref} beakerRef={selectedLeftHand.ref} hand={"right"}/>}
+      {isLitmusMode &&
+  selectedLeftHand &&
+  selectedRightHand &&
+  isLitmus(selectedRightHand.name) && (
+    <LitmusMode
+      litmusRef={selectedRightHand.ref}
+      beakerRef={selectedLeftHand.ref}
+      hand="right"
+    />
+  )}
 
     </>
   )
