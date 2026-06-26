@@ -31,7 +31,10 @@ const ClickObject = () => {
     setIsFilterFolded,
 
     isFilterInFunnel,
-    setIsFilterInFunnel
+    setIsFilterInFunnel,
+
+    isFunnelMode,
+    setIsFunnelMode
   } = useContext(InteractionContext)
 
   const {
@@ -51,13 +54,14 @@ const ClickObject = () => {
     filterPaperRef,
     filterFoldedPaperRef,
 
-    funnelRef
+    funnelRef,
   } = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
 
   const [selectedObject, setSelectedObject] = useState(null)
 
+  const flatOriginalTransformRef = useRef(null)
   const foldedOriginalTransformRef = useRef(null)
 
   const selectableObjects = useMemo(
@@ -111,9 +115,9 @@ const ClickObject = () => {
         ref: filterFoldedPaperRef,
       },
       {
-        name:'main-funnel',
-        ref:funnelRef
-      }
+        name: "main-funnel",
+        ref: funnelRef,
+      },
     ],
     [
       normalBeakerRef,
@@ -128,11 +132,11 @@ const ClickObject = () => {
       testube03Ref,
       filterPaperRef,
       filterFoldedPaperRef,
-      funnelRef
+      funnelRef,
     ]
   )
 
-  const isSpoon = (name) => name === "main-spoon";
+  const isSpoon = (name) => name === "main-spoon"
 
   const isFunnel = (name) => name === "main-funnel"
 
@@ -181,9 +185,19 @@ const ClickObject = () => {
   }
 
   useEffect(() => {
-    if (!filterFoldedPaperRef.current) return
+    if (filterPaperRef.current && !flatOriginalTransformRef.current) {
+      flatOriginalTransformRef.current = {
+        parent: filterPaperRef.current.parent,
+        position: filterPaperRef.current.position.clone(),
+        rotation: filterPaperRef.current.rotation.clone(),
+        scale: filterPaperRef.current.scale.clone(),
+      }
+    }
 
-    if (!foldedOriginalTransformRef.current) {
+    if (
+      filterFoldedPaperRef.current &&
+      !foldedOriginalTransformRef.current
+    ) {
       foldedOriginalTransformRef.current = {
         parent: filterFoldedPaperRef.current.parent,
         position: filterFoldedPaperRef.current.position.clone(),
@@ -191,19 +205,33 @@ const ClickObject = () => {
         scale: filterFoldedPaperRef.current.scale.clone(),
       }
     }
-  }, [filterFoldedPaperRef])
+  }, [filterPaperRef, filterFoldedPaperRef])
 
   useEffect(() => {
     if (!filterPaperRef.current || !filterFoldedPaperRef.current) return
 
-    if (isFilterFolded) {
-      filterPaperRef.current.visible = false
-      filterFoldedPaperRef.current.visible = true
-    } else {
-      filterPaperRef.current.visible = true
-      filterFoldedPaperRef.current.visible = false
+    const flatPaper = filterPaperRef.current
+    const foldedPaper = filterFoldedPaperRef.current
+
+    if (isFilterInFunnel) {
+      flatPaper.visible = false
+      foldedPaper.visible = true
+      return
     }
-  }, [isFilterFolded, filterPaperRef, filterFoldedPaperRef])
+
+    if (isFilterFolded) {
+      flatPaper.visible = false
+      foldedPaper.visible = true
+    } else {
+      flatPaper.visible = true
+      foldedPaper.visible = false
+    }
+  }, [
+    isFilterFolded,
+    isFilterInFunnel,
+    filterPaperRef,
+    filterFoldedPaperRef,
+  ])
 
   const foldFilterPaper = (hand) => {
     const flatPaper = filterPaperRef.current
@@ -218,14 +246,20 @@ const ClickObject = () => {
     flatPaper.visible = false
     foldedPaper.visible = true
 
+    const originalTransform = flatOriginalTransformRef.current
+
     const newHandData = {
       hand,
       name: "main-folded-paper",
       ref: filterFoldedPaperRef,
 
-      originalParent: handData?.originalParent,
-      originalPosition: handData?.originalPosition,
-      originalRotation: handData?.originalRotation,
+      originalParent: originalTransform?.parent || handData?.originalParent,
+      originalPosition:
+        originalTransform?.position?.clone() ||
+        handData?.originalPosition?.clone(),
+      originalRotation:
+        originalTransform?.rotation?.clone() ||
+        handData?.originalRotation?.clone(),
     }
 
     if (hand === "left") {
@@ -237,7 +271,7 @@ const ClickObject = () => {
     }
 
     setIsFilterFolded(true)
-    console.log("Filter paper folded")
+    setSelectedObject(null)
   }
 
   const unfoldFilterPaper = (hand) => {
@@ -246,7 +280,7 @@ const ClickObject = () => {
 
     if (!flatPaper || !foldedPaper) return
 
-    const handData = hand === "left" ? selectedLeftHand : selectedRightHand
+    const originalTransform = flatOriginalTransformRef.current
 
     copyTransform(foldedPaper, flatPaper)
 
@@ -260,9 +294,11 @@ const ClickObject = () => {
       name: "main-filter-paper",
       ref: filterPaperRef,
 
-      originalParent: handData?.originalParent,
-      originalPosition: handData?.originalPosition,
-      originalRotation: handData?.originalRotation,
+      originalParent: originalTransform?.parent || flatPaper.parent,
+      originalPosition:
+        originalTransform?.position?.clone() || flatPaper.position.clone(),
+      originalRotation:
+        originalTransform?.rotation?.clone() || flatPaper.rotation.clone(),
     }
 
     if (hand === "left") {
@@ -274,17 +310,24 @@ const ClickObject = () => {
     }
 
     setIsFilterFolded(false)
-    console.log("Filter paper unfolded")
+    setSelectedObject(null)
   }
 
   const placeFilterInFunnel = (hand) => {
     const foldedPaper = filterFoldedPaperRef.current
+    const flatPaper = filterPaperRef.current
 
     if (!foldedPaper) return
 
-    console.log("Place folded filter paper in funnel")
+    if (flatPaper) {
+      flatPaper.visible = false
+    }
+
+    foldedPaper.visible = true
+    foldedPaper.scale.set(1, 1, 1)
 
     setIsFilterInFunnel(true)
+    setIsFilterFolded(true)
 
     if (hand === "left") {
       setSelectedLeftHand(null)
@@ -292,6 +335,57 @@ const ClickObject = () => {
 
     if (hand === "right") {
       setSelectedRightHand(null)
+    }
+
+    setSelectedObject(null)
+  }
+
+  const removeFilterFromFunnel = (funnelHand) => {
+    const foldedPaper = filterFoldedPaperRef.current
+    const flatPaper = filterPaperRef.current
+
+    if (!foldedPaper) return
+
+    const targetHand = funnelHand === "right" ? "left" : "right"
+
+    const isTargetHandBusy =
+      targetHand === "left" ? selectedLeftHand : selectedRightHand
+
+    if (isTargetHandBusy) {
+      console.log("Opposite hand is already full")
+      return
+    }
+
+    const originalTransform = flatOriginalTransformRef.current
+
+    if (flatPaper) {
+      flatPaper.visible = false
+    }
+
+    foldedPaper.visible = true
+    foldedPaper.scale.set(1, 1, 1)
+
+    const newHandData = {
+      hand: targetHand,
+      name: "main-folded-paper",
+      ref: filterFoldedPaperRef,
+
+      originalParent: originalTransform?.parent || foldedPaper.parent,
+      originalPosition:
+        originalTransform?.position?.clone() || foldedPaper.position.clone(),
+      originalRotation:
+        originalTransform?.rotation?.clone() || foldedPaper.rotation.clone(),
+    }
+
+    setIsFilterInFunnel(false)
+    setIsFilterFolded(true)
+
+    if (targetHand === "left") {
+      setSelectedLeftHand(newHandData)
+    }
+
+    if (targetHand === "right") {
+      setSelectedRightHand(newHandData)
     }
 
     setSelectedObject(null)
@@ -442,14 +536,13 @@ const ClickObject = () => {
     return () => {
       gl.domElement.removeEventListener("click", handleClick)
     }
-  }, [camera, gl, selectableObjects, selectedLeftHand, selectedRightHand])
-
-  const removeFilterFromFunnel = () => {
-  setIsFilterInFunnel(false)
-  setSelectedObject(null)
-}
-
-
+  }, [
+    camera,
+    gl,
+    selectableObjects,
+    selectedLeftHand,
+    selectedRightHand,
+  ])
 
   return (
     <>
@@ -467,12 +560,12 @@ const ClickObject = () => {
           >
             {selectedObject.isHolding ? (
               <>
-                {isFilterFolded && isFoldedFilterPaper(selectedObject.name) ? (
+                {isFilterFolded &&
+                isFoldedFilterPaper(selectedObject.name) ? (
                   <>
                     <button
                       onClick={() => {
                         unfoldFilterPaper(selectedObject.hand)
-                        setSelectedObject(null)
                       }}
                     >
                       Unfold Paper
@@ -488,19 +581,19 @@ const ClickObject = () => {
                   </>
                 ) : isFunnel(selectedObject.name) ? (
                   <>
-                    <button
+                   <button
                       onClick={() => {
-                        console.log("Funnel mode")
+                        setIsFunnelMode((prev) => !prev)
                         setSelectedObject(null)
                       }}
                     >
-                      Funnel Mode
+                      {isFunnelMode ? "Exit Funnel Mode" : "Funnel Mode"}
                     </button>
 
                     {isFilterInFunnel && (
                       <button
                         onClick={() => {
-                          removeFilterFromFunnel()
+                          removeFilterFromFunnel(selectedObject.hand)
                         }}
                       >
                         Remove Filter
@@ -518,14 +611,14 @@ const ClickObject = () => {
                     )}
                   </>
                 ) : (
-                    <>
-                      <button
-                        onClick={() => {
-                          keepBackOnTable(selectedObject.hand)
-                        }}
-                      >
-                        Keep Back On Table
-                      </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        keepBackOnTable(selectedObject.hand)
+                      }}
+                    >
+                      Keep Back On Table
+                    </button>
 
                     <button
                       onClick={() => {
@@ -556,7 +649,6 @@ const ClickObject = () => {
                             foldFilterPaper(selectedObject.hand)
                           }
 
-                          setSelectedObject(null)
                           return
                         }
 

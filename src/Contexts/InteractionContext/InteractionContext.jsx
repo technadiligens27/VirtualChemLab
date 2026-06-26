@@ -42,7 +42,8 @@ export const InteractionProvider = ({ children }) => {
   const [isLitmusMode,setIsLitmusMode] = useState(false);
 
   const [isFilterFolded,setIsFilterFolded] = useState(false);
-  const [isFilterInFunnel,setIsFilterInFunnel] = useState(false)
+  const [isFilterInFunnel,setIsFilterInFunnel] = useState(false);
+  const [isFunnelMode,setIsFunnelMode] = useState(false)
 
 
   return (
@@ -69,7 +70,8 @@ export const InteractionProvider = ({ children }) => {
         isStirring,setIsStirring,
         isLitmusMode,setIsLitmusMode,
         isFilterFolded,setIsFilterFolded,
-        isFilterInFunnel,setIsFilterInFunnel  
+        isFilterInFunnel,setIsFilterInFunnel,
+        isFunnelMode,setIsFunnelMode
       }}
     >
       {children}

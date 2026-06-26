@@ -10,13 +10,15 @@ import LitmusMode from "../LitmusMode/LitmusMode"
 import FoldFilter from "../FoldFilter/FoldFilter"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
+import FunnelMode from "../FunnelMode/FunnelMode"
 
 const HoldLeft = ({ modeldata }) => {
 
   const {isFillUpBeaker,selectedLeftHand,
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
     selectedRightHand,setPouredFromLeft,rightBeakerFillData,
-    isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel
+    isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel,
+    isFunnelMode,setIsFunnelMode
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext)
@@ -197,7 +199,12 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
             funnelRef={funnelRef}
             hand={'left'}
           />
-)}
+      )}
+
+      {
+        isFunnelMode  &&
+        <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef}/>
+      }
 
 
 
