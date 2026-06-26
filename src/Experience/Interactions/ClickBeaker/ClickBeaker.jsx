@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useRef, useState } from "react"
 import { useThree } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
@@ -26,6 +26,9 @@ const ClickObject = () => {
     setIsStirMode,
     setIsLitmusMode,
     isLitmusMode,
+
+    isFilterFolded,
+    setIsFilterFolded,
   } = useContext(InteractionContext)
 
   const {
@@ -41,11 +44,16 @@ const ClickObject = () => {
     testube01Ref,
     testube02Ref,
     testube03Ref,
+
+    filterPaperRef,
+    filterFoldedPaperRef,
   } = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
 
   const [selectedObject, setSelectedObject] = useState(null)
+
+  const foldedOriginalTransformRef = useRef(null)
 
   const selectableObjects = useMemo(
     () => [
@@ -89,6 +97,14 @@ const ClickObject = () => {
         name: "main-testube-03",
         ref: testube03Ref,
       },
+      {
+        name: "main-filter-paper",
+        ref: filterPaperRef,
+      },
+      {
+        name: "main-folded-paper",
+        ref: filterFoldedPaperRef,
+      },
     ],
     [
       normalBeakerRef,
@@ -101,12 +117,23 @@ const ClickObject = () => {
       testube01Ref,
       testube02Ref,
       testube03Ref,
+      filterPaperRef,
+      filterFoldedPaperRef,
     ]
   )
 
   const isSpoon = (name) => name === "main-spoon"
 
   const isLitmus = (name) => name?.toLowerCase().includes("litmus")
+
+  const isFlatFilterPaper = (name) =>
+    name?.toLowerCase().includes("filter-paper")
+
+  const isFoldedFilterPaper = (name) =>
+    name?.toLowerCase().includes("folded-paper")
+
+  const isAnyFilterPaper = (name) =>
+    isFlatFilterPaper(name) || isFoldedFilterPaper(name)
 
   const isClickedInsideObject = (clickedObject, mainObject) => {
     let current = clickedObject
@@ -117,6 +144,149 @@ const ClickObject = () => {
     }
 
     return false
+  }
+
+  const copyTransform = (fromObject, toObject) => {
+    if (!fromObject || !toObject) return
+
+    toObject.position.copy(fromObject.position)
+    toObject.rotation.copy(fromObject.rotation)
+    toObject.scale.copy(fromObject.scale)
+  }
+
+  const applyTransform = (object, transform) => {
+    if (!object || !transform) return
+
+    if (transform.parent) {
+      transform.parent.add(object)
+    } else {
+      scene.add(object)
+    }
+
+    object.position.copy(transform.position)
+    object.rotation.copy(transform.rotation)
+    object.scale.copy(transform.scale)
+  }
+
+  useEffect(() => {
+    if (!filterFoldedPaperRef.current) return
+
+    if (!foldedOriginalTransformRef.current) {
+      foldedOriginalTransformRef.current = {
+        parent: filterFoldedPaperRef.current.parent,
+        position: filterFoldedPaperRef.current.position.clone(),
+        rotation: filterFoldedPaperRef.current.rotation.clone(),
+        scale: filterFoldedPaperRef.current.scale.clone(),
+      }
+    }
+  }, [filterFoldedPaperRef])
+
+  useEffect(() => {
+    if (!filterPaperRef.current || !filterFoldedPaperRef.current) return
+
+    if (isFilterFolded) {
+      filterPaperRef.current.visible = false
+      filterFoldedPaperRef.current.visible = true
+    } else {
+      filterPaperRef.current.visible = true
+      filterFoldedPaperRef.current.visible = false
+    }
+  }, [isFilterFolded, filterPaperRef, filterFoldedPaperRef])
+
+  const foldFilterPaper = (hand) => {
+    const flatPaper = filterPaperRef.current
+    const foldedPaper = filterFoldedPaperRef.current
+
+    if (!flatPaper || !foldedPaper) return
+
+    const handData = hand === "left" ? selectedLeftHand : selectedRightHand
+
+    copyTransform(flatPaper, foldedPaper)
+
+    flatPaper.visible = false
+    foldedPaper.visible = true
+
+    const newHandData = {
+      hand,
+      name: "main-folded-paper",
+      ref: filterFoldedPaperRef,
+
+      originalParent: handData?.originalParent,
+      originalPosition: handData?.originalPosition,
+      originalRotation: handData?.originalRotation,
+    }
+
+    if (hand === "left") {
+      setSelectedLeftHand(newHandData)
+    }
+
+    if (hand === "right") {
+      setSelectedRightHand(newHandData)
+    }
+
+    setIsFilterFolded(true)
+    console.log("Filter paper folded")
+  }
+
+  const unfoldFilterPaper = (hand) => {
+    const flatPaper = filterPaperRef.current
+    const foldedPaper = filterFoldedPaperRef.current
+
+    if (!flatPaper || !foldedPaper) return
+
+    const handData = hand === "left" ? selectedLeftHand : selectedRightHand
+
+    copyTransform(foldedPaper, flatPaper)
+
+    foldedPaper.visible = false
+    flatPaper.visible = true
+
+    applyTransform(foldedPaper, foldedOriginalTransformRef.current)
+
+    const newHandData = {
+      hand,
+      name: "main-filter-paper",
+      ref: filterPaperRef,
+
+      originalParent: handData?.originalParent,
+      originalPosition: handData?.originalPosition,
+      originalRotation: handData?.originalRotation,
+    }
+
+    if (hand === "left") {
+      setSelectedLeftHand(newHandData)
+    }
+
+    if (hand === "right") {
+      setSelectedRightHand(newHandData)
+    }
+
+    setIsFilterFolded(false)
+    console.log("Filter paper unfolded")
+  }
+
+  const placeFilterInFunnel = (hand) => {
+    const foldedPaper = filterFoldedPaperRef.current
+
+    if (!foldedPaper) return
+
+    console.log("Place folded filter paper in funnel")
+
+    // Add your funnel placement logic here later.
+    // Example later:
+    // 1. find funnel point / funnel ref
+    // 2. move foldedPaper to funnel position
+    // 3. setSelectedLeftHand(null) or setSelectedRightHand(null)
+
+    if (hand === "left") {
+      setSelectedLeftHand(null)
+    }
+
+    if (hand === "right") {
+      setSelectedRightHand(null)
+    }
+
+    setSelectedObject(null)
   }
 
   const keepBackOnTable = (hand) => {
@@ -136,6 +306,27 @@ const ClickObject = () => {
     object.rotation.copy(handData.originalRotation)
     object.scale.set(1, 1, 1)
     object.visible = true
+
+    if (isFilterFolded && isFoldedFilterPaper(handData.name)) {
+      const flatPaper = filterPaperRef.current
+      const foldedPaper = filterFoldedPaperRef.current
+
+      if (flatPaper && foldedPaper) {
+        flatPaper.visible = false
+        foldedPaper.visible = true
+      }
+    }
+
+    if (!isFilterFolded && isFlatFilterPaper(handData.name)) {
+      const flatPaper = filterPaperRef.current
+      const foldedPaper = filterFoldedPaperRef.current
+
+      if (flatPaper && foldedPaper) {
+        flatPaper.visible = true
+        foldedPaper.visible = false
+        applyTransform(foldedPaper, foldedOriginalTransformRef.current)
+      }
+    }
 
     if (isLitmus(handData.name)) {
       setIsLitmusMode(false)
@@ -245,6 +436,10 @@ const ClickObject = () => {
     }
   }, [camera, gl, selectableObjects, selectedLeftHand, selectedRightHand])
 
+  useEffect(() => {
+    console.log("isFilterFolded:", isFilterFolded)
+  }, [isFilterFolded])
+
   return (
     <>
       {selectedObject && !isFillBeakerBoxOpen && (
@@ -261,53 +456,91 @@ const ClickObject = () => {
           >
             {selectedObject.isHolding ? (
               <>
-                <button
-                  onClick={() => {
-                    keepBackOnTable(selectedObject.hand)
-                  }}
-                >
-                  Keep Back On Table
-                </button>
+                {isFilterFolded && isFoldedFilterPaper(selectedObject.name) ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        unfoldFilterPaper(selectedObject.hand)
+                        setSelectedObject(null)
+                      }}
+                    >
+                      Unfold Paper
+                    </button>
 
-                <button
-                  onClick={() => {
-                    if (isSpoon(selectedObject.name)) {
-                      setIsLitmusMode(false)
-                      setIsStirMode(true)
-                      setSelectedObject(null)
-                      return
-                    }
+                    <button
+                      onClick={() => {
+                        placeFilterInFunnel(selectedObject.hand)
+                      }}
+                    >
+                      Place in Funnel
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => {
+                        keepBackOnTable(selectedObject.hand)
+                      }}
+                    >
+                      Keep Back On Table
+                    </button>
 
-                    if (isLitmus(selectedObject.name)) {
-                      setIsStirMode(false)
+                    <button
+                      onClick={() => {
+                        if (isSpoon(selectedObject.name)) {
+                          setIsLitmusMode(false)
+                          setIsStirMode(true)
+                          setSelectedObject(null)
+                          return
+                        }
 
-                      if (isLitmusMode) {
+                        if (isLitmus(selectedObject.name)) {
+                          setIsStirMode(false)
+
+                          if (isLitmusMode) {
+                            setIsLitmusMode(false)
+                          } else {
+                            setIsLitmusMode(true)
+                          }
+
+                          setSelectedObject(null)
+                          return
+                        }
+
+                        if (isAnyFilterPaper(selectedObject.name)) {
+                          if (isFilterFolded) {
+                            unfoldFilterPaper(selectedObject.hand)
+                          } else {
+                            foldFilterPaper(selectedObject.hand)
+                          }
+
+                          setSelectedObject(null)
+                          return
+                        }
+
                         setIsLitmusMode(false)
-                      } else {
-                        setIsLitmusMode(true)
-                      }
+                        setIsStirMode(false)
 
-                      setSelectedObject(null)
-                      return
-                    }
-
-                    setIsLitmusMode(false)
-                    setIsStirMode(false)
-
-                    setSelectedObject(null)
-                    setIsFillUpBeaker(false)
-                    setFillBeakerHand(selectedObject.hand)
-                    setIsFillBeakerBoxOpen(true)
-                  }}
-                >
-                  {isSpoon(selectedObject.name)
-                    ? "Stir"
-                    : isLitmus(selectedObject.name)
-                    ? isLitmusMode
-                      ? "Stop Test"
-                      : "Test Liquid"
-                    : "Fill Beaker"}
-                </button>
+                        setSelectedObject(null)
+                        setIsFillUpBeaker(false)
+                        setFillBeakerHand(selectedObject.hand)
+                        setIsFillBeakerBoxOpen(true)
+                      }}
+                    >
+                      {isSpoon(selectedObject.name)
+                        ? "Stir"
+                        : isLitmus(selectedObject.name)
+                        ? isLitmusMode
+                          ? "Stop Test"
+                          : "Test Liquid"
+                        : isAnyFilterPaper(selectedObject.name)
+                        ? isFilterFolded
+                          ? "Unfold Paper"
+                          : "Fold Paper"
+                        : "Fill Beaker"}
+                    </button>
+                  </>
+                )}
               </>
             ) : (
               <>

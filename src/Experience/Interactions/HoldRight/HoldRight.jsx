@@ -130,9 +130,15 @@ const HoldRight = ({ modeldata }) => {
       object.name === "main-testube-01" ||
       object.name === "main-testube-02" ||
       object.name === "main-testube-03"
-    ) {
+    ) 
+    {
       object.scale.set(1.8, 1.8, 1.8)
     } 
+    else if(object.name === "main-filter-paper"){
+      object.scale.set(1.3, 1.3, 1.3);
+      object.rotation.x = Math.PI / 3;
+      object.rotation.z = -2
+    }
     else {
       object.scale.set(1, 1, 1)
 }

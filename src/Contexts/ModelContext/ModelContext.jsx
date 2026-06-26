@@ -17,6 +17,8 @@ export const ModelProvider = ({ children }) => {
   const testube01Ref = useRef(null);
   const testube02Ref = useRef(null);
   const testube03Ref = useRef(null);
+  const filterPaperRef = useRef(null);
+  const filterFoldedPaperRef = useRef(null);
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -36,7 +38,8 @@ export const ModelProvider = ({ children }) => {
         normalBeakerLiquidRef,conicalBeakerLiquidRef,
         spoonRef,saltRef,
         redLitmusRef,blueLitmusRef,
-        testube01Ref,testube02Ref,testube03Ref
+        testube01Ref,testube02Ref,testube03Ref,
+        filterPaperRef,filterFoldedPaperRef
       }}
     >
       {children}

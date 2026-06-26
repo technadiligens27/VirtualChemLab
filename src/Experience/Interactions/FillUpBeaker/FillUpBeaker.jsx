@@ -51,7 +51,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     if (beakerName.includes("normal-beaker")) {
       amountRef.current = Number(fillData.amount) * 0.55
     } else if (beakerName.includes("Conical-Flask")) {
-      amountRef.current = Number(fillData.amount) * 0.15
+      amountRef.current = Number(fillData.amount) * 2
     } else if(beakerName.includes("testube")) {
       amountRef.current = Number(fillData.amount) * 1.2
     }else{
@@ -65,7 +65,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
   useFrame((state, delta) => {
     liquidMeshesRef.current.forEach((mesh) => {
       mesh.scale.y = Math.min(
-        mesh.scale.y + 25 * delta,
+        mesh.scale.y + 45 * delta,
         amountRef.current
       )
     })

@@ -7,12 +7,18 @@ import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 import PouringMode from "../PouringMode/PouringMode"
 import StirMode from "../StirMode/StirMode"
 import LitmusMode from "../LitmusMode/LitmusMode"
+import FoldFilter from "../FoldFilter/FoldFilter"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
 const HoldLeft = ({ modeldata }) => {
 
   const {isFillUpBeaker,selectedLeftHand,
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
-    selectedRightHand,setPouredFromLeft,rightBeakerFillData} = useContext(InteractionContext)
+    selectedRightHand,setPouredFromLeft,rightBeakerFillData,
+    isFilterFolded,setIsFilterFolded
+  } = useContext(InteractionContext)
+
+  const {filterFoldedPaperRef,filterPaperRef} = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -113,6 +119,11 @@ const HoldLeft = ({ modeldata }) => {
     ) {
       object.scale.set(1.8, 1.8, 1.8)
     } 
+    else if(object.name === "main-filter-paper"){
+      object.scale.set(1.3, 1.3, 1.3);
+      object.rotation.x = Math.PI / 3;
+      object.rotation.z = 2
+    }
     else {
       object.scale.set(1, 1, 1)
     }
@@ -130,8 +141,8 @@ const HoldLeft = ({ modeldata }) => {
   })
 
   useEffect(()=>{
-    console.log("stirMode:",isStirMode)
-  },[isStirMode])
+    console.log("selectedLeftHand",selectedLeftHand)
+  },[selectedLeftHand])
 const isLitmus = (name) => name?.toLowerCase().includes("litmus")
   return (
     <>
@@ -165,6 +176,15 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
           beakerFillData={rightBeakerFillData}
         />
       )}
+
+      {isFilterFolded && (
+        <FoldFilter
+          filterPaperRef={filterPaperRef}
+          filterFoldedPaperRef={filterFoldedPaperRef}
+        />
+      )}
+
+
     </>
   )
 }

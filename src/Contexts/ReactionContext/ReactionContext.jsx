@@ -9,6 +9,7 @@ export const ReactionProvider = ({ children }) => {
    const [isNaohUniversal,setIsNaohUniversal] = useState(false);
    const [isStarchIodine,setIsStarchIodine] = useState(false);
    const [isCopperSulfateNaoh,setIsCopperSulfateNaoh] = useState(false);
+   const [isAcidBase,setIsAcidBase] = useState(false)
    
    const stirrLiquidRef = useRef(null)
 
@@ -20,7 +21,8 @@ export const ReactionProvider = ({ children }) => {
         isHclUniversal, setIsHclUniversal,
         isNaohUniversal,setIsNaohUniversal,
         isStarchIodine,setIsStarchIodine,
-        isCopperSulfateNaoh,setIsCopperSulfateNaoh
+        isCopperSulfateNaoh,setIsCopperSulfateNaoh,
+        isAcidBase,setIsAcidBase
       }}
     >
       {children}

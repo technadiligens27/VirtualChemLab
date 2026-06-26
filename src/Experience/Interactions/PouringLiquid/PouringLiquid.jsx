@@ -45,16 +45,26 @@ const PouringLiquid = ({ modelRef, hand, isPouring}) => {
   }, [modelRef])
 
   useEffect(() => {
-  if (hand === "left" && isPouring) {
-    console.log("Pouring from left side")
-    setPouredFromLeft(true)
-  }
+    if (hand === "left") {
+      if (isPouring) {
+        console.log("Pouring from left side")
+        setPouredFromLeft(true)
+        setPouredFromRight(false)
+      } else {
+        setPouredFromLeft(false)
+      }
+    }
 
-  if (hand === "right" && isPouring) {
-    console.log("Pouring from right side")
-    setPouredFromRight(true)
-  }
-}, [hand, isPouring, setPouredFromLeft,setPouredFromRight])
+    if (hand === "right") {
+      if (isPouring) {
+        console.log("Pouring from right side")
+        setPouredFromRight(true)
+        setPouredFromLeft(false)
+      } else {
+        setPouredFromRight(false)
+      }
+    }
+  }, [hand, isPouring, setPouredFromLeft, setPouredFromRight])
 
   useEffect(() => {
     if (!pourLiquidRef.current || !fillData?.color) return

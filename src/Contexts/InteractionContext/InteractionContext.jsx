@@ -41,6 +41,8 @@ export const InteractionProvider = ({ children }) => {
 
   const [isLitmusMode,setIsLitmusMode] = useState(false);
 
+  const [isFilterFolded,setIsFilterFolded] = useState(false)
+
 
   return (
     <InteractionContext.Provider
@@ -64,7 +66,8 @@ export const InteractionProvider = ({ children }) => {
         pouredFromRight,setPouredFromRight,
         isStirMode,setIsStirMode,
         isStirring,setIsStirring,
-        isLitmusMode,setIsLitmusMode
+        isLitmusMode,setIsLitmusMode,
+        isFilterFolded,setIsFilterFolded        
       }}
     >
       {children}
