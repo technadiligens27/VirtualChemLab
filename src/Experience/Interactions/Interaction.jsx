@@ -9,6 +9,7 @@ import { InteractionContext } from "../../Contexts/InteractionContext/Interactio
 import { TransformControls } from "@react-three/drei";
 import PouringMode from "./PouringMode/PouringMode";
 import StirMode from "./StirMode/StirMode";
+import FilterFunnelController from "./FilterFunnelController/FilterFunnelController";
 
 const Interaction = () => {
   const {
@@ -24,7 +25,7 @@ const Interaction = () => {
       <ChairSlide/>
       <GlovesPut/>
       <ClickObject/>
-
+      <FilterFunnelController/>
 
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}

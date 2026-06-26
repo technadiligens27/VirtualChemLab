@@ -29,6 +29,9 @@ const ClickObject = () => {
 
     isFilterFolded,
     setIsFilterFolded,
+
+    isFilterInFunnel,
+    setIsFilterInFunnel
   } = useContext(InteractionContext)
 
   const {
@@ -47,6 +50,8 @@ const ClickObject = () => {
 
     filterPaperRef,
     filterFoldedPaperRef,
+
+    funnelRef
   } = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
@@ -105,6 +110,10 @@ const ClickObject = () => {
         name: "main-folded-paper",
         ref: filterFoldedPaperRef,
       },
+      {
+        name:'main-funnel',
+        ref:funnelRef
+      }
     ],
     [
       normalBeakerRef,
@@ -119,10 +128,13 @@ const ClickObject = () => {
       testube03Ref,
       filterPaperRef,
       filterFoldedPaperRef,
+      funnelRef
     ]
   )
 
-  const isSpoon = (name) => name === "main-spoon"
+  const isSpoon = (name) => name === "main-spoon";
+
+  const isFunnel = (name) => name === "main-funnel"
 
   const isLitmus = (name) => name?.toLowerCase().includes("litmus")
 
@@ -272,11 +284,7 @@ const ClickObject = () => {
 
     console.log("Place folded filter paper in funnel")
 
-    // Add your funnel placement logic here later.
-    // Example later:
-    // 1. find funnel point / funnel ref
-    // 2. move foldedPaper to funnel position
-    // 3. setSelectedLeftHand(null) or setSelectedRightHand(null)
+    setIsFilterInFunnel(true)
 
     if (hand === "left") {
       setSelectedLeftHand(null)
@@ -436,9 +444,12 @@ const ClickObject = () => {
     }
   }, [camera, gl, selectableObjects, selectedLeftHand, selectedRightHand])
 
-  useEffect(() => {
-    console.log("isFilterFolded:", isFilterFolded)
-  }, [isFilterFolded])
+  const removeFilterFromFunnel = () => {
+  setIsFilterInFunnel(false)
+  setSelectedObject(null)
+}
+
+
 
   return (
     <>
@@ -475,15 +486,46 @@ const ClickObject = () => {
                       Place in Funnel
                     </button>
                   </>
-                ) : (
+                ) : isFunnel(selectedObject.name) ? (
                   <>
                     <button
                       onClick={() => {
-                        keepBackOnTable(selectedObject.hand)
+                        console.log("Funnel mode")
+                        setSelectedObject(null)
                       }}
                     >
-                      Keep Back On Table
+                      Funnel Mode
                     </button>
+
+                    {isFilterInFunnel && (
+                      <button
+                        onClick={() => {
+                          removeFilterFromFunnel()
+                        }}
+                      >
+                        Remove Filter
+                      </button>
+                    )}
+
+                    {!isFilterInFunnel && (
+                      <button
+                        onClick={() => {
+                          keepBackOnTable(selectedObject.hand)
+                        }}
+                      >
+                        Keep Back On Table
+                      </button>
+                    )}
+                  </>
+                ) : (
+                    <>
+                      <button
+                        onClick={() => {
+                          keepBackOnTable(selectedObject.hand)
+                        }}
+                      >
+                        Keep Back On Table
+                      </button>
 
                     <button
                       onClick={() => {

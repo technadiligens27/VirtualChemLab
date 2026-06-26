@@ -9,16 +9,17 @@ import StirMode from "../StirMode/StirMode"
 import LitmusMode from "../LitmusMode/LitmusMode"
 import FoldFilter from "../FoldFilter/FoldFilter"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 
 const HoldLeft = ({ modeldata }) => {
 
   const {isFillUpBeaker,selectedLeftHand,
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
     selectedRightHand,setPouredFromLeft,rightBeakerFillData,
-    isFilterFolded,setIsFilterFolded
+    isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel
   } = useContext(InteractionContext)
 
-  const {filterFoldedPaperRef,filterPaperRef} = useContext(ModelContext)
+  const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -143,6 +144,10 @@ const HoldLeft = ({ modeldata }) => {
   useEffect(()=>{
     console.log("selectedLeftHand",selectedLeftHand)
   },[selectedLeftHand])
+
+  useEffect(()=>{
+    console.log("isFilterInFunnel:",isFilterInFunnel)
+  },[isFilterInFunnel])
 const isLitmus = (name) => name?.toLowerCase().includes("litmus")
   return (
     <>
@@ -183,6 +188,17 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
           filterFoldedPaperRef={filterFoldedPaperRef}
         />
       )}
+
+      {isFilterInFunnel &&
+        selectedLeftHand?.name === "main-folded-paper" &&
+        selectedRightHand?.name === "main-funnel" && (
+          <PlaceFilterFunnel
+            foldedFilterRef={filterFoldedPaperRef}
+            funnelRef={funnelRef}
+            hand={'left'}
+          />
+)}
+
 
 
     </>

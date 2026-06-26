@@ -1,22 +1,48 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
-import PouringLiquid from "../PouringLiquid/PouringLiquid"
+
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+
 import PouringMode from "../PouringMode/PouringMode"
 import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
 import StirMode from "../StirMode/StirMode"
 import LitmusMode from "../LitmusMode/LitmusMode"
+import FoldFilter from "../FoldFilter/FoldFilter"
+import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 
 const HoldRight = ({ modeldata }) => {
+  const {
+    isPouringMode,
+    setIsPouringMode,
 
-  const {isPouringMode,setIsPouringMode,isFillUpBeaker,
-    selectedRightHand,selectedLeftHand,isStirMode,isLitmusMode,leftBeakerFillData,rightBeakerFillData
+    isFillUpBeaker,
+    fillBeakerHand,
+
+    selectedRightHand,
+    selectedLeftHand,
+
+    isStirMode,
+    isLitmusMode,
+
+    leftBeakerFillData,
+    rightBeakerFillData,
+
+    isFilterFolded,
+    setIsFilterFolded,
+
+    isFilterInFunnel,
+    setIsFilterInFunnel,
   } = useContext(InteractionContext)
 
-  const { camera, gl,scene } = useThree()
+  const {
+    filterFoldedPaperRef,
+    filterPaperRef,
+    funnelRef,
+  } = useContext(ModelContext)
 
-
+  const { camera, gl, scene } = useThree()
 
   const defaultOffsetRef = useRef(new THREE.Vector3(4.5, -0.5, -5))
   const offsetRef = useRef(defaultOffsetRef.current.clone())
@@ -55,11 +81,7 @@ const HoldRight = ({ modeldata }) => {
       previousMouseRef.current = { x: e.clientX, y: e.clientY }
     }
 
-
-
     const handleWheel = (e) => {
-      // if (!isDraggingRef.current) return
-
       e.preventDefault()
 
       const maxRotation = Math.PI / 5
@@ -77,28 +99,16 @@ const HoldRight = ({ modeldata }) => {
       }
     }
 
-    // const handleMouseUp = () => {
-    //   if (!isDraggingRef.current) return
-
-    //   isDraggingRef.current = false
-    //   setIsPouring(false)
-    // }
-
     canvas.addEventListener("mousedown", handleMouseDown)
-    // window.addEventListener("mousemove", handleMouseMove)
-    // window.addEventListener("mouseup", handleMouseUp)
     window.addEventListener("wheel", handleWheel, {
       passive: false,
     })
 
     return () => {
       canvas.removeEventListener("mousedown", handleMouseDown)
-      // window.removeEventListener("mousemove", handleMouseMove)
-      // window.removeEventListener("mouseup", handleMouseUp)
       window.removeEventListener("wheel", handleWheel)
     }
   }, [camera, gl, modeldata])
-
 
   useEffect(() => {
     if (!modeldata?.ref?.current) return
@@ -118,81 +128,98 @@ const HoldRight = ({ modeldata }) => {
       object.rotation.x = Math.PI / 2
       object.rotation.z = Math.PI / 6
       object.scale.set(1, 1, 1)
-    } 
-    else if (
+    } else if (
       object.name === "main-red-litmus" ||
       object.name === "main-blue-litmus"
     ) {
       object.rotation.x = Math.PI / 2
       object.scale.set(1.5, 1.5, 1.5)
-    } 
-    else if (
+    } else if (
       object.name === "main-testube-01" ||
       object.name === "main-testube-02" ||
       object.name === "main-testube-03"
-    ) 
-    {
+    ) {
       object.scale.set(1.8, 1.8, 1.8)
-    } 
-    else if(object.name === "main-filter-paper"){
-      object.scale.set(1.3, 1.3, 1.3);
-      object.rotation.x = Math.PI / 3;
+    } else if (object.name === "main-filter-paper") {
+      object.scale.set(1.3, 1.3, 1.3)
+      object.rotation.x = Math.PI / 3
       object.rotation.z = -2
-    }
-    else {
+    } else {
       object.scale.set(1, 1, 1)
-}
-  
+    }
 
     object.visible = true
     object.frustumCulled = false
-
   }, [camera, scene, modeldata])
 
-    useFrame(() => {
-      if (!modeldata?.ref?.current) return
+  useFrame(() => {
+    if (!modeldata?.ref?.current) return
 
-      const object = modeldata.ref.current
+    const object = modeldata.ref.current
+  })
 
-      // object.rotation.set(0, 0, rotationZRef.current)
+  useEffect(() => {
+    console.log("selectedRightHand", selectedRightHand)
+  }, [selectedRightHand])
 
-      // const pouringAngle = Math.PI / 5
-      // const pouringNow = Math.abs(rotationZRef.current) >= pouringAngle
+  useEffect(() => {
+    console.log("isFilterInFunnel:", isFilterInFunnel)
+  }, [isFilterInFunnel])
 
-      // setIsPouring(pouringNow)
-
-    })
-
-    const isLitmus = (name) => name?.toLowerCase().includes("litmus")
+  const isLitmus = (name) => name?.toLowerCase().includes("litmus")
 
   return (
     <>
-      {isFillUpBeaker &&
-        
-        (
-          <FillUpBeaker
-            beakerRef={selectedRightHand.ref}
-            hand="right"
-          />
+      {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
+        <FillUpBeaker
+          beakerRef={selectedRightHand.ref}
+          hand="right"
+        />
+      )}
+
+      {!isStirMode &&
+        !isLitmusMode &&
+        selectedLeftHand &&
+        selectedRightHand && (
+          <PouringMode hand="right" />
         )}
 
-      {!isStirMode && !isLitmusMode && selectedLeftHand &&selectedRightHand && (<PouringMode hand={'right'}/>)}
-
-      {isStirMode && selectedLeftHand && selectedRightHand && 
-        <StirMode spoonRef={selectedRightHand.ref} beakerRef={selectedLeftHand.ref} hand={"right"}/>};
+      {isStirMode && selectedLeftHand && selectedRightHand && (
+        <StirMode
+          spoonRef={selectedRightHand.ref}
+          beakerRef={selectedLeftHand.ref}
+          hand="right"
+        />
+      )}
 
       {isLitmusMode &&
-          selectedLeftHand &&
-          selectedRightHand &&
-          isLitmus(selectedRightHand.name) && (
+        selectedLeftHand &&
+        selectedRightHand &&
+        isLitmus(selectedRightHand.name) && (
           <LitmusMode
             litmusRef={selectedRightHand.ref}
             beakerRef={selectedLeftHand.ref}
             hand="right"
             beakerFillData={leftBeakerFillData}
-    />
-  )}
+          />
+        )}
 
+      {isFilterFolded && (
+        <FoldFilter
+          filterPaperRef={filterPaperRef}
+          filterFoldedPaperRef={filterFoldedPaperRef}
+        />
+      )}
+
+      {isFilterInFunnel &&
+        selectedRightHand?.name === "main-folded-paper" &&
+        selectedLeftHand?.name === "main-funnel" && (
+          <PlaceFilterFunnel
+            foldedFilterRef={filterFoldedPaperRef}
+            funnelRef={funnelRef}
+            hand="right"
+          />
+        )}
     </>
   )
 }
