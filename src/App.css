@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+
 canvas{
   width: 100vw;
   height: 100vh;
   background-color: black;
   overflow-x: hidden;
   margin: 0%;  
+}
+
+p,h1,button{
+  font-family: 'Acme',sans-serif ;
 }

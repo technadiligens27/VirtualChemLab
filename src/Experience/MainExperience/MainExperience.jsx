@@ -10,11 +10,19 @@ import { InteractionContext } from '../../Contexts/InteractionContext/Interactio
 import { ModelContext } from '../../Contexts/ModelContext/ModelContext'
 import Interaction from '../Interactions/Interaction'
 import FillBeakerBox from '../Interactions/FillBeakerBox/FillBeakerBox'
+import { MainGuidelineContext } from '../../Contexts/MainGuidelineContext/MainGuidelineContext';
 
 const MainExperience = () => {
 
   const {hasSat} = useContext(InteractionContext);
-  const {isSitting} = useContext(ModelContext)
+  const {isSitting} = useContext(ModelContext);
+  const {isMainGuideline} = useContext(MainGuidelineContext)
+
+  useEffect(() => {
+    if (isMainGuideline) {
+      document.exitPointerLock?.()
+    }
+  }, [isMainGuideline])
   
   useEffect(() => {
     if (!isSitting) return
@@ -44,7 +52,7 @@ const MainExperience = () => {
       <Environment preset='sunset'/>
       <PlayerController/>
 
-      {!isSitting && <PointerLockControls/>}
+      {!isSitting && !isMainGuideline && <PointerLockControls/>}
       {/* <PointerLockControls/> */}
 
       <Interaction/>

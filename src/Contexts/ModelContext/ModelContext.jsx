@@ -25,7 +25,8 @@ export const ModelProvider = ({ children }) => {
   const conicalBeakerLiquidRef = useRef(null);
   const saltRef = useRef(null);
 
-  const [isSitting, setIsSitting] = useState(false);
+  const arrowChairRef = useRef(null);
+
   
 
   return (
@@ -35,13 +36,12 @@ export const ModelProvider = ({ children }) => {
         gogglesRef,
         gloverightRef,gloveleftRef,
         normalBeakerRef,conicalBeakerRef,roundBeakerRef,graduatedBeakerRef,
-        isSitting, setIsSitting,
         normalBeakerLiquidRef,conicalBeakerLiquidRef,
         spoonRef,saltRef,
         redLitmusRef,blueLitmusRef,
         testube01Ref,testube02Ref,testube03Ref,
         filterPaperRef,filterFoldedPaperRef,
-        funnelRef
+        funnelRef,arrowChairRef
       }}
     >
       {children}

@@ -7,8 +7,8 @@ import { ModelContext } from '../../../Contexts/ModelContext/ModelContext'
 import { InteractionContext } from '../../../Contexts/InteractionContext/InteractionContext'
 
 const ChairSit = () => {
-  const { chairRef, setIsSitting } = useContext(ModelContext)
-  const { hasSat } = useContext(InteractionContext)
+  const { chairRef  } = useContext(ModelContext)
+  const { hasSat,setIsSitting } = useContext(InteractionContext)
 
   const { camera } = useThree()
 

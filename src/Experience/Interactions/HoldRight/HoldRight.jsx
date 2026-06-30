@@ -11,12 +11,10 @@ import StirMode from "../StirMode/StirMode"
 import LitmusMode from "../LitmusMode/LitmusMode"
 import FoldFilter from "../FoldFilter/FoldFilter"
 import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
+import FunnelMode from "../FunnelMode/FunnelMode"
 
 const HoldRight = ({ modeldata }) => {
   const {
-    isPouringMode,
-    setIsPouringMode,
-
     isFillUpBeaker,
     fillBeakerHand,
 
@@ -27,13 +25,11 @@ const HoldRight = ({ modeldata }) => {
     isLitmusMode,
 
     leftBeakerFillData,
-    rightBeakerFillData,
 
     isFilterFolded,
-    setIsFilterFolded,
-
     isFilterInFunnel,
-    setIsFilterInFunnel,
+
+    isFunnelMode,
   } = useContext(InteractionContext)
 
   const {
@@ -45,7 +41,6 @@ const HoldRight = ({ modeldata }) => {
   const { camera, gl, scene } = useThree()
 
   const defaultOffsetRef = useRef(new THREE.Vector3(4.5, -0.5, -5))
-  const offsetRef = useRef(defaultOffsetRef.current.clone())
   const rotationZRef = useRef(0)
 
   const raycasterRef = useRef(new THREE.Raycaster())
@@ -82,6 +77,9 @@ const HoldRight = ({ modeldata }) => {
     }
 
     const handleWheel = (e) => {
+      // When Funnel Mode is active, wheel should only control FunnelMode Y height
+      if (isFunnelMode) return
+
       e.preventDefault()
 
       const maxRotation = Math.PI / 5
@@ -108,7 +106,7 @@ const HoldRight = ({ modeldata }) => {
       canvas.removeEventListener("mousedown", handleMouseDown)
       window.removeEventListener("wheel", handleWheel)
     }
-  }, [camera, gl, modeldata])
+  }, [camera, gl, modeldata, isFunnelMode])
 
   useEffect(() => {
     if (!modeldata?.ref?.current) return
@@ -156,6 +154,15 @@ const HoldRight = ({ modeldata }) => {
     if (!modeldata?.ref?.current) return
 
     const object = modeldata.ref.current
+
+    // Only rotate held object when not in Funnel Mode
+    if (!isFunnelMode) {
+      object.rotation.z = THREE.MathUtils.lerp(
+        object.rotation.z,
+        rotationZRef.current,
+        0.1
+      )
+    }
   })
 
   useEffect(() => {
@@ -179,6 +186,7 @@ const HoldRight = ({ modeldata }) => {
 
       {!isStirMode &&
         !isLitmusMode &&
+        !isFunnelMode &&
         selectedLeftHand &&
         selectedRightHand && (
           <PouringMode hand="right" />
@@ -220,6 +228,11 @@ const HoldRight = ({ modeldata }) => {
             hand="right"
           />
         )}
+
+{
+        isFunnelMode  &&
+        <FunnelMode beakerRef={selectedLeftHand.ref} funnelRef={funnelRef} hand='right'/>
+      }
     </>
   )
 }

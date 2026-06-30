@@ -1,0 +1,28 @@
+
+
+.lesson-container{
+    width: 30%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #FFE1C1 0%, #FFBD00 100%);
+    border-radius: 20px;
+
+}
+
+.lesson-btn-container{
+    display: flex;
+    flex-direction: column;
+    gap:20px
+}
+
+.lesson-btn-container button{
+    width: 200px;
+    height: 70px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 7px 35px rgba(0, 0, 0, 0.25);
+    font-size: 20px;
+}

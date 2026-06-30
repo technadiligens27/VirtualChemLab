@@ -59,7 +59,7 @@ const HoldLeft = ({ modeldata }) => {
     }
 
     const handleWheel = (e) => {
-      // if (!isDraggingRef.current) return
+      if (isFunnelMode) return
 
       e.preventDefault()
 
@@ -87,7 +87,7 @@ const HoldLeft = ({ modeldata }) => {
       // window.removeEventListener("mouseup", handleMouseUp)
       window.removeEventListener("wheel", handleWheel)
     }
-  }, [camera, gl, modeldata])
+  }, [camera, gl, modeldata, isFunnelMode])
 
   useEffect(() => {
     if (!modeldata?.ref?.current) return
@@ -160,8 +160,12 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         />
       )}
 
-      {!isStirMode && !isLitmusMode && selectedLeftHand && selectedRightHand && (
-        <PouringMode hand="left" />
+      {!isStirMode &&
+        !isLitmusMode &&
+        !isFunnelMode &&
+        selectedLeftHand &&
+        selectedRightHand && (
+          <PouringMode hand="left" />
       )}
 
       {isStirMode && selectedLeftHand && selectedRightHand && (
@@ -203,7 +207,7 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
 
       {
         isFunnelMode  &&
-        <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef}/>
+        <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
       }
 
 

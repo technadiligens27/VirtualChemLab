@@ -8,6 +8,8 @@ export const InteractionProvider = ({ children }) => {
   const gogglesOn = useRef(false);
   const glovesOn = useRef(false)
 
+  const [isSitting,setIsSitting] = useState(false)
+
   const [selectedLeftHand,setSelectedLeftHand] = useState(false);
   const [selectedRightHand,setSelectedRightHand] = useState(false);
 
@@ -71,7 +73,8 @@ export const InteractionProvider = ({ children }) => {
         isLitmusMode,setIsLitmusMode,
         isFilterFolded,setIsFilterFolded,
         isFilterInFunnel,setIsFilterInFunnel,
-        isFunnelMode,setIsFunnelMode
+        isFunnelMode,setIsFunnelMode,
+        isSitting,setIsSitting
       }}
     >
       {children}
