@@ -66,7 +66,7 @@ export const InteractionProvider = ({ children }) => {
         leftBeakerFillData, setLeftBeakerFillData,
         selectedBeakerBoxHand,setSelectedBeakerBoxHand,
         pouredFromLeft,setPouredFromLeft,
-        isReaction,setIsReaction,
+        isReaction,setIsReaction, 
         pouredFromRight,setPouredFromRight,
         isStirMode,setIsStirMode,
         isStirring,setIsStirring,

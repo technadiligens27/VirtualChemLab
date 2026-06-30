@@ -9,7 +9,11 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [showArrrowChair,setShowArrowChair] = useState(true);
 
-  const [setShowLessonMenu,showLessonMenu] = useState(false);
+  const [showLessonMenu, setShowLessonMenu] = useState(false)
+  const [selectedLesson,setSelectedLesson] = useState(null);
+
+  const [lessonStep,setLessonStep] = useState(null);
+  const [isLessonStart,setIsLessonStart] = useState(false)
 
   return (
     <MainGuidelineContext.Provider
@@ -18,7 +22,10 @@ export const MainGuidelineProvider = ({ children }) => {
         selectedMainGuideline,setSelectedMainGuideline,
         
         showArrrowChair,setShowArrowChair,
-        showLessonMenu,setShowLessonMenu
+        showLessonMenu,setShowLessonMenu,
+        selectedLesson,setSelectedLesson,
+        lessonStep,setLessonStep,
+        isLessonStart,setIsLessonStart
       }}
     >
       {children}

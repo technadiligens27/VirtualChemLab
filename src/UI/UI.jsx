@@ -3,6 +3,7 @@ import MainGuidelines from "./MainGuidelines/MainGuidelines"
 import { MainGuidelineContext } from "../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LessonMenu from "./LessonMenu/LessonMenu"
 import { InteractionContext } from "../Contexts/InteractionContext/InteractionContext"
+import LessonGuide from "./LessonGuide/LessonGuide"
 
 const mainContent = [
   {
@@ -37,11 +38,14 @@ const UI = () => {
 
   const {selectedMainGuideline,setSelectedMainGuideline,
     isMainGuideline,setIsMainGuideline,setShowArrowChair,showArrowChair,
-    setShowLessonMenu,showLessonMenu
+    setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep
   } = useContext(MainGuidelineContext)
 
   const {isSitting} = useContext(InteractionContext)
 
+  useEffect(()=>{
+    console.log("showLessonMenu:",showLessonMenu)
+  },[showLessonMenu])
 
 
 
@@ -85,9 +89,12 @@ const UI = () => {
       mainContent={mainContent[3]} 
       onButton1Click={()=>{startLab();setShowArrowChair(true);}}/>} 
 
-      {selectedMainGuideline === 5 && showLessonMenu && isSitting &&
+      {selectedMainGuideline === 5  && isSitting &&
         <LessonMenu/>      
       }
+
+      {isLessonStart && lessonStep===1 && <LessonGuide title={"Lesson Overview"} text={"In this experiment, hydrochloric acid is mixed with universal indicator. The indicator changes the solution to a red or orange-red color, showing that the solution is acidic. This helps students understand how indicators are used to identify acids in the lab."}/>}
+
 
 
     </>
