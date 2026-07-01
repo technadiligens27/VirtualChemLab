@@ -11,6 +11,7 @@ import FoldFilter from "../FoldFilter/FoldFilter"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 import FunnelMode from "../FunnelMode/FunnelMode"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const HoldLeft = ({ modeldata }) => {
 
@@ -22,6 +23,7 @@ const HoldLeft = ({ modeldata }) => {
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
+  const {lessonStep,setLessonStep,isMainGuideline} = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -32,6 +34,12 @@ const HoldLeft = ({ modeldata }) => {
   const raycasterRef = useRef(new THREE.Raycaster())
   const mouseRef = useRef(new THREE.Vector2())
   const isDraggingRef = useRef(false)
+
+  useEffect(()=>{
+    if(lessonStep===3 && isMainGuideline){
+      setLessonStep(4)
+    }
+  },[lessonStep])
 
 
 

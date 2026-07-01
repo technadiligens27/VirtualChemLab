@@ -1,6 +1,7 @@
 import "./FillBeakerBox.css"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const FillBeakerBox = () => {
   const {
@@ -10,6 +11,8 @@ const FillBeakerBox = () => {
     setLeftBeakerFillData,
     setRightBeakerFillData,
   } = useContext(InteractionContext)
+
+  const {setSelectedLesson,selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const [selectedAcidData, setSelectedAcidData] = useState({
     name: "",
@@ -51,6 +54,22 @@ const FillBeakerBox = () => {
     setIsFillBeakerBoxOpen(false)
     setIsFillUpBeaker(true)
   }
+
+
+
+  useEffect(()=>{
+    if(selectedLesson===2 && lessonStep ===4 ){
+      console.log('lessonStep:',lessonStep)
+      setLessonStep(5)
+    }
+  },[selectedLesson,lessonStep])
+
+
+   useEffect(()=>{
+    if(selectedLesson==2 && lessonStep ===7 ){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])
 
   return (
     <div className="fill-dialog-overlay">

@@ -12,6 +12,7 @@ import LitmusMode from "../LitmusMode/LitmusMode"
 import FoldFilter from "../FoldFilter/FoldFilter"
 import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 import FunnelMode from "../FunnelMode/FunnelMode"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const HoldRight = ({ modeldata }) => {
   const {
@@ -37,6 +38,8 @@ const HoldRight = ({ modeldata }) => {
     filterPaperRef,
     funnelRef,
   } = useContext(ModelContext)
+
+  const {lessonStep,isMainGuideline,setLessonStep} = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -165,15 +168,15 @@ const HoldRight = ({ modeldata }) => {
     }
   })
 
-  useEffect(() => {
-    console.log("selectedRightHand", selectedRightHand)
-  }, [selectedRightHand])
 
-  useEffect(() => {
-    console.log("isFilterInFunnel:", isFilterInFunnel)
-  }, [isFilterInFunnel])
 
-  const isLitmus = (name) => name?.toLowerCase().includes("litmus")
+  const isLitmus = (name) => name?.toLowerCase().includes("litmus");
+
+  useEffect(()=>{
+    if(lessonStep===6 && isMainGuideline){
+      setLessonStep(7)
+    }
+  },[lessonStep,isMainGuideline])
 
   return (
     <>
