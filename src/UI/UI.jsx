@@ -4,6 +4,9 @@ import { MainGuidelineContext } from "../Contexts/MainGuidelineContext/MainGuide
 import LessonMenu from "./LessonMenu/LessonMenu"
 import { InteractionContext } from "../Contexts/InteractionContext/InteractionContext"
 import LessonGuide from "./LessonGuide/LessonGuide"
+import AcidInidicatorTest from "./AllLessons/AcidInidicatorTest/AcidInidicatorTest"
+import AllArrows from "./AllArrows/AllArrows"
+import AllDialogBox from "./AllDialogBox/AllDialogBox"
 
 const mainContent = [
   {
@@ -38,7 +41,8 @@ const UI = () => {
 
   const {selectedMainGuideline,setSelectedMainGuideline,
     isMainGuideline,setIsMainGuideline,setShowArrowChair,showArrowChair,
-    setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep
+    setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep,
+    selectedLesson,setSelectedLesson
   } = useContext(MainGuidelineContext)
 
   const {isSitting} = useContext(InteractionContext)
@@ -59,18 +63,17 @@ const UI = () => {
 
   if(!MainGuidelineContext) return null
 
-  useEffect(()=>{
-    if(selectedMainGuideline!==5){
-      setShowArrowChair(false)
-    }
-  },[showArrowChair])
+  useEffect(() => {
+  if (isSitting) {
+    setShowArrowChair(false)
+  }
+}, [isSitting, setShowArrowChair])
 
   return (
     <>
       {selectedMainGuideline === 1 && <MainGuidelines 
       mainContent={mainContent[0]} 
       onButton1Click={() => setSelectedMainGuideline(2)}
-      
       />}
 
       {selectedMainGuideline === 2 && <MainGuidelines 
@@ -93,9 +96,9 @@ const UI = () => {
         <LessonMenu/>      
       }
 
-      {isLessonStart && lessonStep===1 && <LessonGuide title={"Lesson Overview"} text={"In this experiment, hydrochloric acid is mixed with universal indicator. The indicator changes the solution to a red or orange-red color, showing that the solution is acidic. This helps students understand how indicators are used to identify acids in the lab."}/>}
+      {isLessonStart && selectedLesson===2 && <AcidInidicatorTest/> }
 
-
+      <AllDialogBox/>
 
     </>
   )

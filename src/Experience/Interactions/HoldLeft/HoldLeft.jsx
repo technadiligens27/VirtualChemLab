@@ -21,7 +21,7 @@ const HoldLeft = ({ modeldata }) => {
     isFunnelMode,setIsFunnelMode
   } = useContext(InteractionContext)
 
-  const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext)
+  const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
 
   const { camera, gl, scene } = useThree()
 
@@ -32,6 +32,8 @@ const HoldLeft = ({ modeldata }) => {
   const raycasterRef = useRef(new THREE.Raycaster())
   const mouseRef = useRef(new THREE.Vector2())
   const isDraggingRef = useRef(false)
+
+
 
   useEffect(() => {
     const canvas = gl.domElement

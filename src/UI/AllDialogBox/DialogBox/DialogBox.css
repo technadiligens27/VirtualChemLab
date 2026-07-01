@@ -1,0 +1,23 @@
+.dialog-box-container {
+  position: fixed;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  height: 100px;
+  background: linear-gradient( #FFBD00 100%);
+}
+
+.dialog-box-inner-container{
+    width: 90%;
+    height: 80%;
+    background-color: #FCFCEA;
+    border-radius: 16px;
+}

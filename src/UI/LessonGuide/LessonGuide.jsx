@@ -2,13 +2,11 @@ import { useContext } from 'react'
 import './LessonGuide.css'
 import { MainGuidelineContext } from '../../Contexts/MainGuidelineContext/MainGuidelineContext'
 
-const LessonGuide = ({title,text,button})=>{
+const LessonGuide = ({title,text,onButton1})=>{
 
     const {isLessonStart,setIsLessonStart} = useContext(MainGuidelineContext)
 
-    const AcidIndicatorTest=[{
-        step1: "In this experiment, hydrochloric acid is mixed with universal indicator. The indicator changes the solution to a red or orange-red color, showing that the solution is acidic. This helps students understand how indicators are used to identify acids in the lab."
-    }]
+
 
 
     return(
@@ -21,7 +19,7 @@ const LessonGuide = ({title,text,button})=>{
                    <p>{text}</p> 
                 </div>
                 <div className='main-guidelines-btn-container'>
-                    <button className='main-guidelines-btn'>Continue</button>
+                    <button onClick={onButton1} className='main-guidelines-btn'>Continue</button>
                 </div>
             </div>
         </div>

@@ -1,32 +1,25 @@
-import { useContext, useEffect, useRef } from "react"
-import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { ModelContext } from "../../Contexts/ModelContext/ModelContext"
+import { useEffect, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 
-const ArrowGuides = () => {
-  const { arrowChairRef } = useContext(ModelContext)
-  const { showArrrowChair } = useContext(MainGuidelineContext)
-
-  const originalY = useRef(null)
+const ArrowGuides = ({ arrowRef,speed,height,showStatus }) => {
+  const startY = useRef(0)
 
   useEffect(() => {
-    if (!arrowChairRef?.current) return
+    if (!arrowRef?.current) return
 
-    arrowChairRef.current.visible = showArrrowChair
+    arrowRef.current.visible = true
+    startY.current = arrowRef.current.position.y
 
-    if (originalY.current === null) {
-      originalY.current = arrowChairRef.current.position.y
+    return()=>{
+       arrowRef.current.visible = false
     }
-  }, [showArrrowChair, arrowChairRef])
+  }, [arrowRef])
 
   useFrame((state) => {
-    if (!arrowChairRef?.current) return
-    if (!showArrrowChair) return
+    if (!arrowRef?.current) return
 
-    const time = state.clock.elapsedTime
-
-    arrowChairRef.current.position.y =
-      originalY.current + Math.sin(time * 3) * 2
+    arrowRef.current.position.y =
+      startY.current + Math.sin(state.clock.elapsedTime * speed) * height
   })
 
   return null

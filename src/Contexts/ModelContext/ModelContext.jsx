@@ -26,6 +26,7 @@ export const ModelProvider = ({ children }) => {
   const saltRef = useRef(null);
 
   const arrowChairRef = useRef(null);
+  const arrowNormalBeakerRef = useRef(null)
 
   
 
@@ -41,7 +42,9 @@ export const ModelProvider = ({ children }) => {
         redLitmusRef,blueLitmusRef,
         testube01Ref,testube02Ref,testube03Ref,
         filterPaperRef,filterFoldedPaperRef,
-        funnelRef,arrowChairRef
+        funnelRef,
+        
+        arrowChairRef,arrowNormalBeakerRef
       }}
     >
       {children}

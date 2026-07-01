@@ -10,7 +10,7 @@ import { TransformControls } from "@react-three/drei";
 import PouringMode from "./PouringMode/PouringMode";
 import StirMode from "./StirMode/StirMode";
 import FilterFunnelController from "./FilterFunnelController/FilterFunnelController";
-import ArrowGuides from "../../UI/ArrowGuides/ArrowGuides";
+import AllArrows from "../../UI/AllArrows/AllArrows";
 
 const Interaction = () => {
   const {
@@ -27,8 +27,7 @@ const Interaction = () => {
       <GlovesPut/>
       <ClickObject/>
       <FilterFunnelController/>
-      <ArrowGuides/>
-
+      <AllArrows/>
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
 

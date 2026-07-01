@@ -85,14 +85,15 @@ useEffect(() => {
   if (!show) return null
 
   return (
-    <Message
-      position={[
-        gogglePosition.current.x,
-        gogglePosition.current.y + 1,
-        gogglePosition.current.z,
-      ]}
-      message="Press G to Put"
-    />
+    // <Message
+    //   position={[
+    //     gogglePosition.current.x,
+    //     gogglePosition.current.y + 1,
+    //     gogglePosition.current.z,
+    //   ]}
+    //   message="Press G to Put"
+    // />
+    null
   )
 }
 

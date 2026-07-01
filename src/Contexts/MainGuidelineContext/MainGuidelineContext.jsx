@@ -8,6 +8,7 @@ export const MainGuidelineProvider = ({ children }) => {
   const [selectedMainGuideline,setSelectedMainGuideline] = useState(1);
 
   const [showArrrowChair,setShowArrowChair] = useState(true);
+  const [showNormalBeakerArrow,setShowNormalBeakerArrow] = useState(false)
 
   const [showLessonMenu, setShowLessonMenu] = useState(false)
   const [selectedLesson,setSelectedLesson] = useState(null);
@@ -25,7 +26,8 @@ export const MainGuidelineProvider = ({ children }) => {
         showLessonMenu,setShowLessonMenu,
         selectedLesson,setSelectedLesson,
         lessonStep,setLessonStep,
-        isLessonStart,setIsLessonStart
+        isLessonStart,setIsLessonStart,
+        showNormalBeakerArrow,setShowNormalBeakerArrow
       }}
     >
       {children}
