@@ -10,7 +10,7 @@ const AllErrors = ()=>{
         <>
 
             {showErrorMsgNo ===1 && <ErrorMsg text={'Pls pick with left hand'}/> }
-            
+            {showErrorMsgNo ===2 && <ErrorMsg text={'Pls Select HCL and then 50 ml'}/> }
         </>
     )
 }

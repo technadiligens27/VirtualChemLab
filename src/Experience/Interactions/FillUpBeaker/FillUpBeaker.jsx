@@ -27,6 +27,10 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     }
   }, [lessonStep])
 
+  useEffect(()=>{
+    
+  })
+
   useEffect(() => {
     if (!beakerRef?.current) return
     if (!fillData?.amount) return

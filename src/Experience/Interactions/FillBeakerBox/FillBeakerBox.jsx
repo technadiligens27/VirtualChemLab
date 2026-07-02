@@ -12,7 +12,7 @@ const FillBeakerBox = () => {
     setRightBeakerFillData,
   } = useContext(InteractionContext)
 
-  const {setSelectedLesson,selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {setSelectedLesson,selectedLesson,lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext)
 
   const [selectedAcidData, setSelectedAcidData] = useState({
     name: "",
@@ -35,34 +35,48 @@ const FillBeakerBox = () => {
 
   const amounts = [10, 25, 50, 100]
 
-  const handleConfirm = () => {
-    if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) 
-    return
+const handleConfirm = () => {
+  if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) return
 
-    const fillData = {
-      name: selectedAcidData.name,
-      color: selectedAcidData.color,
-      amount: selectedAmount,
+  if (selectedLesson === 2 && lessonStep === 4) {
+    const isCorrectChemical =
+      selectedAcidData.name === "Hydrochloric Acid (HCl)"
+
+    const isCorrectAmount = selectedAmount === 50
+
+    if (!isCorrectChemical || !isCorrectAmount) {
+      setShowErrorMsgNo(2)
+      return
     }
 
-    if (fillBeakerHand === "left") {
-      setLeftBeakerFillData(fillData)
-    } else if (fillBeakerHand === "right") {
-      setRightBeakerFillData(fillData)
-    }
-
-    setIsFillBeakerBoxOpen(false)
-    setIsFillUpBeaker(true)
+    console.log("correct HCL and 50ml selected")
+    setLessonStep(5)
   }
 
+  const fillData = {
+    name: selectedAcidData.name,
+    color: selectedAcidData.color,
+    amount: selectedAmount,
+  }
+
+  if (fillBeakerHand === "left") {
+    setLeftBeakerFillData(fillData)
+  } else if (fillBeakerHand === "right") {
+    setRightBeakerFillData(fillData)
+  }
+
+  setIsFillBeakerBoxOpen(false)
+  setIsFillUpBeaker(true)
+}
 
 
-  useEffect(()=>{
-    if(selectedLesson===2 && lessonStep ===4 ){
-      console.log('lessonStep:',lessonStep)
-      setLessonStep(5)
-    }
-  },[selectedLesson,lessonStep])
+
+  // useEffect(()=>{
+  //   if(selectedLesson===2 && lessonStep ===4 ){
+  //     console.log('lessonStep:',lessonStep)
+  //     setLessonStep(5)
+  //   }
+  // },[selectedLesson,lessonStep])
 
 
    useEffect(()=>{
