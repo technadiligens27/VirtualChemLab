@@ -6,7 +6,8 @@ import { InteractionContext } from "../Contexts/InteractionContext/InteractionCo
 import LessonGuide from "./LessonGuide/LessonGuide"
 import AcidInidicatorTest from "./AllLessons/AcidInidicatorTest/AcidInidicatorTest"
 import AllArrows from "./AllArrows/AllArrows"
-import AllDialogBox from "./AllDialogBox/AllDialogBox"
+import AllErrors from "./AllErrors/AllErrors"
+import DialogBox from "./AllDialogBox/DialogBox/DialogBox"
 
 const mainContent = [
   {
@@ -42,7 +43,7 @@ const UI = () => {
   const {selectedMainGuideline,setSelectedMainGuideline,
     isMainGuideline,setIsMainGuideline,setShowArrowChair,showArrowChair,
     setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep,
-    selectedLesson,setSelectedLesson
+    selectedLesson,setSelectedLesson,showArrrowChair
   } = useContext(MainGuidelineContext)
 
   const {isSitting} = useContext(InteractionContext)
@@ -92,14 +93,18 @@ const UI = () => {
       mainContent={mainContent[3]} 
       onButton1Click={()=>{startLab();setShowArrowChair(true);}}/>} 
 
+      {selectedMainGuideline === 5 
+        && showArrrowChair 
+        && <DialogBox text={"Walk over to the chair indicated by the arrow"}/>}
+
       {selectedMainGuideline === 5  && isSitting &&
         <LessonMenu/>      
       }
+      
 
       {isLessonStart && selectedLesson===2 && <AcidInidicatorTest/> }
 
-      <AllDialogBox/>
-
+      <AllErrors/>
     </>
   )
 }

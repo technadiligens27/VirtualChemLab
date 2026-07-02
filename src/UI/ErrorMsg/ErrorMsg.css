@@ -1,0 +1,21 @@
+.error-msg {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  width: 50%;
+  height: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+
+  background: red;
+  color: white;
+  font-weight: 600;
+}

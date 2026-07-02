@@ -14,7 +14,9 @@ export const MainGuidelineProvider = ({ children }) => {
   const [selectedLesson,setSelectedLesson] = useState(null);
 
   const [lessonStep,setLessonStep] = useState(null);
-  const [isLessonStart,setIsLessonStart] = useState(false)
+  const [isLessonStart,setIsLessonStart] = useState(false);
+
+  const [showErrorMsgNo,setShowErrorMsgNo] = useState(0)
 
   return (
     <MainGuidelineContext.Provider
@@ -27,7 +29,8 @@ export const MainGuidelineProvider = ({ children }) => {
         selectedLesson,setSelectedLesson,
         lessonStep,setLessonStep,
         isLessonStart,setIsLessonStart,
-        showNormalBeakerArrow,setShowNormalBeakerArrow
+        showNormalBeakerArrow,setShowNormalBeakerArrow,
+        showErrorMsgNo,setShowErrorMsgNo
       }}
     >
       {children}

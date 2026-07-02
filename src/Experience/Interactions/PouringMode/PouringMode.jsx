@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
 import * as THREE from "three"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -12,6 +13,8 @@ const PouringMode = ({ hand }) => {
     selectedLeftHand,
     setPouredFromLeft,
   } = useContext(InteractionContext)
+
+  const {lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const emptyRef = useRef(null)
   const rotationZRef = useRef(0)
@@ -179,6 +182,12 @@ const PouringMode = ({ hand }) => {
     }
   }, [activeObject])
 
+  // useEffect(()=>{
+  //   if(lessonStep === 9){
+  //     setLessonStep(10)
+  //   }
+  // },[lessonStep])
+
   useFrame(() => {
     if (!activeObject) return
 
@@ -192,6 +201,10 @@ const PouringMode = ({ hand }) => {
 
       if (pouringNow && hand === "right") {
         setPouredFromLeft?.(true)
+
+        if (lessonStep === 9) {
+          setLessonStep(10)
+        }
       }
     }
   })

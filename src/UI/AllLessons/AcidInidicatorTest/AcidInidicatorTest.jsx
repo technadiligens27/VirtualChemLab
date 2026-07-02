@@ -31,7 +31,10 @@ const AcidInidicatorTest = ()=>{
 
         step7 : "Select universal inciatoru solution 50 ml",
 
-        step8 : "Press P to got puring mode"
+        step8 : "Press P to got puring mode",
+        step9 : "Scroll mouse to pout and see the reaction happen",
+
+        step10:"You can see the liquid turning to red"
 
     },
     ]
@@ -66,6 +69,10 @@ const AcidInidicatorTest = ()=>{
             />} 
 
             {
+                lessonStep ===3 && <DialogBox text={"Pick Up Beaker"}/>
+            }     
+
+            {
                 lessonStep ===4 && 
                 <DialogBox text={AcidIndicatorTest[0].step3}/>
             }
@@ -92,8 +99,17 @@ const AcidInidicatorTest = ()=>{
             {
                 lessonStep===9  &&
                 <DialogBox text={AcidIndicatorTest[0].step8}/>
-            }                 
+            } 
 
+            {
+                lessonStep ===10 && 
+                <DialogBox text={AcidIndicatorTest[0].step9}/>
+            } 
+
+            {
+                lessonStep ===11 && 
+                <DialogBox text={AcidIndicatorTest[0].step10}/>
+            }     
         </>
     )
 }

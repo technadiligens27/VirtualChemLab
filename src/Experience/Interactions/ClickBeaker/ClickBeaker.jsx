@@ -7,6 +7,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import HoldLeft from "../HoldLeft/HoldLeft"
 import HoldRight from "../HoldRight/HoldRight"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const ClickObject = () => {
   const {
@@ -56,6 +57,8 @@ const ClickObject = () => {
 
     funnelRef,
   } = useContext(ModelContext)
+
+  const { lessonStep,showErrorMsgNo,setShowErrorMsgNo,isMainGuideline } = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -544,6 +547,29 @@ const ClickObject = () => {
     selectedRightHand,
   ])
 
+  const validateRightHandPick = (objectName) => {
+    if (!isMainGuideline) return true
+
+    if (lessonStep === 3 ) {
+      setShowErrorMsgNo(1)
+      return false
+    }
+
+    return true
+  }
+
+  const validateLeftHandPick = (objectName) => {
+    if (!isMainGuideline) return true
+
+    if (lessonStep === 3 && objectName !== "main-normal-beaker") {
+      setShowErrorMsgNo(1)
+      return false
+    }
+
+    return true
+  }
+
+
   return (
     <>
       {selectedObject && !isFillBeakerBoxOpen && (
@@ -681,6 +707,8 @@ const ClickObject = () => {
                 {!selectedLeftHand && (
                   <button
                     onClick={() => {
+                      if (!validateLeftHandPick(selectedObject.name)) return
+
                       setSelectedLeftHand({
                         hand: "left",
                         name: selectedObject.name,
@@ -702,6 +730,8 @@ const ClickObject = () => {
                 {!selectedRightHand && (
                   <button
                     onClick={() => {
+                      if (!validateRightHandPick(selectedObject.name)) return
+
                       setSelectedRightHand({
                         hand: "right",
                         name: selectedObject.name,

@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const Reaction = () => {
   const {
@@ -13,6 +14,8 @@ const Reaction = () => {
     selectedLeftHand,
     selectedRightHand,
   } = useContext(InteractionContext)
+
+  const {lessonStep,setLessonStep} = useContext(MainGuidelineContext);
 
   const {
     isSaltWaterReaction,
@@ -191,6 +194,10 @@ const Reaction = () => {
       mat.color.lerp(targetColorRef.current, delta * 0.8)
       mat.needsUpdate = true
     })
+
+    if(lessonStep===10){
+      setLessonStep(11)
+    }
   })
 
   return null
