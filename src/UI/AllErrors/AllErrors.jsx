@@ -11,6 +11,9 @@ const AllErrors = ()=>{
 
             {showErrorMsgNo ===1 && <ErrorMsg text={'Pls pick with left hand'}/> }
             {showErrorMsgNo ===2 && <ErrorMsg text={'Pls Select HCL and then 50 ml'}/> }
+            {showErrorMsgNo ===3 && <ErrorMsg text={'Press P for pouring mode'}/> }
+            {showErrorMsgNo == 4 && <ErrorMsg text={'Cant do that right now'}/>}
+            {showErrorMsgNo == 5 && <ErrorMsg text={'Pls Select Uniersal Indicatoe and then 50 ml'}/>}
         </>
     )
 }

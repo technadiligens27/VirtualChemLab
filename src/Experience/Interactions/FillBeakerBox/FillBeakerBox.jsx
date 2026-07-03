@@ -35,39 +35,61 @@ const FillBeakerBox = () => {
 
   const amounts = [10, 25, 50, 100]
 
-const handleConfirm = () => {
-  if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) return
+  useEffect(()=>{
+    if(lessonStep === 4){
+      setLessonStep(5)
+    }
+  },[lessonStep])
 
-  if (selectedLesson === 2 && lessonStep === 4) {
-    const isCorrectChemical =
-      selectedAcidData.name === "Hydrochloric Acid (HCl)"
+  const handleConfirm = () => {
+    if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) return
 
-    const isCorrectAmount = selectedAmount === 50
+    const amount = Number(selectedAmount)
 
-    if (!isCorrectChemical || !isCorrectAmount) {
-      setShowErrorMsgNo(2)
-      return
+    const checkFill = (chemical, correctAmount, nextStep) => {
+      const isCorrectChemical = selectedAcidData.name === chemical
+      const isCorrectAmount = amount === correctAmount
+
+      if (!isCorrectChemical || !isCorrectAmount) {
+        setShowErrorMsgNo(2)
+        return false
+      }
+
+      setLessonStep(nextStep)
+      return true
     }
 
-    console.log("correct HCL and 50ml selected")
-    setLessonStep(5)
-  }
+    if (selectedLesson === 2 && lessonStep === 5) {
+      if (!checkFill("Hydrochloric Acid (HCl)", 50, 6)) return
+    }
 
-  const fillData = {
-    name: selectedAcidData.name,
-    color: selectedAcidData.color,
-    amount: selectedAmount,
-  }
+    if (selectedLesson === 2 && lessonStep === 8) {
+      if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
+    }
 
-  if (fillBeakerHand === "left") {
-    setLeftBeakerFillData(fillData)
-  } else if (fillBeakerHand === "right") {
-    setRightBeakerFillData(fillData)
-  }
+    if (selectedLesson === 6 && lessonStep === 5) {
+      if (!checkFill("Hydrochloric Acid (HCl)", 50, 6)) return
+    }
 
-  setIsFillBeakerBoxOpen(false)
-  setIsFillUpBeaker(true)
-}
+    if (selectedLesson === 6 && lessonStep === 8) {
+      if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
+    }
+
+    const fillData = {
+      name: selectedAcidData.name,
+      color: selectedAcidData.color,
+      amount,
+    }
+
+    if (fillBeakerHand === "left") {
+      setLeftBeakerFillData(fillData)
+    } else if (fillBeakerHand === "right") {
+      setRightBeakerFillData(fillData)
+    }
+
+    setIsFillBeakerBoxOpen(false)
+    setIsFillUpBeaker(true)
+  }
 
 
 
@@ -84,6 +106,14 @@ const handleConfirm = () => {
       setLessonStep(8)
     }
   },[selectedLesson,lessonStep])
+
+
+  useEffect(()=>{
+    if(selectedLesson==6 && lessonStep ===7 ){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])
+
 
   return (
     <div className="fill-dialog-overlay">

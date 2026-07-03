@@ -6,10 +6,12 @@ import gsap from "gsap"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import Message from "../../Message/Message"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const GlovesPut = () => {
   const { gloveleftRef, gloverightRef } = useContext(ModelContext)
   const { glovesOn, gogglesOn } = useContext(InteractionContext)
+  const {setSafetyStep,setShowLeftGloveArrow,setShowRightGloveArrow} = useContext(MainGuidelineContext)
 
   const [showLeft, setShowLeft] = useState(false)
   const [showRight, setShowRight] = useState(false)
@@ -75,10 +77,15 @@ const GlovesPut = () => {
 
         if (side === "left") {
           leftDone.current = true
+          setSafetyStep(3);
+          setShowLeftGloveArrow(false);
+          setShowRightGloveArrow(true)
         }
 
         if (side === "right") {
           rightDone.current = true
+          setSafetyStep(4);
+          setShowRightGloveArrow(false)
         }
 
         if (leftDone.current && rightDone.current) {

@@ -8,7 +8,8 @@ const ChemEnvironment = () => {
   const {chairRef,gogglesRef,gloveleftRef,gloverightRef,normalBeakerRef,conicalBeakerRef,
          roundBeakerRef,graduatedBeakerRef,normalBeakerLiquidRef,conicalBeakerLiquidRef,spoonRef,
          saltRef,redLitmusRef,blueLitmusRef,testube01Ref,testube02Ref,testube03Ref,filterPaperRef,
-         filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef
+         filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef,
+         arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef
   } = useContext(ModelContext)
 
   const { scene } = useGLTF('/VirtualChemLab.glb');
@@ -56,6 +57,15 @@ const ChemEnvironment = () => {
       arrowNormalBeakerRef.current = scene.getObjectByName('normalBeakerArrow');
       arrowNormalBeakerRef.current.visible = false;
 
+      arrowGogglesRef.current = scene.getObjectByName('goggles-arrow');
+      arrowGogglesRef.current.visible = false;
+
+      arrowLeftGloveRef.current = scene.getObjectByName('gloves-left-arrow');
+      arrowLeftGloveRef.current.visible = false;
+      
+      arrowRightGloveRef.current = scene.getObjectByName('gloves-right-arrow');
+      arrowRightGloveRef.current.visible = false;
+      
   }, [scene])
 
   return (

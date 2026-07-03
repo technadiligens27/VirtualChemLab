@@ -153,9 +153,9 @@ const HoldLeft = ({ modeldata }) => {
 
   })
 
-  useEffect(()=>{
-    console.log("selectedLeftHand",selectedLeftHand)
-  },[selectedLeftHand])
+  // useEffect(()=>{
+  //   console.log("selectedLeftHand",selectedLeftHand)
+  // },[selectedLeftHand])
 
   useEffect(()=>{
     console.log("isFilterInFunnel:",isFilterInFunnel)

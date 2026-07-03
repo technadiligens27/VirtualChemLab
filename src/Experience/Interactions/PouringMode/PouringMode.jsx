@@ -14,7 +14,7 @@ const PouringMode = ({ hand }) => {
     setPouredFromLeft,
   } = useContext(InteractionContext)
 
-  const {lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext)
 
   const emptyRef = useRef(null)
   const rotationZRef = useRef(0)
@@ -47,8 +47,12 @@ const PouringMode = ({ hand }) => {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key.toLowerCase() !== "p") return
+      if (e.key.toLowerCase() !== "p") {
+        setShowErrorMsgNo(3)
+        return
+      }
 
+      setLessonStep(10)
       // Right hand pouring = P
       if (hand === "right" && e.shiftKey) return
 
@@ -187,6 +191,9 @@ const PouringMode = ({ hand }) => {
   //     setLessonStep(10)
   //   }
   // },[lessonStep])
+  useEffect(()=>{
+    console.log("LessonStep:",lessonStep)
+  },[lessonStep])
 
   useFrame(() => {
     if (!activeObject) return
@@ -201,10 +208,9 @@ const PouringMode = ({ hand }) => {
 
       if (pouringNow && hand === "right") {
         setPouredFromLeft?.(true)
-
-        if (lessonStep === 9) {
-          setLessonStep(10)
-        }
+        // if (lessonStep === 9) {
+        //   setLessonStep(10)
+        // }
       }
     }
   })

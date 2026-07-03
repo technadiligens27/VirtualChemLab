@@ -7,13 +7,18 @@ const LessonMenu = () => {
     console.log('lessonMenu')
   const { setIsMainGuideline,selectedLesson,setSelectedLesson,
     isLessonStart,setIsLessonStart,setShowLessonMenu,lessonStep,
-    setLessonStep,setSelectedMainGuideline} = useContext(MainGuidelineContext)
+    setLessonStep,setSelectedMainGuideline,safetyStep,setSafetyStep} = useContext(MainGuidelineContext)
 
   const lessons = [
     {
       id: 1,
       name: "Salt Dissolving in Water",
     },
+
+    {
+      id:6,
+      name:'Acid Base Neutralization'
+    },    
     {
       id: 2,
       name: "Acid Indicator Test",
@@ -30,6 +35,8 @@ const LessonMenu = () => {
       id: 5,
       name: "Copper Sulfate Precipitation",
     },
+
+    
   ]
 
   useEffect(() => {
@@ -44,7 +51,7 @@ const LessonMenu = () => {
         <div className="lesson-btn-container">
           {lessons.map((lesson) => (
             <button onClick={()=>{setSelectedLesson(lesson.id);setIsLessonStart(true);
-            setShowLessonMenu(false);setSelectedMainGuideline(null);setLessonStep(1)}} key={lesson.id}>
+            setShowLessonMenu(false);setSelectedMainGuideline(null);setLessonStep(1);setSafetyStep(1)}} key={lesson.id}>
               {lesson.name}
             </button> 
           ))}

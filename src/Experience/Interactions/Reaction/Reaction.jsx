@@ -109,10 +109,6 @@ const Reaction = () => {
     },
   ]
 
-  useEffect(()=>{
-    console.log("pouredFromLeft:",pouredFromLeft)
-  },[pouredFromLeft])
-
   useEffect(() => {
     if (!pouredFromLeft && !pouredFromRight) return
 

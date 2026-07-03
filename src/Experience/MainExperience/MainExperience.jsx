@@ -44,7 +44,7 @@ const MainExperience = () => {
       gl={{
         antialias: true,
       }}
-    //   dpr={[1, 2]}
+    dpr={[1, 1.5]}
     >
       <ambientLight intensity={1} />
       <ChemEnvironment/>

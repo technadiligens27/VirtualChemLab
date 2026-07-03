@@ -5,13 +5,18 @@ import ArrowGuides from "../ArrowGuides/ArrowGuides";
 
 const AllArrows=()=>{
 
-    const {arrowNormalBeakerRef,arrowChairRef} = useContext(ModelContext);
-    const {showArrrowChair,showNormalBeakerArrow} = useContext(MainGuidelineContext)
+    const {arrowNormalBeakerRef,arrowChairRef,arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef} = useContext(ModelContext);
+    const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,showRightGloveArrow,
+        
+    } = useContext(MainGuidelineContext)
 
     return(
         <>
         {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}
-        {showNormalBeakerArrow && <ArrowGuides arrowRef={arrowNormalBeakerRef} speed={2.5} height={0.5} showStatus={showNormalBeakerArrow}/>}
+        {showNormalBeakerArrow && <ArrowGuides arrowRef={arrowNormalBeakerRef} speed={2.5} height={0.5} showStatus={showNormalBeakerArrow}/>};
+        {showGogglesArrow && <ArrowGuides arrowRef={arrowGogglesRef} speed={2.5} height={0.5} showStatus={showGogglesArrow}/> }
+        {showLeftGloveArrow && <ArrowGuides arrowRef={arrowLeftGloveRef} speed={2.5} height={0.5} showStatus={showLeftGloveArrow}/> }
+        {showRightGloveArrow && <ArrowGuides arrowRef={arrowRightGloveRef} speed={2.5} height={0.5} showStatus={showRightGloveArrow}/> }
 
         </>
     )

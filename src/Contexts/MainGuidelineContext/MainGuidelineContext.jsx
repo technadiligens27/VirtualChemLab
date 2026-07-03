@@ -8,7 +8,10 @@ export const MainGuidelineProvider = ({ children }) => {
   const [selectedMainGuideline,setSelectedMainGuideline] = useState(1);
 
   const [showArrrowChair,setShowArrowChair] = useState(true);
-  const [showNormalBeakerArrow,setShowNormalBeakerArrow] = useState(false)
+  const [showNormalBeakerArrow,setShowNormalBeakerArrow] = useState(false);
+  const [showGogglesArrow,setshowGogglesArrow] = useState(false);
+  const [showLeftGloveArrow,setShowLeftGloveArrow] = useState(false);
+  const [showRightGloveArrow,setShowRightGloveArrow] = useState(false);
 
   const [showLessonMenu, setShowLessonMenu] = useState(false)
   const [selectedLesson,setSelectedLesson] = useState(null);
@@ -17,6 +20,8 @@ export const MainGuidelineProvider = ({ children }) => {
   const [isLessonStart,setIsLessonStart] = useState(false);
 
   const [showErrorMsgNo,setShowErrorMsgNo] = useState(0)
+
+  const [safetyStep,setSafetyStep] = useState(0);
 
   return (
     <MainGuidelineContext.Provider
@@ -30,7 +35,12 @@ export const MainGuidelineProvider = ({ children }) => {
         lessonStep,setLessonStep,
         isLessonStart,setIsLessonStart,
         showNormalBeakerArrow,setShowNormalBeakerArrow,
-        showErrorMsgNo,setShowErrorMsgNo
+        showErrorMsgNo,setShowErrorMsgNo,
+        showGogglesArrow,setshowGogglesArrow,
+        showLeftGloveArrow,setShowLeftGloveArrow,
+        showRightGloveArrow,setShowRightGloveArrow,
+
+        safetyStep,setSafetyStep
       }}
     >
       {children}

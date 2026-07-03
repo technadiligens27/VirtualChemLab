@@ -395,6 +395,19 @@ const ClickObject = () => {
   }
 
   const keepBackOnTable = (hand) => {
+
+    if (hand === "left" && isMainGuideline) {
+      setShowErrorMsgNo(4);
+      setSelectedObject(null)
+      return
+    }
+
+    if (hand === "right" && isMainGuideline) {
+      setShowErrorMsgNo(4);
+      setSelectedObject(null)
+      return
+    }
+
     const handData = hand === "left" ? selectedLeftHand : selectedRightHand
 
     if (!handData?.ref?.current) return

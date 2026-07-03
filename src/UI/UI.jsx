@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { use, useContext, useEffect } from "react"
 import MainGuidelines from "./MainGuidelines/MainGuidelines"
 import { MainGuidelineContext } from "../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LessonMenu from "./LessonMenu/LessonMenu"
@@ -8,6 +8,7 @@ import AcidInidicatorTest from "./AllLessons/AcidInidicatorTest/AcidInidicatorTe
 import AllArrows from "./AllArrows/AllArrows"
 import AllErrors from "./AllErrors/AllErrors"
 import DialogBox from "./AllDialogBox/DialogBox/DialogBox"
+import AcidBaseNeutralization from "./AllLessons/AcidInidicatorTest/AcidBaseNeutralization/AcidBaseNeutralization"
 
 const mainContent = [
   {
@@ -43,16 +44,11 @@ const UI = () => {
   const {selectedMainGuideline,setSelectedMainGuideline,
     isMainGuideline,setIsMainGuideline,setShowArrowChair,showArrowChair,
     setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep,
-    selectedLesson,setSelectedLesson,showArrrowChair
+    selectedLesson,setSelectedLesson,showArrrowChair,safetyStep,setSafetyStep,setshowGogglesArrow,
+    setShowLeftGloveArrow,setShowRightGloveArrow
   } = useContext(MainGuidelineContext)
 
   const {isSitting} = useContext(InteractionContext)
-
-  useEffect(()=>{
-    console.log("showLessonMenu:",showLessonMenu)
-  },[showLessonMenu])
-
-
 
   const startLab = () => {
     setIsMainGuideline(false);
@@ -66,9 +62,21 @@ const UI = () => {
 
   useEffect(() => {
   if (isSitting) {
-    setShowArrowChair(false)
+    setShowArrowChair(false);
+    setshowGogglesArrow(true)
   }
-}, [isSitting, setShowArrowChair])
+}, [isSitting, setShowArrowChair,setshowGogglesArrow])
+
+useEffect(()=>{
+  if(safetyStep===2){
+      setShowLeftGloveArrow(true);
+  }
+},[safetyStep])
+useEffect(()=>{
+  if(safetyStep===3){
+      setShowRightGloveArrow(true);
+  }
+},[safetyStep])
 
   return (
     <>
@@ -100,9 +108,18 @@ const UI = () => {
       {selectedMainGuideline === 5  && isSitting &&
         <LessonMenu/>      
       }
-      
 
-      {isLessonStart && selectedLesson===2 && <AcidInidicatorTest/> }
+      {safetyStep === 1 && (<DialogBox text={"Click the googles to put them on"}/>) }
+      
+      {safetyStep === 2 && (<DialogBox text={"Click the Left glove to put them on"}/>) }
+
+      {safetyStep === 3 && (<DialogBox text={"Click the Right glove to put them on"}/>) }
+
+      {safetyStep === 4 && isLessonStart && selectedLesson === 2 && <AcidInidicatorTest/> }
+
+      {safetyStep === 4 && isLessonStart && selectedLesson === 6 && <AcidBaseNeutralization/> }
+
+
 
       <AllErrors/>
     </>

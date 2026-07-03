@@ -6,10 +6,12 @@ import gsap from "gsap"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import Message from "../../Message/Message"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const GogglesPut = () => {
   const { gogglesRef } = useContext(ModelContext)
   const { gogglesOn, hasSat } = useContext(InteractionContext)
+  const {setSafetyStep,setshowGogglesArrow,setShowLeftGloveArrow} = useContext(MainGuidelineContext)
 
   const [show, setShow] = useState(false)
   const gogglePosition = useRef(new THREE.Vector3())
@@ -70,9 +72,12 @@ useEffect(() => {
       onComplete: () => {
         goggles.visible = false
         gogglesOn.current = true
-        isAnimating.current = false
+        isAnimating.current = false;
+        setshowGogglesArrow(false);
+        setSafetyStep(2);
       },
     })
+
   }
 
   gl.domElement.addEventListener("click", handleClick)

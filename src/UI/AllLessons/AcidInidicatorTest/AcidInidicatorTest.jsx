@@ -48,10 +48,6 @@ const AcidInidicatorTest = ()=>{
     },[showNormalBeakerArrow,lessonStep,selectedLeftHand,selectedRightHand])
     
 
-    useEffect(()=>{
-        console.log('lessonStep:',lessonStep)
-    },[lessonStep])
-
     return(
         <>
            {lessonStep===1 && 
