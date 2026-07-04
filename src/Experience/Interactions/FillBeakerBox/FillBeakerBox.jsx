@@ -30,7 +30,6 @@ const FillBeakerBox = () => {
     { name: "Starch solution", color: "#e5e7eb" },
     { name: "Iodine solution", color: "#92400e" },    
     { name: "Copper Sulfate (CuSO4)", color: "#2563eb" },    
-
   ]
 
   const amounts = [10, 25, 50, 100]

@@ -23,6 +23,8 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [safetyStep,setSafetyStep] = useState(0);
 
+  const [showRedLitmusArrow,setShowRedLitmusArrow] = useState(false);
+
   return (
     <MainGuidelineContext.Provider
       value={{ 
@@ -39,7 +41,7 @@ export const MainGuidelineProvider = ({ children }) => {
         showGogglesArrow,setshowGogglesArrow,
         showLeftGloveArrow,setShowLeftGloveArrow,
         showRightGloveArrow,setShowRightGloveArrow,
-
+        showRedLitmusArrow,setShowRedLitmusArrow,
         safetyStep,setSafetyStep
       }}
     >

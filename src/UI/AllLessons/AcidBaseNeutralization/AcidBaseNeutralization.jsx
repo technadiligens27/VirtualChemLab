@@ -1,8 +1,8 @@
 import { useContext } from "react"
-import { MainGuidelineContext } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import LessonGuide from "../../../LessonGuide/LessonGuide";
-import DialogBox from "../../../AllDialogBox/DialogBox/DialogBox";
-import { InteractionContext } from "../../../../Contexts/InteractionContext/InteractionContext";
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import LessonGuide from "../../LessonGuide/LessonGuide";
+import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
 
 const AcidBaseNeutralization = ()=>{
 

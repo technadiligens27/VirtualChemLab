@@ -97,7 +97,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
 
     if (!isFillDone) return
     if (fillCompletedRef.current) return
-    if (selectedLesson !== 2) return
+    // if (selectedLesson !== 2) return
 
     fillCompletedRef.current = true
 

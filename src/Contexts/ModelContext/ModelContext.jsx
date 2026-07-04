@@ -3,6 +3,7 @@ import { createContext, useRef, useState } from 'react'
 export const ModelContext = createContext()
 
 export const ModelProvider = ({ children }) => {
+
   const chairRef = useRef(null);
   const gogglesRef = useRef(null);
   const gloveleftRef = useRef(null);
@@ -28,8 +29,10 @@ export const ModelProvider = ({ children }) => {
   const arrowChairRef = useRef(null);
   const arrowNormalBeakerRef = useRef(null);
   const arrowGogglesRef = useRef(null);
-  const arrowLeftGloveRef = useRef(null)
-  const arrowRightGloveRef = useRef(null)
+  const arrowLeftGloveRef = useRef(null);
+  const arrowRightGloveRef = useRef(null);
+
+  const arrowRedLitmusRef = useRef(null);
 
   
 
@@ -45,10 +48,10 @@ export const ModelProvider = ({ children }) => {
         redLitmusRef,blueLitmusRef,
         testube01Ref,testube02Ref,testube03Ref,
         filterPaperRef,filterFoldedPaperRef,
-        funnelRef,
-        
+        funnelRef,        
         arrowChairRef,arrowNormalBeakerRef,
-        arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef
+        arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,
+        arrowRedLitmusRef
       }}
     >
       {children}

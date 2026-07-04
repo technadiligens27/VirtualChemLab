@@ -3,14 +3,17 @@ import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import LitmusReaction from "../LitmusReaction/LitmusReaction"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
   const { camera, gl } = useThree()
   const { rightBeakerFillData, leftBeakerFillData } =
-    useContext(InteractionContext)
+    useContext(InteractionContext);
 
-  const [colorChangeAcid, setColorChangeAcid] = useState(false)
-  const [colorChangeBase, setColorChangeBase] = useState(false)
+  const {lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+
+  const [colorChangeAcid, setColorChangeAcid] = useState(false);
+  const [colorChangeBase, setColorChangeBase] = useState(false);
 
   // acids list
   const acids = [
@@ -117,7 +120,14 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
       litmusRef.current.visible = true
       beakerRef.current.visible = true
     }
-  }, [litmusRef, beakerRef, camera])
+  }, [litmusRef, beakerRef, camera]);
+
+  useEffect(()=>{
+    console.log("lessonStep:",lessonStep)
+    if(lessonStep===7){
+      setLessonStep(8)
+    }
+  },[lessonStep])
 
   useEffect(() => {
     const handleWheel = (e) => {

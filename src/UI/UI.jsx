@@ -8,7 +8,8 @@ import AcidInidicatorTest from "./AllLessons/AcidInidicatorTest/AcidInidicatorTe
 import AllArrows from "./AllArrows/AllArrows"
 import AllErrors from "./AllErrors/AllErrors"
 import DialogBox from "./AllDialogBox/DialogBox/DialogBox"
-import AcidBaseNeutralization from "./AllLessons/AcidInidicatorTest/AcidBaseNeutralization/AcidBaseNeutralization"
+import AlkaliIndicatorTest from "./AllLessons/AlkaliIndicatorTest/AlkaliIndicatorTest"
+import AcidBaseNeutralization from "./AllLessons/AcidBaseNeutralization/AcidBaseNeutralization"
 
 const mainContent = [
   {
@@ -45,7 +46,7 @@ const UI = () => {
     isMainGuideline,setIsMainGuideline,setShowArrowChair,showArrowChair,
     setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep,
     selectedLesson,setSelectedLesson,showArrrowChair,safetyStep,setSafetyStep,setshowGogglesArrow,
-    setShowLeftGloveArrow,setShowRightGloveArrow
+    setShowLeftGloveArrow,setShowRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow
   } = useContext(MainGuidelineContext)
 
   const {isSitting} = useContext(InteractionContext)
@@ -67,16 +68,25 @@ const UI = () => {
   }
 }, [isSitting, setShowArrowChair,setshowGogglesArrow])
 
-useEffect(()=>{
-  if(safetyStep===2){
-      setShowLeftGloveArrow(true);
+  useEffect(()=>{
+    if(safetyStep===2){
+        setShowLeftGloveArrow(true);
+    }
+  },[safetyStep])
+  
+  useEffect(()=>{
+    if(safetyStep===3){
+        setShowRightGloveArrow(true);
+    }
+  },[safetyStep])
+
+  useEffect(() => {
+  if (selectedLesson === 3 && lessonStep === 6) {
+    setShowRedLitmusArrow(true)
+  } else {
+    setShowRedLitmusArrow(false)
   }
-},[safetyStep])
-useEffect(()=>{
-  if(safetyStep===3){
-      setShowRightGloveArrow(true);
-  }
-},[safetyStep])
+}, [selectedLesson, lessonStep, setShowRedLitmusArrow])
 
   return (
     <>
@@ -119,7 +129,7 @@ useEffect(()=>{
 
       {safetyStep === 4 && isLessonStart && selectedLesson === 6 && <AcidBaseNeutralization/> }
 
-
+      {safetyStep === 4 && isLessonStart && selectedLesson === 3 && <AlkaliIndicatorTest/> }
 
       <AllErrors/>
     </>
