@@ -58,7 +58,7 @@ const ClickObject = () => {
     funnelRef,
   } = useContext(ModelContext)
 
-  const { lessonStep, setShowErrorMsgNo, isMainGuideline } =
+  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson} =
     useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
@@ -582,6 +582,13 @@ const ClickObject = () => {
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if(lessonStep==6 && selectedLesson ===3){
+      if(objectName !== 'main-red-litmus'){
+        setShowErrorMsgNo(6)
+        return false
+      }
+    }
+
     if (lessonStep === 3) {
       setShowErrorMsgNo(1)
       return false
@@ -663,6 +670,20 @@ const ClickObject = () => {
   }
 
   const openFillBeakerBox = () => {
+
+    if(isMainGuideline){
+      if ((lessonStep !==4 && lessonStep !==7)) {
+          setShowErrorMsgNo(4);
+          return
+      }
+
+      if(selectedLesson==3 && lessonStep !==4 ){
+        setShowErrorMsgNo(4);
+          return
+      }
+    }
+ 
+
     setIsLitmusMode(false)
     setIsStirMode(false)
 

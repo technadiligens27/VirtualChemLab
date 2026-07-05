@@ -31,52 +31,62 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     
   })
 
-  useEffect(() => {
-    if (!beakerRef?.current) return
-    if (!fillData?.amount) return
+useEffect(() => {
+  if (!beakerRef?.current) return
+  if (!fillData?.amount) return
 
-    liquidMeshesRef.current = []
-    fillCompletedRef.current = false
+  liquidMeshesRef.current = []
+  fillCompletedRef.current = false
 
-    beakerRef.current.traverse((child) => {
-      if (!child.name?.toLowerCase().includes("liquid")) return
+  let firstLiquidMesh = null
 
-      child.visible = true
+  beakerRef.current.traverse((child) => {
+    if (!child.name?.toLowerCase().includes("liquid")) return
 
-      child.traverse((innerChild) => {
-        innerChild.visible = true
+    child.traverse((innerChild) => {
+      if (!innerChild.isMesh || !innerChild.material) return
 
-        if (!innerChild.isMesh || !innerChild.material) return
+      innerChild.visible = false
 
-        liquidMeshesRef.current.push(innerChild)
-
-        if (Array.isArray(innerChild.material)) {
-          innerChild.material = innerChild.material.map((mat) => mat.clone())
-
-          innerChild.material.forEach((mat) => {
-            mat?.color?.set(fillData.color)
-          })
-        } else {
-          innerChild.material = innerChild.material.clone()
-          innerChild.material.color?.set(fillData.color)
-        }
-
-        innerChild.scale.y = 0
-      })
+      if (!firstLiquidMesh) {
+        firstLiquidMesh = innerChild
+      }
     })
+  })
 
-    const beakerName = beakerRef.current.name
+  if (!firstLiquidMesh) return
 
-    if (beakerName.includes("normal-beaker")) {
-      amountRef.current = Number(fillData.amount) * 0.55
-    } else if (beakerName.includes("Conical-Flask")) {
-      amountRef.current = Number(fillData.amount) * 2
-    } else if (beakerName.includes("testube")) {
-      amountRef.current = Number(fillData.amount) * 1.2
-    } else {
-      amountRef.current = Number(fillData.amount) * 0.2
-    }
-  }, [beakerRef, hand, fillData?.color, fillData?.amount])
+  firstLiquidMesh.visible = true
+
+  liquidMeshesRef.current.push(firstLiquidMesh)
+
+  if (Array.isArray(firstLiquidMesh.material)) {
+    firstLiquidMesh.material = firstLiquidMesh.material.map((mat) =>
+      mat.clone()
+    )
+
+    firstLiquidMesh.material.forEach((mat) => {
+      mat?.color?.set(fillData.color)
+    })
+  } else {
+    firstLiquidMesh.material = firstLiquidMesh.material.clone()
+    firstLiquidMesh.material.color?.set(fillData.color)
+  }
+
+  firstLiquidMesh.scale.y = 0
+
+  const beakerName = beakerRef.current.name
+
+  if (beakerName.includes("normal-beaker")) {
+    amountRef.current = Number(fillData.amount) * 0.55
+  } else if (beakerName.includes("Conical-Flask")) {
+    amountRef.current = Number(fillData.amount) * 2
+  } else if (beakerName.includes("testube")) {
+    amountRef.current = Number(fillData.amount) * 1.2
+  } else {
+    amountRef.current = Number(fillData.amount) * 0.2
+  }
+}, [beakerRef, hand, fillData?.color, fillData?.amount])
 
   useFrame((state, delta) => {
     if (!liquidMeshesRef.current.length) return

@@ -9,7 +9,7 @@ export const ReactionProvider = ({ children }) => {
    const [isNaohUniversal,setIsNaohUniversal] = useState(false);
    const [isStarchIodine,setIsStarchIodine] = useState(false);
    const [isCopperSulfateNaoh,setIsCopperSulfateNaoh] = useState(false);
-   const [isAcidBase,setIsAcidBase] = useState(false)
+   const [isAcidBase,setIsAcidBase] = useState(false);
    
    const stirrLiquidRef = useRef(null)
 

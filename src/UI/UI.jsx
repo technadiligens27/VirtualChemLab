@@ -17,6 +17,7 @@ const mainContent = [
     content: `This lab lets you explore chemistry in a safe and interactive way.
 You can use lab equipment, mix chemicals, test reactions, and learn how different experiments work step by step.`,
     button1: "Start Demo",
+    button2 :"Free Roam"
   },
 
   {
@@ -93,6 +94,7 @@ const UI = () => {
       {selectedMainGuideline === 1 && <MainGuidelines 
       mainContent={mainContent[0]} 
       onButton1Click={() => setSelectedMainGuideline(2)}
+      onButton2Click={()=>{setIsMainGuideline(false);setSelectedMainGuideline(0);console.log('Free roam')}}
       />}
 
       {selectedMainGuideline === 2 && <MainGuidelines 

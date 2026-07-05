@@ -14,6 +14,7 @@ const AllErrors = ()=>{
             {showErrorMsgNo ===3 && <ErrorMsg text={'Press P for pouring mode'}/> }
             {showErrorMsgNo == 4 && <ErrorMsg text={'Cant do that right now'}/>}
             {showErrorMsgNo == 5 && <ErrorMsg text={'Pls Select Uniersal Indicatoe and then 50 ml'}/>}
+            {showErrorMsgNo == 6 && <ErrorMsg text={'Pls Select Red Litmus Paper'}/>}
         </>
     )
 }

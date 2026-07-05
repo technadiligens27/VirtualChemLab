@@ -10,8 +10,12 @@ const AllArrows=()=>{
         arrowRightGloveRef,arrowRedLitmusRef
     } = useContext(ModelContext);
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
-        showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow        
+        showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow,isMainGuideline        
     } = useContext(MainGuidelineContext)
+
+    if(!isMainGuideline){
+        return null
+    }
 
     return(
         <>

@@ -4,6 +4,7 @@ import * as THREE from "three"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import CopperPrecipitate from "../../AllReactions/CopperPrecipitate/CopperPrecipitate"
 
 const Reaction = () => {
   const {
@@ -109,6 +110,9 @@ const Reaction = () => {
     },
   ]
 
+
+  const targetBeakerRef = useRef(null);
+  
   useEffect(() => {
     if (!pouredFromLeft && !pouredFromRight) return
 
@@ -126,15 +130,15 @@ const Reaction = () => {
     activeReactionRef.current = reaction.name
     targetColorRef.current = new THREE.Color(reaction.color)
 
-    const targetBeaker = pouredFromLeft
+     targetBeakerRef.current = pouredFromLeft
       ? selectedRightHand?.ref?.current
       : selectedLeftHand?.ref?.current
 
-    if (!targetBeaker) return
+    if (!targetBeakerRef.current) return
 
     liquidRef.current = null
 
-    targetBeaker.traverse((child) => {
+    targetBeakerRef.current.traverse((child) => {
       if (
         child.isMesh &&
         child.name?.toLowerCase().includes("liquid") &&
@@ -196,7 +200,12 @@ const Reaction = () => {
     }
   })
 
-  return null
+  return (
+    <>
+      {isCopperSulfateNaoh && <CopperPrecipitate beakerRef={targetBeakerRef}/>}
+    
+    </>
+  )
 }
 
 export default Reaction

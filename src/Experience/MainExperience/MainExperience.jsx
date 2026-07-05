@@ -14,8 +14,8 @@ import { MainGuidelineContext } from '../../Contexts/MainGuidelineContext/MainGu
 
 const MainExperience = () => {
 
-  const {hasSat} = useContext(InteractionContext);
-  const {isSitting} = useContext(ModelContext);
+  const {hasSat,isSitting} = useContext(InteractionContext);
+  // const {isSitting} = useContext(ModelContext);
   const {isMainGuideline} = useContext(MainGuidelineContext)
 
   useEffect(() => {
@@ -31,7 +31,10 @@ const MainExperience = () => {
       document.exitPointerLock()
     }
   }, [isSitting])
-
+useEffect(() => {
+  console.log("isSitting:", isSitting)
+  console.log("isMainGuideline:", isMainGuideline)
+}, [isSitting, isMainGuideline])
 
   return (
     <Canvas

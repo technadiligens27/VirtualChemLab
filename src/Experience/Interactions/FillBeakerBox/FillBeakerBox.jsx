@@ -12,7 +12,8 @@ const FillBeakerBox = () => {
     setRightBeakerFillData,
   } = useContext(InteractionContext)
 
-  const {setSelectedLesson,selectedLesson,lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext)
+  const {setSelectedLesson,selectedLesson,isMainGuideline,
+    lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext)
 
   const [selectedAcidData, setSelectedAcidData] = useState({
     name: "",
@@ -112,6 +113,8 @@ const FillBeakerBox = () => {
       setLessonStep(8)
     }
   },[selectedLesson,lessonStep])
+  
+  
 
 
   return (

@@ -25,8 +25,8 @@ const MainGuidelines = ({ mainContent,onButton1Click, onButton2Click }) => {
         )}
 
         {button2 && (
-          <button className="main-guidelines-btn">
-            {button2}
+          <button onClick={onButton2Click} className="main-guidelines-btn">
+            {button2 }
           </button>
         )}
       </div>
