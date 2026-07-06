@@ -75,6 +75,14 @@ const FillBeakerBox = () => {
       if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
     }
 
+    if (selectedLesson === 4 && lessonStep === 5) {
+      if (!checkFill("Starch solution", 50, 6)) return
+    }
+
+    if (selectedLesson === 4 && lessonStep === 8) {
+      if (!checkFill("Iodine solution", 50, 9)) return
+    }
+
     const fillData = {
       name: selectedAcidData.name,
       color: selectedAcidData.color,
@@ -114,7 +122,11 @@ const FillBeakerBox = () => {
     }
   },[selectedLesson,lessonStep])
   
-  
+  useEffect(()=>{
+    if(selectedLesson==4 && lessonStep ===7 ){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])  
 
 
   return (

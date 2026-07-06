@@ -71,7 +71,7 @@ const ChemEnvironment = () => {
       arrowRightGloveRef.current.visible = false;
       
       arrowRedLitmusRef.current = scene.getObjectByName('red-litmus-arrow');
-      arrowRedLitmusRef.current.visible = false
+      arrowRedLitmusRef.current.visible = false;
 
 
   }, [scene])

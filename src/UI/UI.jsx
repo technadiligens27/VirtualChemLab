@@ -10,6 +10,7 @@ import AllErrors from "./AllErrors/AllErrors"
 import DialogBox from "./AllDialogBox/DialogBox/DialogBox"
 import AlkaliIndicatorTest from "./AllLessons/AlkaliIndicatorTest/AlkaliIndicatorTest"
 import AcidBaseNeutralization from "./AllLessons/AcidBaseNeutralization/AcidBaseNeutralization"
+import StarchIodineTest from "./AllLessons/StarchIodineTest/StarchIodineTest"
 
 const mainContent = [
   {
@@ -132,6 +133,9 @@ const UI = () => {
       {safetyStep === 4 && isLessonStart && selectedLesson === 6 && <AcidBaseNeutralization/> }
 
       {safetyStep === 4 && isLessonStart && selectedLesson === 3 && <AlkaliIndicatorTest/> }
+
+      {safetyStep === 4 && isLessonStart && selectedLesson === 4 && <StarchIodineTest/> }
+
 
       <AllErrors/>
     </>
