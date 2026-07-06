@@ -16,7 +16,7 @@ const Reaction = () => {
     selectedRightHand,
   } = useContext(InteractionContext)
 
-  const {lessonStep,setLessonStep} = useContext(MainGuidelineContext);
+  const {lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext);
 
   const {
     isSaltWaterReaction,
@@ -123,7 +123,11 @@ const Reaction = () => {
       (r) => r.chemicals.includes(left) && r.chemicals.includes(right)
     )
 
-    if (!reaction) return
+    if (!reaction){
+      console.log("No Visible Reaction Found")
+      setShowErrorMsgNo(8)
+      return
+    }
 
     reaction.run()
 

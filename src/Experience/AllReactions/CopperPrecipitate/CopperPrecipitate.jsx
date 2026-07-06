@@ -2,14 +2,18 @@ import { useEffect, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
-const CopperPrecipitate = ({ beakerRef, downDistance = 1.7 }) => {
+const CopperPrecipitate = ({
+  beakerRef,
+  downDistance = 1.7,
+  fallDelay = 1,
+}) => {
   const precipitateMeshesRef = useRef([])
   const progressRef = useRef(0)
 
-  const moveDuration = 2
-  const opacityDuration = 0.5
+  const moveDuration = 5
+  const opacityDuration = 1.5
 
-  const targetColor = new THREE.Color("#38BDF8")
+  const targetColor = new THREE.Color("#0284C7")
 
   useEffect(() => {
     if (!beakerRef?.current) return
@@ -62,7 +66,6 @@ const CopperPrecipitate = ({ beakerRef, downDistance = 1.7 }) => {
           child.parent.worldToLocal(localTargetPos)
         }
 
-        // Start at normal-beaker-top
         child.position.copy(localTargetPos)
 
         const startY = child.position.y
@@ -82,8 +85,11 @@ const CopperPrecipitate = ({ beakerRef, downDistance = 1.7 }) => {
 
     progressRef.current += delta
 
-    const moveProgress = Math.min(progressRef.current / moveDuration, 1)
     const opacityProgress = Math.min(progressRef.current / opacityDuration, 1)
+
+    // Movement starts only after 1.5 seconds
+    const moveTime = Math.max(progressRef.current - fallDelay, 0)
+    const moveProgress = Math.min(moveTime / moveDuration, 1)
 
     precipitateMeshesRef.current.forEach(({ mesh, startY, endY }) => {
       if (!mesh.material) return

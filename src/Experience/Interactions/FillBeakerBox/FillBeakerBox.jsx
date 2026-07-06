@@ -83,6 +83,14 @@ const FillBeakerBox = () => {
       if (!checkFill("Iodine solution", 50, 9)) return
     }
 
+    if (selectedLesson === 5 && lessonStep === 5) {
+      if (!checkFill("Copper Sulfate (CuSO4)", 50, 6)) return
+    } 
+    
+    if (selectedLesson === 5 && lessonStep === 8) {
+      if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
+    }
+
     const fillData = {
       name: selectedAcidData.name,
       color: selectedAcidData.color,
@@ -128,6 +136,11 @@ const FillBeakerBox = () => {
     }
   },[selectedLesson,lessonStep])  
 
+  useEffect(()=>{
+    if(selectedLesson==5 && lessonStep ===7 ){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])  
 
   return (
     <div className="fill-dialog-overlay">

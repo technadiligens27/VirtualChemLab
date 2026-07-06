@@ -11,6 +11,7 @@ import DialogBox from "./AllDialogBox/DialogBox/DialogBox"
 import AlkaliIndicatorTest from "./AllLessons/AlkaliIndicatorTest/AlkaliIndicatorTest"
 import AcidBaseNeutralization from "./AllLessons/AcidBaseNeutralization/AcidBaseNeutralization"
 import StarchIodineTest from "./AllLessons/StarchIodineTest/StarchIodineTest"
+import CopperSulfate from "./AllLessons/CopperSulfate/CopperSulfate"
 
 const mainContent = [
   {
@@ -135,6 +136,8 @@ const UI = () => {
       {safetyStep === 4 && isLessonStart && selectedLesson === 3 && <AlkaliIndicatorTest/> }
 
       {safetyStep === 4 && isLessonStart && selectedLesson === 4 && <StarchIodineTest/> }
+
+      {safetyStep === 4 && isLessonStart && selectedLesson === 5 && <CopperSulfate/> }
 
 
       <AllErrors/>
