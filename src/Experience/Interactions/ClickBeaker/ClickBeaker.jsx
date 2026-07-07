@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react"
 import { useThree } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
-
+import './ClickBeaker.css'
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import HoldLeft from "../HoldLeft/HoldLeft"
@@ -740,16 +740,8 @@ const ClickObject = () => {
     <>
       {selectedObject && !isFillBeakerBoxOpen && (
         <Html position={selectedObject.position} center>
-          <div
-            style={{
-              background: "#FFBD00",
-              padding: "10px",
-              borderRadius: "8px",
-              display: "flex",
-              gap: "10px",
-              alignItems: "center",
-            }}
-          >
+          <div className="click-btn-container">
+
             
             {selectedObject.isHolding ? (
               <>
@@ -831,7 +823,7 @@ const ClickObject = () => {
                   )}
 
                   {selectedLeftHand && selectedRightHand && (
-                    <p style={{ margin: 0 }}>Both hands are full</p>
+                    <p>Both hands are full</p>
                   )}
                 </>
               )}

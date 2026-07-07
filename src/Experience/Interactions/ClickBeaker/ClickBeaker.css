@@ -1,0 +1,30 @@
+.click-btn-container {
+  background: #ffffff;
+  padding: 5px;
+  border-radius: 8px;
+  gap: 10px;
+  border: 4px solid #FFBD00;
+  width: 150px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* .click-btn-inner-container{
+    width: 75%;
+    height: 95%;
+    background-color: white;
+      align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 150px;
+   display: flex;
+} */
+
+.click-btn-container button{
+    height: 90%;
+    width: 48%;
+}

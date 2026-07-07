@@ -3,7 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
 import gsap from "gsap"
-
+import './GlovesPut.css'
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
@@ -177,22 +177,17 @@ const GlovesPut = () => {
           ]}
           center
         >
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              putGlove(gloveleftRef.current, "left")
-            }}
-            style={{
-              background: "white",
-              padding: "8px 14px",
-              borderRadius: "8px",
-              border: "none",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
-          >
-            Put On
-          </button>
+          <div className="click-btn-container">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                putGlove(gloveleftRef.current, "left")
+              }}
+              className="gloves-btn"
+            >
+              Put On
+            </button>
+          </div>
         </Html>
       )}
 
@@ -205,22 +200,17 @@ const GlovesPut = () => {
           ]}
           center
         >
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              putGlove(gloverightRef.current, "right")
-            }}
-            style={{
-              background: "white",
-              padding: "8px 14px",
-              borderRadius: "8px",
-              border: "none",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
-          >
-            Put On
-          </button>
+          <div className="click-btn-container">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                putGlove(gloverightRef.current, "right")
+              }}
+              className="gloves-btn"
+            >
+              Put On
+            </button>
+          </div>
         </Html>
       )}
     </>

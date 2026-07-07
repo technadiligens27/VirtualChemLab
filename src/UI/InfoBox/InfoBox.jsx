@@ -112,7 +112,7 @@ const InfoBox = ({ clickedModel }) => {
   if (!selectedInfo) return null
 
   return (
-    <div className="main-guidelines info-box-container">
+    <div className="main-guidelines">
       <div className="guideline-container">
         <div className="main-guidelines-title">
           <h1>{selectedInfo.title}</h1>
