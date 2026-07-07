@@ -1,4 +1,4 @@
-import { createContext, useRef, useState } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 
 export const InteractionContext = createContext()
 
@@ -45,7 +45,10 @@ export const InteractionProvider = ({ children }) => {
 
   const [isFilterFolded,setIsFilterFolded] = useState(false);
   const [isFilterInFunnel,setIsFilterInFunnel] = useState(false);
-  const [isFunnelMode,setIsFunnelMode] = useState(false)
+  const [isFunnelMode,setIsFunnelMode] = useState(false);
+
+  const [clickedModel,setClickedModel] = useState(null);
+  const [isObjectInfo,setIsObjectInfo] = useState(false)
 
 
   return (
@@ -74,7 +77,9 @@ export const InteractionProvider = ({ children }) => {
         isFilterFolded,setIsFilterFolded,
         isFilterInFunnel,setIsFilterInFunnel,
         isFunnelMode,setIsFunnelMode,
-        isSitting,setIsSitting
+        isSitting,setIsSitting,
+        clickedModel,setClickedModel,
+        isObjectInfo,setIsObjectInfo
       }}
     >
       {children}

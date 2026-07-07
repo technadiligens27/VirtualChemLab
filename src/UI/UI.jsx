@@ -12,6 +12,8 @@ import AlkaliIndicatorTest from "./AllLessons/AlkaliIndicatorTest/AlkaliIndicato
 import AcidBaseNeutralization from "./AllLessons/AcidBaseNeutralization/AcidBaseNeutralization"
 import StarchIodineTest from "./AllLessons/StarchIodineTest/StarchIodineTest"
 import CopperSulfate from "./AllLessons/CopperSulfate/CopperSulfate"
+import InfoDialogBox from "./InfoDialogBox/InfoDialogBox"
+import InfoBox from "./InfoBox/InfoBox"
 
 const mainContent = [
   {
@@ -52,7 +54,7 @@ const UI = () => {
     setShowLeftGloveArrow,setShowRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow
   } = useContext(MainGuidelineContext)
 
-  const {isSitting} = useContext(InteractionContext)
+  const {isSitting,clickedModel,isObjectInfo} = useContext(InteractionContext)
 
   const startLab = () => {
     setIsMainGuideline(false);
@@ -95,8 +97,8 @@ const UI = () => {
     <>
       {selectedMainGuideline === 1 && <MainGuidelines 
       mainContent={mainContent[0]} 
-      onButton1Click={() => setSelectedMainGuideline(2)}
-      onButton2Click={()=>{setIsMainGuideline(false);setSelectedMainGuideline(0);console.log('Free roam')}}
+      onButton1Click={() =>{setIsMainGuideline(true);setSelectedMainGuideline(2)}}
+      onButton2Click={()=>{setIsMainGuideline(false);setSelectedMainGuideline(0);}}
       />}
 
       {selectedMainGuideline === 2 && <MainGuidelines 
@@ -141,6 +143,10 @@ const UI = () => {
 
 
       <AllErrors/>
+
+      {clickedModel && <InfoDialogBox clickedModel={clickedModel}/> }
+      {isObjectInfo && <InfoBox clickedModel={clickedModel}/>}
+      
     </>
   )
 }

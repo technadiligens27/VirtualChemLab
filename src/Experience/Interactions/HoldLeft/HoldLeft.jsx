@@ -23,7 +23,7 @@ const HoldLeft = ({ modeldata }) => {
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
-  const {lessonStep,setLessonStep,isMainGuideline} = useContext(MainGuidelineContext)
+  const {lessonStep,setLessonStep,isMainGuideline,setShowNormalBeakerArrow} = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
 
@@ -37,7 +37,8 @@ const HoldLeft = ({ modeldata }) => {
 
   useEffect(()=>{
     if(lessonStep===3 && isMainGuideline){
-      setLessonStep(4)
+      setLessonStep(4);
+      setShowNormalBeakerArrow(false)
     }
   },[lessonStep])
 

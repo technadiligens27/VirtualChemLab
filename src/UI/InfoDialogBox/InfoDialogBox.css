@@ -1,0 +1,17 @@
+.info-dialog-box{
+  position: fixed;
+  top: 0px;
+  left: 10%;
+  width: 20%;
+  /* transform: translateX(-50%);
+  z-index: 9999;
+
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  height: 100px;
+  background: linear-gradient( #FFBD00 100%); */
+}

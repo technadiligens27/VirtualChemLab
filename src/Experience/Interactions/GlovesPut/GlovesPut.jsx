@@ -1,20 +1,28 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
+import { Html } from "@react-three/drei"
 import * as THREE from "three"
 import gsap from "gsap"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
-import Message from "../../Message/Message"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const GlovesPut = () => {
   const { gloveleftRef, gloverightRef } = useContext(ModelContext)
   const { glovesOn, gogglesOn } = useContext(InteractionContext)
-  const {setSafetyStep,setShowLeftGloveArrow,setShowRightGloveArrow} = useContext(MainGuidelineContext)
 
-  const [showLeft, setShowLeft] = useState(false)
-  const [showRight, setShowRight] = useState(false)
+  const {
+    setSafetyStep,
+    setShowLeftGloveArrow,
+    setShowRightGloveArrow,
+  } = useContext(MainGuidelineContext)
+
+  const [canClickLeft, setCanClickLeft] = useState(false)
+  const [canClickRight, setCanClickRight] = useState(false)
+
+  const [showLeftButton, setShowLeftButton] = useState(false)
+  const [showRightButton, setShowRightButton] = useState(false)
 
   const leftDone = useRef(false)
   const rightDone = useRef(false)
@@ -36,13 +44,13 @@ const GlovesPut = () => {
     const leftDistance = camera.position.distanceTo(leftPosition.current)
     const rightDistance = camera.position.distanceTo(rightPosition.current)
 
-    setShowLeft(
+    setCanClickLeft(
       leftDistance < 10 &&
         !leftDone.current &&
         !isAnimating.current
     )
 
-    setShowRight(
+    setCanClickRight(
       rightDistance < 10 &&
         !rightDone.current &&
         !isAnimating.current
@@ -55,8 +63,9 @@ const GlovesPut = () => {
     if (isAnimating.current) return
 
     isAnimating.current = true
-    setShowLeft(false)
-    setShowRight(false)
+
+    setShowLeftButton(false)
+    setShowRightButton(false)
 
     gsap.to(glove.rotation, {
       z:
@@ -77,14 +86,14 @@ const GlovesPut = () => {
 
         if (side === "left") {
           leftDone.current = true
-          setSafetyStep(3);
-          setShowLeftGloveArrow(false);
+          setSafetyStep(3)
+          setShowLeftGloveArrow(false)
           setShowRightGloveArrow(true)
         }
 
         if (side === "right") {
           rightDone.current = true
-          setSafetyStep(4);
+          setSafetyStep(4)
           setShowRightGloveArrow(false)
         }
 
@@ -111,28 +120,34 @@ const GlovesPut = () => {
 
       raycaster.setFromCamera(mouse, camera)
 
-      if (showLeft && gloveleftRef.current && !leftDone.current) {
+      if (canClickLeft && gloveleftRef.current && !leftDone.current) {
         const leftIntersects = raycaster.intersectObject(
           gloveleftRef.current,
           true
         )
 
         if (leftIntersects.length > 0) {
-          putGlove(gloveleftRef.current, "left")
+          setShowLeftButton(true)
+          setShowRightButton(false)
           return
         }
       }
 
-      if (showRight && gloverightRef.current && !rightDone.current) {
+      if (canClickRight && gloverightRef.current && !rightDone.current) {
         const rightIntersects = raycaster.intersectObject(
           gloverightRef.current,
           true
         )
 
         if (rightIntersects.length > 0) {
-          putGlove(gloverightRef.current, "right")
+          setShowRightButton(true)
+          setShowLeftButton(false)
+          return
         }
       }
+
+      setShowLeftButton(false)
+      setShowRightButton(false)
     }
 
     gl.domElement.addEventListener("click", handleClick)
@@ -140,30 +155,73 @@ const GlovesPut = () => {
     return () => {
       gl.domElement.removeEventListener("click", handleClick)
     }
-  }, [showLeft, showRight, camera, gl, gloveleftRef, gloverightRef])
+  }, [
+    canClickLeft,
+    canClickRight,
+    camera,
+    gl,
+    gloveleftRef,
+    gloverightRef,
+    gogglesOn,
+    glovesOn,
+  ])
 
   return (
     <>
-      {showLeft && (
-        <Message
+      {showLeftButton && (
+        <Html
           position={[
             leftPosition.current.x,
             leftPosition.current.y + 1,
             leftPosition.current.z,
           ]}
-          message="Click Left Glove"
-        />
+          center
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              putGlove(gloveleftRef.current, "left")
+            }}
+            style={{
+              background: "white",
+              padding: "8px 14px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Put On
+          </button>
+        </Html>
       )}
 
-      {showRight && (
-        <Message
+      {showRightButton && (
+        <Html
           position={[
             rightPosition.current.x,
             rightPosition.current.y + 1,
             rightPosition.current.z,
           ]}
-          message="Click Right Glove"
-        />
+          center
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              putGlove(gloverightRef.current, "right")
+            }}
+            style={{
+              background: "white",
+              padding: "8px 14px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Put On
+          </button>
+        </Html>
       )}
     </>
   )

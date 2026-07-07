@@ -36,6 +36,8 @@ const ClickObject = () => {
 
     isFunnelMode,
     setIsFunnelMode,
+    clickedModel,setClickedModel,
+    isObjectInfo,setIsObjectInfo
   } = useContext(InteractionContext)
 
   const {
@@ -510,11 +512,15 @@ const ClickObject = () => {
       isClickedInsideObject(clickedObject, selectedRightHand.ref.current)
 
     if (isLeftHoldingClickedObject) {
+      console.log("Clicked object:", selectedLeftHand.name)
+
       selectHeldObject(selectedLeftHand, "left")
       return true
     }
 
     if (isRightHoldingClickedObject) {
+      console.log("Clicked object:", selectedRightHand.name)
+
       selectHeldObject(selectedRightHand, "right")
       return true
     }
@@ -532,6 +538,8 @@ const ClickObject = () => {
       setSelectedObject(null)
       return
     }
+
+    setClickedModel(selectedItem.name)
 
     selectTableObject(selectedItem)
   }
@@ -734,7 +742,7 @@ const ClickObject = () => {
         <Html position={selectedObject.position} center>
           <div
             style={{
-              background: "white",
+              background: "#FFBD00",
               padding: "10px",
               borderRadius: "8px",
               display: "flex",
@@ -742,6 +750,7 @@ const ClickObject = () => {
               alignItems: "center",
             }}
           >
+            
             {selectedObject.isHolding ? (
               <>
                 {isFilterFolded &&
@@ -806,24 +815,28 @@ const ClickObject = () => {
                 )}
               </>
             ) : (
-              <>
-                {!selectedLeftHand && (
-                  <button onClick={pickObjectWithLeftHand}>
-                    Left Hand
-                  </button>
-                )}
+            <>
+              {!isObjectInfo && (
+                <>
+                  {!selectedLeftHand && (
+                    <button onClick={pickObjectWithLeftHand}>
+                      Left Hand
+                    </button>
+                  )}
 
-                {!selectedRightHand && (
-                  <button onClick={pickObjectWithRightHand}>
-                    Right Hand
-                  </button>
-                )}
+                  {!selectedRightHand && (
+                    <button onClick={pickObjectWithRightHand}>
+                      Right Hand
+                    </button>
+                  )}
 
-                {selectedLeftHand && selectedRightHand && (
-                  <p style={{ margin: 0 }}>Both hands are full</p>
-                )}
-              </>
-            )}
+                  {selectedLeftHand && selectedRightHand && (
+                    <p style={{ margin: 0 }}>Both hands are full</p>
+                  )}
+                </>
+              )}
+            </>
+          )}
           </div>
         </Html>
       )}

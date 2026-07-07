@@ -20,4 +20,8 @@
     height: 80%;
     background-color: #FCFCEA;
     border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

@@ -1,23 +1,30 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
+import { Html } from "@react-three/drei"
 import * as THREE from "three"
 import gsap from "gsap"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
-import Message from "../../Message/Message"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const GogglesPut = () => {
   const { gogglesRef } = useContext(ModelContext)
   const { gogglesOn, hasSat } = useContext(InteractionContext)
-  const {setSafetyStep,setshowGogglesArrow,setShowLeftGloveArrow} = useContext(MainGuidelineContext)
 
-  const [show, setShow] = useState(false)
+  const {
+    setSafetyStep,
+    setshowGogglesArrow,
+    setShowLeftGloveArrow,
+  } = useContext(MainGuidelineContext)
+
+  const [showPutButton, setShowPutButton] = useState(false)
+  const [isNearGoggles, setIsNearGoggles] = useState(false)
+
   const gogglePosition = useRef(new THREE.Vector3())
   const isAnimating = useRef(false)
 
-  const { camera,gl } = useThree()
+  const { camera, gl } = useThree()
 
   useFrame(() => {
     if (!gogglesRef.current) return
@@ -27,34 +34,17 @@ const GogglesPut = () => {
 
     const distance = camera.position.distanceTo(gogglePosition.current)
 
-    setShow(distance < 10 && hasSat.current)
+    setIsNearGoggles(distance < 10 && hasSat.current)
   })
 
-useEffect(() => {
-  const raycaster = new THREE.Raycaster()
-  const mouse = new THREE.Vector2()
-
-  const handleClick = (event) => {
-    if (!show) return
+  const putOnGoggles = () => {
     if (!gogglesRef.current) return
     if (gogglesOn.current) return
     if (!hasSat.current) return
     if (isAnimating.current) return
 
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-
-    raycaster.setFromCamera(mouse, camera)
-
-    const intersects = raycaster.intersectObject(
-      gogglesRef.current,
-      true
-    )
-
-    if (intersects.length === 0) return
-
     isAnimating.current = true
-    setShow(false)
+    setShowPutButton(false)
 
     const goggles = gogglesRef.current
 
@@ -72,33 +62,76 @@ useEffect(() => {
       onComplete: () => {
         goggles.visible = false
         gogglesOn.current = true
-        isAnimating.current = false;
-        setshowGogglesArrow(false);
-        setSafetyStep(2);
+        isAnimating.current = false
+
+        setshowGogglesArrow(false)
+        setShowLeftGloveArrow(true)
+        setSafetyStep(2)
       },
     })
-
   }
 
-  gl.domElement.addEventListener("click", handleClick)
+  useEffect(() => {
+    const raycaster = new THREE.Raycaster()
+    const mouse = new THREE.Vector2()
 
-  return () => {
-    gl.domElement.removeEventListener("click", handleClick)
-  }
-}, [show, gogglesRef, gogglesOn, hasSat, camera, gl])
+    const handleClick = (event) => {
+      if (!isNearGoggles) return
+      if (!gogglesRef.current) return
+      if (gogglesOn.current) return
+      if (!hasSat.current) return
+      if (isAnimating.current) return
 
-  if (!show) return null
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+      raycaster.setFromCamera(mouse, camera)
+
+      const intersects = raycaster.intersectObject(gogglesRef.current, true)
+
+      if (intersects.length === 0) {
+        setShowPutButton(false)
+        return
+      }
+
+      setShowPutButton(true)
+    }
+
+    gl.domElement.addEventListener("click", handleClick)
+
+    return () => {
+      gl.domElement.removeEventListener("click", handleClick)
+    }
+  }, [isNearGoggles, gogglesRef, gogglesOn, hasSat, camera, gl])
+
+  if (!showPutButton) return null
 
   return (
-    // <Message
-    //   position={[
-    //     gogglePosition.current.x,
-    //     gogglePosition.current.y + 1,
-    //     gogglePosition.current.z,
-    //   ]}
-    //   message="Press G to Put"
-    // />
-    null
+    <Html
+      position={[
+        gogglePosition.current.x,
+        gogglePosition.current.y + 1,
+        gogglePosition.current.z,
+      ]}
+      center
+    >
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          putOnGoggles()
+        }}
+        style={{
+          background: "white",
+          padding: "8px 14px",
+          borderRadius: "8px",
+          border: "none",
+          cursor: "pointer",
+          fontWeight: "600",
+        }}
+      >
+        Put On
+      </button>
+    </Html>
   )
 }
 
