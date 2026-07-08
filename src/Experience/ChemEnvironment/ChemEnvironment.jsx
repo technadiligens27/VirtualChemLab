@@ -14,13 +14,29 @@ const ChemEnvironment = () => {
 
   const { scene } = useGLTF('/VirtualChemLab.glb');
 
+  const hidePourObjects = (objectRef) => {
+  if (!objectRef.current) return
+
+  objectRef.current.traverse((child) => {
+    if (child.name?.toLowerCase().includes("pour")) {
+      child.visible = false
+    }
+  })
+}
+
   useEffect(() => {
     chairRef.current = scene.getObjectByName('main-chair')
     gogglesRef.current = scene.getObjectByName('Goggles');
     gloveleftRef.current = scene.getObjectByName('main-glove-left');
     gloverightRef.current = scene.getObjectByName('main-glove-right');
+
     normalBeakerRef.current = scene.getObjectByName('main-normal-beaker');
     conicalBeakerRef.current = scene.getObjectByName('main-Conical-Flask');
+    
+    hidePourObjects(normalBeakerRef)
+    hidePourObjects(conicalBeakerRef)
+
+
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
     graduatedBeakerRef.current = scene.getObjectByName('main-graduated-cylinder');
     spoonRef.current = scene.getObjectByName('main-spoon');

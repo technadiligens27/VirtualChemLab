@@ -192,6 +192,15 @@ const Reaction = () => {
       ? liquidRef.current.material
       : [liquidRef.current.material]
 
+    if(liquidRef.current.name==='main-normal-beaker-liquid' && liquidRef.current.scale.y <55){
+      liquidRef.current.scale.y += delta * 2
+    }
+
+    if(liquidRef.current.name==='main-Conical-Flask-liquid' && liquidRef.current.scale.y < 200){
+      liquidRef.current.scale.y += delta * 2
+    }
+      
+
     materials.forEach((mat) => {
       if (!mat.color) return
 

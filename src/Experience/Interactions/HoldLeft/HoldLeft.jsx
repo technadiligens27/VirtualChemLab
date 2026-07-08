@@ -12,6 +12,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 import FunnelMode from "../FunnelMode/FunnelMode"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
 
 const HoldLeft = ({ modeldata }) => {
 
@@ -71,7 +72,7 @@ const HoldLeft = ({ modeldata }) => {
 
     const handleWheel = (e) => {
       if (isFunnelMode) return
-
+      if (selectedRightHand) return
       e.preventDefault()
 
       const maxRotation = Math.PI / 5
@@ -98,7 +99,7 @@ const HoldLeft = ({ modeldata }) => {
       // window.removeEventListener("mouseup", handleMouseUp)
       window.removeEventListener("wheel", handleWheel)
     }
-  }, [camera, gl, modeldata, isFunnelMode])
+  }, [camera, gl, modeldata, isFunnelMode, selectedRightHand])
 
   useEffect(() => {
     if (!modeldata?.ref?.current) return
@@ -159,7 +160,6 @@ const HoldLeft = ({ modeldata }) => {
   // },[selectedLeftHand])
 
   useEffect(()=>{
-    console.log("isFilterInFunnel:",isFilterInFunnel)
   },[isFilterInFunnel])
 const isLitmus = (name) => name?.toLowerCase().includes("litmus")
   return (
@@ -221,7 +221,9 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
       }
 
-
+      {
+         <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
+      }
 
     </>
   )

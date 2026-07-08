@@ -17,7 +17,7 @@ const AllErrors = ()=>{
             {showErrorMsgNo == 6 && <ErrorMsg text={'Pls Select Red Litmus Paper'}/>}
             {showErrorMsgNo == 7 && <ErrorMsg text={'Pls Select Starch Solution and 50 ml'}/>}
             {showErrorMsgNo == 8 && <ErrorMsg text={'No Visible Reaction Found'}/>}
-            
+            {showErrorMsgNo == 9 && <ErrorMsg text={'No Liquid Inside beaker to pour'}/>}
         </>
     )
 }

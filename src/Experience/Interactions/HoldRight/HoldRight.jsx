@@ -13,6 +13,7 @@ import FoldFilter from "../FoldFilter/FoldFilter"
 import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 import FunnelMode from "../FunnelMode/FunnelMode"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
 
 const HoldRight = ({ modeldata }) => {
   const {
@@ -82,6 +83,7 @@ const HoldRight = ({ modeldata }) => {
     const handleWheel = (e) => {
       // When Funnel Mode is active, wheel should only control FunnelMode Y height
       if (isFunnelMode) return
+      if(selectedRightHand) return
 
       e.preventDefault()
 
@@ -109,7 +111,7 @@ const HoldRight = ({ modeldata }) => {
       canvas.removeEventListener("mousedown", handleMouseDown)
       window.removeEventListener("wheel", handleWheel)
     }
-  }, [camera, gl, modeldata, isFunnelMode])
+  }, [camera, gl, modeldata, isFunnelMode, selectedRightHand])
 
   useEffect(() => {
     if (!modeldata?.ref?.current) return
@@ -235,6 +237,10 @@ const HoldRight = ({ modeldata }) => {
 {
         isFunnelMode  &&
         <FunnelMode beakerRef={selectedLeftHand.ref} funnelRef={funnelRef} hand='right'/>
+      }
+
+      {
+         <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
     </>
   )

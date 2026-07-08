@@ -1,0 +1,10 @@
+.liquid-label {
+  background: #ffbd00;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+}

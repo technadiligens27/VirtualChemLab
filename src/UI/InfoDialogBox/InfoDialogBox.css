@@ -15,3 +15,7 @@
   height: 100px;
   background: linear-gradient( #FFBD00 100%); */
 }
+
+.info-dialog-inner-box{
+  flex-direction: column;
+}
