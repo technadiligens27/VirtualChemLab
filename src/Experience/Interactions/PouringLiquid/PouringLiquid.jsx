@@ -15,6 +15,9 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
 
     setPouredFromRight,
     pouredFromRight,
+
+    selectedLeftHand,
+    selectedRightHand,
   } = useContext(InteractionContext)
 
   const { setShowErrorMsgNo } = useContext(MainGuidelineContext)
@@ -55,14 +58,59 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
   useEffect(() => {
     if (!pourLiquidRef.current || !fillData?.color) return
 
-    if (Array.isArray(pourLiquidRef.current.material)) {
-      pourLiquidRef.current.material.forEach((mat) => {
-        mat?.color?.set(fillData.color)
-      })
-    } else {
-      pourLiquidRef.current.material.color?.set(fillData.color)
-    }
+    const materials = Array.isArray(pourLiquidRef.current.material)
+      ? pourLiquidRef.current.material
+      : [pourLiquidRef.current.material]
+
+    materials.forEach((mat) => {
+      mat.color?.set(fillData.color)
+      mat.needsUpdate = true
+    })
   }, [fillData?.color])
+
+  const findLiquidMesh = (model) => {
+    if (!model) return null
+    if (typeof model.traverse !== "function") return null
+
+    let liquidMesh = null
+
+    model.traverse((child) => {
+      if (liquidMesh) return
+
+      if (
+        child.isMesh &&
+        child.name?.toLowerCase().includes("liquid")
+      ) {
+        liquidMesh = child
+      }
+    })
+
+    return liquidMesh
+  }
+
+  const getLiquidMaxScaleY = (liquidMesh) => {
+    const name = liquidMesh?.name?.toLowerCase()
+
+    if (name?.includes("conical")) return 200
+    if (name?.includes("normal")) return 55
+
+    return 55
+  }
+
+  const isTargetBeakerFull = () => {
+    const targetModel =
+      hand === "left"
+        ? selectedRightHand?.ref?.current
+        : selectedLeftHand?.ref?.current
+
+    const targetLiquid = findLiquidMesh(targetModel)
+
+    if (!targetLiquid) return false
+
+    const maxScaleY = getLiquidMaxScaleY(targetLiquid)
+
+    return targetLiquid.scale.y >= maxScaleY - 0.05
+  }
 
   const hasLiquidInsideBeaker = () => {
     if (!modelRef?.current) return false
@@ -76,6 +124,12 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
       const childName = child.name?.toLowerCase()
 
       if (!childName?.includes("liquid")) return
+
+      if (child.isMesh && child.visible && child.scale.y > 0.01) {
+        hasLiquid = true
+        liquidInsideRef.current = child
+        return
+      }
 
       child.traverse((innerChild) => {
         if (hasLiquid) return
@@ -97,17 +151,17 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
       pourLiquidRef.current.scale.y = 0
     }
 
-    if (actualPouringRef.current) {
-      if (hand === "left") {
-        setPouredFromLeft(false)
-      }
+    if (!actualPouringRef.current) return
 
-      if (hand === "right") {
-        setPouredFromRight(false)
-      }
-
-      actualPouringRef.current = false
+    if (hand === "left") {
+      setPouredFromLeft(false)
     }
+
+    if (hand === "right") {
+      setPouredFromRight(false)
+    }
+
+    actualPouringRef.current = false
   }
 
   const startPouring = () => {
@@ -149,6 +203,12 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
       return
     }
 
+    if (isTargetBeakerFull()) {
+      console.log("Target beaker is full. Stop pouring.")
+      stopPouring()
+      return
+    }
+
     noLiquidLoggedRef.current = false
 
     startPouring()
@@ -164,7 +224,6 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
       25
     )
 
-    // This is the simple part: liquid inside beaker goes down
     if (liquidInsideRef.current) {
       liquidInsideRef.current.scale.y -= 5 * delta
 
@@ -178,8 +237,8 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
 
   return (
     <>
-      {pouredFromLeft && <Reaction />}
-      {pouredFromRight && <Reaction />}
+      {hand === "left" && pouredFromLeft && <Reaction hand="left" />}
+      {hand === "right" && pouredFromRight && <Reaction hand="right" />}
     </>
   )
 }

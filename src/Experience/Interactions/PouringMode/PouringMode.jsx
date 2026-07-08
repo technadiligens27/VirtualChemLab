@@ -12,6 +12,7 @@ const PouringMode = ({ hand }) => {
     selectedRightHand,
     selectedLeftHand,
     setPouredFromLeft,
+    isPouring, setIsPouring
   } = useContext(InteractionContext)
 
   const {lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext)
@@ -25,7 +26,7 @@ const PouringMode = ({ hand }) => {
   const otherOriginalPositionRef = useRef(null)
   const otherOriginalRotationRef = useRef(null)
 
-  const [isPouring, setIsPouring] = useState(false)
+  // const [isPouring, setIsPouring] = useState(false)
   const [activeObject, setActiveObject] = useState(null)
 
   useEffect(() => {

@@ -32,6 +32,7 @@ const HoldRight = ({ modeldata }) => {
     isFilterInFunnel,
 
     isFunnelMode,
+    selectedModelRight
   } = useContext(InteractionContext)
 
   const {
@@ -43,6 +44,10 @@ const HoldRight = ({ modeldata }) => {
   const {lessonStep,isMainGuideline,setLessonStep} = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
+
+  useEffect(()=>{
+    selectedModelRight.current = modeldata.ref.current
+  },[])
 
   const defaultOffsetRef = useRef(new THREE.Vector3(4.5, -0.5, -5))
   const rotationZRef = useRef(0)

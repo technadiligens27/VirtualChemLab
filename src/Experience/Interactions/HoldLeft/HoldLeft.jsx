@@ -20,14 +20,21 @@ const HoldLeft = ({ modeldata }) => {
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
     selectedRightHand,setPouredFromLeft,rightBeakerFillData,
     isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel,
-    isFunnelMode,setIsFunnelMode
+    isFunnelMode,setIsFunnelMode,selectedModelLeft
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
   const {lessonStep,setLessonStep,isMainGuideline,setShowNormalBeakerArrow} = useContext(MainGuidelineContext)
 
-  const { camera, gl, scene } = useThree()
+  const { camera, gl, scene } = useThree();
 
+  useEffect(()=>{
+    selectedModelLeft.current = modeldata.ref.current
+  },[])
+
+  useEffect(()=>{
+    console.log('selectedModelLeft:',selectedModelLeft)
+  },[selectedModelLeft])
 
   const defaultOffsetRef = useRef(new THREE.Vector3(-4, -0.5, -5))
   const rotationZRef = useRef(0)

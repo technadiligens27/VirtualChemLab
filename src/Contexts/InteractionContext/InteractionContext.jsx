@@ -48,7 +48,15 @@ export const InteractionProvider = ({ children }) => {
   const [isFunnelMode,setIsFunnelMode] = useState(false);
 
   const [clickedModel,setClickedModel] = useState(null);
-  const [isObjectInfo,setIsObjectInfo] = useState(false)
+  const [isObjectInfo,setIsObjectInfo] = useState(false);
+
+  const selectedModelLeft = useRef(null);
+  const selectedModelRight = useRef(null);
+
+  const liquidLeftModel = useRef(null);
+  const liquidRightModel = useRef(null);
+
+  const [isPouring, setIsPouring] = useState(false)
 
 
   return (
@@ -79,7 +87,10 @@ export const InteractionProvider = ({ children }) => {
         isFunnelMode,setIsFunnelMode,
         isSitting,setIsSitting,
         clickedModel,setClickedModel,
-        isObjectInfo,setIsObjectInfo
+        isObjectInfo,setIsObjectInfo,
+        selectedModelLeft,selectedModelRight,
+        liquidLeftModel,liquidRightModel,
+        isPouring, setIsPouring
       }}
     >
       {children}
