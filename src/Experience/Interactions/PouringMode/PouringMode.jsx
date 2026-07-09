@@ -4,6 +4,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
 import * as THREE from "three"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -14,6 +15,8 @@ const PouringMode = ({ hand }) => {
     setPouredFromLeft,
     isPouring, setIsPouring
   } = useContext(InteractionContext)
+
+  const {isReactionRef} = useContext(ReactionContext)
 
   const {lessonStep,setLessonStep,setShowErrorMsgNo} = useContext(MainGuidelineContext)
 
@@ -218,8 +221,9 @@ const PouringMode = ({ hand }) => {
 
   return (
     <>
-      {activeObject && (
+      {activeObject  && (
         <PouringLiquid
+        
           modelRef={{ current: activeObject }}
           hand={hand}
           isPouring={isPouring}

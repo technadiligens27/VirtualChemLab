@@ -5,79 +5,191 @@ import * as THREE from "three"
 const CopperPrecipitate = ({
   beakerRef,
   downDistance = 1.7,
-  fallDelay = 1,
+  fallDelay = 0.5,
 }) => {
   const precipitateMeshesRef = useRef([])
   const progressRef = useRef(0)
+  const frameLogDoneRef = useRef(false)
 
-  const moveDuration = 5
-  const opacityDuration = 1.5
-
-  const targetColor = new THREE.Color("#0284C7")
+  const moveDuration = 4
+  const opacityDuration = 1.2
 
   useEffect(() => {
-    if (!beakerRef?.current) return
+    console.log("CopperPrecipitate mounted")
 
-    precipitateMeshesRef.current = []
-    progressRef.current = 0
-
-    let normalTopObject = null
-
-    beakerRef.current.traverse((child) => {
-      const childName = child.name?.toLowerCase()
-
-      if (childName?.includes("normal-beaker-top")) {
-        normalTopObject = child
-      }
-    })
-
-    if (!normalTopObject) {
-      console.log("normal-beaker-top empty not found")
+    if (!beakerRef?.current) {
+      console.log("beakerRef.current not found")
       return
     }
 
-    const normalTopWorldPos = new THREE.Vector3()
-    normalTopObject.getWorldPosition(normalTopWorldPos)
+    const beaker = beakerRef.current
 
-    beakerRef.current.traverse((child) => {
+    console.log("beaker found:", beaker.name, beaker)
+
+    precipitateMeshesRef.current = []
+    progressRef.current = 0
+    frameLogDoneRef.current = false
+
+    let liquidTopEmpty = null
+    let precipitateHolder = null
+
+    console.log("Searching beaker children...")
+
+    beaker.traverse((child) => {
       const childName = child.name?.toLowerCase()
 
-      if (
-        child.isMesh &&
-        childName?.includes("precipitate") &&
-        child.material
-      ) {
-        child.visible = true
-        child.frustumCulled = false
-        child.renderOrder = 999
+      console.log("child:", {
+        name: child.name,
+        type: child.type,
+        isMesh: child.isMesh,
+        visible: child.visible,
+        scale: child.scale,
+      })
 
-        child.material = new THREE.MeshBasicMaterial({
-          color: targetColor,
-          transparent: true,
-          opacity: 0,
-          side: THREE.DoubleSide,
-          depthTest: false,
-          depthWrite: false,
-        })
+      if (childName?.includes("normal-beaker-top")) {
+        liquidTopEmpty = child
+        console.log("FOUND liquidTopEmpty:", child.name)
+      }
 
-        const localTargetPos = normalTopWorldPos.clone()
-
-        if (child.parent) {
-          child.parent.worldToLocal(localTargetPos)
-        }
-
-        child.position.copy(localTargetPos)
-
-        const startY = child.position.y
-        const endY = startY - downDistance
-
-        precipitateMeshesRef.current.push({
-          mesh: child,
-          startY,
-          endY,
-        })
+      if (childName?.includes("precipitate-empty")) {
+        precipitateHolder = child
+        console.log("FOUND precipitateHolder:", child.name)
       }
     })
+
+    if (!liquidTopEmpty) {
+      console.log("ERROR: normal-beaker-top empty not found")
+      return
+    }
+
+    if (!precipitateHolder) {
+      console.log("ERROR: precipitate-empty holder not found")
+      return
+    }
+
+    // Important: if the holder is invisible, all child blobs will also be invisible
+    precipitateHolder.visible = true
+
+    console.log("liquidTopEmpty object:", liquidTopEmpty)
+    console.log("precipitateHolder object:", precipitateHolder)
+
+    const liquidTopWorldPosition = new THREE.Vector3()
+    liquidTopEmpty.getWorldPosition(liquidTopWorldPosition)
+
+    console.log("liquidTopWorldPosition:", liquidTopWorldPosition)
+
+    const liquidTopLocalPosition = liquidTopWorldPosition.clone()
+    precipitateHolder.worldToLocal(liquidTopLocalPosition)
+
+    console.log("liquidTopLocalPosition inside precipitateHolder:", liquidTopLocalPosition)
+
+    const precipitateMeshes = []
+
+    console.log("Searching blobs inside precipitateHolder...")
+
+    precipitateHolder.traverse((child) => {
+      console.log("holder child:", {
+        name: child.name,
+        type: child.type,
+        isMesh: child.isMesh,
+        visible: child.visible,
+        hasMaterial: !!child.material,
+        position: child.position,
+        scale: child.scale,
+      })
+
+      if (child.isMesh && child.material) {
+        precipitateMeshes.push(child)
+        console.log("FOUND precipitate mesh:", child.name)
+      }
+    })
+
+    console.log("Total precipitate meshes found:", precipitateMeshes.length)
+
+    if (precipitateMeshes.length === 0) {
+      console.log("ERROR: No precipitate blobs found inside precipitate-empty")
+      return
+    }
+
+    precipitateMeshes.forEach((mesh, index) => {
+      console.log(`Setting up blob ${index}:`, mesh.name)
+
+      mesh.visible = false
+      mesh.frustumCulled = false
+      mesh.renderOrder = 999
+
+      const oldWorldPos = new THREE.Vector3()
+      mesh.getWorldPosition(oldWorldPos)
+
+      console.log(`Blob ${index} old world position:`, oldWorldPos)
+      console.log(`Blob ${index} old local position:`, mesh.position.clone())
+      console.log(`Blob ${index} old scale:`, mesh.scale.clone())
+
+      mesh.material = new THREE.MeshBasicMaterial({
+        color: new THREE.Color("#0284C7"),
+        transparent: true,
+        opacity: 0,
+        side: THREE.DoubleSide,
+
+        // For debugging, false makes it easier to see through glass.
+        // Later you can change this back to true.
+        depthTest: false,
+        depthWrite: false,
+      })
+
+      const originalPosition = mesh.position.clone()
+
+      const randomEndX = (Math.random() - 0.5) * 0.15
+      const randomEndZ = (Math.random() - 0.5) * 0.15
+
+      const startPosition = originalPosition.clone()
+
+      // Only take the Y position from the liquid top
+      startPosition.y = liquidTopLocalPosition.y
+
+      const endPosition = startPosition.clone()
+      endPosition.y -= downDistance
+
+      // Small random settling movement
+      endPosition.x += randomEndX
+      endPosition.z += randomEndZ
+
+      mesh.position.copy(startPosition)
+
+      console.log(`Blob ${index} startPosition:`, startPosition)
+      console.log(`Blob ${index} endPosition:`, endPosition)
+      console.log(`Blob ${index} new local position:`, mesh.position.clone())
+
+      const randomDelay = Math.random() * 1.4
+      const randomDuration = moveDuration + Math.random() * 2
+
+      const swayAmount = 0.015 + Math.random() * 0.035
+      const swaySpeed = 2 + Math.random() * 3
+      const phase = Math.random() * Math.PI * 2
+
+      const rotationSpeed = {
+        x: (Math.random() - 0.5) * 0.8,
+        y: (Math.random() - 0.5) * 0.8,
+        z: (Math.random() - 0.5) * 0.8,
+      }
+
+      precipitateMeshesRef.current.push({
+        mesh,
+        startPosition,
+        endPosition,
+        randomDelay,
+        randomDuration,
+        swayAmount,
+        swaySpeed,
+        phase,
+        rotationSpeed,
+      })
+    })
+
+    console.log(
+      "Final precipitateMeshesRef count:",
+      precipitateMeshesRef.current.length
+    )
   }, [beakerRef, downDistance])
 
   useFrame((_, delta) => {
@@ -85,23 +197,77 @@ const CopperPrecipitate = ({
 
     progressRef.current += delta
 
-    const opacityProgress = Math.min(progressRef.current / opacityDuration, 1)
+    if (!frameLogDoneRef.current) {
+      console.log("Animation started")
+      console.log("Current progress time:", progressRef.current)
+      console.log("Blobs in animation:", precipitateMeshesRef.current.length)
+      frameLogDoneRef.current = true
+    }
 
-    // Movement starts only after 1.5 seconds
-    const moveTime = Math.max(progressRef.current - fallDelay, 0)
-    const moveProgress = Math.min(moveTime / moveDuration, 1)
+    precipitateMeshesRef.current.forEach((blob, index) => {
+      const {
+        mesh,
+        startPosition,
+        endPosition,
+        randomDelay,
+        randomDuration,
+        swayAmount,
+        swaySpeed,
+        phase,
+        rotationSpeed,
+      } = blob
 
-    precipitateMeshesRef.current.forEach(({ mesh, startY, endY }) => {
-      if (!mesh.material) return
+      if (!mesh.material) {
+        console.log(`Blob ${index} has no material`)
+        return
+      }
+
+      const localTime = progressRef.current - fallDelay - randomDelay
+
+      if (localTime < 0) return
+
+      const opacityProgress = Math.min(localTime / opacityDuration, 1)
+      const moveProgress = Math.min(localTime / randomDuration, 1)
+
+      const smoothProgress =
+        moveProgress * moveProgress * (3 - 2 * moveProgress)
 
       mesh.visible = true
-      mesh.material.opacity = opacityProgress
 
-      mesh.position.y = THREE.MathUtils.lerp(
-        startY,
-        endY,
-        moveProgress
-      )
+      mesh.position.lerpVectors(startPosition, endPosition, smoothProgress)
+
+      mesh.position.x +=
+        Math.sin(progressRef.current * swaySpeed + phase) *
+        swayAmount *
+        (1 - smoothProgress)
+
+      mesh.position.z +=
+        Math.cos(progressRef.current * swaySpeed + phase) *
+        swayAmount *
+        (1 - smoothProgress)
+
+      mesh.rotation.x += rotationSpeed.x * delta
+      mesh.rotation.y += rotationSpeed.y * delta
+      mesh.rotation.z += rotationSpeed.z * delta
+
+      mesh.material.opacity = opacityProgress
+      mesh.material.needsUpdate = true
+
+      if (index === 0 && moveProgress > 0 && moveProgress < 0.05) {
+        console.log("First blob became visible:", {
+          name: mesh.name,
+          visible: mesh.visible,
+          opacity: mesh.material.opacity,
+          localTime,
+          moveProgress,
+          position: mesh.position.clone(),
+          scale: mesh.scale.clone(),
+        })
+      }
+
+      if (moveProgress >= 1) {
+        mesh.position.copy(endPosition)
+      }
     })
   })
 

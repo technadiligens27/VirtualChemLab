@@ -12,7 +12,7 @@ export const ReactionProvider = ({ children }) => {
    const [isAcidBase,setIsAcidBase] = useState(false);
    
    const stirrLiquidRef = useRef(null)
-
+    const isReactionRef = useRef(false)
   return (
     <ReactionContext.Provider
       value={{
@@ -22,7 +22,8 @@ export const ReactionProvider = ({ children }) => {
         isNaohUniversal,setIsNaohUniversal,
         isStarchIodine,setIsStarchIodine,
         isCopperSulfateNaoh,setIsCopperSulfateNaoh,
-        isAcidBase,setIsAcidBase
+        isAcidBase,setIsAcidBase,
+        isReactionRef
       }}
     >
       {children}

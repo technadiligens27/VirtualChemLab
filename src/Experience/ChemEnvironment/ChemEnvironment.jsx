@@ -24,6 +24,20 @@ const ChemEnvironment = () => {
   })
 }
 
+  const hidePrecipitateObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("precipitate")) {
+      child.visible = false
+      console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
+
+
   useEffect(() => {
     chairRef.current = scene.getObjectByName('main-chair')
     gogglesRef.current = scene.getObjectByName('Goggles');
@@ -63,8 +77,8 @@ const ChemEnvironment = () => {
     conicalBeakerLiquidRef.current.visible = false;
   }
 
-    normalPrecipitateRef.current = scene.getObjectByName('normal-beaker-precipitate');
-    normalPrecipitateRef.current.visible = false
+  hidePrecipitateObjects(scene)
+
 
   }, [scene])
 

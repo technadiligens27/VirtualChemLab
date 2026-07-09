@@ -4,6 +4,16 @@ import { useContext, useEffect, useRef } from "react"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import Reaction from "../Reaction/Reaction"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
+
+const visibleReactions = [
+  ["Water (H2O)", "Salt (NaCl)"],
+  ["Hydrochloric Acid (HCl)", "Universal indicator"],
+  ["Sodium Hydroxide (NaOH)", "Universal indicator"],
+  ["Iodine solution", "Starch solution"],
+  ["Copper Sulfate (CuSO4)", "Sodium Hydroxide (NaOH)"],
+  ["Hydrochloric Acid (HCl)", "Sodium Hydroxide (NaOH)"],
+]
 
 const PouringLiquid = ({ modelRef, hand, isPouring }) => {
   const {
@@ -21,12 +31,14 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
   } = useContext(InteractionContext)
 
   const { setShowErrorMsgNo } = useContext(MainGuidelineContext)
+  const { isReactionRef } = useContext(ReactionContext)
 
   const pourLiquidRef = useRef(null)
   const pourParentRef = useRef(null)
   const liquidInsideRef = useRef(null)
 
   const noLiquidLoggedRef = useRef(false)
+  const noReactionLoggedRef = useRef(false)
   const actualPouringRef = useRef(false)
 
   const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
@@ -68,6 +80,17 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
     })
   }, [fillData?.color])
 
+  const hasVisibleReaction = () => {
+    const left = leftBeakerFillData?.name
+    const right = rightBeakerFillData?.name
+
+    if (!left || !right) return false
+
+    return visibleReactions.some(
+      (reaction) => reaction.includes(left) && reaction.includes(right)
+    )
+  }
+
   const findLiquidMesh = (model) => {
     if (!model) return null
     if (typeof model.traverse !== "function") return null
@@ -77,10 +100,7 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
     model.traverse((child) => {
       if (liquidMesh) return
 
-      if (
-        child.isMesh &&
-        child.name?.toLowerCase().includes("liquid")
-      ) {
+      if (child.isMesh && child.name?.toLowerCase().includes("liquid")) {
         liquidMesh = child
       }
     })
@@ -145,10 +165,17 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
     return hasLiquid
   }
 
-  const stopPouring = () => {
+  const stopPouring = (forceReset = false) => {
     if (pourLiquidRef.current) {
       pourLiquidRef.current.visible = false
       pourLiquidRef.current.scale.y = 0
+    }
+
+    if (forceReset) {
+      setPouredFromLeft(false)
+      setPouredFromRight(false)
+      actualPouringRef.current = false
+      return
     }
 
     if (!actualPouringRef.current) return
@@ -189,6 +216,7 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
 
     if (!isPouring) {
       noLiquidLoggedRef.current = false
+      noReactionLoggedRef.current = false
       stopPouring()
       return
     }
@@ -209,7 +237,21 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
       return
     }
 
+    if (!hasVisibleReaction()) {
+      if (!noReactionLoggedRef.current) {
+        console.log("No Visible Reaction Found")
+        setShowErrorMsgNo(8)
+        noReactionLoggedRef.current = true
+      }
+
+      isReactionRef.current = false
+
+      stopPouring(true)
+      return
+    }
+
     noLiquidLoggedRef.current = false
+    noReactionLoggedRef.current = false
 
     startPouring()
 

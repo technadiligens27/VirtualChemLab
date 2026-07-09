@@ -21,14 +21,11 @@ const Reaction = ({ hand }) => {
     liquidLeftModel,
     liquidRightModel,
 
-    isPouring, setIsPouring
+    isPouring,
   } = useContext(InteractionContext)
 
-  const {
-    lessonStep,
-    setLessonStep,
-    setShowErrorMsgNo,
-  } = useContext(MainGuidelineContext)
+  const { lessonStep, setLessonStep, setShowErrorMsgNo } =
+    useContext(MainGuidelineContext)
 
   const {
     isSaltWaterReaction,
@@ -49,14 +46,14 @@ const Reaction = ({ hand }) => {
     isAcidBase,
     setIsAcidBase,
 
-    stirrLiquidRef,
+    stirrLiquidRef,isReactionRef
   } = useContext(ReactionContext)
 
   const liquidRef = useRef(null)
   const targetColorRef = useRef(null)
   const activeReactionRef = useRef(null)
   const targetBeakerRef = useRef(null)
-
+const finishLoggedRef = useRef(false)
   const lessonStepChangedRef = useRef(false)
 
   const resetReactions = useCallback(() => {
@@ -74,6 +71,14 @@ const Reaction = ({ hand }) => {
     setIsCopperSulfateNaoh,
     setIsAcidBase,
   ])
+
+  const clearReactionRefs = useCallback(() => {
+    liquidRef.current = null
+    targetColorRef.current = null
+    activeReactionRef.current = null
+    targetBeakerRef.current = null
+    stirrLiquidRef.current = null
+  }, [stirrLiquidRef])
 
   const reactions = useMemo(
     () => [
@@ -156,10 +161,7 @@ const Reaction = ({ hand }) => {
     model.traverse((child) => {
       if (liquidMesh) return
 
-      if (
-        child.isMesh &&
-        child.name?.toLowerCase().includes("liquid")
-      ) {
+      if (child.isMesh && child.name?.toLowerCase().includes("liquid")) {
         liquidMesh = child
       }
     })
@@ -195,17 +197,22 @@ const Reaction = ({ hand }) => {
   }
 
   const increaseLiquidScaleY = (liquidMesh, delta) => {
-    if (!liquidMesh) return
+      if (!liquidMesh) return false
 
-    const maxScaleY = getLiquidMaxScaleY(liquidMesh)
+      const maxScaleY = getLiquidMaxScaleY(liquidMesh)
 
-    liquidMesh.visible = true
+      liquidMesh.visible = true
 
-    liquidMesh.scale.y = Math.min(
-      liquidMesh.scale.y + delta * 2,
-      maxScaleY
-    )
-  }
+      liquidMesh.scale.y = Math.min(liquidMesh.scale.y + delta * 2, maxScaleY)
+
+      if (liquidMesh.scale.y >= maxScaleY && !finishLoggedRef.current) {
+        setShowErrorMsgNo(10)
+        finishLoggedRef.current = true
+        return true
+      }
+
+      return false
+}
 
   const isLiquidEmpty = (liquidMesh) => {
     if (!liquidMesh) return true
@@ -229,12 +236,7 @@ const Reaction = ({ hand }) => {
     if (rightLiquid) {
       liquidRightModel.current = rightLiquid
     }
-  }, [
-    selectedLeftHand,
-    selectedRightHand,
-    liquidLeftModel,
-    liquidRightModel,
-  ])
+  }, [selectedLeftHand, selectedRightHand, liquidLeftModel, liquidRightModel])
 
   useEffect(() => {
     if (!pouredFromLeft && !pouredFromRight) return
@@ -248,11 +250,20 @@ const Reaction = ({ hand }) => {
 
     if (!reaction) {
       console.log("No Visible Reaction Found")
+
+      isReactionRef.current = false
+
+      resetReactions()
+      clearReactionRefs()
+
       setShowErrorMsgNo(8)
+
       return
     }
 
     reaction.run()
+
+    isReactionRef.current = true
 
     activeReactionRef.current = reaction.name
     targetColorRef.current = new THREE.Color(reaction.color)
@@ -279,6 +290,8 @@ const Reaction = ({ hand }) => {
     selectedLeftHand,
     selectedRightHand,
     reactions,
+    resetReactions,
+    clearReactionRefs,
     setShowErrorMsgNo,
     stirrLiquidRef,
   ])
@@ -290,6 +303,7 @@ const Reaction = ({ hand }) => {
   }, [lessonStep])
 
   useFrame((_, delta) => {
+    if (!isReactionRef.current) return
     if (!liquidRef.current || !targetColorRef.current) return
 
     const canLerp =
@@ -303,7 +317,7 @@ const Reaction = ({ hand }) => {
     if (!canLerp) return
     if (!isPouring) return
 
-    if (pouredFromLeft ) {
+    if (pouredFromLeft) {
       const sourceLiquid = liquidLeftModel.current
       const targetLiquid = liquidRightModel.current
 
@@ -340,7 +354,7 @@ const Reaction = ({ hand }) => {
 
   return (
     <>
-      {isCopperSulfateNaoh && (
+      {isCopperSulfateNaoh && targetBeakerRef.current && (
         <CopperPrecipitate beakerRef={targetBeakerRef} />
       )}
     </>

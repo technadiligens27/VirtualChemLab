@@ -49,24 +49,23 @@ const LiquidLabels = ({ modelRef, hand }) => {
 
   if (!showLabel) return null
 
+  const colorOfLiquid = (name) => {
+    if (name === "Hydrochloric Acid (HCl)") return "Colourless"
+    if (name === "Sodium Hydroxide (NaOH)") return "Colourless"
+    if (name === "Copper Sulfate (CuSO4)") return "Blue"
+    if (name === "Universal indicator") return "Green"
+    if (name === "Water (H2O)") return "Colourless"
+    if (name === "Salt (NaCl)") return "White"
+
+    return fillData?.color || "Unknown colour"
+  }
+
   return (
     <group ref={labelRef}>
       <Html center>
-        <div
-          style={{
-            background: fillData?.color || "#ffbd00",
-            color: "black",
-            padding: "6px 12px",
-            borderRadius: "8px",
-            fontSize: "13px",
-            fontWeight: "700",
-            whiteSpace: "nowrap",
-            border: "2px solid white",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-            pointerEvents: "none",
-          }}
-        >
+        <div className="liquid-label">
           {fillData?.name || "Liquid"}
+          <p>{colorOfLiquid(fillData.name)}</p>
         </div>
       </Html>
     </group>

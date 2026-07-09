@@ -18,6 +18,8 @@ const AllErrors = ()=>{
             {showErrorMsgNo == 7 && <ErrorMsg text={'Pls Select Starch Solution and 50 ml'}/>}
             {showErrorMsgNo == 8 && <ErrorMsg text={'No Visible Reaction Found'}/>}
             {showErrorMsgNo == 9 && <ErrorMsg text={'No Liquid Inside beaker to pour'}/>}
+            {showErrorMsgNo == 10 && <ErrorMsg text={'Beaker Already full'}/>}
+
         </>
     )
 }
