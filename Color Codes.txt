@@ -1,0 +1,10 @@
+Color Codes
+
+Student Table - #A5978DFF
+Table Bottom - #AA7646FF
+Chair Head - #C6A781FF
+Chair legs - #A7A29EFF
+Sink inner - #181915FF
+Sink Outer - ##D0C4B4FF
+Goggles - #638067FF	
+Glass - #E5DCE7FF
