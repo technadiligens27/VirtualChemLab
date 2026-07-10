@@ -54,7 +54,8 @@ const UI = () => {
     setShowLeftGloveArrow,setShowRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow
   } = useContext(MainGuidelineContext)
 
-  const {isSitting,clickedModel,isObjectInfo} = useContext(InteractionContext)
+  const {isSitting,clickedModel,isObjectInfo,
+    showSlideChairMsg,isChairSlid, setIsChairSlid,chairStep,setChairStep} = useContext(InteractionContext)
 
   const startLab = () => {
     setIsMainGuideline(false);
@@ -64,7 +65,6 @@ const UI = () => {
     canvas?.requestPointerLock?.()
   }
 
-  if(!MainGuidelineContext) return null
 
   useEffect(() => {
   if (isSitting) {
@@ -93,8 +93,28 @@ const UI = () => {
   }
 }, [selectedLesson, lessonStep, setShowRedLitmusArrow])
 
+
+  useEffect(()=>{
+    console.log('selectedMainGuideline:',selectedMainGuideline)
+  },[selectedMainGuideline])
+
+  if(!isMainGuideline){
+    return(
+      <>
+      {chairStep === 1  && (
+          <DialogBox text="Press G to Slide Chair" />
+        )}   
+
+      {chairStep===2 && <DialogBox text={'Press E to Sit'}/>}  
+      </>
+    )
+  } 
+
   return (
     <>
+
+      
+
       {selectedMainGuideline === 1 && <MainGuidelines 
       mainContent={mainContent[0]} 
       onButton1Click={() =>{setIsMainGuideline(true);setSelectedMainGuideline(2)}}
@@ -117,9 +137,16 @@ const UI = () => {
       mainContent={mainContent[3]} 
       onButton1Click={()=>{startLab();setShowArrowChair(true);}}/>} 
 
-      {selectedMainGuideline === 5 
+      {selectedMainGuideline === 5 && chairStep==0
         && showArrrowChair 
         && <DialogBox text={"Walk over to the chair indicated by the arrow"}/>}
+
+      {chairStep === 1 && selectedMainGuideline === 5 && (
+          <DialogBox text="Press G to Slide Chair" />
+        )}      
+      
+      {chairStep===2 && <DialogBox text={'Press E to Sit'}/>}  
+
 
       {selectedMainGuideline === 5  && isSitting &&
         <LessonMenu/>      

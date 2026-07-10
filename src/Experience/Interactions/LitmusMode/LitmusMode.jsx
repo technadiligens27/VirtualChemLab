@@ -1,21 +1,18 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState, useCallback } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import LitmusReaction from "../LitmusReaction/LitmusReaction"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
   const { camera, gl } = useThree()
-  const { rightBeakerFillData, leftBeakerFillData } =
-    useContext(InteractionContext);
 
-  const {lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const { lessonStep, setLessonStep, setShowErrorMsgNo } =
+    useContext(MainGuidelineContext)
 
-  const [colorChangeAcid, setColorChangeAcid] = useState(false);
-  const [colorChangeBase, setColorChangeBase] = useState(false);
+  const [colorChangeAcid, setColorChangeAcid] = useState(false)
+  const [colorChangeBase, setColorChangeBase] = useState(false)
 
-  // acids list
   const acids = [
     "Hydrochloric Acid (HCl)",
     "Sulfuric Acid (H2SO4)",
@@ -25,7 +22,6 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
     "Carbonic Acid (H2CO3)",
   ]
 
-  // bases list
   const bases = [
     "Sodium Hydroxide (NaOH)",
     "Potassium Hydroxide (KOH)",
@@ -36,10 +32,7 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
     "Sodium Bicarbonate (NaHCO3)",
   ]
 
-  // top child = touch/contact point
   const topPointRef = useRef(null)
-
-  // stir child = lowest scroll limit
   const limitPointRef = useRef(null)
 
   const topWorldRef = useRef(new THREE.Vector3())
@@ -49,8 +42,8 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
   const limitLocalRef = useRef(new THREE.Vector3())
 
   const hasTouchedRef = useRef(false)
+  const checkedLiquidOnStartRef = useRef(false)
 
-  // starts above the top point
   const yOffsetRef = useRef(3.4)
 
   const originalLitmusPositionRef = useRef(null)
@@ -63,6 +56,46 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
 
   const xOffset = hand === "right" ? 0.2 : -0.2
   const zOffset = 0
+
+  const hasLiquidInBeaker = useCallback((beakerObject) => {
+    if (!beakerObject) return false
+
+    let hasLiquid = false
+
+    beakerObject.traverse((child) => {
+      const childName = child.name?.toLowerCase()
+
+      if (
+        childName?.includes("liquid") &&
+        child.visible &&
+        child.scale.y > 0
+      ) {
+        hasLiquid = true
+      }
+    })
+
+    return hasLiquid
+  }, [])
+
+  const canUseLitmusTest = useCallback(() => {
+    const hasLiquid = hasLiquidInBeaker(beakerRef?.current)
+    const chemicalName = beakerFillData?.name
+
+    return hasLiquid && chemicalName
+  }, [beakerRef, beakerFillData, hasLiquidInBeaker])
+
+  useEffect(() => {
+    if (!beakerRef?.current) return
+    if (checkedLiquidOnStartRef.current) return
+
+    checkedLiquidOnStartRef.current = true
+
+    if (!canUseLitmusTest()) {
+      setShowErrorMsgNo(11)
+      setColorChangeAcid(false)
+      setColorChangeBase(false)
+    }
+  }, [beakerRef, canUseLitmusTest, setShowErrorMsgNo])
 
   useEffect(() => {
     if (!litmusRef?.current || !beakerRef?.current) return
@@ -120,19 +153,26 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
       litmusRef.current.visible = true
       beakerRef.current.visible = true
     }
-  }, [litmusRef, beakerRef, camera]);
+  }, [litmusRef, beakerRef, camera])
 
-  useEffect(()=>{
-    console.log("lessonStep:",lessonStep)
-    if(lessonStep===7){
+  useEffect(() => {
+
+    if (lessonStep === 7) {
       setLessonStep(8)
     }
-  },[lessonStep])
+  }, [lessonStep, setLessonStep])
 
   useEffect(() => {
     const handleWheel = (e) => {
       e.preventDefault()
       e.stopPropagation()
+
+      if (!canUseLitmusTest()) {
+        setShowErrorMsgNo(11)
+        setColorChangeAcid(false)
+        setColorChangeBase(false)
+        return
+      }
 
       const speed = 0.2
 
@@ -156,7 +196,7 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
     return () => {
       gl.domElement.removeEventListener("wheel", handleWheel)
     }
-  }, [gl])
+  }, [gl, canUseLitmusTest, setShowErrorMsgNo])
 
   useFrame(() => {
     if (!litmusRef?.current || !beakerRef?.current) return
@@ -194,11 +234,7 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
     }
 
     targetLocalRef.current.add(
-      new THREE.Vector3(
-        xOffset,
-        yOffsetRef.current,
-        zOffset
-      )
+      new THREE.Vector3(xOffset, yOffsetRef.current, zOffset)
     )
 
     limitLocalRef.current.copy(limitWorldRef.current)
@@ -234,9 +270,16 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
 
     if (distance < 1.6 && !hasTouchedRef.current) {
       hasTouchedRef.current = true
-      console.log("Litmus touched liquid/beaker")
+
+      if (!canUseLitmusTest()) {
+        setColorChangeAcid(false)
+        setColorChangeBase(false)
+        return
+      }
 
       const chemicalName = beakerFillData?.name?.toLowerCase()
+
+      console.log("Litmus touched liquid/beaker")
 
       const isAcid = acids.some(
         (acid) => acid.toLowerCase() === chemicalName

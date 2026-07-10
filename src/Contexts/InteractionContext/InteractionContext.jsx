@@ -56,7 +56,9 @@ export const InteractionProvider = ({ children }) => {
   const liquidLeftModel = useRef(null);
   const liquidRightModel = useRef(null);
 
-  const [isPouring, setIsPouring] = useState(false)
+  const [isPouring, setIsPouring] = useState(false);
+
+  const [chairStep,setChairStep] = useState(0);
 
 
   return (
@@ -90,7 +92,8 @@ export const InteractionProvider = ({ children }) => {
         isObjectInfo,setIsObjectInfo,
         selectedModelLeft,selectedModelRight,
         liquidLeftModel,liquidRightModel,
-        isPouring, setIsPouring
+        isPouring, setIsPouring,
+        chairStep,setChairStep
       }}
     >
       {children}

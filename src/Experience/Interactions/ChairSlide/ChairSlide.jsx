@@ -5,9 +5,11 @@ import gsap from 'gsap'
 import Message from '../../Message/Message'
 import { ModelContext } from '../../../Contexts/ModelContext/ModelContext'
 import ChairSit from '../ChairSit/ChairSit'
+import { InteractionContext } from '../../../Contexts/InteractionContext/InteractionContext'
 
 const ChairSlide = () => {
   const { chairRef } = useContext(ModelContext);
+  const {chairStep,setChairStep} = useContext(InteractionContext)
 
   const { camera } = useThree()
 
@@ -25,9 +27,16 @@ const ChairSlide = () => {
     const distance = camera.position.distanceTo(chairPosition.current)
 
     if (!slid) {
-      setShow(distance < 14)
+      setShow(distance < 14);
+      if(distance< 14){
+        setChairStep(1);
+      }
     }
   })
+
+  useEffect(()=>{
+    console.log('chairStep:',chairStep)
+  },[chairStep])
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -46,7 +55,8 @@ const ChairSlide = () => {
         ease: 'power2.out',
         onComplete: () => {
           isSliding.current = false
-          setSlid(true)
+          setSlid(true);
+          setChairStep(2);
         }
       })
     }
@@ -60,7 +70,7 @@ const ChairSlide = () => {
 
   return (
     <>
-      {show && chairRef.current && (
+      {/* {show && chairRef.current && (
         <Message
           position={[
             chairPosition.current.x,
@@ -69,7 +79,7 @@ const ChairSlide = () => {
           ]}
           message="Press G to Slide"
         />
-      )}
+      )} */}
 
       {slid && <ChairSit />}
     </>

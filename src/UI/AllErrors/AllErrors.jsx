@@ -19,6 +19,7 @@ const AllErrors = ()=>{
             {showErrorMsgNo == 8 && <ErrorMsg text={'No Visible Reaction Found'}/>}
             {showErrorMsgNo == 9 && <ErrorMsg text={'No Liquid Inside beaker to pour'}/>}
             {showErrorMsgNo == 10 && <ErrorMsg text={'Beaker Already full'}/>}
+            {showErrorMsgNo == 11 && <ErrorMsg text={'No Liquid to test'}/>}
 
         </>
     )

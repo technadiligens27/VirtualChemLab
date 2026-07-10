@@ -8,7 +8,7 @@ import { InteractionContext } from '../../../Contexts/InteractionContext/Interac
 
 const ChairSit = () => {
   const { chairRef  } = useContext(ModelContext)
-  const { hasSat,setIsSitting } = useContext(InteractionContext)
+  const { hasSat,setIsSitting,setChairStep } = useContext(InteractionContext)
 
   const { camera } = useThree()
 
@@ -43,7 +43,7 @@ const ChairSit = () => {
         gsap.to(camera.position, {
           x: chairPosition.current.x,
           y: chairPosition.current.y - 4,
-          z: chairPosition.current.z-1,
+          z: chairPosition.current.z,
           duration: 1.5,
           ease: 'power2.inOut'
         })
@@ -57,7 +57,8 @@ const ChairSit = () => {
         })
 
         hasSat.current = true
-        setIsSitting(true)
+        setIsSitting(true);
+        setChairStep(0)
       }
 
       if (event.code === 'KeyG' && hasSat.current) {
@@ -92,7 +93,10 @@ const ChairSit = () => {
   if (!show) return null
 
   return (
-    <Message
+        <>
+
+    {/* <Message
+    
       position={[
         chairPosition.current.x,
         chairPosition.current.y + 2,
@@ -103,7 +107,10 @@ const ChairSit = () => {
           ? 'Press G to Stand Up'
           : 'Press E to Sit'
       }
-    />
+    /> */}
+
+
+    </>
   )
 }
 

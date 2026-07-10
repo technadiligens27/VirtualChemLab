@@ -267,7 +267,7 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
     )
 
     if (liquidInsideRef.current) {
-      liquidInsideRef.current.scale.y -= 5 * delta
+      liquidInsideRef.current.scale.y -= 2 * delta
 
       if (liquidInsideRef.current.scale.y <= 0.01) {
         liquidInsideRef.current.scale.y = 0

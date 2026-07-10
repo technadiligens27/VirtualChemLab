@@ -653,21 +653,28 @@ const ClickObject = () => {
   }
 
   const toggleLitmusMode = () => {
-    setIsStirMode(false)
+      setIsStirMode(false)
 
-    if (isLitmusMode) {
-      if (lessonStep === 8) {
-        setShowErrorMsgNo(4)
+      const otherHandData = getOtherHandData(selectedObject.hand)
+
+      if (!isLitmusMode && !otherHandData) {
+        setSelectedObject(null)
         return
       }
 
-      setIsLitmusMode(false)
-    } else {
-      setIsLitmusMode(true)
-    }
+      if (isLitmusMode) {
+        if (lessonStep === 8) {
+          setShowErrorMsgNo(4)
+          return
+        }
 
-    setSelectedObject(null)
-  }
+        setIsLitmusMode(false)
+      } else {
+        setIsLitmusMode(true)
+      }
+
+      setSelectedObject(null)
+    }
 
   const handleFilterPaperAction = () => {
     if (isFilterFolded) {
@@ -736,6 +743,27 @@ const ClickObject = () => {
     return "Fill Beaker"
   }
 
+
+  const getOtherHandData = (hand) => {
+  return hand === "left" ? selectedRightHand : selectedLeftHand
+}
+
+const canShowMainHoldingButton = () => {
+  if (!selectedObject?.isHolding) return false
+
+  if (isLitmus(selectedObject.name)) {
+    const otherHandData = getOtherHandData(selectedObject.hand)
+
+    // Show Stop Test if test already started
+    if (isLitmusMode) return true
+
+    // Show Test Liquid only if other hand has something
+    return !!otherHandData
+  }
+
+  return true
+}
+
   return (
     <>
       {selectedObject && !isFillBeakerBoxOpen && (
@@ -800,9 +828,11 @@ const ClickObject = () => {
                       Keep Back On Table
                     </button>
 
-                    <button onClick={handleMainHoldingAction}>
-                      {getMainHoldingButtonText()}
-                    </button>
+                    {canShowMainHoldingButton() && (
+                      <button onClick={handleMainHoldingAction}>
+                        {getMainHoldingButtonText()}
+                      </button>
+                    )}
                   </>
                 )}
               </>

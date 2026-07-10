@@ -42,7 +42,7 @@ const PlayerController = () => {
   useFrame((state, delta) => {
 
     if (hasSat.current) {
-      camera.position.y = 8
+      camera.position.y = 9
       return
     }    
     const speed = 25

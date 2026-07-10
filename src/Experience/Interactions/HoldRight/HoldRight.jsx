@@ -131,7 +131,10 @@ const HoldRight = ({ modeldata }) => {
 
     object.position.copy(defaultOffsetRef.current)
     object.rotation.set(0, 0, 0)
-
+    
+      if (object.name === "main-normal-beaker") {
+        object.rotation.y = Math.PI // 180 degrees
+      }
     if (object.name === "main-spoon") {
       object.rotation.x = Math.PI / 2
       object.rotation.z = Math.PI / 6

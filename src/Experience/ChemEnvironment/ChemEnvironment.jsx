@@ -12,7 +12,7 @@ const ChemEnvironment = () => {
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef
   } = useContext(ModelContext)
 
-  const { scene } = useGLTF('/VirtualChemLab.glb');
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
 
   const hidePourObjects = (objectRef) => {
   if (!objectRef.current) return
@@ -37,6 +37,19 @@ const ChemEnvironment = () => {
   })
 }
 
+const hideLiquidObjects=(root)=>{
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("liquid")) {
+      child.visible = false
+      // console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
+
 
   useEffect(() => {
     chairRef.current = scene.getObjectByName('main-chair')
@@ -49,7 +62,6 @@ const ChemEnvironment = () => {
     
     hidePourObjects(normalBeakerRef)
     hidePourObjects(conicalBeakerRef)
-
 
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
     graduatedBeakerRef.current = scene.getObjectByName('main-graduated-cylinder');
@@ -78,7 +90,7 @@ const ChemEnvironment = () => {
   }
 
   hidePrecipitateObjects(scene)
-
+  hideLiquidObjects(scene)
 
   }, [scene])
 

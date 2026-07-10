@@ -46,7 +46,7 @@ const CopperPrecipitate = ({
         scale: child.scale,
       })
 
-      if (childName?.includes("normal-beaker-top")) {
+      if (childName?.includes("top")) {
         liquidTopEmpty = child
         console.log("FOUND liquidTopEmpty:", child.name)
       }
