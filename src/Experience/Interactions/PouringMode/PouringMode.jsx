@@ -186,8 +186,6 @@ const PouringMode = ({ hand }) => {
         return
       }
 
-      setLessonStep(10)
-
       // Right hand pouring = P
       if (hand === "right" && e.shiftKey) return
 
@@ -198,12 +196,32 @@ const PouringMode = ({ hand }) => {
 
       if (!emptyRef.current || !targetObject) return
 
-      // If already pouring, pressing P again returns objects back
+      // P pressed again while already in pouring mode
       if (activeObject === targetObject) {
+        setShowErrorMsgNo(4)
+
         restoreOriginalTransforms(targetObject, otherObject)
         resetPouringState()
         return
       }
+
+      // Only the first valid P press changes the lesson step
+      setLessonStep(10)
+
+      saveOriginalTransforms(targetObject, otherObject)
+
+      if (hand === "right") {
+        moveRightHandPouringObject(targetObject, otherObject)
+      }
+
+      if (hand === "left") {
+        moveLeftHandPouringObject(targetObject, otherObject)
+      }
+
+      setupBaseRotation(targetObject)
+
+      setIsPouring(false)
+      setActiveObject(targetObject)
 
       saveOriginalTransforms(targetObject, otherObject)
 

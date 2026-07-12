@@ -1,11 +1,9 @@
-import { use, useContext, useEffect } from "react"
+import { useContext, useEffect } from "react"
 import MainGuidelines from "./MainGuidelines/MainGuidelines"
 import { MainGuidelineContext } from "../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LessonMenu from "./LessonMenu/LessonMenu"
 import { InteractionContext } from "../Contexts/InteractionContext/InteractionContext"
-import LessonGuide from "./LessonGuide/LessonGuide"
 import AcidInidicatorTest from "./AllLessons/AcidInidicatorTest/AcidInidicatorTest"
-import AllArrows from "./AllArrows/AllArrows"
 import AllErrors from "./AllErrors/AllErrors"
 import DialogBox from "./AllDialogBox/DialogBox/DialogBox"
 import AlkaliIndicatorTest from "./AllLessons/AlkaliIndicatorTest/AlkaliIndicatorTest"
@@ -21,9 +19,8 @@ const mainContent = [
     content: `This lab lets you explore chemistry in a safe and interactive way.
 You can use lab equipment, mix chemicals, test reactions, and learn how different experiments work step by step.`,
     button1: "Start Demo",
-    button2 :"Free Roam"
+    button2: "Free Roam",
   },
-
   {
     title: "Follow the Guide",
     content: `During the tutorial, arrows will show you where to go and what to click.
@@ -36,7 +33,6 @@ Follow the arrows, interact with the highlighted objects, and complete each step
 Move close to the highlighted objects and follow the arrows to continue the tutorial.`,
     button1: "Continue",
   },
-
   {
     title: "Tutorial Mode",
     content: `Learn how to use the lab step by step.
@@ -46,134 +42,241 @@ You will be guided through basic actions like wearing safety gear, selecting equ
 ]
 
 const UI = () => {
-
-  const {selectedMainGuideline,setSelectedMainGuideline,
-    isMainGuideline,setIsMainGuideline,setShowArrowChair,showArrowChair,
-    setShowLessonMenu,showLessonMenu,isLessonStart,setIsLessonStart,lessonStep,setLessonStep,
-    selectedLesson,setSelectedLesson,showArrrowChair,safetyStep,setSafetyStep,setshowGogglesArrow,
-    setShowLeftGloveArrow,setShowRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow
+  const {
+    selectedMainGuideline,
+    setSelectedMainGuideline,
+    setIsMainGuideline,
+    showArrrowChair,
+    isLessonStart,
+    lessonStep,
+    selectedLesson,
+    safetyStep,
+    setShowArrowChair,
+    setshowGogglesArrow,
+    setShowLeftGloveArrow,
+    setShowRightGloveArrow,
+    setShowRedLitmusArrow,
+    isTutorialMode,
+    setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow
   } = useContext(MainGuidelineContext)
 
-  const {isSitting,clickedModel,isObjectInfo,
-    showSlideChairMsg,isChairSlid, setIsChairSlid,chairStep,setChairStep} = useContext(InteractionContext)
+  const {
+    isSitting,
+    clickedModel,
+    isObjectInfo,
+    chairStep,
+  } = useContext(InteractionContext)
 
   const startLab = () => {
-    setIsMainGuideline(false);
+    setIsMainGuideline(false)
     setSelectedMainGuideline(5)
 
     const canvas = document.querySelector("canvas")
     canvas?.requestPointerLock?.()
   }
 
+  const startTutorial = () => {
+    setIsMainGuideline(true)
+    setSelectedMainGuideline(2)
+    setIsTutorialMode(true)
+  }
+
+  const startFreeRoam = () => {
+    setIsMainGuideline(false)
+    setSelectedMainGuideline(0)
+    setIsTutorialMode(false)
+
+    const canvas = document.querySelector("canvas")
+    canvas?.requestPointerLock?.()
+  }
 
   useEffect(() => {
-  if (isSitting) {
-    setShowArrowChair(false);
-    setshowGogglesArrow(true)
-  }
-}, [isSitting, setShowArrowChair,setshowGogglesArrow])
-
-  useEffect(()=>{
-    if(safetyStep===2){
-        setShowLeftGloveArrow(true);
+    if (isSitting) {
+      setShowArrowChair(false)
+      setshowGogglesArrow(true)
     }
-  },[safetyStep])
-  
-  useEffect(()=>{
-    if(safetyStep===3){
-        setShowRightGloveArrow(true);
-    }
-  },[safetyStep])
+  }, [
+    isSitting,
+    setShowArrowChair,
+    setshowGogglesArrow,
+  ])
 
   useEffect(() => {
-  if (selectedLesson === 3 && lessonStep === 6) {
-    setShowRedLitmusArrow(true)
-  } else {
-    setShowRedLitmusArrow(false)
-  }
-}, [selectedLesson, lessonStep, setShowRedLitmusArrow])
+    setShowLeftGloveArrow(safetyStep === 2)
+  }, [safetyStep, setShowLeftGloveArrow])
 
+  useEffect(() => {
+    setShowRightGloveArrow(safetyStep === 3)
+  }, [safetyStep, setShowRightGloveArrow])
+
+  useEffect(() => {
+    setShowRedLitmusArrow(
+      selectedLesson === 3 && lessonStep === 6
+    )
+  }, [selectedLesson,lessonStep,setShowRedLitmusArrow])
 
   useEffect(()=>{
-    console.log('selectedMainGuideline:',selectedMainGuideline)
-  },[selectedMainGuideline])
+    setShowArrowConicalArrow(
+      lessonStep===6
+    )
+  },[lessonStep,showConicalArrow])
 
-  if(!isMainGuideline){
-    return(
+  // useEffect(()=>{
+  //   console.log('lessonStep:',lessonStep);
+  //   console.log('showConicalArrow:',showConicalArrow)
+  // },[lessonStep,showConicalArrow])
+
+  /*
+    null means the user has not selected
+    Tutorial Mode or Free Roam yet.
+  */
+  if (isTutorialMode === null) {
+    return (
       <>
-      {chairStep === 1  && (
-          <DialogBox text="Press G to Slide Chair" />
-        )}   
-
-      {chairStep===2 && <DialogBox text={'Press E to Sit'}/>}  
+        {selectedMainGuideline === 1 && (
+          <MainGuidelines
+            mainContent={mainContent[0]}
+            onButton1Click={startTutorial}
+            onButton2Click={startFreeRoam}
+          />
+        )}
       </>
     )
-  } 
+  }
 
+  /*
+    Free-roam mode
+  */
+  if (isTutorialMode === false) {
+    return (
+      <>
+        {chairStep === 1 && (
+          <DialogBox text="Press G to Slide Chair" />
+        )}
+
+        {chairStep === 2 && (
+          <DialogBox text="Press E to Sit" />
+        )}
+
+        {clickedModel && (
+          <InfoDialogBox clickedModel={clickedModel} />
+        )}
+
+        {isObjectInfo && (
+          <InfoBox clickedModel={clickedModel} />
+        )}
+
+        <AllErrors />
+      </>
+    )
+  }
+
+  /*
+    Tutorial mode
+  */
   return (
     <>
+      {selectedMainGuideline === 2 && (
+        <MainGuidelines
+          mainContent={mainContent[1]}
+          onButton1Click={() =>
+            setSelectedMainGuideline(3)
+          }
+        />
+      )}
 
-      
+      {selectedMainGuideline === 3 && (
+        <MainGuidelines
+          mainContent={mainContent[2]}
+          onButton1Click={() =>
+            setSelectedMainGuideline(4)
+          }
+        />
+      )}
 
-      {selectedMainGuideline === 1 && <MainGuidelines 
-      mainContent={mainContent[0]} 
-      onButton1Click={() =>{setIsMainGuideline(true);setSelectedMainGuideline(2)}}
-      onButton2Click={()=>{setIsMainGuideline(false);setSelectedMainGuideline(0);}}
-      />}
+      {selectedMainGuideline === 4 && (
+        <MainGuidelines
+          mainContent={mainContent[3]}
+          onButton1Click={() => {
+            startLab()
+            setShowArrowChair(true)
+          }}
+        />
+      )}
 
-      {selectedMainGuideline === 2 && <MainGuidelines 
-      mainContent={mainContent[1]} 
-      onButton1Click={() => setSelectedMainGuideline(3)}
-      />}
+      {selectedMainGuideline === 5 &&
+        chairStep === 0 &&
+        showArrrowChair &&
+        !isSitting && (
+          <DialogBox text="Walk over to the chair indicated by the arrow" />
+        )}
 
-
-      {selectedMainGuideline === 3 && <MainGuidelines 
-      mainContent={mainContent[2]} 
-      onButton1Click={() => setSelectedMainGuideline(4)}
-      />}
-
-
-      {selectedMainGuideline === 4 && <MainGuidelines 
-      mainContent={mainContent[3]} 
-      onButton1Click={()=>{startLab();setShowArrowChair(true);}}/>} 
-
-      {selectedMainGuideline === 5 && chairStep==0
-        && showArrrowChair 
-        && <DialogBox text={"Walk over to the chair indicated by the arrow"}/>}
-
-      {chairStep === 1 && selectedMainGuideline === 5 && (
+      {selectedMainGuideline === 5 &&
+        chairStep === 1 && (
           <DialogBox text="Press G to Slide Chair" />
-        )}      
-      
-      {chairStep===2 && <DialogBox text={'Press E to Sit'}/>}  
+        )}
 
+      {chairStep === 2 && (
+        <DialogBox text="Press E to Sit" />
+      )}
 
-      {selectedMainGuideline === 5  && isSitting &&
-        <LessonMenu/>      
-      }
+      {selectedMainGuideline === 5 &&
+        isSitting &&
+        safetyStep === 0 && (
+          <LessonMenu />
+        )}
 
-      {safetyStep === 1 && (<DialogBox text={"Click the googles to put them on"}/>) }
-      
-      {safetyStep === 2 && (<DialogBox text={"Click the Left glove to put them on"}/>) }
+      {safetyStep === 1 && (
+        <DialogBox text="Click the goggles to put them on" />
+      )}
 
-      {safetyStep === 3 && (<DialogBox text={"Click the Right glove to put them on"}/>) }
+      {safetyStep === 2 && (
+        <DialogBox text="Click the left glove to put it on" />
+      )}
 
-      {safetyStep === 4 && isLessonStart && selectedLesson === 2 && <AcidInidicatorTest/> }
+      {safetyStep === 3 && (
+        <DialogBox text="Click the right glove to put it on" />
+      )}
 
-      {safetyStep === 4 && isLessonStart && selectedLesson === 6 && <AcidBaseNeutralization/> }
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 2 && (
+          <AcidInidicatorTest />
+        )}
 
-      {safetyStep === 4 && isLessonStart && selectedLesson === 3 && <AlkaliIndicatorTest/> }
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 3 && (
+          <AlkaliIndicatorTest />
+        )}
 
-      {safetyStep === 4 && isLessonStart && selectedLesson === 4 && <StarchIodineTest/> }
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 4 && (
+          <StarchIodineTest />
+        )}
 
-      {safetyStep === 4 && isLessonStart && selectedLesson === 5 && <CopperSulfate/> }
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 5 && (
+          <CopperSulfate />
+        )}
 
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 6 && (
+          <AcidBaseNeutralization />
+        )}
 
-      <AllErrors/>
+      <AllErrors />
 
-      {clickedModel && <InfoDialogBox clickedModel={clickedModel}/> }
-      {isObjectInfo && <InfoBox clickedModel={clickedModel}/>}
-      
+      {clickedModel && (
+        <InfoDialogBox clickedModel={clickedModel} />
+      )}
+
+      {isObjectInfo && (
+        <InfoBox clickedModel={clickedModel} />
+      )}
     </>
   )
 }

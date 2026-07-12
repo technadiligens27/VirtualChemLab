@@ -9,7 +9,8 @@ const ChemEnvironment = () => {
          roundBeakerRef,graduatedBeakerRef,normalBeakerLiquidRef,conicalBeakerLiquidRef,spoonRef,
          saltRef,redLitmusRef,blueLitmusRef,testube01Ref,testube02Ref,testube03Ref,filterPaperRef,
          filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef,
-         arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef
+         arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
+         arrowConicalFlaskRef
   } = useContext(ModelContext)
 
   const { scene } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
@@ -32,7 +33,7 @@ const ChemEnvironment = () => {
 
     if (childName?.includes("precipitate")) {
       child.visible = false
-      console.log("Precipitate hidden:", child.name)
+      // console.log("Precipitate hidden:", child.name)
     }
   })
 }
@@ -114,6 +115,9 @@ const hideLiquidObjects=(root)=>{
       
       arrowRedLitmusRef.current = scene.getObjectByName('red-litmus-arrow');
       arrowRedLitmusRef.current.visible = false;
+
+      arrowConicalFlaskRef.current = scene.getObjectByName('conicalFlaskArrow');
+      arrowConicalFlaskRef.current.visible = false
 
 
   }, [scene])

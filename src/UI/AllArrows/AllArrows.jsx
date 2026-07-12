@@ -7,16 +7,18 @@ const AllArrows=()=>{
 
 
     const {arrowNormalBeakerRef,arrowChairRef,arrowGogglesRef,arrowLeftGloveRef,
-        arrowRightGloveRef,arrowRedLitmusRef
+        arrowRightGloveRef,arrowRedLitmusRef,conicalBeakerRef,arrowConicalFlaskRef
     } = useContext(ModelContext);
+
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
-        showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow,isMainGuideline        
+        showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow,isMainGuideline,
+        showConicalArrow,setShowArrowConicalArrow     
     } = useContext(MainGuidelineContext)
 
     if(!isMainGuideline){
         return (
             <>
-                    {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}
+                {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}
 
             </>
         )
@@ -26,6 +28,7 @@ const AllArrows=()=>{
         <>
         {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}     
         {showNormalBeakerArrow && <ArrowGuides arrowRef={arrowNormalBeakerRef} speed={2.5} height={0.5} showStatus={showNormalBeakerArrow}/>};
+        {showConicalArrow && <ArrowGuides arrowRef={arrowConicalFlaskRef} speed={2.5} height={0.5} showStatus={showConicalArrow}/> }
         {showGogglesArrow && <ArrowGuides arrowRef={arrowGogglesRef} speed={2.5} height={0.5} showStatus={showGogglesArrow}/> }
         {showLeftGloveArrow && <ArrowGuides arrowRef={arrowLeftGloveRef} speed={2.5} height={0.5} showStatus={showLeftGloveArrow}/> }
         {showRightGloveArrow && <ArrowGuides arrowRef={arrowRightGloveRef} speed={2.5} height={0.5} showStatus={showRightGloveArrow}/> }
