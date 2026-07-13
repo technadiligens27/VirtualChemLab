@@ -91,6 +91,10 @@ const FillBeakerBox = () => {
       if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
     }
 
+    if (selectedLesson === 1 && lessonStep === 5) {
+      if (!checkFill("Water (H2O)", 50, 6)) return
+    }
+
     const fillData = {
       name: selectedAcidData.name,
       color: selectedAcidData.color,

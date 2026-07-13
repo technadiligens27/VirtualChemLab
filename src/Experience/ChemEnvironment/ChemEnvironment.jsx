@@ -10,7 +10,7 @@ const ChemEnvironment = () => {
          saltRef,redLitmusRef,blueLitmusRef,testube01Ref,testube02Ref,testube03Ref,filterPaperRef,
          filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef,
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
-         arrowConicalFlaskRef
+         arrowConicalFlaskRef,arrowSpoonRef
   } = useContext(ModelContext)
 
   const { scene } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
@@ -119,7 +119,8 @@ const hideLiquidObjects=(root)=>{
       arrowConicalFlaskRef.current = scene.getObjectByName('conicalFlaskArrow');
       arrowConicalFlaskRef.current.visible = false
 
-
+      arrowSpoonRef.current = scene.getObjectByName('spoon-arrow')
+      arrowSpoonRef.current.visible = false
   }, [scene])
 
   return (

@@ -592,7 +592,7 @@ const ClickObject = () => {
 
     if(lessonStep==6 && selectedLesson ===6){
       if(objectName !== 'main-Conical-Flask'){
-        setShowErrorMsgNo(6)
+        setShowErrorMsgNo(12)
         return false
       }
     }

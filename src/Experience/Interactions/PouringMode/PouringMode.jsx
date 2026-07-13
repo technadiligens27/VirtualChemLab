@@ -19,12 +19,15 @@ const PouringMode = ({ hand }) => {
 
     isPouring,
     setIsPouring,
+    pouringModeHand,
+  setPouringModeHand,
   } = useContext(InteractionContext)
 
   const {
     lessonStep,
     setLessonStep,
     setShowErrorMsgNo,
+    
   } = useContext(MainGuidelineContext)
 
   const emptyRef = useRef(null)
@@ -295,56 +298,86 @@ const PouringMode = ({ hand }) => {
     }
 
     const handleKeyDown = (event) => {
-      /*
-       * Ignore every key except P.
-       */
-      if (event.code !== "KeyP") return
+        if (event.code !== "KeyP") return
 
-      /*
-       * Right hand uses P.
-       */
-      if (
-        hand === "right" &&
-        event.shiftKey
-      ) {
-        return
-      }
+          const requestedHand =
+            event.shiftKey ? "left" : "right"
 
-      /*
-       * Left hand uses Shift + P.
-       */
-      if (
-        hand === "left" &&
-        !event.shiftKey
-      ) {
-        return
-      }
+          /*
+          * This component should only handle its own shortcut.
+          */
+          if (requestedHand !== hand) return
 
-      const {
-        targetObject,
-        otherObject,
-      } = getPouringObjects()
+          /*
+          * Another hand is already in pouring position.
+          */
+          if (
+            pouringModeHand &&
+            pouringModeHand !== requestedHand
+          ) {
+            console.log(
+              `${pouringModeHand} hand is already in pouring mode`
+            )
 
-      if (!emptyRef.current) return
-      if (!targetObject) return
+            setShowErrorMsgNo(3)
+            return
+          }
 
-      /*
-       * Pressing P again exits pouring mode.
-       */
-      if (activeObject === targetObject) {
-        setShowErrorMsgNo(4)
+          const {
+            targetObject,
+            otherObject,
+          } = getPouringObjects()
 
-        restoreOriginalTransforms(
-          targetObject,
-          otherObject
-        )
+          if (!emptyRef.current) return
+          if (!targetObject) return
 
-        resetPouringState()
+          /*
+          * Press the same shortcut again to exit.
+          */
+          if (
+            pouringModeHand === requestedHand &&
+            activeObject === targetObject
+          ) {
+            restoreOriginalTransforms(
+              targetObject,
+              otherObject
+            )
 
-        return
-      }
+            resetPouringState()
+            setPouringModeHand(null)
 
-      setLessonStep(10)
+            return
+          }
+
+          saveOriginalTransforms(
+            targetObject,
+            otherObject
+          )
+
+          if (hand === "right") {
+            moveRightHandPouringObject(
+              targetObject,
+              otherObject
+            )
+          }
+
+          if (hand === "left") {
+            moveLeftHandPouringObject(
+              targetObject,
+              otherObject
+            )
+          }
+
+          setupBaseRotation(targetObject)
+
+          setIsPouring(false)
+          setPouredFromLeft(false)
+          setPouredFromRight(false)
+
+          setActiveObject(targetObject)
+          setPouringModeHand(requestedHand)
+
+          setLessonStep(10)
 
       saveOriginalTransforms(
         targetObject,
@@ -399,6 +432,9 @@ const PouringMode = ({ hand }) => {
     setPouredFromRight,
     setLessonStep,
     setShowErrorMsgNo,
+    lessonStep,
+    pouringModeHand,
+    setPouringModeHand,
   ])
 
   /*

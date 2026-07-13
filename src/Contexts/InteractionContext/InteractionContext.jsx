@@ -59,7 +59,7 @@ export const InteractionProvider = ({ children }) => {
   const [isPouring, setIsPouring] = useState(false);
 
   const [chairStep,setChairStep] = useState(0);
-
+  const [pouringModeHand,setPouringModeHand] = useState();
 
   return (
     <InteractionContext.Provider
@@ -93,7 +93,8 @@ export const InteractionProvider = ({ children }) => {
         selectedModelLeft,selectedModelRight,
         liquidLeftModel,liquidRightModel,
         isPouring, setIsPouring,
-        chairStep,setChairStep
+        chairStep,setChairStep,
+        pouringModeHand,setPouringModeHand
       }}
     >
       {children}

@@ -10,7 +10,7 @@ const AllErrors = ()=>{
         <>
 
             {showErrorMsgNo ===1 && <ErrorMsg text={'Pls pick with left hand'}/> }
-            {showErrorMsgNo ===2 && <ErrorMsg text={'Pls Select HCL and then 50 ml'}/> }
+            {showErrorMsgNo ===2 && <ErrorMsg text={'Pls Correct Liquid and Amount'}/> }
             {showErrorMsgNo ===3 && <ErrorMsg text={'Press P for pouring mode'}/> }
             {showErrorMsgNo == 4 && <ErrorMsg text={'Cant do that right now'}/>}
             {showErrorMsgNo == 5 && <ErrorMsg text={'Pls Select Uniersal Indicatoe and then 50 ml'}/>}
@@ -20,6 +20,7 @@ const AllErrors = ()=>{
             {showErrorMsgNo == 9 && <ErrorMsg text={'No Liquid Inside beaker to pour'}/>}
             {showErrorMsgNo == 10 && <ErrorMsg text={'Beaker Already full'}/>}
             {showErrorMsgNo == 11 && <ErrorMsg text={'No Liquid to test'}/>}
+            {showErrorMsgNo == 12 && <ErrorMsg text={'Select Conical Flask'}/>}
 
         </>
     )

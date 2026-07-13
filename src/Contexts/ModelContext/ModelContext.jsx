@@ -34,8 +34,8 @@ export const ModelProvider = ({ children }) => {
   const arrowGogglesRef = useRef(null);
   const arrowLeftGloveRef = useRef(null);
   const arrowRightGloveRef = useRef(null);
-
   const arrowRedLitmusRef = useRef(null);
+  const arrowSpoonRef = useRef(null)
 
   
 
@@ -56,7 +56,8 @@ export const ModelProvider = ({ children }) => {
         arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,
         arrowRedLitmusRef,
         normalPrecipitateRef,
-        arrowConicalFlaskRef
+        arrowConicalFlaskRef,
+        arrowSpoonRef
       }}
     >
       {children}

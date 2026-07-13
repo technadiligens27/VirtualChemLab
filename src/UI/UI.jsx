@@ -12,6 +12,7 @@ import StarchIodineTest from "./AllLessons/StarchIodineTest/StarchIodineTest"
 import CopperSulfate from "./AllLessons/CopperSulfate/CopperSulfate"
 import InfoDialogBox from "./InfoDialogBox/InfoDialogBox"
 import InfoBox from "./InfoBox/InfoBox"
+import SaltWaterTest from "./AllLessons/SaltWaterTest/SaltWaterTest"
 
 const mainContent = [
   {
@@ -56,7 +57,7 @@ const UI = () => {
     setShowLeftGloveArrow,
     setShowRightGloveArrow,
     setShowRedLitmusArrow,
-    isTutorialMode,
+    isTutorialMode,showSpoonArrow,setShowSpoonArrow,
     setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow
   } = useContext(MainGuidelineContext)
 
@@ -117,9 +118,13 @@ const UI = () => {
 
   useEffect(()=>{
     setShowArrowConicalArrow(
-      lessonStep===6
+      lessonStep===6 && selectedLesson !==1
     )
   },[lessonStep,showConicalArrow])
+
+  useEffect(()=>{
+    setShowSpoonArrow(selectedLesson==1 && lessonStep===6)
+  },[lessonStep,showSpoonArrow])
 
   // useEffect(()=>{
   //   console.log('lessonStep:',lessonStep);
@@ -130,6 +135,7 @@ const UI = () => {
     null means the user has not selected
     Tutorial Mode or Free Roam yet.
   */
+
   if (isTutorialMode === null) {
     return (
       <>
@@ -242,6 +248,12 @@ const UI = () => {
         isLessonStart &&
         selectedLesson === 2 && (
           <AcidInidicatorTest />
+        )}
+
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 1 && (
+          <SaltWaterTest/>
         )}
 
       {safetyStep === 4 &&
