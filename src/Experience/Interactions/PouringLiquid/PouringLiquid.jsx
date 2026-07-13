@@ -1,118 +1,258 @@
 import { useFrame } from "@react-three/fiber"
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
-import Reaction from "../Reaction/Reaction"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 
+import Reaction from "../Reaction/Reaction"
+
 const visibleReactions = [
   ["Water (H2O)", "Salt (NaCl)"],
-  ["Hydrochloric Acid (HCl)", "Universal indicator"],
-  ["Sodium Hydroxide (NaOH)", "Universal indicator"],
-  ["Iodine solution", "Starch solution"],
-  ["Copper Sulfate (CuSO4)", "Sodium Hydroxide (NaOH)"],
-  ["Hydrochloric Acid (HCl)", "Sodium Hydroxide (NaOH)"],
+
+  [
+    "Hydrochloric Acid (HCl)",
+    "Universal indicator",
+  ],
+
+  [
+    "Sodium Hydroxide (NaOH)",
+    "Universal indicator",
+  ],
+
+  [
+    "Iodine solution",
+    "Starch solution",
+  ],
+
+  [
+    "Copper Sulfate (CuSO4)",
+    "Sodium Hydroxide (NaOH)",
+  ],
+
+  [
+    "Hydrochloric Acid (HCl)",
+    "Sodium Hydroxide (NaOH)",
+  ],
 ]
 
-const PouringLiquid = ({ modelRef, hand, isPouring }) => {
+const PouringLiquid = ({
+  model,
+  hand,
+  isPouring,
+}) => {
   const {
     leftBeakerFillData,
     rightBeakerFillData,
 
     setPouredFromLeft,
-    pouredFromLeft,
-
     setPouredFromRight,
-    pouredFromRight,
 
     selectedLeftHand,
     selectedRightHand,
   } = useContext(InteractionContext)
 
-  const { setShowErrorMsgNo } = useContext(MainGuidelineContext)
-  const { isReactionRef } = useContext(ReactionContext)
+  const {
+    setShowErrorMsgNo,
+  } = useContext(MainGuidelineContext)
+
+  const {
+    isReactionRef,
+  } = useContext(ReactionContext)
 
   const pourLiquidRef = useRef(null)
   const pourParentRef = useRef(null)
+
   const liquidInsideRef = useRef(null)
 
-  const noLiquidLoggedRef = useRef(false)
-  const noReactionLoggedRef = useRef(false)
-  const actualPouringRef = useRef(false)
+  const noLiquidLoggedRef =
+    useRef(false)
 
-  const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
+  const noReactionLoggedRef =
+    useRef(false)
 
+  const actualPouringRef =
+    useRef(false)
+
+  const fillData =
+    hand === "left"
+      ? leftBeakerFillData
+      : rightBeakerFillData
+
+  /*
+   * Find and prepare the pouring-stream mesh.
+   */
   useEffect(() => {
-    if (!modelRef?.current) return
+    if (!model) return
 
     pourLiquidRef.current = null
     pourParentRef.current = null
+
     actualPouringRef.current = false
 
-    modelRef.current.traverse((child) => {
-      if (!child.name?.toLowerCase().includes("pour")) return
+    model.traverse((child) => {
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (!childName.includes("pour")) {
+        return
+      }
 
       pourParentRef.current = child
       child.visible = true
 
       child.traverse((innerChild) => {
-        if (!innerChild.isMesh || !innerChild.material) return
+        if (!innerChild.isMesh) return
+        if (!innerChild.material) return
 
-        pourLiquidRef.current = innerChild
-        innerChild.material = innerChild.material.clone()
+        pourLiquidRef.current =
+          innerChild
+
+        /*
+         * Clone only once.
+         */
+        if (
+          !innerChild.userData
+            .pourMaterialPrepared
+        ) {
+          innerChild.material =
+            Array.isArray(
+              innerChild.material
+            )
+              ? innerChild.material.map(
+                  (material) =>
+                    material.clone()
+                )
+              : innerChild.material.clone()
+
+          innerChild.userData
+            .pourMaterialPrepared = true
+        }
+
         innerChild.visible = false
-        innerChild.scale.set(1, 0, 1)
+
+        innerChild.scale.set(
+          1,
+          0,
+          1
+        )
       })
     })
-  }, [modelRef])
+  }, [model])
 
+  /*
+   * Change the pouring-stream colour.
+   */
   useEffect(() => {
-    if (!pourLiquidRef.current || !fillData?.color) return
+    if (!pourLiquidRef.current) return
+    if (!fillData?.color) return
 
-    const materials = Array.isArray(pourLiquidRef.current.material)
-      ? pourLiquidRef.current.material
-      : [pourLiquidRef.current.material]
+    const materials =
+      Array.isArray(
+        pourLiquidRef.current.material
+      )
+        ? pourLiquidRef.current.material
+        : [
+            pourLiquidRef.current
+              .material,
+          ]
 
-    materials.forEach((mat) => {
-      mat.color?.set(fillData.color)
-      mat.needsUpdate = true
+    materials.forEach((material) => {
+      material.color?.set(
+        fillData.color
+      )
+
+      material.needsUpdate = true
     })
   }, [fillData?.color])
 
   const hasVisibleReaction = () => {
-    const left = leftBeakerFillData?.name
-    const right = rightBeakerFillData?.name
+    const left =
+      leftBeakerFillData?.name
 
-    if (!left || !right) return false
+    const right =
+      rightBeakerFillData?.name
+
+    if (!left || !right) {
+      return false
+    }
 
     return visibleReactions.some(
-      (reaction) => reaction.includes(left) && reaction.includes(right)
+      (reaction) =>
+        reaction.includes(left) &&
+        reaction.includes(right)
     )
   }
 
-  const findLiquidMesh = (model) => {
-    if (!model) return null
-    if (typeof model.traverse !== "function") return null
+  /*
+   * Find a liquid mesh but ignore the pouring stream.
+   */
+  const findLiquidMesh = (
+    targetModel
+  ) => {
+    if (!targetModel) return null
 
-    let liquidMesh = null
+    if (
+      typeof targetModel.traverse !==
+      "function"
+    ) {
+      return null
+    }
 
-    model.traverse((child) => {
-      if (liquidMesh) return
+    let visibleLiquid = null
+    let firstLiquid = null
 
-      if (child.isMesh && child.name?.toLowerCase().includes("liquid")) {
-        liquidMesh = child
+    targetModel.traverse((child) => {
+      if (!child.isMesh) return
+
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (!childName.includes("liquid")) {
+        return
+      }
+
+      if (childName.includes("pour")) {
+        return
+      }
+
+      if (!firstLiquid) {
+        firstLiquid = child
+      }
+
+      if (
+        child.visible &&
+        child.scale.y > 0.01
+      ) {
+        visibleLiquid = child
       }
     })
 
-    return liquidMesh
+    return visibleLiquid || firstLiquid
   }
 
-  const getLiquidMaxScaleY = (liquidMesh) => {
-    const name = liquidMesh?.name?.toLowerCase()
+  const getLiquidMaxScaleY = (
+    liquidMesh
+  ) => {
+    const liquidName =
+      liquidMesh?.name?.toLowerCase() ||
+      ""
 
-    if (name?.includes("conical")) return 200
-    if (name?.includes("normal")) return 55
+    if (
+      liquidName.includes("normal")
+    ) {
+      return 55
+    }
+
+    if (
+      liquidName.includes("conical")
+    ) {
+      return 200
+    }
 
     return 55
   }
@@ -123,62 +263,90 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
         ? selectedRightHand?.ref?.current
         : selectedLeftHand?.ref?.current
 
-    const targetLiquid = findLiquidMesh(targetModel)
+    if (!targetModel) return false
+
+    const targetLiquid =
+      findLiquidMesh(targetModel)
 
     if (!targetLiquid) return false
 
-    const maxScaleY = getLiquidMaxScaleY(targetLiquid)
+    const maxScaleY =
+      getLiquidMaxScaleY(
+        targetLiquid
+      )
 
-    return targetLiquid.scale.y >= maxScaleY - 0.05
+    return (
+      targetLiquid.scale.y >=
+      maxScaleY - 0.05
+    )
   }
 
+  /*
+   * Find the liquid inside the object being poured.
+   */
   const hasLiquidInsideBeaker = () => {
-    if (!modelRef?.current) return false
+    if (!model) return false
 
     let hasLiquid = false
+
     liquidInsideRef.current = null
 
-    modelRef.current.traverse((child) => {
+    model.traverse((child) => {
       if (hasLiquid) return
+      if (!child.isMesh) return
 
-      const childName = child.name?.toLowerCase()
+      const childName =
+        child.name?.toLowerCase() || ""
 
-      if (!childName?.includes("liquid")) return
-
-      if (child.isMesh && child.visible && child.scale.y > 0.01) {
-        hasLiquid = true
-        liquidInsideRef.current = child
+      if (!childName.includes("liquid")) {
         return
       }
 
-      child.traverse((innerChild) => {
-        if (hasLiquid) return
-        if (!innerChild.isMesh) return
+      /*
+       * Do not select the pouring stream.
+       */
+      if (childName.includes("pour")) {
+        return
+      }
 
-        if (innerChild.visible && innerChild.scale.y > 0.01) {
-          hasLiquid = true
-          liquidInsideRef.current = innerChild
-        }
-      })
+      if (
+        child.visible &&
+        child.scale.y > 0.01
+      ) {
+        hasLiquid = true
+
+        liquidInsideRef.current =
+          child
+      }
     })
 
     return hasLiquid
   }
 
-  const stopPouring = (forceReset = false) => {
+  const stopPouring = (
+    forceReset = false
+  ) => {
     if (pourLiquidRef.current) {
-      pourLiquidRef.current.visible = false
+      pourLiquidRef.current.visible =
+        false
+
       pourLiquidRef.current.scale.y = 0
     }
 
     if (forceReset) {
       setPouredFromLeft(false)
       setPouredFromRight(false)
+
       actualPouringRef.current = false
+
       return
     }
 
-    if (!actualPouringRef.current) return
+    if (
+      !actualPouringRef.current
+    ) {
+      return
+    }
 
     if (hand === "left") {
       setPouredFromLeft(false)
@@ -192,16 +360,26 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
   }
 
   const startPouring = () => {
-    if (actualPouringRef.current) return
+    if (
+      actualPouringRef.current
+    ) {
+      return
+    }
 
     if (hand === "left") {
-      console.log("Pouring from left side")
+      console.log(
+        "Pouring from left side"
+      )
+
       setPouredFromLeft(true)
       setPouredFromRight(false)
     }
 
     if (hand === "right") {
-      console.log("Pouring from right side")
+      console.log(
+        "Pouring from right side"
+      )
+
       setPouredFromRight(true)
       setPouredFromLeft(false)
     }
@@ -209,80 +387,158 @@ const PouringLiquid = ({ modelRef, hand, isPouring }) => {
     actualPouringRef.current = true
   }
 
-  useFrame((state, delta) => {
-    if (!pourLiquidRef.current) return
-
-    const hasLiquid = hasLiquidInsideBeaker()
-
-    if (!isPouring) {
-      noLiquidLoggedRef.current = false
-      noReactionLoggedRef.current = false
-      stopPouring()
+  useFrame((_, delta) => {
+    if (!pourLiquidRef.current) {
       return
     }
 
+    const hasLiquid =
+      hasLiquidInsideBeaker()
+
+    /*
+     * The object is no longer tilted enough.
+     */
+    if (!isPouring) {
+      noLiquidLoggedRef.current =
+        false
+
+      noReactionLoggedRef.current =
+        false
+
+      stopPouring()
+
+      return
+    }
+
+    /*
+     * The source object has no liquid.
+     */
     if (!hasLiquid) {
-      if (!noLiquidLoggedRef.current) {
+      if (
+        !noLiquidLoggedRef.current
+      ) {
         setShowErrorMsgNo(9)
-        noLiquidLoggedRef.current = true
+
+        noLiquidLoggedRef.current =
+          true
       }
 
       stopPouring()
+
       return
     }
 
+    /*
+     * Stop when the receiving beaker is full.
+     */
     if (isTargetBeakerFull()) {
-      console.log("Target beaker is full. Stop pouring.")
+      console.log(
+        "Target beaker is full. Stop pouring."
+      )
+
       stopPouring()
+
       return
     }
 
+    /*
+     * The selected liquids do not create a visible reaction.
+     */
     if (!hasVisibleReaction()) {
-      if (!noReactionLoggedRef.current) {
-        console.log("No Visible Reaction Found")
+      if (
+        !noReactionLoggedRef.current
+      ) {
+        console.log(
+          "No Visible Reaction Found"
+        )
+
         setShowErrorMsgNo(8)
-        noReactionLoggedRef.current = true
+
+        noReactionLoggedRef.current =
+          true
       }
 
       isReactionRef.current = false
 
       stopPouring(true)
+
       return
     }
 
-    noLiquidLoggedRef.current = false
-    noReactionLoggedRef.current = false
+    noLiquidLoggedRef.current =
+      false
+
+    noReactionLoggedRef.current =
+      false
 
     startPouring()
 
-    pourLiquidRef.current.visible = true
+    /*
+     * Show the pouring stream.
+     */
+    pourLiquidRef.current.visible =
+      true
 
-    if (pourLiquidRef.current.parent) {
-      pourLiquidRef.current.parent.visible = true
+    if (
+      pourLiquidRef.current.parent
+    ) {
+      pourLiquidRef.current.parent
+        .visible = true
     }
 
-    pourLiquidRef.current.scale.y = Math.min(
-      pourLiquidRef.current.scale.y + 45 * delta,
-      25
-    )
+    pourLiquidRef.current.scale.y =
+      Math.min(
+        pourLiquidRef.current.scale.y +
+          45 * delta,
+        25
+      )
 
+    /*
+     * Reduce the liquid inside the source object.
+     */
     if (liquidInsideRef.current) {
-      liquidInsideRef.current.scale.y -= 2 * delta
+      const liquidName =
+        liquidInsideRef.current.name
+          ?.toLowerCase() || ""
 
-      if (liquidInsideRef.current.scale.y <= 0.01) {
-        liquidInsideRef.current.scale.y = 0
-        liquidInsideRef.current.visible = false
+      let reduceSpeed = 2
+
+      if (
+        liquidName.includes(
+          "conical-liquid"
+        )
+      ) {
+        reduceSpeed = 0.05
+      }
+
+      liquidInsideRef.current.scale.y =
+        Math.max(
+          liquidInsideRef.current.scale.y -
+            reduceSpeed * delta,
+          0
+        )
+
+      if (
+        liquidInsideRef.current.scale.y <=
+        0.01
+      ) {
+        liquidInsideRef.current.scale.y =
+          0
+
+        liquidInsideRef.current.visible =
+          false
+
         stopPouring()
       }
     }
   })
 
-  return (
-    <>
-      {hand === "left" && pouredFromLeft && <Reaction hand="left" />}
-      {hand === "right" && pouredFromRight && <Reaction hand="right" />}
-    </>
-  )
+  /*
+   * Keep Reaction mounted while pouring mode is active.
+   * This prevents its refs from resetting when the user
+   * stops tilting and then starts pouring again.
+   */
+  return <Reaction hand={hand} />
 }
 
 export default PouringLiquid

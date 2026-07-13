@@ -11,6 +11,7 @@ import PouringMode from "./PouringMode/PouringMode";
 import StirMode from "./StirMode/StirMode";
 import FilterFunnelController from "./FilterFunnelController/FilterFunnelController";
 import AllArrows from "../../UI/AllArrows/AllArrows";
+import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext";
 
 const Interaction = () => {
   const {
@@ -20,12 +21,25 @@ const Interaction = () => {
     fillBeakerHand,setIsDragging,isStirMode,
   } = useContext(InteractionContext);
 
+  const {lessonStep,isTutorialMode,safetyStep,setSafetyStep} = useContext(MainGuidelineContext)
+
+  const clickBeakerOption=()=>{
+    if(isTutorialMode){
+      if(!(safetyStep ===1 || safetyStep ===2 || safetyStep ===3)){
+      return <ClickObject/>
+    }
+    }else{
+      return <ClickObject/>
+    }
+    
+  }
+
   return (
     <>
       <GogglesPut/>
       <ChairSlide/>
       <GlovesPut/>
-      <ClickObject/>
+      {clickBeakerOption()}
       <FilterFunnelController/>
       <AllArrows/>
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}

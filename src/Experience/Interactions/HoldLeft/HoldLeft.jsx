@@ -146,6 +146,10 @@ const HoldLeft = ({ modeldata }) => {
       object.rotation.x = Math.PI / 3;
       object.rotation.z = 2
     }
+    else if(object.name === "main-normal-beaker"){
+      object.scale.set(0.9, 0.9, 0.9);
+      
+    }
     else {
       object.scale.set(1, 1, 1)
     }

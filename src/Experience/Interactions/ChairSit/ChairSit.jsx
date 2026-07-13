@@ -45,7 +45,12 @@ const ChairSit = () => {
           y: chairPosition.current.y - 4,
           z: chairPosition.current.z,
           duration: 1.5,
-          ease: 'power2.inOut'
+          ease: 'power2.inOut',
+          onComplete: () => {
+            hasSat.current = true
+            setIsSitting(true)
+            setChairStep(0)
+          }
         })
 
         gsap.to(camera.rotation, {
@@ -55,10 +60,6 @@ const ChairSit = () => {
           duration: 1.5,
           ease: 'power2.inOut'
         })
-
-        hasSat.current = true
-        setIsSitting(true);
-        setChairStep(0)
       }
 
       if (event.code === 'KeyG' && hasSat.current) {

@@ -4,7 +4,6 @@ import * as THREE from "three"
 
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
 
@@ -14,15 +13,19 @@ const PouringMode = ({ hand }) => {
   const {
     selectedRightHand,
     selectedLeftHand,
+
     setPouredFromLeft,
+    setPouredFromRight,
+
     isPouring,
     setIsPouring,
   } = useContext(InteractionContext)
 
-  const { isReactionRef } = useContext(ReactionContext)
-
-  const { lessonStep, setLessonStep, setShowErrorMsgNo } =
-    useContext(MainGuidelineContext)
+  const {
+    lessonStep,
+    setLessonStep,
+    setShowErrorMsgNo,
+  } = useContext(MainGuidelineContext)
 
   const emptyRef = useRef(null)
   const rotationZRef = useRef(0)
@@ -33,31 +36,41 @@ const PouringMode = ({ hand }) => {
   const otherOriginalPositionRef = useRef(null)
   const otherOriginalRotationRef = useRef(null)
 
-  // Stores the base rotation before adding pouring rotation
-  const baseRotationRef = useRef(new THREE.Euler(0, 0, 0))
+  const baseRotationRef = useRef(
+    new THREE.Euler(0, 0, 0)
+  )
 
-  const [activeObject, setActiveObject] = useState(null)
+  const [activeObject, setActiveObject] =
+    useState(null)
 
-  // Find the mouth empty from the receiving object
+  /*
+   * Find the mouth empty inside the receiving object.
+   */
   useEffect(() => {
     emptyRef.current = null
 
-    const sourceObject =
+    const receivingObject =
       hand === "right"
         ? selectedLeftHand?.ref?.current
         : selectedRightHand?.ref?.current
 
-    if (!sourceObject) return
+    if (!receivingObject) return
 
-    sourceObject.traverse((child) => {
-      if (child.name?.toLowerCase().includes("mouth")) {
+    receivingObject.traverse((child) => {
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (childName.includes("mouth")) {
         emptyRef.current = child
       }
     })
-  }, [hand, selectedLeftHand, selectedRightHand])
+  }, [
+    hand,
+    selectedLeftHand,
+    selectedRightHand,
+  ])
 
   useEffect(() => {
-    // Get pouring object and receiving object based on hand
     const getPouringObjects = () => {
       const targetObject =
         hand === "right"
@@ -69,180 +82,311 @@ const PouringMode = ({ hand }) => {
           ? selectedLeftHand?.ref?.current
           : selectedRightHand?.ref?.current
 
-      return { targetObject, otherObject }
-    }
-
-    // Save object positions and rotations before moving to pouring position
-    const saveOriginalTransforms = (targetObject, otherObject) => {
-      originalPositionRef.current = targetObject.position.clone()
-      originalRotationRef.current = targetObject.rotation.clone()
-
-      if (otherObject) {
-        otherOriginalPositionRef.current = otherObject.position.clone()
-        otherOriginalRotationRef.current = otherObject.rotation.clone()
+      return {
+        targetObject,
+        otherObject,
       }
     }
 
-    // Restore both objects when pressing P again
-    const restoreOriginalTransforms = (targetObject, otherObject) => {
+    const saveOriginalTransforms = (
+      targetObject,
+      otherObject
+    ) => {
+      originalPositionRef.current =
+        targetObject.position.clone()
+
+      originalRotationRef.current =
+        targetObject.rotation.clone()
+
+      if (otherObject) {
+        otherOriginalPositionRef.current =
+          otherObject.position.clone()
+
+        otherOriginalRotationRef.current =
+          otherObject.rotation.clone()
+      }
+    }
+
+    const restoreOriginalTransforms = (
+      targetObject,
+      otherObject
+    ) => {
       if (originalPositionRef.current) {
-        targetObject.position.copy(originalPositionRef.current)
+        targetObject.position.copy(
+          originalPositionRef.current
+        )
       }
 
       if (originalRotationRef.current) {
-        targetObject.rotation.copy(originalRotationRef.current)
+        targetObject.rotation.copy(
+          originalRotationRef.current
+        )
       }
 
-      if (otherObject && otherOriginalPositionRef.current) {
-        otherObject.position.copy(otherOriginalPositionRef.current)
+      if (
+        otherObject &&
+        otherOriginalPositionRef.current
+      ) {
+        otherObject.position.copy(
+          otherOriginalPositionRef.current
+        )
       }
 
-      if (otherObject && otherOriginalRotationRef.current) {
-        otherObject.rotation.copy(otherOriginalRotationRef.current)
+      if (
+        otherObject &&
+        otherOriginalRotationRef.current
+      ) {
+        otherObject.rotation.copy(
+          otherOriginalRotationRef.current
+        )
       }
     }
 
-    // Clear pouring state after stopping pouring mode
     const resetPouringState = () => {
       rotationZRef.current = 0
+
       setIsPouring(false)
+
+      setPouredFromLeft(false)
+      setPouredFromRight(false)
+
       setActiveObject(null)
 
       originalPositionRef.current = null
       originalRotationRef.current = null
+
       otherOriginalPositionRef.current = null
       otherOriginalRotationRef.current = null
     }
 
-    // Move right hand object near the left hand object's mouth empty
-    const moveRightHandPouringObject = (targetObject, otherObject) => {
-      // Move left hand object slightly aside
+    const moveRightHandPouringObject = (
+      targetObject,
+      otherObject
+    ) => {
       otherObject?.position.set(-1, -0.5, -5)
 
-      const otherObjectName = otherObject?.name
-      console.log("otherObjectName:", otherObjectName)
+      const otherObjectName =
+        otherObject?.name?.toLowerCase() || ""
 
-      // If left hand object is conical flask, rotate it 180 degrees on Y
-      if (otherObjectName === "main-Conical-Flask") {
+      console.log(
+        "Receiving object:",
+        otherObject?.name
+      )
+
+      if (
+        otherObjectName.includes(
+          "main-conical-flask"
+        )
+      ) {
         otherObject.rotation.y = Math.PI
       }
 
-      const worldPosition = new THREE.Vector3()
-      emptyRef.current.getWorldPosition(worldPosition)
+      const worldPosition =
+        new THREE.Vector3()
 
-      const localPosition = camera.worldToLocal(worldPosition.clone())
+      emptyRef.current.getWorldPosition(
+        worldPosition
+      )
 
-      // Different offset when pouring into conical flask
-      if (otherObjectName === "main-Conical-Flask") {
-        localPosition.add(new THREE.Vector3(2, -0.3, -0.5))
+      const localPosition =
+        camera.worldToLocal(
+          worldPosition.clone()
+        )
+
+      if (
+        otherObjectName.includes(
+          "main-conical-flask"
+        )
+      ) {
+        localPosition.add(
+          new THREE.Vector3(
+            2,
+            -0.3,
+            -0.5
+          )
+        )
       } else {
-        localPosition.add(new THREE.Vector3(1, -0.3, -0.5))
+        localPosition.add(
+          new THREE.Vector3(
+            1,
+            -0.3,
+            -0.5
+          )
+        )
       }
 
-      targetObject.position.copy(localPosition)
+      targetObject.position.copy(
+        localPosition
+      )
     }
 
-    // Move left hand object near the right hand object's mouth empty
-    const moveLeftHandPouringObject = (targetObject, otherObject) => {
-      // Move right hand object slightly aside
+    const moveLeftHandPouringObject = (
+      targetObject,
+      otherObject
+    ) => {
       otherObject?.position.set(1, -0.5, -5)
 
-      const worldPosition = new THREE.Vector3()
-      emptyRef.current.getWorldPosition(worldPosition)
+      const otherObjectName =
+        otherObject?.name?.toLowerCase() || ""
 
-      const localPosition = camera.worldToLocal(worldPosition.clone())
+      const worldPosition =
+        new THREE.Vector3()
 
-      // Different offset when right hand object is normal beaker
-      if (otherObject.name === "main-normal-beaker") {
-        localPosition.add(new THREE.Vector3(-1, 0.1, -0.5))
+      emptyRef.current.getWorldPosition(
+        worldPosition
+      )
+
+      const localPosition =
+        camera.worldToLocal(
+          worldPosition.clone()
+        )
+
+      if (
+        otherObjectName.includes(
+          "main-normal-beaker"
+        )
+      ) {
+        localPosition.add(
+          new THREE.Vector3(
+            -1,
+            0.1,
+            -0.5
+          )
+        )
       } else {
-        localPosition.add(new THREE.Vector3(-2, 0.1, -0.5))
+        localPosition.add(
+          new THREE.Vector3(
+            -2,
+            0.1,
+            -0.5
+          )
+        )
       }
 
-      targetObject.position.copy(localPosition)
+      targetObject.position.copy(
+        localPosition
+      )
     }
 
-    // Set the base rotation before pouring tilt starts
-    const setupBaseRotation = (targetObject) => {
+    const setupBaseRotation = (
+      targetObject
+    ) => {
       rotationZRef.current = 0
 
-      const targetName = targetObject.name?.toLowerCase()
+      const targetName =
+        targetObject.name?.toLowerCase() || ""
 
-      // Default pouring rotation
-      baseRotationRef.current = new THREE.Euler(0, 0, 0)
+      baseRotationRef.current =
+        new THREE.Euler(0, 0, 0)
 
-      // Only right hand normal beaker gets 180 Y rotation
-      if (hand === "right" && targetName?.includes("main-normal-beaker")) {
-        baseRotationRef.current.y = Math.PI
+      if (
+        hand === "right" &&
+        targetName.includes(
+          "main-normal-beaker"
+        )
+      ) {
+        baseRotationRef.current.y =
+          Math.PI
       }
 
-      targetObject.rotation.copy(baseRotationRef.current)
+      targetObject.rotation.copy(
+        baseRotationRef.current
+      )
     }
 
-    const handleKeyDown = (e) => {
-      // Only P is allowed for pouring mode
-      if (e.key.toLowerCase() !== "p") {
-        setShowErrorMsgNo(3)
+    const handleKeyDown = (event) => {
+      /*
+       * Ignore every key except P.
+       */
+      if (event.code !== "KeyP") return
+
+      /*
+       * Right hand uses P.
+       */
+      if (
+        hand === "right" &&
+        event.shiftKey
+      ) {
         return
       }
 
-      // Right hand pouring = P
-      if (hand === "right" && e.shiftKey) return
+      /*
+       * Left hand uses Shift + P.
+       */
+      if (
+        hand === "left" &&
+        !event.shiftKey
+      ) {
+        return
+      }
 
-      // Left hand pouring = Shift + P
-      if (hand === "left" && !e.shiftKey) return
+      const {
+        targetObject,
+        otherObject,
+      } = getPouringObjects()
 
-      const { targetObject, otherObject } = getPouringObjects()
+      if (!emptyRef.current) return
+      if (!targetObject) return
 
-      if (!emptyRef.current || !targetObject) return
-
-      // P pressed again while already in pouring mode
+      /*
+       * Pressing P again exits pouring mode.
+       */
       if (activeObject === targetObject) {
         setShowErrorMsgNo(4)
 
-        restoreOriginalTransforms(targetObject, otherObject)
+        restoreOriginalTransforms(
+          targetObject,
+          otherObject
+        )
+
         resetPouringState()
+
         return
       }
 
-      // Only the first valid P press changes the lesson step
       setLessonStep(10)
 
-      saveOriginalTransforms(targetObject, otherObject)
+      saveOriginalTransforms(
+        targetObject,
+        otherObject
+      )
 
       if (hand === "right") {
-        moveRightHandPouringObject(targetObject, otherObject)
+        moveRightHandPouringObject(
+          targetObject,
+          otherObject
+        )
       }
 
       if (hand === "left") {
-        moveLeftHandPouringObject(targetObject, otherObject)
+        moveLeftHandPouringObject(
+          targetObject,
+          otherObject
+        )
       }
 
       setupBaseRotation(targetObject)
 
+      /*
+       * Clear old pouring states.
+       */
       setIsPouring(false)
-      setActiveObject(targetObject)
+      setPouredFromLeft(false)
+      setPouredFromRight(false)
 
-      saveOriginalTransforms(targetObject, otherObject)
-
-      if (hand === "right") {
-        moveRightHandPouringObject(targetObject, otherObject)
-      }
-
-      if (hand === "left") {
-        moveLeftHandPouringObject(targetObject, otherObject)
-      }
-
-      setupBaseRotation(targetObject)
-
-      setIsPouring(false)
       setActiveObject(targetObject)
     }
 
-    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    )
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown)
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      )
     }
   }, [
     hand,
@@ -251,38 +395,52 @@ const PouringMode = ({ hand }) => {
     camera,
     activeObject,
     setIsPouring,
+    setPouredFromLeft,
+    setPouredFromRight,
     setLessonStep,
     setShowErrorMsgNo,
   ])
 
-  // Mouse wheel controls pouring tilt
+  /*
+   * Mouse wheel controls the pouring rotation.
+   */
   useEffect(() => {
-    const handleWheel = (e) => {
+    const handleWheel = (event) => {
       if (!activeObject) return
 
-      e.preventDefault()
+      event.preventDefault()
 
-      const maxRotation = Math.PI / 5
+      const maxRotation =
+        Math.PI / 5
 
-      if (e.deltaY > 0) {
-        rotationZRef.current = Math.max(
-          rotationZRef.current - 0.15,
-          -maxRotation
-        )
+      if (event.deltaY > 0) {
+        rotationZRef.current =
+          Math.max(
+            rotationZRef.current - 0.15,
+            -maxRotation
+          )
       } else {
-        rotationZRef.current = Math.min(
-          rotationZRef.current + 0.15,
-          maxRotation
-        )
+        rotationZRef.current =
+          Math.min(
+            rotationZRef.current + 0.15,
+            maxRotation
+          )
       }
     }
 
-    window.addEventListener("wheel", handleWheel, {
-      passive: false,
-    })
+    window.addEventListener(
+      "wheel",
+      handleWheel,
+      {
+        passive: false,
+      }
+    )
 
     return () => {
-      window.removeEventListener("wheel", handleWheel)
+      window.removeEventListener(
+        "wheel",
+        handleWheel
+      )
     }
   }, [activeObject])
 
@@ -293,23 +451,22 @@ const PouringMode = ({ hand }) => {
   useFrame(() => {
     if (!activeObject) return
 
-    // Keep base X and Y rotation.
-    // Only Z changes when pouring.
     activeObject.rotation.set(
       baseRotationRef.current.x,
       baseRotationRef.current.y,
-      baseRotationRef.current.z + rotationZRef.current
+      baseRotationRef.current.z +
+        rotationZRef.current
     )
 
-    const pouringAngle = Math.PI / 5
-    const pouringNow = Math.abs(rotationZRef.current) >= pouringAngle
+    const pouringAngle =
+      Math.PI / 5
+
+    const pouringNow =
+      Math.abs(rotationZRef.current) >=
+      pouringAngle
 
     if (pouringNow !== isPouring) {
       setIsPouring(pouringNow)
-
-      if (pouringNow && hand === "right") {
-        setPouredFromLeft?.(true)
-      }
     }
   })
 
@@ -317,7 +474,7 @@ const PouringMode = ({ hand }) => {
     <>
       {activeObject && (
         <PouringLiquid
-          modelRef={{ current: activeObject }}
+          model={activeObject}
           hand={hand}
           isPouring={isPouring}
         />

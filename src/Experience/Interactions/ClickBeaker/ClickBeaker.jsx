@@ -60,7 +60,7 @@ const ClickObject = () => {
     funnelRef,
   } = useContext(ModelContext)
 
-  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson} =
+  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode} =
     useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
@@ -590,6 +590,13 @@ const ClickObject = () => {
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if(lessonStep==6 && selectedLesson ===6){
+      if(objectName !== 'main-Conical-Flask'){
+        setShowErrorMsgNo(6)
+        return false
+      }
+    }
+
     if(lessonStep==6 && selectedLesson ===3){
       if(objectName !== 'main-red-litmus'){
         setShowErrorMsgNo(6)
@@ -684,28 +691,53 @@ const ClickObject = () => {
     }
   }
 
-  const openFillBeakerBox = () => {
+  useEffect(()=>{
+    console.log('lessonStep:',lessonStep)
+  },[lessonStep])
 
-    if(isMainGuideline){
-      if ((lessonStep !==4 && lessonStep !==7)) {
-          setShowErrorMsgNo(4);
-          return
+
+  const openFillBeakerBox = () => {
+    if (!selectedObject) return
+
+    // Only show wrong when lesson step is 8
+    // and the clicked object is in the left hand
+    if (
+      isMainGuideline &&
+      lessonStep === 8 &&
+      selectedObject.hand === "left"
+    ) {
+      console.log("Wrong")
+      setShowErrorMsgNo(4)
+      setSelectedObject(null)
+      return
+    }
+
+    if (isMainGuideline) {
+      if (lessonStep !== 4 && lessonStep !== 7 && lessonStep !== 8) {
+        setShowErrorMsgNo(4)
+        setSelectedObject(null)
+        return
       }
 
-      if(selectedLesson==3 && lessonStep !==4 ){
-        setShowErrorMsgNo(4);
-          return
+      if (
+        selectedLesson === 3 &&
+        lessonStep !== 4
+      ) {
+        setShowErrorMsgNo(4)
+        setSelectedObject(null)
+        return
       }
     }
- 
+
+    const selectedHand = selectedObject.hand
 
     setIsLitmusMode(false)
     setIsStirMode(false)
-
-    setSelectedObject(null)
     setIsFillUpBeaker(false)
-    setFillBeakerHand(selectedObject.hand)
+
+    setFillBeakerHand(selectedHand)
     setIsFillBeakerBoxOpen(true)
+    setSelectedObject(null)
   }
 
   const handleMainHoldingAction = () => {
@@ -763,6 +795,36 @@ const canShowMainHoldingButton = () => {
 
   return true
 }
+
+
+  const renderHandSelectionButtons = () => {
+    if ( isTutorialMode && lessonStep !== 3 && lessonStep !== 6) {
+      return <p>Can't pick now</p>
+    }
+    if (isObjectInfo) {
+      return null
+    }
+
+    if (selectedLeftHand && selectedRightHand) {
+      return <p>Both hands are full</p>
+    }
+
+    return (
+      <>
+        {!selectedLeftHand && (
+          <button onClick={pickObjectWithLeftHand}>
+            Left Hand
+          </button>
+        )}
+
+        {!selectedRightHand && (
+          <button onClick={pickObjectWithRightHand}>
+            Right Hand
+          </button>
+        )}
+      </>
+    )
+  }
 
   return (
     <>
@@ -838,25 +900,7 @@ const canShowMainHoldingButton = () => {
               </>
             ) : (
             <>
-              {!isObjectInfo && (
-                <>
-                  {!selectedLeftHand && (
-                    <button onClick={pickObjectWithLeftHand}>
-                      Left Hand
-                    </button>
-                  )}
-
-                  {!selectedRightHand && (
-                    <button onClick={pickObjectWithRightHand}>
-                      Right Hand
-                    </button>
-                  )}
-
-                  {selectedLeftHand && selectedRightHand && (
-                    <p>Both hands are full</p>
-                  )}
-                </>
-              )}
+              {renderHandSelectionButtons()}
             </>
           )}
           </div>
