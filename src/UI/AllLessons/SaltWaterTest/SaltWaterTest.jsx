@@ -28,7 +28,7 @@ const SaltWaterTest = ()=>{
         "Click on the spoon and select the Right Hand option.",
 
         step6:
-        "Use the spoon to collect a small amount of salt.",
+        "Click spoon again and Press Fill Spoon",
 
         step7:
         "Move the spoon over the beaker containing water.",

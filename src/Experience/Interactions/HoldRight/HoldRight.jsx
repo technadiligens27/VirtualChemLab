@@ -136,8 +136,8 @@ const HoldRight = ({ modeldata }) => {
         object.rotation.y = Math.PI // 180 degrees
       }
     if (object.name === "main-spoon") {
-      object.rotation.x = Math.PI / 2
-      object.rotation.z = Math.PI / 6
+      object.rotation.x = Math.PI 
+      object.rotation.y = -Math.PI
       object.scale.set(1, 1, 1)
     } else if (
       object.name === "main-red-litmus" ||

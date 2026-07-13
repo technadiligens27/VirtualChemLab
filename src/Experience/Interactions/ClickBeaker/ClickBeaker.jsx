@@ -37,7 +37,8 @@ const ClickObject = () => {
     isFunnelMode,
     setIsFunnelMode,
     clickedModel,setClickedModel,
-    isObjectInfo,setIsObjectInfo
+    isObjectInfo,setIsObjectInfo,
+    spoonHasSalt, setSpoonHasSalt
   } = useContext(InteractionContext)
 
   const {
@@ -56,6 +57,7 @@ const ClickObject = () => {
 
     filterPaperRef,
     filterFoldedPaperRef,
+    saltContainerRef,
 
     funnelRef,
   } = useContext(ModelContext)
@@ -124,6 +126,10 @@ const ClickObject = () => {
         name: "main-funnel",
         ref: funnelRef,
       },
+      {
+        name: "salt-container",
+        ref:saltContainerRef
+      }
     ],
     [
       normalBeakerRef,
@@ -139,6 +145,7 @@ const ClickObject = () => {
       filterPaperRef,
       filterFoldedPaperRef,
       funnelRef,
+      saltContainerRef
     ]
   )
 
@@ -826,6 +833,34 @@ const canShowMainHoldingButton = () => {
     )
   }
 
+const addSaltToSpoon = () => {
+  if (
+    selectedLeftHand?.name !== "main-spoon" &&
+    selectedRightHand?.name !== "main-spoon"
+  ) {
+    console.log("selectedLeftHand:", selectedLeftHand)
+    console.log("selectedRightHand:", selectedRightHand)
+
+    setShowErrorMsgNo(13)
+    return
+  }
+
+  console.log("Spoon found")
+}
+
+  const renderTableObjectButtons = () => {
+  if (selectedObject?.name === "salt-container") {
+    return (
+      <button onClick={()=>addSaltToSpoon()} >
+        Take Salt
+      </button>
+    )
+  }
+
+  return renderHandSelectionButtons()
+}
+
+
   return (
     <>
       {selectedObject && !isFillBeakerBoxOpen && (
@@ -900,7 +935,7 @@ const canShowMainHoldingButton = () => {
               </>
             ) : (
             <>
-              {renderHandSelectionButtons()}
+              {renderTableObjectButtons()}
             </>
           )}
           </div>

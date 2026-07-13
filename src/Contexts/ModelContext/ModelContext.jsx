@@ -35,10 +35,10 @@ export const ModelProvider = ({ children }) => {
   const arrowLeftGloveRef = useRef(null);
   const arrowRightGloveRef = useRef(null);
   const arrowRedLitmusRef = useRef(null);
-  const arrowSpoonRef = useRef(null)
+  const arrowSpoonRef = useRef(null);
 
-  
-
+  const saltContainerRef = useRef(null)
+ 
   return (
     <ModelContext.Provider
       value={{ 
@@ -57,7 +57,8 @@ export const ModelProvider = ({ children }) => {
         arrowRedLitmusRef,
         normalPrecipitateRef,
         arrowConicalFlaskRef,
-        arrowSpoonRef
+        arrowSpoonRef,
+        saltContainerRef
       }}
     >
       {children}
