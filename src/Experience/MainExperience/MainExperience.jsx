@@ -58,7 +58,7 @@ useEffect(() => {
       {!isSitting && !isMainGuideline && <PointerLockControls/>}
       {/* <PointerLockControls/> */}
 
-      <Interaction key={labResetKey}/>
+      <Interaction/>
       <Perf position="top-right" />
 
     </Canvas>

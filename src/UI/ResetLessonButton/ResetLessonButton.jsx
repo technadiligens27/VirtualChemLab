@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 import { ModelContext } from "../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../Contexts/InteractionContext/InteractionContext"
@@ -30,7 +30,7 @@ const ResetLessonButton = () => {
   const { resetInteractions } =
     useContext(InteractionContext)
 
-  const { resetLessonGuidelines } =
+  const { resetLessonGuidelines,labResetKey} =
     useContext(MainGuidelineContext)
 
   const { resetReactions } =
@@ -54,19 +54,32 @@ const ResetLessonButton = () => {
       funnelRef,
     ]
 
-    // Reset positions, rotations, scales and visibility.
-    labModels.forEach((modelRef) => {
-      if (modelRef.current) {
-        resetModel(modelRef.current)
-      }
-    })
-
-    // Reset context states.
+    /*
+    * First stop PouringMode, StirMode,
+    * selected hands and all other interactions.
+    */
     resetInteractions()
     resetReactions()
     resetLessonGuidelines()
+
+    /*
+    * Wait until React has removed/stopped the
+    * interaction components before resetting
+    * the Three.js model transforms.
+    */
+    requestAnimationFrame(() => {
+      labModels.forEach((modelRef) => {
+        if (modelRef.current) {
+          resetModel(modelRef.current)
+        }
+      })
+    })
   }
 
+  useEffect(()=>{
+    console.log('labResetKey:',labResetKey)
+  },[labResetKey])
+  
   return (
     <button
       className="reset-btn"

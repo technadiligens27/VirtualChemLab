@@ -3,22 +3,26 @@ import "./LessonMenu.css"
 import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const LessonMenu = () => {
-
-    console.log('lessonMenu')
-  const { setIsMainGuideline,selectedLesson,setSelectedLesson,
-    isLessonStart,setIsLessonStart,setShowLessonMenu,lessonStep,
-    setLessonStep,setSelectedMainGuideline,safetyStep,setSafetyStep} = useContext(MainGuidelineContext)
+  const {
+    setIsMainGuideline,
+    setSelectedLesson,
+    setIsLessonStart,
+    setShowLessonMenu,
+    setLessonStep,
+    setSelectedMainGuideline,
+    setSafetyStep,
+    labResetKey,
+  } = useContext(MainGuidelineContext)
 
   const lessons = [
     {
       id: 1,
       name: "Salt Dissolving in Water",
     },
-
     {
-      id:6,
-      name:'Acid Base Neutralization'
-    },    
+      id: 6,
+      name: "Acid Base Neutralization",
+    },
     {
       id: 2,
       name: "Acid Indicator Test",
@@ -35,13 +39,22 @@ const LessonMenu = () => {
       id: 5,
       name: "Copper Sulfate Precipitation",
     },
-
-    
   ]
 
   useEffect(() => {
     setIsMainGuideline(true)
   }, [setIsMainGuideline])
+
+  const startLesson = (lessonId) => {
+    setSelectedLesson(lessonId)
+    setIsLessonStart(true)
+    setShowLessonMenu(false)
+    setSelectedMainGuideline(null)
+    setLessonStep(1)
+
+    // Skip completed safety instructions after the lab has been reset.
+    // setSafetyStep(labResetKey > 0 ? 4 : 1)
+  }
 
   return (
     <div className="main-guidelines">
@@ -50,12 +63,14 @@ const LessonMenu = () => {
 
         <div className="lesson-btn-container">
           {lessons.map((lesson) => (
-            <button onClick={()=>{setSelectedLesson(lesson.id);setIsLessonStart(true);
-            setShowLessonMenu(false);setSelectedMainGuideline(null);setLessonStep(1);setSafetyStep(1)}} key={lesson.id}>
+            <button
+              key={lesson.id}
+              onClick={() => startLesson(lesson.id)}
+            >
               {lesson.name}
-            </button> 
+            </button>
           ))}
-        </div>               
+        </div>
       </div>
     </div>
   )

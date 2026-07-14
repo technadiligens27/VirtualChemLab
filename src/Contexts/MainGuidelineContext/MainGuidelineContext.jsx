@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useState ,useRef} from "react"
 
 export const MainGuidelineContext = createContext()
 
@@ -30,8 +30,11 @@ export const MainGuidelineProvider = ({ children }) => {
     useState(false)
 
   const [labResetKey, setLabResetKey] = useState(0)
+  const labResetVersionRef = useRef(0)
 
   const resetLessonGuidelines = () => {
+    labResetVersionRef.current += 1
+    setLabResetKey(labResetVersionRef.current)
     // Stop the current lesson
     setSelectedLesson(null)
     setLessonStep(null)
@@ -41,7 +44,7 @@ export const MainGuidelineProvider = ({ children }) => {
     setShowErrorMsgNo(0)
 
     // Reset lesson safety step
-    setSafetyStep(0)
+    setSafetyStep(4)
 
     // Hide all arrows
     setShowArrowChair(false)
@@ -60,7 +63,7 @@ export const MainGuidelineProvider = ({ children }) => {
     setShowLessonMenu(true)
     setIsTutorialMode(true)
     // Restart interaction components
-    setLabResetKey((previousKey) => previousKey + 1)
+    
   }
 
   return (
@@ -124,6 +127,7 @@ export const MainGuidelineProvider = ({ children }) => {
         setLabResetKey,
 
         resetLessonGuidelines,
+        labResetVersionRef
       }}
     >
       {children}

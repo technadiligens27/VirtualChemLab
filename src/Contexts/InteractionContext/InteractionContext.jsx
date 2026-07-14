@@ -59,7 +59,7 @@ export const InteractionProvider = ({ children }) => {
   const [isPouring, setIsPouring] = useState(false);
 
   const [chairStep,setChairStep] = useState(0);
-  const [pouringModeHand,setPouringModeHand] = useState();
+  const [pouringModeHand,setPouringModeHand] = useState(null);
 
   const [spoonHasSalt, setSpoonHasSalt] = useState(false);
   const [isAddSalt,setIsAddSalt] = useState(false);

@@ -60,7 +60,7 @@ const UI = () => {
     setShowRedLitmusArrow,
     isTutorialMode,showSpoonArrow,setShowSpoonArrow,
     setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow,
-    setShowSaltContainerArrow
+    setShowSaltContainerArrow,labResetKey
   } = useContext(MainGuidelineContext)
 
   const {
@@ -228,11 +228,17 @@ const UI = () => {
         <DialogBox text="Press E to Sit" />
       )}
 
-      {selectedMainGuideline === 5 &&
-        isSitting &&
-        safetyStep === 0 && (
-          <LessonMenu />
-        )}
+      {(
+        (labResetKey > 0 &&
+          safetyStep === 4 &&
+          isSitting &&
+          selectedMainGuideline === 5) ||
+        (selectedMainGuideline === 5 &&
+          isSitting &&
+          safetyStep === 0)
+      ) && (
+        <LessonMenu />
+      )}
 
       {safetyStep === 1 && (
         <DialogBox text="Click the goggles to put them on" />

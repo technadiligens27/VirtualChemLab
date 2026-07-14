@@ -64,7 +64,7 @@ const FillBeakerBox = () => {
     }
 
     if (selectedLesson === 2 && lessonStep === 8) {
-      if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
+      if (!checkFill("Universal indicator", 50, 9)) return
     }
 
     if (selectedLesson === 6 && lessonStep === 5) {
