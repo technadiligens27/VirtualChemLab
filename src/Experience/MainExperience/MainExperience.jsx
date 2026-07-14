@@ -16,7 +16,7 @@ const MainExperience = () => {
 
   const {hasSat,isSitting} = useContext(InteractionContext);
   // const {isSitting} = useContext(ModelContext);
-  const {isMainGuideline} = useContext(MainGuidelineContext)
+  const {isMainGuideline,labResetKey} = useContext(MainGuidelineContext)
 
   useEffect(() => {
     if (isMainGuideline) {
@@ -58,7 +58,7 @@ useEffect(() => {
       {!isSitting && !isMainGuideline && <PointerLockControls/>}
       {/* <PointerLockControls/> */}
 
-      <Interaction/>
+      <Interaction key={labResetKey}/>
       <Perf position="top-right" />
 
     </Canvas>

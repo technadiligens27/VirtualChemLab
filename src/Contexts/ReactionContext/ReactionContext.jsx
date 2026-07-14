@@ -1,29 +1,68 @@
-import { createContext, useRef, useState } from 'react'
+import { createContext, useRef, useState } from "react"
 
 export const ReactionContext = createContext()
 
 export const ReactionProvider = ({ children }) => {
-  
-   const [isSaltWaterReaction,setIsSaltWaterReaction] = useState(false);
-   const [isHclUniversal, setIsHclUniversal] = useState(false);
-   const [isNaohUniversal,setIsNaohUniversal] = useState(false);
-   const [isStarchIodine,setIsStarchIodine] = useState(false);
-   const [isCopperSulfateNaoh,setIsCopperSulfateNaoh] = useState(false);
-   const [isAcidBase,setIsAcidBase] = useState(false);
-   
-   const stirrLiquidRef = useRef(null)
-    const isReactionRef = useRef(false)
+  const [isSaltWaterReaction, setIsSaltWaterReaction] =
+    useState(false)
+
+  const [isHclUniversal, setIsHclUniversal] =
+    useState(false)
+
+  const [isNaohUniversal, setIsNaohUniversal] =
+    useState(false)
+
+  const [isStarchIodine, setIsStarchIodine] =
+    useState(false)
+
+  const [
+    isCopperSulfateNaoh,
+    setIsCopperSulfateNaoh,
+  ] = useState(false)
+
+  const [isAcidBase, setIsAcidBase] =
+    useState(false)
+
+  const stirrLiquidRef = useRef(null)
+  const isReactionRef = useRef(false)
+
+  const resetReactions = () => {
+    setIsSaltWaterReaction(false)
+    setIsHclUniversal(false)
+    setIsNaohUniversal(false)
+    setIsStarchIodine(false)
+    setIsCopperSulfateNaoh(false)
+    setIsAcidBase(false)
+
+    stirrLiquidRef.current = null
+    isReactionRef.current = false
+  }
+
   return (
     <ReactionContext.Provider
       value={{
-        isSaltWaterReaction,setIsSaltWaterReaction,
+        isSaltWaterReaction,
+        setIsSaltWaterReaction,
+
+        isHclUniversal,
+        setIsHclUniversal,
+
+        isNaohUniversal,
+        setIsNaohUniversal,
+
+        isStarchIodine,
+        setIsStarchIodine,
+
+        isCopperSulfateNaoh,
+        setIsCopperSulfateNaoh,
+
+        isAcidBase,
+        setIsAcidBase,
+
         stirrLiquidRef,
-        isHclUniversal, setIsHclUniversal,
-        isNaohUniversal,setIsNaohUniversal,
-        isStarchIodine,setIsStarchIodine,
-        isCopperSulfateNaoh,setIsCopperSulfateNaoh,
-        isAcidBase,setIsAcidBase,
-        isReactionRef
+        isReactionRef,
+
+        resetReactions,
       }}
     >
       {children}

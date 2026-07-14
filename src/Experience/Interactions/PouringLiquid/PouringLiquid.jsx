@@ -323,13 +323,9 @@ const PouringLiquid = ({
     return hasLiquid
   }
 
-  const stopPouring = (
-    forceReset = false
-  ) => {
+  const stopPouring = (forceReset = false) => {
     if (pourLiquidRef.current) {
-      pourLiquidRef.current.visible =
-        false
-
+      pourLiquidRef.current.visible = false
       pourLiquidRef.current.scale.y = 0
     }
 

@@ -13,6 +13,7 @@ import CopperSulfate from "./AllLessons/CopperSulfate/CopperSulfate"
 import InfoDialogBox from "./InfoDialogBox/InfoDialogBox"
 import InfoBox from "./InfoBox/InfoBox"
 import SaltWaterTest from "./AllLessons/SaltWaterTest/SaltWaterTest"
+import ResetLessonButton from "./ResetLessonButton/ResetLessonButton"
 
 const mainContent = [
   {
@@ -182,6 +183,7 @@ const UI = () => {
   */
   return (
     <>
+    <ResetLessonButton/>
       {selectedMainGuideline === 2 && (
         <MainGuidelines
           mainContent={mainContent[1]}

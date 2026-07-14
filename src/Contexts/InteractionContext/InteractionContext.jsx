@@ -62,7 +62,71 @@ export const InteractionProvider = ({ children }) => {
   const [pouringModeHand,setPouringModeHand] = useState();
 
   const [spoonHasSalt, setSpoonHasSalt] = useState(false);
-  const [isAddSalt,setIsAddSalt] = useState(false)
+  const [isAddSalt,setIsAddSalt] = useState(false);
+
+  const resetInteractions = () => {
+  // Empty both hands
+  setSelectedLeftHand(false)
+  setSelectedRightHand(false)
+
+  selectedModelLeft.current = null
+  selectedModelRight.current = null
+
+  // Close the fill-beaker UI
+  setIsFillBeakerBoxOpen(false)
+  setIsFillUpBeaker(false)
+  setFillBeakerHand(null)
+  setSelectedBeakerBoxHand(null)
+
+  // Reset dragging and object information
+  setIsDragging(null)
+  setClickedModel(null)
+  setIsObjectInfo(false)
+
+  // Reset pouring
+  setIsPouringMode(false)
+  setIsPouring(false)
+  setPouringModeHand(undefined)
+
+  setPouredFromLeft(false)
+  setPouredFromRight(false)
+  setPourAmount(null)
+
+  // Reset the liquids
+  setRightBeakerFillData({
+    name: "",
+    color: "",
+    amount: 0,
+  })
+
+  setLeftBeakerFillData({
+    name: "",
+    color: "",
+    amount: 0,
+  })
+
+  liquidLeftModel.current = null
+  liquidRightModel.current = null
+
+  // Reset reaction and stirring
+  setIsReaction(false)
+  setIsStirMode(false)
+  setIsStirring(false)
+
+  // Reset litmus mode
+  setIsLitmusMode(false)
+
+  // Reset filter and funnel
+  setIsFilterFolded(false)
+  setIsFilterInFunnel(false)
+  setIsFunnelMode(false)
+
+  // Reset salt and spoon
+  setSpoonHasSalt(false)
+  setIsAddSalt(false);
+  setIsSitting(true);
+  setChairStep(0)
+}
 
   return (
     <InteractionContext.Provider
@@ -99,7 +163,7 @@ export const InteractionProvider = ({ children }) => {
         chairStep,setChairStep,
         pouringModeHand,setPouringModeHand,
         spoonHasSalt, setSpoonHasSalt,
-        isAddSalt,setIsAddSalt
+        isAddSalt,setIsAddSalt,resetInteractions
       }}
     >
       {children}

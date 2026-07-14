@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import { useContext, useEffect, useRef } from 'react';
 import { ModelContext } from '../../Contexts/ModelContext/ModelContext';
 import ChairSlide from '../Interactions/ChairSlide/ChairSlide';
+import { saveModelStartState } from "../resetModels/resetModels.jsx"
 
 const ChemEnvironment = () => {
 
@@ -142,6 +143,38 @@ const hideLiquidObjects=(root)=>{
       arrowSaltContainerRef.current.visible = false
 
   }, [scene])
+
+  const hasSavedModelsRef = useRef(false)
+
+useEffect(() => {
+  if (hasSavedModelsRef.current) return
+
+  const labModels = [
+    normalBeakerRef,
+    conicalBeakerRef,
+    roundBeakerRef,
+    graduatedBeakerRef,
+    spoonRef,
+    saltRef,
+    redLitmusRef,
+    blueLitmusRef,
+    testube01Ref,
+    testube02Ref,
+    testube03Ref,
+    filterPaperRef,
+    filterFoldedPaperRef,
+    funnelRef,
+  ]
+
+  labModels.forEach((modelRef) => {
+    if (modelRef.current) {
+      saveModelStartState(modelRef.current)
+    }
+  })
+
+  hasSavedModelsRef.current = true
+}, [])
+
 
   return (
     <>

@@ -93,6 +93,7 @@ const StirMode = ({ spoonRef, beakerRef, hand }) => {
 
   useEffect(() => {
     const handleWheel = (e) => {
+      e.preventDefault()
       targetAngle.current += e.deltaY * 0.004
 
       setIsStirring(true)
