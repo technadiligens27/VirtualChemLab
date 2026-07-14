@@ -59,7 +59,7 @@ useEffect(() => {
       {/* <PointerLockControls/> */}
 
       <Interaction/>
-      <Perf position="top-right" />
+      {/* <Perf position="top-right" /> */}
 
     </Canvas>
   )

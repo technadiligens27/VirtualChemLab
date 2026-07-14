@@ -1,8 +1,8 @@
 .reset-btn{
-    width: 100px;
-    height: 200px;
+    width: 200px;
+    height: 100px;
     position: absolute;
     top: 0%;
-    left: 50%;
+    left: 80%;
     z-index: 9999;
 }

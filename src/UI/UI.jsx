@@ -183,7 +183,8 @@ const UI = () => {
   */
   return (
     <>
-    <ResetLessonButton/>
+    {isLessonStart && safetyStep===4 && <ResetLessonButton/>}
+    
       {selectedMainGuideline === 2 && (
         <MainGuidelines
           mainContent={mainContent[1]}
