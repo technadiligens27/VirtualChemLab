@@ -190,12 +190,14 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
           <PouringMode hand="left" />
       )}
 
-      {isStirMode && selectedLeftHand && selectedRightHand && (
-        <StirMode
-          spoonRef={selectedLeftHand.ref}
-          beakerRef={selectedRightHand.ref}
-          hand="left"
-        />
+      {isStirMode &&
+          selectedLeftHand?.name === "main-spoon" &&
+          selectedRightHand && (
+            <StirMode
+              spoonRef={selectedLeftHand.ref}
+              beakerRef={selectedRightHand.ref}
+              hand="left"
+            />
       )}
 
       {isLitmusMode &&
@@ -232,9 +234,9 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
       }
 
-      {
+      {/* {
          <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
-      }
+      } */}
 
     </>
   )

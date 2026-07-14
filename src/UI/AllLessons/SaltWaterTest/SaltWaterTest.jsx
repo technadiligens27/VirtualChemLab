@@ -28,21 +28,16 @@ const SaltWaterTest = ()=>{
         "Click on the spoon and select the Right Hand option.",
 
         step6:
-        "Click spoon again and Press Fill Spoon",
+        "Click Salt Container and Click Take Salt",
 
         step7:
-        "Move the spoon over the beaker containing water.",
+        "Click the spoon and press StirMode",
 
         step8:
-        "Add the salt into the water.",
+        "Now scroll mouse to stir.",
+       
 
         step9:
-        "Click on the spoon and select the Stir option.",
-
-        step10:
-        "Stir the mixture and observe the salt gradually dissolving in the water.",
-
-        step11:
         "The salt particles spread throughout the water, forming a saltwater solution. No new substance is produced, so this is a physical change.",
     },
     ]
@@ -101,10 +96,7 @@ const SaltWaterTest = ()=>{
            lessonStep ===10 && 
            <DialogBox text={SaltWaterTestSteps[0].step9}/>
         }
-        {
-           lessonStep ===11 && 
-           <DialogBox text={SaltWaterTestSteps[0].step10}/>
-        }
+        
 
 
        </>

@@ -26,14 +26,15 @@ export const MainGuidelineProvider = ({ children }) => {
   const [safetyStep,setSafetyStep] = useState(0);
 
   const [showRedLitmusArrow,setShowRedLitmusArrow] = useState(false);
-  const [isTutorialMode,setIsTutorialMode] = useState(null)
+  const [isTutorialMode,setIsTutorialMode] = useState(null);
+
+  const [showSaltContainerArrow,setShowSaltContainerArrow] = useState(false)
 
   return (
     <MainGuidelineContext.Provider
       value={{ 
         isMainGuideline,setIsMainGuideline,
-        selectedMainGuideline,setSelectedMainGuideline,
-        
+        selectedMainGuideline,setSelectedMainGuideline,        
         showArrrowChair,setShowArrowChair,
         showLessonMenu,setShowLessonMenu,
         selectedLesson,setSelectedLesson,
@@ -48,7 +49,8 @@ export const MainGuidelineProvider = ({ children }) => {
         safetyStep,setSafetyStep,
         isTutorialMode,setIsTutorialMode,
         showConicalArrow,setShowArrowConicalArrow,
-        showSpoonArrow,setShowSpoonArrow
+        showSpoonArrow,setShowSpoonArrow,
+        showSaltContainerArrow,setShowSaltContainerArrow
       }}
     >
       {children}

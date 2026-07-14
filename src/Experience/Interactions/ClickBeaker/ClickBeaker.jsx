@@ -24,6 +24,7 @@ const ClickObject = () => {
 
     isDragging,
 
+    isStirMode,
     setIsStirMode,
     setIsLitmusMode,
     isLitmusMode,
@@ -38,7 +39,8 @@ const ClickObject = () => {
     setIsFunnelMode,
     clickedModel,setClickedModel,
     isObjectInfo,setIsObjectInfo,
-    spoonHasSalt, setSpoonHasSalt
+    spoonHasSalt, setSpoonHasSalt,
+    setIsAddSalt
   } = useContext(InteractionContext)
 
   const {
@@ -660,11 +662,17 @@ const ClickObject = () => {
     setSelectedObject(null)
   }
 
-  const startStirMode = () => {
-    setIsLitmusMode(false)
-    setIsStirMode(true)
+  const toggleStirMode = () => {
+  if ( isTutorialMode && selectedLesson === 1 && lessonStep === 7) {
+    setShowErrorMsgNo(4)
     setSelectedObject(null)
+    return
   }
+
+  setIsLitmusMode(false)
+  setIsStirMode((prev) => !prev)
+  setSelectedObject(null)
+}
 
   const toggleLitmusMode = () => {
       setIsStirMode(false)
@@ -749,7 +757,7 @@ const ClickObject = () => {
 
   const handleMainHoldingAction = () => {
     if (isSpoon(selectedObject.name)) {
-      startStirMode()
+      toggleStirMode()
       return
     }
 
@@ -767,8 +775,11 @@ const ClickObject = () => {
   }
 
   const getMainHoldingButtonText = () => {
+
+    
+
     if (isSpoon(selectedObject.name)) {
-      return "Stir"
+      return isStirMode ? "Exit Stir Mode" : "Stir"
     }
 
     if (isLitmus(selectedObject.name)) {
@@ -780,7 +791,7 @@ const ClickObject = () => {
     }
 
     return "Fill Beaker"
-  }
+}
 
 
   const getOtherHandData = (hand) => {
@@ -804,48 +815,52 @@ const canShowMainHoldingButton = () => {
 }
 
 
-  const renderHandSelectionButtons = () => {
-    if ( isTutorialMode && lessonStep !== 3 && lessonStep !== 6) {
-      return <p>Can't pick now</p>
-    }
-    if (isObjectInfo) {
-      return null
-    }
-
-    if (selectedLeftHand && selectedRightHand) {
-      return <p>Both hands are full</p>
-    }
-
-    return (
-      <>
-        {!selectedLeftHand && (
-          <button onClick={pickObjectWithLeftHand}>
-            Left Hand
-          </button>
-        )}
-
-        {!selectedRightHand && (
-          <button onClick={pickObjectWithRightHand}>
-            Right Hand
-          </button>
-        )}
-      </>
-    )
+const renderHandSelectionButtons = () => {
+  if (
+    isTutorialMode &&
+    selectedLesson === 1 &&
+    lessonStep === 6 &&
+    selectedObject?.name !== "main-spoon"
+  ) {
+    return <p>Can't pick now</p>
   }
+
+  if (isTutorialMode && lessonStep !== 3 && lessonStep !== 6) {
+    return <p>Can't pick now</p>
+  }
+
+  if (isObjectInfo) return null
+
+  if (selectedLeftHand && selectedRightHand) {
+    return <p>Both hands are full</p>
+  }
+
+  return (
+    <>
+      {!selectedLeftHand && (
+        <button onClick={pickObjectWithLeftHand}>
+          Left Hand
+        </button>
+      )}
+
+      {!selectedRightHand && (
+        <button onClick={pickObjectWithRightHand}>
+          Right Hand
+        </button>
+      )}
+    </>
+  )
+}
 
 const addSaltToSpoon = () => {
   if (
-    selectedLeftHand?.name !== "main-spoon" &&
-    selectedRightHand?.name !== "main-spoon"
-  ) {
-    console.log("selectedLeftHand:", selectedLeftHand)
-    console.log("selectedRightHand:", selectedRightHand)
-
-    setShowErrorMsgNo(13)
-    return
-  }
-
-  console.log("Spoon found")
+    selectedLeftHand?.name !== "main-spoon" && selectedRightHand?.name !== "main-spoon"){
+      console.log("selectedLeftHand:", selectedLeftHand)
+      console.log("selectedRightHand:", selectedRightHand)
+      setShowErrorMsgNo(13)
+      return
+  }  
+  setIsAddSalt(true)
 }
 
   const renderTableObjectButtons = () => {

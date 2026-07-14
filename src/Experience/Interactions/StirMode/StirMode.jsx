@@ -3,11 +3,11 @@ import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import StirReaction from "../StirReaction/StirReaction"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
-import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const StirMode = ({ spoonRef, beakerRef, hand }) => {
-  const { isStirring, setIsStirring } = useContext(InteractionContext);
-  const {} = useContext(ReactionContext)
+  const { isStirring, setIsStirring } =useContext(InteractionContext)
+  const  {lessonStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
   const centerWorld = useRef(new THREE.Vector3())
   const centerLocal = useRef(new THREE.Vector3())
@@ -15,21 +15,41 @@ const StirMode = ({ spoonRef, beakerRef, hand }) => {
 
   const targetAngle = useRef(0)
   const currentAngle = useRef(0)
-
   const scrollStopTimer = useRef(null)
 
-  const radius = 0.3
-  const heightOffset = 2
+  // Save positions before Stir Mode starts
+  const originalBeakerPosition = useRef(null)
+  const originalSpoonPosition = useRef(null)
+  const originalSpoonRotation = useRef(null)
+
+  const radius = 0.2
+  const heightOffset = 0.5
+
+  useEffect(()=>{
+    if(selectedLesson==1 && lessonStep==8){
+      setLessonStep(9)
+    }
+  },[lessonStep])
 
   useEffect(() => {
     if (!beakerRef?.current || !spoonRef?.current) return
+
+    // Save original transforms
+    originalBeakerPosition.current =
+      beakerRef.current.position.clone()
+
+    originalSpoonPosition.current =
+      spoonRef.current.position.clone()
+
+    originalSpoonRotation.current =
+      spoonRef.current.rotation.clone()
 
     if (hand === "left") {
       beakerRef.current.position.x -= 2.5
     }
 
     if (hand === "right") {
-      beakerRef.current.position.x += 2
+      beakerRef.current.position.x += 4
     }
 
     beakerRef.current.traverse((child) => {
@@ -39,7 +59,37 @@ const StirMode = ({ spoonRef, beakerRef, hand }) => {
         foundStirPoint.current = true
       }
     })
-  }, [beakerRef, spoonRef, hand])
+
+    // Runs when Exit Stir Mode is clicked
+    return () => {
+      setIsStirring(false)
+      foundStirPoint.current = false
+
+      if (originalBeakerPosition.current) {
+        beakerRef.current?.position.copy(
+          originalBeakerPosition.current
+        )
+      }
+
+      if (originalSpoonPosition.current) {
+        spoonRef.current?.position.copy(
+          originalSpoonPosition.current
+        )
+      }
+
+      if (originalSpoonRotation.current) {
+        spoonRef.current?.rotation.copy(
+          originalSpoonRotation.current
+        )
+      }
+
+      beakerRef.current?.traverse((child) => {
+        if (child.name?.toLowerCase().includes("stir")) {
+          child.visible = false
+        }
+      })
+    }
+  }, [beakerRef, spoonRef, hand, setIsStirring])
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -64,6 +114,8 @@ const StirMode = ({ spoonRef, beakerRef, hand }) => {
       if (scrollStopTimer.current) {
         clearTimeout(scrollStopTimer.current)
       }
+
+      setIsStirring(false)
     }
   }, [setIsStirring])
 
@@ -92,13 +144,14 @@ const StirMode = ({ spoonRef, beakerRef, hand }) => {
     )
 
     spoonRef.current.lookAt(centerWorld.current)
+
+    // Adjust spoon rotation after lookAt
+    spoonRef.current.rotateX(-1.4285)
+    spoonRef.current.rotateY(-5.3011)
+    spoonRef.current.rotateZ(0.0213)
   })
 
-  return (
-    <>
-    {isStirring &&  <StirReaction/>}
-    </>
-  )
+  return <>{isStirring && <StirReaction hand={hand} spoonRef={spoonRef} beakerRef={beakerRef} />}</>
 }
 
 export default StirMode

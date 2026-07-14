@@ -36,6 +36,7 @@ export const ModelProvider = ({ children }) => {
   const arrowRightGloveRef = useRef(null);
   const arrowRedLitmusRef = useRef(null);
   const arrowSpoonRef = useRef(null);
+  const arrowSaltContainerRef = useRef(null)
 
   const saltContainerRef = useRef(null)
  
@@ -58,7 +59,8 @@ export const ModelProvider = ({ children }) => {
         normalPrecipitateRef,
         arrowConicalFlaskRef,
         arrowSpoonRef,
-        saltContainerRef
+        saltContainerRef,
+        arrowSaltContainerRef
       }}
     >
       {children}

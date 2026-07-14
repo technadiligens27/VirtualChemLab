@@ -14,7 +14,7 @@ import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 import FunnelMode from "../FunnelMode/FunnelMode"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
-
+import { TransformControls } from "@react-three/drei"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -44,7 +44,7 @@ const HoldRight = ({ modeldata }) => {
   const {lessonStep,isMainGuideline,setLessonStep} = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
-
+const transformControlsRef = useRef()
   useEffect(()=>{
     selectedModelRight.current = modeldata.ref.current
   },[])
@@ -136,9 +136,13 @@ const HoldRight = ({ modeldata }) => {
         object.rotation.y = Math.PI // 180 degrees
       }
     if (object.name === "main-spoon") {
-      object.rotation.x = Math.PI 
-      object.rotation.y = -Math.PI
-      object.scale.set(1, 1, 1)
+      object.rotation.set(
+        -1.4285088984579244,
+        -0.30110700753116976,
+        -1.0212733683935664
+      )
+      object.scale.set(1, 1, 1);
+      object.position.x =3.5
     } else if (
       object.name === "main-red-litmus" ||
       object.name === "main-blue-litmus"
@@ -163,23 +167,37 @@ const HoldRight = ({ modeldata }) => {
     object.frustumCulled = false
   }, [camera, scene, modeldata])
 
-  useFrame(() => {
-    if (!modeldata?.ref?.current) return
+  // useFrame(() => {
+  //   if (!modeldata?.ref?.current) return
 
-    const object = modeldata.ref.current
+  //   const object = modeldata.ref.current
 
-    // Only rotate held object when not in Funnel Mode
-    if (!isFunnelMode) {
-      object.rotation.z = THREE.MathUtils.lerp(
-        object.rotation.z,
-        rotationZRef.current,
-        0.1
-      )
-    }
-  })
+  //   // Only rotate held object when not in Funnel Mode
+  //   if (!isFunnelMode) {
+  //     object.rotation.z = THREE.MathUtils.lerp(
+  //       object.rotation.z,
+  //       rotationZRef.current,
+  //       0.1
+  //     )
+  //   }
+  // })
 
 
+// useEffect(() => {
+//   const object = modeldata?.ref?.current
 
+//   if (!object || object.name !== "main-spoon") return
+
+//   const axesHelper = new THREE.AxesHelper(2)
+//   axesHelper.name = "spoon-axes-helper"
+
+//   object.add(axesHelper)
+
+//   return () => {
+//     object.remove(axesHelper)
+//     axesHelper.dispose()
+//   }
+// }, [modeldata])
   const isLitmus = (name) => name?.toLowerCase().includes("litmus");
 
   useEffect(()=>{
@@ -205,12 +223,14 @@ const HoldRight = ({ modeldata }) => {
           <PouringMode hand="right" />
         )}
 
-      {isStirMode && selectedLeftHand && selectedRightHand && (
-        <StirMode
-          spoonRef={selectedRightHand.ref}
-          beakerRef={selectedLeftHand.ref}
-          hand="right"
-        />
+      {isStirMode &&
+        selectedRightHand?.name === "main-spoon" &&
+        selectedLeftHand && (
+          <StirMode
+            spoonRef={selectedRightHand.ref}
+            beakerRef={selectedLeftHand.ref}
+            hand="right"
+          />
       )}
 
       {isLitmusMode &&
@@ -247,9 +267,34 @@ const HoldRight = ({ modeldata }) => {
         <FunnelMode beakerRef={selectedLeftHand.ref} funnelRef={funnelRef} hand='right'/>
       }
 
-      {
+      {/* {
          <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
-      }
+      } */}
+
+      {/* {modeldata?.ref?.current?.name === "main-spoon" && (
+  <TransformControls
+    ref={transformControlsRef}
+    object={modeldata.ref.current}
+    mode="rotate"
+    space="local"
+    size={1}
+    onMouseUp={() => {
+      const spoon = modeldata.ref.current
+
+      console.log("Rotation radians:", {
+        x: spoon.rotation.x,
+        y: spoon.rotation.y,
+        z: spoon.rotation.z,
+      })
+
+      console.log("Rotation degrees:", {
+        x: THREE.MathUtils.radToDeg(spoon.rotation.x),
+        y: THREE.MathUtils.radToDeg(spoon.rotation.y),
+        z: THREE.MathUtils.radToDeg(spoon.rotation.z),
+      })
+    }}
+  />
+)} */}
     </>
   )
 }

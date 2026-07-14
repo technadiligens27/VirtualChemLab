@@ -58,7 +58,8 @@ const UI = () => {
     setShowRightGloveArrow,
     setShowRedLitmusArrow,
     isTutorialMode,showSpoonArrow,setShowSpoonArrow,
-    setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow
+    setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow,
+    setShowSaltContainerArrow
   } = useContext(MainGuidelineContext)
 
   const {
@@ -126,10 +127,9 @@ const UI = () => {
     setShowSpoonArrow(selectedLesson==1 && lessonStep===6)
   },[lessonStep,showSpoonArrow])
 
-  // useEffect(()=>{
-  //   console.log('lessonStep:',lessonStep);
-  //   console.log('showConicalArrow:',showConicalArrow)
-  // },[lessonStep,showConicalArrow])
+  useEffect(()=>{
+    setShowSaltContainerArrow(selectedLesson===1 && lessonStep===7)
+  },[lessonStep,selectedLesson])
 
   /*
     null means the user has not selected

@@ -1,32 +1,95 @@
+import { useContext, useEffect, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
-import { useContext, useMemo } from "react"
 import * as THREE from "three"
-import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 
-const StirReaction = () => {
-  const { isSaltWaterReaction,stirrLiquidRef } = useContext(ReactionContext)
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
+const StirReaction = ({ hand, spoonRef, beakerRef }) => {
+  const liquidRef = useRef(null)
+  const saltRef = useRef(null)
+  const canReactRef = useRef(false)
 
-  // Final color after stirring
-  const stirColor = useMemo(() => {
-    return new THREE.Color("#DFF6FF")
-  }, [])
+  const targetColor = useRef(new THREE.Color("#dff6ff"))
 
-  useFrame((_, delta) => {
-    if (!isSaltWaterReaction) return
-    if (!stirrLiquidRef?.current) return
-    if (!stirrLiquidRef.current.material) return
+  const {
+    rightBeakerFillData,
+    leftBeakerFillData,
+  } = useContext(InteractionContext)
 
-    const materials = Array.isArray(stirrLiquidRef.current.material)
-      ? stirrLiquidRef.current.material
-      : [stirrLiquidRef.current.material]
+  const {
+    setLessonStep,
+    selectedLesson,
+    lessonStep,
+  } = useContext(MainGuidelineContext)
 
-    materials.forEach((material) => {
-      if (!material?.color) return
+  const beakerFillData =
+    hand === "left"
+      ? rightBeakerFillData
+      : leftBeakerFillData
 
-      material.color.lerp(stirColor, delta * 0.8)
-      material.needsUpdate = true
+  useEffect(() => {
+    if (!beakerRef?.current || !spoonRef?.current) return
+
+    liquidRef.current = null
+    saltRef.current = null
+    canReactRef.current = false
+
+    beakerRef.current.traverse((child) => {
+      if (
+        child.name?.toLowerCase().includes("liquid") &&
+        child.visible
+      ) {
+        liquidRef.current = child
+      }
     })
+
+    spoonRef.current.traverse((child) => {
+      if (
+        child.name?.toLowerCase().includes("salt") &&
+        child.visible
+      ) {
+        saltRef.current = child
+      }
+    })
+
+    const liquidName =
+      beakerFillData?.name?.toLowerCase() || ""
+
+    const isWater =
+      liquidName.includes("water") ||
+      liquidName.includes("h2o")
+
+    if (liquidRef.current && saltRef.current && isWater) {
+      canReactRef.current = true
+      saltRef.current.visible = false
+
+      console.log("Salt-water reaction started")
+    }
+  }, [beakerRef, spoonRef, beakerFillData])
+
+  useEffect(() => {
+    if (
+      canReactRef.current &&
+      selectedLesson === 1 &&
+      lessonStep === 9
+    ) {
+      setLessonStep(10)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
+  useFrame((state, delta) => {
+    if (!canReactRef.current) return
+    if (!liquidRef.current?.material?.color) return
+
+    liquidRef.current.material.color.lerp(
+      targetColor.current,
+      delta
+    )
   })
 
   return null

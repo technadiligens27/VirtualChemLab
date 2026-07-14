@@ -61,7 +61,8 @@ export const InteractionProvider = ({ children }) => {
   const [chairStep,setChairStep] = useState(0);
   const [pouringModeHand,setPouringModeHand] = useState();
 
-  const [spoonHasSalt, setSpoonHasSalt] = useState(false)
+  const [spoonHasSalt, setSpoonHasSalt] = useState(false);
+  const [isAddSalt,setIsAddSalt] = useState(false)
 
   return (
     <InteractionContext.Provider
@@ -97,7 +98,8 @@ export const InteractionProvider = ({ children }) => {
         isPouring, setIsPouring,
         chairStep,setChairStep,
         pouringModeHand,setPouringModeHand,
-        spoonHasSalt, setSpoonHasSalt
+        spoonHasSalt, setSpoonHasSalt,
+        isAddSalt,setIsAddSalt
       }}
     >
       {children}
