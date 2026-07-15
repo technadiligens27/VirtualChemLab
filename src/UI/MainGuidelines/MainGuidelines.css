@@ -19,32 +19,39 @@
 }
 
 .guideline-container {
-  width: 50%;
-  min-height: 50%;
+  width: 60%;
+  min-height: 60%;
   background-color: aliceblue;
   border-radius: 30px;
-  background: linear-gradient(90deg, #FFE1C1 0%, #FFBD00 100%);
+  background: linear-gradient(90deg, #FECC43 0%, #D6AD3B 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
 }
 
 .guideline-inner-container {
-  background-color: #FCFCEA;
-  width: 80%;
-  height: 70%;
+  background-color: #F9F9E7;
+  width: 95%;
+  height: 80%;
   border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  box-shadow: inset 0 7px 35px rgba(88, 57, 57, 0.45);
+
+  /* box-shadow: inset 0 7px 35px rgba(88, 57, 57, 0.45); */
 }
 
-.guideline-inner-container p{
-  padding: 20px;
-  font-size: 26px;
+.guideline-description{
+  padding: 0px 40px;
+  font-size: 23px;
   text-align: center;
   line-height: 160%;
+  margin: 0%;
 }
 
 .main-guidelines-btn-container{
@@ -53,12 +60,15 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding-top: 20px;
+  /* padding:10px 0px; */
+  gap: 5px;
+
 }
 
 .main-guidelines-btn{
-  width: 200px;
-  height: 60px;
+  width: 150px;
+  height: 45px;
   background-color: #4F7F93;
   color: white;
   font-size: 22px;
@@ -66,6 +76,76 @@
   border-radius: 10px;
 }
 
+.main-guidelines-title{
+  margin-right: auto;
+  padding-left: 20px;
+}
+
+
 .main-guidelines-title h1{
-  color: #572132;
+  color: #FFFFFF;
+}
+
+.guideline-image-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.guideline-image-container img{
+  width: 20%;
+}
+
+.guide-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px}
+.guide-info-img-container{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+.guide-info-img-container img{
+  min-width: 30px;
+
+}
+
+.guide-info p{
+  text-align: left;
+  padding: 0%;
+}
+
+.highlight{
+  font-weight: bold;
+}
+
+.guideline-inner-container-row {
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.guideline-inner-container-row .guideline-image-container {
+  width: 35%;
+  flex-shrink: 0;
+}
+
+.guideline-inner-container-row .guideline-image-container img {
+  width: 60%;
+}
+
+.guideline-content-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

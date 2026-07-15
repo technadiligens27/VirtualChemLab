@@ -6,3 +6,12 @@
     left: 80%;
     z-index: 9999;
 }
+
+.guide-info p{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.guide-info img{
+    width: 10%;
+}

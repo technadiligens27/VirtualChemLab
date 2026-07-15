@@ -1,6 +1,6 @@
-import "./MainGuidelines.css"
+import "./MovementGuideline.css"
 
-const MainGuidelines = ({
+const MovementGuideline = ({
   mainContent,
   onButton1Click,
   onButton2Click,
@@ -13,12 +13,9 @@ const MainGuidelines = ({
     button1,
     button2,
     info,
-    infoImg,
-    layout = "column",
-    mainImg
+    MainImg='./Arrow.png',
   } = mainContent
 
-  const isRowLayout = layout === "row"
 
   return (
     <div className="main-guidelines">
@@ -27,15 +24,17 @@ const MainGuidelines = ({
           <h1>{title}</h1>
         </div>
 
-        <div className={`guideline-inner-container ${isRowLayout ? "guideline-inner-container-row" : ""}`}>
-          <div className="guideline-image-container">
-            <img src={mainImg} alt="Chemistry equipment" />
+        <div className={"guideline-inner-container guideline-inner-container-row"}>
+          <button className="main-guidelines-btn back-btn">Back</button>
+
+          <div className="guideline-image-container arrow-img-container">
+            <img src={MainImg} alt="Chemistry equipment" />
           </div>
 
           <div className="guideline-content-container">
-            <p className="guideline-description">{content}</p>
+            <p className="movement-content guideline-description">{content}</p>
 
-            <div className="main-guidelines-btn-container">
+            <div className="main-guidelines-btn-container movement-guidelines-btn-container">
               {button1 && (
                 <button
                   onClick={onButton1Click}
@@ -73,4 +72,4 @@ const MainGuidelines = ({
   )
 }
 
-export default MainGuidelines
+export default MovementGuideline

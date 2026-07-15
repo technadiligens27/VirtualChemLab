@@ -14,26 +14,35 @@ import InfoDialogBox from "./InfoDialogBox/InfoDialogBox"
 import InfoBox from "./InfoBox/InfoBox"
 import SaltWaterTest from "./AllLessons/SaltWaterTest/SaltWaterTest"
 import ResetLessonButton from "./ResetLessonButton/ResetLessonButton"
+import MovementGuideline from "./MainGuidelines/MovementGuideline/MovementGuideline"
 
 const mainContent = [
   {
-    title: "Welcome to the Chem Lab",
+    title: "WELCOME TO THE CHEMISTRY LAB",
     content: `This lab lets you explore chemistry in a safe and interactive way.
 You can use lab equipment, mix chemicals, test reactions, and learn how different experiments work step by step.`,
     button1: "Start Demo",
     button2: "Free Roam",
+    info: "Select Start Demo to continue with the tutorial or select Free Roam to experiment on your own",
+    mainImg:"./chem-icon.png",
+    infoImg: "./info.png",
+    layout: "column",
   },
   {
     title: "Follow the Guide",
     content: `During the tutorial, arrows will show you where to go and what to click.
 Follow the arrows, interact with the highlighted objects, and complete each step to learn how the lab works.`,
     button1: "Continue",
+    layout: "column",
+    mainImg:"./chem-icon.png",
   },
   {
     title: "Movement Controls",
     content: `Use W, A, S, and D to move around the lab.
 Move close to the highlighted objects and follow the arrows to continue the tutorial.`,
     button1: "Continue",
+    layout: "row",
+    infoImg: "./Arrow.png"
   },
   {
     title: "Tutorial Mode",
@@ -145,6 +154,7 @@ const UI = () => {
             mainContent={mainContent[0]}
             onButton1Click={startTutorial}
             onButton2Click={startFreeRoam}
+            
           />
         )}
       </>
@@ -195,7 +205,7 @@ const UI = () => {
       )}
 
       {selectedMainGuideline === 3 && (
-        <MainGuidelines
+        <MovementGuideline
           mainContent={mainContent[2]}
           onButton1Click={() =>
             setSelectedMainGuideline(4)
