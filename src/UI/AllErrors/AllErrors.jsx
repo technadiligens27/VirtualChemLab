@@ -22,7 +22,6 @@ const AllErrors = ()=>{
             {showErrorMsgNo == 11 && <ErrorMsg text={'No Liquid to test'}/>}
             {showErrorMsgNo == 12 && <ErrorMsg text={'Select Conical Flask'}/>}
             {showErrorMsgNo == 13 && <ErrorMsg text={'Should Have Spoon in Hand to fill salt'}/>}
-
         </>
     )
 }

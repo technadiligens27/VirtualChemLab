@@ -23,7 +23,14 @@ const ErrorMsg = ({ text }) => {
 
   return (
     <div className="error-msg">
-      <p>{text}</p>
+      <div className="error-icon-container">
+        <img src={'./cross.png'}/>
+      </div>
+      <div className="error-content-container">
+        <p className="try-again">Try Again</p>
+        <p className="error-text">{text}</p>
+      </div>
+      {/* <p>{text}</p> */}
     </div>
   )
 }

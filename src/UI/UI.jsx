@@ -15,6 +15,7 @@ import InfoBox from "./InfoBox/InfoBox"
 import SaltWaterTest from "./AllLessons/SaltWaterTest/SaltWaterTest"
 import ResetLessonButton from "./ResetLessonButton/ResetLessonButton"
 import MovementGuideline from "./MainGuidelines/MovementGuideline/MovementGuideline"
+import MouseGuide from "./MouseGuide/MouseGuide"
 
 const mainContent = [
   {
@@ -78,6 +79,9 @@ const UI = () => {
     isObjectInfo,
     chairStep,
   } = useContext(InteractionContext)
+
+
+
 
   const startLab = () => {
     setIsMainGuideline(false)
@@ -213,7 +217,7 @@ const UI = () => {
         />
       )}
 
-      {selectedMainGuideline === 4 && (
+      {/* {selectedMainGuideline === 4 && (
         <MainGuidelines
           mainContent={mainContent[3]}
           onButton1Click={() => {
@@ -221,7 +225,12 @@ const UI = () => {
             setShowArrowChair(true)
           }}
         />
-      )}
+      )} */}
+
+      {selectedMainGuideline === 4 &&<MouseGuide onButton1Click={()=>{
+        startLab()
+        setShowArrowChair(true)
+      }}/>}
 
       {selectedMainGuideline === 5 &&
         chairStep === 0 &&
@@ -308,6 +317,8 @@ const UI = () => {
       {isObjectInfo && (
         <InfoBox clickedModel={clickedModel} />
       )}
+
+      
     </>
   )
 }

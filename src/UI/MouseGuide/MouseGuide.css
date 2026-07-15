@@ -1,0 +1,34 @@
+.mouse-guide {
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mouse-content{
+    color: white;
+    font-size: 40px;
+}
+
+.mouse-img-container{
+    width: 150px;
+    height: 200px;
+}
+
+.mouse-img-container img{
+    width: 100%;
+    height: 100%;
+}
