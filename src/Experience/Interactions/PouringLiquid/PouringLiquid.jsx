@@ -38,6 +38,10 @@ const visibleReactions = [
     "Hydrochloric Acid (HCl)",
     "Sodium Hydroxide (NaOH)",
   ],
+  [
+    "Protein Sample",
+    "Biuret Reagent",
+  ],
 ]
 
 const PouringLiquid = ({

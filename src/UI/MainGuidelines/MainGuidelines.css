@@ -66,15 +66,23 @@
 
 }
 
-.main-guidelines-btn{
+.main-guidelines-btn {
   width: 150px;
   height: 45px;
-  background-color: #4F7F93;
+  background-color: #4f7f93;
   color: white;
   font-size: 22px;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.1s ease, transform 0.2s ease;
 }
+
+.main-guidelines-btn:hover {
+  background-color: #245970;
+  transform: translateY(-2px);
+}
+
 
 .main-guidelines-title{
   margin-right: auto;
@@ -148,4 +156,4 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
+};

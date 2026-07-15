@@ -28,13 +28,15 @@ const PouringMode = ({ hand }) => {
 
     pouringModeHand,
     setPouringModeHand,
+    isPouringMode,setIsPouringMode
   } = useContext(InteractionContext)
 
   const {
     lessonStep,
     setLessonStep,
     setShowErrorMsgNo,
-    labResetKey,
+    labResetKey,isTutorialMode
+    
   } = useContext(MainGuidelineContext)
 
   const emptyRef = useRef(null)
@@ -182,11 +184,8 @@ const PouringMode = ({ hand }) => {
         )
       }
 
-      if (
-        otherObject &&
-        otherOriginalPositionRef.current
-      ) {
-        otherObject.position.copy(
+      if (otherObject &&otherOriginalPositionRef.current) {
+          otherObject.position.copy(
           otherOriginalPositionRef.current
         )
       }
@@ -401,14 +400,12 @@ const PouringMode = ({ hand }) => {
       /*
        * Exit pouring mode.
        */
-      if (
-        pouringModeHand === requestedHand &&
-        activeObject
-      ) {
-        restoreOriginalTransforms(
-          activeObject,
-          activeOtherObjectRef.current
-        )
+      if (pouringModeHand === requestedHand && activeObject) {
+        if(isTutorialMode && isPouringMode && lessonStep>8){
+          setShowErrorMsgNo(12)
+          return
+        }
+        restoreOriginalTransforms(activeObject,activeOtherObjectRef.current)
 
         resetLocalPouringState()
         setPouringModeHand(null)
@@ -425,6 +422,8 @@ const PouringMode = ({ hand }) => {
       ) {
         return
       }
+
+      setIsPouringMode(true)
 
       saveOriginalTransforms(
         targetObject,
@@ -479,6 +478,9 @@ const PouringMode = ({ hand }) => {
     setLessonStep,
     setShowErrorMsgNo,
     setPouringModeHand,
+    isPouringMode,
+    lessonStep,
+    isTutorialMode
   ])
 
   /*

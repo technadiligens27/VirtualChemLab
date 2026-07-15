@@ -40,7 +40,8 @@ const ClickObject = () => {
     clickedModel,setClickedModel,
     isObjectInfo,setIsObjectInfo,
     spoonHasSalt, setSpoonHasSalt,
-    setIsAddSalt
+    setIsAddSalt,
+    isDropperPlaced,setIsDropperPlaced
   } = useContext(InteractionContext)
 
   const {
@@ -61,7 +62,7 @@ const ClickObject = () => {
     filterFoldedPaperRef,
     saltContainerRef,
 
-    funnelRef,
+    funnelRef,mainDropperRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode} =
@@ -131,6 +132,11 @@ const ClickObject = () => {
       {
         name: "salt-container",
         ref:saltContainerRef
+      },
+
+      {
+        name: "main-dropper",
+        ref:mainDropperRef
       }
     ],
     [
@@ -147,7 +153,8 @@ const ClickObject = () => {
       filterPaperRef,
       filterFoldedPaperRef,
       funnelRef,
-      saltContainerRef
+      saltContainerRef,
+      mainDropperRef
     ]
   )
 
@@ -156,6 +163,8 @@ const ClickObject = () => {
   const isFunnel = (name) => name === "main-funnel"
 
   const isLitmus = (name) => name?.toLowerCase().includes("litmus")
+
+  const isDropper = (name) =>name === "main-dropper"
 
   const isFlatFilterPaper = (name) =>
     name?.toLowerCase().includes("filter-paper")
@@ -575,6 +584,7 @@ const ClickObject = () => {
       }
 
       const clickedObject = intersects[0].object
+      console.log(clickedObject)
 
       const clickedHoldingObject = handleHoldingObjectClick(clickedObject)
 
@@ -598,6 +608,14 @@ const ClickObject = () => {
 
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
+      
+    if(lessonStep===6 && selectedLesson===7){
+      if(objectName !=='main-dropper'){
+        setShowErrorMsgNo(12)
+        return false
+      }
+        
+    }
 
     if(lessonStep==6 && selectedLesson ===6){
       if(objectName !== 'main-Conical-Flask'){
@@ -613,6 +631,7 @@ const ClickObject = () => {
       }
     }
 
+
     if (lessonStep === 3) {
       setShowErrorMsgNo(1)
       return false
@@ -624,9 +643,21 @@ const ClickObject = () => {
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
-    if (lessonStep === 3 && objectName !== "main-normal-beaker") {
-      setShowErrorMsgNo(1)
-      return false
+    if (selectedLesson === 7 && lessonStep === 3) {
+      if (objectName !== "main-testube-01") {
+        setShowErrorMsgNo(1)
+        return false
+      }
+
+      return true
+    }
+
+
+    if (lessonStep === 3) {
+      if (objectName !== "main-normal-beaker") {
+        setShowErrorMsgNo(1)
+        return false
+      }
     }
 
     return true
@@ -651,7 +682,7 @@ const ClickObject = () => {
   }
 
   const pickObjectWithRightHand = () => {
-    if (!validateRightHandPick(selectedObject.name)) return
+    if (!validateRightHandPick(selectedObject?.name)) return
 
     setSelectedRightHand(createHandObjectData("right"))
     setSelectedObject(null)
@@ -777,7 +808,7 @@ const ClickObject = () => {
   const getMainHoldingButtonText = () => {
 
     
-
+    
     if (isSpoon(selectedObject.name)) {
       return isStirMode ? "Exit Stir Mode" : "Stir"
     }
@@ -863,6 +894,11 @@ const addSaltToSpoon = () => {
   setIsAddSalt(true)
 }
 
+  const placeDropper=()=>{
+    setIsDropperPlaced(true)
+  }
+
+
   const renderTableObjectButtons = () => {
   if (selectedObject?.name === "salt-container") {
     return (
@@ -930,23 +966,39 @@ const addSaltToSpoon = () => {
                       </button>
                     )}
                   </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => {
-                        keepBackOnTable(selectedObject.hand)
-                      }}
-                    >
-                      Keep Back On Table
-                    </button>
-
-                    {canShowMainHoldingButton() && (
-                      <button onClick={handleMainHoldingAction}>
-                        {getMainHoldingButtonText()}
+                  ) : selectedObject.name === "main-dropper" ? (
+                    <>
+                      <button
+                        onClick={() => {
+                          keepBackOnTable(selectedObject.hand)
+                        }}
+                      >
+                        Keep Back On Table
                       </button>
-                    )}
-                  </>
-                )}
+
+                      <button onClick={()=>{
+                        placeDropper()
+                      }}>
+                        Place Dropper
+                      </button>
+                    </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => {
+                              keepBackOnTable(selectedObject.hand)
+                            }}
+                          >
+                            Keep Back On Table
+                          </button>
+
+                          {canShowMainHoldingButton() && (
+                            <button onClick={handleMainHoldingAction}>
+                              {getMainHoldingButtonText()}
+                            </button>
+                          )}
+                        </>
+                      )}
               </>
             ) : (
             <>

@@ -21,7 +21,9 @@ export const ReactionProvider = ({ children }) => {
   ] = useState(false)
 
   const [isAcidBase, setIsAcidBase] =
-    useState(false)
+    useState(false);
+
+  const [isBiuretReaction,setIsBiuretReaction] = useState(false)  
 
   const stirrLiquidRef = useRef(null)
   const isReactionRef = useRef(false)
@@ -58,6 +60,9 @@ export const ReactionProvider = ({ children }) => {
 
         isAcidBase,
         setIsAcidBase,
+
+        isBiuretReaction,
+        setIsBiuretReaction,
 
         stirrLiquidRef,
         isReactionRef,

@@ -21,6 +21,7 @@ export const ModelProvider = ({ children }) => {
   const filterPaperRef = useRef(null);
   const filterFoldedPaperRef = useRef(null);
   const funnelRef = useRef(null)
+  const mainDropperRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -36,7 +37,10 @@ export const ModelProvider = ({ children }) => {
   const arrowRightGloveRef = useRef(null);
   const arrowRedLitmusRef = useRef(null);
   const arrowSpoonRef = useRef(null);
-  const arrowSaltContainerRef = useRef(null)
+  const arrowSaltContainerRef = useRef(null);
+  const arrowDropperRef = useRef(null)
+  const arrowTestube01Ref = useRef(null)
+  const arrowTestube02Ref = useRef(null)
 
   const saltContainerRef = useRef(null)
  
@@ -52,7 +56,8 @@ export const ModelProvider = ({ children }) => {
         redLitmusRef,blueLitmusRef,
         testube01Ref,testube02Ref,testube03Ref,
         filterPaperRef,filterFoldedPaperRef,
-        funnelRef,        
+        funnelRef,      
+        mainDropperRef,  
         arrowChairRef,arrowNormalBeakerRef,
         arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,
         arrowRedLitmusRef,
@@ -60,7 +65,9 @@ export const ModelProvider = ({ children }) => {
         arrowConicalFlaskRef,
         arrowSpoonRef,
         saltContainerRef,
-        arrowSaltContainerRef
+        arrowSaltContainerRef,
+        arrowDropperRef,
+        arrowTestube01Ref,arrowTestube02Ref
       }}
     >
       {children}

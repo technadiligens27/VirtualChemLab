@@ -26,8 +26,10 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showRedLitmusArrow, setShowRedLitmusArrow] = useState(false)
   const [isTutorialMode, setIsTutorialMode] = useState(null)
 
-  const [showSaltContainerArrow, setShowSaltContainerArrow] =
-    useState(false)
+  const [showSaltContainerArrow, setShowSaltContainerArrow] = useState(false);
+  const [showTestube01Arrow,setShowTestube01Arrow] = useState(false)
+
+  const [showDropperArrow,setShowDropperArrow] = useState(false)
 
   const [labResetKey, setLabResetKey] = useState(0)
   const labResetVersionRef = useRef(0)
@@ -61,7 +63,9 @@ export const MainGuidelineProvider = ({ children }) => {
     setIsMainGuideline(true)
     setSelectedMainGuideline(5)
     setShowLessonMenu(true)
-    setIsTutorialMode(true)
+    setIsTutorialMode(true);
+    setShowTestube01Arrow(false);
+    setShowDropperArrow(false)
     // Restart interaction components
     
   }
@@ -127,7 +131,13 @@ export const MainGuidelineProvider = ({ children }) => {
         setLabResetKey,
 
         resetLessonGuidelines,
-        labResetVersionRef
+        labResetVersionRef,
+
+        showTestube01Arrow,
+        setShowTestube01Arrow,
+
+        showDropperArrow,
+        setShowDropperArrow
       }}
     >
       {children}

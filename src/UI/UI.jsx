@@ -16,6 +16,7 @@ import SaltWaterTest from "./AllLessons/SaltWaterTest/SaltWaterTest"
 import ResetLessonButton from "./ResetLessonButton/ResetLessonButton"
 import MovementGuideline from "./MainGuidelines/MovementGuideline/MovementGuideline"
 import MouseGuide from "./MouseGuide/MouseGuide"
+import ProteinIdentification from "./AllLessons/ProteinIdentification/ProteinIdentification"
 
 const mainContent = [
   {
@@ -70,7 +71,8 @@ const UI = () => {
     setShowRedLitmusArrow,
     isTutorialMode,showSpoonArrow,setShowSpoonArrow,
     setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow,
-    setShowSaltContainerArrow,labResetKey
+    setShowSaltContainerArrow,labResetKey,setShowTestube01Arrow,
+    showTestube01Arrow,showDropperArrow,setShowDropperArrow
   } = useContext(MainGuidelineContext)
 
   const {
@@ -133,7 +135,7 @@ const UI = () => {
 
   useEffect(()=>{
     setShowArrowConicalArrow(
-      lessonStep===6 && selectedLesson !==1
+      lessonStep===6 && selectedLesson !==1 && selectedLesson!==7
     )
   },[lessonStep,showConicalArrow])
 
@@ -144,6 +146,14 @@ const UI = () => {
   useEffect(()=>{
     setShowSaltContainerArrow(selectedLesson===1 && lessonStep===7)
   },[lessonStep,selectedLesson])
+
+  useEffect(()=>{
+    setShowTestube01Arrow(selectedLesson===7 && lessonStep===3)
+  },[selectedLesson,lessonStep])
+
+  useEffect(() => {
+    setShowDropperArrow(selectedLesson===7 && lessonStep===6)
+  }, [selectedLesson,lessonStep,showDropperArrow])
 
   /*
     null means the user has not selected
@@ -307,6 +317,12 @@ const UI = () => {
         selectedLesson === 6 && (
           <AcidBaseNeutralization />
         )}
+
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 7 && (
+          <ProteinIdentification />
+        )}  
 
       <AllErrors />
 

@@ -1,4 +1,7 @@
+import { useContext, useEffect } from "react"
 import "./MovementGuideline.css"
+import MainGuidelines from "../MainGuidelines";
+import { MainGuidelineContext } from '../../../Contexts/MainGuidelineContext/MainGuidelineContext'
 
 const MovementGuideline = ({
   mainContent,
@@ -6,6 +9,8 @@ const MovementGuideline = ({
   onButton2Click,
 }) => {
   if (!mainContent) return null
+
+
 
   const {
     title,
@@ -15,6 +20,8 @@ const MovementGuideline = ({
     info,
     MainImg='./Arrow.png',
   } = mainContent
+
+
 
 
   return (

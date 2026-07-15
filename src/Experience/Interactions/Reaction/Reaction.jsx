@@ -58,6 +58,9 @@ const Reaction = ({ hand }) => {
     isAcidBase,
     setIsAcidBase,
 
+    isBiuretReaction,
+    setIsBiuretReaction,
+
     stirrLiquidRef,
     isReactionRef,
   } = useContext(ReactionContext)
@@ -100,7 +103,8 @@ const Reaction = ({ hand }) => {
     setIsNaohUniversal(false)
     setIsStarchIodine(false)
     setIsCopperSulfateNaoh(false)
-    setIsAcidBase(false)
+    setIsAcidBase(false);
+    setIsBiuretReaction(false)
   }, [
     setIsSaltWaterReaction,
     setIsHclUniversal,
@@ -108,6 +112,7 @@ const Reaction = ({ hand }) => {
     setIsStarchIodine,
     setIsCopperSulfateNaoh,
     setIsAcidBase,
+    setIsBiuretReaction
   ])
 
   const clearReactionRefs = useCallback(() => {
@@ -193,6 +198,18 @@ const Reaction = ({ hand }) => {
         run: () => {
           resetReactions()
           setIsAcidBase(true)
+        },
+      },
+      {
+        name: "protein-biuret",
+        chemicals: [
+          "Protein Sample",
+          "Biuret Reagent",
+        ],
+        color: "#7b2cbf",
+        run: () => {
+          resetReactions();
+          setIsBiuretReaction(true)
         },
       },
     ],
@@ -821,7 +838,8 @@ const Reaction = ({ hand }) => {
       isNaohUniversal ||
       isStarchIodine ||
       isCopperSulfateNaoh ||
-      isAcidBase
+      isAcidBase ||
+      isBiuretReaction
 
     if (!canLerp) return
     if (!isPouring) return

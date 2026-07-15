@@ -39,6 +39,10 @@ const LessonMenu = () => {
       id: 5,
       name: "Copper Sulfate Precipitation",
     },
+    {
+      id:7,
+      name:'Protein Identification – Biuret Test'
+    }
   ]
 
   useEffect(() => {

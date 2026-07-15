@@ -167,37 +167,7 @@ const transformControlsRef = useRef()
     object.frustumCulled = false
   }, [camera, scene, modeldata])
 
-  // useFrame(() => {
-  //   if (!modeldata?.ref?.current) return
-
-  //   const object = modeldata.ref.current
-
-  //   // Only rotate held object when not in Funnel Mode
-  //   if (!isFunnelMode) {
-  //     object.rotation.z = THREE.MathUtils.lerp(
-  //       object.rotation.z,
-  //       rotationZRef.current,
-  //       0.1
-  //     )
-  //   }
-  // })
-
-
-// useEffect(() => {
-//   const object = modeldata?.ref?.current
-
-//   if (!object || object.name !== "main-spoon") return
-
-//   const axesHelper = new THREE.AxesHelper(2)
-//   axesHelper.name = "spoon-axes-helper"
-
-//   object.add(axesHelper)
-
-//   return () => {
-//     object.remove(axesHelper)
-//     axesHelper.dispose()
-//   }
-// }, [modeldata])
+ 
   const isLitmus = (name) => name?.toLowerCase().includes("litmus");
 
   useEffect(()=>{

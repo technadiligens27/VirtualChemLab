@@ -22,16 +22,18 @@ const FillBeakerBox = () => {
 
   const [selectedAmount, setSelectedAmount] = useState("")
 
-  const acids = [
-    { name: "Salt (NaCl)", color: "#F5F5F5" },
-    { name: "Water (H2O)", color: "#0073a0" },
-    { name: "Universal indicator", color: "#4ade80" },
-    { name: "Hydrochloric Acid (HCl)", color: "#f8fafc" },
-    { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe" },
-    { name: "Starch solution", color: "#e5e7eb" },
-    { name: "Iodine solution", color: "#92400e" },    
-    { name: "Copper Sulfate (CuSO4)", color: "#2563eb" },    
-  ]
+const acids = [
+  { name: "Salt (NaCl)", color: "#F5F5F5" },
+  { name: "Water (H2O)", color: "#0073a0" },
+  { name: "Universal indicator", color: "#4ade80" },
+  { name: "Hydrochloric Acid (HCl)", color: "#f8fafc" },
+  { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe" },
+  { name: "Starch solution", color: "#e5e7eb" },
+  { name: "Iodine solution", color: "#92400e" },
+  { name: "Copper Sulfate (CuSO4)", color: "#2563eb" },  
+  { name: "Protein Sample", color: "#F5F1D8" },
+  { name: "Biuret Reagent", color: "#2F80ED" },
+]
 
   const amounts = [10, 25, 50, 100]
 
@@ -95,6 +97,14 @@ const FillBeakerBox = () => {
       if (!checkFill("Water (H2O)", 50, 6)) return
     }
 
+    if (selectedLesson === 7 && lessonStep === 5) {
+      if (!checkFill("Biuret Reagent", 50, 6)) return
+    }
+
+    if (selectedLesson === 7 && lessonStep === 8) {
+      if (!checkFill("Protein Sample", 50, 9)) return
+    }
+
     const fillData = {
       name: selectedAcidData.name,
       color: selectedAcidData.color,
@@ -146,6 +156,12 @@ const FillBeakerBox = () => {
     }
   },[selectedLesson,lessonStep])  
 
+  useEffect(()=>{
+    if(selectedLesson==7 && lessonStep ===7 ){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])
+
   return (
     <div className="fill-dialog-overlay">
       <div className="fill-dialog">
@@ -182,6 +198,13 @@ const FillBeakerBox = () => {
                 {amount} ml
               </button>
             ))}
+                    <button
+          className="confirm-btn"
+          disabled={!selectedAcidData.name || !selectedAmount || !fillBeakerHand}
+          onClick={handleConfirm}
+        >
+          Confirm
+        </button>
           </div>
         </div>
 
@@ -201,13 +224,7 @@ const FillBeakerBox = () => {
           </p>
         </div>
 
-        <button
-          className="confirm-btn"
-          disabled={!selectedAcidData.name || !selectedAmount || !fillBeakerHand}
-          onClick={handleConfirm}
-        >
-          Confirm
-        </button>
+
       </div>
     </div>
   )

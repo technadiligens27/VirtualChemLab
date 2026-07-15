@@ -1,7 +1,14 @@
+import { useContext, useEffect } from "react"
 import "./MouseGuide.css"
+import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const MouseGuide = ({ onButton1Click }) => {
 
+  const {isMainGuideline,setIsMainGuideline} = useContext(MainGuidelineContext)
+
+  useEffect(()=>{
+    setIsMainGuideline(false)
+  },[isMainGuideline])
 
   return (
     <div className="mouse-guide" onClick={onButton1Click}>

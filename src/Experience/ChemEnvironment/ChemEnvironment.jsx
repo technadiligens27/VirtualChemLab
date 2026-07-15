@@ -11,7 +11,8 @@ const ChemEnvironment = () => {
          saltRef,redLitmusRef,blueLitmusRef,testube01Ref,testube02Ref,testube03Ref,filterPaperRef,
          filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef,
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
-         arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef
+         arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef,arrowDropperRef,
+         mainDropperRef, arrowTestube01Ref,arrowTestube02Ref
   } = useContext(ModelContext)
 
   const { scene } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
@@ -88,6 +89,7 @@ const hideLiquidObjects=(root)=>{
     testube02Ref.current = scene.getObjectByName('main-testube-02');
     testube03Ref.current = scene.getObjectByName('main-testube-03');
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
+    mainDropperRef.current = scene.getObjectByName('main-dropper')
 
     filterFoldedPaperRef.current = scene.getObjectByName('main-folded-paper')
     filterFoldedPaperRef.current.visible = false;
@@ -140,8 +142,16 @@ const hideLiquidObjects=(root)=>{
       arrowSpoonRef.current.visible = false
 
       arrowSaltContainerRef.current = scene.getObjectByName('salt-container-arrow');
-      arrowSaltContainerRef.current.visible = false
+      arrowSaltContainerRef.current.visible = false;
 
+      arrowDropperRef.current =  scene.getObjectByName('dropper-arrow');
+      arrowDropperRef.current.visible = false;
+
+      arrowTestube01Ref.current = scene.getObjectByName('testube-arrow-01')
+      arrowTestube01Ref.current.visible = false;
+
+      arrowTestube02Ref.current = scene.getObjectByName('testube-arrow-02')
+      arrowTestube02Ref.current.visible = false;
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)
