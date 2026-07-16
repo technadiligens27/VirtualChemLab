@@ -30,7 +30,7 @@ const ProteinIdentificationTest = [
       "Now click on the Dropper and select the Right Hand option.",
 
     step6:
-      "Click on the conical flask again and press the Fill Beaker button.",
+      "Click on the Dropper again and select place dropper",
 
     step7:
       "Select Biuret Reagent and 50 ml.",

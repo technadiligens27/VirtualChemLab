@@ -3,6 +3,8 @@ import { useContext, useEffect, useRef } from 'react';
 import { ModelContext } from '../../Contexts/ModelContext/ModelContext';
 import ChairSlide from '../Interactions/ChairSlide/ChairSlide';
 import { saveModelStartState } from "../resetModels/resetModels.jsx"
+import { useAnimations} from "@react-three/drei"
+import * as THREE from "three"
 
 const ChemEnvironment = () => {
 
@@ -12,10 +14,13 @@ const ChemEnvironment = () => {
          filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef,
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
          arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef,arrowDropperRef,
-         mainDropperRef, arrowTestube01Ref,arrowTestube02Ref
+         mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction
   } = useContext(ModelContext)
 
-  const { scene } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
+  const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
+  const { actions, names } = useAnimations(animations, scene)
+
+
 
   const hidePourObjects = (objectRef) => {
   if (!objectRef.current) return
@@ -65,6 +70,37 @@ const hideLiquidObjects=(root)=>{
     }
   })
 }
+
+
+  useEffect(() => {
+  console.log("Available animations:", names)
+
+  if (names.length === 0) {
+    console.warn("No animations found in VirtualChemLab.glb")
+    return
+  }
+
+  const action = actions[names[0]]
+
+  if (!action) return
+
+  action.reset()
+  action.setLoop(THREE.LoopOnce, 1)
+  action.clampWhenFinished = true
+  action.paused = true
+  action.play()
+
+  setDropperAnimationAction(action)
+
+  return () => {
+    action.stop()
+    setDropperAnimationAction(null)
+  }
+}, [actions, names, setDropperAnimationAction])
+
+useEffect(()=>{
+  console.log('dropperAnimationAction:',dropperAnimationAction);
+},[dropperAnimationAction])
 
 
   useEffect(() => {

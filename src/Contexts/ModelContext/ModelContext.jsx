@@ -43,6 +43,8 @@ export const ModelProvider = ({ children }) => {
   const arrowTestube02Ref = useRef(null)
 
   const saltContainerRef = useRef(null)
+
+  const [dropperAnimationAction,setDropperAnimationAction] = useState(null)
  
   return (
     <ModelContext.Provider
@@ -67,7 +69,8 @@ export const ModelProvider = ({ children }) => {
         saltContainerRef,
         arrowSaltContainerRef,
         arrowDropperRef,
-        arrowTestube01Ref,arrowTestube02Ref
+        arrowTestube01Ref,arrowTestube02Ref,
+        dropperAnimationAction,setDropperAnimationAction
       }}
     >
       {children}

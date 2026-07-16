@@ -896,6 +896,11 @@ const addSaltToSpoon = () => {
 
   const placeDropper=()=>{
     setIsDropperPlaced(true)
+    console.log('active')
+  }
+
+  const removeDropper=()=>{
+    setIsDropperPlaced(false)
   }
 
 
@@ -966,21 +971,33 @@ const addSaltToSpoon = () => {
                       </button>
                     )}
                   </>
-                  ) : selectedObject.name === "main-dropper" ? (
+                 ) : selectedObject.name === "main-dropper" ? (
                     <>
-                      <button
-                        onClick={() => {
-                          keepBackOnTable(selectedObject.hand)
-                        }}
-                      >
-                        Keep Back On Table
-                      </button>
+                      {isDropperPlaced ? (
+                        <>
+                          <button onClick={()=>{removeDropper()}}>
+                            Remove Dropper
+                          </button>
 
-                      <button onClick={()=>{
-                        placeDropper()
-                      }}>
-                        Place Dropper
-                      </button>
+                          <button >
+                            Squeeze Dropper
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => {
+                              keepBackOnTable(selectedObject.hand)
+                            }}
+                          >
+                            Keep Back On Table
+                          </button>
+
+                          <button onClick={placeDropper}>
+                            Place Dropper
+                          </button>
+                        </>
+                      )}
                     </>
                       ) : (
                         <>

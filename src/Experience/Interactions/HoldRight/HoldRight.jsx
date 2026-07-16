@@ -15,6 +15,7 @@ import FunnelMode from "../FunnelMode/FunnelMode"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
 import { TransformControls } from "@react-three/drei"
+import DropperPlaced from "../DropperPlaced/DropperPlaced"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -32,7 +33,7 @@ const HoldRight = ({ modeldata }) => {
     isFilterInFunnel,
 
     isFunnelMode,
-    selectedModelRight
+    selectedModelRight,isDropperPlaced
   } = useContext(InteractionContext)
 
   const {
@@ -232,39 +233,16 @@ const transformControlsRef = useRef()
           />
         )}
 
-{
+      {
         isFunnelMode  &&
         <FunnelMode beakerRef={selectedLeftHand.ref} funnelRef={funnelRef} hand='right'/>
       }
 
-      {/* {
-         <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
-      } */}
+      {
+        isDropperPlaced && <DropperPlaced hand='right' beakerRef={selectedLeftHand.ref}/>
+      }
 
-      {/* {modeldata?.ref?.current?.name === "main-spoon" && (
-  <TransformControls
-    ref={transformControlsRef}
-    object={modeldata.ref.current}
-    mode="rotate"
-    space="local"
-    size={1}
-    onMouseUp={() => {
-      const spoon = modeldata.ref.current
 
-      console.log("Rotation radians:", {
-        x: spoon.rotation.x,
-        y: spoon.rotation.y,
-        z: spoon.rotation.z,
-      })
-
-      console.log("Rotation degrees:", {
-        x: THREE.MathUtils.radToDeg(spoon.rotation.x),
-        y: THREE.MathUtils.radToDeg(spoon.rotation.y),
-        z: THREE.MathUtils.radToDeg(spoon.rotation.z),
-      })
-    }}
-  />
-)} */}
     </>
   )
 }
