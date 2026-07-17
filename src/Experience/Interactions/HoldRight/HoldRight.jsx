@@ -16,6 +16,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
 import { TransformControls } from "@react-three/drei"
 import DropperPlaced from "../DropperPlaced/DropperPlaced"
+import DropperScrollAnimation from "../DropperScrollAnimation/DropperScrollAnimation"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -42,7 +43,8 @@ const HoldRight = ({ modeldata }) => {
     funnelRef,
   } = useContext(ModelContext)
 
-  const {lessonStep,isMainGuideline,setLessonStep} = useContext(MainGuidelineContext)
+  const {lessonStep,isMainGuideline,setLessonStep,
+    selectedLesson,isTutorialMode} = useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
 const transformControlsRef = useRef()
@@ -177,6 +179,12 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,isMainGuideline])
 
+  // useEffect(()=>{
+  //   if(lessonStep===6 && selectedLesson===7 && isTutorialMode){
+  //     setLessonStep(7)
+  //   }
+  // })
+
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
@@ -242,7 +250,7 @@ const transformControlsRef = useRef()
         isDropperPlaced && <DropperPlaced hand='right' beakerRef={selectedLeftHand.ref}/>
       }
 
-
+      {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation />}
     </>
   )
 }

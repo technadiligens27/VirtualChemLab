@@ -43,6 +43,8 @@ const acids = [
     }
   },[lessonStep])
 
+
+
   const handleConfirm = () => {
     if (!selectedAcidData.name || !selectedAmount || !fillBeakerHand) return
 
@@ -101,9 +103,11 @@ const acids = [
       if (!checkFill("Biuret Reagent", 50, 6)) return
     }
 
-    if (selectedLesson === 7 && lessonStep === 8) {
-      if (!checkFill("Protein Sample", 50, 9)) return
+    if (selectedLesson === 7 && lessonStep === 12) {
+      if (!checkFill("Protein Sample", 50, 13)) return
     }
+
+    
 
     const fillData = {
       name: selectedAcidData.name,
@@ -161,6 +165,12 @@ const acids = [
       setLessonStep(8)
     }
   },[selectedLesson,lessonStep])
+
+    useEffect(()=>{
+    if(lessonStep===11 && selectedLesson ===7){
+      setLessonStep(12)
+    }
+  },[lessonStep,selectedLesson])
 
   return (
     <div className="fill-dialog-overlay">

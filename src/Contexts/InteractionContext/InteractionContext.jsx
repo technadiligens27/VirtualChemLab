@@ -64,7 +64,8 @@ export const InteractionProvider = ({ children }) => {
   const [spoonHasSalt, setSpoonHasSalt] = useState(false);
   const [isAddSalt,setIsAddSalt] = useState(false);
 
-  const [isDropperPlaced,setIsDropperPlaced] = useState(false)
+  const [isDropperPlaced,setIsDropperPlaced] = useState(false);
+  const [isDropperFilled,setIsDropperFilled] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -128,6 +129,8 @@ export const InteractionProvider = ({ children }) => {
   setIsAddSalt(false);
   setIsSitting(true);
   setChairStep(0)
+  setIsDropperPlaced(false);
+  setIsDropperFilled(false)
 }
 
   return (
@@ -166,7 +169,8 @@ export const InteractionProvider = ({ children }) => {
         pouringModeHand,setPouringModeHand,
         spoonHasSalt, setSpoonHasSalt,
         isAddSalt,setIsAddSalt,resetInteractions,
-        isDropperPlaced,setIsDropperPlaced
+        isDropperPlaced,setIsDropperPlaced,
+        isDropperFilled,setIsDropperFilled
       }}
     >
       {children}

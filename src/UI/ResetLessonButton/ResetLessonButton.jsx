@@ -24,7 +24,7 @@ const ResetLessonButton = () => {
     testube03Ref,
     filterPaperRef,
     filterFoldedPaperRef,
-    funnelRef,
+    funnelRef,mainDropperRef
   } = useContext(ModelContext)
 
   const { resetInteractions } =
@@ -52,6 +52,7 @@ const ResetLessonButton = () => {
       filterPaperRef,
       filterFoldedPaperRef,
       funnelRef,
+      mainDropperRef
     ]
 
     /*

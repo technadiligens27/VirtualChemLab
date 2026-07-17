@@ -65,7 +65,7 @@ const ClickObject = () => {
     funnelRef,mainDropperRef
   } = useContext(ModelContext)
 
-  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode} =
+  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
     useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
@@ -745,13 +745,16 @@ const ClickObject = () => {
   const openFillBeakerBox = () => {
     if (!selectedObject) return
 
+    if(isTutorialMode){
+      if(selectedLesson==7 && lessonStep!==11 && lessonStep !==4){
+        setShowErrorMsgNo(4);
+        setSelectedObject(null);
+        return
+      }
+    }
     // Only show wrong when lesson step is 8
     // and the clicked object is in the left hand
-    if (
-      isMainGuideline &&
-      lessonStep === 8 &&
-      selectedObject.hand === "left"
-    ) {
+    if (isMainGuideline && lessonStep === 8 && selectedObject.hand === "left") {
       console.log("Wrong")
       setShowErrorMsgNo(4)
       setSelectedObject(null)
@@ -759,21 +762,20 @@ const ClickObject = () => {
     }
 
     if (isMainGuideline) {
-      if (lessonStep !== 4 && lessonStep !== 7 && lessonStep !== 8) {
+      if (lessonStep !== 4 && lessonStep !== 7 && lessonStep !== 8 && selectedLesson !==7) {
         setShowErrorMsgNo(4)
         setSelectedObject(null)
         return
       }
 
-      if (
-        selectedLesson === 3 &&
-        lessonStep !== 4
-      ) {
+      if (  selectedLesson === 3 &&  lessonStep !== 4 ) {
         setShowErrorMsgNo(4)
         setSelectedObject(null)
         return
       }
     }
+
+
 
     const selectedHand = selectedObject.hand
 
@@ -895,12 +897,20 @@ const addSaltToSpoon = () => {
 }
 
   const placeDropper=()=>{
-    setIsDropperPlaced(true)
-    console.log('active')
+    if(isTutorialMode && selectedLesson===7 && (lessonStep ===13 || lessonStep ===8))
+    setIsDropperPlaced(true);    
   }
 
-  const removeDropper=()=>{
-    setIsDropperPlaced(false)
+    const removeDropper = () => {
+      setIsDropperPlaced(false)
+
+      if (
+        isTutorialMode &&
+        selectedLesson === 7 &&
+        lessonStep === 10
+      ) {
+        setLessonStep(11)
+      }
   }
 
 

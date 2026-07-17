@@ -27,22 +27,32 @@ const ProteinIdentificationTest = [
       "Select Biuret reagent and 50 ml.",
 
     step5:
-      "Now click on the Dropper and select the Right Hand option.",
+      "Now click on the Dropper and select the Right Hand option.",   
 
     step6:
-      "Click on the Dropper again and select place dropper",
-
+      "Now scroll down mouse to squess the dropper to realase air",
     step7:
-      "Select Biuret Reagent and 50 ml.",
-
+      "Click on the Dropper again and select place dropper",
     step8:
-      "Press P to enter Pouring Mode.",
+      "Now scroll Up mouse to get Buriett reagent to dropper",
 
     step9:
-      "Scroll the mouse to pour the Biuret reagent into the protein sample.",
+      "Now Click Dropper and press remive dropper",
 
     step10:
-      "Observe the liquid changing to purple. This confirms that protein is present.",
+      "Now click testube and click fill beaker",
+
+    step11:
+      "Fill Beaker with Protein Sample 50ml",  
+
+    step12:
+      "Click Dropper and clikc Place Dropper",   
+      
+    step13:
+      "Scroll donw to relase burette regent in Dropper to testube",      
+
+    step14:
+      "You can see the color chnage whihc indicates Protien ",   
   },
 ]
 
@@ -112,7 +122,29 @@ const ProteinIdentificationTest = [
             {
                 lessonStep ===11 && 
                 <DialogBox text={ProteinIdentificationTest[0].step10}/>
-            }     
+            }   
+
+            {
+                lessonStep ===12 && 
+                <DialogBox text={ProteinIdentificationTest[0].step11}/>
+            }
+
+            {
+                lessonStep ===13 && 
+                <DialogBox text={ProteinIdentificationTest[0].step12}/>
+            }
+
+            {
+                lessonStep ===14 && 
+                <DialogBox text={ProteinIdentificationTest[0].step13}/>
+            }
+
+            {
+                lessonStep ===15 && 
+                <DialogBox text={ProteinIdentificationTest[0].step14}/>
+            }
+
+
         </>
     )
 }

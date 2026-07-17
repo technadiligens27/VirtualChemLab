@@ -34,7 +34,8 @@ export const ReactionProvider = ({ children }) => {
     setIsNaohUniversal(false)
     setIsStarchIodine(false)
     setIsCopperSulfateNaoh(false)
-    setIsAcidBase(false)
+    setIsAcidBase(false);
+    setIsBiuretReaction(false)
 
     stirrLiquidRef.current = null
     isReactionRef.current = false
