@@ -8,7 +8,33 @@ import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionConte
 
 import FillDropper from "../FillDropper/FillDropper"
 
-const DropperScrollAnimation = () => {
+const PROTEIN_LESSON = 7
+const SCROLL_SPEED = 0.0008
+
+const DROP_ANIMATION_STEPS = [7, 9, 14]
+
+const findLiquid = (object, onlyVisible = false) => {
+  let liquid = null
+
+  object?.traverse((child) => {
+    const isLiquid = child.name
+      ?.toLowerCase()
+      .includes("liquid")
+
+    if (!isLiquid) return
+    if (onlyVisible && !child.visible) return
+
+    liquid = child
+  })
+
+  return liquid
+}
+
+const hasLiquid = (liquid) => {
+  return liquid?.visible && liquid.scale.y > 0
+}
+
+const DropperScrollAnimation = ({hand}) => {
   const {
     dropperAnimationAction,
     mainDropperRef,
@@ -22,30 +48,93 @@ const DropperScrollAnimation = () => {
   } = useContext(InteractionContext)
 
   const {
-    setLessonStep,
     selectedLesson,
     lessonStep,
+    setLessonStep,
   } = useContext(MainGuidelineContext)
 
   const { setIsBiuretReaction } =
     useContext(ReactionContext)
 
-  const selectedLessonRef = useRef(selectedLesson)
-  const lessonStepRef = useRef(lessonStep)
-  const selectedLeftHandRef = useRef(selectedLeftHand)
-  const leftBeakerFillDataRef = useRef(leftBeakerFillData)
+  const latestDataRef = useRef({
+    selectedLesson,
+    lessonStep,
+    selectedLeftHand,
+    leftBeakerFillData,
+  })
 
   useEffect(() => {
-    selectedLessonRef.current = selectedLesson
-    lessonStepRef.current = lessonStep
-    selectedLeftHandRef.current = selectedLeftHand
-    leftBeakerFillDataRef.current = leftBeakerFillData
+    latestDataRef.current = {
+      selectedLesson,
+      lessonStep,
+      selectedLeftHand,
+      leftBeakerFillData,
+    }
   }, [
     selectedLesson,
     lessonStep,
     selectedLeftHand,
     leftBeakerFillData,
   ])
+
+  const startProteinReaction = () => {
+    const dropper = mainDropperRef?.current
+    const beaker =
+      latestDataRef.current.selectedLeftHand?.ref?.current
+
+    if (!dropper || !beaker) return
+
+    const dropperLiquid = findLiquid(dropper)
+    const beakerLiquid = findLiquid(beaker, true)
+
+    const isProteinSample =
+      latestDataRef.current.leftBeakerFillData?.name ===
+      "Protein Sample"
+
+    const canReact =
+      hasLiquid(dropperLiquid) &&
+      hasLiquid(beakerLiquid) &&
+      isProteinSample
+
+    if (!canReact) return
+
+    setIsDropperFilled(false)
+    setIsBiuretReaction(true)
+  }
+
+  const handleCompletedAnimation = (actionTime, duration) => {
+    if (actionTime < duration) return
+
+    const { selectedLesson, lessonStep } =
+      latestDataRef.current
+
+    if (selectedLesson !== PROTEIN_LESSON) return
+
+    if (lessonStep === 7) {
+      setLessonStep(8)
+    }
+
+    if (lessonStep === 14) {
+      startProteinReaction()
+      setLessonStep(15)
+    }
+  }
+
+    const handleDropperReleased = (actionTime) => {
+      const { selectedLesson, lessonStep } =
+        latestDataRef.current
+
+      const isFullyReleased = actionTime <= 0
+
+      if (
+        selectedLesson === PROTEIN_LESSON &&
+        lessonStep === 9 &&
+        isFullyReleased
+      ) {
+        setIsDropperFilled(true)
+        setLessonStep(10)
+      }
+    }
 
   useEffect(() => {
     const action = dropperAnimationAction
@@ -62,67 +151,27 @@ const DropperScrollAnimation = () => {
 
     mixer.update(0)
 
-    const checkProteinReaction = () => {
-      const dropper = mainDropperRef?.current
-      const beaker =
-        selectedLeftHandRef.current?.ref?.current
-
-      if (!dropper || !beaker) return
-
-      let dropperLiquid = null
-      let beakerLiquid = null
-
-      dropper.traverse((child) => {
-        if (
-          child.name?.toLowerCase().includes("liquid")
-        ) {
-          dropperLiquid = child
-        }
-      })
-
-      beaker.traverse((child) => {
-        if (
-          child.name?.toLowerCase().includes("liquid") &&
-          child.visible
-        ) {
-          beakerLiquid = child
-        }
-      })
-
-      const correctReaction =
-        dropperLiquid?.visible &&
-        dropperLiquid.scale.y > 0 &&
-        beakerLiquid?.visible &&
-        beakerLiquid.scale.y > 0 &&
-        leftBeakerFillDataRef.current?.name ===
-          "Protein Sample"
-
-      if (correctReaction) {
-        setIsDropperFilled(false)
-        setIsBiuretReaction(true)
-      }
-    }
-
     const handleScroll = (event) => {
+      const { selectedLesson, lessonStep } =
+        latestDataRef.current
+
+      const canAnimate =
+        selectedLesson === PROTEIN_LESSON &&
+        DROP_ANIMATION_STEPS.includes(lessonStep)
+
+      if (!canAnimate) return
+
       event.preventDefault()
 
-      const amount = Math.abs(event.deltaY) * 0.0008
-      const wasFullySqueezed =
-        action.time >= duration
+      const scrollAmount =
+        Math.abs(event.deltaY) * SCROLL_SPEED
 
       if (event.deltaY > 0) {
-        action.time += amount
+        // Scroll down — squeeze
+        action.time += scrollAmount
       } else {
-        action.time -= amount
-
-        if (
-          wasFullySqueezed &&
-          selectedLessonRef.current === 7 &&
-          lessonStepRef.current === 9
-        ) {
-          setIsDropperFilled(true)
-          setLessonStep(10)
-        }
+        // Scroll up — unsqueeze
+        action.time -= scrollAmount
       }
 
       action.time = THREE.MathUtils.clamp(
@@ -133,22 +182,11 @@ const DropperScrollAnimation = () => {
 
       mixer.update(0)
 
-      if (
-        action.time >= duration &&
-        selectedLessonRef.current === 7 &&
-        lessonStepRef.current === 7
-      ) {
-        setLessonStep(8)
+      if (event.deltaY < 0) {
+        handleDropperReleased(action.time)
       }
 
-      if (
-        action.time >= duration &&
-        selectedLessonRef.current === 7 &&
-        lessonStepRef.current === 14
-      ) {
-        checkProteinReaction()
-        setLessonStep(15)
-      }
+      handleCompletedAnimation(action.time, duration)
     }
 
     window.addEventListener("wheel", handleScroll, {
@@ -156,17 +194,14 @@ const DropperScrollAnimation = () => {
     })
 
     return () => {
-      window.removeEventListener("wheel", handleScroll)
+      window.removeEventListener(
+        "wheel",
+        handleScroll
+      )
     }
-  }, [
-    dropperAnimationAction,
-    mainDropperRef,
-    setLessonStep,
-    setIsDropperFilled,
-    setIsBiuretReaction,
-  ])
+  }, [dropperAnimationAction])
 
-  return isDropperFilled ? <FillDropper /> : null
+  return isDropperFilled ? <FillDropper hand={hand} /> : null
 }
 
 export default DropperScrollAnimation

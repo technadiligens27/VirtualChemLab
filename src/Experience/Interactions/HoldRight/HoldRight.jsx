@@ -250,7 +250,7 @@ const transformControlsRef = useRef()
         isDropperPlaced && <DropperPlaced hand='right' beakerRef={selectedLeftHand.ref}/>
       }
 
-      {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation />}
+      {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
     </>
   )
 }

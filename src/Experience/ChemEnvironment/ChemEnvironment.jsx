@@ -98,9 +98,7 @@ const hideLiquidObjects=(root)=>{
   }
 }, [actions, names, setDropperAnimationAction])
 
-useEffect(()=>{
-  console.log('dropperAnimationAction:',dropperAnimationAction);
-},[dropperAnimationAction])
+
 
 
   useEffect(() => {
@@ -210,6 +208,7 @@ useEffect(() => {
     filterPaperRef,
     filterFoldedPaperRef,
     funnelRef,
+    mainDropperRef
   ]
 
   labModels.forEach((modelRef) => {

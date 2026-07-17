@@ -111,7 +111,7 @@ const DropperPlaced = ({ beakerRef, hand }) => {
 
   return (
     <>
-      {isBiuretReaction && <ProteinBiuretReaction beakerRef={beakerRef} mainDropperRef={mainDropperRef}/>}
+      {isBiuretReaction && <ProteinBiuretReaction beakerRef={beakerRef} mainDropperRef={mainDropperRef} hand={hand}/>}
     </>
   )
   

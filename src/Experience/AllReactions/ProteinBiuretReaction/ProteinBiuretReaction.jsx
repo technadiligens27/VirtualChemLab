@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
-const ProteinBiuretReaction = ({ beakerRef, mainDropperRef }) => {
+const ProteinBiuretReaction = ({ beakerRef, mainDropperRef, hand }) => {
   const liquidRef = useRef(null)
   const dropperLiquidRef = useRef(null)
   const startReaction = useRef(false)
@@ -15,9 +15,7 @@ const ProteinBiuretReaction = ({ beakerRef, mainDropperRef }) => {
 
     beaker.traverse((child) => {
       if (
-        child.name?.toLowerCase().includes("liquid") &&
-        child.visible
-      ) {
+        child.name?.toLowerCase().includes("liquid") && child.visible ) {
         liquidRef.current = child
       }
     })
@@ -28,12 +26,7 @@ const ProteinBiuretReaction = ({ beakerRef, mainDropperRef }) => {
       }
     })
 
-    if (
-      liquidRef.current &&
-      dropperLiquidRef.current &&
-      dropperLiquidRef.current.visible &&
-      dropperLiquidRef.current.scale.y > 0
-    ) {
+    if (liquidRef.current &&dropperLiquidRef.current &&dropperLiquidRef.current.visible &&dropperLiquidRef.current.scale.y > 0) {
       startReaction.current = true
     }
   }, [beakerRef, mainDropperRef])
