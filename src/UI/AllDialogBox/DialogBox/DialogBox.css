@@ -5,23 +5,25 @@
   transform: translateX(-50%);
   z-index: 9999;
 
-  width: 50%;
+  min-width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
+  border-radius: 70px;
   height: 100px;
-  background: linear-gradient( #FFBD00 100%);
+  background: #FCFCEA;
+  border: 7px solid #F7C741 ;
 }
 
 .dialog-box-inner-container{
-    width: 90%;
-    height: 80%;
-    background-color: #FCFCEA;
-    border-radius: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: column;
+   display: flex;
+   flex-direction: row;
+   gap: 10px;
+   /* border: 1px solid black; */
+   justify-content: center;
+   align-items: center;
+}   
+
+.dialog-box-inner-container p{
+  font-size: 20px;
 }

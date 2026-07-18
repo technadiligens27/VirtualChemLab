@@ -17,6 +17,7 @@ import ResetLessonButton from "./ResetLessonButton/ResetLessonButton"
 import MovementGuideline from "./MainGuidelines/MovementGuideline/MovementGuideline"
 import MouseGuide from "./MouseGuide/MouseGuide"
 import ProteinIdentification from "./AllLessons/ProteinIdentification/ProteinIdentification"
+import SideGuide from "./SideGuide/SideGuide"
 
 const mainContent = [
   {
@@ -207,6 +208,8 @@ const UI = () => {
   */
   return (
     <>
+    {!isSitting && selectedMainGuideline===5 && <SideGuide/>}
+
     {isLessonStart && safetyStep===4 && <ResetLessonButton/>}
     
       {selectedMainGuideline === 2 && (

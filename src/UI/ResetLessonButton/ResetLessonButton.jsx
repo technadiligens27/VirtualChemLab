@@ -24,7 +24,8 @@ const ResetLessonButton = () => {
     testube03Ref,
     filterPaperRef,
     filterFoldedPaperRef,
-    funnelRef,mainDropperRef
+    funnelRef,mainDropperRef,
+    dropperAnimationAction,
   } = useContext(ModelContext)
 
   const { resetInteractions } =
@@ -36,50 +37,75 @@ const ResetLessonButton = () => {
   const { resetReactions } =
     useContext(ReactionContext)
 
-  const resetLesson = () => {
-    const labModels = [
-      normalBeakerRef,
-      conicalBeakerRef,
-      roundBeakerRef,
-      graduatedBeakerRef,
-      spoonRef,
-      saltRef,
-      redLitmusRef,
-      blueLitmusRef,
-      testube01Ref,
-      testube02Ref,
-      testube03Ref,
-      filterPaperRef,
-      filterFoldedPaperRef,
-      funnelRef,
-      mainDropperRef
-    ]
+      const resetDropperAnimation = () => {
+  if (!dropperAnimationAction) return
 
-    /*
-    * First stop PouringMode, StirMode,
-    * selected hands and all other interactions.
-    */
-    resetInteractions()
-    resetReactions()
-    resetLessonGuidelines()
+  // Remove the final-frame clamp
+  dropperAnimationAction.stop()
 
-    /*
-    * Wait until React has removed/stopped the
-    * interaction components before resetting
-    * the Three.js model transforms.
-    */
-    requestAnimationFrame(() => {
-      labModels.forEach((modelRef) => {
-        if (modelRef.current) {
-          resetModel(modelRef.current)
-        }
-      })
+  // Return the action time to the beginning
+  dropperAnimationAction.reset()
+  dropperAnimationAction.time = 0
+
+  // Prepare it for scroll-controlled animation again
+  dropperAnimationAction.enabled = true
+  dropperAnimationAction.clampWhenFinished = true
+  dropperAnimationAction.paused = true
+
+  dropperAnimationAction.setEffectiveWeight(1)
+  dropperAnimationAction.setEffectiveTimeScale(1)
+
+  // The action must be active for its first frame to be applied
+  dropperAnimationAction.play()
+
+  // Immediately apply frame 0
+  const mixer = dropperAnimationAction.getMixer()
+  mixer.update(0)
+}
+
+const resetLesson = () => {
+  const labModels = [
+    normalBeakerRef,
+    conicalBeakerRef,
+    roundBeakerRef,
+    graduatedBeakerRef,
+    spoonRef,
+    saltRef,
+    redLitmusRef,
+    blueLitmusRef,
+    testube01Ref,
+    testube02Ref,
+    testube03Ref,
+    filterPaperRef,
+    filterFoldedPaperRef,
+    funnelRef,
+    mainDropperRef,
+  ]
+
+  resetInteractions()
+  resetReactions()
+  resetLessonGuidelines()
+
+  // Reset animation before restoring model transforms
+  resetDropperAnimation()
+
+  requestAnimationFrame(() => {
+    labModels.forEach((modelRef) => {
+      if (modelRef.current) {
+        resetModel(modelRef.current)
+      }
     })
-  }
 
-  useEffect(()=>{
-    console.log('labResetKey:',labResetKey)
-  },[labResetKey])
+    // Apply animation frame 0 after transform restoration
+    if (dropperAnimationAction) {
+      dropperAnimationAction.time = 0
+      dropperAnimationAction.getMixer().update(0)
+    }
+  })
+}
+
+
+
   
   return (
     <button

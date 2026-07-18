@@ -1,0 +1,46 @@
+.side-guide-container {
+  position: fixed;
+  top: 70%;
+  left: 8px;
+  transform: translateY(-50%);
+  z-index: 9999;
+
+  width: 240px;
+  padding: 25px;
+
+  background-color: rgba(248, 246, 243, 0.95);
+  border: 4px solid #ffcd42;
+  border-radius: 25px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.side-guide {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 0px;
+}
+
+.side-guide img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.side-guide p {
+  margin: 0;
+  font-size: 20px;
+  color: #181818;
+}
+
+.look-guide {
+  margin-bottom: 5px;
+}
+
+.look-guide img {
+  width: 95px;
+  height: 90px;
+  margin-left: -12px;
+}

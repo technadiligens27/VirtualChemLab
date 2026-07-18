@@ -896,23 +896,51 @@ const addSaltToSpoon = () => {
   setIsAddSalt(true)
 }
 
-  const placeDropper=()=>{
-    if(isTutorialMode && selectedLesson===7 && (lessonStep ===13 || lessonStep ===8))
-    setIsDropperPlaced(true);    
+  const placeDropper = () => {
+    if (
+      isTutorialMode &&
+      selectedLesson === 7 &&
+      (lessonStep === 13 || lessonStep === 8)
+    ) {
+      setIsDropperPlaced(true)
+
+      // Close the old popup after placing
+      setSelectedObject(null)
+      return
+    }
+
+    setShowErrorMsgNo(12)
+    setSelectedObject(null)
   }
 
-    const removeDropper = () => {
-      setIsDropperPlaced(false)
 
-      if (
-        isTutorialMode &&
-        selectedLesson === 7 &&
-        lessonStep === 10
-      ) {
-        setLessonStep(11)
-      }
+  useEffect(() => {
+    setSelectedObject(null)
+  }, [isDropperPlaced])
+
+  const removeDropper = () => {
+    if (
+      isTutorialMode &&
+      selectedLesson === 7 &&
+      lessonStep !== 14 &&
+      lessonStep !== 10
+    ) {
+      setShowErrorMsgNo(12)
+      setSelectedObject(null)
+      return
+    }
+
+    setIsDropperPlaced(false)
+    setSelectedObject(null)
+
+    if (
+      isTutorialMode &&
+      selectedLesson === 7 &&
+      lessonStep === 10
+    ) {
+      setLessonStep(11)
+    }
   }
-
 
   const renderTableObjectButtons = () => {
   if (selectedObject?.name === "salt-container") {
@@ -989,9 +1017,9 @@ const addSaltToSpoon = () => {
                             Remove Dropper
                           </button>
 
-                          <button >
+                          {/* <button >
                             Squeeze Dropper
-                          </button>
+                          </button> */}
                         </>
                       ) : (
                         <>
