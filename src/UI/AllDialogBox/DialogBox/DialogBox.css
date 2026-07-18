@@ -5,12 +5,12 @@
   transform: translateX(-50%);
   z-index: 9999;
 
-  min-width: 40%;
+  min-width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 70px;
-  height: 100px;
+  height: 80px;
   background: #FCFCEA;
   border: 7px solid #F7C741 ;
 }

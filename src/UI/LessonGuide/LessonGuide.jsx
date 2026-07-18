@@ -12,15 +12,28 @@ const LessonGuide = ({title,text,onButton1})=>{
     return(
         <div className="main-guidelines">
             <div className="lesson-guide-container">
-                <div>
-                    <h1>{title}</h1>
+                <div className='top-bar'>
+                    <img src='./clipboard.png'/>
+                   <h1>{title}</h1>
                 </div>
-                <div className="guideline-inner-container">
-                   <p>{text}</p> 
+                <div className='lesson-guide-inner-container'>
+                    <div className='lesson-overview-img'>
+                        <img src='./saltLesson.png'/>
+                    </div>
+                    <div className='lesson-overview-sub-heading'>
+                        <h1>Salt Dissolving In Water</h1>
+                    </div>
+                    <div className="lesson-guide-text">
+                    <p>{text}</p> 
+                    </div>
+                    <div className='lesson-guide-btn-container'>
+                        <div className='continue-arrow-container'>
+                            <img src='./continue-arrow.png'/>
+                        </div>
+                        <button onClick={onButton1} className='lesson-continue-btn'>Continue</button>
+                    </div>
                 </div>
-                <div className='main-guidelines-btn-container'>
-                    <button onClick={onButton1} className='main-guidelines-btn'>Continue</button>
-                </div>
+
             </div>
         </div>
     )
