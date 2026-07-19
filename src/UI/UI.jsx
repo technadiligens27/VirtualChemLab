@@ -329,9 +329,9 @@ const UI = () => {
 
       <AllErrors />
 
-      {clickedModel && (
+      {/* {clickedModel && (
         <InfoDialogBox clickedModel={clickedModel} />
-      )}
+      )} */}
 
       {isObjectInfo && (
         <InfoBox clickedModel={clickedModel} />

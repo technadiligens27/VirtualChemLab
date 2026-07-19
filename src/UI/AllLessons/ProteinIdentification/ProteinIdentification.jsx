@@ -70,13 +70,15 @@ const ProteinIdentificationTest = [
                 <LessonGuide
                  title={"Lesson Overview"} 
                 text={ProteinIdentificationTest[0].step1} 
+                icon={'./ProteinTest.png'}
                 onButton1={() => setLessonStep(2)}/>
             } 
 
 
            {lessonStep===2 && 
                 <LessonGuide 
-                title={"Lesson Overview"}                
+                title={"Lesson Overview"}   
+                icon={'./ProteinTest.png'}             
                 text={ProteinIdentificationTest[0].step2}
                 onButton1={() =>{ setLessonStep(3)}}
             />} 

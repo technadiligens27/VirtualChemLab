@@ -47,19 +47,23 @@ const SaltWaterTest = ()=>{
         {lessonStep===1 && 
             <LessonGuide
                title={"Lesson Overview"} 
+               subTitle={'Salt Dissolving In Water'}
                text={SaltWaterTestSteps[0].step1} 
+               icon={'./saltLesson.png'}
                onButton1={() => setLessonStep(2)}/>
         }
 
         {lessonStep===2 && 
                 <LessonGuide 
-                title={"Lesson Overview"}                
+                title={"Lets Start"}      
+                subTitle={'Pick Up Normal Beaker'}    
+                icon={'./saltLesson.png'}      
                 text={SaltWaterTestSteps[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />}  
 
         {
-          lessonStep ===3 && <DialogBox text={"Pick Up Beaker"}/>
+          lessonStep ===3 && <DialogBox text={"Pick Up Normal Beaker by Clicking on it Selecting the left hand option"}/>
         }
 
         {

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import './LessonGuide.css'
 import { MainGuidelineContext } from '../../Contexts/MainGuidelineContext/MainGuidelineContext'
 
-const LessonGuide = ({title,text,onButton1})=>{
+const LessonGuide = ({title,text,onButton1,subTitle,icon})=>{
 
     const {isLessonStart,setIsLessonStart} = useContext(MainGuidelineContext)
 
@@ -18,10 +18,10 @@ const LessonGuide = ({title,text,onButton1})=>{
                 </div>
                 <div className='lesson-guide-inner-container'>
                     <div className='lesson-overview-img'>
-                        <img src='./saltLesson.png'/>
+                        <img src='./saltLesson.png' src={icon}/>
                     </div>
                     <div className='lesson-overview-sub-heading'>
-                        <h1>Salt Dissolving In Water</h1>
+                        <h1>{subTitle}</h1>
                     </div>
                     <div className="lesson-guide-text">
                     <p>{text}</p> 

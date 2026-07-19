@@ -1,19 +1,29 @@
 .lesson-container{
-    width: 30%;
+    width: 60%;
     height: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #FFE1C1 0%, #FFBD00 100%);
-    border-radius: 20px;
+    background: #F0C13F;
+    border-radius: 42.61px;
 
+}    
+
+.lesson-inner-container{
+    background-color: #FCF5E0;
+    height: 75%;
+    width: 95%;
+    border-radius: 33.91px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lesson-btn-container{
     display: flex;
     flex-direction: column;
-    gap:20px
+    gap:20px;
 }
 
 .lesson-btn-container button{
@@ -23,4 +33,61 @@
     border: none;
     box-shadow: 0px 7px 35px rgba(0, 0, 0, 0.25);
     font-size: 20px;
+}
+
+.select-lesson-container h1{
+    font-family: 'Baloo Bhai 2',sans-serif;
+    font-size: 55px;
+    font-weight: 700;
+    color: #4D4D4D;
+    margin: 0%;
+    padding: 0%;
+    height: 70px;
+}
+
+.select-lesson-container p{
+    font-family: 'Baloo Bhai 2',sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #4D4D4D;
+    margin: 0%;
+    padding: 0%;
+}
+
+.select-lesson-container{
+    margin: 0%;
+    padding: 0%;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 0px;
+}
+
+.lesson-btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.lesson-btn{
+    border: 3px solid #D2D0D0;
+    height: 350px;
+    width: 240px;
+    background-color: #FEFEFE;
+    border-radius: 35.33px;
+}
+
+.divider{
+    border: 1px solid #FFB80C;
+}
+
+.lesson-name{
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+.lesson-text{
+    text-align: center;
 }

@@ -48,13 +48,15 @@ const AlkaliIndicatorTest = ()=>{
             {lessonStep===1 && 
                 <LessonGuide
                 title={"Lesson Overview"} 
+                icon={'./AlkaliTest.png'}
                 text={AlkaliIndicatorTest[0].step1} 
                 onButton1={() => setLessonStep(2)}/>
             }       
        
             {lessonStep===2 && 
                 <LessonGuide 
-                title={"Lesson Overview"}                
+                title={"Lesson Overview"}  
+                icon={'./AlkaliTest.png'}              
                 text={AlkaliIndicatorTest[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />} 

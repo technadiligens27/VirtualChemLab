@@ -51,13 +51,16 @@ const StarchIodineTest = ()=>{
             {lessonStep===1 && 
                 <LessonGuide
                 title={"Lesson Overview"} 
+                icon={'./StarchIodine.png'}
                 text={StarchIodineTest[0].step1} 
+                subTitle={"Starch Iodine Test"}
                 onButton1={() => setLessonStep(2)}/>
             }       
        
             {lessonStep===2 && 
                 <LessonGuide 
-                title={"Lesson Overview"}                
+                title={"Lesson Overview"}  
+                icon={'./StarchIodine.png'}              
                 text={StarchIodineTest[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
             />} 

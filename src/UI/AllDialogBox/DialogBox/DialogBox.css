@@ -13,6 +13,8 @@
   height: 80px;
   background: #FCFCEA;
   border: 7px solid #F7C741 ;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .dialog-box-inner-container{

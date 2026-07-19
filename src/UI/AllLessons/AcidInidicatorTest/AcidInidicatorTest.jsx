@@ -14,7 +14,7 @@ const AcidInidicatorTest = ()=>{
     const AcidIndicatorTest = [
     {
         step1:
-        "In this experiment, hydrochloric acid is mixed with universal indicator. The indicator changes the solution to a red or orange-red color, showing that the solution is acidic. This helps to understand how indicators are used to identify acids in the lab.",
+        "In this experiment, hydrochloric acid is mixed with universal indicator. The indicator changes the solution to a red or orange-red color, showing that the solution is acidic.",
 
         step2:
         "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
@@ -53,20 +53,24 @@ const AcidInidicatorTest = ()=>{
            {lessonStep===1 && 
                 <LessonGuide
                  title={"Lesson Overview"} 
+                 subTitle={"Acid Indicator Test"}
                 text={AcidIndicatorTest[0].step1} 
+                icon={'./acidIndicator.png'}
                 onButton1={() => setLessonStep(2)}/>
             } 
 
 
            {lessonStep===2 && 
                 <LessonGuide 
-                title={"Lesson Overview"}                
+                title={"Lesson Overview"}
+                icon={'./acidIndicator.png'}
+                subTitle={"Acid Indicator Test"}               
                 text={AcidIndicatorTest[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
             />} 
 
             {
-                lessonStep ===3 && <DialogBox text={"Pick Up Beaker"}/>
+                lessonStep ===3 && <DialogBox text={"Click Beaker And Select Left Hand"}/>
             }     
 
             {
