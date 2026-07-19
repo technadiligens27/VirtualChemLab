@@ -1,4 +1,4 @@
-.lesson-container{
+.lesson-container {
     width: 75%;
     height: 70%;
     display: flex;
@@ -7,10 +7,9 @@
     justify-content: center;
     background: #F0C13F;
     border-radius: 42.61px;
+}
 
-}    
-
-.lesson-inner-container{
+.lesson-inner-container {
     background-color: #FCF5E0;
     height: 75%;
     width: 95%;
@@ -18,59 +17,51 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    margin-bottom: 25px;
+    padding: 0;
+    position: relative;
+
+    /* Hides lessons while sliding outside */
+    overflow: hidden;
 }
 
-.lesson-btn-container{
-    display: flex;
-    flex-direction: column;
-    gap:20px;
+.select-lesson-container {
+    margin: auto;
+    padding: 0 0 0 20px;
 }
 
-.lesson-btn-container button{
-    width: 200px;
-    height: 70px;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0px 7px 35px rgba(0, 0, 0, 0.25);
-    font-size: 20px;
-}
-
-.select-lesson-container h1{
-    font-family: 'Baloo Bhai 2',sans-serif;
+.select-lesson-container h1 {
+    font-family: "Baloo Bhai 2", sans-serif;
     font-size: 55px;
     font-weight: 700;
     color: white;
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     height: 70px;
+    text-align: center;
 }
 
-.select-lesson-container p{
-    font-family: 'Baloo Bhai 2',sans-serif;
+.select-lesson-container p {
+    font-family: "Baloo Bhai 2", sans-serif;
     font-size: 20px;
     font-weight: 400;
-    color: #4D4D4D;
-    margin: 0%;
-    padding: 0%;
+    color: white;
+    margin: 0;
+    padding: 0;
 }
 
-.select-lesson-container{
-    margin: 0%;
-    padding: 0%;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-bottom: 20px;
-    padding-top: 0px;
-}
-
-.lesson-btn-container{
+.lesson-btn-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 20px;
+
+    will-change: transform, opacity;
 }
 
-.lesson-btn{
+.lesson-btn {
     border: 3px solid #D2D0D0;
     height: 350px;
     width: 240px;
@@ -84,40 +75,50 @@
     flex-direction: column;
     padding: 10px;
     cursor: pointer;
-        transition: 0.25s ease;
+    transition: 0.25s ease;
 
+    /* Stops cards from becoming smaller */
+    flex-shrink: 0;
 }
 
-.lesson-btn:hover{
+.lesson-btn:hover {
     transform: translateY(-6px);
     border-color: #FFCC40;
     background-color: #f3e9d3;
 }
-.divider{
+
+.lesson-btn img {
+    max-width: 80%;
+    max-height: 130px;
+    object-fit: contain;
+}
+
+.divider {
     border: 2px solid #FFB80C;
     width: 100px;
     margin-top: -10px;
 }
 
-.green{
-    border: 2px solid #32B458;
+.green {
+    border-color: #32B458;
 }
 
-.purple{
-    border: 2px solid #7A3FBF;
+.purple {
+    border-color: #7A3FBF;
 }
 
-.lesson-name{
-    font-family: 'Montserrat',sans-serif;
+.lesson-name {
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 20px;
     text-align: center;
 }
-.lesson-text{
+
+.lesson-text {
     text-align: center;
 }
 
-.number-container{
+.number-container {
     background-color: #F0C13F;
     border-radius: 50%;
     width: 35px;
@@ -128,17 +129,121 @@
     position: absolute;
     top: 3%;
     left: 5%;
-
 }
 
-.number{
-    font-family: 'Baloo Bhai 2',sans-serif;
+.number {
+    font-family: "Baloo Bhai 2", sans-serif;
     color: white;
     font-size: 24px;
     font-weight: bold;
     margin: auto;
 }
 
-.lesson-btn img{
-    
+.arrow-left,
+.arrow-right {
+    position: absolute;
+    background-color: #BCBCBC;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.arrow-left {
+    left: 4%;
+}
+
+.arrow-right {
+    right: 4%;
+}
+
+.arrow-left img,
+.arrow-right img {
+    width: 40%;
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
+    background-color: #FFCC40;
+    transform: scale(1.1);
+}
+
+/* Moving to the next page */
+
+.slide-out-left {
+    animation: slideOutLeft 0.3s ease forwards;
+    pointer-events: none;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.35s ease forwards;
+    pointer-events: none;
+}
+
+/* Moving to the previous page */
+
+.slide-out-right {
+    animation: slideOutRight 0.3s ease forwards;
+    pointer-events: none;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.35s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-150px);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(150px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(150px);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-150px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
