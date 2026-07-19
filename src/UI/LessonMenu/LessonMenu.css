@@ -1,5 +1,5 @@
 .lesson-container{
-    width: 60%;
+    width: 75%;
     height: 70%;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@
     font-family: 'Baloo Bhai 2',sans-serif;
     font-size: 55px;
     font-weight: 700;
-    color: #4D4D4D;
+    color: white;
     margin: 0%;
     padding: 0%;
     height: 70px;
@@ -76,10 +76,35 @@
     width: 240px;
     background-color: #FEFEFE;
     border-radius: 35.33px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+        transition: 0.25s ease;
+
 }
 
+.lesson-btn:hover{
+    transform: translateY(-6px);
+    border-color: #FFCC40;
+    background-color: #f3e9d3;
+}
 .divider{
-    border: 1px solid #FFB80C;
+    border: 2px solid #FFB80C;
+    width: 100px;
+    margin-top: -10px;
+}
+
+.green{
+    border: 2px solid #32B458;
+}
+
+.purple{
+    border: 2px solid #7A3FBF;
 }
 
 .lesson-name{
@@ -90,4 +115,30 @@
 }
 .lesson-text{
     text-align: center;
+}
+
+.number-container{
+    background-color: #F0C13F;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 3%;
+    left: 5%;
+
+}
+
+.number{
+    font-family: 'Baloo Bhai 2',sans-serif;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.lesson-btn img{
+    
 }

@@ -20,15 +20,24 @@ const LessonMenu = () => {
       name: "Salt Dissolving in Water",
       imgPath:'./SaltDissolve.png',
       text:'Mix Salt into Water to see how crystals break down and form a clear solution',
-      number:1
+      number:1,
+      divider:''
     },
     {
       id: 6,
       name: "Acid Base Neutralization",
+      imgPath:'./AcidBaseLesson.png',
+      text:'Combine an acid and a base to create a neutral reaction, forming salt and water.',
+      number:2,
+      divider:'green'
     },
     {
       id: 2,
       name: "Acid Indicator Test",
+      imgPath:'./IndicatorSolution.png',
+      text:'Add a testing solution or paper to an acid and observe the color change to confirm its presence.',
+      number:3,
+      divider:'purple'
     },
     // {
     //   id: 3,
@@ -77,10 +86,10 @@ const LessonMenu = () => {
                   key={lesson.id}
                   onClick={() => startLesson(lesson.id)}
                 >
-                  <div className="number-container">{lesson.number}</div>
+                  <div className="number-container"><p className="number">{lesson.number}</p></div>
                   <img src={lesson.imgPath}/>
                  <p className="lesson-name">{lesson.name}</p> 
-                 <div className="divider"> </div>
+                 <div className={`divider ${lesson.divider}`}></div>
                  <p className="lesson-text">{lesson.text}</p>
                 </div>
               ))}
