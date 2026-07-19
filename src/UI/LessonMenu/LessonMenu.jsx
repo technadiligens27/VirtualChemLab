@@ -25,13 +25,13 @@ const LessonMenu = () => {
       number: 1,
       divider: "",
     },
-    {
-      id: 6,
-      name: "Acid Base Neutralization",
-      imgPath: "./AcidBaseLesson.png",
-      text: "Combine an acid and a base to create a neutral reaction, forming salt and water.",
+            {
+      id: 5,
+      name: "Copper Sulfate Precipitation",
+      imgPath: "./CopperSulphateTest.png",
+      text: "Combine two solutions and observe the formation of a solid precipitate.",
       number: 2,
-      divider: "green",
+      divider: "blue",
     },
     {
       id: 2,
@@ -42,37 +42,42 @@ const LessonMenu = () => {
       divider: "purple",
     },
     {
-      id: 3,
-      name: "Alkali Indicator Test",
-      imgPath: "./AlkaliIndicator.png",
-      text: "Use an indicator to test an alkali and observe the resulting color change.",
+      id: 6,
+      name: "Acid Base Neutralization",
+      imgPath: "./AcidBaseLesson.png",
+      text: "Combine an acid and a base to create a neutral reaction, forming salt and water.",
       number: 4,
       divider: "green",
     },
+
+
+
     {
       id: 4,
       name: "Starch-Iodine Test",
       imgPath: "./StarchIodine.png",
       text: "Add iodine solution to a sample and observe the color change when starch is present.",
       number: 5,
-      divider: "purple",
-    },
-    {
-      id: 5,
-      name: "Copper Sulfate Precipitation",
-      imgPath: "./CopperSulfate.png",
-      text: "Combine two solutions and observe the formation of a solid precipitate.",
-      number: 6,
-      divider: "",
+      divider: "blue",
     },
     {
       id: 7,
-      name: "Protein Identification – Biuret Test",
-      imgPath: "./BiuretTest.png",
+      name: "Protein Identification",
+      imgPath: "./ProteinTest.png",
       text: "Add Biuret reagent to a protein sample and observe the purple color change.",
+      number: 6,
+      divider: "purple",
+    },
+        {
+      id: 3,
+      name: "Alkali Indicator Test",
+      imgPath: "./AlkaliTest.png",
+      text: "Use an indicator to test an alkali and observe the resulting color change.",
       number: 7,
       divider: "purple",
     },
+
+
   ]
 
   const lessonsPerPage = 3

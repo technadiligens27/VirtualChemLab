@@ -5,7 +5,7 @@
   transform: translateX(-50%);
   z-index: 9999;
 
-  min-width: 24%;
+  min-width: 20%;
   height: 100px;
 
   display: flex;
@@ -33,6 +33,10 @@
   align-items: center;
 }
 
+.error-icon-container img{
+  width: 80%;
+}
+
 
 .error-content-container{
   height: 80%;
@@ -40,6 +44,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: left;
+  margin-right: auto;
 }
 
 

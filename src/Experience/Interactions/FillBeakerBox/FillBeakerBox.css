@@ -16,43 +16,73 @@
 .fill-dialog {
   width: 700px;
   max-width: 90vw;
-
-  background: white;
-  border-radius: 12px;
+  height: 80vh;
+  background: #FFD768;
+  border-radius: 55px;
   padding: 24px;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-.fill-dialog h2 {
+.fill-dialog h3 {
   text-align: center;
   margin-bottom: 20px;
+
 }
 
 .fill-dialog-content {
   display: flex;
-  gap: 30px;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  min-height: 98%;
+  
+}
+
+.fill-dialog-content h3{
+    font-family: 'Baloo Bhai 2',sans-serif;
+    font-size: 25px;
 }
 
 .fill-dialog-section {
-  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option-btn img{
+  width: 15%;
 }
 
 .fill-dialog-section h3 {
   margin-bottom: 12px;
+  font-family: 'Baloo Bhai 2',sans-serif;
 }
 
 .option-btn {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  width: 40%;
+  height: 55px;
+  font-size: 18px;
+  /* margin-bottom: 10px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 5px;
+  border: 3px solid #CCCCCC;
+  border-radius: 18px;
 
   background: white;
   cursor: pointer;
   transition: 0.2s;
+  margin-bottom: 5px;
 }
 
 .option-btn:hover {
@@ -95,4 +125,75 @@
 .confirm-btn:disabled {
   background: #bdbdbd;
   cursor: not-allowed;
+}
+
+.fill-divider{
+  width: 200px;
+  height: 0px;
+}
+
+.fill-title-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 35px;
+  gap:10px;
+  margin: 0;
+  padding: 0%;
+  margin-right: auto;
+  padding-left: 70px;
+}
+
+.fill-amount-container{
+  background-color: #FFF9E8;
+  border-radius: 25px;
+  border: 1px solid #B0ACA0;
+   background-color: #FFF9E8;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0%;
+  padding: 15px 0px;
+    margin-top: 15px;
+
+}
+
+.amount-slider-container{
+  width: 100%;
+}
+.amount-slider{
+  width: 100%;
+}
+
+.amount-btn-container{
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.amount-btn{
+  width: 25%;
+}
+
+.fill-amount-title-container{
+  padding: 0%;
+  margin: 0%;
+  padding-left: 35px;
+  margin-right: auto;
+  padding-left: 60px;
+}
+
+.fill-amount-title-container h3{
+  margin: 0%;
+  padding: 0%;
+}
+
+.confirm-btn{
+  width: 40%;
+  margin-bottom: 10px;
 }

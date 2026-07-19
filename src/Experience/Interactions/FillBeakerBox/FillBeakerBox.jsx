@@ -23,10 +23,10 @@ const FillBeakerBox = () => {
   const [selectedAmount, setSelectedAmount] = useState("")
 
 const acids = [
-  { name: "Salt (NaCl)", color: "#F5F5F5" },
-  { name: "Water (H2O)", color: "#0073a0" },
-  { name: "Universal indicator", color: "#4ade80" },
-  { name: "Hydrochloric Acid (HCl)", color: "#f8fafc" },
+  // { name: "Salt (NaCl)", color: "#F5F5F5",imgPath:'./water.png' },
+  { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
+  { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
+  { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
   { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe" },
   { name: "Starch solution", color: "#e5e7eb" },
   { name: "Iodine solution", color: "#92400e" },
@@ -175,11 +175,15 @@ const acids = [
   return (
     <div className="fill-dialog-overlay">
       <div className="fill-dialog">
-        <h2>Fill Beaker</h2>
-
+        {/* <h2>Fill Beaker</h2> */}
+        
         <div className="fill-dialog-content">
-          <div className="fill-dialog-section">
+          <div className="fill-title-container">
             <h3>Select Chemical</h3>
+            <div className="fill-divider"></div>
+          </div>
+
+          <div className="fill-dialog-section">
 
             {acids.map((acid) => (
               <button
@@ -189,52 +193,38 @@ const acids = [
                 }`}
                 onClick={() => setSelectedAcidData(acid)}
               >
+                <img src={acid.imgPath}/>
                 {acid.name}
               </button>
             ))}
           </div>
 
-          <div className="fill-dialog-section">
-            <h3>Select Amount</h3>
-
-            {amounts.map((amount) => (
+          <div className="fill-amount-container">
+            <div className="fill-amount-title-container">
+              <h3>Select Amount</h3>
+            </div>
+            <div className="amount-btn-container">
+               {amounts.map((amount) => (
               <button
                 key={amount}
-                className={`option-btn ${
+                className={`option-btn amount-btn ${
                   selectedAmount === amount ? "selected" : ""
                 }`}
                 onClick={() => setSelectedAmount(amount)}
               >
                 {amount} ml
               </button>
-            ))}
-                    <button
-          className="confirm-btn"
-          disabled={!selectedAcidData.name || !selectedAmount || !fillBeakerHand}
-          onClick={handleConfirm}
-        >
+            ))}    
+            </div>
+          </div>
+           <button
+            className="confirm-btn"
+            disabled={!selectedAcidData.name || !selectedAmount || !fillBeakerHand}
+            onClick={handleConfirm}
+          >
           Confirm
         </button>
-          </div>
         </div>
-
-        <div className="selection-info">
-          <p>
-            <strong>Hand:</strong> {fillBeakerHand || "Not Selected"}
-          </p>
-
-          <p>
-            <strong>Chemical:</strong>{" "}
-            {selectedAcidData.name || "Not Selected"}
-          </p>
-
-          <p>
-            <strong>Amount:</strong>{" "}
-            {selectedAmount ? `${selectedAmount} ml` : "Not Selected"}
-          </p>
-        </div>
-
-
       </div>
     </div>
   )

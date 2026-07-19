@@ -1,5 +1,5 @@
 .lesson-container {
-    width: 75%;
+    width: 70%;
     height: 70%;
     display: flex;
     flex-direction: column;
@@ -106,6 +106,10 @@
 .purple {
     border-color: #7A3FBF;
 }
+.blue{
+    border-color: blue;
+}
+
 
 .lesson-name {
     font-family: "Montserrat", sans-serif;
