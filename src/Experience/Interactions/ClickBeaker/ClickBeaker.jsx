@@ -8,6 +8,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import HoldLeft from "../HoldLeft/HoldLeft"
 import HoldRight from "../HoldRight/HoldRight"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import ClickHitbox from "../ClickHitbox/ClickHitbox"
 
 const ClickObject = () => {
   const {
@@ -823,7 +824,7 @@ const ClickObject = () => {
       return isFilterFolded ? "Unfold Paper" : "Fold Paper"
     }
 
-    return "Fill Beaker"
+    return "Add Liquid"
 }
 
 
@@ -1069,6 +1070,28 @@ const addSaltToSpoon = () => {
       )}
 
       {selectedRightHand && <HoldRight modeldata={selectedRightHand} />}
+
+      <ClickHitbox
+      modelRef={spoonRef}
+      multiplier={2}
+      />
+
+      <ClickHitbox
+      modelRef={mainDropperRef}
+      multiplier={2}
+      />
+
+      <ClickHitbox
+      modelRef={testube01Ref}
+      multiplier={2}
+      />
+
+      <ClickHitbox
+      modelRef={redLitmusRef}
+      multiplier={2}
+      />
+
+
     </>
   )
 }

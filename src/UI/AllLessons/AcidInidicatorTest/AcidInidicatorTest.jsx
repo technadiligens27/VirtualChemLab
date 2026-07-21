@@ -20,7 +20,7 @@ const AcidInidicatorTest = ()=>{
         "Click the normal beaker and select the Left Hand option to pick it up.",
 
         step3:
-        "Click the beaker again and select the Fill Beaker option.",
+        "Click the beaker again and select the Add Liquid option.",
 
         step4:
         "Select Hydrochloric Acid (HCl) and choose 50 mL.",

@@ -15,10 +15,10 @@ const AlkaliIndicatorTest = ()=>{
         "In this experiment, you will test an alkali using red litmus paper. Alkalis turn red litmus paper blue, helping us identify basic solutions.",
 
         step2:
-        "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
+        "Click the normal beaker and select the Left Hand option to pick it up.",
 
         step3:
-        "Click on the beaker again and press the Fill Beaker button.",
+        "Click on the beaker again and press the Add Liquid button.",
 
         step4:
         "Select Sodium Hydroxide (NaOH) and 50 ml.",
@@ -27,7 +27,7 @@ const AlkaliIndicatorTest = ()=>{
         "Now pick up the red litmus paper by clicking on it and selecting the Right Hand option.",
 
         step6:
-        "Click the litmus paper and click test liquid",
+        "Click the litmus paper and click Test liquid",
 
         step7:
         "Move the litmus paper into the sodium hydroxide solution by scrolling the mouse until it touches the liquid.",
@@ -62,7 +62,7 @@ const AlkaliIndicatorTest = ()=>{
         />} 
 
             {
-            lessonStep ===3 && <DialogBox text={"Pick Up Beaker"}/>
+            lessonStep ===3 && <DialogBox text={"Click the normal beaker and select the Left Hand option to pick it up."}/>
             }
 
             {

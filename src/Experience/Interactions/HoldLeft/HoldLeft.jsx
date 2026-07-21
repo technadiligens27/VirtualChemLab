@@ -13,6 +13,7 @@ import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
 import FunnelMode from "../FunnelMode/FunnelMode"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
+import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 
 const HoldLeft = ({ modeldata }) => {
 
@@ -25,6 +26,8 @@ const HoldLeft = ({ modeldata }) => {
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
   const {lessonStep,setLessonStep,isMainGuideline,setShowNormalBeakerArrow} = useContext(MainGuidelineContext)
+
+  const {isReactionRef} = useContext(ReactionContext)
 
   const { camera, gl, scene } = useThree();
 
@@ -234,9 +237,9 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
       }
 
-      {/* {
-         <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
-      } */}
+      {
+        isReactionRef.current===false && <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
+      }
 
     </>
   )

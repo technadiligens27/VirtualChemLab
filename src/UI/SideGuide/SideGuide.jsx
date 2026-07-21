@@ -1,35 +1,54 @@
 import "./SideGuide.css"
 
+const controls = [
+  {
+    icon: "./ArrowMovement.png",
+    text: "Look Around",
+    className: "look-guide",
+  },
+  {
+    icon: "./w-icon.png",
+    text: "Move Forward",
+  },
+  {
+    icon: "./A-icon.png",
+    text: "Move Left",
+  },
+  {
+    icon: "./D-icon.png",
+    text: "Move Right",
+  },
+  {
+    icon: "./S-icon.png",
+    text: "Move Back",
+  },
+]
+
 const SideGuide = () => {
   return (
-    <div className="side-guide-container">
-      <div className="side-guide look-guide">
-        <img src="./ArrowMovement.png" alt="" />
-        <p>Look around</p>
-      </div>
+    <aside className="side-guide-container">
+      <h2 className="side-guide-title">
+        Controls
+      </h2>
 
-      <div className="side-guide">
-        <img src="./w-icon.png" alt="" />
-        <p>Move Forward</p>
-      </div>
+      <div className="side-guide-list">
+        {controls.map((control) => (
+          <div
+            className={`side-guide ${control.className || ""}`}
+            key={control.text}
+          >
+            <div className="side-guide-icon">
+              <img
+                src={control.icon}
+                alt={control.text}
+              />
+            </div>
 
-      <div className="side-guide">
-        <img src="./A-icon.png" alt="" />
-        <p>Move Left</p>
+            <p>{control.text}</p>
+          </div>
+        ))}
       </div>
-
-      <div className="side-guide">
-        <img src="./D-icon.png" alt="" />
-        <p>Move Right</p>
-      </div>
-
-      <div className="side-guide">
-        <img src="./S-icon.png" alt="" />
-        <p>Move Back</p>
-      </div>
-
-      
-    </div>
+    </aside>
   )
 }
 

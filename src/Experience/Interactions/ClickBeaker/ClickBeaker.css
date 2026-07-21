@@ -1,30 +1,45 @@
 .click-btn-container {
-  background: #ffffff;
-  padding: 5px;
-  border-radius: 8px;
-  gap: 10px;
-  border: 4px solid #FFBD00;
-  width: 150px;
-  height: 40px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 
+  width: fit-content;
+  min-width: 160px;
+  padding: 7px;
+
+  background-color: #ffffff;
+  border: 3px solid #ffbd00;
+  border-radius: 12px;
+
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
 }
 
-/* .click-btn-inner-container{
-    width: 75%;
-    height: 95%;
-    background-color: white;
-      align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  width: 150px;
-   display: flex;
-} */
+.click-btn-container button {
+  min-width: 90px;
+  height: 34px;
+  padding: 0 12px;
 
-.click-btn-container button{
-    height: 90%;
-    width: 48%;
+  border: none;
+  border-radius: 7px;
+  background-color: #f1c03c;
+
+  color: #2d2d2d;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.click-btn-container button:hover {
+  background-color: #ffd04a;
+  transform: translateY(-1px);
+}
+
+.click-btn-container button:active {
+  transform: translateY(0);
 }

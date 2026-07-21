@@ -19,7 +19,7 @@ const CopperSulfate = () =>{
         "Click the normal beaker and select the Left Hand option to pick it up.",
 
       step3:
-        "Click the beaker again and select the Fill Beaker option.",
+        "Click the beaker again and select the Add Liquid option.",
 
       step4:
         "Select Copper Sulfate (CuSO₄) and choose 50 mL.",
@@ -28,7 +28,7 @@ const CopperSulfate = () =>{
         "Click the conical flask and select the Right Hand option to pick it up.",
 
       step6:
-        "Click the conical flask again and select the Fill Beaker option.",
+        "Click the conical flask again and select the Add Liquid option.",
 
       step7:
         "Select Sodium Hydroxide (NaOH) and choose 50 mL.",
@@ -67,7 +67,7 @@ const CopperSulfate = () =>{
         />}  
 
         {
-          lessonStep ===3 && <DialogBox text={"Pick Up Beaker"}/>
+          lessonStep ===3 && <DialogBox text={"Click the normal beaker and select the Left Hand option to pick it up."}/>
         }
 
         {

@@ -34,7 +34,7 @@ const mainContent = [
     ),
     button1: "Start Demo",
     info:
-      "Select Start Demo to continue with the tutorial or select Free Roam to experiment on your own",
+      "Select Start Demo to continue with the tutorial",
     mainImg: "./chem-icon.png",
     infoImg: "./info.png",
     layout: "column",
@@ -44,11 +44,11 @@ const mainContent = [
     title: "Follow the Guide",
     content: (
       <>
-        During the tutorial, <strong>arrows will show you</strong> where to go
+        During the tutorial, <strong>Arrows</strong> will show you where to go
         and what to click.
         <br />
         Follow the arrows, interact with the{" "}
-        <strong>highlighted objects</strong>, and complete each step.
+        <strong>Objects</strong>, and complete each step.
       </>
     ),
     button1: "Continue",
@@ -75,7 +75,7 @@ const mainContent = [
     title: "Tutorial Mode",
     content: (
       <>
-        Learn how to use the lab <strong>step by step</strong>.
+        Learn how to use the lab <strong>Step By Step</strong>.
         <br />
         You will be guided through wearing safety gear, selecting equipment,
         mixing chemicals, and completing experiments safely.

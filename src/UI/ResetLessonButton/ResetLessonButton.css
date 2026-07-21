@@ -1,17 +1,56 @@
-.reset-btn{
-    width: 200px;
-    height: 100px;
-    position: absolute;
-    top: -1%;
-    left: 80%;
-    z-index: 9999;
-    background-color: white;
-    border:6px solid #FDC944;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    font-weight: 700;
-    font-size: 16px;
-    cursor: pointer;
+.reset-btn {
+  position: fixed;
+  top: -2px;
+  right: clamp(16px, 4vw, 60px);
+  z-index: 9999;
+
+  min-width: 210px;
+  height: 64px;
+  padding: 0 24px;
+
+  background-color: #fffdf5;
+  border: 4px solid #fdc944;
+  border-top: none;
+  border-radius: 0 0 18px 18px;
+
+  color: #2f2f2f;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.14);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.reset-btn:hover {
+  background-color: #fff1bd;
+  transform: translateY(2px);
+  box-shadow: 0 7px 15px rgba(0, 0, 0, 0.18);
+}
+
+.reset-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
+}
+
+.reset-btn:focus-visible {
+  outline: 3px solid rgba(253, 201, 68, 0.45);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .reset-btn {
+    right: 12px;
+    min-width: 170px;
+    height: 54px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
 }
 
 .guide-info p{

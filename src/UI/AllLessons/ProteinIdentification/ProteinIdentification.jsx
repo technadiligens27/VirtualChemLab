@@ -12,51 +12,51 @@ const ProteinIdentification = ()=>{
       setShowTestube01Arrow} = useContext(MainGuidelineContext);
     const {selectedLeftHand,selectedRightHand,isFillBeakerBoxOpen} = useContext(InteractionContext)
     
-const ProteinIdentificationTest = [
-  {
-    step1:
-      "In this experiment, the Biuret test is used to identify proteins. When Biuret reagent is added to a protein sample, the solution changes from blue to purple if protein is present.",
+    const ProteinIdentificationTest = [
+      {
+        step1:
+          "In this experiment, the Biuret test is used to identify proteins. When Biuret reagent is added to a protein sample, the solution changes from blue to purple if protein is present.",
 
-    step2:
-      "Click the test tube and select the Left Hand option to pick it up.",
+        step2:
+          "Click the test tube and select the Left Hand option to pick it up.",
 
-    step3:
-      "Click the test tube again and select the Fill Beaker option.",
+        step3:
+          "Click the test tube again and select the Add Liquid option.",
 
-    step4:
-      "Select Biuret Reagent and choose 50 mL.",
+        step4:
+          "Select Biuret Reagent and choose 50 mL.",
 
-    step5:
-      "Click the dropper and select the Right Hand option to pick it up.",
+        step5:
+          "Click the dropper and select the Right Hand option to pick it up.",
 
-    step6:
-      "Scroll the mouse wheel down to squeeze the dropper and release the air inside it.",
+        step6:
+          "Scroll the mouse wheel down to squeeze the dropper and release the air inside it.",
 
-    step7:
-      "Click the dropper again and select the Place Dropper option.",
+        step7:
+          "Click the dropper again and select the Place Dropper option.",
 
-    step8:
-      "Scroll the mouse wheel up to draw the Biuret reagent into the dropper.",
+        step8:
+          "Scroll the mouse wheel up to draw the Biuret reagent into the dropper.",
 
-    step9:
-      "Click the dropper and select the Remove Dropper option.",
+        step9:
+          "Click the dropper and select the Remove Dropper option.",
 
-    step10:
-      "Click the test tube again and select the Fill Beaker option.",
+        step10:
+          "Click the test tube again and select the Fill Beaker option.",
 
-    step11:
-      "Select Protein Sample and choose 50 mL.",
+        step11:
+          "Select Protein Sample and choose 50 mL.",
 
-    step12:
-      "Click the dropper and select the Place Dropper option.",
+        step12:
+          "Click the dropper and select the Place Dropper option.",
 
-    step13:
-      "Scroll the mouse wheel down to release the Biuret reagent into the test tube.",
+        step13:
+          "Scroll the mouse wheel down to release the Biuret reagent into the test tube.",
 
-    step14:
-      "Observe the solution changing to purple. This color change indicates that protein is present in the sample.",
-  },
-]
+        step14:
+          "Observe the solution changing to purple. This color change indicates that protein is present in the sample.",
+      },
+    ]
     // useEffect(()=>{
     //     if (lessonStep !== 3 || selectedLeftHand?.name ==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') {
     //         setShowNormalBeakerArrow(false)
@@ -85,7 +85,7 @@ const ProteinIdentificationTest = [
             />} 
 
             {
-                lessonStep ===3 && <DialogBox text={"Pick Up TestTube"}/>
+                lessonStep ===3 && <DialogBox text={"Click TestTube and select the Left Hand option to pick it up."}/>
             }     
 
             {

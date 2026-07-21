@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import { useContext, useRef, useState } from "react"
 import * as THREE from "three"
 import { InteractionContext } from "../../Contexts/InteractionContext/InteractionContext"
-
+import "./LiquidLabels.css"
 
 const LiquidLabels = ({ modelRef, hand }) => {
   const {
@@ -16,7 +16,10 @@ const LiquidLabels = ({ modelRef, hand }) => {
 
   const [showLabel, setShowLabel] = useState(false)
 
-  const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
+  const fillData =
+    hand === "left"
+      ? leftBeakerFillData
+      : rightBeakerFillData
 
   useFrame(() => {
     if (!modelRef?.current) return
@@ -39,33 +42,84 @@ const LiquidLabels = ({ modelRef, hand }) => {
     setShowLabel(liquidFound)
 
     if (liquidFound && labelRef.current) {
-      modelRef.current.getWorldPosition(positionRef.current)
+      modelRef.current.getWorldPosition(
+        positionRef.current
+      )
 
       positionRef.current.y += 1.3
 
-      labelRef.current.position.copy(positionRef.current)
+      labelRef.current.position.copy(
+        positionRef.current
+      )
     }
   })
 
   if (!showLabel) return null
 
   const colorOfLiquid = (name) => {
-    if (name === "Hydrochloric Acid (HCl)") return "Colourless"
-    if (name === "Sodium Hydroxide (NaOH)") return "Colourless"
-    if (name === "Copper Sulfate (CuSO4)") return "Blue"
-    if (name === "Universal indicator") return "Green"
-    if (name === "Water (H2O)") return "Colourless"
-    if (name === "Salt (NaCl)") return "White"
+    if (name === "Hydrochloric Acid (HCl)")
+      return "Colourless"
+
+    if (name === "Sodium Hydroxide (NaOH)")
+      return "Colourless"
+
+    if (name === "Copper Sulfate (CuSO4)")
+      return "Blue"
+
+    if (name === "Universal indicator")
+      return "Green"
+
+    if (name === "Water (H2O)")
+      return "Colourless"
+
+    if (name === "Salt (NaCl)")
+      return "White"
 
     return fillData?.color || "Unknown colour"
   }
+
+  const getColourClass = (colour) => {
+    const normalizedColour =
+      colour?.toLowerCase() || ""
+
+    if (normalizedColour === "blue") {
+      return "liquid-color-blue"
+    }
+
+    if (normalizedColour === "green") {
+      return "liquid-color-green"
+    }
+
+    if (normalizedColour === "white") {
+      return "liquid-color-white"
+    }
+
+    if (normalizedColour === "colourless") {
+      return "liquid-color-colourless"
+    }
+
+    return "liquid-color-default"
+  }
+
+  const liquidColour = colorOfLiquid(
+    fillData?.name
+  )
 
   return (
     <group ref={labelRef}>
       <Html center>
         <div className="liquid-label">
-          {fillData?.name || "Liquid"}
-          <p>{colorOfLiquid(fillData.name)}</p>
+          <span className="liquid-name">
+            {fillData?.name || "Liquid"}
+          </span>
+
+          <p
+            className={`liquid-color ${getColourClass(
+              liquidColour
+            )}`}
+          >
+            {liquidColour}
+          </p>
         </div>
       </Html>
     </group>

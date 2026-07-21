@@ -19,7 +19,7 @@ const SaltWaterTestSteps = [
       "Click the normal beaker and select the Left Hand option to pick it up.",
 
     step3:
-      "Click the beaker again and select the Fill Beaker option.",
+      "Click the beaker again and select the Add Liquid option.",
 
     step4:
       "Select Water and fill the beaker with 50 mL.",

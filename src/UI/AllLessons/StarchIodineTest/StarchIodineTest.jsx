@@ -65,7 +65,7 @@ const StarchIodineTest = ()=>{
             />} 
 
             {
-            lessonStep ===3 && <DialogBox text={"Pick Up Beaker"}/>
+            lessonStep ===3 && <DialogBox text={"Click the normal beaker and select the Left Hand option to pick it up."}/>
             }
 
             {

@@ -487,49 +487,43 @@ const PouringMode = ({ hand }) => {
    * Rotate the pouring object with
    * the mouse wheel.
    */
-  useEffect(() => {
-    const handleWheel = (event) => {
-      if (
-        !activeObject ||
-        pouringModeHand !== hand
-      ) {
-        return
-      }
-
-      event.preventDefault()
-
-      const maxRotation = Math.PI / 5
-
-      if (event.deltaY > 0) {
-        rotationZRef.current = Math.max(
-          rotationZRef.current - 0.15,
-          -maxRotation
-        )
-      } else {
-        rotationZRef.current = Math.min(
-          rotationZRef.current + 0.15,
-          maxRotation
-        )
-      }
+useEffect(() => {
+  const handleWheel = (event) => {
+    if (
+      !activeObject ||
+      pouringModeHand !== hand
+    ) {
+      return
     }
 
-    window.addEventListener(
-      "wheel",
-      handleWheel,
-      { passive: false }
-    )
+    event.preventDefault()
 
-    return () => {
-      window.removeEventListener(
-        "wheel",
-        handleWheel
+    const maxRotation = Math.PI / 5
+    const rotationSpeed = 0.15
+
+    if (event.deltaY > 0) {
+      // Scroll down: rotate the beaker the other way
+      rotationZRef.current = Math.min(
+        rotationZRef.current + rotationSpeed,
+        maxRotation
+      )
+    } else {
+      // Scroll up: return the beaker to its original position
+      rotationZRef.current = Math.max(
+        rotationZRef.current - rotationSpeed,
+        0
       )
     }
-  }, [
-    activeObject,
-    pouringModeHand,
-    hand,
-  ])
+  }
+
+  window.addEventListener("wheel", handleWheel, {
+    passive: false,
+  })
+
+  return () => {
+    window.removeEventListener("wheel", handleWheel)
+  }
+}, [activeObject, pouringModeHand, hand])
 
   /*
    * Continuously apply the pouring rotation.

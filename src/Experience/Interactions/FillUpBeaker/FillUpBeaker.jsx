@@ -406,7 +406,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
 
   return (
     <>
-      {showLabel && (
+      {/* {showLabel && (
         <group ref={labelGroupRef}>
           <Html center>
             <div
@@ -421,7 +421,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
             </div>
           </Html>
         </group>
-      )}
+      )} */}
     </>
   )
 }
