@@ -26,11 +26,11 @@ const LessonGuide = ({title,text,onButton1,subTitle,icon})=>{
                     <div className="lesson-guide-text">
                     <p>{text}</p> 
                     </div>
-                    <div className='lesson-guide-btn-container'>
+                    <div onClick={onButton1} className='lesson-guide-btn-container'>
                         <div className='continue-arrow-container'>
                             <img src='./continue-arrow.png'/>
                         </div>
-                        <button onClick={onButton1} className='lesson-continue-btn'>Continue</button>
+                        <button  className='lesson-continue-btn'>Continue</button>
                     </div>
                 </div>
 

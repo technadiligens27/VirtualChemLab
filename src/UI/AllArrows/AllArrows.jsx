@@ -15,10 +15,10 @@ const AllArrows=()=>{
         showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow,isMainGuideline,
         showConicalArrow,setShowArrowConicalArrow,showSpoonArrow,
         showSaltContainerArrow,setShowSaltContainerArrow,showTestube01Arrow,
-        showDropperArrow,setShowDropperArrow
+        showDropperArrow,setShowDropperArrow,isTutorialMode
     } = useContext(MainGuidelineContext)
 
-    if(!isMainGuideline){
+    if(!isTutorialMode){
         return (
             <>
              {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}

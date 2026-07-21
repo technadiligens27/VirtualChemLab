@@ -84,83 +84,61 @@ const LitmusMode = ({ litmusRef, beakerRef, hand, beakerFillData }) => {
     return hasLiquid && chemicalName
   }, [beakerRef, beakerFillData, hasLiquidInBeaker])
 
-  useEffect(() => {
-    if (!beakerRef?.current) return
-    if (checkedLiquidOnStartRef.current) return
+useEffect(() => {
+  if (!beakerRef?.current) return
+  if (checkedLiquidOnStartRef.current) return
 
-    checkedLiquidOnStartRef.current = true
+  checkedLiquidOnStartRef.current = true
 
-    if (!canUseLitmusTest()) {
-      setShowErrorMsgNo(11)
-      setColorChangeAcid(false)
-      setColorChangeBase(false)
-    }
-  }, [beakerRef, canUseLitmusTest, setShowErrorMsgNo])
+  if (!canUseLitmusTest()) {
+    setShowErrorMsgNo(11)
+    setColorChangeAcid(false)
+    setColorChangeBase(false)
+  }
+}, [beakerRef, canUseLitmusTest, setShowErrorMsgNo])
 
-  useEffect(() => {
-    if (!litmusRef?.current || !beakerRef?.current) return
+// Put the new positioning effect here
+useEffect(() => {
+  if (!litmusRef?.current || !beakerRef?.current) {
+    return
+  }
 
-    const litmusObject = litmusRef.current
-    const beakerObject = beakerRef.current
+  const beakerObject = beakerRef.current
 
-    originalLitmusPositionRef.current = litmusObject.position.clone()
-    originalLitmusRotationRef.current = litmusObject.rotation.clone()
-    originalLitmusScaleRef.current = litmusObject.scale.clone()
+  const centerWorldPosition =
+    new THREE.Vector3(0, -0.5, -5)
 
-    originalBeakerPositionRef.current = beakerObject.position.clone()
-    originalBeakerRotationRef.current = beakerObject.rotation.clone()
-    originalBeakerScaleRef.current = beakerObject.scale.clone()
+  camera.localToWorld(centerWorldPosition)
 
-    const centerWorldPosition = new THREE.Vector3(0, -0.5, -5)
+  if (beakerObject.parent) {
+    beakerObject.parent.worldToLocal(
+      centerWorldPosition
+    )
+  }
 
-    camera.localToWorld(centerWorldPosition)
+  beakerObject.position.copy(
+    centerWorldPosition
+  )
 
-    if (beakerObject.parent) {
-      beakerObject.parent.worldToLocal(centerWorldPosition)
-    }
+  beakerObject.rotation.set(0, 0, 0)
+  beakerObject.scale.set(1, 1, 1)
+  beakerObject.updateMatrixWorld(true)
 
-    beakerObject.position.copy(centerWorldPosition)
-    beakerObject.rotation.set(0, 0, 0)
-    beakerObject.scale.set(1, 1, 1)
+  return () => {
+    yOffsetRef.current = 3.4
+    hasTouchedRef.current = false
+    checkedLiquidOnStartRef.current = false
 
-    return () => {
-      if (!litmusRef?.current || !beakerRef?.current) return
+    topPointRef.current = null
+    limitPointRef.current = null
+  }
+}, [litmusRef, beakerRef, camera])
 
-      if (originalLitmusPositionRef.current) {
-        litmusRef.current.position.copy(originalLitmusPositionRef.current)
-      }
-
-      if (originalLitmusRotationRef.current) {
-        litmusRef.current.rotation.copy(originalLitmusRotationRef.current)
-      }
-
-      if (originalLitmusScaleRef.current) {
-        litmusRef.current.scale.copy(originalLitmusScaleRef.current)
-      }
-
-      if (originalBeakerPositionRef.current) {
-        beakerRef.current.position.copy(originalBeakerPositionRef.current)
-      }
-
-      if (originalBeakerRotationRef.current) {
-        beakerRef.current.rotation.copy(originalBeakerRotationRef.current)
-      }
-
-      if (originalBeakerScaleRef.current) {
-        beakerRef.current.scale.copy(originalBeakerScaleRef.current)
-      }
-
-      litmusRef.current.visible = true
-      beakerRef.current.visible = true
-    }
-  }, [litmusRef, beakerRef, camera])
-
-  useEffect(() => {
-
-    if (lessonStep === 7) {
-      setLessonStep(8)
-    }
-  }, [lessonStep, setLessonStep])
+useEffect(() => {
+  if (lessonStep === 7) {
+    setLessonStep(8)
+  }
+}, [lessonStep, setLessonStep])
 
   useEffect(() => {
     const handleWheel = (e) => {

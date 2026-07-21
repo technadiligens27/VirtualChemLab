@@ -25,7 +25,7 @@ const mainContent = [
     content: `This lab lets you explore chemistry in a safe and interactive way.
 You can use lab equipment, mix chemicals, test reactions, and learn how different experiments work step by step.`,
     button1: "Start Demo",
-    button2: "Free Roam",
+    // button2: "Free Roam",
     info: "Select Start Demo to continue with the tutorial or select Free Roam to experiment on your own",
     mainImg:"./chem-icon.png",
     infoImg: "./info.png",
@@ -37,7 +37,7 @@ You can use lab equipment, mix chemicals, test reactions, and learn how differen
 Follow the arrows, interact with the highlighted objects, and complete each step to learn how the lab works.`,
     button1: "Continue",
     layout: "column",
-    mainImg:"./chem-icon.png",
+    mainImg:"./benderArrow.png",
   },
   {
     title: "Movement Controls",
@@ -73,7 +73,7 @@ const UI = () => {
     isTutorialMode,showSpoonArrow,setShowSpoonArrow,
     setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow,
     setShowSaltContainerArrow,labResetKey,setShowTestube01Arrow,
-    showTestube01Arrow,showDropperArrow,setShowDropperArrow
+    showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu
   } = useContext(MainGuidelineContext)
 
   const {
@@ -112,7 +112,6 @@ const UI = () => {
   useEffect(() => {
     if (isSitting) {
       setShowArrowChair(false)
-      setshowGogglesArrow(true)
     }
   }, [
     isSitting,
@@ -154,7 +153,11 @@ const UI = () => {
 
   useEffect(() => {
     setShowDropperArrow(selectedLesson===7 && lessonStep===6)
-  }, [selectedLesson,lessonStep,showDropperArrow])
+  }, [selectedLesson,lessonStep,showDropperArrow]);
+
+  useEffect(()=>{
+    setshowGogglesArrow(safetyStep===1)
+  },[safetyStep])
 
   /*
     null means the user has not selected
@@ -267,13 +270,13 @@ const UI = () => {
           isSitting &&
           selectedMainGuideline === 5) ||
         (selectedMainGuideline === 5 &&
-          isSitting &&
-          safetyStep === 0)
+          isSitting  &&
+          safetyStep === 1)
       ) && (
         <LessonMenu />
       )}
 
-      {safetyStep === 1 && (
+      {safetyStep === 1 && !showLessonMenu && (
         <DialogBox text="Click the goggles to put them on" />
       )}
 

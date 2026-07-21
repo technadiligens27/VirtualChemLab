@@ -116,22 +116,19 @@ const GogglesPut = () => {
       ]}
       center
     >
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          putOnGoggles()
-        }}
-        style={{
-          background: "white",
-          padding: "8px 14px",
-          borderRadius: "8px",
-          border: "none",
-          cursor: "pointer",
-          fontWeight: "600",
-        }}
-      >
-        Put On
-      </button>
+      <div className="click-btn-container">
+        <button className="gloves-btn"
+          onClick={(e) => {
+            e.stopPropagation()
+            putOnGoggles()
+          }}
+
+        >
+          Put On
+        </button>
+
+      </div>
+
     </Html>
   )
 }

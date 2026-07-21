@@ -2,9 +2,16 @@
     width: 200px;
     height: 100px;
     position: absolute;
-    top: 0%;
+    top: -1%;
     left: 80%;
     z-index: 9999;
+    background-color: white;
+    border:6px solid #FDC944;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .guide-info p{

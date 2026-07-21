@@ -1,42 +1,102 @@
 import { useFrame } from "@react-three/fiber"
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 import * as THREE from "three"
+
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const LitmusReaction = ({ litmusRef, type }) => {
-  const { lessonStep, setLessonStep } = useContext(MainGuidelineContext)
+  const { lessonStep, setLessonStep } =
+    useContext(MainGuidelineContext)
 
   const progressRef = useRef(0)
   const reactionFinishedRef = useRef(false)
+
   const materialRef = useRef(null)
+  const originalMaterialRef = useRef(null)
+  const originalColorRef = useRef(null)
 
   useEffect(() => {
-    if (!litmusRef?.current) return
+    const litmusObject = litmusRef?.current
 
-    // Give this litmus paper its own independent material
-    const clonedMaterial = litmusRef.current.material.clone()
+    if (!litmusObject?.material) return
 
-    litmusRef.current.material = clonedMaterial
+    // Save the real original material
+    originalMaterialRef.current =
+      litmusObject.material
+
+    originalColorRef.current =
+      litmusObject.material.color.clone()
+
+    // Create an independent material for the reaction
+    const clonedMaterial =
+      litmusObject.material.clone()
+
+    clonedMaterial.color.copy(
+      originalColorRef.current
+    )
+
+    litmusObject.material = clonedMaterial
     materialRef.current = clonedMaterial
 
     progressRef.current = 0
     reactionFinishedRef.current = false
 
     return () => {
+      const currentLitmus = litmusRef?.current
+
+      // Put the original material back
+      if (
+        currentLitmus &&
+        originalMaterialRef.current
+      ) {
+        currentLitmus.material =
+          originalMaterialRef.current
+
+        currentLitmus.material.needsUpdate = true
+      }
+
+      // Dispose only the reaction clone
       clonedMaterial.dispose()
+
+      materialRef.current = null
     }
   }, [litmusRef])
 
   useEffect(() => {
     progressRef.current = 0
     reactionFinishedRef.current = false
+
+    // Start each reaction from the original color
+    if (
+      materialRef.current &&
+      originalColorRef.current
+    ) {
+      materialRef.current.color.copy(
+        originalColorRef.current
+      )
+
+      materialRef.current.needsUpdate = true
+    }
   }, [type])
 
   useFrame((state, delta) => {
-    if (!litmusRef?.current || !type || !materialRef.current) return
+    if (
+      !litmusRef?.current ||
+      !type ||
+      !materialRef.current ||
+      !originalColorRef.current
+    ) {
+      return
+    }
 
     const targetColor = new THREE.Color(
-      type === "acid" ? "#000000" : "#0000ff"
+      type === "acid"
+        ? "#000000"
+        : "#0000ff"
     )
 
     progressRef.current = Math.min(
@@ -44,7 +104,8 @@ const LitmusReaction = ({ litmusRef, type }) => {
       1
     )
 
-    materialRef.current.color.lerp(
+    materialRef.current.color.lerpColors(
+      originalColorRef.current,
       targetColor,
       progressRef.current
     )

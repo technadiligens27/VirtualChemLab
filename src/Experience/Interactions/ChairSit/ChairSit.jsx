@@ -5,10 +5,12 @@ import gsap from 'gsap'
 import Message from '../../Message/Message'
 import { ModelContext } from '../../../Contexts/ModelContext/ModelContext'
 import { InteractionContext } from '../../../Contexts/InteractionContext/InteractionContext'
+import { MainGuidelineContext } from '../../../Contexts/MainGuidelineContext/MainGuidelineContext'
 
 const ChairSit = () => {
   const { chairRef  } = useContext(ModelContext)
-  const { hasSat,setIsSitting,setChairStep } = useContext(InteractionContext)
+  const { hasSat,setIsSitting,setChairStep } = useContext(InteractionContext);
+  const {setSafetyStep,safetyStep} = useContext(MainGuidelineContext)
 
   const { camera } = useThree()
 
@@ -49,7 +51,8 @@ const ChairSit = () => {
           onComplete: () => {
             hasSat.current = true
             setIsSitting(true)
-            setChairStep(0)
+            setChairStep(0);
+            setSafetyStep(1)
           }
         })
 

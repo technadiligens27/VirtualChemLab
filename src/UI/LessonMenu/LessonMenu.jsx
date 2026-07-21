@@ -10,7 +10,12 @@ const LessonMenu = () => {
     setShowLessonMenu,
     setLessonStep,
     setSelectedMainGuideline,
+    showLessonMenu
   } = useContext(MainGuidelineContext)
+
+  useEffect(()=>{
+    setShowLessonMenu(true)
+  },[showLessonMenu])
 
   const [page, setPage] = useState(0)
   const [animationClass, setAnimationClass] = useState("")

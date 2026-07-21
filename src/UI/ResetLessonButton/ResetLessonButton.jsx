@@ -82,30 +82,31 @@ const resetLesson = () => {
     mainDropperRef,
   ]
 
+  // This turns isLitmusMode off
   resetInteractions()
+
   resetReactions()
   resetLessonGuidelines()
-
-  // Reset animation before restoring model transforms
   resetDropperAnimation()
 
+
   requestAnimationFrame(() => {
-    labModels.forEach((modelRef) => {
-      if (modelRef.current) {
-        resetModel(modelRef.current)
+    requestAnimationFrame(() => {
+      labModels.forEach((modelRef) => {
+        if (modelRef.current) {
+          resetModel(modelRef.current)
+        }
+      })
+
+      if (dropperAnimationAction) {
+        dropperAnimationAction.time = 0
+        dropperAnimationAction
+          .getMixer()
+          .update(0)
       }
     })
-
-    // Apply animation frame 0 after transform restoration
-    if (dropperAnimationAction) {
-      dropperAnimationAction.time = 0
-      dropperAnimationAction.getMixer().update(0)
-    }
   })
 }
-
-
-
   
   return (
     <button
