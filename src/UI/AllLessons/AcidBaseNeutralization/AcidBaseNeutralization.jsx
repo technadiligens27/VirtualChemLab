@@ -10,42 +10,42 @@ const AcidBaseNeutralization = ()=>{
 
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
 
-const AcidBaseNeutralization = [
-  {
-    step1:
-      "In this experiment, hydrochloric acid is mixed with sodium hydroxide. This is called a neutralization reaction. An acid and a base react together to form salt and water.",
+    const AcidBaseNeutralization = [
+      {
+        step1:
+          "In this experiment, hydrochloric acid is mixed with sodium hydroxide. This is known as a neutralization reaction, where an acid and a base react to form salt and water.",
 
-    step2:
-      "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
+        step2:
+          "Click the normal beaker and select the Left Hand option to pick it up.",
 
-    step3:
-      "Click on the beaker again and press the Fill Beaker button.",
+        step3:
+          "Click the beaker again and select the Fill Beaker option.",
 
-    step4:
-      "Select Hydrochloric Acid (HCl) and 50 ml.",
+        step4:
+          "Select Hydrochloric Acid (HCl) and choose 50 mL.",
 
-    step5:
-      "Now click on the conical flask and select the Right Hand option.",
+        step5:
+          "Click the conical flask and select the Right Hand option to pick it up.",
 
-    step6:
-      "Click on the conical flask again and press the Fill Beaker button.",
+        step6:
+          "Click the conical flask again and select the Fill Beaker option.",
 
-    step7:
-      "Select Sodium Hydroxide (NaOH) and 50 ml.",
+        step7:
+          "Select Sodium Hydroxide (NaOH) and choose 50 mL.",
 
-    step8:
-      "Press P to enter Pouring Mode.",
+        step8:
+          "Press P to enter pouring mode.",
 
-    step9:
-      "Scroll the mouse to pour the sodium hydroxide into the hydrochloric acid.",
+        step9:
+          "Scroll the mouse wheel to pour the sodium hydroxide into the hydrochloric acid.",
 
-    step10:
-      "Observe the reaction. The acid and base neutralize each other, forming a neutral solution.",
+        step10:
+          "Observe the reaction as the acid and base neutralize each other, forming salt and water.",
 
-    step11:
-      "This shows that acids and bases can react together to reduce each other's effects."
-  },
-]
+        step11:
+          "This reaction demonstrates how an acid and a base can react to produce a neutral solution.",
+      },
+    ]
 
  return(
        <>

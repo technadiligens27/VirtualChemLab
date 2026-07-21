@@ -10,37 +10,36 @@ const SaltWaterTest = ()=>{
 
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
 
-    const SaltWaterTestSteps = [
-    {
-        step1:
-        "In this experiment, salt is added to water to observe how it dissolves and forms a saltwater solution.",
+const SaltWaterTestSteps = [
+  {
+    step1:
+      "In this experiment, salt is added to water to observe how it dissolves and forms a saltwater solution.",
 
-        step2:
-        "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
+    step2:
+      "Click the normal beaker and select the Left Hand option to pick it up.",
 
-        step3:
-        "Click on the beaker again and press the Fill Beaker button.",
+    step3:
+      "Click the beaker again and select the Fill Beaker option.",
 
-        step4:
-        "Select Water and fill the beaker with 50 ml.",
+    step4:
+      "Select Water and fill the beaker with 50 mL.",
 
-        step5:
-        "Click on the spoon and select the Right Hand option.",
+    step5:
+      "Click the spoon and select the Right Hand option to pick it up.",
 
-        step6:
-        "Click Salt Container and Click Take Salt",
+    step6:
+      "Click the salt container and select the Take Salt option.",
 
-        step7:
-        "Click the spoon and press StirMode",
+    step7:
+      "Click the spoon again and select Stir Mode.",
 
-        step8:
-        "Now scroll mouse to stir.",
-       
+    step8:
+      "Scroll the mouse wheel to stir the salt into the water.",
 
-        step9:
-        "The salt particles spread throughout the water, forming a saltwater solution. No new substance is produced, so this is a physical change.",
-    },
-    ]
+    step9:
+      "Observe the salt dissolving as its particles spread throughout the water, forming a saltwater solution. No new substance is produced, so this is a physical change.",
+  },
+]
 
  return(
        <>

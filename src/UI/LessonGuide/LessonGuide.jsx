@@ -4,10 +4,7 @@ import { MainGuidelineContext } from '../../Contexts/MainGuidelineContext/MainGu
 
 const LessonGuide = ({title,text,onButton1,subTitle,icon})=>{
 
-    const {isLessonStart,setIsLessonStart} = useContext(MainGuidelineContext)
-
-
-
+    const {isLessonStart,setIsLessonStart} = useContext(MainGuidelineContext);
 
     return(
         <div className="main-guidelines">

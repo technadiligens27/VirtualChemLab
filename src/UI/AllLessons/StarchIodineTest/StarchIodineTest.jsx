@@ -9,41 +9,40 @@ const StarchIodineTest = ()=>{
     const {isFillBeakerBoxOpen} = useContext(InteractionContext);
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);  
 
-
     const StarchIodineTest = [
     {
         step1:
-        "In this experiment, iodine solution is mixed with starch solution. This test is used to check for the presence of starch. Iodine turns blue-black when starch is present.",
+        "In this experiment, iodine solution is mixed with starch solution to test for the presence of starch. If starch is present, the iodine changes the solution to a blue-black color.",
 
         step2:
-        "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
+        "Click the normal beaker and select the Left Hand option to pick it up.",
 
         step3:
-        "Click on the beaker again and press the Fill Beaker button.",
+        "Click the beaker again and select the Fill Beaker option.",
 
         step4:
-        "Select Starch Solution and 50 ml.",
+        "Select Starch Solution and choose 50 mL.",
 
         step5:
-        "Now click on the conical flask and select the Right Hand option.",
+        "Click the conical flask and select the Right Hand option to pick it up.",
 
         step6:
-        "Click on the conical flask again and press the Fill Beaker button.",
+        "Click the conical flask again and select the Fill Beaker option.",
 
         step7:
-        "Select Iodine Solution and 50 ml.",
+        "Select Iodine Solution and choose 50 mL.",
 
         step8:
-        "Press P to enter Pouring Mode.",
+        "Press P to enter pouring mode.",
 
         step9:
-        "Scroll the mouse to pour the iodine solution into the starch solution.",
+        "Scroll the mouse wheel to pour the iodine solution into the starch solution.",
 
         step10:
-        "Observe the reaction. The solution changes from yellow-brown to blue-black.",
+        "Observe the solution changing from yellow-brown to blue-black.",
 
         step11:
-        "This color change shows that starch is present in the solution."
+        "The blue-black color confirms that starch is present in the solution.",
     },
     ]
     return(

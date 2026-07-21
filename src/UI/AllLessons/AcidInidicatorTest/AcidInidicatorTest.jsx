@@ -14,29 +14,34 @@ const AcidInidicatorTest = ()=>{
     const AcidIndicatorTest = [
     {
         step1:
-        "In this experiment, hydrochloric acid is mixed with universal indicator. The indicator changes the solution to a red or orange-red color, showing that the solution is acidic.",
+        "In this experiment, hydrochloric acid is mixed with a universal indicator. The indicator changes the solution to red or orange-red, showing that the solution is acidic.",
 
         step2:
-        "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
+        "Click the normal beaker and select the Left Hand option to pick it up.",
 
         step3:
-        "Click on the beaker again and press the Fill Beaker button.",
+        "Click the beaker again and select the Fill Beaker option.",
 
         step4:
-        "Select HCL and 50ml",
-        
-        step5 : "Now click on Conical Flask and get it to right hand",
+        "Select Hydrochloric Acid (HCl) and choose 50 mL.",
 
-        step6 : "Now clikc conocal flas and press fill beaker",
+        step5:
+        "Click the conical flask and select the Right Hand option to pick it up.",
 
-        step7 : "Select universal inciatoru solution 50 ml",
+        step6:
+        "Click the conical flask again and select the Fill Beaker option.",
 
-        step8 : "Press P to got puring mode",
-        
-        step9 : "Scroll mouse to pout and see the reaction happen",
+        step7:
+        "Select the universal indicator solution and choose 50 mL.",
 
-        step10:"You can see the liquid turning to red"
+        step8:
+        "Press P to enter pouring mode.",
 
+        step9:
+        "Scroll the mouse wheel to pour the solution and observe the reaction.",
+
+        step10:
+        "Observe the liquid turning red, indicating that the solution is acidic.",
     },
     ]
 

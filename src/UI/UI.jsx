@@ -22,35 +22,65 @@ import SideGuide from "./SideGuide/SideGuide"
 const mainContent = [
   {
     title: "WELCOME TO THE CHEMISTRY LAB",
-    content: `This lab lets you explore chemistry in a safe and interactive way.
-You can use lab equipment, mix chemicals, test reactions, and learn how different experiments work step by step.`,
+    content: (
+      <>
+        This lab lets you explore chemistry in a{" "}
+        <strong>safe and interactive way</strong>.
+        <br />
+        You can use lab equipment, <strong>mix chemicals</strong>, test
+        reactions, and learn how different experiments work{" "}
+        <strong>step by step</strong>.
+      </>
+    ),
     button1: "Start Demo",
-    // button2: "Free Roam",
-    info: "Select Start Demo to continue with the tutorial or select Free Roam to experiment on your own",
-    mainImg:"./chem-icon.png",
+    info:
+      "Select Start Demo to continue with the tutorial or select Free Roam to experiment on your own",
+    mainImg: "./chem-icon.png",
     infoImg: "./info.png",
     layout: "column",
   },
+
   {
     title: "Follow the Guide",
-    content: `During the tutorial, arrows will show you where to go and what to click.
-Follow the arrows, interact with the highlighted objects, and complete each step to learn how the lab works.`,
+    content: (
+      <>
+        During the tutorial, <strong>arrows will show you</strong> where to go
+        and what to click.
+        <br />
+        Follow the arrows, interact with the{" "}
+        <strong>highlighted objects</strong>, and complete each step.
+      </>
+    ),
     button1: "Continue",
     layout: "column",
-    mainImg:"./benderArrow.png",
+    mainImg: "./benderArrow.png",
   },
+
   {
     title: "Movement Controls",
-    content: `Use W, A, S, and D to move around the lab.
-Move close to the highlighted objects and follow the arrows to continue the tutorial.`,
+    content: (
+      <>
+        Use <strong>W, A, S, and D</strong> to move around the lab.
+        <br />
+        Move close to the highlighted objects and follow the arrows to continue
+        the tutorial.
+      </>
+    ),
     button1: "Continue",
     layout: "row",
-    infoImg: "./Arrow.png"
+    infoImg: "./Arrow.png",
   },
+
   {
     title: "Tutorial Mode",
-    content: `Learn how to use the lab step by step.
-You will be guided through basic actions like wearing safety gear, selecting equipment, mixing chemicals, and completing experiments safely.`,
+    content: (
+      <>
+        Learn how to use the lab <strong>step by step</strong>.
+        <br />
+        You will be guided through wearing safety gear, selecting equipment,
+        mixing chemicals, and completing experiments safely.
+      </>
+    ),
     button1: "Start",
   },
 ]
@@ -135,7 +165,7 @@ const UI = () => {
 
   useEffect(()=>{
     setShowArrowConicalArrow(
-      lessonStep===6 && selectedLesson !==1 && selectedLesson!==7
+      lessonStep===6 && selectedLesson !==1 && selectedLesson!==7 && selectedLesson !==3
     )
   },[lessonStep,showConicalArrow])
 

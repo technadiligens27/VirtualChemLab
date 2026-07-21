@@ -15,47 +15,48 @@ const ProteinIdentification = ()=>{
 const ProteinIdentificationTest = [
   {
     step1:
-      "In this experiment, the Biuret Test is used to identify protein. A protein sample is mixed with Biuret reagent. If protein is present, the solution changes from blue to purple.",
+      "In this experiment, the Biuret test is used to identify proteins. When Biuret reagent is added to a protein sample, the solution changes from blue to purple if protein is present.",
 
     step2:
-      "Pick up the Test Tube by clicking on it and selecting the Left Hand option.",
+      "Click the test tube and select the Left Hand option to pick it up.",
 
     step3:
-      "Click on the Test Tube again and press the Fill Beaker button.",
+      "Click the test tube again and select the Fill Beaker option.",
 
     step4:
-      "Select Biuret reagent and 50 ml.",
+      "Select Biuret Reagent and choose 50 mL.",
 
     step5:
-      "Now click on the Dropper and select the Right Hand option.",   
+      "Click the dropper and select the Right Hand option to pick it up.",
 
     step6:
-      "Now scroll down mouse to squess the dropper to realase air",
+      "Scroll the mouse wheel down to squeeze the dropper and release the air inside it.",
+
     step7:
-      "Click on the Dropper again and select place dropper",
+      "Click the dropper again and select the Place Dropper option.",
+
     step8:
-      "Now scroll Up mouse to get Buriett reagent to dropper",
+      "Scroll the mouse wheel up to draw the Biuret reagent into the dropper.",
 
     step9:
-      "Now Click Dropper and press remive dropper",
+      "Click the dropper and select the Remove Dropper option.",
 
     step10:
-      "Now click testube and click fill beaker",
+      "Click the test tube again and select the Fill Beaker option.",
 
     step11:
-      "Fill Beaker with Protein Sample 50ml",  
+      "Select Protein Sample and choose 50 mL.",
 
     step12:
-      "Click Dropper and clikc Place Dropper",   
-      
+      "Click the dropper and select the Place Dropper option.",
+
     step13:
-      "Scroll donw to relase burette regent in Dropper to testube",      
+      "Scroll the mouse wheel down to release the Biuret reagent into the test tube.",
 
     step14:
-      "You can see the color chnage whihc indicates Protien ",   
+      "Observe the solution changing to purple. This color change indicates that protein is present in the sample.",
   },
 ]
-
     // useEffect(()=>{
     //     if (lessonStep !== 3 || selectedLeftHand?.name ==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') {
     //         setShowNormalBeakerArrow(false)

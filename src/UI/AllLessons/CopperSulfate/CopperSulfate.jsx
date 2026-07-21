@@ -10,42 +10,42 @@ const CopperSulfate = () =>{
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
 
-    const CopperSulfatePrecipitate = [
-  {
-    step1:
-      "In this experiment, copper sulfate solution is mixed with sodium hydroxide solution. This reaction forms a blue copper hydroxide precipitate.",
+  const CopperSulfatePrecipitate = [
+    {
+      step1:
+        "In this experiment, copper sulfate solution is mixed with sodium hydroxide solution. The reaction produces a light blue copper hydroxide precipitate.",
 
-    step2:
-      "Pick up the normal beaker by clicking on it and selecting the Left Hand option.",
+      step2:
+        "Click the normal beaker and select the Left Hand option to pick it up.",
 
-    step3:
-      "Click on the beaker again and press the Fill Beaker button.",
+      step3:
+        "Click the beaker again and select the Fill Beaker option.",
 
-    step4:
-      "Select Copper Sulfate (CuSO4) and 50 ml.",
+      step4:
+        "Select Copper Sulfate (CuSO₄) and choose 50 mL.",
 
-    step5:
-      "Now click on the conical flask and select the Right Hand option.",
+      step5:
+        "Click the conical flask and select the Right Hand option to pick it up.",
 
-    step6:
-      "Click on the conical flask again and press the Fill Beaker button.",
+      step6:
+        "Click the conical flask again and select the Fill Beaker option.",
 
-    step7:
-      "Select Sodium Hydroxide (NaOH) and 50 ml.",
+      step7:
+        "Select Sodium Hydroxide (NaOH) and choose 50 mL.",
 
-    step8:
-      "Press P to enter Pouring Mode.",
+      step8:
+        "Press P to enter pouring mode.",
 
-    step9:
-      "Scroll the mouse to pour the sodium hydroxide into the copper sulfate solution.",
+      step9:
+        "Scroll the mouse wheel to pour the sodium hydroxide into the copper sulfate solution.",
 
-    step10:
-      "Observe the reaction. A light blue precipitate forms inside the beaker.",
+      step10:
+        "Observe the reaction as a light blue precipitate forms inside the beaker.",
 
-    step11:
-      "This shows that copper sulfate reacts with sodium hydroxide to form insoluble copper hydroxide."
-  },
-]
+      step11:
+        "The light blue precipitate confirms that copper sulfate has reacted with sodium hydroxide to form insoluble copper hydroxide.",
+    },
+  ]
 
     return(
         <>
