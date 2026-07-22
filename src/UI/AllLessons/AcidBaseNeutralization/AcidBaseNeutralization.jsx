@@ -3,6 +3,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import LessonGuide from "../../LessonGuide/LessonGuide";
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import LessonDetails from "../../LessonDetails/LessonDetails";
 
 const AcidBaseNeutralization = ()=>{
 
@@ -47,14 +48,101 @@ const AcidBaseNeutralization = ()=>{
       },
     ]
 
+const lessonDetailsData = [
+  {
+    id: 6,
+
+    headerTitle: "Lesson Overview",
+
+    lessonTitle: "Acid–Base Neutralization",
+
+    description:
+      "In this lesson, hydrochloric acid is mixed with sodium hydroxide. The acid and base neutralize each other and form salt and water, producing a neutral solution.",
+
+    lessonImages: [
+      {
+        id: 1,
+        imgPath: "./BeakerHcl.png",
+        label: "HCL Acid",
+        alt: "Beaker containing hydrochloric acid",
+      },
+      {
+        id: 2,
+        imgPath: "./ConicalSodiumGydroxide.png",
+        label: "NaOH",
+        alt: "Conical flask containing sodium hydroxide solution",
+      },
+      {
+        id: 3,
+        imgPath: "./BeakerNeutral.png",
+        label: "Neutral",
+        alt: "Beaker containing the neutral salt and water solution",
+      },
+    ],
+
+    hint: {
+      imgPath: "./light-bulb.png",
+      alt: "Light bulb",
+      text:
+        "During neutralization, an acid and a base react to form salt and water.",
+    },
+
+    objectives: {
+      title: "Objectives",
+      imgPath: "./objective.png",
+      alt: "Objectives icon",
+      items: [
+        "Understand the process of neutralization",
+        "Observe the reaction between an acid and a base",
+        "Identify salt and water as the products"
+      ],
+    },
+
+    materials: {
+      title: "Materials",
+      imgPath: "./AcidBaseLesson.png",
+      alt: "Acid-base neutralization materials",
+      items: [
+        "Normal beaker",
+        "Conical flask",
+        "Hydrochloric acid (HCl)",
+        "Sodium hydroxide solution (NaOH)",
+      ],
+    },
+
+    procedure: {
+      title: "Procedure",
+      imgPath: "./procedure.png",
+      alt: "Procedure icon",
+      items: [
+        "Add 50 mL of hydrochloric acid to beaker",
+        "Add 50 mL of sodium hydroxide to the conical flask",
+        "Pour the sodium hydroxide into the HCL acid",
+        "Observe the acid and base forming salt and water",
+      ],
+    },
+
+    continueButtonText: "Continue",
+  },
+]
+
+
  return(
        <>
-        {lessonStep===1 && 
+        {/* {lessonStep===1 && 
             <LessonGuide
                title={"Lesson Overview"} 
                icon={'./AcidBase.png'}
                text={AcidBaseNeutralization[0].step1} 
                onButton1={() => setLessonStep(2)}/>
+        } */}
+
+        {
+          lessonStep===1 && <LessonDetails
+            lessonData={lessonDetailsData[0]}
+            onContinue={() => setLessonStep(2)}
+          
+          />
         }
 
         {lessonStep===2 && 

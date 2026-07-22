@@ -19,6 +19,109 @@ import MouseGuide from "./MouseGuide/MouseGuide"
 import ProteinIdentification from "./AllLessons/ProteinIdentification/ProteinIdentification"
 import SideGuide from "./SideGuide/SideGuide"
 import LessonDetails from "./LessonDetails/LessonDetails"
+import LessonSummary from "./LessonSummary/LessonSummary"
+
+
+// const saltDissolvingSummary = {
+//   headerTitle: "Lesson Summary",
+
+//   lessonTitle: "Salt Dissolving in Water",
+
+//   description:
+//     "In this experiment, we observed how salt (sodium chloride) dissolves in water to form a clear solution.",
+
+//   lessonIcon: "./summary-beaker-icon.png",
+
+//   whatHappened: {
+//     title: "What Happened?",
+//     icon: "./sparkle-icon.png",
+//     description:
+//       "When salt was added to water and stirred, the salt crystals gradually disappeared, and a clear solution was formed.",
+//   },
+
+//   steps: [
+//     {
+//       id: 1,
+//       number: 1,
+//       imgPath: "./salt-added-to-water.png",
+//       text: "Salt is added to water.",
+//     },
+//     {
+//       id: 2,
+//       number: 2,
+//       imgPath: "./salt-water-stirring.png",
+//       text: "Stirring helps the salt break apart.",
+//     },
+//     {
+//       id: 3,
+//       number: 3,
+//       imgPath: "./clear-salt-solution.png",
+//       text: "Salt particles spread evenly to form a clear solution.",
+//     },
+//   ],
+
+//   keyTakeaways: {
+//     title: "Key Takeaways",
+//     icon: "./graduation-cap-icon.png",
+//     items: [
+//       "Salt is soluble in water.",
+//       "The salt particles break apart into tiny ions that are not visible to the eye.",
+//       "These ions spread evenly throughout the water.",
+//       "No new substance is formed – this is a physical change.",
+//       "Solutions are clear and uniform.",
+//     ],
+//   },
+
+//   materialsUsed: {
+//     title: "Materials Used",
+//     icon: "./flask-icon.png",
+//     items: [
+//       {
+//         id: 1,
+//         name: "Beaker",
+//         imgPath: "./beaker.png",
+//       },
+//       {
+//         id: 2,
+//         name: "Measuring Cylinder",
+//         imgPath: "./measuring-cylinder.png",
+//       },
+//       {
+//         id: 3,
+//         name: "Spoon",
+//         imgPath: "./spoon.png",
+//       },
+//       {
+//         id: 4,
+//         name: "Salt (NaCl)",
+//         imgPath: "./salt-bottle.png",
+//       },
+//       {
+//         id: 5,
+//         name: "Water (H₂O)",
+//         imgPath: "./water-beaker.png",
+//       },
+//     ],
+//   },
+
+//   conclusion: {
+//     title: "Conclusion",
+//     icon: "./light-bulb-icon.png",
+//     text:
+//       "Salt dissolves in water because its particles, called ions, break apart and spread evenly throughout the water. This helps us understand how solutions work at the molecular level.",
+//   },
+
+//   whatsNext: {
+//     title: "What's Next?",
+//     icon: "./rocket-icon.png",
+//     text:
+//       "You can try dissolving different substances and compare how they dissolve in water!",
+//   },
+
+//   backButtonText: "Back to Lessons",
+// }
+
+
 
 const mainContent = [
   {
@@ -242,7 +345,8 @@ const UI = () => {
   */
   return (
     <>
-    <LessonDetails/>
+    {/* <LessonDetails/> */}
+    {/* <LessonSummary summaryData={saltDissolvingSummary}/> */}
     {!isSitting && selectedMainGuideline===5 && <SideGuide/>}
 
     {isLessonStart && safetyStep===4 && <ResetLessonButton/>}
@@ -372,7 +476,6 @@ const UI = () => {
         <InfoBox clickedModel={clickedModel} />
       )}
 
-      
     </>
   )
 }
