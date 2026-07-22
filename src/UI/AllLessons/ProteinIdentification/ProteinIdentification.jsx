@@ -42,7 +42,7 @@ const ProteinIdentification = ()=>{
           "Click the dropper and select the Remove Dropper option.",
 
         step10:
-          "Click the test tube again and select the Fill Beaker option.",
+          "Click the test tube again and select the Add Liquid option.",
 
         step11:
           "Select Protein Sample and choose 50 mL.",

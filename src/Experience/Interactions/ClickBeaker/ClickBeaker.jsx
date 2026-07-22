@@ -1083,7 +1083,7 @@ const addSaltToSpoon = () => {
 
       <ClickHitbox
       modelRef={testube01Ref}
-      multiplier={2}
+      multiplier={1.2}
       />
 
       <ClickHitbox

@@ -56,50 +56,72 @@ const LiquidLabels = ({ modelRef, hand }) => {
 
   if (!showLabel) return null
 
-  const colorOfLiquid = (name) => {
-    if (name === "Hydrochloric Acid (HCl)")
-      return "Colourless"
+const colorOfLiquid = (name) => {
+  if (name === "Hydrochloric Acid (HCl)")
+    return "Colourless"
 
-    if (name === "Sodium Hydroxide (NaOH)")
-      return "Colourless"
+  if (name === "Sodium Hydroxide (NaOH)")
+    return "Colourless"
 
-    if (name === "Copper Sulfate (CuSO4)")
-      return "Blue"
+  if (name === "Copper Sulfate (CuSO4)")
+    return "Blue"
 
-    if (name === "Universal indicator")
-      return "Green"
+  if (name === "Universal indicator")
+    return "Green"
 
-    if (name === "Water (H2O)")
-      return "Colourless"
+  if (name === "Water (H2O)")
+    return "Colourless"
 
-    if (name === "Salt (NaCl)")
-      return "White"
+  if (name === "Salt (NaCl)")
+    return "White"
 
-    return fillData?.color || "Unknown colour"
+  if (name === "Starch solution")
+    return "Cloudy white"
+
+  if (name === "Iodine solution")
+    return "Brown"
+
+  if (name === "Protein Sample")
+    return "Pale cream"
+
+  if (name === "Biuret Reagent")
+    return "Blue"
+
+  return fillData?.color || "Unknown colour"
+}
+const getColourClass = (colour) => {
+  const normalizedColour = colour?.toLowerCase().trim() || ""
+
+  if (normalizedColour === "blue") {
+    return "liquid-color-blue"
   }
 
-  const getColourClass = (colour) => {
-    const normalizedColour =
-      colour?.toLowerCase() || ""
-
-    if (normalizedColour === "blue") {
-      return "liquid-color-blue"
-    }
-
-    if (normalizedColour === "green") {
-      return "liquid-color-green"
-    }
-
-    if (normalizedColour === "white") {
-      return "liquid-color-white"
-    }
-
-    if (normalizedColour === "colourless") {
-      return "liquid-color-colourless"
-    }
-
-    return "liquid-color-default"
+  if (normalizedColour === "green") {
+    return "liquid-color-green"
   }
+
+  if (normalizedColour === "white") {
+    return "liquid-color-white"
+  }
+
+  if (normalizedColour === "cloudy white") {
+    return "liquid-color-cloudy-white"
+  }
+
+  if (normalizedColour === "brown") {
+    return "liquid-color-brown"
+  }
+
+  if (normalizedColour === "pale cream") {
+    return "liquid-color-pale-cream"
+  }
+
+  if (normalizedColour === "colourless") {
+    return "liquid-color-colourless"
+  }
+
+  return "liquid-color-default"
+}
 
   const liquidColour = colorOfLiquid(
     fillData?.name

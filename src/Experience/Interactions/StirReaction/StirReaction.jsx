@@ -88,7 +88,7 @@ const StirReaction = ({ hand, spoonRef, beakerRef }) => {
 
     liquidRef.current.material.color.lerp(
       targetColor.current,
-      delta * 0.5
+      delta * 0.2
     )
   })
 

@@ -8,20 +8,19 @@ const AllErrors = ()=>{
 
     return(
         <>
-
-            {showErrorMsgNo ===1 && <ErrorMsg text={'Pls pick with left hand'}/> }
-            {showErrorMsgNo ===2 && <ErrorMsg text={'Pls Correct Liquid and Amount'}/> }
-            {showErrorMsgNo ===3 && <ErrorMsg text={'Press P for pouring mode'}/> }
-            {showErrorMsgNo == 4 && <ErrorMsg text={'Cant do that right now'}/>}
-            {showErrorMsgNo == 5 && <ErrorMsg text={'Pls Select Uniersal Indicatoe and then 50 ml'}/>}
-            {showErrorMsgNo == 6 && <ErrorMsg text={'Pls Select Red Litmus Paper'}/>}
-            {showErrorMsgNo == 7 && <ErrorMsg text={'Pls Select Starch Solution and 50 ml'}/>}
-            {showErrorMsgNo == 8 && <ErrorMsg text={'No Visible Reaction Found'}/>}
-            {showErrorMsgNo == 9 && <ErrorMsg text={'No Liquid Inside beaker to pour'}/>}
-            {showErrorMsgNo == 10 && <ErrorMsg text={'Beaker Already full'}/>}
-            {showErrorMsgNo == 11 && <ErrorMsg text={'No Liquid to test'}/>}
-            {showErrorMsgNo == 12 && <ErrorMsg text={'Select Conical Flask'}/>}
-            {showErrorMsgNo == 13 && <ErrorMsg text={'Should Have Spoon in Hand to fill salt'}/>}
+            {showErrorMsgNo === 1 && <ErrorMsg text="Use left hand" />}
+            {showErrorMsgNo === 2 && <ErrorMsg text="Wrong liquid or amount" />}
+            {showErrorMsgNo === 3 && <ErrorMsg text="Press P to pour" />}
+            {showErrorMsgNo === 4 && <ErrorMsg text="Not available now" />}
+            {showErrorMsgNo === 5 && <ErrorMsg text="Select 50 ml indicator" />}
+            {showErrorMsgNo === 6 && <ErrorMsg text="Select red litmus" />}
+            {showErrorMsgNo === 7 && <ErrorMsg text="Select 50 ml starch" />}
+            {showErrorMsgNo === 8 && <ErrorMsg text="No reaction found" />}
+            {showErrorMsgNo === 9 && <ErrorMsg text="Beaker is empty" />}
+            {showErrorMsgNo === 10 && <ErrorMsg text="Beaker is full" />}
+            {showErrorMsgNo === 11 && <ErrorMsg text="No liquid to test" />}
+            {showErrorMsgNo === 12 && <ErrorMsg text="Select conical flask" />}
+            {showErrorMsgNo === 13 && <ErrorMsg text="Hold the spoon first" />}
         </>
     )
 }

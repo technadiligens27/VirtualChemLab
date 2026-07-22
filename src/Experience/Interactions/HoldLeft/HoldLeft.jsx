@@ -21,7 +21,7 @@ const HoldLeft = ({ modeldata }) => {
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
     selectedRightHand,setPouredFromLeft,rightBeakerFillData,
     isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel,
-    isFunnelMode,setIsFunnelMode,selectedModelLeft
+    isFunnelMode,setIsFunnelMode,selectedModelLeft,isDropperPlaced
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
@@ -238,7 +238,7 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
       }
 
       {
-        isReactionRef.current===false && <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
+       !isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current===false && <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
       }
 
     </>

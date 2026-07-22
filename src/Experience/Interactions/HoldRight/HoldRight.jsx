@@ -256,7 +256,7 @@ const transformControlsRef = useRef()
       {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
 
       {
-       isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
+       !isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
     </>
   )

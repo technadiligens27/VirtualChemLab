@@ -27,12 +27,12 @@ const acids = [
   { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
   { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
   { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
-  { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe" },
-  { name: "Starch solution", color: "#e5e7eb" },
-  { name: "Iodine solution", color: "#92400e" },
-  { name: "Copper Sulfate (CuSO4)", color: "#2563eb" },  
-  { name: "Protein Sample", color: "#F5F1D8" },
-  { name: "Biuret Reagent", color: "#2F80ED" },
+  { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
+  { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
+  { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.png' },
+  { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
+  { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
+  { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
 ]
 
   const amounts = [10, 25, 50, 100]
