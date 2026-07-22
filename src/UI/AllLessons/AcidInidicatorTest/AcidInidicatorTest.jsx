@@ -4,6 +4,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import { step } from "three/tsl";
+import LessonDetails from "../../LessonDetails/LessonDetails";
 
 const AcidInidicatorTest = ()=>{
 
@@ -45,6 +46,87 @@ const AcidInidicatorTest = ()=>{
     },
     ]
 
+    const lessonDetailsData = [
+  {
+    id: 2,
+
+    headerTitle: "Lesson Overview",
+
+    lessonTitle: "Acid Indicator Test",
+
+    description:
+      "In this lesson, hydrochloric acid is mixed with a universal indicator to determine whether the solution is acidic. The indicator changes the solution to red or orange-red, confirming the presence of an acid.",
+
+    lessonImages: [
+      {
+        id: 1,
+        imgPath: "./BeakerHcl.png",
+        label: "HCL Acid",
+        alt: "Beaker containing hydrochloric acid",
+      },
+      {
+        id: 2,
+        imgPath: "./conicalUniversalSolution.png",
+        label: "Universal",
+        alt: "Conical flask containing universal indicator solution",
+      },
+      {
+        id: 3,
+        imgPath: "./BeakerRed.png",
+        label: "Acidic Result",
+        alt: "Red solution showing an acidic result",
+      },
+    ],
+
+    hint: {
+      imgPath: "./light-bulb.png",
+      alt: "Light bulb",
+      text:
+        "A red or orange-red colour indicates that the solution is acidic.",
+    },
+
+    objectives: {
+      title: "Objectives",
+      imgPath: "./objective.png",
+      alt: "Objectives icon",
+      items: [
+        "Understand how a universal indicator identifies acids",
+        "Observe the colour change",
+        "Identify a red or orange-red acidic result"
+      ],
+    },
+
+    materials: {
+      title: "Materials",
+      imgPath: "./AcidIndicatorTest.png",
+      alt: "Acid indicator test materials",
+      items: [
+        "Normal beaker",
+        "Conical flask",
+        "Hydrochloric acid (HCl)",
+        "Universal indicator solution",
+      ],
+    },
+
+    procedure: {
+      title: "Procedure",
+      imgPath: "./procedure.png",
+      alt: "Procedure icon",
+      items: [
+        "Add 50 mL of hydrochloric acid to the normal beaker",
+        "Add 50 mL of universal indicator to the conical flask",
+        "Pour the universal indicator into the HCL acid",
+        "Observe the solution turning red or orange-red",
+      ],
+    },
+
+    continueButtonText: "Continue",
+  },
+]
+
+ 
+    
+
     useEffect(()=>{
         if (lessonStep !== 3 || selectedLeftHand?.name ==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') {
             setShowNormalBeakerArrow(false)
@@ -55,15 +137,20 @@ const AcidInidicatorTest = ()=>{
 
     return(
         <>
-           {lessonStep===1 && 
+           {/* {lessonStep===1 && 
                 <LessonGuide
                  title={"Lesson Overview"} 
                  subTitle={"Acid Indicator Test"}
                 text={AcidIndicatorTest[0].step1} 
                 icon={'./acidIndicator.png'}
                 onButton1={() => setLessonStep(2)}/>
-            } 
+            }  */}
 
+            {lessonStep===1 &&
+            <LessonDetails
+                lessonData={lessonDetailsData[0]}
+                onContinue={() => setLessonStep(2)}
+            />}
 
            {lessonStep===2 && 
                 <LessonGuide 

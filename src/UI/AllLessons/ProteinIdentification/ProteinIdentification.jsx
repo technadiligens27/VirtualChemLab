@@ -4,6 +4,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import { step } from "three/tsl";
+import LessonDetails from "../../LessonDetails/LessonDetails";
 
 const ProteinIdentification = ()=>{
 
@@ -57,23 +58,106 @@ const ProteinIdentification = ()=>{
           "Observe the solution changing to purple. This color change indicates that protein is present in the sample.",
       },
     ]
-    // useEffect(()=>{
-    //     if (lessonStep !== 3 || selectedLeftHand?.name ==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') {
-    //         setShowNormalBeakerArrow(false)
-    //         return
-    //     }    
-    // },[showNormalBeakerArrow,lessonStep,selectedLeftHand,selectedRightHand])
+
+
+const lessonDetailsData = [
+  {
+    id: 7,
+
+    headerTitle: "Lesson Overview",
+
+    lessonTitle: "Protein Identification – Biuret Test",
+
+    description:
+      "In this lesson, we use the Biuret test to identify proteins in a sample. When Biuret reagent reacts with protein, the solution changes from blue to purple, indicating that protein is present.",
+
+    lessonImages: [
+      {
+        id: 1,
+        imgPath: "./testube-protein.png",
+        label: "Protein Sample",
+        alt: "Test tube containing a protein sample",
+      },
+      {
+        id: 2,
+        imgPath: "./dropper-buirette.png",
+        label: "Biuret Reagent",
+        alt: "Dropper containing Biuret reagent",
+      },
+      {
+        id: 3,
+        imgPath: "./positiveBuirette.png",
+        label: "Positive Result",
+        alt: "Purple solution showing a positive Biuret test",
+      },
+    ],
+
+    hint: {
+      imgPath: "./light-bulb.png",
+      alt: "Light bulb",
+      text:
+        "A purple colour change indicates that protein is present in the sample.",
+    },
+
+    objectives: {
+      title: "Objectives",
+      imgPath: "./objective.png",
+      alt: "Objectives icon",
+      items: [
+        "Understand how Biuret test identifies proteins",
+        "Observe the colour change",
+        "Identify a positive protein test result",
+        "Practice using a test tube and dropper",
+      ],
+    },
+
+    materials: {
+      title: "Materials",
+      imgPath: "./ProteinTest.png",
+      alt: "Protein test materials",
+      items: [
+        "Test tube",
+        "Dropper",
+        "Protein sample",
+        "Biuret reagent",
+      ],
+    },
+
+    procedure: {
+      title: "Procedure",
+      imgPath: "./procedure.png",
+      alt: "Procedure icon",
+      items: [
+        "Add Biuret reagent to the test tube",
+        "Draw the Biuret reagent into the dropper",
+        "Add the protein sample to the test tube",
+        "Release the Biuret reagent into the protein sample",
+        "Observe the solution changing from blue to purple",
+      ],
+    },
+
+    continueButtonText: "Continue",
+  },
+]
     
 
     return(
         <>
-           {lessonStep===1 && 
+           {/* {lessonStep===1 && 
                 <LessonGuide
                  title={"Lesson Overview"} 
                 text={ProteinIdentificationTest[0].step1} 
                 icon={'./ProteinTest.png'}
                 onButton1={() => setLessonStep(2)}/>
-            } 
+            }  */}
+
+            {
+              lessonStep===1 && 
+              <LessonDetails
+                lessonData={lessonDetailsData[0]}
+                onContinue={() => setLessonStep(2)}
+              />
+            }
 
 
            {lessonStep===2 && 

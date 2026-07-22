@@ -3,6 +3,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import LessonGuide from "../../LessonGuide/LessonGuide";
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import LessonDetails from "../../LessonDetails/LessonDetails";
 
 const SaltWaterTest = ()=>{
 
@@ -41,15 +42,99 @@ const SaltWaterTestSteps = [
   },
 ]
 
+ const lessonDetailsData = [
+  {
+    id: 1,
+
+    headerTitle: "Lesson Overview",
+
+    lessonTitle: "Salt Dissolving in Water",
+
+    description:
+      "In this lesson, we observe how salt (sodium chloride) dissolves in water to form a clear solution. This helps us understand the concept of solubility and how substances can mix at the molecular level.",
+
+    lessonImages: [
+      {
+        id: 1,
+        imgPath: "./beakerWithWater.png",
+        label: "Water",
+        alt: "Beaker containing water",
+      },
+      {
+        id: 2,
+        imgPath: "./beaker+Spoon.png",
+        label: "Salt",
+        alt: "Beaker and spoon containing salt",
+      },
+      {
+        id: 3,
+        imgPath: "./beakerWithWater.png",
+        label: "Salt Solution",
+        alt: "Beaker containing salt solution",
+      },
+    ],
+
+    hint: {
+      imgPath: "./light-bulb.png",
+      alt: "Light bulb",
+      text:
+        "Salt disappears because its particles break apart and spread evenly throughout the water.",
+    },
+
+    objectives: {
+      title: "Objectives",
+      imgPath: "./objective.png",
+      alt: "Objectives icon",
+      items: [
+        "Observe the dissolving process",
+        "Understand the concept of solubility",
+        "Identify physical changes in a solution",
+        "Practice using lab equipment safely",
+      ],
+    },
+
+    materials: {
+      title: "Materials",
+      imgPath: "./AlkaliLesson.png",
+      alt: "Materials icon",
+      items: [
+        "Beaker",
+        "Spoon",
+        "Salt (NaCl)",
+        "Water (H₂O)",
+      ],
+    },
+
+    procedure: {
+      title: "Procedure",
+      imgPath: "./procedure.png",
+      alt: "Procedure icon",
+      items: [
+        "Take a beaker and add 50 ml of water",
+        "Add a small amount of salt using a spoon",
+        "Stir the mixture with the spoon",
+        "Observe the changes",
+      ],
+    },
+
+    continueButtonText: "Continue",
+  },
+]
+
  return(
        <>
-        {lessonStep===1 && 
+        {/* {lessonStep===1 && 
             <LessonGuide
                title={"Lesson Overview"} 
                subTitle={'Salt Dissolving In Water'}
                text={SaltWaterTestSteps[0].step1} 
                icon={'./saltLesson.png'}
                onButton1={() => setLessonStep(2)}/>
+        } */}
+
+        {
+         lessonStep===1 &&  <LessonDetails lessonData={lessonDetailsData[0]} onContinue={() => setLessonStep(2)}/> 
+
         }
 
         {lessonStep===2 && 

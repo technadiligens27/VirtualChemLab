@@ -242,7 +242,7 @@ const UI = () => {
   */
   return (
     <>
-    {/* <LessonDetails/> */}
+    <LessonDetails/>
     {!isSitting && selectedMainGuideline===5 && <SideGuide/>}
 
     {isLessonStart && safetyStep===4 && <ResetLessonButton/>}

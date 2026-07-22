@@ -1,91 +1,196 @@
-import './LessonDetails.css'
+import "./LessonDetails.css"
 
-const LessonDetails = ()=>{
-    return(
-        <div className='lesson-details-overlay'>
-        <div className="lesson-details-container">
-            <div className='lesson-header-container'>
-                <h1>Lesson Overview</h1>
-            </div>
-            <div className="lesson-details-left">
-                <div className='lesson-details-overview'>
-                    <div className='lesson-details-content'>
-                        <h1 className='lesson-sub-title'>Salt Dissolving in Water</h1>
-                        <p>In this lesson, we observe how salt (sodium chloride) dissolves in water
-                             to form a clear solution. This helps us understand the concept of solubility
-                              and how substances can mix at the molecular level.</p>
+const LessonDetails = ({
+  lessonData,
+  onContinue,
+}) => {
+  if (!lessonData) return null
+
+  const {
+    headerTitle,
+    lessonTitle,
+    description,
+    lessonImages = [],
+    hint,
+    objectives,
+    materials,
+    procedure,
+    continueButtonText,
+  } = lessonData
+
+  return (
+    <div className="lesson-details-overlay">
+      <div className="lesson-details-container">
+
+        {headerTitle && (
+          <div className="lesson-header-container">
+            <h1>{headerTitle}</h1>
+          </div>
+        )}
+
+        <div className="lesson-details-left">
+          <div className="lesson-details-overview">
+
+            {(lessonTitle || description) && (
+              <div className="lesson-details-content">
+                {lessonTitle && (
+                  <h1 className="lesson-sub-title">
+                    {lessonTitle}
+                  </h1>
+                )}
+
+                {description && <p>{description}</p>}
+              </div>
+            )}
+
+            {lessonImages.length > 0 && (
+              <div className="lesson-images-container">
+                {lessonImages.map((image, index) => {
+                  if (!image) return null
+
+                  return (
+                    <div
+                      className="lesson-images"
+                      key={image.id || index}
+                    >
+                      {image.imgPath && (
+                        <img
+                          src={image.imgPath}
+                          alt={image.alt || image.label || "Lesson material"}
+                        />
+                      )}
+
+                      {image.label && (
+                        <button>{image.label}</button>
+                      )}
                     </div>
-                    <div className='lesson-images-container'>
-                        <div className='lesson-images'>
-                            <img src={'./beaker+Spoon.png'}/>
-                            <button>Water</button>
-                        </div>
-                        <div className='lesson-images'>
-                            <img src={'./beaker+Spoon.png'}/>
-                            <button>Water</button>
-                        </div>
-                        <div className='lesson-images'>
-                            <img src={'./beaker+Spoon.png'}/>
-                            <button>Water</button>
-                        </div>
+                  )
+                })}
+              </div>
+            )}
 
-                    </div>
-                        <div className='lesson-hint-container'>
-                            <img/>
-                            <p>Salt disappears because its particles break apart and spread evenly throughout the water.</p>
-                        </div>
-                </div>
+            {hint && (hint.imgPath || hint.text) && (
+              <div className="lesson-hint-container">
+                {hint.imgPath && (
+                  <img
+                    src={hint.imgPath}
+                    alt={hint.alt || "Lesson hint"}
+                  />
+                )}
 
-            </div>
+                {hint.text && <p>{hint.text}</p>}
+              </div>
+            )}
+          </div>
 
-            <div className="lesson-details-right">
-                <div className='lesson-objectives-container'>
-                    <div className=''>
-                        <img src={''}/>
-                        <h1 className='lesson-sub-title'>Objectives</h1>
-                        <div className='objective-container'>
-                            <p>lsson stepaw 01</p>
-                            <p>lsson stepawdawd 01</p>
-                            <p>lsson stepawd 01</p>
-                            <p>lsson stepwad 01</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className='lesson-objectives-container lesson-materials-container'>
-                    <div className=''>
-                        <img src={''}/>
-                        <h1 className='lesson-sub-title'>Materials</h1>
-                        <div className='objective-container'>
-                            <p>lsson step 01</p>
-                            <p>lsson step 01</p>
-                            <p>lsson step 01</p>
-                            <p>lsson step 01</p>
-                        </div>
-                    </div>
-                </div>
-                <div className='lesson-objectives-container lesson-procedure-container'>
-                    <div className=' '>
-                        <img src={''}/>
-                        <h1 className='lesson-sub-title'>Procedure</h1>
-                        <div className='objective-container procedure-container'>
-                            <p>lsson step 01</p>
-                            <p>lsson step 01</p>
-                            <p>lsson step 01</p>
-                            <p>lsson step 01</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+          {continueButtonText && (
             <div className="lesson-detail-btn-container">
-
+              <button
+                className="continue-btn"
+                onClick={onContinue}
+              >
+                {continueButtonText}
+              </button>
             </div>
+          )}
         </div>
-        
+
+        <div className="lesson-details-right">
+
+          {objectives &&
+            (objectives.title ||
+              objectives.imgPath ||
+              objectives.items?.length > 0) && (
+              <div className="lesson-objectives-container">
+                <div className="">
+                  {objectives.imgPath && (
+                    <img
+                      src={objectives.imgPath}
+                      alt={objectives.alt || "Objectives"}
+                    />
+                  )}
+
+                  {objectives.title && (
+                    <h1 className="lesson-sub-title">
+                      {objectives.title}
+                    </h1>
+                  )}
+
+                  {objectives.items?.length > 0 && (
+                    <div className="objective-container">
+                      {objectives.items.map((item, index) => (
+                        item && <p key={index}>{item}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+          {materials &&
+            (materials.title ||
+              materials.imgPath ||
+              materials.items?.length > 0) && (
+              <div className="lesson-objectives-container lesson-materials-container">
+                <div className="">
+                  {materials.imgPath && (
+                    <img
+                      src={materials.imgPath}
+                      alt={materials.alt || "Materials"}
+                    />
+                  )}
+
+                  {materials.title && (
+                    <h1 className="lesson-sub-title">
+                      {materials.title}
+                    </h1>
+                  )}
+
+                  {materials.items?.length > 0 && (
+                    <div className="objective-container">
+                      {materials.items.map((item, index) => (
+                        item && <p key={index}>{item}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+          {procedure &&
+            (procedure.title ||
+              procedure.imgPath ||
+              procedure.items?.length > 0) && (
+              <div className="lesson-objectives-container lesson-procedure-container">
+                <div className="">
+                  {procedure.imgPath && (
+                    <img
+                      src={procedure.imgPath}
+                      alt={procedure.alt || "Procedure"}
+                    />
+                  )}
+
+                  {procedure.title && (
+                    <h1 className="lesson-sub-title">
+                      {procedure.title}
+                    </h1>
+                  )}
+
+                  {procedure.items?.length > 0 && (
+                    <div className="objective-container procedure-container">
+                      {procedure.items.map((item, index) => (
+                        item && <p key={index}>{item}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default LessonDetails

@@ -3,6 +3,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import LessonGuide from "../../LessonGuide/LessonGuide";
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
+import LessonDetails from "../../LessonDetails/LessonDetails";
 
 const StarchIodineTest = ()=>{
 
@@ -45,16 +46,103 @@ const StarchIodineTest = ()=>{
         "The blue-black color confirms that starch is present in the solution.",
     },
     ]
+
+    const lessonDetailsData = [
+  {
+    id: 4,
+
+    headerTitle: "Lesson Overview",
+
+    lessonTitle: "Starch–Iodine Test",
+
+    description:
+      "In this lesson, iodine solution is added to starch solution to test for the presence of starch. When starch is present, the iodine causes the solution to change from yellow-brown to a blue-black colour.",
+
+    lessonImages: [
+      {
+        id: 1,
+        imgPath: "./starch-beaker.png",
+        label: "Starch Solution",
+        alt: "Beaker containing starch solution",
+      },
+      {
+        id: 2,
+        imgPath: "./conical-iodine.png",
+        label: "Iodine Solution",
+        alt: "Conical flask containing iodine solution",
+      },
+      {
+        id: 3,
+        imgPath: "./blueBlackBeaker.png",
+        label: "Positive Result",
+        alt: "Blue-black solution showing a positive starch test",
+      },
+    ],
+
+    hint: {
+      imgPath: "./light-bulb.png",
+      alt: "Light bulb",
+      text:
+        "A blue-black colour change confirms that starch is present in the solution.",
+    },
+
+    objectives: {
+      title: "Objectives",
+      imgPath: "./objective.png",
+      alt: "Objectives icon",
+      items: [
+        "Understand how iodine is used to test for starch",
+        "Observe the colour change during the reaction",
+        "Identify a positive starch test result",
+        "Practice pouring chemicals safely",
+      ],
+    },
+
+    materials: {
+      title: "Materials",
+      imgPath: "./StarchTest.png",
+      alt: "Starch test materials",
+      items: [
+        "Normal beaker",
+        "Conical flask",
+        "Starch solution",
+        "Iodine solution",
+      ],
+    },
+
+    procedure: {
+      title: "Procedure",
+      imgPath: "./procedure.png",
+      alt: "Procedure icon",
+      items: [
+        "Add 50 mL of starch solution to the normal beaker",
+        "Add 50 mL of iodine solution to the conical flask",
+        "Enter pouring mode",
+        "Pour the iodine solution into the starch solution",
+        "Observe the solution changing to blue-black",
+      ],
+    },
+
+    continueButtonText: "Continue",
+  },
+]
     return(
         <>
-            {lessonStep===1 && 
+            {/* {lessonStep===1 && 
                 <LessonGuide
                 title={"Lesson Overview"} 
                 icon={'./StarchIodine.png'}
                 text={StarchIodineTest[0].step1} 
                 subTitle={"Starch Iodine Test"}
                 onButton1={() => setLessonStep(2)}/>
-            }       
+            }        */}
+
+            {
+                lessonStep===1 && <LessonDetails
+                    lessonData={lessonDetailsData[0]}
+                    onContinue={() => setLessonStep(2)}
+                />
+            }
        
             {lessonStep===2 && 
                 <LessonGuide 
