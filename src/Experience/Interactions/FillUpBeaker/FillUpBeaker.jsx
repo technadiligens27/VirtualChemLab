@@ -1,4 +1,9 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
@@ -29,7 +34,8 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
   const fillCompletedRef = useRef(false)
 
   const isConicalFlaskRef = useRef(false)
-  const isRoundBottomFlaskRef = useRef(false)
+  const isRoundBottomFlaskRef =
+    useRef(false)
 
   const startXScaleRef = useRef(1)
   const targetXScaleRef = useRef(1)
@@ -71,7 +77,17 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       fillData.amount
     )
 
-    console.log('selecetdAmoung:',selectedAmount)
+    const liquidName =
+      fillData?.name?.toLowerCase() || ""
+
+    const isWater =
+      liquidName.includes("water") ||
+      liquidName.includes("h2o")
+
+    console.log(
+      "Selected amount:",
+      selectedAmount
+    )
 
     isConicalFlaskRef.current =
       lowerBeakerName.includes(
@@ -88,8 +104,8 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     /*
       Hide all liquid meshes first.
 
-      For conical flask, select the mesh based
-      on the selected amount:
+      The conical flask selects its liquid
+      mesh based on the chosen amount:
 
       conical-liquid-25
       conical-liquid-50
@@ -109,12 +125,14 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       child.visible = false
 
       if (isConicalFlaskRef.current) {
-        const requiredName = `conical-liquid-${selectedAmount}`
+        const requiredName =
+          `conical-liquid-${selectedAmount}`
 
         console.log("Checking:", {
           childName,
           requiredName,
-          matches: childName === requiredName,
+          matches:
+            childName === requiredName,
         })
 
         if (childName === requiredName) {
@@ -126,7 +144,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
 
       /*
         Other containers use their first
-        liquid mesh.
+        available liquid mesh.
       */
       if (!selectedLiquidMesh) {
         selectedLiquidMesh = child
@@ -134,12 +152,15 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     })
 
     if (!selectedLiquidMesh) {
-      console.log("Liquid mesh not found:", {
-        beakerName,
-        selectedAmount,
-        expectedName:
-          `conical-liquid-${selectedAmount}`,
-      })
+      console.log(
+        "Liquid mesh not found:",
+        {
+          beakerName,
+          selectedAmount,
+          expectedName:
+            `conical-liquid-${selectedAmount}`,
+        }
+      )
 
       return
     }
@@ -153,10 +174,36 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     setShowLabel(true)
 
     /*
-      Clone the material so changing this
-      liquid colour does not change the
-      other liquid models.
+      Apply the selected liquid colour.
+
+      Water is made slightly transparent.
+      Other liquids remain fully opaque.
     */
+    const updateMaterial = (material) => {
+      if (!material) return material
+
+      const clonedMaterial =
+        material.clone()
+
+      clonedMaterial.color?.set(
+        fillData.color
+      )
+
+      if (isWater) {
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0.35
+        clonedMaterial.depthWrite = false
+      } else {
+        clonedMaterial.transparent = false
+        clonedMaterial.opacity = 1
+        clonedMaterial.depthWrite = true
+      }
+
+      clonedMaterial.needsUpdate = true
+
+      return clonedMaterial
+    }
+
     if (
       Array.isArray(
         selectedLiquidMesh.material
@@ -164,37 +211,20 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     ) {
       selectedLiquidMesh.material =
         selectedLiquidMesh.material.map(
-          (material) => material.clone()
+          updateMaterial
         )
-
-      selectedLiquidMesh.material.forEach(
-        (material) => {
-          if (!material) return
-
-          material.color?.set(
-            fillData.color
-          )
-
-          material.needsUpdate = true
-        }
-      )
     } else if (
       selectedLiquidMesh.material
     ) {
       selectedLiquidMesh.material =
-        selectedLiquidMesh.material.clone()
-
-      selectedLiquidMesh.material.color?.set(
-        fillData.color
-      )
-
-      selectedLiquidMesh.material.needsUpdate =
-        true
+        updateMaterial(
+          selectedLiquidMesh.material
+        )
     }
 
     /*
-      Start the liquid near zero so it grows
-      upward from the bottom.
+      Start near zero so the liquid grows
+      upward from the container bottom.
     */
     selectedLiquidMesh.scale.y = 0.001
     selectedLiquidMesh.scale.x = 1
@@ -202,11 +232,8 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     speedRef.current = 1
 
     /*
-      Conical flask liquid meshes are already
-      made at their correct final sizes in Blender.
-
-      Therefore every selected conical liquid
-      model grows from scale.y 0.001 to 1.
+      Conical flask liquid meshes already
+      have their correct final size.
     */
     if (isConicalFlaskRef.current) {
       amountRef.current = 1
@@ -231,8 +258,12 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       Test tube.
     */
     else if (
-      lowerBeakerName.includes("testube") ||
-      lowerBeakerName.includes("test-tube")
+      lowerBeakerName.includes(
+        "testube"
+      ) ||
+      lowerBeakerName.includes(
+        "test-tube"
+      )
     ) {
       amountRef.current =
         selectedAmount * 1.2
@@ -273,7 +304,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     }
 
     /*
-      Fallback.
+      Fallback container.
     */
     else {
       amountRef.current =
@@ -289,6 +320,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
   }, [
     beakerRef,
     hand,
+    fillData?.name,
     fillData?.color,
     fillData?.amount,
   ])
@@ -309,10 +341,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
         if (!mesh) return
 
         /*
-          CONICAL FLASK
-
-          The selected mesh always grows to
-          scale.y = 1.
+          Conical flask.
         */
         if (isConicalFlaskRef.current) {
           mesh.scale.y = Math.min(
@@ -327,7 +356,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
         }
 
         /*
-          OTHER CONTAINERS
+          Other containers.
         */
         else {
           if (!amountRef.current) {
@@ -342,8 +371,8 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
           )
 
           /*
-            Round-bottom flask expands in X
-            while filling.
+            Expand round-bottom flask liquid
+            horizontally while filling.
           */
           if (
             isRoundBottomFlaskRef.current

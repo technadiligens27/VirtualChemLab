@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
 
 const MAX_SCALE_Y = 8
 const FILL_SPEED = 7.5
@@ -28,7 +29,9 @@ const cloneMaterial = (object) => {
   if (!object?.material) return null
 
   object.material = Array.isArray(object.material)
-    ? object.material.map((material) => material.clone())
+    ? object.material.map((material) =>
+        material.clone()
+      )
     : object.material.clone()
 
   return Array.isArray(object.material)
@@ -45,16 +48,26 @@ const getMaterial = (object) => {
 }
 
 const FillDropper = ({ hand }) => {
-  const { mainDropperRef } = useContext(ModelContext)
+  const { mainDropperRef } =
+    useContext(ModelContext)
 
   const {
     selectedLeftHand,
     selectedRightHand,
+    leftBeakerFillData,
+    rightBeakerFillData,
   } = useContext(InteractionContext)
 
   const liquidRef = useRef(null)
 
-  const getBeaker = () => {
+  // Dropper in right hand takes liquid from left hand.
+  // Dropper in left hand takes liquid from right hand.
+  const sourceFillData =
+    hand === "right"
+      ? leftBeakerFillData
+      : rightBeakerFillData
+
+  const getSourceBeaker = () => {
     const oppositeHand =
       hand === "right"
         ? selectedLeftHand
@@ -64,29 +77,40 @@ const FillDropper = ({ hand }) => {
   }
 
   const copyBeakerColor = (dropperLiquid) => {
-    const beaker = getBeaker()
+    const beaker = getSourceBeaker()
+
     if (!beaker) return
 
     const beakerLiquid = findLiquid(beaker, true)
 
     if (!beakerLiquid) {
-      console.warn("Beaker liquid not found")
+      console.warn("Source liquid not found")
       return
     }
 
-    const beakerMaterial = getMaterial(beakerLiquid)
-    const dropperMaterial = cloneMaterial(dropperLiquid)
+    const beakerMaterial =
+      getMaterial(beakerLiquid)
 
-    if (!beakerMaterial?.color || !dropperMaterial?.color) {
+    const dropperMaterial =
+      cloneMaterial(dropperLiquid)
+
+    if (
+      !beakerMaterial?.color ||
+      !dropperMaterial?.color
+    ) {
       return
     }
 
-    dropperMaterial.color.copy(beakerMaterial.color)
+    dropperMaterial.color.copy(
+      beakerMaterial.color
+    )
+
     dropperMaterial.needsUpdate = true
   }
 
   useEffect(() => {
     const dropper = mainDropperRef?.current
+
     if (!dropper) return
 
     const dropperLiquid = findLiquid(dropper)
@@ -111,6 +135,7 @@ const FillDropper = ({ hand }) => {
 
   useFrame((_, delta) => {
     const liquid = liquidRef.current
+
     if (!liquid) return
 
     liquid.scale.y = Math.min(
@@ -119,7 +144,13 @@ const FillDropper = ({ hand }) => {
     )
   })
 
-  return null
+  return (
+    <LiquidLabels
+      hand={hand}
+      modelRef={mainDropperRef}
+      liquidData={sourceFillData}
+    />
+  )
 }
 
 export default FillDropper

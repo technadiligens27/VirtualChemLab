@@ -18,6 +18,7 @@ import MovementGuideline from "./MainGuidelines/MovementGuideline/MovementGuidel
 import MouseGuide from "./MouseGuide/MouseGuide"
 import ProteinIdentification from "./AllLessons/ProteinIdentification/ProteinIdentification"
 import SideGuide from "./SideGuide/SideGuide"
+import LessonDetails from "./LessonDetails/LessonDetails"
 
 const mainContent = [
   {
@@ -241,6 +242,7 @@ const UI = () => {
   */
   return (
     <>
+    {/* <LessonDetails/> */}
     {!isSitting && selectedMainGuideline===5 && <SideGuide/>}
 
     {isLessonStart && safetyStep===4 && <ResetLessonButton/>}

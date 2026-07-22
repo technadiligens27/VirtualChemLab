@@ -35,7 +35,8 @@ const HoldRight = ({ modeldata }) => {
     isFilterInFunnel,
 
     isFunnelMode,
-    selectedModelRight,isDropperPlaced
+    selectedModelRight,isDropperPlaced,
+    isDropperFilled
   } = useContext(InteractionContext)
 
   const {
@@ -256,7 +257,7 @@ const transformControlsRef = useRef()
       {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
 
       {
-       !isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
+       !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
     </>
   )

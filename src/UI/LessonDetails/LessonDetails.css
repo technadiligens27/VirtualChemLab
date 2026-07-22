@@ -1,0 +1,130 @@
+.lesson-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+}
+
+.lesson-details-container {
+  width: 800px;
+  height: 700px;
+
+  background-color: #FDFAF3;
+  border-radius: 24px;
+
+  position: relative;
+  z-index: 10000;
+  border: 7px solid #FDC843;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.lesson-header-container{
+    width: 300px;
+    height: 50px;
+    background-color: #FDC843;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lesson-header-container h1{
+    font-size: 23px;
+    text-align: center;
+}
+
+.lesson-details-left, .lesson-details-right{
+    /* border: 1px solid black; */
+    width: 55%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.lesson-details-overview{
+    display:flex ;
+    flex-direction: column;
+    height: 90%;
+    gap: 50px;
+}
+
+.lesson-details-content h1{
+    font-size: 22px;
+}
+
+.lesson-images-container{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.lesson-images{
+    width: 45%;
+}
+
+.lesson-images img{
+    /* border: 1px solid black; */
+    width: 100%;
+}
+.lesson-hint-container{
+    background-color:#FDF6E6 ;
+    border: 2px solid #FDC843;
+}
+
+
+.lesson-materials-inner-container h1{
+    color: #482F8B;
+    font-size: 23px;
+}
+
+.lesson-sub-title{
+    color: #482F8B;
+    font-size: 23px;
+}
+
+.lesson-objectives-container{
+    width: 90%;
+    /* border: 1px solid black; */
+}
+
+.objective-container{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-height: 40%;
+}
+
+.objective-container p{
+    /* border: 1px solid black; */
+    margin: 0%;
+    padding: 0%;
+}
+
+.lesson-details-right{
+    width: 30%;
+}
