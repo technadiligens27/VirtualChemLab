@@ -22,63 +22,72 @@ const LessonMenu = () => {
   const [isAnimating, setIsAnimating] = useState(false)
 
   const lessons = [
-    {
-      id: 1,
-      name: "Salt Dissolving in Water",
-      imgPath: "./SaltDissolve.png",
-      text: "Mix salt into water to see how crystals break down and form a clear solution.",
-      number: 1,
-      divider: "",
-    },
+    // {
+    //   id: 1,
+    //   name: "Salt Dissolving in Water",
+    //   imgPath: "./SaltDissolve.png",
+    //   text: "Mix salt into water to see how crystals break down and form a clear solution.",
+    //   number: 1,
+    //   divider: "",
+    // },
+    //         {
+    //   id: 5,
+    //   name: "Copper Sulfate Precipitation",
+    //   imgPath: "./CopperSulphateTest.png",
+    //   text: "Combine two solutions and observe the formation of a solid precipitate.",
+    //   number: 2,
+    //   divider: "blue",
+    // },
+    // {
+    //   id: 2,
+    //   name: "Acid Indicator Test",
+    //   imgPath: "./IndicatorSolution.png",
+    //   text: "Add a testing solution or paper to an acid and observe the color change to confirm its presence.",
+    //   number: 3,
+    //   divider: "purple",
+    // },
+    // {
+    //   id: 6,
+    //   name: "Acid Base Neutralization",
+    //   imgPath: "./AcidBaseLesson.png",
+    //   text: "Combine an acid and a base to create a neutral reaction, forming salt and water.",
+    //   number: 4,
+    //   divider: "green",
+    // },
+
+
+
+    // {
+    //   id: 4,
+    //   name: "Starch-Iodine Test",
+    //   imgPath: "./StarchIodine.png",
+    //   text: "Add iodine solution to a sample and observe the color change when starch is present.",
+    //   number: 5,
+    //   divider: "blue",
+    // },
+    // {
+    //   id: 7,
+    //   name: "Protein Identification",
+    //   imgPath: "./ProteinTest.png",
+    //   text: "Add Biuret reagent to a protein sample and observe the purple color change.",
+    //   number: 6,
+    //   divider: "purple",
+    // },
+    //     {
+    //   id: 3,
+    //   name: "Alkali Indicator Test",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Use an indicator to test an alkali and observe the resulting color change.",
+    //   number: 7,
+    //   divider: "purple",
+    // },
+
             {
-      id: 5,
-      name: "Copper Sulfate Precipitation",
-      imgPath: "./CopperSulphateTest.png",
-      text: "Combine two solutions and observe the formation of a solid precipitate.",
-      number: 2,
-      divider: "blue",
-    },
-    {
-      id: 2,
-      name: "Acid Indicator Test",
-      imgPath: "./IndicatorSolution.png",
-      text: "Add a testing solution or paper to an acid and observe the color change to confirm its presence.",
-      number: 3,
-      divider: "purple",
-    },
-    {
-      id: 6,
-      name: "Acid Base Neutralization",
-      imgPath: "./AcidBaseLesson.png",
-      text: "Combine an acid and a base to create a neutral reaction, forming salt and water.",
-      number: 4,
-      divider: "green",
-    },
-
-
-
-    {
-      id: 4,
-      name: "Starch-Iodine Test",
-      imgPath: "./StarchIodine.png",
-      text: "Add iodine solution to a sample and observe the color change when starch is present.",
-      number: 5,
-      divider: "blue",
-    },
-    {
-      id: 7,
-      name: "Protein Identification",
-      imgPath: "./ProteinTest.png",
-      text: "Add Biuret reagent to a protein sample and observe the purple color change.",
-      number: 6,
-      divider: "purple",
-    },
-        {
-      id: 3,
-      name: "Alkali Indicator Test",
+      id: 8,
+      name: "Enthalpy Change Using Hess’s Law",
       imgPath: "./AlkaliTest.png",
-      text: "Use an indicator to test an alkali and observe the resulting color change.",
-      number: 7,
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes, and use Hess’s Law to find the enthalpy change for potassium hydrogencarbonate decomposition.",
+      number: 8,
       divider: "purple",
     },
 

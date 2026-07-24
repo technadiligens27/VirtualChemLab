@@ -65,7 +65,9 @@ export const InteractionProvider = ({ children }) => {
   const [isAddSalt,setIsAddSalt] = useState(false);
 
   const [isDropperPlaced,setIsDropperPlaced] = useState(false);
-  const [isDropperFilled,setIsDropperFilled] = useState(false)
+  const [isDropperFilled,setIsDropperFilled] = useState(false);
+
+  const [isPlacePolysterene,setIsPlacePolysterene] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -170,7 +172,8 @@ export const InteractionProvider = ({ children }) => {
         spoonHasSalt, setSpoonHasSalt,
         isAddSalt,setIsAddSalt,resetInteractions,
         isDropperPlaced,setIsDropperPlaced,
-        isDropperFilled,setIsDropperFilled
+        isDropperFilled,setIsDropperFilled,
+        isPlacePolysterene,setIsPlacePolysterene
       }}
     >
       {children}

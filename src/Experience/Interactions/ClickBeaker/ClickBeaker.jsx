@@ -42,7 +42,8 @@ const ClickObject = () => {
     isObjectInfo,setIsObjectInfo,
     spoonHasSalt, setSpoonHasSalt,
     setIsAddSalt,
-    isDropperPlaced,setIsDropperPlaced
+    isDropperPlaced,setIsDropperPlaced,
+    isPlacePolysterene,setIsPlacePolysterene
   } = useContext(InteractionContext)
 
   const {
@@ -63,7 +64,8 @@ const ClickObject = () => {
     filterFoldedPaperRef,
     saltContainerRef,
 
-    funnelRef,mainDropperRef
+    funnelRef,mainDropperRef,
+    mainPolystereneRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -138,6 +140,11 @@ const ClickObject = () => {
       {
         name: "main-dropper",
         ref:mainDropperRef
+      },
+
+      {
+        name:'mainPolysterene',
+       ref:mainPolystereneRef
       }
     ],
     [
@@ -155,7 +162,8 @@ const ClickObject = () => {
       filterFoldedPaperRef,
       funnelRef,
       saltContainerRef,
-      mainDropperRef
+      mainDropperRef,
+      mainPolystereneRef
     ]
   )
 
@@ -609,6 +617,7 @@ const ClickObject = () => {
 
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
+
       
     if(lessonStep===6 && selectedLesson===7){
       if(objectName !=='main-dropper'){
@@ -643,6 +652,13 @@ const ClickObject = () => {
 
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
+
+    if(selectedLesson===8 && lessonStep ==3){
+      if (objectName !== "main-normal-beaker") {
+        setShowErrorMsgNo(1)
+        return false
+      }
+    }
 
     if (selectedLesson === 7 && lessonStep === 3) {
       if (objectName !== "main-testube-01") {
@@ -850,16 +866,11 @@ const canShowMainHoldingButton = () => {
 
 
 const renderHandSelectionButtons = () => {
-  if (
-    isTutorialMode &&
-    selectedLesson === 1 &&
-    lessonStep === 6 &&
-    selectedObject?.name !== "main-spoon"
-  ) {
+  if ( isTutorialMode && selectedLesson === 1 && lessonStep === 6 && selectedObject?.name !== "main-spoon") {
     return <p>Can't pick now</p>
   }
 
-  if (isTutorialMode && lessonStep !== 3 && lessonStep !== 6) {
+  if (isTutorialMode && lessonStep !== 3 && lessonStep !== 6 && selectedLesson !==8) {
     return <p>Can't pick now</p>
   }
 
@@ -895,6 +906,20 @@ const addSaltToSpoon = () => {
       return
   }  
   setIsAddSalt(true)
+}
+
+const handlePlacePolysterene = () => {
+  if (
+    selectedLesson === 8 &&
+    lessonStep === 5
+  ) {
+    setIsPlacePolysterene(true)
+    setSelectedObject(null)
+    return
+  }
+
+  setShowErrorMsgNo(4)
+  setSelectedObject(null)
 }
 
   const placeDropper = () => {
@@ -955,145 +980,172 @@ const addSaltToSpoon = () => {
   return renderHandSelectionButtons()
 }
 
+const renderHeldObjectButtons = () => {
+  if (!selectedObject?.isHolding) return null
+
+  if (
+    isFilterFolded &&
+    isFoldedFilterPaper(selectedObject.name)
+  ) {
+    return (
+      <>
+        <button
+          onClick={() =>
+            unfoldFilterPaper(selectedObject.hand)
+          }
+        >
+          Unfold Paper
+        </button>
+
+        <button
+          onClick={() =>
+            placeFilterInFunnel(selectedObject.hand)
+          }
+        >
+          Place in Funnel
+        </button>
+      </>
+    )
+  }
+
+  if (isFunnel(selectedObject.name)) {
+    return (
+      <>
+        <button onClick={toggleFunnelMode}>
+          {isFunnelMode
+            ? "Exit Funnel Mode"
+            : "Funnel Mode"}
+        </button>
+
+        {isFilterInFunnel ? (
+          <button
+            onClick={() =>
+              removeFilterFromFunnel(
+                selectedObject.hand
+              )
+            }
+          >
+            Remove Filter
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
+        )}
+      </>
+    )
+  }
+
+  if (selectedObject.name === "mainPolysterene") {
+    return (
+      <>
+        <button
+          onClick={() =>
+            keepBackOnTable(selectedObject.hand)
+          }
+        >
+          Keep Back On Table
+        </button>
+
+        <button onClick={handlePlacePolysterene} >
+          Place In Beaker
+        </button>
+      </>
+    )
+  }
+
+  if (selectedObject.name === "main-dropper") {
+    return isDropperPlaced ? (
+      <button onClick={removeDropper}>
+        Remove Dropper
+      </button>
+    ) : (
+      <>
+        <button
+          onClick={() =>
+            keepBackOnTable(selectedObject.hand)
+          }
+        >
+          Keep Back On Table
+        </button>
+
+        <button onClick={()=>placeDropper()}>
+          Place Dropper
+        </button>
+      </>
+    )
+  }
 
   return (
     <>
-      {selectedObject && !isFillBeakerBoxOpen && (
-        <Html position={selectedObject.position} center>
-          <div className="click-btn-container">
+      <button
+        onClick={() =>
+          keepBackOnTable(selectedObject.hand)
+        }
+      >
+        Keep Back On Table
+      </button>
 
-            
-            {selectedObject.isHolding ? (
-              <>
-                {isFilterFolded &&
-                isFoldedFilterPaper(selectedObject.name) ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        unfoldFilterPaper(selectedObject.hand)
-                      }}
-                    >
-                      Unfold Paper
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        placeFilterInFunnel(selectedObject.hand)
-                      }}
-                    >
-                      Place in Funnel
-                    </button>
-                  </>
-                ) : isFunnel(selectedObject.name) ? (
-                  <>
-                    <button onClick={toggleFunnelMode}>
-                      {isFunnelMode ? "Exit Funnel Mode" : "Funnel Mode"}
-                    </button>
-
-                    {isFilterInFunnel && (
-                      <button
-                        onClick={() => {
-                          removeFilterFromFunnel(selectedObject.hand)
-                        }}
-                      >
-                        Remove Filter
-                      </button>
-                    )}
-
-                    {!isFilterInFunnel && (
-                      <button
-                        onClick={() => {
-                          keepBackOnTable(selectedObject.hand)
-                        }}
-                      >
-                        Keep Back On Table
-                      </button>
-                    )}
-                  </>
-                 ) : selectedObject.name === "main-dropper" ? (
-                    <>
-                      {isDropperPlaced ? (
-                        <>
-                          <button onClick={()=>{removeDropper()}}>
-                            Remove Dropper
-                          </button>
-
-                          {/* <button >
-                            Squeeze Dropper
-                          </button> */}
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() => {
-                              keepBackOnTable(selectedObject.hand)
-                            }}
-                          >
-                            Keep Back On Table
-                          </button>
-
-                          <button onClick={placeDropper}>
-                            Place Dropper
-                          </button>
-                        </>
-                      )}
-                    </>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() => {
-                              keepBackOnTable(selectedObject.hand)
-                            }}
-                          >
-                            Keep Back On Table
-                          </button>
-
-                          {canShowMainHoldingButton() && (
-                            <button onClick={handleMainHoldingAction}>
-                              {getMainHoldingButtonText()}
-                            </button>
-                          )}
-                        </>
-                      )}
-              </>
-            ) : (
-            <>
-              {renderTableObjectButtons()}
-            </>
-          )}
-          </div>
-        </Html>
+      {canShowMainHoldingButton() && (
+        <button onClick={handleMainHoldingAction}>
+          {getMainHoldingButtonText()}
+        </button>
       )}
-
-      {selectedLeftHand && !isDragging && (
-        <HoldLeft modeldata={selectedLeftHand} />
-      )}
-
-      {selectedRightHand && <HoldRight modeldata={selectedRightHand} />}
-
-      <ClickHitbox
-      modelRef={spoonRef}
-      multiplier={2}
-      />
-
-      <ClickHitbox
-      modelRef={mainDropperRef}
-      multiplier={2}
-      />
-
-      <ClickHitbox
-      modelRef={testube01Ref}
-      multiplier={1.2}
-      />
-
-      <ClickHitbox
-      modelRef={redLitmusRef}
-      multiplier={2}
-      />
-
-
     </>
   )
+}
+
+
+ return (
+  <>
+    {selectedObject && !isFillBeakerBoxOpen && (
+      <Html position={selectedObject.position} center>
+        <div className="click-btn-container">
+          {selectedObject.isHolding
+            ? renderHeldObjectButtons()
+            : renderTableObjectButtons()}
+        </div>
+      </Html>
+    )}
+
+    {selectedLeftHand && !isDragging && (
+      <HoldLeft modeldata={selectedLeftHand} />
+    )}
+
+    {selectedRightHand && (
+      <HoldRight modeldata={selectedRightHand} />
+    )}
+
+    <ClickHitbox
+      modelRef={spoonRef}
+      multiplier={2}
+    />
+
+    <ClickHitbox
+      modelRef={mainDropperRef}
+      multiplier={2}
+    />
+
+    <ClickHitbox
+      modelRef={testube01Ref}
+      multiplier={1.2}
+    />
+
+    <ClickHitbox
+      modelRef={redLitmusRef}
+      multiplier={2}
+    />
+
+    <ClickHitbox
+      modelRef={mainPolystereneRef}
+      multiplier={1.5}
+    />
+  </>
+)
 }
 
 export default ClickObject

@@ -14,7 +14,8 @@ const ChemEnvironment = () => {
          filterFoldedPaper,filterFoldedPaperRef,funnelRef,arrowChairRef,arrowNormalBeakerRef,
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
          arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef,arrowDropperRef,
-         mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction
+         mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
+         arrowPolystereneRef,mainPolystereneRef
   } = useContext(ModelContext)
 
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
@@ -123,7 +124,8 @@ const hideLiquidObjects=(root)=>{
     testube02Ref.current = scene.getObjectByName('main-testube-02');
     testube03Ref.current = scene.getObjectByName('main-testube-03');
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
-    mainDropperRef.current = scene.getObjectByName('main-dropper')
+    mainDropperRef.current = scene.getObjectByName('main-dropper');
+    mainPolystereneRef.current = scene.getObjectByName('mainPolystyrene')
 
     filterFoldedPaperRef.current = scene.getObjectByName('main-folded-paper')
     filterFoldedPaperRef.current.visible = false;
@@ -149,8 +151,7 @@ const hideLiquidObjects=(root)=>{
   }, [scene])
 
 
-  useEffect(() => {
-    
+  useEffect(() => {    
       arrowChairRef.current = scene.getObjectByName('chair-arrow');
       arrowChairRef.current.visible = false
 
@@ -186,6 +187,10 @@ const hideLiquidObjects=(root)=>{
 
       arrowTestube02Ref.current = scene.getObjectByName('testube-arrow-02')
       arrowTestube02Ref.current.visible = false;
+
+      arrowPolystereneRef.current = scene.getObjectByName('main-polysterene-arrow');
+      arrowPolystereneRef.current.visible = false;
+
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)
@@ -208,7 +213,8 @@ useEffect(() => {
     filterPaperRef,
     filterFoldedPaperRef,
     funnelRef,
-    mainDropperRef
+    mainDropperRef,
+    mainPolystereneRef
   ]
 
   labModels.forEach((modelRef) => {

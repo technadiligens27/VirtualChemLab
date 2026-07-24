@@ -8,14 +8,16 @@ const AllArrows=()=>{
 
     const {arrowNormalBeakerRef,arrowChairRef,arrowGogglesRef,arrowLeftGloveRef,
         arrowRightGloveRef,arrowRedLitmusRef,conicalBeakerRef,arrowConicalFlaskRef,
-        arrowSpoonRef,arrowSaltContainerRef,mainDropperRef,arrowDropperRef, arrowTestube01Ref
+        arrowSpoonRef,arrowSaltContainerRef,mainDropperRef,arrowDropperRef, arrowTestube01Ref,
+        arrowPolystereneRef
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
         showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow,isMainGuideline,
         showConicalArrow,setShowArrowConicalArrow,showSpoonArrow,
         showSaltContainerArrow,setShowSaltContainerArrow,showTestube01Arrow,
-        showDropperArrow,setShowDropperArrow,isTutorialMode
+        showDropperArrow,setShowDropperArrow,isTutorialMode,showPolystereneArrow,
+
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -39,8 +41,7 @@ const AllArrows=()=>{
         {showSaltContainerArrow && <ArrowGuides arrowRef={arrowSaltContainerRef} speed={2.5} height={0.5} showStatus={showSaltContainerArrow}/>}
         {showTestube01Arrow &&  <ArrowGuides arrowRef={arrowTestube01Ref} speed={2.5} height={0.5} showStatus={showTestube01Arrow}/> }
         {showDropperArrow &&  <ArrowGuides arrowRef={arrowDropperRef} speed={2.5} height={0.5} showStatus={showDropperArrow}/> }
-
-       
+        {showPolystereneArrow && <ArrowGuides arrowRef={arrowPolystereneRef} speed={2.5} height={0.5} showStatus={showPolystereneArrow}/>}
         </>
     )
 }

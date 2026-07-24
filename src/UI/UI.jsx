@@ -20,6 +20,7 @@ import ProteinIdentification from "./AllLessons/ProteinIdentification/ProteinIde
 import SideGuide from "./SideGuide/SideGuide"
 import LessonDetails from "./LessonDetails/LessonDetails"
 import LessonSummary from "./LessonSummary/LessonSummary"
+import EnthalpyHessLaw from "./AllLessons/EnthalpyHessLaw/EnthalpyHessLaw"
 
 
 // const saltDissolvingSummary = {
@@ -207,7 +208,9 @@ const UI = () => {
     isTutorialMode,showSpoonArrow,setShowSpoonArrow,
     setIsTutorialMode,showConicalArrow,setShowArrowConicalArrow,
     setShowSaltContainerArrow,labResetKey,setShowTestube01Arrow,
-    showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu
+    showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu,
+    ShowNormalBeakerArrow,setShowNormalBeakerArrow,
+    showPolystereneArrow,setShowPolystereneArrow
   } = useContext(MainGuidelineContext)
 
   const {
@@ -217,6 +220,23 @@ const UI = () => {
     chairStep,
   } = useContext(InteractionContext)
 
+
+
+  // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    if(selectedLesson===8 && safetyStep===4){
+      setShowNormalBeakerArrow(true)
+    }
+  },[safetyStep,selectedLesson,ShowNormalBeakerArrow])
+
+  useEffect(()=>{
+      setShowPolystereneArrow(selectedLesson===8 && lessonStep===4)
+  },[selectedLesson,lessonStep,showPolystereneArrow])
+
+
+
+  //-------------------------------------------------
 
 
 
@@ -465,6 +485,13 @@ const UI = () => {
         selectedLesson === 7 && (
           <ProteinIdentification />
         )}  
+
+
+     {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 8 && (
+          <EnthalpyHessLaw />
+        )}     
 
       <AllErrors />
 

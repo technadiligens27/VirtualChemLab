@@ -18,6 +18,7 @@ import { TransformControls } from "@react-three/drei"
 import DropperPlaced from "../DropperPlaced/DropperPlaced"
 import DropperScrollAnimation from "../DropperScrollAnimation/DropperScrollAnimation"
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
+import PlacePolysterene from "../PlacePolysterene/PlacePolysterene"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -36,7 +37,8 @@ const HoldRight = ({ modeldata }) => {
 
     isFunnelMode,
     selectedModelRight,isDropperPlaced,
-    isDropperFilled
+    isDropperFilled, 
+    setIsPlacePolysterene,isPlacePolysterene
   } = useContext(InteractionContext)
 
   const {
@@ -183,11 +185,11 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,isMainGuideline])
 
-  // useEffect(()=>{
-  //   if(lessonStep===6 && selectedLesson===7 && isTutorialMode){
-  //     setLessonStep(7)
-  //   }
-  // })
+  useEffect(()=>{
+    if(lessonStep===4 && selectedLesson===8 && isTutorialMode){
+      setLessonStep(5)
+    }
+  })
 
   return (
     <>
@@ -259,6 +261,9 @@ const transformControlsRef = useRef()
       {
        !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
+
+      {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>
+  )}
     </>
   )
 }
