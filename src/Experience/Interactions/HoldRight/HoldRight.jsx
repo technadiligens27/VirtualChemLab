@@ -180,7 +180,16 @@ const transformControlsRef = useRef()
   const isLitmus = (name) => name?.toLowerCase().includes("litmus");
 
   useEffect(()=>{
-    if(lessonStep===6 && isMainGuideline){
+    if(selectedLesson ===8 && lessonStep ===5){
+      console.log('lessonStep=5')
+      setLessonStep(6)
+    }
+  },[lessonStep,selectedLesson])
+
+  // General step change
+
+  useEffect(()=>{
+    if(lessonStep===6 && isMainGuideline && selectedLesson !==8){
       setLessonStep(7)
     }
   },[lessonStep,isMainGuideline])

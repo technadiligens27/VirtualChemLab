@@ -132,7 +132,8 @@ export const InteractionProvider = ({ children }) => {
   setIsSitting(true);
   setChairStep(0)
   setIsDropperPlaced(false);
-  setIsDropperFilled(false)
+  setIsDropperFilled(false);
+  setIsPlacePolysterene(false)
 }
 
   return (

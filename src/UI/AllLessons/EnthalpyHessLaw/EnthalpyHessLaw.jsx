@@ -24,13 +24,13 @@ const EnthalpyHessLaw = () =>{
         "Click the Polysterene Cup and select the Right Hand option.",
 
       step4:
-        "Select Copper Sulfate (CuSO₄) and choose 50 mL.",
+        "Click the Polysterene Cup and select Place in Beaker",
 
       step5:
-        "Click the conical flask and select the Right Hand option to pick it up.",
+        "Now Lest Keep the Beaker back in the table- Click Beaker and press Keep Back on Table",
 
       step6:
-        "Click the conical flask again and select the Add Liquid option.",
+        "Click the Testube and select Left Hand Option",
 
       step7:
         "Select Sodium Hydroxide (NaOH) and choose 50 mL.",
@@ -173,17 +173,17 @@ const EnthalpyHessLaw = () =>{
 
         {
             lessonStep===6  &&
-            <DialogBox text={Enthalpy[0].step5}/>
+            <DialogBox text={Enthalpy[0].step4}/>
         }  
 
         {
             lessonStep===7  &&
-            <DialogBox text={Enthalpy[0].step6}/>
+            <DialogBox text={Enthalpy[0].step5}/>
         }  
 
         {
             lessonStep===8  &&
-            <DialogBox text={Enthalpy[0].step7}/>
+            <DialogBox text={Enthalpy[0].step6}/>
         }
 
         {

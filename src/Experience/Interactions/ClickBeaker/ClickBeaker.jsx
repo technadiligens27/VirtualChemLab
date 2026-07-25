@@ -466,16 +466,12 @@ const ClickObject = () => {
   }
 
   const keepBackOnTable = (hand) => {
-    if (hand === "left" && isMainGuideline) {
-      setShowErrorMsgNo(4)
-      setSelectedObject(null)
-      return
-    }
-
-    if (hand === "right" && isMainGuideline) {
-      setShowErrorMsgNo(4)
-      setSelectedObject(null)
-      return
+    if (
+      hand === "left" &&
+      selectedLesson === 8 &&
+      lessonStep === 7
+    ) {
+      setLessonStep(8)
     }
 
     const handData = getHandData(hand)
@@ -484,22 +480,13 @@ const ClickObject = () => {
 
     const object = handData.ref.current
 
-    if (handData.originalParent) {
-      handData.originalParent.add(object)
-    } else {
-      scene.add(object)
-    }
+    handData.originalParent.add(object)
 
     object.position.copy(handData.originalPosition)
     object.rotation.copy(handData.originalRotation)
     object.scale.set(1, 1, 1)
-    object.visible = true
-
-    handleFilterVisibilityAfterKeepBack(handData)
-    handleModeAfterKeepBack(handData)
 
     clearHandData(hand)
-
     setSelectedObject(null)
   }
 
@@ -754,9 +741,9 @@ const ClickObject = () => {
     }
   }
 
-  useEffect(()=>{
-    console.log('lessonStep:',lessonStep)
-  },[lessonStep])
+  // useEffect(()=>{
+  //   console.log('lessonStep:',lessonStep)
+  // },[lessonStep])
 
 
   const openFillBeakerBox = () => {
@@ -911,7 +898,7 @@ const addSaltToSpoon = () => {
 const handlePlacePolysterene = () => {
   if (
     selectedLesson === 8 &&
-    lessonStep === 5
+    lessonStep === 6
   ) {
     setIsPlacePolysterene(true)
     setSelectedObject(null)

@@ -1,26 +1,26 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import * as THREE from "three"
 
-const PlacePolysterene = ({
-  beakerRef,
-  polystereneRef,
-  hand,
-}) => {
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
+
+const PlacePolysterene = ({beakerRef,polystereneRef,hand,}) => {
+  const {setSelectedLeftHand,setSelectedRightHand,setIsPlacePolysterene} = useContext(InteractionContext);
+  const {selectedLesson,lessonStep, setLessonStep} = useContext(MainGuidelineContext)
+
+  useEffect(()=>{
+    if(lessonStep===6 && selectedLesson ===8){
+      setLessonStep(7)
+    }
+  },[lessonStep,selectedLesson])
+
   useEffect(() => {
     const beaker = beakerRef?.current
     const cup = polystereneRef?.current
 
     if (!beaker || !cup) return
 
-    const polystereneHand = hand
-    const beakerHand =
-      hand === "right" ? "left" : "right"
-
-    console.log("Polystyrene hand:", polystereneHand)
-    console.log("Beaker hand:", beakerHand)
-
     let stirPoint = null
-    beaker.position.x =0
 
     beaker.traverse((child) => {
       if (
@@ -40,6 +40,7 @@ const PlacePolysterene = ({
 
     stirPoint.getWorldPosition(stirWorldPosition)
 
+    // Place the cup inside the beaker
     beaker.attach(cup)
 
     const localPosition = beaker.worldToLocal(
@@ -47,15 +48,27 @@ const PlacePolysterene = ({
     )
 
     cup.position.copy(localPosition)
-
-    // Height offset
-    cup.position.y += 2.2
+    cup.position.y += 1.8
 
     cup.rotation.set(0, 0, 0)
+    cup.scale.set(1.3, 1.3, 1.3)
+
+    // Free the hand that was holding the cup
+    if (hand === "right") {
+      setSelectedRightHand(null)
+    } else {
+      setSelectedLeftHand(null)
+    }
+
+    // Placement has finished
+    setIsPlacePolysterene(false)
   }, [
     beakerRef,
     polystereneRef,
     hand,
+    setSelectedLeftHand,
+    setSelectedRightHand,
+    setIsPlacePolysterene,
   ])
 
   return null

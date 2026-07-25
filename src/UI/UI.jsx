@@ -235,6 +235,9 @@ const UI = () => {
   },[selectedLesson,lessonStep,showPolystereneArrow])
 
 
+  // useEffect(()=>{
+  //   setShowTestube01Arrow(lessonStep===8 && selectedLesson===8)
+  // },[lessonStep,selectedLesson])
 
   //-------------------------------------------------
 
@@ -289,7 +292,7 @@ const UI = () => {
 
   useEffect(()=>{
     setShowArrowConicalArrow(
-      lessonStep===6 && selectedLesson !==1 && selectedLesson!==7 && selectedLesson !==3
+      lessonStep===6 && selectedLesson !==1 && selectedLesson!==7 && selectedLesson !==3 && selectedLesson !==8
     )
   },[lessonStep,showConicalArrow])
 
@@ -301,9 +304,12 @@ const UI = () => {
     setShowSaltContainerArrow(selectedLesson===1 && lessonStep===7)
   },[lessonStep,selectedLesson])
 
-  useEffect(()=>{
-    setShowTestube01Arrow(selectedLesson===7 && lessonStep===3)
-  },[selectedLesson,lessonStep])
+useEffect(() => {
+  setShowTestube01Arrow(
+    (selectedLesson === 8 && lessonStep === 8) ||
+    (selectedLesson === 7 && lessonStep === 3)
+  )
+}, [selectedLesson, lessonStep])
 
   useEffect(() => {
     setShowDropperArrow(selectedLesson===7 && lessonStep===6)
