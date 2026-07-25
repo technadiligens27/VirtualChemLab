@@ -15,7 +15,8 @@ const ChemEnvironment = () => {
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
          arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef,arrowDropperRef,
          mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
-         arrowPolystereneRef,mainPolystereneRef
+         arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef
+         
   } = useContext(ModelContext)
 
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
@@ -52,7 +53,7 @@ const hideSaltBits = (root) => {
   root.traverse((child) => {
     const childName = child.name?.toLowerCase()
 
-    if (childName?.includes("salt-bits")) {
+    if (childName?.includes("salt-pottasium-carbonate-bits")) {
       child.visible = false
       // console.log("Precipitate hidden:", child.name)
     }
@@ -143,6 +144,7 @@ const hideLiquidObjects=(root)=>{
   }
 
   saltContainerRef.current = scene.getObjectByName('salt-container')
+  pottasiumCarbonateContainerRef.current = scene.getObjectByName('pottasium-carbonate-container')
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -190,6 +192,9 @@ const hideLiquidObjects=(root)=>{
 
       arrowPolystereneRef.current = scene.getObjectByName('main-polysterene-arrow');
       arrowPolystereneRef.current.visible = false;
+
+      arrowPottasiumCarbonateRef.current = scene.getObjectByName('pottasium-carbonate-container-arrow');
+      arrowPottasiumCarbonateRef.current.visible = false
 
   }, [scene])
 

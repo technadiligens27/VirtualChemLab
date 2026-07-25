@@ -25,7 +25,8 @@ const HoldLeft = ({ modeldata }) => {
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
-  const {lessonStep,setLessonStep,isMainGuideline,setShowNormalBeakerArrow} = useContext(MainGuidelineContext)
+  const {lessonStep,setLessonStep,isMainGuideline,
+         setShowNormalBeakerArrow,selectedLesson} = useContext(MainGuidelineContext)
 
   const {isReactionRef} = useContext(ReactionContext)
 
@@ -53,6 +54,11 @@ const HoldLeft = ({ modeldata }) => {
     }
   },[lessonStep])
 
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===8){
+      setLessonStep(9)
+    }
+  },[lessonStep,selectedLesson])
 
 
   useEffect(() => {

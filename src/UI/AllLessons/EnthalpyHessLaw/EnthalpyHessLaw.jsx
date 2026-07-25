@@ -33,7 +33,7 @@ const EnthalpyHessLaw = () =>{
         "Click the Testube and select Left Hand Option",
 
       step7:
-        "Select Sodium Hydroxide (NaOH) and choose 50 mL.",
+        "Click the Spatula and Select Right Hand Option",
 
       step8:
         "Press P to enter pouring mode.",
@@ -188,16 +188,16 @@ const EnthalpyHessLaw = () =>{
 
         {
             lessonStep===9  &&
-            <DialogBox text={Enthalpy[0].step8}/>
+            <DialogBox text={Enthalpy[0].step7}/>
         } 
 
         {
            lessonStep ===10 && 
-           <DialogBox text={Enthalpy[0].step9}/>
+           <DialogBox text={Enthalpy[0].step8}/>
         }
         {
            lessonStep ===11 && 
-           <DialogBox text={Enthalpy[0].step10}/>
+           <DialogBox text={Enthalpy[0].step9}/>
         }  
         </>
     )

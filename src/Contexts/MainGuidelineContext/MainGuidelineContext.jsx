@@ -30,10 +30,14 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showSaltContainerArrow, setShowSaltContainerArrow] = useState(false);
   const [showTestube01Arrow,setShowTestube01Arrow] = useState(false)
 
-  const [showDropperArrow,setShowDropperArrow] = useState(false)
+  const [showDropperArrow,setShowDropperArrow] = useState(false);
+
+  const [showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow] = useState(false)
 
   const [labResetKey, setLabResetKey] = useState(0)
-  const labResetVersionRef = useRef(0)
+  const labResetVersionRef = useRef(0);
+
+  
 
   const resetLessonGuidelines = () => {
     labResetVersionRef.current += 1
@@ -141,7 +145,12 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowDropperArrow,
 
         showPolystereneArrow,
-        setShowPolystereneArrow
+        setShowPolystereneArrow,
+
+        showPottasiumCarbonateArrow,
+        setShowPottasiumCarbonateArrow
+
+
       }}
     >
       {children}

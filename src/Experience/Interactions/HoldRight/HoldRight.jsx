@@ -186,6 +186,12 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,selectedLesson])
 
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===9){
+      setLessonStep(10)
+    }
+  })
+
   // General step change
 
   useEffect(()=>{

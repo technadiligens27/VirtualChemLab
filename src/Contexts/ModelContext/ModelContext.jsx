@@ -23,6 +23,7 @@ export const ModelProvider = ({ children }) => {
   const funnelRef = useRef(null)
   const mainDropperRef = useRef(null);
   const mainPolystereneRef = useRef(null)
+  const pottasiumCarbonateContainerRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -43,6 +44,7 @@ export const ModelProvider = ({ children }) => {
   const arrowTestube01Ref = useRef(null)
   const arrowTestube02Ref = useRef(null)
   const arrowPolystereneRef = useRef(null)
+  const arrowPottasiumCarbonateRef = useRef(null)
 
   const saltContainerRef = useRef(null)
 
@@ -73,7 +75,9 @@ export const ModelProvider = ({ children }) => {
         arrowDropperRef,
         arrowTestube01Ref,arrowTestube02Ref,
         dropperAnimationAction,setDropperAnimationAction,
-        arrowPolystereneRef,mainPolystereneRef
+        arrowPolystereneRef,mainPolystereneRef,
+        pottasiumCarbonateContainerRef,
+        arrowPottasiumCarbonateRef 
       }}
     >
       {children}

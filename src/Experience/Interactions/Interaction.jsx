@@ -13,13 +13,15 @@ import FilterFunnelController from "./FilterFunnelController/FilterFunnelControl
 import AllArrows from "../../UI/AllArrows/AllArrows";
 import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext";
 import AddSaltToSpoon from "./AddSaltToSpoon/AddSaltToSpoon";
+import AddPottasiumCarobnateToSpoon from "./AddPottasiumCarobnateToSpoon/AddPottasiumCarobnateToSpoon";
 
 const Interaction = () => {
   const {
     isFillUpBeaker,
     selectedRightHand,
     selectedLeftHand,
-    fillBeakerHand,setIsDragging,isStirMode,isAddSalt,setIsAddSalt
+    fillBeakerHand,setIsDragging,isStirMode,isAddSalt,setIsAddSalt,
+    isPottasiumCarobnateInSpoon
   } = useContext(InteractionContext);
 
   const {lessonStep,isTutorialMode,safetyStep,setSafetyStep} = useContext(MainGuidelineContext)
@@ -44,6 +46,7 @@ const Interaction = () => {
       <FilterFunnelController/>
       <AllArrows/>
       {isAddSalt && <AddSaltToSpoon/>}      
+      {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
 

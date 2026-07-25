@@ -43,7 +43,8 @@ const ClickObject = () => {
     spoonHasSalt, setSpoonHasSalt,
     setIsAddSalt,
     isDropperPlaced,setIsDropperPlaced,
-    isPlacePolysterene,setIsPlacePolysterene
+    isPlacePolysterene,setIsPlacePolysterene,
+    setIsPottasiumCarobnateInSpoon
   } = useContext(InteractionContext)
 
   const {
@@ -65,7 +66,8 @@ const ClickObject = () => {
     saltContainerRef,
 
     funnelRef,mainDropperRef,
-    mainPolystereneRef
+    mainPolystereneRef,
+    pottasiumCarbonateContainerRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -145,6 +147,10 @@ const ClickObject = () => {
       {
         name:'mainPolysterene',
        ref:mainPolystereneRef
+      },
+      {
+        name:'pottasium-carbonate-container',
+        ref:pottasiumCarbonateContainerRef
       }
     ],
     [
@@ -163,7 +169,8 @@ const ClickObject = () => {
       funnelRef,
       saltContainerRef,
       mainDropperRef,
-      mainPolystereneRef
+      mainPolystereneRef,
+      pottasiumCarbonateContainerRef
     ]
   )
 
@@ -639,6 +646,13 @@ const ClickObject = () => {
 
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
+    
+    if(selectedLesson===8 && lessonStep===8){
+      if (objectName !== "main-testube-01") {
+        setShowErrorMsgNo(1)
+        return false
+      }
+    }
 
     if(selectedLesson===8 && lessonStep ==3){
       if (objectName !== "main-normal-beaker") {
@@ -783,39 +797,53 @@ const ClickObject = () => {
 
     const selectedHand = selectedObject.hand
 
-    setIsLitmusMode(false)
-    setIsStirMode(false)
-    setIsFillUpBeaker(false)
+        setIsLitmusMode(false)
+        setIsStirMode(false)
+        setIsFillUpBeaker(false)
 
-    setFillBeakerHand(selectedHand)
-    setIsFillBeakerBoxOpen(true)
-    setSelectedObject(null)
-  }
+        setFillBeakerHand(selectedHand)
+        setIsFillBeakerBoxOpen(true)
+        setSelectedObject(null)
+      }
 
-  const handleMainHoldingAction = () => {
-    if (isSpoon(selectedObject.name)) {
-      toggleStirMode()
-      return
+    const pourIntoTestTube = () => {
+      console.log("Pour into test tube")
+      setSelectedObject(null)
     }
 
-    if (isLitmus(selectedObject.name)) {
-      toggleLitmusMode()
-      return
-    }
+      const handleMainHoldingAction = () => {
+      if (isSpoon(selectedObject.name)) {
+        if (selectedLesson === 8) {
+          pourIntoTestTube()
+          return
+        }
 
-    if (isAnyFilterPaper(selectedObject.name)) {
-      handleFilterPaperAction()
-      return
-    }
+        toggleStirMode()
+        return
+      }
 
-    openFillBeakerBox()
-  }
+      if (isLitmus(selectedObject.name)) {
+        toggleLitmusMode()
+        return
+      }
+
+      if (isAnyFilterPaper(selectedObject.name)) {
+        handleFilterPaperAction()
+        return
+      }
+
+      openFillBeakerBox()
+    }
 
   const getMainHoldingButtonText = () => {
 
     
     
     if (isSpoon(selectedObject.name)) {
+      if (selectedLesson === 8) {
+        return "Pour Into Test Tube"
+      }
+
       return isStirMode ? "Exit Stir Mode" : "Stir"
     }
 
@@ -955,6 +983,11 @@ const handlePlacePolysterene = () => {
     }
   }
 
+
+  const addPottasiumCarbinateToSpoon = ()=>{
+    setIsPottasiumCarobnateInSpoon(true);
+  }
+
   const renderTableObjectButtons = () => {
   if (selectedObject?.name === "salt-container") {
     return (
@@ -963,6 +996,15 @@ const handlePlacePolysterene = () => {
       </button>
     )
   }
+
+  if (selectedObject?.name === "pottasium-carbonate-container") {
+    return (
+      <button onClick={()=>addPottasiumCarbinateToSpoon()}>
+        Take Pottasium Carbonate
+      </button>
+    )
+  }
+
 
   return renderHandSelectionButtons()
 }
