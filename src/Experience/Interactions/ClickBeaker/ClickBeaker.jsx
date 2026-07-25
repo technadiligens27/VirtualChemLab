@@ -44,7 +44,8 @@ const ClickObject = () => {
     setIsAddSalt,
     isDropperPlaced,setIsDropperPlaced,
     isPlacePolysterene,setIsPlacePolysterene,
-    setIsPottasiumCarobnateInSpoon
+    setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
+    isPourIntoTestube
   } = useContext(InteractionContext)
 
   const {
@@ -70,7 +71,9 @@ const ClickObject = () => {
     pottasiumCarbonateContainerRef
   } = useContext(ModelContext)
 
-  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
+  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,
+    
+  } =
     useContext(MainGuidelineContext)
 
   const { camera, gl, scene } = useThree()
@@ -473,29 +476,38 @@ const ClickObject = () => {
   }
 
   const keepBackOnTable = (hand) => {
-    if (
-      hand === "left" &&
-      selectedLesson === 8 &&
-      lessonStep === 7
-    ) {
-      setLessonStep(8)
+      const handData = getHandData(hand)
+
+      if (!handData?.ref?.current) return
+
+      // Existing beaker step progression
+      if (
+        hand === "left" &&
+        selectedLesson === 8 &&
+        lessonStep === 7
+      ) {
+        setLessonStep(8)
+      }
+
+      // Spoon cleanup
+      if (
+        handData.name === "main-spoon" &&
+        isPourIntoTestube
+      ) {
+        setIsPourIntoTestube(false)
+      }
+
+      const object = handData.ref.current
+
+      handData.originalParent.add(object)
+
+      object.position.copy(handData.originalPosition)
+      object.rotation.copy(handData.originalRotation)
+      object.scale.set(1, 1, 1)
+
+      clearHandData(hand)
+      setSelectedObject(null)
     }
-
-    const handData = getHandData(hand)
-
-    if (!handData?.ref?.current) return
-
-    const object = handData.ref.current
-
-    handData.originalParent.add(object)
-
-    object.position.copy(handData.originalPosition)
-    object.rotation.copy(handData.originalRotation)
-    object.scale.set(1, 1, 1)
-
-    clearHandData(hand)
-    setSelectedObject(null)
-  }
 
   const getWorldPopupPosition = (objectRef) => {
     const worldPosition = new THREE.Vector3()
@@ -700,11 +712,15 @@ const ClickObject = () => {
   }
 
   const pickObjectWithRightHand = () => {
-    if (!validateRightHandPick(selectedObject?.name)) return
+  if (!validateRightHandPick(selectedObject?.name)) return
 
-    setSelectedRightHand(createHandObjectData("right"))
-    setSelectedObject(null)
-  }
+  const data = createHandObjectData("right")
+
+  console.log("Going to right hand:", data.name)
+
+  setSelectedRightHand(data)
+  setSelectedObject(null)
+}
 
   const toggleFunnelMode = () => {
     setIsFunnelMode((prev) => !prev)
@@ -773,7 +789,6 @@ const ClickObject = () => {
     // Only show wrong when lesson step is 8
     // and the clicked object is in the left hand
     if (isMainGuideline && lessonStep === 8 && selectedObject.hand === "left") {
-      console.log("Wrong")
       setShowErrorMsgNo(4)
       setSelectedObject(null)
       return
@@ -806,15 +821,27 @@ const ClickObject = () => {
         setSelectedObject(null)
       }
 
+   const togglePourIntoTestTube = () => {
+    setIsPourIntoTestube((previousValue) => {
+      const newValue = !previousValue
+
+      console.log("isPourIntoTestube:", newValue)
+
+      return newValue
+  })
+
+  setSelectedObject(null)
+}
+
     const pourIntoTestTube = () => {
-      console.log("Pour into test tube")
+      setIsPourIntoTestube(true)
       setSelectedObject(null)
     }
 
-      const handleMainHoldingAction = () => {
+    const handleMainHoldingAction = () => {
       if (isSpoon(selectedObject.name)) {
         if (selectedLesson === 8) {
-          pourIntoTestTube()
+          togglePourIntoTestTube()
           return
         }
 
@@ -836,27 +863,32 @@ const ClickObject = () => {
     }
 
   const getMainHoldingButtonText = () => {
+      if (isSpoon(selectedObject.name)) {
+        if (selectedLesson === 8) {
+          return isPourIntoTestube
+            ? "Disable Pour Mode"
+            : "Pour Into Test Tube"
+        }
 
-    
-    
-    if (isSpoon(selectedObject.name)) {
-      if (selectedLesson === 8) {
-        return "Pour Into Test Tube"
+        return isStirMode
+          ? "Exit Stir Mode"
+          : "Stir"
       }
 
-      return isStirMode ? "Exit Stir Mode" : "Stir"
-    }
+      if (isLitmus(selectedObject.name)) {
+        return isLitmusMode
+          ? "Stop Test"
+          : "Test Liquid"
+      }
 
-    if (isLitmus(selectedObject.name)) {
-      return isLitmusMode ? "Stop Test" : "Test Liquid"
-    }
+      if (isAnyFilterPaper(selectedObject.name)) {
+        return isFilterFolded
+          ? "Unfold Paper"
+          : "Fold Paper"
+      }
 
-    if (isAnyFilterPaper(selectedObject.name)) {
-      return isFilterFolded ? "Unfold Paper" : "Fold Paper"
+      return "Add Liquid"
     }
-
-    return "Add Liquid"
-}
 
 
   const getOtherHandData = (hand) => {

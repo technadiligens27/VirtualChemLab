@@ -19,6 +19,7 @@ import DropperPlaced from "../DropperPlaced/DropperPlaced"
 import DropperScrollAnimation from "../DropperScrollAnimation/DropperScrollAnimation"
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 import PlacePolysterene from "../PlacePolysterene/PlacePolysterene"
+import PourIntoTestubeFromSpoon from "../PourIntoTestubeFromSpoon/PourIntoTestubeFromSpoon"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -38,16 +39,20 @@ const HoldRight = ({ modeldata }) => {
     isFunnelMode,
     selectedModelRight,isDropperPlaced,
     isDropperFilled, 
-    setIsPlacePolysterene,isPlacePolysterene
+    setIsPlacePolysterene,isPlacePolysterene,isPourIntoTestube,
+    isPottasiumCarobnateInSpoon,
   } = useContext(InteractionContext)
 
   const {
     filterFoldedPaperRef,
     filterPaperRef,
     funnelRef,
+    spoonRef
   } = useContext(ModelContext)
 
-  const {lessonStep,isMainGuideline,setLessonStep,selectedLesson,isTutorialMode} = useContext(MainGuidelineContext)
+  const {lessonStep,isMainGuideline,setLessonStep,selectedLesson,isTutorialMode,
+    
+  } = useContext(MainGuidelineContext)
 
   const {isReactionRef} = useContext(ReactionContext)
 
@@ -181,7 +186,6 @@ const transformControlsRef = useRef()
 
   useEffect(()=>{
     if(selectedLesson ===8 && lessonStep ===5){
-      console.log('lessonStep=5')
       setLessonStep(6)
     }
   },[lessonStep,selectedLesson])
@@ -190,7 +194,7 @@ const transformControlsRef = useRef()
     if(selectedLesson===8 && lessonStep ===9){
       setLessonStep(10)
     }
-  })
+  },[selectedLesson,lessonStep])
 
   // General step change
 
@@ -277,9 +281,21 @@ const transformControlsRef = useRef()
        !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
 
-      {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>
-  )}
-    </>
+      {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>)}
+
+
+      { isPourIntoTestube &&
+        selectedLeftHand?.name === "main-testube-01" && (
+          <PourIntoTestubeFromSpoon
+            testubeRef={selectedLeftHand.ref}
+            spoonRef={spoonRef}
+            hand="right"
+            heightOffset={0.6}
+            xOffset={0.6}
+          />
+        )
+      }  
+  </>
   )
 }
 

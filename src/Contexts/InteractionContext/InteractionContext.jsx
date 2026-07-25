@@ -69,7 +69,11 @@ export const InteractionProvider = ({ children }) => {
 
   const [isPlacePolysterene,setIsPlacePolysterene] = useState(false);
 
-  const [isPottasiumCarobnateInSpoon,setIsPottasiumCarobnateInSpoon]=useState(false)
+  const [isPottasiumCarobnateInSpoon,setIsPottasiumCarobnateInSpoon] = useState(false);
+  
+  const [isPourIntoTestube,setIsPourIntoTestube] = useState(false)
+
+  const [isPotassiumTransferred,setIsPotassiumTransferred] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -135,7 +139,9 @@ export const InteractionProvider = ({ children }) => {
   setChairStep(0)
   setIsDropperPlaced(false);
   setIsDropperFilled(false);
-  setIsPlacePolysterene(false)
+  setIsPlacePolysterene(false);
+  setIsPourIntoTestube(false);
+  setIsPotassiumTransferred(false)
 }
 
   return (
@@ -177,7 +183,10 @@ export const InteractionProvider = ({ children }) => {
         isDropperPlaced,setIsDropperPlaced,
         isDropperFilled,setIsDropperFilled,
         isPlacePolysterene,setIsPlacePolysterene,
-        isPottasiumCarobnateInSpoon,setIsPottasiumCarobnateInSpoon
+        isPottasiumCarobnateInSpoon,setIsPottasiumCarobnateInSpoon,
+        isPourIntoTestube,setIsPourIntoTestube,
+        isPotassiumTransferred,setIsPotassiumTransferred
+
       }}
     >
       {children}

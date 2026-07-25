@@ -36,16 +36,16 @@ const EnthalpyHessLaw = () =>{
         "Click the Spatula and Select Right Hand Option",
 
       step8:
-        "Press P to enter pouring mode.",
+        "Click the Pottasium Carbonate Container and Select Take Pottasium Carbonate",
 
       step9:
-        "Scroll the mouse wheel to pour the sodium hydroxide into the copper sulfate solution.",
+        "Click the spoon and select Pour Into Testube.",
 
       step10:
-        "Observe the reaction as a light blue precipitate forms inside the beaker.",
+        "Now scroll down mouse to rotate the spoon",
 
       step11:
-        "The light blue precipitate confirms that copper sulfate has reacted with sodium hydroxide to form insoluble copper hydroxide.",
+        "Click the spoon and disable Pour Mode",
     },
   ]
 
@@ -199,6 +199,16 @@ const EnthalpyHessLaw = () =>{
            lessonStep ===11 && 
            <DialogBox text={Enthalpy[0].step9}/>
         }  
+
+        {
+           lessonStep ===12 && 
+           <DialogBox text={Enthalpy[0].step10}/>
+        }    
+
+        {
+           lessonStep ===13 && 
+           <DialogBox text={Enthalpy[0].step11}/>
+        }   
         </>
     )
 }

@@ -47,6 +47,19 @@ const ChemEnvironment = () => {
   })
 }
 
+ const hidePowderObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("powder")) {
+      child.visible = false
+      // console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
+
 const hideSaltBits = (root) => {
   if (!root) return
 
@@ -149,6 +162,7 @@ const hideLiquidObjects=(root)=>{
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
   hideSaltBits(scene)
+  hidePowderObjects(scene)
 
   }, [scene])
 
