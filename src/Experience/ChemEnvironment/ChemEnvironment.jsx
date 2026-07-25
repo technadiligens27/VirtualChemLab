@@ -15,7 +15,8 @@ const ChemEnvironment = () => {
          arrowGogglesRef,arrowLeftGloveRef,arrowRightGloveRef,arrowRedLitmusRef,normalPrecipitateRef,
          arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef,arrowDropperRef,
          mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
-         arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef
+         arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
+         digitalBalanceRef,arrowBalanceRef
          
   } = useContext(ModelContext)
 
@@ -157,7 +158,9 @@ const hideLiquidObjects=(root)=>{
   }
 
   saltContainerRef.current = scene.getObjectByName('salt-container')
-  pottasiumCarbonateContainerRef.current = scene.getObjectByName('pottasium-carbonate-container')
+  pottasiumCarbonateContainerRef.current = scene.getObjectByName('pottasium-carbonate-container');
+
+  digitalBalanceRef.current = scene.getObjectByName('mainMassBalance')
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -209,6 +212,9 @@ const hideLiquidObjects=(root)=>{
 
       arrowPottasiumCarbonateRef.current = scene.getObjectByName('pottasium-carbonate-container-arrow');
       arrowPottasiumCarbonateRef.current.visible = false
+
+      arrowBalanceRef.current = scene.getObjectByName('balance-arrow');
+      arrowBalanceRef.current.visible = false
 
   }, [scene])
 
