@@ -304,8 +304,26 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     }
 
     /*
+     Buirette Container
+    */
+
+
+    else if (
+      lowerBeakerName.includes(
+        "main-buirette"
+      ) 
+    ) {
+      amountRef.current =
+        selectedAmount * 0.010
+
+      speedRef.current = 0.8
+    }
+    
+        /*
       Fallback container.
     */
+
+
     else {
       amountRef.current =
         selectedAmount * 0.2

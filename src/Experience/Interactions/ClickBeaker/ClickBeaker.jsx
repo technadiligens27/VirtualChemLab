@@ -796,49 +796,67 @@ const ClickObject = () => {
 
 
   const openFillBeakerBox = () => {
-    if (!selectedObject) return
+      if (!selectedObject) return
 
-    if(isTutorialMode){
-      if(selectedLesson==7 && lessonStep!==11 && lessonStep !==4){
-        setShowErrorMsgNo(4);
-        setSelectedObject(null);
+      if (isTutorialMode) {
+        if (
+          selectedLesson === 7 &&
+          lessonStep !== 11 &&
+          lessonStep !== 4
+        ) {
+          setShowErrorMsgNo(4)
+          setSelectedObject(null)
+          return
+        }
+      }
+
+      if (
+        isMainGuideline &&
+        lessonStep === 8 &&
+        selectedObject.hand === "left" &&
+        selectedLesson !== 8
+      ) {
+        setShowErrorMsgNo(4)
+        setSelectedObject(null)
         return
       }
-    }
-    // Only show wrong when lesson step is 8
-    // and the clicked object is in the left hand
-    if (isMainGuideline && lessonStep === 8 && selectedObject.hand === "left") {
-      setShowErrorMsgNo(4)
+
+      if (isMainGuideline) {
+        const isAllowedStep =
+          lessonStep === 4 ||
+          lessonStep === 7 ||
+          lessonStep === 8 ||
+          (selectedLesson === 7 &&
+            (lessonStep === 4 || lessonStep === 11)) ||
+          (selectedLesson === 8 &&
+            lessonStep === 19)
+
+        if (!isAllowedStep) {
+          setShowErrorMsgNo(4)
+          setSelectedObject(null)
+          return
+        }
+
+        if (
+          selectedLesson === 3 &&
+          lessonStep !== 4
+        ) {
+          setShowErrorMsgNo(4)
+          setSelectedObject(null)
+          return
+        }
+      }
+
+      const selectedHand = selectedObject.hand
+
+      setIsLitmusMode(false)
+      setIsStirMode(false)
+      setIsFillUpBeaker(false)
+
+      setFillBeakerHand(selectedHand)
+      setIsFillBeakerBoxOpen(true)
       setSelectedObject(null)
-      return
     }
-
-    if (isMainGuideline) {
-      if (lessonStep !== 4 && lessonStep !== 7 && lessonStep !== 8 && selectedLesson !==7) {
-        setShowErrorMsgNo(4)
-        setSelectedObject(null)
-        return
-      }
-
-      if (  selectedLesson === 3 &&  lessonStep !== 4 ) {
-        setShowErrorMsgNo(4)
-        setSelectedObject(null)
-        return
-      }
-    }
-
-
-
-    const selectedHand = selectedObject.hand
-
-        setIsLitmusMode(false)
-        setIsStirMode(false)
-        setIsFillUpBeaker(false)
-
-        setFillBeakerHand(selectedHand)
-        setIsFillBeakerBoxOpen(true)
-        setSelectedObject(null)
-      }
 
    const togglePourIntoTestTube = () => {
       setIsPourIntoTestube((previousValue) => {
