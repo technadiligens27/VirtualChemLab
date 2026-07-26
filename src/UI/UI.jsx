@@ -210,7 +210,8 @@ const UI = () => {
     setShowSaltContainerArrow,labResetKey,setShowTestube01Arrow,
     showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu,
     ShowNormalBeakerArrow,setShowNormalBeakerArrow,
-    showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow
+    showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow,
+    showBalanceArrow,setShowBalanceArrow
   } = useContext(MainGuidelineContext)
 
   const {
@@ -236,6 +237,10 @@ const UI = () => {
 
   useEffect(()=>{
     setShowPottasiumCarbonateArrow(selectedLesson===8 && lessonStep === 10)
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    setShowBalanceArrow(lessonStep===14 && selectedLesson === 8)
   },[selectedLesson,lessonStep])
 
 

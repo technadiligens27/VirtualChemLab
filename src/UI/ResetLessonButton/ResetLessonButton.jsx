@@ -25,7 +25,8 @@ const ResetLessonButton = () => {
     filterPaperRef,
     filterFoldedPaperRef,
     funnelRef,mainDropperRef,
-    dropperAnimationAction,mainPolystereneRef
+    dropperAnimationAction,mainPolystereneRef,
+    digitalBalanceRef
   } = useContext(ModelContext)
 
   const { resetInteractions } =
@@ -80,7 +81,7 @@ const resetLesson = () => {
     filterFoldedPaperRef,
     funnelRef,
     mainDropperRef,
-
+digitalBalanceRef,
     mainPolystereneRef
   ]
 

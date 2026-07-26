@@ -173,6 +173,10 @@ const transformControlsRef = useRef()
       object.scale.set(1.3, 1.3, 1.3)
       object.rotation.x = Math.PI / 3
       object.rotation.z = -2
+    }else if(object.name === "main-buirette"){
+      object.scale.set(0.9, 0.9, 0.9);
+      object.position.y+=1
+      
     } else {
       object.scale.set(1, 1, 1)
     }
@@ -196,6 +200,7 @@ const transformControlsRef = useRef()
     }
   },[selectedLesson,lessonStep])
 
+  
   // General step change
 
   useEffect(()=>{

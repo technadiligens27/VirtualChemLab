@@ -60,6 +60,12 @@ const HoldLeft = ({ modeldata }) => {
     }
   },[lessonStep,selectedLesson])
 
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===18){
+      setLessonStep(19)
+    }
+  },[selectedLesson,lessonStep])
+
 
   useEffect(() => {
     const canvas = gl.domElement
@@ -157,6 +163,10 @@ const HoldLeft = ({ modeldata }) => {
     }
     else if(object.name === "main-normal-beaker"){
       object.scale.set(0.9, 0.9, 0.9);
+      
+    }else if(object.name === "main-buirette"){
+      object.scale.set(0.8, 0.8, 0.8);
+      object.position.y+=1
       
     }
     else {

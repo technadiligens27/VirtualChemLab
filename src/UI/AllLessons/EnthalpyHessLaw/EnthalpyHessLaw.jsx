@@ -46,6 +46,23 @@ const EnthalpyHessLaw = () =>{
 
       step11:
         "Click the spoon and disable Pour Mode",
+
+      step12:
+        "Now click the digital balance and select Place Balance",  
+
+      step13:
+        "Now click the Spoon and select Keep Back on Table",  
+      step14:
+        "Now click the Testube and select Weigh Testube",    
+
+      step15:
+        "Now click the Testube again and select Keep on Table",    
+
+      step16:
+        "Now Click The Buirette and Select Left Hand Option",  
+        
+      step17:
+        "Now Click The Buirette and Select Add Liquid Option",  
     },
   ]
 
@@ -208,7 +225,36 @@ const EnthalpyHessLaw = () =>{
         {
            lessonStep ===13 && 
            <DialogBox text={Enthalpy[0].step11}/>
-        }   
+        }
+
+        {
+           lessonStep ===14 && 
+           <DialogBox text={Enthalpy[0].step12}/>
+        }
+
+        {
+          lessonStep ===15 && 
+           <DialogBox text={Enthalpy[0].step13}/>
+        }
+
+        {
+          lessonStep ===16 && 
+           <DialogBox text={Enthalpy[0].step14}/>
+        }  
+
+        
+        {lessonStep ===17 && 
+           <DialogBox text={Enthalpy[0].step15}/>
+        }  
+
+        {lessonStep ===18 && 
+           <DialogBox text={Enthalpy[0].step16}/>
+        } 
+
+       {lessonStep ===19 && 
+           <DialogBox text={Enthalpy[0].step17}/>
+        }  
+
         </>
     )
 }

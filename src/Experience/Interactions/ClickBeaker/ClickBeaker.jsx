@@ -45,7 +45,8 @@ const ClickObject = () => {
     isDropperPlaced,setIsDropperPlaced,
     isPlacePolysterene,setIsPlacePolysterene,
     setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
-    isPourIntoTestube
+    isPourIntoTestube,setIsWeighTestube,isWeighTestube,
+
   } = useContext(InteractionContext)
 
   const {
@@ -68,13 +69,18 @@ const ClickObject = () => {
 
     funnelRef,mainDropperRef,
     mainPolystereneRef,
-    pottasiumCarbonateContainerRef
+    pottasiumCarbonateContainerRef,
+    digitalBalanceRef,
+    mainBuiretteRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,
     
   } =
     useContext(MainGuidelineContext)
+
+ const {isBalancePlaced,setIsBalancePlaced} = useContext(InteractionContext)
+  
 
   const { camera, gl, scene } = useThree()
 
@@ -154,6 +160,14 @@ const ClickObject = () => {
       {
         name:'pottasium-carbonate-container',
         ref:pottasiumCarbonateContainerRef
+      },
+      {
+        name:'mainMassBalance',
+        ref:digitalBalanceRef
+      },
+      {
+        name:'main-buirette',
+        ref:mainBuiretteRef
       }
     ],
     [
@@ -173,7 +187,9 @@ const ClickObject = () => {
       saltContainerRef,
       mainDropperRef,
       mainPolystereneRef,
-      pottasiumCarbonateContainerRef
+      pottasiumCarbonateContainerRef,
+      digitalBalanceRef,
+      mainBuiretteRef
     ]
   )
 
@@ -184,6 +200,8 @@ const ClickObject = () => {
   const isLitmus = (name) => name?.toLowerCase().includes("litmus")
 
   const isDropper = (name) =>name === "main-dropper"
+
+  const isTestTube = (name) => name === "main-testube-01" || name === "main-testube-02" || name === "main-testube-03"
 
   const isFlatFilterPaper = (name) =>
     name?.toLowerCase().includes("filter-paper")
@@ -476,38 +494,39 @@ const ClickObject = () => {
   }
 
   const keepBackOnTable = (hand) => {
-      const handData = getHandData(hand)
+    const handData = getHandData(hand)
 
-      if (!handData?.ref?.current) return
+    if (!handData?.ref?.current) return
 
-      // Existing beaker step progression
-      if (
-        hand === "left" &&
-        selectedLesson === 8 &&
-        lessonStep === 7
-      ) {
-        setLessonStep(8)
-      }
-
-      // Spoon cleanup
-      if (
-        handData.name === "main-spoon" &&
-        isPourIntoTestube
-      ) {
-        setIsPourIntoTestube(false)
-      }
-
-      const object = handData.ref.current
-
-      handData.originalParent.add(object)
-
-      object.position.copy(handData.originalPosition)
-      object.rotation.copy(handData.originalRotation)
-      object.scale.set(1, 1, 1)
-
-      clearHandData(hand)
-      setSelectedObject(null)
+    if ( handData.name === "main-spoon" && selectedLesson === 8 && lessonStep === 15) {
+      setLessonStep(16)
     }
+
+    if (  hand === "left" &&  selectedLesson === 8 && lessonStep === 7 ) {
+      setLessonStep(8)
+    }
+
+    if ( handData.name === "main-spoon" && isPourIntoTestube ) {
+      setIsPourIntoTestube(false)
+    }
+
+    if ( handData.name === "main-testube-01" && isWeighTestube ) {
+      if(lessonStep === 17 && selectedLesson ===8){
+        setLessonStep(18)
+      }
+    }
+
+    const object = handData.ref.current
+
+    handData.originalParent.add(object)
+
+    object.position.copy(handData.originalPosition)
+    object.rotation.copy(handData.originalRotation)
+    object.scale.set(1, 1, 1)
+
+    clearHandData(hand)
+    setSelectedObject(null)
+  }
 
   const getWorldPopupPosition = (objectRef) => {
     const worldPosition = new THREE.Vector3()
@@ -822,23 +841,55 @@ const ClickObject = () => {
       }
 
    const togglePourIntoTestTube = () => {
-    setIsPourIntoTestube((previousValue) => {
-      const newValue = !previousValue
+      setIsPourIntoTestube((previousValue) => {
+        if (previousValue) {
+          if(selectedLesson===8 && lessonStep === 13)
+          setLessonStep(14)
+        }
 
-      console.log("isPourIntoTestube:", newValue)
+        return !previousValue
+      })
 
-      return newValue
-  })
-
-  setSelectedObject(null)
-}
+      setSelectedObject(null)
+    }
 
     const pourIntoTestTube = () => {
       setIsPourIntoTestube(true)
       setSelectedObject(null)
     }
 
-    const handleMainHoldingAction = () => {
+
+    const handleWeighTestTube = () => {
+        if (
+          isBalancePlaced &&
+          selectedLesson === 8 &&
+          (lessonStep === 16 || lessonStep === 17) &&
+          isTestTube(selectedObject?.name)
+        ) {
+          setIsWeighTestube(true)
+
+          if (lessonStep === 16) {
+            setLessonStep(17)
+          }
+
+          setSelectedObject(null)
+          return
+        }
+
+        setShowErrorMsgNo(4)
+        setSelectedObject(null)
+      }
+
+  const handleMainHoldingAction = () => {
+      // All held test tubes in Lesson 8 use weighing
+      if (
+        selectedLesson === 8 &&
+        isTestTube(selectedObject?.name)
+      ) {
+        handleWeighTestTube()
+        return
+      }
+
       if (isSpoon(selectedObject.name)) {
         if (selectedLesson === 8) {
           togglePourIntoTestTube()
@@ -863,33 +914,41 @@ const ClickObject = () => {
     }
 
   const getMainHoldingButtonText = () => {
-      if (isSpoon(selectedObject.name)) {
-        if (selectedLesson === 8) {
-          return isPourIntoTestube
-            ? "Disable Pour Mode"
-            : "Pour Into Test Tube"
-        }
+  // In Lesson 8, test tubes are weighed,
+  // not filled using Add Liquid
+  if (
+    selectedLesson === 8 &&
+    isTestTube(selectedObject?.name)
+  ) {
+    return "Weigh Test Tube"
+  }
 
-        return isStirMode
-          ? "Exit Stir Mode"
-          : "Stir"
-      }
-
-      if (isLitmus(selectedObject.name)) {
-        return isLitmusMode
-          ? "Stop Test"
-          : "Test Liquid"
-      }
-
-      if (isAnyFilterPaper(selectedObject.name)) {
-        return isFilterFolded
-          ? "Unfold Paper"
-          : "Fold Paper"
-      }
-
-      return "Add Liquid"
+  if (isSpoon(selectedObject.name)) {
+    if (selectedLesson === 8) {
+      return isPourIntoTestube
+        ? "Disable Pour Mode"
+        : "Pour Into Test Tube"
     }
 
+    return isStirMode
+      ? "Exit Stir Mode"
+      : "Stir"
+  }
+
+  if (isLitmus(selectedObject.name)) {
+    return isLitmusMode
+      ? "Stop Test"
+      : "Test Liquid"
+  }
+
+  if (isAnyFilterPaper(selectedObject.name)) {
+    return isFilterFolded
+      ? "Unfold Paper"
+      : "Fold Paper"
+  }
+
+  return "Add Liquid"
+}
 
   const getOtherHandData = (hand) => {
   return hand === "left" ? selectedRightHand : selectedLeftHand
@@ -1015,34 +1074,142 @@ const handlePlacePolysterene = () => {
     }
   }
 
+  const keepWeighedTestTubeOnTable = (hand) => {
+  const handData = getHandData(hand)
+
+  if (!handData?.ref?.current) {
+    return
+  }
+
+  const testube = handData.ref.current
+
+  // First move directly from balance
+  // back to its original table parent
+  handData.originalParent.add(testube)
+
+  testube.position.copy(
+    handData.originalPosition
+  )
+
+  testube.rotation.copy(
+    handData.originalRotation
+  )
+
+  testube.scale.set(1, 1, 1)
+
+  testube.updateMatrixWorld(true)
+
+  // Now reset the balance reading
+  setIsWeighTestube(false)
+
+  // The test tube is no longer held
+  clearHandData(hand)
+
+  setSelectedObject(null)
+
+  if (
+    selectedLesson === 8 &&
+    lessonStep === 17
+  ) {
+    setLessonStep(18)
+  }
+
+  console.log(
+    "Test tube moved directly from balance to table"
+  )
+}
+
+ const handleRemoveTestTube = () => {
+    if (
+      !isWeighTestube ||
+      !isTestTube(selectedObject?.name)
+    ) {
+      return
+    }
+
+    console.log(
+      "Test tube removed from balance"
+    )
+
+    // HoldLeft/HoldRight will place it back
+    // in the previously selected hand
+    setIsWeighTestube(false)
+
+    setSelectedObject(null)
+}
+const handlePlaceBalance = () => {
+  setIsBalancePlaced((previousValue) => !previousValue)
+  setSelectedObject(null)
+}
+
+  const handleRemoveBalance = ()=>{
+    setIsBalancePlaced(false)
+  }
+
 
   const addPottasiumCarbinateToSpoon = ()=>{
     setIsPottasiumCarobnateInSpoon(true);
   }
 
   const renderTableObjectButtons = () => {
-  if (selectedObject?.name === "salt-container") {
-    return (
-      <button onClick={()=>addSaltToSpoon()} >
-        Take Salt
-      </button>
-    )
+
+
+    if (selectedObject?.name === "salt-container") {
+      return (
+        <button onClick={addSaltToSpoon}>
+          Take Salt
+        </button>
+      )
+    }
+
+    if (
+      selectedObject?.name ===
+      "pottasium-carbonate-container"
+    ) {
+      return (
+        <button
+          onClick={addPottasiumCarbinateToSpoon}
+        >
+          Take Potassium Carbonate
+        </button>
+      )
+    }
+
+    if (selectedObject?.name === "mainMassBalance") {
+      return (
+        <button onClick={handlePlaceBalance}>
+          {isBalancePlaced
+            ? "Remove Balance"
+            : "Place Balance"}
+        </button>
+      )
+    }
+
+    return renderHandSelectionButtons()
   }
-
-  if (selectedObject?.name === "pottasium-carbonate-container") {
-    return (
-      <button onClick={()=>addPottasiumCarbinateToSpoon()}>
-        Take Pottasium Carbonate
-      </button>
-    )
-  }
-
-
-  return renderHandSelectionButtons()
-}
 
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
+
+  if ( isWeighTestube && isTestTube(selectedObject.name)) {
+    return (
+      <>
+        <button
+          onClick={() =>
+            keepWeighedTestTubeOnTable(
+              selectedObject.hand
+            )
+          }
+        >
+          Keep Back On Table
+        </button>
+
+        <button onClick={handleRemoveTestTube}>
+          Remove Test Tube
+        </button>
+      </>
+    )
+  }
 
   if (
     isFilterFolded &&
@@ -1204,6 +1371,11 @@ const renderHeldObjectButtons = () => {
     <ClickHitbox
       modelRef={mainPolystereneRef}
       multiplier={1.5}
+    />
+
+    <ClickHitbox
+      modelRef={mainBuiretteRef}
+      multiplier={3}
     />
   </>
 )

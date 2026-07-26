@@ -73,7 +73,11 @@ export const InteractionProvider = ({ children }) => {
   
   const [isPourIntoTestube,setIsPourIntoTestube] = useState(false)
 
-  const [isPotassiumTransferred,setIsPotassiumTransferred] = useState(false)
+  const [isPotassiumTransferred,setIsPotassiumTransferred] = useState(false);
+
+  const [isBalancePlaced,setIsBalancePlaced] = useState(false)
+  const [isWeighTestube,setIsWeighTestube] = useState(false)
+
 
   const resetInteractions = () => {
   // Empty both hands
@@ -141,7 +145,9 @@ export const InteractionProvider = ({ children }) => {
   setIsDropperFilled(false);
   setIsPlacePolysterene(false);
   setIsPourIntoTestube(false);
-  setIsPotassiumTransferred(false)
+  setIsPotassiumTransferred(false);
+  setIsBalancePlaced(false);
+  setIsWeighTestube(false)
 }
 
   return (
@@ -185,7 +191,9 @@ export const InteractionProvider = ({ children }) => {
         isPlacePolysterene,setIsPlacePolysterene,
         isPottasiumCarobnateInSpoon,setIsPottasiumCarobnateInSpoon,
         isPourIntoTestube,setIsPourIntoTestube,
-        isPotassiumTransferred,setIsPotassiumTransferred
+        isPotassiumTransferred,setIsPotassiumTransferred,
+        isBalancePlaced,setIsBalancePlaced,
+        isWeighTestube,setIsWeighTestube
 
       }}
     >

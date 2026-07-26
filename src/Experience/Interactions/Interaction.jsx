@@ -14,6 +14,10 @@ import AllArrows from "../../UI/AllArrows/AllArrows";
 import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext";
 import AddSaltToSpoon from "./AddSaltToSpoon/AddSaltToSpoon";
 import AddPottasiumCarobnateToSpoon from "./AddPottasiumCarobnateToSpoon/AddPottasiumCarobnateToSpoon";
+import PlaceDigitalBalance from "./PlaceDigitalBalance/PlaceDigitalBalance";
+import WeighTestube from "./WeighTestube/WeighTestube";
+import { ModelContext } from "../../Contexts/ModelContext/ModelContext";
+import BalanceReading from "./BalanceReading/BalanceReading";
 
 const Interaction = () => {
   const {
@@ -21,10 +25,13 @@ const Interaction = () => {
     selectedRightHand,
     selectedLeftHand,
     fillBeakerHand,setIsDragging,isStirMode,isAddSalt,setIsAddSalt,
-    isPottasiumCarobnateInSpoon
+    isPottasiumCarobnateInSpoon,isBalancePlaced,
+    isWeighTestube
   } = useContext(InteractionContext);
 
-  const {lessonStep,isTutorialMode,safetyStep,setSafetyStep} = useContext(MainGuidelineContext)
+  const {testube01Ref,digitalBalanceRef} = useContext(ModelContext)
+
+  const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
   const clickBeakerOption=()=>{
     if(isTutorialMode){
@@ -47,9 +54,15 @@ const Interaction = () => {
       <AllArrows/>
       {isAddSalt && <AddSaltToSpoon/>}      
       {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}
+      {isBalancePlaced && <PlaceDigitalBalance/>}
+      {isWeighTestube && selectedLesson===8 &&<WeighTestube testubeRef={testube01Ref}/>}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
-
+      {selectedLesson===8  &&  <BalanceReading 
+        balanceRef={digitalBalanceRef}
+        isWeighTestube={isWeighTestube}
+        finalMass={24.7}
+        />}
 
     </>
   );

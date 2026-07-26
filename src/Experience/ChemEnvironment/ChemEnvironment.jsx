@@ -5,6 +5,7 @@ import ChairSlide from '../Interactions/ChairSlide/ChairSlide';
 import { saveModelStartState } from "../resetModels/resetModels.jsx"
 import { useAnimations} from "@react-three/drei"
 import * as THREE from "three"
+import { InteractionContext } from '../../Contexts/InteractionContext/InteractionContext.jsx';
 
 const ChemEnvironment = () => {
 
@@ -16,9 +17,10 @@ const ChemEnvironment = () => {
          arrowConicalFlaskRef,arrowSpoonRef,saltContainerRef,arrowSaltContainerRef,arrowDropperRef,
          mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
          arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
-         digitalBalanceRef,arrowBalanceRef
-         
-  } = useContext(ModelContext)
+         digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
+         arrowBuirette      
+  } = useContext(ModelContext);
+
 
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
   const { actions, names } = useAnimations(animations, scene)
@@ -140,7 +142,10 @@ const hideLiquidObjects=(root)=>{
     testube03Ref.current = scene.getObjectByName('main-testube-03');
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
     mainDropperRef.current = scene.getObjectByName('main-dropper');
-    mainPolystereneRef.current = scene.getObjectByName('mainPolystyrene')
+    mainPolystereneRef.current = scene.getObjectByName('mainPolystyrene');
+
+    testube01CapRef.current = scene.getObjectByName('testube-cap')
+    testube01CapRef.current.visible = false
 
     filterFoldedPaperRef.current = scene.getObjectByName('main-folded-paper')
     filterFoldedPaperRef.current.visible = false;
@@ -160,7 +165,10 @@ const hideLiquidObjects=(root)=>{
   saltContainerRef.current = scene.getObjectByName('salt-container')
   pottasiumCarbonateContainerRef.current = scene.getObjectByName('pottasium-carbonate-container');
 
-  digitalBalanceRef.current = scene.getObjectByName('mainMassBalance')
+  digitalBalanceRef.current = scene.getObjectByName('mainMassBalance');
+  balancePositionRef.current = scene.getObjectByName('balance-position')
+  trayPointRef.current = scene.getObjectByName('tray-point-empty');
+  mainBuiretteRef.current = scene.getObjectByName('main-buirette');
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -216,6 +224,9 @@ const hideLiquidObjects=(root)=>{
       arrowBalanceRef.current = scene.getObjectByName('balance-arrow');
       arrowBalanceRef.current.visible = false
 
+      arrowBuirette.current = scene.getObjectByName('buirette-arrow');
+      arrowBuirette.current.visible = false
+
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)
@@ -239,7 +250,8 @@ useEffect(() => {
     filterFoldedPaperRef,
     funnelRef,
     mainDropperRef,
-    mainPolystereneRef
+    mainPolystereneRef,
+    digitalBalanceRef
   ]
 
   labModels.forEach((modelRef) => {

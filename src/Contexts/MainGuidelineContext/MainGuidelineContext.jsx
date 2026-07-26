@@ -37,6 +37,8 @@ export const MainGuidelineProvider = ({ children }) => {
   const [labResetKey, setLabResetKey] = useState(0)
   const labResetVersionRef = useRef(0);
 
+  const [showBalanceArrow,setShowBalanceArrow] = useState(false)
+
   
 
   const resetLessonGuidelines = () => {
@@ -148,7 +150,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowPolystereneArrow,
 
         showPottasiumCarbonateArrow,
-        setShowPottasiumCarbonateArrow
+        setShowPottasiumCarbonateArrow,
+
+        showBalanceArrow,
+        setShowBalanceArrow
 
 
       }}

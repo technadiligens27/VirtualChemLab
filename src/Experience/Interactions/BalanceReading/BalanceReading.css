@@ -1,0 +1,28 @@
+.balance-model-screen {
+  width: 3210px;
+  height: 808px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 10px;
+
+  background: #b8d7b0;
+  color: #17251a;
+
+  /* border: 2px solid #263a2b; */
+  border-radius: 3px;
+
+  font-family: "Courier New", monospace;
+  font-size: 825px;
+  font-weight: bold;
+
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.balance-model-screen span {
+  margin-left: 5px;
+  font-size: 14px;
+}
