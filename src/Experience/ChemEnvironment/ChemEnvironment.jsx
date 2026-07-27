@@ -18,7 +18,7 @@ const ChemEnvironment = () => {
          mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
          arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
-         arrowBuirette      
+         arrowBuirette,buretteClampRef,arrowBuretteClampRef     
   } = useContext(ModelContext);
 
 
@@ -169,6 +169,7 @@ const hideLiquidObjects=(root)=>{
   balancePositionRef.current = scene.getObjectByName('balance-position')
   trayPointRef.current = scene.getObjectByName('tray-point-empty');
   mainBuiretteRef.current = scene.getObjectByName('main-buirette');
+  buretteClampRef.current = scene.getObjectByName('mainBuretteClamp')
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -225,7 +226,10 @@ const hideLiquidObjects=(root)=>{
       arrowBalanceRef.current.visible = false
 
       arrowBuirette.current = scene.getObjectByName('buirette-arrow');
-      arrowBuirette.current.visible = false
+      arrowBuirette.current.visible = false;
+
+      arrowBuretteClampRef.current = scene.getObjectByName('burette-clamp-arrow');
+      arrowBuretteClampRef.current.visible = false
 
   }, [scene])
 
@@ -251,7 +255,8 @@ useEffect(() => {
     funnelRef,
     mainDropperRef,
     mainPolystereneRef,
-    digitalBalanceRef
+    digitalBalanceRef,
+    mainBuiretteRef
   ]
 
   labModels.forEach((modelRef) => {

@@ -1,4 +1,8 @@
-import { useContext, useEffect } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 import * as THREE from "three"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
@@ -10,33 +14,75 @@ const PlaceDigitalBalance = () => {
     digitalBalanceRef,
   } = useContext(ModelContext)
 
-  const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
+  const {
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-  useEffect(()=>{
-    if(selectedLesson===8 && lessonStep === 14){
-        setLessonStep(15)
-    }
-  },[lessonStep,selectedLesson])
-  
+  const originalPositionRef = useRef(null)
 
   useEffect(() => {
-    const balancePosition= balancePositionRef?.current
-    const digitalBalance = digitalBalanceRef?.current
+    if (
+      selectedLesson === 8 &&
+      lessonStep === 14
+    ) {
+      setLessonStep(15)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
+    const balancePosition =
+      balancePositionRef?.current
+
+    const digitalBalance =
+      digitalBalanceRef?.current
 
     if (!balancePosition || !digitalBalance) return
 
-    const balanceWorldPosition = new THREE.Vector3()
+    // Save original position
+    originalPositionRef.current =
+      digitalBalance.position.clone()
 
-    balancePosition.getWorldPosition(balanceWorldPosition)
+    const balanceWorldPosition =
+      new THREE.Vector3()
+
+    balancePosition.getWorldPosition(
+      balanceWorldPosition
+    )
 
     const balanceParent = digitalBalance.parent
 
     if (balanceParent) {
-      balanceParent.worldToLocal(balanceWorldPosition)
+      balanceParent.worldToLocal(
+        balanceWorldPosition
+      )
     }
 
-    digitalBalance.position.copy(balanceWorldPosition)
-  }, [balancePositionRef, digitalBalanceRef])
+    digitalBalance.position.copy(
+      balanceWorldPosition
+    )
+
+    digitalBalance.updateMatrixWorld(true)
+
+    // Runs when component unmounts
+    return () => {
+      if (originalPositionRef.current) {
+        digitalBalance.position.copy(
+          originalPositionRef.current
+        )
+
+        digitalBalance.updateMatrixWorld(true)
+      }
+    }
+  }, [
+    balancePositionRef,
+    digitalBalanceRef,
+  ])
 
   return null
 }

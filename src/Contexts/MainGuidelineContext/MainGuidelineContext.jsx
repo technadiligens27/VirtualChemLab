@@ -39,6 +39,8 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [showBalanceArrow,setShowBalanceArrow] = useState(false)
 
+  const [showBuretteArrow,setShowBuretteArrow] = useState(false);
+
   
 
   const resetLessonGuidelines = () => {
@@ -153,7 +155,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowPottasiumCarbonateArrow,
 
         showBalanceArrow,
-        setShowBalanceArrow
+        setShowBalanceArrow,
+
+        showBuretteArrow,
+        setShowBuretteArrow
 
 
       }}

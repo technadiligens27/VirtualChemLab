@@ -148,8 +148,9 @@ const transformControlsRef = useRef()
     
       if (object.name === "main-normal-beaker") {
         object.rotation.y = Math.PI // 180 degrees
+        object.scale.set(0.9, 0.9, 0.9);
       }
-    if (object.name === "main-spoon") {
+    else if (object.name === "main-spoon") {
       object.rotation.set(
         -1.4285088984579244,
         -0.30110700753116976,
@@ -191,6 +192,12 @@ const transformControlsRef = useRef()
   useEffect(()=>{
     if(selectedLesson ===8 && lessonStep ===5){
       setLessonStep(6)
+    }
+  },[lessonStep,selectedLesson])
+
+  useEffect(()=>{
+    if(selectedLesson ===8 && lessonStep ===21){
+      setLessonStep(22)
     }
   },[lessonStep,selectedLesson])
 

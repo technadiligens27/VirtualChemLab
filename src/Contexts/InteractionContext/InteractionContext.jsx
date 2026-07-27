@@ -78,6 +78,9 @@ export const InteractionProvider = ({ children }) => {
   const [isBalancePlaced,setIsBalancePlaced] = useState(false)
   const [isWeighTestube,setIsWeighTestube] = useState(false)
 
+  const [isBuirettePourMode,setIsBuirettePourMode] = useState(false);
+  const [isBuiretteClamped,setIsBuiretteClamped] = useState(false)
+
 
   const resetInteractions = () => {
   // Empty both hands
@@ -147,7 +150,9 @@ export const InteractionProvider = ({ children }) => {
   setIsPourIntoTestube(false);
   setIsPotassiumTransferred(false);
   setIsBalancePlaced(false);
-  setIsWeighTestube(false)
+  setIsWeighTestube(false);
+  setIsBuirettePourMode(false);
+  setIsBuiretteClamped(false)
 }
 
   return (
@@ -193,7 +198,9 @@ export const InteractionProvider = ({ children }) => {
         isPourIntoTestube,setIsPourIntoTestube,
         isPotassiumTransferred,setIsPotassiumTransferred,
         isBalancePlaced,setIsBalancePlaced,
-        isWeighTestube,setIsWeighTestube
+        isWeighTestube,setIsWeighTestube,
+        isBuirettePourMode,setIsBuirettePourMode,
+        isBuiretteClamped,setIsBuiretteClamped
 
       }}
     >

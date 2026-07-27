@@ -63,6 +63,25 @@ const EnthalpyHessLaw = () =>{
         
       step17:
         "Now Click The Buirette and Select Add Liquid Option",  
+
+      step18:
+        "Add HCL 50 ml",  
+
+      step19:
+        "Select Normal Beaker And Take it to Right Hand",
+      
+      step20:
+        "Now Lets Remove the balance by clikcing on the digital balance and electing remove balance",  
+
+      step21:
+        "Now click the burette and select Clamp Burette",  
+
+      step22:
+        "Now click the burette and select Clamp Burette",  
+
+      step23:
+        "Now Click the beaker and select Place beaker",  
+
     },
   ]
 
@@ -253,7 +272,33 @@ const EnthalpyHessLaw = () =>{
 
        {lessonStep ===19 && 
            <DialogBox text={Enthalpy[0].step17}/>
-        }  
+       }
+
+       {lessonStep ===20 && 
+           <DialogBox text={Enthalpy[0].step18}/>
+       }
+
+       {lessonStep ===21 && 
+           <DialogBox text={Enthalpy[0].step19}/>
+       }
+
+       {lessonStep ===22 && 
+           <DialogBox text={Enthalpy[0].step20}/>
+       }
+
+       {lessonStep ===23 && 
+           <DialogBox text={Enthalpy[0].step21}/>
+       }
+
+       {lessonStep ===24 && 
+           <DialogBox text={Enthalpy[0].step22}/>
+       }
+
+       {lessonStep ===25 && 
+           <DialogBox text={Enthalpy[0].step23}/>
+       }       
+          
+     
 
         </>
     )

@@ -135,6 +135,13 @@ const acids = [
   // },[selectedLesson,lessonStep])
 
 
+  useEffect(()=>{
+    if(selectedLesson ===8 && lessonStep ===19){
+      setLessonStep(20)
+    }
+  },[selectedLesson,lessonStep])
+
+
    useEffect(()=>{
     if(selectedLesson==2 && lessonStep ===7 ){
       setLessonStep(8)

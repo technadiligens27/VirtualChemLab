@@ -26,7 +26,7 @@ const ResetLessonButton = () => {
     filterFoldedPaperRef,
     funnelRef,mainDropperRef,
     dropperAnimationAction,mainPolystereneRef,
-    digitalBalanceRef
+    digitalBalanceRef,mainBuiretteRef
   } = useContext(ModelContext)
 
   const { resetInteractions } =
@@ -78,11 +78,12 @@ const resetLesson = () => {
     testube02Ref,
     testube03Ref,
     filterPaperRef,
-    filterFoldedPaperRef,
+    filterFoldedPaperRef, 
     funnelRef,
     mainDropperRef,
-digitalBalanceRef,
-    mainPolystereneRef
+    digitalBalanceRef,
+    mainPolystereneRef,
+    mainBuiretteRef
   ]
 
   // This turns isLitmusMode off

@@ -71,7 +71,8 @@ const ClickObject = () => {
     mainPolystereneRef,
     pottasiumCarbonateContainerRef,
     digitalBalanceRef,
-    mainBuiretteRef
+    mainBuiretteRef,
+    buretteClampRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,
@@ -79,7 +80,7 @@ const ClickObject = () => {
   } =
     useContext(MainGuidelineContext)
 
- const {isBalancePlaced,setIsBalancePlaced} = useContext(InteractionContext)
+ const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped} = useContext(InteractionContext)
   
 
   const { camera, gl, scene } = useThree()
@@ -168,6 +169,10 @@ const ClickObject = () => {
       {
         name:'main-buirette',
         ref:mainBuiretteRef
+      },
+      {
+        name:'mainBuretteClamp',
+        ref:buretteClampRef
       }
     ],
     [
@@ -189,7 +194,8 @@ const ClickObject = () => {
       mainPolystereneRef,
       pottasiumCarbonateContainerRef,
       digitalBalanceRef,
-      mainBuiretteRef
+      mainBuiretteRef,
+      buretteClampRef
     ]
   )
 
@@ -393,6 +399,15 @@ const ClickObject = () => {
     setIsFilterFolded(false)
     setSelectedObject(null)
   }
+
+  const handlePlaceBeaker = () => {
+  console.log("Place beaker")
+
+  setSelectedObject(null)
+
+  // Add your placement state here later
+  // setIsBeakerPlaced(true)
+}
 
   const placeFilterInFunnel = (hand) => {
     const foldedPaper = filterFoldedPaperRef.current
@@ -877,6 +892,27 @@ const ClickObject = () => {
     }
 
 
+    const handleClampBurette = () => {
+        setIsBuiretteClamped((previousValue) => !previousValue)
+
+        if (selectedObject?.hand === "left") {
+          setSelectedLeftHand(null)
+        }
+
+        if (selectedObject?.hand === "right") {
+          setSelectedRightHand(null)
+        }
+
+        setSelectedObject(null)
+
+        if (
+          selectedLesson === 8 &&
+          lessonStep === 23
+        ) {
+          setLessonStep(24)
+        }
+      }
+
     const handleWeighTestTube = () => {
         if (
           isBalancePlaced &&
@@ -1158,10 +1194,14 @@ const handlePlacePolysterene = () => {
 const handlePlaceBalance = () => {
   setIsBalancePlaced((previousValue) => !previousValue)
   setSelectedObject(null)
+  if(isBalancePlaced && selectedLesson ===8 && lessonStep ===22){
+      setLessonStep(23)
+    }
 }
 
   const handleRemoveBalance = ()=>{
     setIsBalancePlaced(false)
+    
   }
 
 
@@ -1203,11 +1243,60 @@ const handlePlaceBalance = () => {
       )
     }
 
+    
+
     return renderHandSelectionButtons()
   }
 
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
+
+  if (
+  selectedLesson === 8 &&
+  selectedObject.name === "main-normal-beaker"
+) {
+  return (
+    <>
+      <button
+        onClick={() =>
+          keepBackOnTable(selectedObject.hand)
+        }
+      >
+        Keep Back On Table
+      </button>
+
+      <button onClick={openFillBeakerBox}>
+        Add Liquid
+      </button>
+
+      <button onClick={handlePlaceBeaker}>
+        Place Beaker
+      </button>
+    </>
+  )
+}
+
+  if (selectedObject.name === "main-buirette") {
+  return (
+    <>
+      <button
+        onClick={() =>
+          keepBackOnTable(selectedObject.hand)
+        }
+      >
+        Keep Back On Table
+      </button>
+
+      <button onClick={openFillBeakerBox}>
+        Add Liquid
+      </button>
+
+      <button onClick={handleClampBurette}>
+        {isBuiretteClamped ? "Unclamp" : "Clamp"}
+      </button>
+    </>
+  )
+}
 
   if ( isWeighTestube && isTestTube(selectedObject.name)) {
     return (
@@ -1393,8 +1482,16 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={mainBuiretteRef}
-      multiplier={3}
+      multiplier={1.5}
     />
+
+    <ClickHitbox
+      modelRef={buretteClampRef}
+      multiplier={1.5}    
+    />
+
+
+
   </>
 )
 }

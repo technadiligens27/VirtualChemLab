@@ -211,7 +211,7 @@ const UI = () => {
     showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu,
     ShowNormalBeakerArrow,setShowNormalBeakerArrow,
     showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow,
-    showBalanceArrow,setShowBalanceArrow
+    showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow
   } = useContext(MainGuidelineContext)
 
   const {
@@ -225,11 +225,18 @@ const UI = () => {
 
   // ------------------------ Lesson 08 -------------
 
+  useEffect(() => {
+    setShowNormalBeakerArrow(
+      selectedLesson === 8 &&
+      (lessonStep === 3 || lessonStep === 21)
+    )
+  }, [selectedLesson, lessonStep])
+
+
   useEffect(()=>{
-    if(selectedLesson===8 && safetyStep===4){
-      setShowNormalBeakerArrow(true)
-    }
-  },[safetyStep,selectedLesson,ShowNormalBeakerArrow])
+    setShowBuretteArrow(lessonStep===18 && selectedLesson===8)
+  },[selectedLesson, lessonStep])
+
 
   useEffect(()=>{
       setShowPolystereneArrow(selectedLesson===8 && lessonStep===4)

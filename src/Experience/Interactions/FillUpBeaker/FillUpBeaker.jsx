@@ -20,7 +20,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     setIsFillUpBeaker,
   } = useContext(InteractionContext)
 
-  const { lessonStep, setLessonStep } =
+  const { lessonStep, setLessonStep,selectedLesson } =
     useContext(MainGuidelineContext)
 
   const fillData =
@@ -441,6 +441,10 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     fillCompletedRef.current = true
 
     setIsFillUpBeaker(false)
+
+    if(selectedLesson ===8 && lessonStep ===20){
+      setLessonStep(21)
+    }
 
     if (lessonStep === 5) {
       setLessonStep(6)

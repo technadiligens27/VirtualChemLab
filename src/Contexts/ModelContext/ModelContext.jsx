@@ -26,7 +26,8 @@ export const ModelProvider = ({ children }) => {
   const pottasiumCarbonateContainerRef = useRef(null)
   const digitalBalanceRef = useRef(null);
   const testube01CapRef = useRef(null);
-  const mainBuiretteRef = useRef(null)
+  const mainBuiretteRef = useRef(null);
+  const buretteClampRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -49,7 +50,8 @@ export const ModelProvider = ({ children }) => {
   const arrowPolystereneRef = useRef(null)
   const arrowPottasiumCarbonateRef = useRef(null);
   const arrowBalanceRef = useRef(null);
-  const arrowBuirette = useRef(null)
+  const arrowBuirette = useRef(null);
+  const arrowBuretteClampRef = useRef(null)
 
   const saltContainerRef = useRef(null)
   const balancePositionRef = useRef(null)
@@ -88,7 +90,8 @@ export const ModelProvider = ({ children }) => {
         digitalBalanceRef,arrowBalanceRef,
         balancePositionRef,trayPointRef,
         testube01CapRef,mainBuiretteRef,
-        arrowBuirette
+        arrowBuirette,buretteClampRef,
+        arrowBuretteClampRef
       }}
     >
       {children}
