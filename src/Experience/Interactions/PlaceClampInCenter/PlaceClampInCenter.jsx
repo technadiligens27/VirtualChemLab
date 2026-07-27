@@ -6,14 +6,19 @@ import {
 import * as THREE from "three"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PlaceClampInCenter = () => {
-  const {
-    buretteClampRef,
-    balancePositionRef,
-  } = useContext(ModelContext)
+  const { buretteClampRef, balancePositionRef,} = useContext(ModelContext)
+  const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
 
   const originalTransformRef = useRef(null)
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep===25){
+      setLessonStep(26)
+    }
+  },[lessonStep,selectedLesson])
 
   useEffect(() => {
     const clamp = buretteClampRef?.current

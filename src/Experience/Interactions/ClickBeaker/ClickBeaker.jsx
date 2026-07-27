@@ -77,13 +77,12 @@ const ClickObject = () => {
     
   } = useContext(ModelContext)
 
-  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,
-    
-  } =
+  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
     useContext(MainGuidelineContext)
 
- const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped} = useContext(InteractionContext)
-  
+ const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,
+  isBeakerNearClamp,setIsBeakerNearClamp
+ } = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
 
@@ -403,13 +402,13 @@ const ClickObject = () => {
   }
 
   const handlePlaceBeaker = () => {
-  console.log("Place beaker")
-
-  setSelectedObject(null)
-
-  // Add your placement state here later
-  // setIsBeakerPlaced(true)
+  setIsBeakerNearClamp(true);
+  setSelectedObject(null);
 }
+
+  const handlePlaceBeakerRemove = ()=>{
+    setIsBeakerNearClamp(false)
+  }
 
   const handlePlaceBuretteInCentre = () => {
     console.log("Place burette in centre")
@@ -1291,7 +1290,7 @@ const handlePlaceBalance = () => {
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
-  if (selectedLesson === 8 && selectedObject.name === "main-normal-beaker") {
+  if (selectedLesson === 8 && selectedObject.name === "main-normal-beaker" &&  !isBeakerNearClamp) {
       return (
         <>
           <button
@@ -1308,6 +1307,26 @@ const renderHeldObjectButtons = () => {
 
           <button onClick={handlePlaceBeaker}>
             Place Beaker
+          </button>
+        </>
+      )
+    }
+
+
+    if (selectedLesson === 8 && selectedObject.name === "main-normal-beaker" && isBeakerNearClamp) {
+      return (
+        <>
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
+
+          
+          <button onClick={handlePlaceBeakerRemove}>
+            Remove Beaker
           </button>
         </>
       )

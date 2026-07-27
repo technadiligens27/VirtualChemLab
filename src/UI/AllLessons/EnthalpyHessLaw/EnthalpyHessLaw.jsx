@@ -81,6 +81,15 @@ const EnthalpyHessLaw = () =>{
 
       step23:
         "Now Click the Burrette and select Place In Center",  
+      
+      step24:
+        "Now Click the Normal Beaker and select Place Beaker",
+
+      step25:
+        "Lesson Step 27",
+        
+     step26:
+        "Lesson Step 28",     
     },
   ]
 
@@ -295,7 +304,15 @@ const EnthalpyHessLaw = () =>{
 
        {lessonStep ===25 && 
            <DialogBox text={Enthalpy[0].step23}/>
-       }       
+       }  
+
+       {lessonStep ===26 && 
+           <DialogBox text={Enthalpy[0].step24}/>
+       }
+
+       {lessonStep ===27 && 
+           <DialogBox text={Enthalpy[0].step25}/>
+       }      
           
      
 

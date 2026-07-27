@@ -20,15 +20,16 @@ import { ModelContext } from "../../Contexts/ModelContext/ModelContext";
 import BalanceReading from "./BalanceReading/BalanceReading";
 import ClampBurette from "./ClampBurette/ClampBurette";
 import PlaceClampInCenter from "./PlaceClampInCenter/PlaceClampInCenter";
+import PlaceBeakerNearClamp from "./PlaceBeakerNearClamp/PlaceBeakerNearClamp";
 
 const Interaction = () => {
   const {
     isFillUpBeaker,selectedRightHand,selectedLeftHand,fillBeakerHand,setIsDragging,isStirMode,isAddSalt,
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
-    setIsBuiretteClamped,isClampInCenter,
+    setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp
   } = useContext(InteractionContext);
 
-  const {testube01Ref,digitalBalanceRef} = useContext(ModelContext)
+  const {testube01Ref,digitalBalanceRef,normalBeakerRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
@@ -65,6 +66,7 @@ const Interaction = () => {
       }
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
+      {isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.7} heightOffset ={-4} scaleOffset={0.6} beakerRef={normalBeakerRef}/>}
 
     </>
   );
