@@ -79,7 +79,9 @@ export const InteractionProvider = ({ children }) => {
   const [isWeighTestube,setIsWeighTestube] = useState(false)
 
   const [isBuirettePourMode,setIsBuirettePourMode] = useState(false);
-  const [isBuiretteClamped,setIsBuiretteClamped] = useState(false)
+  const [isBuiretteClamped,setIsBuiretteClamped] = useState(false);
+
+  const [isClampInCenter,setIsClampInCenter] = useState(false);
 
 
   const resetInteractions = () => {
@@ -152,7 +154,8 @@ export const InteractionProvider = ({ children }) => {
   setIsBalancePlaced(false);
   setIsWeighTestube(false);
   setIsBuirettePourMode(false);
-  setIsBuiretteClamped(false)
+  setIsBuiretteClamped(false);
+  setIsClampInCenter(false);
 }
 
   return (
@@ -200,8 +203,9 @@ export const InteractionProvider = ({ children }) => {
         isBalancePlaced,setIsBalancePlaced,
         isWeighTestube,setIsWeighTestube,
         isBuirettePourMode,setIsBuirettePourMode,
-        isBuiretteClamped,setIsBuiretteClamped
-
+        isBuiretteClamped,setIsBuiretteClamped,
+        isClampInCenter,setIsClampInCenter
+        
       }}
     >
       {children}

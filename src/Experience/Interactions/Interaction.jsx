@@ -19,12 +19,13 @@ import WeighTestube from "./WeighTestube/WeighTestube";
 import { ModelContext } from "../../Contexts/ModelContext/ModelContext";
 import BalanceReading from "./BalanceReading/BalanceReading";
 import ClampBurette from "./ClampBurette/ClampBurette";
+import PlaceClampInCenter from "./PlaceClampInCenter/PlaceClampInCenter";
 
 const Interaction = () => {
   const {
     isFillUpBeaker,selectedRightHand,selectedLeftHand,fillBeakerHand,setIsDragging,isStirMode,isAddSalt,
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
-    setIsBuiretteClamped
+    setIsBuiretteClamped,isClampInCenter,
   } = useContext(InteractionContext);
 
   const {testube01Ref,digitalBalanceRef} = useContext(ModelContext)
@@ -60,9 +61,10 @@ const Interaction = () => {
         balanceRef={digitalBalanceRef}
         isWeighTestube={isWeighTestube}
         finalMass={24.7}
-        />}
-
-      { isBuiretteClamped &&  <ClampBurette/>}  
+        />
+      }
+      {isBuiretteClamped &&  <ClampBurette/>}  
+      {isClampInCenter && <PlaceClampInCenter/>}
 
     </>
   );

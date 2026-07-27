@@ -80,8 +80,7 @@ const EnthalpyHessLaw = () =>{
         "Now click the burette and select Clamp Burette",  
 
       step23:
-        "Now Click the beaker and select Place beaker",  
-
+        "Now Click the Burrette and select Place In Center",  
     },
   ]
 

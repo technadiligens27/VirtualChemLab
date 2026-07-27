@@ -46,6 +46,7 @@ const ClickObject = () => {
     isPlacePolysterene,setIsPlacePolysterene,
     setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
     isPourIntoTestube,setIsWeighTestube,isWeighTestube,
+    isClampInCenter,setIsClampInCenter,
 
   } = useContext(InteractionContext)
 
@@ -72,7 +73,8 @@ const ClickObject = () => {
     pottasiumCarbonateContainerRef,
     digitalBalanceRef,
     mainBuiretteRef,
-    buretteClampRef
+    buretteClampRef,
+    
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,
@@ -408,6 +410,16 @@ const ClickObject = () => {
   // Add your placement state here later
   // setIsBeakerPlaced(true)
 }
+
+  const handlePlaceBuretteInCentre = () => {
+    console.log("Place burette in centre")
+    setIsClampInCenter(true)
+    setSelectedObject(null)
+
+    // Add placement state here
+    // setIsBuretteInCentre(true)
+  }
+
 
   const placeFilterInFunnel = (hand) => {
     const foldedPaper = filterFoldedPaperRef.current
@@ -1209,9 +1221,37 @@ const handlePlaceBalance = () => {
     setIsPottasiumCarobnateInSpoon(true);
   }
 
+  const handleRemoveClampFromCenter = ()=>{
+    setIsClampInCenter(false)
+  }
+
   const renderTableObjectButtons = () => {
+    if ( selectedObject?.name === "mainBuretteClamp" && isBuiretteClamped) {
+      return (
+        <>
+          <button
+            onClick={isClampInCenter ? handleRemoveClampFromCenter : handlePlaceBuretteInCentre }
+          >
+            {isClampInCenter
+              ? "Remove From Center"
+              : "Place In Centre"}
+          </button>  
+          
+          {
+            isBuiretteClamped &&
+            <button>
+              Unclamped
+            </button>
+          }
+          {/* <button>
+            {isBuiretteClamped
+              ? "Unclamped"
+              : "Place In Centre"}
+          </button>      */}
+        </>
 
-
+      )
+    }
     if (selectedObject?.name === "salt-container") {
       return (
         <button onClick={addSaltToSpoon}>
@@ -1251,77 +1291,73 @@ const handlePlaceBalance = () => {
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
-  if (
-  selectedLesson === 8 &&
-  selectedObject.name === "main-normal-beaker"
-) {
-  return (
-    <>
-      <button
-        onClick={() =>
-          keepBackOnTable(selectedObject.hand)
-        }
-      >
-        Keep Back On Table
-      </button>
+  if (selectedLesson === 8 && selectedObject.name === "main-normal-beaker") {
+      return (
+        <>
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
 
-      <button onClick={openFillBeakerBox}>
-        Add Liquid
-      </button>
+          <button onClick={openFillBeakerBox}>
+            Add Liquid
+          </button>
 
-      <button onClick={handlePlaceBeaker}>
-        Place Beaker
-      </button>
-    </>
-  )
-}
+          <button onClick={handlePlaceBeaker}>
+            Place Beaker
+          </button>
+        </>
+      )
+    }
 
   if (selectedObject.name === "main-buirette") {
-  return (
-    <>
-      <button
-        onClick={() =>
-          keepBackOnTable(selectedObject.hand)
-        }
-      >
-        Keep Back On Table
-      </button>
+      return (
+        <>
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
 
-      <button onClick={openFillBeakerBox}>
-        Add Liquid
-      </button>
+          <button onClick={openFillBeakerBox}>
+            Add Liquid
+          </button>
 
-      <button onClick={handleClampBurette}>
-        {isBuiretteClamped ? "Unclamp" : "Clamp"}
-      </button>
-    </>
-  )
-}
+          <button onClick={handleClampBurette}>
+            {isBuiretteClamped ? "Unclamp" : "Clamp"}
+          </button>
+        </>
+      )
+    }
 
-  if ( isWeighTestube && isTestTube(selectedObject.name)) {
-    return (
-      <>
-        <button
-          onClick={() =>
-            keepWeighedTestTubeOnTable(
-              selectedObject.hand
-            )
-          }
-        >
-          Keep Back On Table
-        </button>
+    
 
-        <button onClick={handleRemoveTestTube}>
-          Remove Test Tube
-        </button>
-      </>
-    )
-  }
+    if ( isWeighTestube && isTestTube(selectedObject.name)) {
+      return (
+        <>
+          <button
+            onClick={() =>
+              keepWeighedTestTubeOnTable(
+                selectedObject.hand
+              )
+            }
+          >
+            Keep Back On Table
+          </button>
 
-  if (
-    isFilterFolded &&
-    isFoldedFilterPaper(selectedObject.name)
-  ) {
+          <button onClick={handleRemoveTestTube}>
+            Remove Test Tube
+          </button>
+        </>
+      )
+    }
+
+  if ( isFilterFolded && isFoldedFilterPaper(selectedObject.name)) {
     return (
       <>
         <button
