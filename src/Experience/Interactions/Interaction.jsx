@@ -70,7 +70,7 @@ const Interaction = () => {
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
       {isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
-      <PourFromBurette scaleSpeed={10.5} minimumScaleY={80}/>
+      {isBuiretteClamped && <PourFromBurette scaleSpeed={10.5} minimumScaleY={80}/> }
 
       {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') && isPlacePolysterene
          && isPlaceThermometer && <PlaceThermometer beakerParentRef={normalBeakerRef} beakerRef={mainPolystereneRef}/>}

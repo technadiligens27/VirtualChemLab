@@ -12,6 +12,8 @@ import * as THREE from "three"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
+import PourFromTestube from "../PourFromTestube/PourFromTestube"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -28,8 +30,11 @@ const PouringMode = ({ hand }) => {
 
     pouringModeHand,
     setPouringModeHand,
-    isPouringMode,setIsPouringMode
+    isPouringMode,setIsPouringMode,
+    rightBeakerFillData,leftBeakerFillData
   } = useContext(InteractionContext)
+
+  const {testube01Ref} = useContext(ModelContext)
 
   const {
     lessonStep,
@@ -38,6 +43,7 @@ const PouringMode = ({ hand }) => {
     labResetKey,isTutorialMode
     
   } = useContext(MainGuidelineContext)
+
 
   const emptyRef = useRef(null)
 
@@ -560,14 +566,18 @@ useEffect(() => {
 
   return (
     <>
-      {activeObject &&
+      {/* {activeObject &&
         pouringModeHand === hand && (
           <PouringLiquid
             model={activeObject}
             hand={hand}
             isPouring={isPouring}
           />
-        )}
+        )} */}
+
+      {hand==='right' && selectedRightHand.name==='main-testube-01' && <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
+      {hand==='left' && selectedLeftHand.name==='main-testube-01' && <PourFromTestube isPouring={isPouring} hand={"left"} model={testube01Ref.current} liquidColor={leftBeakerFillData.color} />}
+
     </>
   )
 }

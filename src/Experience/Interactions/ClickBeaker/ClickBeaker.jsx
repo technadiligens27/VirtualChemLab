@@ -1290,10 +1290,7 @@ const handlePlaceBalance = () => {
       )
     }
 
-    if (
-      selectedObject?.name ===
-      "pottasium-carbonate-container"
-    ) {
+    if (selectedObject?.name === "pottasium-carbonate-container") {
       return (
         <button
           onClick={addPottasiumCarbinateToSpoon}
@@ -1350,8 +1347,18 @@ const renderHeldObjectButtons = () => {
             Remove Beaker
           </button>
         )}
+
+        {isPlacePolysterene && isPlaceThermometer && (
+          <button>
+            Stir
+          </button>
+        )}
       </>
     )
+  }
+
+  if(selectedObject.name === "main-normal-beaker" ){
+
   }
 
 
@@ -1381,6 +1388,12 @@ const renderHeldObjectButtons = () => {
         {isBeakerNearClamp && (
           <button onClick={handlePlaceBeakerRemove}>
             Remove Beaker
+          </button>
+        )}
+
+        {isPlacePolysterene && isPlaceThermometer && (
+          <button>
+            Stir
           </button>
         )}
       </>
