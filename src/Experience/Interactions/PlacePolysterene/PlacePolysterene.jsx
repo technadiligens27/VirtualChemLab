@@ -60,15 +60,13 @@ const PlacePolysterene = ({beakerRef,polystereneRef,hand,}) => {
       setSelectedLeftHand(null)
     }
 
-    // Placement has finished
-    setIsPlacePolysterene(false)
+  
   }, [
     beakerRef,
     polystereneRef,
     hand,
     setSelectedLeftHand,
     setSelectedRightHand,
-    setIsPlacePolysterene,
   ])
 
   return null

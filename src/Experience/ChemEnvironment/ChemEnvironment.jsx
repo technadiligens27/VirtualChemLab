@@ -18,7 +18,7 @@ const ChemEnvironment = () => {
          mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
          arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
-         arrowBuirette,buretteClampRef,arrowBuretteClampRef     
+         arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef  
   } = useContext(ModelContext);
 
 
@@ -169,7 +169,8 @@ const hideLiquidObjects=(root)=>{
   balancePositionRef.current = scene.getObjectByName('balance-position')
   trayPointRef.current = scene.getObjectByName('tray-point-empty');
   mainBuiretteRef.current = scene.getObjectByName('main-buirette');
-  buretteClampRef.current = scene.getObjectByName('mainBuretteClamp')
+  buretteClampRef.current = scene.getObjectByName('mainBuretteClamp');
+  mainThermometerRef.current = scene.getObjectByName('mainThermometer')
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -230,6 +231,9 @@ const hideLiquidObjects=(root)=>{
 
       arrowBuretteClampRef.current = scene.getObjectByName('burette-clamp-arrow');
       arrowBuretteClampRef.current.visible = false
+
+      arrowThermometerRef.current = scene.getObjectByName('thermometer-arrow');
+      arrowThermometerRef.current.visible = false
 
   }, [scene])
 

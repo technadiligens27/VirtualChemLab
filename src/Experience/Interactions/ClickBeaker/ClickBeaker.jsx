@@ -46,7 +46,8 @@ const ClickObject = () => {
     isPlacePolysterene,setIsPlacePolysterene,
     setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
     isPourIntoTestube,setIsWeighTestube,isWeighTestube,
-    isClampInCenter,setIsClampInCenter,
+    isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
+    isPlaceThermometer
 
   } = useContext(InteractionContext)
 
@@ -74,6 +75,7 @@ const ClickObject = () => {
     digitalBalanceRef,
     mainBuiretteRef,
     buretteClampRef,
+    mainThermometerRef
     
   } = useContext(ModelContext)
 
@@ -174,6 +176,10 @@ const ClickObject = () => {
       {
         name:'mainBuretteClamp',
         ref:buretteClampRef
+      },
+      {
+        name:'mainThermometer',
+        ref: mainThermometerRef
       }
     ],
     [
@@ -1080,14 +1086,20 @@ const addSaltToSpoon = () => {
 }
 
 const handlePlacePolysterene = () => {
-  if (
-    selectedLesson === 8 &&
-    lessonStep === 6
-  ) {
-    setIsPlacePolysterene(true)
-    setSelectedObject(null)
-    return
+  if(isTutorialMode){
+    if ( selectedLesson === 8 && lessonStep === 6) {
+      setIsPlacePolysterene(true)
+      setSelectedObject(null)
+      return
+    }
   }
+
+  if(!isTutorialMode){
+    setIsPlacePolysterene(true)
+      setSelectedObject(null)
+      return
+  }
+  
 
   setShowErrorMsgNo(4)
   setSelectedObject(null)
@@ -1215,6 +1227,21 @@ const handlePlaceBalance = () => {
     
   }
 
+  useEffect(()=>{
+    console.log({
+  left: selectedLeftHand?.name,
+  right: selectedRightHand?.name,
+  isPlacePolysterene,
+  isPlaceThermometer,
+})
+  },[selectedLeftHand,selectedRightHand,isPlacePolysterene,isPlaceThermometer])
+
+  const placeThermometer=()=>{
+    setIsPlaceThermometer(true)
+  }
+  const removeThermometer = ()=>{
+    setIsPlaceThermometer(false)
+  }
 
   const addPottasiumCarbinateToSpoon = ()=>{
     setIsPottasiumCarobnateInSpoon(true);
@@ -1223,6 +1250,10 @@ const handlePlaceBalance = () => {
   const handleRemoveClampFromCenter = ()=>{
     setIsClampInCenter(false)
   }
+
+  useEffect(()=>{
+    console.log('isPlacePolysterene:',isPlacePolysterene)
+  },[isPlacePolysterene])
 
   const renderTableObjectButtons = () => {
     if ( selectedObject?.name === "mainBuretteClamp" && isBuiretteClamped) {
@@ -1285,52 +1316,100 @@ const handlePlaceBalance = () => {
     
 
     return renderHandSelectionButtons()
+    
   }
 
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
-  if (selectedLesson === 8 && selectedObject.name === "main-normal-beaker" &&  !isBeakerNearClamp) {
-      return (
-        <>
-          <button
-            onClick={() =>
-              keepBackOnTable(selectedObject.hand)
-            }
-          >
-            Keep Back On Table
-          </button>
+  if ( selectedLesson === 8 && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
+    return (
+      <>
+        <button
+          onClick={() =>
+            keepBackOnTable(selectedObject.hand)
+          }
+        >
+          Keep Back On Table
+        </button>
 
-          <button onClick={openFillBeakerBox}>
-            Add Liquid
-          </button>
+        {!isBeakerNearClamp && (
+          <>
+            <button onClick={openFillBeakerBox}>
+              Add Liquid
+            </button>
 
-          <button onClick={handlePlaceBeaker}>
-            Place Beaker
-          </button>
-        </>
-      )
-    }
+            <button onClick={handlePlaceBeaker}>
+              Place Beaker
+            </button>
+          </>
+        )}
 
-
-    if (selectedLesson === 8 && selectedObject.name === "main-normal-beaker" && isBeakerNearClamp) {
-      return (
-        <>
-          <button
-            onClick={() =>
-              keepBackOnTable(selectedObject.hand)
-            }
-          >
-            Keep Back On Table
-          </button>
-
-          
+        {isBeakerNearClamp && (
           <button onClick={handlePlaceBeakerRemove}>
             Remove Beaker
           </button>
-        </>
-      )
-    }
+        )}
+      </>
+    )
+  }
+
+
+  if(selectedObject.name === "main-normal-beaker" && !isTutorialMode){
+    return(
+      <>
+        <button
+          onClick={() =>
+            keepBackOnTable(selectedObject.hand)
+          }
+        >
+          Keep Back On Table
+        </button>
+
+        {!isBeakerNearClamp && (
+          <>
+            <button onClick={openFillBeakerBox}>
+              Add Liquid
+            </button>
+
+            <button onClick={handlePlaceBeaker}>
+              Place Beaker
+            </button>
+          </>
+        )}
+
+        {isBeakerNearClamp && (
+          <button onClick={handlePlaceBeakerRemove}>
+            Remove Beaker
+          </button>
+        )}
+      </>
+    )
+
+  }
+
+  if(selectedObject.name === "mainThermometer"){
+     return(
+      <>
+        <button onClick={() => keepBackOnTable(selectedObject.hand)}>
+          Keep Back On Table
+        </button>
+
+        {!isPlaceThermometer && 
+          <button onClick={()=>placeThermometer()}>
+            Place Thermometer
+          </button>
+        }
+
+        {isPlaceThermometer && 
+          <button onClick={()=>removeThermometer()}>
+            Remove Thermometer
+          </button>
+        }
+      </>
+    )   
+  }
+
 
   if (selectedObject.name === "main-buirette") {
       return (
@@ -1441,7 +1520,7 @@ const renderHeldObjectButtons = () => {
           Keep Back On Table
         </button>
 
-        <button onClick={handlePlacePolysterene} >
+        <button onClick={()=>handlePlacePolysterene()} >
           Place In Beaker
         </button>
       </>
@@ -1543,6 +1622,11 @@ const renderHeldObjectButtons = () => {
     <ClickHitbox
       modelRef={buretteClampRef}
       multiplier={1.5}    
+    />
+
+    <ClickHitbox
+      modelRef={mainThermometerRef}
+      multiplier={1.5}
     />
 
 

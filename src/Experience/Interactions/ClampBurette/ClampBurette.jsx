@@ -79,9 +79,9 @@ const ClampBurette = () => {
     clampPosition.add(burette)
 
     // Position relative to clamp marker
-    burette.position.set(0, 1, 0)
+    burette.position.set(0.5, 1, 0)
     burette.rotation.set(0, 0, 0)
-    burette.scale.set(0.8, 0.8, 0.8)
+    burette.scale.set(1, 0.8, 0.8)
 
     burette.updateMatrixWorld(true)
 

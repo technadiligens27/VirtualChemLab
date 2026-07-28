@@ -138,6 +138,7 @@ const mainContent = [
       </>
     ),
     button1: "Start Demo",
+    button2:"Free Roam",
     info:
       "Select Start Demo to continue with the tutorial",
     mainImg: "./chem-icon.png",

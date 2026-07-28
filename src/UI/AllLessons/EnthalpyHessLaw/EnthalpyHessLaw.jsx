@@ -86,7 +86,7 @@ const EnthalpyHessLaw = () =>{
         "Now Click the Normal Beaker and select Place Beaker",
 
       step25:
-        "Lesson Step 27",
+        "Now scroll down to Pour HCL to Polysterene cup",
         
      step26:
         "Lesson Step 28",     

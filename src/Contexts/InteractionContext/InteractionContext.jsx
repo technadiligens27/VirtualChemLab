@@ -82,7 +82,9 @@ export const InteractionProvider = ({ children }) => {
   const [isBuiretteClamped,setIsBuiretteClamped] = useState(false);
 
   const [isClampInCenter,setIsClampInCenter] = useState(false);
-  const [isBeakerNearClamp,setIsBeakerNearClamp] = useState(false)
+  const [isBeakerNearClamp,setIsBeakerNearClamp] = useState(false);
+
+  const [isPlaceThermometer,setIsPlaceThermometer] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -156,7 +158,8 @@ export const InteractionProvider = ({ children }) => {
   setIsBuirettePourMode(false);
   setIsBuiretteClamped(false);
   setIsClampInCenter(false);
-  setIsBeakerNearClamp(false)
+  setIsBeakerNearClamp(false);
+  setIsPlaceThermometer(false)
 }
 
   return (
@@ -206,7 +209,8 @@ export const InteractionProvider = ({ children }) => {
         isBuirettePourMode,setIsBuirettePourMode,
         isBuiretteClamped,setIsBuiretteClamped,
         isClampInCenter,setIsClampInCenter,
-        isBeakerNearClamp,setIsBeakerNearClamp
+        isBeakerNearClamp,setIsBeakerNearClamp,
+        setIsPlaceThermometer,isPlaceThermometer
         
       }}
     >
