@@ -965,13 +965,12 @@ const ClickObject = () => {
       }
 
     const handleWeighTestTube = () => {
-        if (
-          isBalancePlaced &&
-          selectedLesson === 8 &&
-          (lessonStep === 16 || lessonStep === 17) &&
-          isTestTube(selectedObject?.name)
-        ) {
+        if (isBalancePlaced &&selectedLesson === 8 &&(lessonStep === 16 || lessonStep === 17 || lessonStep===39) && isTestTube(selectedObject?.name)){
           setIsWeighTestube(true)
+
+        if(selectedLesson===8 &&  lessonStep===39){
+          setLessonStep(40)
+        }  
 
           if (lessonStep === 16) {
             setLessonStep(17)
@@ -1232,17 +1231,24 @@ const handlePlacePolysterene = () => {
     setSelectedObject(null)
 }
 const handlePlaceBalance = () => {
-  setIsBalancePlaced((previousValue) => !previousValue)
+  setIsBalancePlaced(true)
   setSelectedObject(null)
-  if(isBalancePlaced && selectedLesson ===8 && lessonStep ===22){
-      setLessonStep(23)
-    }
+
+  if(lessonStep===38 && selectedLesson===8){
+    setLessonStep(39)
+  }
+
 }
 
-  const handleRemoveBalance = ()=>{
-    setIsBalancePlaced(false)
-    
+  const handleRemoveBalance=()=>{
+      setIsBalancePlaced(false);
+      setSelectedObject(null)
+      if(isBalancePlaced && selectedLesson ===8 && lessonStep ===22){
+        setLessonStep(23)
+      }
   }
+
+
 
   useEffect(()=>{
     console.log({
@@ -1282,16 +1288,20 @@ const handlePlaceBalance = () => {
   }
 
   const removePolystereneStirMode = ()=>{
-    console.log('UnStir')
     setIsPolystereneStirMode(false);
-    setSelectedObject(null)
+    setSelectedObject(null);
+
+    if(lessonStep===37 && selectedLesson===8){
+      setLessonStep(38)
+    }
   }
 
   useEffect(()=>{
     console.log('isPlacePolysterene:',isPlacePolysterene)
   },[isPlacePolysterene])
 
-  const renderTableObjectButtons = () => {
+
+  const renderClampTableButtons=()=>{
     if ( selectedObject?.name === "mainBuretteClamp" && isBuiretteClamped) {
       return (
         <>
@@ -1318,6 +1328,9 @@ const handlePlaceBalance = () => {
 
       )
     }
+  }
+
+  const renderSaltContainerTableButtons=()=>{
     if (selectedObject?.name === "salt-container") {
       return (
         <button onClick={addSaltToSpoon}>
@@ -1325,37 +1338,70 @@ const handlePlaceBalance = () => {
         </button>
       )
     }
+  }
 
+  const renderPottasiumCarbinateTableButtons = ()=>{
     if (selectedObject?.name === "pottasium-carbonate-container") {
       return (
-        <button
-          onClick={addPottasiumCarbinateToSpoon}
-        >
+        <button onClick={addPottasiumCarbinateToSpoon}>
           Take Potassium Carbonate
         </button>
       )
     }
+  }
 
+  const renderDigitalBalanceTableButtons=()=>{
     if (selectedObject?.name === "mainMassBalance") {
+      // return (
+      //   <button onClick={handlePlaceBalance}>
+      //     {isBalancePlaced
+      //       ? "Remove Balance"
+      //       : "Place Balance"}
+      //   </button>
+      // )
+
       return (
-        <button onClick={handlePlaceBalance}>
-          {isBalancePlaced
-            ? "Remove Balance"
-            : "Place Balance"}
-        </button>
+        <>
+          {isBalancePlaced && (
+            <button onClick={handleRemoveBalance}>
+              Remove Balance
+            </button>
+          )}
+
+          {!isBalancePlaced && (
+            <button onClick={handlePlaceBalance}>
+              Place Balance
+            </button>
+          )}
+        </>
       )
     }
 
-    
-
-    return renderHandSelectionButtons()
-    
   }
 
-const renderHeldObjectButtons = () => {
-  if (!selectedObject?.isHolding) return null
+  const renderTableObjectButtons = () => {
+    const clampButtons = renderClampTableButtons()
+    if (clampButtons) return clampButtons
 
-  if ( selectedLesson === 8 && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
+    const saltButtons = renderSaltContainerTableButtons()
+    if (saltButtons) return saltButtons
+
+    const potassiumButtons =
+      renderPottasiumCarbinateTableButtons()
+
+    if (potassiumButtons) return potassiumButtons
+
+    const balanceButtons =
+      renderDigitalBalanceTableButtons()
+
+    if (balanceButtons) return balanceButtons
+
+    return renderHandSelectionButtons()
+  }
+
+  const renderNormalBeakerHeldButtons=()=>{
+      //----------------Tutorial Mode-------------////
+      if ( selectedLesson === 8 && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
     return (
       <>
         <button
@@ -1402,11 +1448,7 @@ const renderHeldObjectButtons = () => {
     )
   }
 
-  if(selectedObject.name === "main-normal-beaker" ){
-
-  }
-
-
+  //-----------------Free Roam--------------////
   if(selectedObject.name === "main-normal-beaker" && !isTutorialMode){
     return(
       <>
@@ -1453,6 +1495,12 @@ const renderHeldObjectButtons = () => {
 
   }
 
+
+  }
+
+
+const renderThermometerHeldButtons=()=>{
+    
   if(selectedObject.name === "mainThermometer"){
      return(
       <>
@@ -1474,9 +1522,10 @@ const renderHeldObjectButtons = () => {
       </>
     )   
   }
+}
 
-
-  if (selectedObject.name === "main-buirette") {
+const renderBuretteHeldButtons = ()=>{
+    if (selectedObject.name === "main-buirette") {
       return (
         <>
           <button
@@ -1497,9 +1546,10 @@ const renderHeldObjectButtons = () => {
         </>
       )
     }
+}
 
-    
 
+const renderTestubeHeldButtons = ()=>{
     if ( isWeighTestube && isTestTube(selectedObject.name)) {
       return (
         <>
@@ -1519,30 +1569,55 @@ const renderHeldObjectButtons = () => {
         </>
       )
     }
+}
 
-  if ( isFilterFolded && isFoldedFilterPaper(selectedObject.name)) {
+const renderPolystereneHeldButtons=()=>{
+    if (selectedObject.name === "mainPolysterene") {
     return (
       <>
         <button
           onClick={() =>
-            unfoldFilterPaper(selectedObject.hand)
+            keepBackOnTable(selectedObject.hand)
           }
         >
-          Unfold Paper
+          Keep Back On Table
         </button>
 
-        <button
-          onClick={() =>
-            placeFilterInFunnel(selectedObject.hand)
-          }
-        >
-          Place in Funnel
+        <button onClick={()=>handlePlacePolysterene()} >
+          Place In Beaker
         </button>
       </>
     )
   }
+}
 
-  if (isFunnel(selectedObject.name)) {
+  const renderDropperHeldButtons=()=>{
+      if (selectedObject.name === "main-dropper") {
+    return isDropperPlaced ? (
+      <button onClick={removeDropper}>
+        Remove Dropper
+      </button>
+    ) : (
+      <>
+        <button
+          onClick={() =>
+            keepBackOnTable(selectedObject.hand)
+          }
+        >
+          Keep Back On Table
+        </button>
+
+        <button onClick={()=>placeDropper()}>
+          Place Dropper
+        </button>
+      </>
+    )
+  }
+  }
+
+
+const renderFunnelHeldButtons=()=>{
+    if (isFunnel(selectedObject.name)) {
     return (
       <>
         <button onClick={toggleFunnelMode}>
@@ -1573,46 +1648,75 @@ const renderHeldObjectButtons = () => {
       </>
     )
   }
+}
 
-  if (selectedObject.name === "mainPolysterene") {
+
+const renderHeldObjectButtons = () => {
+  if (!selectedObject?.isHolding) return null
+
+  const normalBeakerButtons =
+    renderNormalBeakerHeldButtons()
+
+  if (normalBeakerButtons) return normalBeakerButtons
+
+  const thermometerButtons =
+    renderThermometerHeldButtons()
+
+  if (thermometerButtons) return thermometerButtons
+
+  const buretteButtons =
+    renderBuretteHeldButtons()
+
+  if (buretteButtons) return buretteButtons
+
+  const testTubeButtons =
+    renderTestubeHeldButtons()
+
+  if (testTubeButtons) return testTubeButtons
+
+  const polystyreneButtons =
+    renderPolystereneHeldButtons()
+
+  if (polystyreneButtons) return polystyreneButtons
+
+  const dropperButtons =
+    renderDropperHeldButtons()
+
+  if (dropperButtons) return dropperButtons
+
+  const funnelButtons =
+    renderFunnelHeldButtons()
+
+  if (funnelButtons) return funnelButtons
+ 
+
+  if ( isFilterFolded && isFoldedFilterPaper(selectedObject.name)) {
     return (
       <>
         <button
           onClick={() =>
-            keepBackOnTable(selectedObject.hand)
+            unfoldFilterPaper(selectedObject.hand)
           }
         >
-          Keep Back On Table
+          Unfold Paper
         </button>
 
-        <button onClick={()=>handlePlacePolysterene()} >
-          Place In Beaker
-        </button>
-      </>
-    )
-  }
-
-  if (selectedObject.name === "main-dropper") {
-    return isDropperPlaced ? (
-      <button onClick={removeDropper}>
-        Remove Dropper
-      </button>
-    ) : (
-      <>
         <button
           onClick={() =>
-            keepBackOnTable(selectedObject.hand)
+            placeFilterInFunnel(selectedObject.hand)
           }
         >
-          Keep Back On Table
-        </button>
-
-        <button onClick={()=>placeDropper()}>
-          Place Dropper
+          Place in Funnel
         </button>
       </>
     )
   }
+
+
+
+
+
+
 
   return (
     <>

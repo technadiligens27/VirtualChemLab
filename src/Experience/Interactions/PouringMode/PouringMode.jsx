@@ -421,6 +421,10 @@ const PouringMode = ({ hand }) => {
         resetLocalPouringState()
         setPouringModeHand(null)
 
+        if(lessonStep===36 && selectedLesson ===8){
+          setLessonStep(37)
+        }
+
         return
       }
 

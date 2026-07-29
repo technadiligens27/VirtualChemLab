@@ -1,18 +1,36 @@
 import { Html } from "@react-three/drei"
 import { createPortal } from "@react-three/fiber"
-import { useEffect, useState } from "react"
+import {
+  useContext,
+  useEffect,
+  useState,
+} from "react"
+
 import "./BalanceReading.css"
+
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const BalanceReading = ({
   balanceRef,
   isWeighTestube,
   finalMass = 24.7,
 }) => {
+  const {
+    selectedLesson,
+    lessonStep,
+  } = useContext(MainGuidelineContext)
+
   const [displayPoint, setDisplayPoint] =
     useState(null)
 
   const [displayMass, setDisplayMass] =
     useState(0)
+
+  const currentFinalMass =
+    selectedLesson === 8 &&
+    lessonStep === 40
+      ? 21.7
+      : finalMass
 
   useEffect(() => {
     let attempts = 0
@@ -33,7 +51,10 @@ const BalanceReading = ({
       let foundPoint = null
 
       balance.traverse((child) => {
-        console.log("Balance child:", child.name)
+        console.log(
+          "Balance child:",
+          child.name
+        )
 
         if (
           child.name
@@ -71,13 +92,13 @@ const BalanceReading = ({
           (Math.random() - 0.5) * 0.1
 
         setDisplayMass(
-          finalMass + fluctuation
+          currentFinalMass + fluctuation
         )
       }, 150)
 
       timeout = setTimeout(() => {
         clearInterval(interval)
-        setDisplayMass(finalMass)
+        setDisplayMass(currentFinalMass)
       }, 1500)
     } else {
       setDisplayMass(0)
@@ -87,7 +108,10 @@ const BalanceReading = ({
       clearInterval(interval)
       clearTimeout(timeout)
     }
-  }, [isWeighTestube, finalMass])
+  }, [
+    isWeighTestube,
+    currentFinalMass,
+  ])
 
   if (!displayPoint) return null
 
@@ -97,9 +121,7 @@ const BalanceReading = ({
       center
       distanceFactor={0.5}
       position={[0, -0.35, 0.02]}
-       rotation={[-Math.PI / 2, 0, 0]}
-      
-      
+      rotation={[-Math.PI / 2, 0, 0]}
     >
       <div className="balance-model-screen">
         {displayMass.toFixed(2)}

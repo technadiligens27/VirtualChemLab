@@ -111,7 +111,17 @@ const EnthalpyHessLaw = () =>{
         "Now scroll dwon to stie and pour from testuve", 
         
       step34:
-        "36",  
+        "Press P to exit PouringMode",  
+
+      step35:
+        "Now click Normal Beaker and press UnStir to remove the spatula",   
+      step36:
+        "Now lets take the balance again to reweigh the testube",
+      step37:
+        "Now clikc Testube and press Weigh Testube", 
+        
+      step38:
+        "40",  
     },
   ]
 
@@ -372,6 +382,22 @@ const EnthalpyHessLaw = () =>{
       {lessonStep ===36 && 
            <DialogBox text={Enthalpy[0].step34}/>
        }
+
+      {lessonStep ===37 && 
+           <DialogBox text={Enthalpy[0].step35}/>
+      } 
+
+      {lessonStep ===38 && 
+           <DialogBox text={Enthalpy[0].step36}/>
+      }
+
+      {lessonStep ===39 && 
+           <DialogBox text={Enthalpy[0].step37}/>
+      } 
+
+      {lessonStep ===40 && 
+           <DialogBox text={Enthalpy[0].step38}/>
+      }  
 
         </>
     )

@@ -246,7 +246,7 @@ const transformControlsRef = useRef()
 
       {!isStirMode &&
         !isLitmusMode &&
-        !isFunnelMode &&
+        !isFunnelMode && 
         selectedLeftHand &&
         selectedRightHand && (
           <PouringMode hand="right" />
