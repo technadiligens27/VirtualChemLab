@@ -47,7 +47,7 @@ const ClickObject = () => {
     setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
     isPourIntoTestube,setIsWeighTestube,isWeighTestube,
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
-    isPlaceThermometer
+    isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode
 
   } = useContext(InteractionContext)
 
@@ -414,8 +414,42 @@ const ClickObject = () => {
 
   const handlePlaceBeakerRemove = ()=>{
     setIsBeakerNearClamp(false)
+    if(lessonStep===28 && selectedLesson===8){
+      setLessonStep(29);
+      moveObjectToLeftHand()
+    }
   }
 
+  const moveObjectToLeftHand = () => {
+  if (!selectedObject?.isHolding) return
+  if (selectedLeftHand) {
+    console.log("Left hand is already full")
+    return
+  }
+
+  const currentHandData =
+    selectedObject.hand === "right"
+      ? selectedRightHand
+      : selectedLeftHand
+
+  if (!currentHandData) return
+
+  setSelectedLeftHand({
+    ...currentHandData,
+    hand: "left",
+  })
+
+  if (selectedObject.hand === "right") {
+    setSelectedRightHand(null)
+  }
+
+  setSelectedObject(null)
+
+  console.log(
+    currentHandData.name,
+    "moved to left hand"
+  )
+}
   const handlePlaceBuretteInCentre = () => {
     console.log("Place burette in centre")
     setIsClampInCenter(true)
@@ -953,19 +987,15 @@ const ClickObject = () => {
 
   const handleMainHoldingAction = () => {
       // All held test tubes in Lesson 8 use weighing
-      if (
-        selectedLesson === 8 &&
-        isTestTube(selectedObject?.name)
-      ) {
+      if (selectedLesson === 8 && isTestTube(selectedObject?.name)) {
         handleWeighTestTube()
         return
       }
 
       if (isSpoon(selectedObject.name)) {
-        if (selectedLesson === 8) {
           togglePourIntoTestTube()
           return
-        }
+        
 
         toggleStirMode()
         return
@@ -987,35 +1017,22 @@ const ClickObject = () => {
   const getMainHoldingButtonText = () => {
   // In Lesson 8, test tubes are weighed,
   // not filled using Add Liquid
-  if (
-    selectedLesson === 8 &&
-    isTestTube(selectedObject?.name)
-  ) {
+  if ( selectedLesson === 8 && isTestTube(selectedObject?.name)) {
     return "Weigh Test Tube"
   }
 
   if (isSpoon(selectedObject.name)) {
-    if (selectedLesson === 8) {
-      return isPourIntoTestube
-        ? "Disable Pour Mode"
-        : "Pour Into Test Tube"
-    }
-
-    return isStirMode
-      ? "Exit Stir Mode"
-      : "Stir"
+    
+      return isPourIntoTestube ? "Disable Pour Mode" : "Pour Into Test Tube"
+      return isStirMode ? "Exit Stir Mode" : "Stir"
   }
 
   if (isLitmus(selectedObject.name)) {
-    return isLitmusMode
-      ? "Stop Test"
-      : "Test Liquid"
+    return isLitmusMode ? "Stop Test" : "Test Liquid"
   }
 
   if (isAnyFilterPaper(selectedObject.name)) {
-    return isFilterFolded
-      ? "Unfold Paper"
-      : "Fold Paper"
+    return isFilterFolded ? "Unfold Paper" : "Fold Paper"
   }
 
   return "Add Liquid"
@@ -1247,8 +1264,27 @@ const handlePlaceBalance = () => {
     setIsPottasiumCarobnateInSpoon(true);
   }
 
+  useEffect(()=>{
+    console.log('lessonStep:',lessonStep)
+  },[lessonStep])
+
   const handleRemoveClampFromCenter = ()=>{
     setIsClampInCenter(false)
+    if(selectedLesson ===8 && lessonStep===29){
+      setLessonStep(30)
+    }
+  }
+
+  const handlePolystereneStirMode = ()=>{
+    
+    setIsPolystereneStirMode(true)
+    setSelectedObject(null)
+  }
+
+  const removePolystereneStirMode = ()=>{
+    console.log('UnStir')
+    setIsPolystereneStirMode(false);
+    setSelectedObject(null)
   }
 
   useEffect(()=>{
@@ -1348,11 +1384,20 @@ const renderHeldObjectButtons = () => {
           </button>
         )}
 
-        {isPlacePolysterene && isPlaceThermometer && (
-          <button>
+        {isPlacePolysterene && isPlaceThermometer && !isPolystereneStirMode && (
+          <button onClick={handlePolystereneStirMode}>
             Stir
           </button>
         )}
+
+        {
+        isPlacePolysterene && isPlaceThermometer && isPolystereneStirMode && (
+          <button onClick={removePolystereneStirMode}>
+            Unstir
+          </button>
+        )
+
+        }
       </>
     )
   }
@@ -1392,9 +1437,16 @@ const renderHeldObjectButtons = () => {
         )}
 
         {isPlacePolysterene && isPlaceThermometer && (
-          <button>
+          <button onClick={handlePolystereneStirMode}>
             Stir
           </button>
+        )}
+
+        {
+          isPlacePolysterene && isPlaceThermometer && isPolystereneStirMode && (
+            <button onClick={removePolystereneStirMode}>
+              Unstir
+            </button>
         )}
       </>
     )

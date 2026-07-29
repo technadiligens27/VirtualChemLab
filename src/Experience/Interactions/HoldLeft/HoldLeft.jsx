@@ -66,6 +66,7 @@ const HoldLeft = ({ modeldata }) => {
     }
   },[selectedLesson,lessonStep])
 
+  
 
   useEffect(() => {
     const canvas = gl.domElement

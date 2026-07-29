@@ -196,6 +196,19 @@ const transformControlsRef = useRef()
   },[lessonStep,selectedLesson])
 
   useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===30){
+      setLessonStep(31)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===32){
+      setLessonStep(33)
+    }
+  },[selectedLesson,lessonStep])
+
+
+  useEffect(()=>{
     if(selectedLesson ===8 && lessonStep ===21){
       setLessonStep(22)
     }

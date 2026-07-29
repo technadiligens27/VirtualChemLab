@@ -89,7 +89,26 @@ const EnthalpyHessLaw = () =>{
         "Now scroll down to Pour HCL to Polysterene cup",
         
      step26:
-        "Lesson Step 28",     
+        "Now Click the beaker and click remove beaker", 
+      step27:
+        "Now Click the trhe Burette Clamp and click remove From center",  
+        
+      step28:
+        "Now Click the the Thermometer and Select Right Hand Option",   
+
+      step29:
+        "Now clik the thermometer again press Place Thermometer",    
+
+      step30:
+        "Now CLick testuvbe and select Right hand option",   
+
+      step31:
+        "Now clikc beaker again and select Stir", 
+        
+      step32:
+        "Now press P fro Puring mode",  
+      step33:
+        "Now scroll dwon to stie and pour from testuve",   
     },
   ]
 
@@ -312,9 +331,44 @@ const EnthalpyHessLaw = () =>{
 
        {lessonStep ===27 && 
            <DialogBox text={Enthalpy[0].step25}/>
+       }  
+
+
+       {lessonStep ===28 && 
+           <DialogBox text={Enthalpy[0].step26}/>
+       } 
+
+       {lessonStep ===29 && 
+           <DialogBox text={Enthalpy[0].step27}/>
+       }
+
+       {lessonStep ===30 && 
+           <DialogBox text={Enthalpy[0].step28}/>
+       }
+
+       {lessonStep ===31 && 
+           <DialogBox text={Enthalpy[0].step29}/>
+       }
+
+       {lessonStep ===32 && 
+           <DialogBox text={Enthalpy[0].step30}/>
+       }
+
+       {lessonStep ===33 && 
+           <DialogBox text={Enthalpy[0].step31}/>
+       }
+
+       {lessonStep ===34 && 
+           <DialogBox text={Enthalpy[0].step32}/>
+       } 
+
+      {lessonStep ===35 && 
+           <DialogBox text={Enthalpy[0].step33}/>
        }      
           
-     
+      {lessonStep ===36 && 
+           <DialogBox text={Enthalpy[0].step34}/>
+       }
 
         </>
     )

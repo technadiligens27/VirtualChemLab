@@ -20,7 +20,7 @@ const PourIntoTestubeFromSpoon = ({
 
   const {
     isPotassiumTransferred,
-    setIsPotassiumTransferred,
+    setIsPotassiumTransferred,setIsPottasiumCarobnateInTestube01
   } = useContext(InteractionContext)
 
   const spoonRotationXRef = useRef(0)
@@ -37,7 +37,8 @@ const PourIntoTestubeFromSpoon = ({
   const powderMaterialsRef = useRef([])
 
   const isPotassiumFallingRef = useRef(false)
-  const targetPowderOpacityRef = useRef(0)
+  const targetPowderOpacityRef = useRef(0);
+  
 
   useEffect(() => {
     if (
@@ -544,7 +545,8 @@ const PourIntoTestubeFromSpoon = ({
         targetPowderOpacityRef.current = 1
 
         // Permanently record transfer
-        setIsPotassiumTransferred(true)
+        setIsPotassiumTransferred(true);
+        setIsPottasiumCarobnateInTestube01(true)
 
         // Make sure all spoon particles remain hidden
         potassiumPieces.forEach(

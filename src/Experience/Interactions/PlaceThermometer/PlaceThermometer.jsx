@@ -6,6 +6,7 @@ import {
 import * as THREE from 'three'
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PlaceThermometer = ({
   beakerParentRef,
@@ -14,8 +15,8 @@ const PlaceThermometer = ({
   xOffset = 0,
   zOffset = 0,
 }) => {
-  const { mainThermometerRef } =
-    useContext(ModelContext)
+  const { mainThermometerRef } = useContext(ModelContext)
+  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const {
     selectedRightHand,
@@ -29,6 +30,12 @@ const PlaceThermometer = ({
 
   const originalBeakerParentPositionRef =
     useRef(null)
+
+    useEffect(()=>{
+      if(lessonStep===31 && selectedLesson===8){
+        setLessonStep(32)
+      }
+    },[lessonStep,selectedLesson])
 
   useEffect(() => {
     if (

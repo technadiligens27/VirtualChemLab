@@ -85,7 +85,9 @@ export const InteractionProvider = ({ children }) => {
   const [isBeakerNearClamp,setIsBeakerNearClamp] = useState(false);
 
   const [isPlaceThermometer,setIsPlaceThermometer] = useState(false);
-  const [isPolystereneStirMode,setIsPolystereneStirMode] = useState(false)
+  const [isPolystereneStirMode,setIsPolystereneStirMode] = useState(false);
+
+  const [isPottasiumCarobnateInTestube01,setIsPottasiumCarobnateInTestube01] =useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -161,7 +163,8 @@ export const InteractionProvider = ({ children }) => {
   setIsClampInCenter(false);
   setIsBeakerNearClamp(false);
   setIsPlaceThermometer(false);
-  setIsPolystereneStirMode(false)
+  setIsPolystereneStirMode(false);
+  setIsPottasiumCarobnateInTestube01(false)
 }
 
   return (
@@ -213,7 +216,8 @@ export const InteractionProvider = ({ children }) => {
         isClampInCenter,setIsClampInCenter,
         isBeakerNearClamp,setIsBeakerNearClamp,
         setIsPlaceThermometer,isPlaceThermometer,
-        isPolystereneStirMode,setIsPolystereneStirMode
+        isPolystereneStirMode,setIsPolystereneStirMode,
+        isPottasiumCarobnateInTestube01,setIsPottasiumCarobnateInTestube01
         
       }}
     >

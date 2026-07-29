@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ChairSlide from "./ChairSlide/ChairSlide";
 import GlovesPut from "./GlovesPut/GlovesPut";
 import GogglesPut from "./GogglesPut/GogglesPut";
@@ -23,13 +23,14 @@ import PlaceClampInCenter from "./PlaceClampInCenter/PlaceClampInCenter";
 import PlaceBeakerNearClamp from "./PlaceBeakerNearClamp/PlaceBeakerNearClamp";
 import PourFromBurette from "./PourFromBurrette/PourFromBurrette";
 import PlaceThermometer from "./PlaceThermometer/PlaceThermometer";
+import StirModePolysterene from "./StirModePolysterene/StirModePolysterene";
 
 const Interaction = () => {
   const {
     isFillUpBeaker,selectedRightHand,selectedLeftHand,fillBeakerHand,setIsDragging,isStirMode,isAddSalt,
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
-     mainThermometerRef
+     mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode
   } = useContext(InteractionContext);
 
   const {testube01Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef} = useContext(ModelContext)
@@ -46,6 +47,14 @@ const Interaction = () => {
     }
     
   }
+
+  useEffect(()=>{
+    console.log('isPlacePolysterene:',isPlacePolysterene);
+    console.log('isPolystereneStirMode:',isPolystereneStirMode)
+    console.log('selectedLeftHand:',selectedLeftHand);
+    console.log('selectedLeftHand:',selectedRightHand);
+
+  },[isPlacePolysterene,isPolystereneStirMode,selectedLeftHand,selectedRightHand])
 
   return (
     <>
@@ -70,10 +79,13 @@ const Interaction = () => {
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
       {isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
-      {isBuiretteClamped && <PourFromBurette scaleSpeed={10.5} minimumScaleY={80}/> }
+      {isBuiretteClamped && <PourFromBurette /> }
 
       {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') && isPlacePolysterene
          && isPlaceThermometer && <PlaceThermometer beakerParentRef={normalBeakerRef} beakerRef={mainPolystereneRef}/>}
+
+      {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
+       && isPlacePolysterene && <StirModePolysterene heightOffset={1}/>}   
     </>
   );
 };

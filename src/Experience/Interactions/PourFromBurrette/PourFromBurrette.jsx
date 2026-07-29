@@ -10,177 +10,45 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PourFromBurette = ({
-  scaleSpeed = 0.05,
+  scaleSpeed = 0.5,
   minimumScaleY = 0,
-  smoothSpeed = 6,
+  smoothSpeed = 2,
 }) => {
-  const { mainBuiretteRef } =
-    useContext(ModelContext)
-
+  
   const {
     lessonStep,
-    setLessonStep,
     selectedLesson,
+    setLessonStep,
   } = useContext(MainGuidelineContext)
 
-  const pourChildRef = useRef(null)
-  const liquidChildRef = useRef(null)
+  const { mainBuiretteRef } =
+    useContext(ModelContext)
+  
+  const pourRef = useRef(null)
+  const liquidRef = useRef(null)
 
-  const originalPourScaleYRef = useRef(null)
-  const originalLiquidScaleYRef = useRef(null)
-
-  const targetPourScaleYRef = useRef(null)
-  const targetLiquidScaleYRef = useRef(null)
-
-  const pouringCompletedRef = useRef(false)
+  const isScrollingRef = useRef(false)
+  const isPourFinishedRef = useRef(false)
 
   useEffect(() => {
-    const burette = mainBuiretteRef?.current
-
-    if (!burette) {
-      console.log(
-        "Main burette was not found"
-      )
-      return
-    }
-
-    let pourChild = null
-    let liquidChild = null
-
-    burette.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() || ""
-
-      if (
-        !pourChild &&
-        childName.includes("pour")
-      ) {
-        pourChild = child
-      }
-
-      if (
-        !liquidChild &&
-        childName.includes("liquid")
-      ) {
-        liquidChild = child
-      }
-    })
-
-    if (!pourChild) {
-      console.log(
-        'A child containing "pour" was not found'
-      )
-      return
-    }
-
-    if (!liquidChild) {
-      console.log(
-        'A child containing "liquid" was not found'
-      )
-      return
-    }
-
-    pourChildRef.current = pourChild
-    liquidChildRef.current = liquidChild
-
-    originalPourScaleYRef.current =
-      pourChild.scale.y
-
-    originalLiquidScaleYRef.current =
-      liquidChild.scale.y
-
-    targetPourScaleYRef.current =
-      pourChild.scale.y
-
-    targetLiquidScaleYRef.current =
-      liquidChild.scale.y
-
-    pouringCompletedRef.current = false
-
-    // The stream should initially be hidden.
-    // It becomes visible when the user scrolls.
-    pourChild.visible = false
-
     const handleWheel = (event) => {
-      const currentPourChild =
-        pourChildRef.current
+      const liquid = liquidRef.current
 
-      const currentLiquidChild =
-        liquidChildRef.current
-
-      if (
-        !currentPourChild ||
-        !currentLiquidChild
-      ) {
-        return
-      }
-
-      // Only pour while scrolling downward.
       if (event.deltaY <= 0) return
+      if (!liquid) return
+      if (liquid.scale.y <= 0) return
+      if (isScrollingRef.current) return
+      if (isPourFinishedRef.current) return
 
-      // Do not pour when the liquid is hidden.
-      if (!currentLiquidChild.visible) {
-        console.log(
-          "Cannot pour because the burette has no visible liquid"
-        )
-        return
-      }
+      isScrollingRef.current = true
 
-      // Do not continue if pouring has finished.
-      if (pouringCompletedRef.current) {
-        return
-      }
-
-      if (
-        targetLiquidScaleYRef.current <=
-        minimumScaleY
-      ) {
-        return
-      }
-
-      event.preventDefault()
-
-      // Show the pouring stream once pouring begins.
-      currentPourChild.visible = true
-
-      targetLiquidScaleYRef.current =
-        Math.max(
-          minimumScaleY,
-          targetLiquidScaleYRef.current -
-            scaleSpeed
-        )
-
-      /*
-       * Make the pouring stream decrease according
-       * to the amount of liquid remaining.
-       */
-      const originalLiquidScale =
-        originalLiquidScaleYRef.current
-
-      const originalPourScale =
-        originalPourScaleYRef.current
-
-      if (
-        originalLiquidScale > 0 &&
-        originalPourScale !== null
-      ) {
-        const liquidPercentage =
-          targetLiquidScaleYRef.current /
-          originalLiquidScale
-
-        targetPourScaleYRef.current =
-          Math.max(
-            minimumScaleY,
-            originalPourScale *
-              liquidPercentage
-          )
-      }
+      console.log("Burette pouring started")
     }
 
     window.addEventListener(
       "wheel",
       handleWheel,
-      { passive: false }
+      { passive: true }
     )
 
     return () => {
@@ -188,137 +56,84 @@ const PourFromBurette = ({
         "wheel",
         handleWheel
       )
-
-      if (
-        pourChildRef.current &&
-        originalPourScaleYRef.current !== null
-      ) {
-        pourChildRef.current.scale.y =
-          originalPourScaleYRef.current
-
-        pourChildRef.current.visible = false
-      }
-
-      if (
-        liquidChildRef.current &&
-        originalLiquidScaleYRef.current !== null
-      ) {
-        liquidChildRef.current.scale.y =
-          originalLiquidScaleYRef.current
-
-        liquidChildRef.current.visible = true
-      }
-
-      pourChildRef.current?.updateMatrixWorld(
-        true
-      )
-
-      liquidChildRef.current?.updateMatrixWorld(
-        true
-      )
-
-      pourChildRef.current = null
-      liquidChildRef.current = null
-
-      targetPourScaleYRef.current = null
-      targetLiquidScaleYRef.current = null
-
-      pouringCompletedRef.current = false
     }
-  }, [
-    mainBuiretteRef,
-    scaleSpeed,
-    minimumScaleY,
-  ])
+  }, [])
 
-  useFrame((_, delta) => {
-    const pourChild =
-      pourChildRef.current
+  useEffect(() => {
+    const burette =
+      mainBuiretteRef.current
 
-    const liquidChild =
-      liquidChildRef.current
-
-    const targetPourScaleY =
-      targetPourScaleYRef.current
-
-    const targetLiquidScaleY =
-      targetLiquidScaleYRef.current
-
-    if (
-      !pourChild ||
-      !liquidChild ||
-      targetPourScaleY === null ||
-      targetLiquidScaleY === null ||
-      pouringCompletedRef.current
-    ) {
+    if (!burette) {
+      console.log("No Burette Found")
       return
     }
 
-    // Smoothly reduce the liquid inside the burette.
-    liquidChild.scale.y =
+    burette.traverse((child) => {
+      if (
+        child.isMesh &&
+        child.name.includes("pour")
+      ) {
+        pourRef.current = child
+
+        child.scale.y = minimumScaleY
+        child.visible = false
+      }
+
+      if (
+        child.isMesh &&
+        child.name.includes("liquid")
+      ) {
+        liquidRef.current = child
+      }
+    })
+  }, [
+    mainBuiretteRef,
+    minimumScaleY,
+  ])
+
+  useFrame((state, delta) => {
+    const pour = pourRef.current
+    const liquid = liquidRef.current
+
+    if (!pour) return
+    if (!liquid) return
+    if (!isScrollingRef.current) return
+
+    if (liquid.scale.y <= 0) {
+      liquid.scale.y = 0
+      pour.visible = false
+      pour.scale.y = minimumScaleY
+
+      isScrollingRef.current = false
+      isPourFinishedRef.current = true
+
+      return
+    }
+
+    pour.visible = true
+
+    pour.scale.y =
       THREE.MathUtils.damp(
-        liquidChild.scale.y,
-        targetLiquidScaleY,
+        pour.scale.y,
+        50,
         smoothSpeed,
         delta
       )
 
-    // Smoothly reduce the pouring stream.
-    pourChild.scale.y =
-      THREE.MathUtils.damp(
-        pourChild.scale.y,
-        targetPourScaleY,
-        smoothSpeed,
-        delta
-      )
+    liquid.scale.y = Math.max(
+      liquid.scale.y - scaleSpeed * delta,
+      0
+    )
 
-    const liquidReachedTarget =
-      Math.abs(
-        liquidChild.scale.y -
-          targetLiquidScaleY
-      ) < 0.0001
+    if (liquid.scale.y <= 0) {
+      liquid.scale.y = 0
+      pour.visible = false
+      pour.scale.y = minimumScaleY
 
-    const pourReachedTarget =
-      Math.abs(
-        pourChild.scale.y -
-          targetPourScaleY
-      ) < 0.0001
+      isScrollingRef.current = false
+      isPourFinishedRef.current = true
 
-    if (liquidReachedTarget) {
-      liquidChild.scale.y =
-        targetLiquidScaleY
-    }
-
-    if (pourReachedTarget) {
-      pourChild.scale.y =
-        targetPourScaleY
-    }
-
-    const liquidIsEmpty =
-      targetLiquidScaleY <= minimumScaleY &&
-      liquidReachedTarget
-
-    if (
-      liquidIsEmpty &&
-      !pouringCompletedRef.current
-    ) {
-      pouringCompletedRef.current = true
-
-      liquidChild.scale.y = minimumScaleY
-      pourChild.scale.y = minimumScaleY
-
-      // There is now no liquid inside the burette.
-      liquidChild.visible = false
-
-      // Stop and hide the pouring stream.
-      pourChild.visible = false
-
-      liquidChild.updateMatrixWorld(true)
-      pourChild.updateMatrixWorld(true)
-
-      console.log(
-        "Burette is empty and pouring has stopped"
-      )
+      console.log("Burette pouring finished")
 
       if (
         selectedLesson === 8 &&
@@ -326,12 +141,7 @@ const PourFromBurette = ({
       ) {
         setLessonStep(28)
       }
-
-      return
     }
-
-    liquidChild.updateMatrixWorld(true)
-    pourChild.updateMatrixWorld(true)
   })
 
   return null

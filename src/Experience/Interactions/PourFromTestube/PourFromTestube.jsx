@@ -8,7 +8,6 @@ const PourFromTestube = ({
   liquidColor,
 }) => {
   const pourRef = useRef(null)
-  console.log("color:",liquidColor)
 
   useEffect(() => {
     if (!model) return

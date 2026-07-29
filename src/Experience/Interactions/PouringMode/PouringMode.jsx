@@ -14,6 +14,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import PouringLiquid from "../PouringLiquid/PouringLiquid"
 import PourFromTestube from "../PourFromTestube/PourFromTestube"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+import PourPowderFromTestube from "../PourPowderFromTestube/PourPowderFromTestube"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -31,7 +32,8 @@ const PouringMode = ({ hand }) => {
     pouringModeHand,
     setPouringModeHand,
     isPouringMode,setIsPouringMode,
-    rightBeakerFillData,leftBeakerFillData
+    rightBeakerFillData,leftBeakerFillData,
+    isPottasiumCarobnateInTestube01
   } = useContext(InteractionContext)
 
   const {testube01Ref} = useContext(ModelContext)
@@ -40,7 +42,8 @@ const PouringMode = ({ hand }) => {
     lessonStep,
     setLessonStep,
     setShowErrorMsgNo,
-    labResetKey,isTutorialMode
+    labResetKey,isTutorialMode,
+    selectedLesson
     
   } = useContext(MainGuidelineContext)
 
@@ -89,6 +92,12 @@ const PouringMode = ({ hand }) => {
     selectedLeftHand,
     selectedRightHand,
   ])
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ==34){
+        setLessonStep(35)
+    }
+  },[lessonStep,selectedLesson])
 
   /*
    * Clear local pouring state after the lab is reset.
@@ -493,6 +502,30 @@ const PouringMode = ({ hand }) => {
    * Rotate the pouring object with
    * the mouse wheel.
    */
+
+  useEffect(() => {
+  if (selectedLesson == 8){
+     const testTube = testube01Ref.current
+
+  if (!testTube) return
+
+  testTube.traverse((child) => {
+    if (
+      child.name
+        ?.toLowerCase()
+        .includes("cap")
+    ) {
+      child.visible = false
+    }
+  })
+  }
+
+ 
+}, [
+  selectedLesson,
+  testube01Ref,
+])
+
 useEffect(() => {
   const handleWheel = (event) => {
     if (
@@ -575,8 +608,11 @@ useEffect(() => {
           />
         )} */}
 
-      {hand==='right' && selectedRightHand.name==='main-testube-01' && <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
-      {hand==='left' && selectedLeftHand.name==='main-testube-01' && <PourFromTestube isPouring={isPouring} hand={"left"} model={testube01Ref.current} liquidColor={leftBeakerFillData.color} />}
+      {hand==='right' && selectedRightHand.name==='main-testube-01' && !isPottasiumCarobnateInTestube01  && <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
+      {hand==='left' && selectedLeftHand.name==='main-testube-01' && !isPottasiumCarobnateInTestube01  && <PourFromTestube isPouring={isPouring} hand={"left"} model={testube01Ref.current} liquidColor={leftBeakerFillData.color} />}
+
+      {hand==='left' && selectedLeftHand.name==='main-testube-01' && isPottasiumCarobnateInTestube01 && <PourPowderFromTestube isPouring={isPouring}  model={testube01Ref.current}/>}
+      {hand==='right' && selectedRightHand.name==='main-testube-01' && isPottasiumCarobnateInTestube01 && <PourPowderFromTestube isPouring={isPouring}  model={testube01Ref.current}/>}
 
     </>
   )
