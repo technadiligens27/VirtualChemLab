@@ -24,6 +24,7 @@ import PlaceBeakerNearClamp from "./PlaceBeakerNearClamp/PlaceBeakerNearClamp";
 import PourFromBurette from "./PourFromBurrette/PourFromBurrette";
 import PlaceThermometer from "./PlaceThermometer/PlaceThermometer";
 import StirModePolysterene from "./StirModePolysterene/StirModePolysterene";
+import FillThermometer from "./FillThermometer/FillThermometer";
 
 const Interaction = () => {
   const {
@@ -86,6 +87,9 @@ const Interaction = () => {
 
       {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
        && isPlacePolysterene && <StirModePolysterene heightOffset={1}/>}   
+
+       {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={100}/>} 
+
     </>
   );
 };

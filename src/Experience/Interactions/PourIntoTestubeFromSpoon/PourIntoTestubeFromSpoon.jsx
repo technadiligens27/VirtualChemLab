@@ -1,4 +1,8 @@
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -20,7 +24,8 @@ const PourIntoTestubeFromSpoon = ({
 
   const {
     isPotassiumTransferred,
-    setIsPotassiumTransferred,setIsPottasiumCarobnateInTestube01
+    setIsPotassiumTransferred,
+    setIsPottasiumCarobnateInTestube01,
   } = useContext(InteractionContext)
 
   const spoonRotationXRef = useRef(0)
@@ -30,15 +35,23 @@ const PourIntoTestubeFromSpoon = ({
   const originalSpoonPositionRef = useRef(null)
   const originalSpoonRotationRef = useRef(null)
 
-  const originalTestTubePositionRef = useRef(null)
-  const originalTestTubeRotationRef = useRef(null)
+  const originalTestTubePositionRef =
+    useRef(null)
+
+  const originalTestTubeRotationRef =
+    useRef(null)
 
   const potassiumPiecesRef = useRef([])
   const powderMaterialsRef = useRef([])
 
-  const isPotassiumFallingRef = useRef(false)
-  const targetPowderOpacityRef = useRef(0);
-  
+  const isPotassiumFallingRef =
+    useRef(false)
+
+  const targetPowderOpacityRef =
+    useRef(0)
+
+  const powderRevealFinishedRef =
+    useRef(false)
 
   useEffect(() => {
     if (
@@ -54,15 +67,20 @@ const PourIntoTestubeFromSpoon = ({
   ])
 
   useEffect(() => {
-    const testTube = testubeRef?.current
-    const spoon = spoonRef?.current
+    const testTube =
+      testubeRef?.current
+
+    const spoon =
+      spoonRef?.current
 
     if (!testTube || !spoon) return
 
     const spoonParent = spoon.parent
 
     if (!spoonParent) {
-      console.log("Spoon parent not found")
+      console.log(
+        "Spoon parent not found"
+      )
       return
     }
 
@@ -71,12 +89,15 @@ const PourIntoTestubeFromSpoon = ({
     const potassiumPieces = []
     const powderMaterials = []
 
-    // Find potassium pieces inside the spoon
     spoon.traverse((child) => {
       const childName =
         child.name?.toLowerCase() || ""
 
-      if (childName.includes("pottasium")) {
+      if (
+        childName.includes(
+          "pottasium"
+        )
+      ) {
         potassiumPieces.push({
           object: child,
 
@@ -116,86 +137,104 @@ const PourIntoTestubeFromSpoon = ({
     potassiumPiecesRef.current =
       potassiumPieces
 
-    // Find mouth and powder inside test tube
-    testTube.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() || ""
+testTube.traverse((child) => {
+  const childName =
+    child.name?.toLowerCase() || ""
 
-      if (
-        !mouth &&
-        childName.includes("mouth")
-      ) {
-        mouth = child
-      }
+  // Mouth can be an Object3D or Empty,
+  // so do not require child.isMesh here.
+  if (
+    !mouth &&
+    childName.includes("mouth")
+  ) {
+    mouth = child
 
-      if (
-        childName.includes("powder") &&
-        child.material
-      ) {
-        const originalMaterials =
-          Array.isArray(child.material)
-            ? child.material
-            : [child.material]
+    console.log(
+      "Test tube mouth found:",
+      child.name
+    )
+  }
 
-        const clonedMaterials =
-          originalMaterials.map(
-            (originalMaterial) => {
-              const clonedMaterial =
-                originalMaterial.clone()
+  // Only handle actual powder meshes here.
+  if (
+    child.isMesh &&
+    childName.startsWith(
+      "testube01-powder"
+    ) &&
+    child.material
+  ) {
+    const originalMaterials =
+      Array.isArray(child.material)
+        ? child.material
+        : [child.material]
 
-              clonedMaterial.transparent = true
-              clonedMaterial.depthWrite = false
+    const clonedMaterials =
+      originalMaterials.map(
+        (originalMaterial) => {
+          const clonedMaterial =
+            originalMaterial.clone()
 
-              clonedMaterial.opacity =
-                isPotassiumTransferred
-                  ? 1
-                  : 0
+          clonedMaterial.transparent = true
+          clonedMaterial.depthWrite = false
 
-              clonedMaterial.needsUpdate = true
+          clonedMaterial.opacity =
+            isPotassiumTransferred
+              ? 1
+              : 0
 
-              powderMaterials.push({
-                object: child,
-                material: clonedMaterial,
-              })
+          clonedMaterial.needsUpdate = true
 
-              return clonedMaterial
-            }
-          )
+          powderMaterials.push({
+            object: child,
+            material: clonedMaterial,
+          })
 
-        child.material = Array.isArray(
-          child.material
-        )
-          ? clonedMaterials
-          : clonedMaterials[0]
+          return clonedMaterial
+        }
+      )
 
-        child.visible =
-          isPotassiumTransferred
-      }
-    })
+    child.material =
+      Array.isArray(child.material)
+        ? clonedMaterials
+        : clonedMaterials[0]
+
+    child.visible =
+      isPotassiumTransferred
+  }
+})
 
     powderMaterialsRef.current =
       powderMaterials
 
+    console.log(
+      "Potassium spoon pieces:",
+      potassiumPieces.length
+    )
+
+    console.log(
+      "Test tube powder materials:",
+      powderMaterials.length
+    )
+
     if (!mouth) {
-      console.log("Test tube mouth not found")
+      console.log(
+        "Test tube mouth not found"
+      )
       return
     }
 
-    // Save original spoon transform
     originalSpoonPositionRef.current =
       spoon.position.clone()
 
     originalSpoonRotationRef.current =
       spoon.rotation.clone()
 
-    // Save original test-tube transform
     originalTestTubePositionRef.current =
       testTube.position.clone()
 
     originalTestTubeRotationRef.current =
       testTube.rotation.clone()
 
-    // If already transferred, keep spoon empty
     if (isPotassiumTransferred) {
       potassiumPiecesRef.current.forEach(
         (piece) => {
@@ -212,11 +251,18 @@ const PourIntoTestubeFromSpoon = ({
       )
 
       targetPowderOpacityRef.current = 1
+
+      // The transfer animation has already
+      // completed, so stop controlling opacity.
+      powderRevealFinishedRef.current =
+        true
     } else {
       targetPowderOpacityRef.current = 0
+
+      powderRevealFinishedRef.current =
+        false
     }
 
-    // Move test tube to centre
     testTube.position.x = 0
     testTube.updateMatrixWorld(true)
 
@@ -225,9 +271,12 @@ const PourIntoTestubeFromSpoon = ({
     const targetPosition =
       new THREE.Vector3()
 
-    mouth.getWorldPosition(targetPosition)
+    mouth.getWorldPosition(
+      targetPosition
+    )
 
-    targetPosition.y += heightOffset
+    targetPosition.y +=
+      heightOffset
 
     targetPosition.x +=
       hand === "right"
@@ -243,7 +292,6 @@ const PourIntoTestubeFromSpoon = ({
       localTargetPosition
     )
 
-    // Set spoon rotation limits
     const startingRotationX =
       spoon.rotation.x
 
@@ -254,12 +302,14 @@ const PourIntoTestubeFromSpoon = ({
       startingRotationX
 
     maximumRotationXRef.current =
-      startingRotationX + Math.PI / 2
+      startingRotationX +
+      Math.PI / 2
 
     spoon.updateMatrixWorld(true)
 
     return () => {
-      isPotassiumFallingRef.current = false
+      isPotassiumFallingRef.current =
+        false
 
       const currentSpoon =
         spoonRef?.current
@@ -267,7 +317,6 @@ const PourIntoTestubeFromSpoon = ({
       const currentTestTube =
         testubeRef?.current
 
-      // Restore spoon position and rotation
       if (
         currentSpoon &&
         originalSpoonPositionRef.current
@@ -286,7 +335,6 @@ const PourIntoTestubeFromSpoon = ({
         )
       }
 
-      // Restore test-tube position and rotation
       if (
         currentTestTube &&
         originalTestTubePositionRef.current
@@ -305,26 +353,10 @@ const PourIntoTestubeFromSpoon = ({
         )
       }
 
-      if (isPotassiumTransferred) {
-        // Transfer completed:
-        // keep spoon potassium hidden
-        potassiumPiecesRef.current.forEach(
-          (piece) => {
-            piece.object.visible = false
-          }
-        )
-
-        // Keep powder inside test tube visible
-        powderMaterialsRef.current.forEach(
-          ({ object, material }) => {
-            object.visible = true
-            material.opacity = 1
-            material.needsUpdate = true
-          }
-        )
-      } else {
-        // Transfer not completed:
-        // restore potassium to spoon
+      // Do not continuously restore opacity here.
+      // The next component must be able to fade
+      // the test-tube powder independently.
+      if (!isPotassiumTransferred) {
         potassiumPiecesRef.current.forEach(
           (piece) => {
             piece.object.position.copy(
@@ -339,7 +371,6 @@ const PourIntoTestubeFromSpoon = ({
           }
         )
 
-        // Hide powder inside test tube
         powderMaterialsRef.current.forEach(
           ({ object, material }) => {
             object.visible = false
@@ -347,13 +378,24 @@ const PourIntoTestubeFromSpoon = ({
             material.needsUpdate = true
           }
         )
+      } else {
+        potassiumPiecesRef.current.forEach(
+          (piece) => {
+            piece.object.visible = false
+          }
+        )
       }
 
       potassiumPiecesRef.current = []
       powderMaterialsRef.current = []
 
-      currentSpoon?.updateMatrixWorld(true)
-      currentTestTube?.updateMatrixWorld(true)
+      currentSpoon?.updateMatrixWorld(
+        true
+      )
+
+      currentTestTube?.updateMatrixWorld(
+        true
+      )
     }
   }, [
     testubeRef,
@@ -364,9 +406,9 @@ const PourIntoTestubeFromSpoon = ({
     isPotassiumTransferred,
   ])
 
-  // Rotate spoon using scroll
   useEffect(() => {
-    const spoon = spoonRef?.current
+    const spoon =
+      spoonRef?.current
 
     if (!spoon) return
 
@@ -409,9 +451,12 @@ const PourIntoTestubeFromSpoon = ({
         isPotassiumFallingRef.current =
           true
 
-        targetPowderOpacityRef.current = 0
+        powderRevealFinishedRef.current =
+          false
 
-        // Show powder mesh but begin transparent
+        targetPowderOpacityRef.current =
+          0
+
         powderMaterialsRef.current.forEach(
           ({ object, material }) => {
             object.visible = true
@@ -420,7 +465,6 @@ const PourIntoTestubeFromSpoon = ({
           }
         )
 
-        // Reset spoon particles before falling
         potassiumPiecesRef.current.forEach(
           (piece) => {
             piece.elapsed = 0
@@ -453,82 +497,104 @@ const PourIntoTestubeFromSpoon = ({
     spoonRef,
     isPotassiumTransferred,
   ])
-  
-  useEffect(()=>{
-    if(isPotassiumTransferred && selectedLesson===8 && lessonStep ===12){
-        setLessonStep(13)
+
+  useEffect(() => {
+    if (
+      isPotassiumTransferred &&
+      selectedLesson === 8 &&
+      lessonStep === 12
+    ) {
+      setLessonStep(13)
     }
-  },[lessonStep,selectedLesson,isPotassiumTransferred])
+  }, [
+    lessonStep,
+    selectedLesson,
+    isPotassiumTransferred,
+    setLessonStep,
+  ])
 
   useFrame((_, delta) => {
     const potassiumPieces =
       potassiumPiecesRef.current
 
-    if (isPotassiumFallingRef.current) {
-      const maximumFallDistance = 3.5
+    if (
+      isPotassiumFallingRef.current
+    ) {
+      const maximumFallDistance =
+        3.5
 
       let finishedCount = 0
 
-      potassiumPieces.forEach((piece) => {
-        if (piece.finished) {
-          finishedCount += 1
-          return
-        }
+      potassiumPieces.forEach(
+        (piece) => {
+          if (piece.finished) {
+            finishedCount += 1
+            return
+          }
 
-        piece.elapsed += delta
+          piece.elapsed += delta
 
-        if (piece.elapsed < piece.delay) {
-          return
-        }
+          if (
+            piece.elapsed <
+            piece.delay
+          ) return
 
-        const object = piece.object
-        const parent = object.parent
+          const object =
+            piece.object
 
-        if (!parent) return
+          const parent =
+            object.parent
 
-        parent.updateMatrixWorld(true)
+          if (!parent) return
 
-        const currentWorldPosition =
-          new THREE.Vector3()
+          parent.updateMatrixWorld(true)
 
-        object.getWorldPosition(
-          currentWorldPosition
-        )
+          const currentWorldPosition =
+            new THREE.Vector3()
 
-        const distanceFallen =
-          piece.startWorldPosition.y -
-          currentWorldPosition.y
-
-        if (
-          distanceFallen >=
-          maximumFallDistance
-        ) {
-          piece.finished = true
-          object.visible = false
-
-          finishedCount += 1
-          return
-        }
-
-        const fallAmount =
-          piece.speed * delta
-
-        currentWorldPosition.y -=
-          fallAmount
-
-        currentWorldPosition.z +=
-          piece.zDrift * delta
-
-        const localPosition =
-          parent.worldToLocal(
-            currentWorldPosition.clone()
+          object.getWorldPosition(
+            currentWorldPosition
           )
 
-        object.position.copy(localPosition)
-        object.updateMatrixWorld(true)
-      })
+          const distanceFallen =
+            piece.startWorldPosition.y -
+            currentWorldPosition.y
 
-      if (potassiumPieces.length > 0) {
+          if (
+            distanceFallen >=
+            maximumFallDistance
+          ) {
+            piece.finished = true
+            object.visible = false
+            finishedCount += 1
+            return
+          }
+
+          const fallAmount =
+            piece.speed * delta
+
+          currentWorldPosition.y -=
+            fallAmount
+
+          currentWorldPosition.z +=
+            piece.zDrift * delta
+
+          const localPosition =
+            parent.worldToLocal(
+              currentWorldPosition.clone()
+            )
+
+          object.position.copy(
+            localPosition
+          )
+
+          object.updateMatrixWorld(true)
+        }
+      )
+
+      if (
+        potassiumPieces.length > 0
+      ) {
         targetPowderOpacityRef.current =
           finishedCount /
           potassiumPieces.length
@@ -542,13 +608,17 @@ const PourIntoTestubeFromSpoon = ({
         isPotassiumFallingRef.current =
           false
 
-        targetPowderOpacityRef.current = 1
+        targetPowderOpacityRef.current =
+          1
 
-        // Permanently record transfer
-        setIsPotassiumTransferred(true);
-        setIsPottasiumCarobnateInTestube01(true)
+        setIsPotassiumTransferred(
+          true
+        )
 
-        // Make sure all spoon particles remain hidden
+        setIsPottasiumCarobnateInTestube01(
+          true
+        )
+
         potassiumPieces.forEach(
           (piece) => {
             piece.object.visible = false
@@ -557,29 +627,64 @@ const PourIntoTestubeFromSpoon = ({
       }
     }
 
-    // Gradually reveal powder
+    // Stop touching the test-tube powder
+    // after its reveal reaches full opacity.
+    if (
+      powderRevealFinishedRef.current
+    ) return
+
+    let allPowderVisible =
+      powderMaterialsRef.current.length >
+      0
+
     powderMaterialsRef.current.forEach(
       ({ object, material }) => {
-        if (
-          targetPowderOpacityRef.current > 0 ||
-          isPotassiumTransferred
-        ) {
+        const targetOpacity =
+          targetPowderOpacityRef.current
+
+        if (targetOpacity > 0) {
           object.visible = true
         }
 
         material.opacity =
           THREE.MathUtils.damp(
             material.opacity,
-            isPotassiumTransferred
-              ? 1
-              : targetPowderOpacityRef.current,
+            targetOpacity,
             4,
             delta
           )
 
+        if (material.opacity < 0.99) {
+          allPowderVisible = false
+        }
+
         material.needsUpdate = true
       }
     )
+
+    if (
+      isPotassiumTransferred &&
+      targetPowderOpacityRef.current ===
+        1 &&
+      allPowderVisible
+    ) {
+      powderMaterialsRef.current.forEach(
+        ({ object, material }) => {
+          object.visible = true
+          material.opacity = 1
+          material.needsUpdate = true
+        }
+      )
+
+      // Critical: from this point onward,
+      // this component no longer changes opacity.
+      powderRevealFinishedRef.current =
+        true
+
+      console.log(
+        "Powder reveal completed. Opacity control released."
+      )
+    }
   })
 
   return null

@@ -108,7 +108,10 @@ const EnthalpyHessLaw = () =>{
       step32:
         "Now press P fro Puring mode",  
       step33:
-        "Now scroll dwon to stie and pour from testuve",   
+        "Now scroll dwon to stie and pour from testuve", 
+        
+      step34:
+        "36",  
     },
   ]
 

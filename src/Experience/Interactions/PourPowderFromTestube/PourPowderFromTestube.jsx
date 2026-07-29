@@ -1,93 +1,130 @@
 import {
+  useContext,
   useEffect,
   useRef,
 } from "react"
 import { useFrame } from "@react-three/fiber"
+import { select } from "three/tsl"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const PourPowderFromTestube = ({
   isPouring,
-  fallDistance = 5,
-  totalDuration = 5,
-  particleFallDuration = 3.5,
+  fallDistance = 0.4,
+  totalDuration = 6,
+  particleFallDuration = 1,
   randomMovement = 0.5,
-  leftMovement = 1.9,
+  leftMovement = 0.5,
+  powderFadeSpeed = 0.5,
   model,
 }) => {
+
+  const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
+  const {setIsPottasiumCarobnateInTestube01} = useContext(InteractionContext)
+
   const powderParticlesRef = useRef([])
+  const testTubePowderMeshesRef = useRef([])
+
   const elapsedTimeRef = useRef(0)
   const wasPouringRef = useRef(false)
+  const shouldFadePowderRef = useRef(false)
 
   useEffect(() => {
-    const testTube = model
+    if (!model) return
 
-    if (!testTube) {
-      console.log("Test tube was not found")
-      return
-    }
+    const fallingPowderMeshes = []
+    const insidePowderMeshes = []
 
-    const powderMeshes = []
+    model.traverse((child) => {
+      if (!child.isMesh) return
 
-    testTube.traverse((child) => {
-      if (
-        child.isMesh &&
-        child.name
-          ?.toLowerCase()
-          .includes("pour-powder")
-      ) {
-        child.visible = true
-        child.scale.set(1,1,1)
+      const name =
+        child.name?.toLowerCase() || ""
+
+      if (name.includes("pour-powder")) {
+        child.visible = false
+        child.scale.set(1, 1, 1)
 
         child.material =
           child.material.clone()
 
         child.material.color.set("white")
 
-        powderMeshes.push(child)
+        fallingPowderMeshes.push(child)
+      }
+
+      if (
+        name.includes("testube01-powder")
+      ) {
+        child.visible = true
+
+        child.material =
+          child.material.clone()
+
+        child.material.transparent = true
+        child.material.opacity = 1
+        child.material.needsUpdate = true
+
+        insidePowderMeshes.push(child)
       }
     })
 
+    testTubePowderMeshesRef.current =
+      insidePowderMeshes
+
     const maximumDelay = Math.max(
-      totalDuration - particleFallDuration,
+      totalDuration -
+        particleFallDuration,
       0
     )
 
     powderParticlesRef.current =
-      powderMeshes.map((powder, index) => {
-        const progress =
-          powderMeshes.length <= 1
-            ? 0
-            : index /
-              (powderMeshes.length - 1)
+      fallingPowderMeshes.map(
+        (powder, index) => {
+          const progress =
+            fallingPowderMeshes.length <= 1
+              ? 0
+              : index /
+                (fallingPowderMeshes.length -
+                  1)
 
-        return {
-          object: powder,
-          originalPosition:
-            powder.position.clone(),
+          return {
+            object: powder,
 
-          delay:
-            progress * maximumDelay +
-            Math.random() * 0.15,
+            originalPosition:
+              powder.position.clone(),
 
-          speed:
-            fallDistance /
-            particleFallDuration,
+            delay:
+              progress * maximumDelay +
+              Math.random() * 0.15,
 
-          randomX:
-            (Math.random() - 0.5) *
-            randomMovement,
+            speed:
+              fallDistance /
+              particleFallDuration,
 
-          randomZ:
-            (Math.random() - 0.5) *
-            randomMovement,
+            randomX:
+              (Math.random() - 0.5) *
+              randomMovement,
 
-          hasFinished: false,
+            randomZ:
+              (Math.random() - 0.5) *
+              randomMovement,
+
+            hasFinished: false,
+          }
         }
-      })
+      )
 
-    console.log(
-      "Powder particles:",
-      powderMeshes.length
-    )
+    return () => {
+      powderParticlesRef.current.forEach(
+        (particle) => {
+          particle.object.visible = false
+        }
+      )
+
+      powderParticlesRef.current = []
+      testTubePowderMeshesRef.current = []
+    }
   }, [
     model,
     fallDistance,
@@ -97,8 +134,12 @@ const PourPowderFromTestube = ({
   ])
 
   useFrame((_, delta) => {
-    if (isPouring && !wasPouringRef.current) {
+    if (
+      isPouring &&
+      !wasPouringRef.current
+    ) {
       elapsedTimeRef.current = 0
+      shouldFadePowderRef.current = false
 
       powderParticlesRef.current.forEach(
         (particle) => {
@@ -106,24 +147,49 @@ const PourPowderFromTestube = ({
             particle.originalPosition
           )
 
-          particle.object.visible = true
+          particle.object.visible = false
           particle.hasFinished = false
+        }
+      )
+
+      testTubePowderMeshesRef.current.forEach(
+        (powder) => {
+          powder.visible = true
+          powder.material.transparent = true
+          powder.material.opacity = 1
+          powder.material.needsUpdate = true
         }
       )
     }
 
     wasPouringRef.current = isPouring
 
-    if (!isPouring) return
+    if (!isPouring) {
+      powderParticlesRef.current.forEach(
+        (particle) => {
+          particle.object.visible = false
+        }
+      )
+
+      return
+    }
 
     elapsedTimeRef.current += delta
 
     powderParticlesRef.current.forEach(
       (particle) => {
         if (particle.hasFinished) return
-        if (elapsedTimeRef.current < particle.delay) return
+
+        if (
+          elapsedTimeRef.current <
+          particle.delay
+        ) {
+          return
+        }
 
         const powder = particle.object
+
+        powder.visible = true
 
         powder.position.y -=
           particle.speed * delta
@@ -141,12 +207,66 @@ const PourPowderFromTestube = ({
           particle.originalPosition.y -
           powder.position.y
 
-        if (distanceFallen >= fallDistance) {
+        if (
+          distanceFallen >= fallDistance
+        ) {
           powder.visible = false
           particle.hasFinished = true
         }
       }
     )
+
+    const allParticlesFinished =
+      powderParticlesRef.current.length > 0 &&
+      powderParticlesRef.current.every(
+        (particle) =>
+          particle.hasFinished
+      )
+
+    if (allParticlesFinished) {
+      shouldFadePowderRef.current = true
+    }
+
+    if (!shouldFadePowderRef.current) {
+      return
+    }
+
+    testTubePowderMeshesRef.current.forEach(
+      (powder) => {
+        powder.material.opacity =
+          Math.max(
+            powder.material.opacity -
+              powderFadeSpeed * delta,
+            0
+          )
+
+        powder.material.needsUpdate = true
+
+        if (
+          powder.material.opacity <= 0
+        ) {
+          powder.material.opacity = 0
+          powder.visible = false
+        }
+      }
+    )
+
+    const allInsidePowderHidden =
+      testTubePowderMeshesRef.current.length >
+        0 &&
+      testTubePowderMeshesRef.current.every(
+        (powder) =>
+          powder.material.opacity <= 0
+      )
+
+    if (allInsidePowderHidden) {
+      shouldFadePowderRef.current = false
+
+      if(lessonStep ===35 && selectedLesson===8){
+        setLessonStep(36)
+        setIsPottasiumCarobnateInTestube01(false)
+      }
+    }
   })
 
   return null

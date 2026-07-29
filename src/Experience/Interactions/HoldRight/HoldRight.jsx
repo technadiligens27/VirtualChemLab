@@ -309,7 +309,7 @@ const transformControlsRef = useRef()
       {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>)}
 
 
-      { isPourIntoTestube &&
+      { isPourIntoTestube && 
         selectedLeftHand?.name === "main-testube-01" && (
           <PourIntoTestubeFromSpoon
             testubeRef={selectedLeftHand.ref}

@@ -93,11 +93,7 @@ const PouringMode = ({ hand }) => {
     selectedRightHand,
   ])
 
-  useEffect(()=>{
-    if(selectedLesson===8 && lessonStep ==34){
-        setLessonStep(35)
-    }
-  },[lessonStep,selectedLesson])
+
 
   /*
    * Clear local pouring state after the lab is reset.
@@ -416,7 +412,7 @@ const PouringMode = ({ hand }) => {
        * Exit pouring mode.
        */
       if (pouringModeHand === requestedHand && activeObject) {
-        if(isTutorialMode && isPouringMode && lessonStep>8){
+        if(isTutorialMode && isPouringMode && lessonStep>8 && selectedLesson!==8){
           setShowErrorMsgNo(12)
           return
         }
@@ -466,7 +462,15 @@ const PouringMode = ({ hand }) => {
       setActiveObject(targetObject)
       setPouringModeHand(requestedHand)
 
-      setLessonStep(10)
+        if(selectedLesson===8 && lessonStep ==34){
+        setLessonStep(35)
+       }
+
+       if(selectedLesson!==8){
+              setLessonStep(10)
+
+       }
+
     }
 
     window.addEventListener(

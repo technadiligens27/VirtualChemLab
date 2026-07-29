@@ -21,7 +21,7 @@ const HoldLeft = ({ modeldata }) => {
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
     selectedRightHand,setPouredFromLeft,rightBeakerFillData,
     isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel,
-    isFunnelMode,setIsFunnelMode,selectedModelLeft,isDropperPlaced
+    isFunnelMode,setIsFunnelMode,selectedModelLeft,isDropperPlaced,isPottasiumCarobnateInTestube01
   } = useContext(InteractionContext)
 
   const {filterFoldedPaperRef,filterPaperRef,funnelRef} = useContext(ModelContext);
