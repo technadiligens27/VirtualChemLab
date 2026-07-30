@@ -220,7 +220,7 @@ const UI = () => {
     isSitting,
     clickedModel,
     isObjectInfo,
-    chairStep,
+    chairStep,setHessGuidelineNumber
   } = useContext(InteractionContext)
 
 
@@ -324,6 +324,8 @@ useEffect(() => {
     (selectedLesson === 8 && lessonStep === 8) ||
     (selectedLesson === 7 && lessonStep === 3)
   )
+  setHessGuidelineNumber(selectedLesson === 8 && lessonStep === 8)
+
 }, [selectedLesson, lessonStep])
 
   useEffect(() => {

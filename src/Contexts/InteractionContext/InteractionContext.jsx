@@ -91,6 +91,9 @@ export const InteractionProvider = ({ children }) => {
 
   const [isThermometerRisen,setIsThermometerRisen] = useState(false);
 
+  const [isHessGuideline,setIsHessGuideline] = useState(false);
+  const [hessGuidelineNumber,setHessGuidelineNumber] = useState(false)
+
   const resetInteractions = () => {
   // Empty both hands
   setSelectedLeftHand(false)
@@ -166,7 +169,9 @@ export const InteractionProvider = ({ children }) => {
   setIsBeakerNearClamp(false);
   setIsPlaceThermometer(false);
   setIsPolystereneStirMode(false);
-  setIsPottasiumCarobnateInTestube01(false)
+  setIsPottasiumCarobnateInTestube01(false);
+  setIsHessGuideline(false);
+  setHessGuidelineNumber(false)
 }
 
   return (
@@ -220,7 +225,9 @@ export const InteractionProvider = ({ children }) => {
         setIsPlaceThermometer,isPlaceThermometer,
         isPolystereneStirMode,setIsPolystereneStirMode,
         isPottasiumCarobnateInTestube01,setIsPottasiumCarobnateInTestube01,
-        isThermometerRisen,setIsThermometerRisen
+        isThermometerRisen,setIsThermometerRisen,
+        isHessGuideline,setIsHessGuideline,
+        hessGuidelineNumber,setHessGuidelineNumber
         
       }}
     >

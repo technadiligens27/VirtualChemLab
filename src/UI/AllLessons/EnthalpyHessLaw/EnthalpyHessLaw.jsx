@@ -9,7 +9,7 @@ import HessGuidelines from "../../HessGuidelines/HessGuidelines";
 
 const EnthalpyHessLaw = () =>{
 
-  const {isFillBeakerBoxOpen} = useContext(InteractionContext)
+  const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
 
@@ -215,6 +215,73 @@ const EnthalpyHessLaw = () =>{
   },
 ]
 
+const guidelineData = [
+  {
+    title: "Prepare the Polystyrene Cup",
+
+    description:
+      "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
+
+    implementationSteps: [
+      "Pick up the normal beaker.",
+      "Pick up the polystyrene cup with the other hand.",
+      "Place the polystyrene cup inside the normal beaker.",
+      "Make sure the cup is positioned upright in the centre.",
+      "Keep the top of the polystyrene cup open for adding the reactants.",
+    ],
+
+    image: "./polystyreneCupInBeaker.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+      setLessonStep(3)
+      setShowNormalBeakerArrow(true)
+    },
+  },
+
+  {
+    title: "Prepare the Potassium Carbonate",
+
+    description:
+      "Place potassium carbonate into a test tube so its mass can be measured before it is added to the hydrochloric acid. It will react with the acid and produce the temperature change required for the enthalpy calculation.",
+
+    implementationSteps: [
+      "Pick up an empty test tube.",
+      "Pick up the spatula with the other hand.",
+      "Use the spatula to collect potassium carbonate.",
+      "Move the spatula above the opening of the test tube.",
+      "Carefully pour the potassium carbonate from the spatula into the test tube.",
+      "Make sure all the potassium carbonate enters the test tube.",
+    ],
+
+    image: "./potassiumCarbonateIntoTestube.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    title: "Measure the Temperature",
+
+    description:
+      "Place the thermometer in the hydrochloric acid and wait for the reading to become stable.",
+
+    implementationSteps: [
+      "Keep the thermometer inside the cup.",
+      "Make sure the thermometer bulb is inside the liquid.",
+      "Do not let the thermometer touch the bottom of the cup.",
+      "Wait until the temperature reading becomes stable.",
+      "Press Continue after observing the stable reading.",
+    ],
+
+    image: "./beakerWithThermometer.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+]
 
     return(
         <>
@@ -227,13 +294,7 @@ const EnthalpyHessLaw = () =>{
                onButton1={() => setLessonStep(2)}/>
         } */}
 
-         <HessGuidelines
-            
-            onButton1Click={() => {
-             
-            }}
-           
-          />
+
 
         {
           lessonStep===1 &&
@@ -244,13 +305,23 @@ const EnthalpyHessLaw = () =>{
             />
         }
 
-        {lessonStep===2 && 
+        {
+          lessonStep==2 && <HessGuidelines guidelineData={guidelineData[0]}/>
+        }
+
+        
+        {
+          lessonStep==8 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[1]}/>
+        }
+         
+
+        {/* {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}    
                  icon={'./CopperSulphateTest.png'}            
                 text={Enthalpy[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
-        />}  
+        />}   */}
 
         {
           lessonStep ===3 && <DialogBox text={"Click the normal beaker and select the Left Hand option to pick it up."}/>
