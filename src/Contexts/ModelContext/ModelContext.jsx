@@ -28,10 +28,13 @@ export const ModelProvider = ({ children }) => {
   const testube01CapRef = useRef(null);
   const mainBuiretteRef = useRef(null);
   const buretteClampRef = useRef(null);
-  const mainThermometerRef = useRef(null)
+  const mainThermometerRef = useRef(null);
+  const mainPolysterene2Ref = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
+  const thermometerLiquidRef = useRef(null)
+
   const saltRef = useRef(null);
 
   const normalPrecipitateRef = useRef(null)
@@ -94,7 +97,8 @@ export const ModelProvider = ({ children }) => {
         testube01CapRef,mainBuiretteRef,
         arrowBuirette,buretteClampRef,
         arrowBuretteClampRef,mainThermometerRef,
-        arrowThermometerRef
+        arrowThermometerRef,
+        mainPolysterene2Ref,thermometerLiquidRef
       }}
     >
       {children}

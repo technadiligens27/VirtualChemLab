@@ -47,7 +47,8 @@ const ClickObject = () => {
     setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
     isPourIntoTestube,setIsWeighTestube,isWeighTestube,
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
-    isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode
+    isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,
+    isThermometerRisen,setIsThermometerRisen
 
   } = useContext(InteractionContext)
 
@@ -75,7 +76,9 @@ const ClickObject = () => {
     digitalBalanceRef,
     mainBuiretteRef,
     buretteClampRef,
-    mainThermometerRef
+    mainThermometerRef,
+    mainPolysterene2Ref,
+    thermometerLiquidRef
     
   } = useContext(ModelContext)
 
@@ -83,15 +86,15 @@ const ClickObject = () => {
     useContext(MainGuidelineContext)
 
  const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,
-  isBeakerNearClamp,setIsBeakerNearClamp
- } = useContext(InteractionContext)  
+  isBeakerNearClamp,setIsBeakerNearClamp } = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
 
   const [selectedObject, setSelectedObject] = useState(null)
 
   const flatOriginalTransformRef = useRef(null)
-  const foldedOriginalTransformRef = useRef(null)
+  const foldedOriginalTransformRef = useRef(null);
+  const thermometerOriginalTransformRef = useRef(null)
 
   const selectableObjects = useMemo(
     () => [
@@ -180,6 +183,10 @@ const ClickObject = () => {
       {
         name:'mainThermometer',
         ref: mainThermometerRef
+      },
+      {
+        name:'mainPolysterene2',
+        ref:mainPolysterene2Ref
       }
     ],
     [
@@ -202,7 +209,8 @@ const ClickObject = () => {
       pottasiumCarbonateContainerRef,
       digitalBalanceRef,
       mainBuiretteRef,
-      buretteClampRef
+      buretteClampRef,
+      mainPolysterene2Ref
     ]
   )
 
@@ -579,6 +587,12 @@ const ClickObject = () => {
     if ( handData.name === "main-testube-01" && isWeighTestube ) {
       if(lessonStep === 17 && selectedLesson ===8){
         setLessonStep(18)
+      }
+    }
+
+    if(handData.name==='mainThermometer'){
+      if(lessonStep === 43 && selectedLesson ===8){
+        setLessonStep(44)
       }
     }
 
@@ -1259,11 +1273,77 @@ const handlePlaceBalance = () => {
 })
   },[selectedLeftHand,selectedRightHand,isPlacePolysterene,isPlaceThermometer])
 
-  const placeThermometer=()=>{
-    setIsPlaceThermometer(true)
-  }
-  const removeThermometer = ()=>{
+  const placeThermometer = () => {
+      const thermometer = mainThermometerRef.current
+
+      if (!thermometer) return
+
+      if (!thermometerOriginalTransformRef.current) {
+        const handData =
+          selectedRightHand?.name === "mainThermometer"
+            ? selectedRightHand
+            : selectedLeftHand
+
+        thermometerOriginalTransformRef.current = {
+          parent: handData?.originalParent,
+          position: handData?.originalPosition?.clone(),
+          rotation: handData?.originalRotation?.clone(),
+        }
+      }
+
+      setIsPlaceThermometer(true)
+      setSelectedObject(null)
+}
+
+  const removeThermometer = () => {
+    const original =
+      thermometerOriginalTransformRef.current
+
+    if (!original) {
+      console.log(
+        "Thermometer original transform was not found"
+      )
+      return
+    }
+
     setIsPlaceThermometer(false)
+
+    setSelectedRightHand({
+      hand: "right",
+      name: "mainThermometer",
+      ref: mainThermometerRef,
+      originalParent: original.parent,
+      originalPosition: original.position.clone(),
+      originalRotation: original.rotation.clone(),
+    })
+
+    setSelectedObject(null)
+
+    if (
+      selectedLesson === 8 &&
+      lessonStep === 40
+    ) {
+      setLessonStep(41)
+    }
+  }
+
+  const resetThermometer = ()=>{
+    setIsThermometerRisen(false);
+    thermometerLiquidRef.current.scale.set(0,0,0);
+    thermometerLiquidRef.current.visible = false;
+
+    if(selectedLesson===8 && lessonStep==41){
+      setLessonStep(42);
+    }
+
+  }
+
+  const disposeCup = ()=>{
+    setIsPlacePolysterene(false)
+    if(lessonStep==42 && selectedLesson==8){
+      mainPolystereneRef.current.visible=false
+      setLessonStep(43)
+    }
   }
 
   const addPottasiumCarbinateToSpoon = ()=>{
@@ -1378,6 +1458,7 @@ const handlePlaceBalance = () => {
     }
 
   }
+  
 
   const renderTableObjectButtons = () => {
     const clampButtons = renderClampTableButtons()
@@ -1444,6 +1525,22 @@ const handlePlaceBalance = () => {
         )
 
         }
+
+        {
+          lessonStep === 40 && selectedLesson ===8 && (
+            <button onClick={removeThermometer}>
+              Remove Thermometer
+            </button>
+          )
+        }
+
+        {
+          lessonStep === 42 && selectedLesson ===8 && (
+            <button onClick={disposeCup}>
+              Dispose Cup
+            </button>
+          )
+        }
       </>
     )
   }
@@ -1490,6 +1587,14 @@ const handlePlaceBalance = () => {
               Unstir
             </button>
         )}
+
+        {
+          isPlaceThermometer && (
+            <button onClick={removeThermometer}>
+              Remove Thermometer
+            </button>
+          )
+        }
       </>
     )
 
@@ -1498,6 +1603,9 @@ const handlePlaceBalance = () => {
 
   }
 
+  useEffect(()=>{
+    console.log('isThermometerRisen:',isThermometerRisen)
+  },[isThermometerRisen])
 
 const renderThermometerHeldButtons=()=>{
     
@@ -1519,6 +1627,24 @@ const renderThermometerHeldButtons=()=>{
             Remove Thermometer
           </button>
         }
+
+        {
+          isThermometerRisen && !isPlaceThermometer && selectedRightHand.name==='mainThermometer' && !isTutorialMode &&
+          <button onClick={resetThermometer}>
+            Reset Thermometer
+          </button>
+        }
+
+       {/* //--------------TutorialBased--------------/////// */}
+
+       {
+          selectedLesson===8 && lessonStep===41 &&
+          <button onClick={resetThermometer}>
+            Reset Thermometer
+          </button>
+        }
+
+
       </>
     )   
   }

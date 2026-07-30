@@ -4,6 +4,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import LessonGuide from "../../LessonGuide/LessonGuide";
 import LessonDetails from "../../LessonDetails/LessonDetails";
+import HessGuidelines from "../../HessGuidelines/HessGuidelines";
 
 
 const EnthalpyHessLaw = () =>{
@@ -121,7 +122,18 @@ const EnthalpyHessLaw = () =>{
         "Now clikc Testube and press Weigh Testube", 
         
       step38:
-        "40",  
+        "Click Normal beaker select Remove Thermometer",
+        
+      step39:
+        "Click Thermometer select Reset Thermometer",
+        
+      step40:
+        "Click Beaker and select Dispose Cup", 
+      step41:
+        "Keep Thermometer In Table ",
+        
+      step42:
+        "44",  
     },
   ]
 
@@ -204,7 +216,6 @@ const EnthalpyHessLaw = () =>{
 ]
 
 
-
     return(
         <>
 
@@ -215,6 +226,14 @@ const EnthalpyHessLaw = () =>{
                text={CopperSulfatePrecipitate[0].step1} 
                onButton1={() => setLessonStep(2)}/>
         } */}
+
+         <HessGuidelines
+            
+            onButton1Click={() => {
+             
+            }}
+           
+          />
 
         {
           lessonStep===1 &&
@@ -397,7 +416,23 @@ const EnthalpyHessLaw = () =>{
 
       {lessonStep ===40 && 
            <DialogBox text={Enthalpy[0].step38}/>
-      }  
+      }
+
+      {lessonStep ===41 && 
+           <DialogBox text={Enthalpy[0].step39}/>
+      }
+
+      {lessonStep ===42 && 
+           <DialogBox text={Enthalpy[0].step40}/>
+      }
+
+      {lessonStep ===43 && 
+           <DialogBox text={Enthalpy[0].step41}/>
+      }
+
+      {lessonStep ===44 && 
+           <DialogBox text={Enthalpy[0].step42}/>
+      }      
 
         </>
     )

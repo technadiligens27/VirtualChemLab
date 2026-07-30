@@ -18,7 +18,8 @@ const ChemEnvironment = () => {
          mainDropperRef, arrowTestube01Ref,arrowTestube02Ref,dropperAnimationAction,setDropperAnimationAction,
          arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
-         arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef  
+         arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef,mainPolysterene2Ref,
+         thermometerLiquidRef
   } = useContext(ModelContext);
 
 
@@ -143,7 +144,7 @@ const hideLiquidObjects=(root)=>{
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainPolystereneRef.current = scene.getObjectByName('mainPolystyrene');
-
+    mainPolysterene2Ref.current = scene.getObjectByName('mainPolysterene2')
     testube01CapRef.current = scene.getObjectByName('testube-cap')
     testube01CapRef.current.visible = false
 
@@ -170,7 +171,8 @@ const hideLiquidObjects=(root)=>{
   trayPointRef.current = scene.getObjectByName('tray-point-empty');
   mainBuiretteRef.current = scene.getObjectByName('main-buirette');
   buretteClampRef.current = scene.getObjectByName('mainBuretteClamp');
-  mainThermometerRef.current = scene.getObjectByName('mainThermometer')
+  mainThermometerRef.current = scene.getObjectByName('mainThermometer');
+  thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid')
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -260,7 +262,8 @@ useEffect(() => {
     mainDropperRef,
     mainPolystereneRef,
     digitalBalanceRef,
-    mainBuiretteRef
+    mainBuiretteRef,
+    thermometerLiquidRef
   ]
 
   labModels.forEach((modelRef) => {

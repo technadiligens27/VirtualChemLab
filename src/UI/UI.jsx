@@ -21,6 +21,7 @@ import SideGuide from "./SideGuide/SideGuide"
 import LessonDetails from "./LessonDetails/LessonDetails"
 import LessonSummary from "./LessonSummary/LessonSummary"
 import EnthalpyHessLaw from "./AllLessons/EnthalpyHessLaw/EnthalpyHessLaw"
+import HessGuidelines from "./HessGuidelines/HessGuidelines"
 
 
 // const saltDissolvingSummary = {
@@ -385,6 +386,8 @@ useEffect(() => {
   */
   return (
     <>
+
+    
     {/* <LessonDetails/> */}
     {/* <LessonSummary summaryData={saltDissolvingSummary}/> */}
     {!isSitting && selectedMainGuideline===5 && <SideGuide/>}

@@ -89,6 +89,7 @@ const Interaction = () => {
        && isPlacePolysterene && <StirModePolysterene heightOffset={1}/>}   
 
        {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={200}/>} 
+       {isPlaceThermometer && <FillThermometer amount={200}/> }
 
     </>
   );

@@ -9,6 +9,7 @@ import * as THREE from "three"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const FillThermometer = ({
   amount,
@@ -17,13 +18,9 @@ const FillThermometer = ({
   finalAmount = 4,
   fillSpeed = 3,
 }) => {
-  const { mainThermometerRef } =
-    useContext(ModelContext)
-
-  const {
-    selectedLesson,
-    lessonStep,
-  } = useContext(MainGuidelineContext)
+  const { mainThermometerRef } = useContext(ModelContext)
+  const {selectedLesson,lessonStep} = useContext(MainGuidelineContext)
+  const {setIsThermometerRisen,isThermometerRisen} = useContext(InteractionContext)
 
   const liquidRef = useRef(null)
   const originalScaleRef = useRef(null)
@@ -32,15 +29,18 @@ const FillThermometer = ({
   const reactionTimerRef = useRef(0)
   const reactionStartedRef = useRef(false)
 
+  useEffect(()=>{
+    setIsThermometerRisen(true)
+    console.log('isThermometerRisen:',isThermometerRisen)
+  },[isThermometerRisen])
+
+  
+
   useEffect(() => {
-    const thermometer =
-      mainThermometerRef?.current
+    const thermometer = mainThermometerRef?.current
 
     if (!thermometer) {
-      console.log(
-        "Main thermometer was not found"
-      )
-
+      console.log("Main thermometer was not found")
       return
     }
 
