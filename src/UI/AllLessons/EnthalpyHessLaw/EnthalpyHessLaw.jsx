@@ -5,6 +5,7 @@ import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import LessonGuide from "../../LessonGuide/LessonGuide";
 import LessonDetails from "../../LessonDetails/LessonDetails";
 import HessGuidelines from "../../HessGuidelines/HessGuidelines";
+import HessReactionResult from "../../HessReactionResult/HessReactionResult";
 
 
 const EnthalpyHessLaw = () =>{
@@ -215,73 +216,152 @@ const EnthalpyHessLaw = () =>{
   },
 ]
 
-const guidelineData = [
-  {
-    title: "Prepare the Polystyrene Cup",
+//-----------------------
 
-    description:
-      "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
+  const guidelineData = [
+    {
+      id: 1,
 
-    implementationSteps: [
-      "Pick up the normal beaker.",
-      "Pick up the polystyrene cup with the other hand.",
-      "Place the polystyrene cup inside the normal beaker.",
-      "Make sure the cup is positioned upright in the centre.",
-      "Keep the top of the polystyrene cup open for adding the reactants.",
-    ],
+      title: "Prepare the Polystyrene Cup",
 
-    image: "./polystyreneCupInBeaker.png",
+      description:
+        "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
 
-    onButtonContinue: () => {
-      setHessGuidelineNumber(false)
-      setLessonStep(3)
-      setShowNormalBeakerArrow(true)
+      implementationSteps: [
+        "Pick up the normal beaker.",
+        "Pick up the polystyrene cup with the other hand.",
+        "Place the polystyrene cup inside the normal beaker.",
+        "Make sure the cup is positioned upright in the centre.",
+        "Keep the top of the polystyrene cup open for adding the reactants.",
+      ],
+
+      image: "./polystyreneCupInBeaker.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+        setLessonStep(3)
+        setShowNormalBeakerArrow(true)
+      },
     },
-  },
 
-  {
-    title: "Prepare the Potassium Carbonate",
+    {
+      id: 2,
 
-    description:
-      "Place potassium carbonate into a test tube so its mass can be measured before it is added to the hydrochloric acid. It will react with the acid and produce the temperature change required for the enthalpy calculation.",
+      title: "Prepare the Potassium Carbonate",
 
-    implementationSteps: [
-      "Pick up an empty test tube.",
-      "Pick up the spatula with the other hand.",
-      "Use the spatula to collect potassium carbonate.",
-      "Move the spatula above the opening of the test tube.",
-      "Carefully pour the potassium carbonate from the spatula into the test tube.",
-      "Make sure all the potassium carbonate enters the test tube.",
-    ],
+      description:
+        "Transfer potassium carbonate into a test tube so that its mass can be measured before it is added to the hydrochloric acid. The potassium carbonate will react with the acid and produce the temperature change required for the enthalpy calculation.",
 
-    image: "./potassiumCarbonateIntoTestube.png",
+      implementationSteps: [
+        "Pick up an empty test tube.",
+        "Pick up the spatula with the other hand.",
+        "Use the spatula to collect potassium carbonate.",
+        "Carefully transfer the potassium carbonate from the spatula into the test tube.",
+      ],
 
-    onButtonContinue: () => {
-      setHessGuidelineNumber(false)
+      image: "./TestubePottasiumAdd.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
     },
-  },
 
-  {
-    title: "Measure the Temperature",
+    {
+      id: 3,
 
-    description:
-      "Place the thermometer in the hydrochloric acid and wait for the reading to become stable.",
+      title: "Measure the Temperature",
 
-    implementationSteps: [
-      "Keep the thermometer inside the cup.",
-      "Make sure the thermometer bulb is inside the liquid.",
-      "Do not let the thermometer touch the bottom of the cup.",
-      "Wait until the temperature reading becomes stable.",
-      "Press Continue after observing the stable reading.",
-    ],
+      description:
+        "Place the thermometer in the hydrochloric acid and wait for the reading to become stable.",
 
-    image: "./beakerWithThermometer.png",
+      implementationSteps: [
+        "Keep the thermometer inside the cup.",
+        "Make sure the thermometer bulb is fully immersed in the liquid.",
+        "Do not allow the thermometer to touch the bottom or sides of the cup.",
+        "Wait until the temperature reading becomes stable.",
+        "Record the initial temperature of the hydrochloric acid.",
+      ],
 
-    onButtonContinue: () => {
-      setHessGuidelineNumber(false)
+      image: "./beakerWithThermometer.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
     },
+
+    {
+      id: 4,
+
+      title: "Weigh Test Tube and Potassium Carbonate",
+
+      description:
+        "Measure and record the combined mass of the test tube, cap, and potassium carbonate. This measurement will later be used to determine the exact mass of potassium carbonate added to the hydrochloric acid.",
+
+      implementationSteps: [
+        "Place the digital balance in the centre of the workspace.",
+        "Close the test tube securely with its cap.",
+        "Place the test tube on the centre of the balance pan.",
+        "Wait until the balance reading becomes stable.",
+        "Record the combined mass of the test tube, cap, and potassium carbonate.",
+      ],
+
+      image: "./weighTestube.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+  id: 5,
+
+  title: "Add Hydrochloric Acid to the Polystyrene Cup",
+
+  description:
+    "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. The hydrochloric acid can then be delivered accurately into the polystyrene cup.",
+
+  implementationSteps: [
+    "Add hydrochloric acid to the burette.",
+    "Secure the burette vertically in the burette clamp.",
+    "Place the normal beaker beneath the burette tip.",
+    "Open the burette tap gradually.",
+    "Close the burette tap when the required volume has been delivered.",
+  ],
+
+  image: "./BuretteHCLPour.png",
+
+  onButtonContinue: () => {
+    setHessGuidelineNumber(false)
   },
-]
+},
+{
+  id: 6,
+
+  title: "Add Potassium Carbonate and Measure the Temperature Change",
+
+  description:
+    "Add the potassium carbonate to the hydrochloric acid while stirring continuously. Observe the thermometer and record the highest stable temperature reached during the reaction.",
+
+  implementationSteps: [
+    "Pick up the test tube containing the potassium carbonate.",
+    "Keep the thermometer inside the polystyrene cup.",
+    "Pick up the stirring rod with the other hand.",
+    "Position the test tube above the polystyrene cup.",
+    "Add the potassium carbonate gradually to the hydrochloric acid.",
+    "Stir the mixture continuously while adding the potassium carbonate.",
+    "Make sure all the potassium carbonate is transferred into the cup.",
+    "Continue stirring while observing the thermometer reading.",
+    "Wait until the temperature reaches its highest value and begins to stabilise.",
+    "Record the highest temperature reached during the reaction.",
+  ],
+
+  image: "./addPotassiumCarbonateAndStir.png",
+
+  onButtonContinue: () => {
+    setHessGuidelineNumber(false)
+  },
+},
+  ]
 
     return(
         <>
@@ -301,8 +381,7 @@ const guidelineData = [
           <LessonDetails
             lessonData={lessonDetailsData[0]}
             onContinue={() => setLessonStep(2)}
-            
-            />
+          />
         }
 
         {
@@ -312,6 +391,26 @@ const guidelineData = [
         
         {
           lessonStep==8 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[1]}/>
+        }
+
+        {
+          lessonStep==14 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[3]}/>
+        }
+
+        {
+          lessonStep==18 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[4]}/>
+        }
+
+        {
+          lessonStep==28 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[2]}/>
+        }
+
+        {
+          lessonStep==32 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[2]}/>
+        }
+
+        {
+          lessonStep==39 && hessGuidelineNumber && <HessReactionResult/>
         }
          
 

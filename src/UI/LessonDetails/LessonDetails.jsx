@@ -28,6 +28,7 @@ const LessonDetails = ({
           </div>
         )}
 
+
         <div className="lesson-details-left">
           <div className="lesson-details-overview">
 

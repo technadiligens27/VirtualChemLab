@@ -10,9 +10,11 @@
   width: 70vw;
   height: 80vh;
   padding: 18px;
-  background-color: #1a2c3d;
+  background-color: #FCF8F3;
   border-radius: 16px;
   box-sizing: border-box;
+  border: 10px solid #fdc843;
+  position: relative;
 }
 
 .hess-guideline-inner {
@@ -27,7 +29,8 @@
 .hess-left {
   width: 60%;
   height: 100%;
-  padding: 35px;
+  padding-left: 20px;
+  padding-top: 35px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -35,8 +38,8 @@
 
 .hess-title-container h1 {
   margin: 0 0 14px;
-  font-size: 32px;
-  color: #1a2c3d;
+  font-size: 29px;
+  color: #351C7C;
 }
 
 .hess-left > p {
@@ -50,8 +53,8 @@
 .hess-steps {
   width: 100%;
   padding: 22px;
-  background-color: #f5f8fb;
-  border: 1px solid #dbe4ec;
+  background-color: #F4EFFA;
+  border: 2px solid #CBBAEE;
   border-radius: 12px;
   box-sizing: border-box;
 }
@@ -63,16 +66,16 @@
   margin-bottom: 18px;
 }
 
-.hess-steps h2 {
+.hess-steps h1 {
   margin: 0;
   font-size: 21px;
-  color: #1a2c3d;
+  color: #351C7C;
 }
 
 .hess-inner-steps {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 .hess-lesson-step {
@@ -90,7 +93,7 @@
 
 .hess-lesson-step p {
   margin: 0;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.5;
   color: #425466;
 }
@@ -99,7 +102,6 @@
   width: 40%;
   height: 100%;
   padding: 25px;
-  background-color: #eef5fa;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -118,6 +120,26 @@
   width: 90%;
   max-height: 90%;
   object-fit: contain;
+}
+
+.hess-button{
+  background-color: #351C7C;
+  color: #dbe4ec;
+  height: 50px;
+  width: 200px;
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  margin-top: 20px;
+}
+
+.lesson-side-container {
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  /* transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center; */
 }
 
 @media (max-width: 900px) {

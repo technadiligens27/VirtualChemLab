@@ -14,6 +14,13 @@ const HessGuidelines = ({ guidelineData }) => {
   return (
     <div className="main-guidelines">
       <div className="hess-guideline">
+        <div className="lesson-header-container">
+          <h1>Practical Step</h1>
+        </div>
+        
+        <div className="lesson-header-container lesson-side-container">
+          <h1>side</h1>
+        </div>
         <div className="hess-guideline-inner">
           <div className="hess-left">
             <div className="hess-title-container">
@@ -24,7 +31,7 @@ const HessGuidelines = ({ guidelineData }) => {
 
             <div className="hess-steps">
               <div className="hess-steps-title">
-                <h2>Implementation</h2>
+                <h1>Implementation</h1>
               </div>
 
               <div className="hess-inner-steps">
@@ -44,7 +51,7 @@ const HessGuidelines = ({ guidelineData }) => {
               </div>
             </div>
 
-            <button type="button" onClick={onButtonContinue} >
+            <button className="hess-button" onClick={onButtonContinue} >
               Continue
             </button>
           </div>
