@@ -6,6 +6,8 @@ import LessonGuide from "../../LessonGuide/LessonGuide";
 import LessonDetails from "../../LessonDetails/LessonDetails";
 import HessGuidelines from "../../HessGuidelines/HessGuidelines";
 import HessReactionResult from "../../HessReactionResult/HessReactionResult";
+import HessLessonIntroduction from "../../HessLessonIntroduction/HessLessonIntroduction";
+import HessReactionOneResults from "../../HessReactionOneResults/HessReactionOneResults";
 
 
 const EnthalpyHessLaw = () =>{
@@ -376,41 +378,46 @@ const EnthalpyHessLaw = () =>{
 
 
 
-        {
+        {/* {
           lessonStep===1 &&
           <LessonDetails
             lessonData={lessonDetailsData[0]}
             onContinue={() => setLessonStep(2)}
           />
-        }
+        } */}
 
         {
-          lessonStep==2 && <HessGuidelines guidelineData={guidelineData[0]}/>
+          lessonStep===1 && <HessLessonIntroduction
+            onStartLesson={() => {
+              setLessonStep(2)
+  }}
+/>
         }
 
+        {(lessonStep >= 2 && lessonStep <= 7 ) && ( <HessGuidelines guidelineData={guidelineData[0]}/>)}
         
         {
-          lessonStep==8 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[1]}/>
+          (lessonStep>=8 && lessonStep<=13)  && <HessGuidelines guidelineData={guidelineData[1]}/>
         }
 
         {
-          lessonStep==14 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[3]}/>
+          (lessonStep>=14 && lessonStep<=17)  && <HessGuidelines guidelineData={guidelineData[3]}/>
         }
 
         {
-          lessonStep==18 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[4]}/>
+          (lessonStep>=18 && lessonStep<=29)  && <HessGuidelines guidelineData={guidelineData[4]}/>
         }
 
         {
-          lessonStep==28 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[2]}/>
+          (lessonStep>=30 &&  lessonStep<=31)  && <HessGuidelines guidelineData={guidelineData[2]}/>
         }
 
         {
-          lessonStep==32 && hessGuidelineNumber && <HessGuidelines guidelineData={guidelineData[2]}/>
+          (lessonStep>=32 && lessonStep<=38)  && <HessGuidelines guidelineData={guidelineData[5]}/>
         }
 
         {
-          lessonStep==39 && hessGuidelineNumber && <HessReactionResult/>
+          lessonStep==40  && <HessReactionOneResults/>
         }
          
 

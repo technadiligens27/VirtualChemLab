@@ -316,7 +316,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       amountRef.current =
         selectedAmount * 0.010
 
-      speedRef.current = 0.8
+      speedRef.current = 0.4
     }
     
         /*

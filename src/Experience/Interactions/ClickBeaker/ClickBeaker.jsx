@@ -572,26 +572,46 @@ const ClickObject = () => {
 
     if (!handData?.ref?.current) return
 
-    if ( handData.name === "main-spoon" && selectedLesson === 8 && lessonStep === 15) {
+    if (
+      handData.name === "main-spoon" &&
+      selectedLesson === 8 &&
+      lessonStep === 15
+    ) {
       setLessonStep(16)
     }
 
-    if (  hand === "left" &&  selectedLesson === 8 && lessonStep === 7 ) {
+    if (
+      hand === "left" &&
+      selectedLesson === 8 &&
+      lessonStep === 7
+    ) {
       setLessonStep(8)
     }
 
-    if ( handData.name === "main-spoon" && isPourIntoTestube ) {
+    if (
+      handData.name === "main-spoon" &&
+      isPourIntoTestube
+    ) {
       setIsPourIntoTestube(false)
     }
 
-    if ( handData.name === "main-testube-01" && isWeighTestube ) {
-      if(lessonStep === 17 && selectedLesson ===8){
+    if (
+      handData.name === "main-testube-01" &&
+      isWeighTestube
+    ) {
+      if (
+        lessonStep === 17 &&
+        selectedLesson === 8
+      ) {
         setLessonStep(18)
       }
     }
 
-    if(handData.name==='mainThermometer'){
-      if(lessonStep === 43 && selectedLesson ===8){
+    if (handData.name === "mainThermometer") {
+      if (
+        lessonStep === 43 &&
+        selectedLesson === 8
+      ) {
         setLessonStep(44)
       }
     }
@@ -600,12 +620,29 @@ const ClickObject = () => {
 
     handData.originalParent.add(object)
 
-    object.position.copy(handData.originalPosition)
-    object.rotation.copy(handData.originalRotation)
+    object.position.copy(
+      handData.originalPosition
+    )
+
+    object.rotation.copy(
+      handData.originalRotation
+    )
+
     object.scale.set(1, 1, 1)
+    object.updateMatrixWorld(true)
 
     clearHandData(hand)
     setSelectedObject(null)
+
+    requestAnimationFrame(() => {
+      object.scale.set(1, 1, 1)
+      object.updateMatrixWorld(true)
+
+      console.log(
+        "Final table scale:",
+        object.scale
+      )
+    })
   }
 
   const getWorldPopupPosition = (objectRef) => {
@@ -1496,9 +1533,9 @@ const handlePlaceBalance = () => {
 
         {!isBeakerNearClamp && (
           <>
-            <button onClick={openFillBeakerBox}>
+            {/* <button onClick={openFillBeakerBox}>
               Add Liquid
-            </button>
+            </button> */}
 
             <button onClick={handlePlaceBeaker}>
               Place Beaker

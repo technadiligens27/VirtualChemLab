@@ -10,7 +10,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PourFromBurette = ({
-  scaleSpeed = 0.5,
+  scaleSpeed = 0.09,
   minimumScaleY = 0,
   smoothSpeed = 2,
 }) => {
@@ -115,7 +115,7 @@ const PourFromBurette = ({
     pour.scale.y =
       THREE.MathUtils.damp(
         pour.scale.y,
-        50,
+        80,
         smoothSpeed,
         delta
       )

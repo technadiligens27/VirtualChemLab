@@ -143,13 +143,19 @@ const HessGuidelines = ({ guidelineData }) => {
   }
 
   return (
-    <div className="main-guidelines">
+    <div
+      className={`main-guidelines-2 ${
+        isGuidelineOpen
+          ? "guideline-overlay-open"
+          : "guideline-overlay-closed"
+      }`}
+    >
       <div
         className="hess-guideline"
         ref={guidelineRef}
       >
         <div className="lesson-header-container">
-          <h1>Practical Step</h1>
+          <h1>What to do</h1>
         </div>
 
         <button

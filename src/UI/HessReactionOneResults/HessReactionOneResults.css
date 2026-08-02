@@ -1,0 +1,1088 @@
+.reaction-results-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  transition:
+    backdrop-filter 0.4s ease,
+    background-color 0.4s ease;
+}
+
+.reaction-results-overlay-open {
+  background-color: rgba(20, 15, 40, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.reaction-results-overlay-closed {
+  background-color: transparent;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.reaction-results-panel {
+  width: 90vw;
+  height: 88vh;
+
+  padding: 18px;
+
+  position: relative;
+  box-sizing: border-box;
+
+  background-color: #fcf8f3;
+  border: 10px solid #fdc843;
+  border-radius: 18px;
+
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.reaction-results-header {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  z-index: 5;
+
+  width: 420px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fdc843;
+
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+
+  transform: translateX(-50%);
+}
+
+.reaction-results-header h1 {
+  margin: 0;
+
+  font-size: 25px;
+  font-weight: 700;
+
+  color: #351c7c;
+}
+
+.reaction-results-side-button {
+  position: absolute;
+  top: 50%;
+  right: -70px;
+
+  width: 70px;
+  height: 160px;
+
+  padding: 0;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fdc843;
+
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+}
+
+.reaction-results-side-button img {
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  will-change: transform;
+}
+
+.reaction-results-side-button:hover {
+  background-color: #f2bb2e;
+}
+
+.reaction-results-side-button:active {
+  background-color: #e7ac16;
+}
+
+.reaction-results-inner {
+  width: 100%;
+  height: 100%;
+
+  padding:
+    58px
+    42px
+    28px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  gap: 42px;
+
+  background-color: white;
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.reaction-results-left {
+  width: 36%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+}
+
+.reaction-results-title h1 {
+  margin:
+    0
+    0
+    18px;
+
+  max-width: 480px;
+
+  font-size: 28px;
+  line-height: 1.35;
+
+  color: #351c7c;
+}
+
+.reaction-results-title p {
+  margin:
+    0
+    0
+    24px;
+
+  max-width: 480px;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  color: #526170;
+}
+
+.reaction-results-recall {
+  width: 100%;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+
+  background-color: #f7f3fc;
+  border: 2px solid #bda9eb;
+  border-radius: 13px;
+}
+
+.reaction-results-recall h2 {
+  margin:
+    0
+    0
+    12px;
+
+  font-size: 20px;
+
+  color: #351c7c;
+}
+
+.reaction-results-recall > p {
+  margin:
+    0
+    0
+    16px;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: #526170;
+}
+
+.reaction-results-formula {
+  width: 100%;
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: white;
+  border: 2px solid #a88de4;
+  border-radius: 12px;
+}
+
+.reaction-results-formula span {
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 23px;
+  font-style: italic;
+
+  color: #351c7c;
+}
+
+.reaction-results-formula sub {
+  font-size: 65%;
+}
+
+.reaction-results-recall
+.reaction-results-positive {
+  margin:
+    16px
+    0
+    0;
+
+  font-size: 14px;
+
+  color: #526170;
+}
+
+.reaction-results-tip {
+  width: 100%;
+
+  margin-top: 20px;
+  padding: 18px 22px;
+
+  box-sizing: border-box;
+
+  background-color: #fffaf0;
+  border: 2px solid #efbe4b;
+  border-radius: 13px;
+}
+
+.reaction-results-tip-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+.reaction-results-tip-heading span {
+  font-size: 27px;
+
+  color: #d39700;
+}
+
+.reaction-results-tip-heading h2 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #765715;
+}
+
+.reaction-results-tip p {
+  margin:
+    0
+    0
+    8px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #5d594e;
+}
+
+.reaction-results-tip p:last-child {
+  margin-bottom: 0;
+}
+
+.reaction-results-continue {
+  width: 200px;
+  height: 52px;
+
+  margin-top: auto;
+
+  border: none;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #351c7c,
+      #43239a
+    );
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: white;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.reaction-results-continue:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0
+    8px
+    18px
+    rgba(53, 28, 124, 0.25);
+}
+
+.reaction-results-continue:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.reaction-results-continue:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.reaction-results-right {
+  width: 64%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reaction-results-table-box {
+  width: 100%;
+  max-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border: 2px solid #bda9eb;
+  border-radius: 15px;
+
+  background-color: white;
+}
+
+.reaction-results-table-header {
+  min-height: 62px;
+
+  padding:
+    0
+    28px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background:
+    linear-gradient(
+      135deg,
+      #351c7c,
+      #51289f
+    );
+}
+
+.reaction-results-table-header h2 {
+  margin: 0;
+
+  font-size: 21px;
+
+  color: white;
+}
+
+.reaction-results-table-header span {
+  font-size: 30px;
+
+  color: white;
+}
+
+.reaction-results-column-headings {
+  min-height: 56px;
+
+  display: grid;
+  grid-template-columns:
+    1.35fr
+    0.75fr
+    1fr
+    0.55fr;
+
+  background-color: #f6f2fc;
+  border-bottom: 1px solid #cfc1ed;
+}
+
+.reaction-results-column-headings div {
+  padding:
+    0
+    16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-right: 1px solid #cfc1ed;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #351c7c;
+}
+
+.reaction-results-column-headings div:first-child {
+  justify-content: flex-start;
+}
+
+.reaction-results-column-headings div:last-child {
+  border-right: none;
+}
+
+.reaction-results-table-row {
+  min-height: 68px;
+
+  display: grid;
+  grid-template-columns:
+    1.35fr
+    0.75fr
+    1fr
+    0.55fr;
+
+  border-bottom: 1px solid #d8ceed;
+}
+
+.reaction-results-table-row > div {
+  padding:
+    8px
+    16px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  border-right: 1px solid #d8ceed;
+}
+
+.reaction-results-table-row > div:last-child {
+  border-right: none;
+}
+
+.reaction-results-measurement {
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: #425466;
+}
+
+.reaction-results-symbol {
+  justify-content: center;
+
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 20px;
+  font-style: italic;
+
+  color: #351c7c;
+}
+
+.reaction-results-symbol sub {
+  font-size: 65%;
+}
+
+.reaction-results-value {
+  justify-content: center;
+}
+
+.reaction-results-value input {
+  width: 100%;
+  height: 43px;
+
+  padding:
+    0
+    14px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #b9bfd0;
+  border-radius: 8px;
+
+  background-color: white;
+
+  outline: none;
+
+  font-size: 15px;
+
+  color: #425466;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.reaction-results-value input:focus {
+  border-color: #7454bd;
+
+  box-shadow:
+    0
+    0
+    0
+    3px
+    rgba(116, 84, 189, 0.13);
+}
+
+.reaction-results-value input[readonly] {
+  background-color: #f5f0fc;
+
+  font-weight: 700;
+
+  color: #351c7c;
+}
+
+.reaction-results-value
+input.reaction-results-invalid {
+  border-color: #d9534f;
+  background-color: #fff1f1;
+
+  color: #b72e2a;
+}
+
+.reaction-results-unit {
+  justify-content: center;
+
+  font-size: 15px;
+
+  color: #425466;
+}
+
+.reaction-results-calculated-row {
+  background-color: #fcfaff;
+}
+
+.reaction-results-equation-row {
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom: 1px solid #d8ceed;
+
+  background-color: #f7f3fc;
+}
+
+.reaction-results-equation-row span {
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 18px;
+  font-style: italic;
+
+  color: #351c7c;
+}
+
+.reaction-results-equation-row sub {
+  font-size: 65%;
+}
+
+.reaction-results-final-row {
+  background-color: #fcfaff;
+}
+
+.reaction-results-bottom-formula {
+  min-height: 48px;
+
+  padding:
+    0
+    18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  background-color: #f7f3fc;
+}
+
+.reaction-results-bottom-formula span {
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 18px;
+  font-style: italic;
+
+  color: #351c7c;
+}
+
+.reaction-results-bottom-formula sub {
+  font-size: 65%;
+}
+
+.reaction-results-bottom-formula p {
+  margin: 0;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #59448c;
+}
+
+@media (max-width: 1500px) {
+  .reaction-results-panel {
+    width: 92vw;
+    height: 91vh;
+  }
+
+  .reaction-results-inner {
+    padding:
+      52px
+      32px
+      22px;
+
+    gap: 30px;
+  }
+
+  .reaction-results-title h1 {
+    font-size: 24px;
+  }
+
+  .reaction-results-title p {
+    font-size: 14px;
+    margin-bottom: 17px;
+  }
+
+  .reaction-results-recall {
+    padding: 16px;
+  }
+
+  .reaction-results-tip {
+    margin-top: 14px;
+    padding: 14px 17px;
+  }
+
+  .reaction-results-table-header {
+    min-height: 54px;
+  }
+
+  .reaction-results-table-header h2 {
+    font-size: 18px;
+  }
+
+  .reaction-results-column-headings {
+    min-height: 46px;
+  }
+
+  .reaction-results-table-row {
+    min-height: 58px;
+  }
+
+  .reaction-results-value input {
+    height: 37px;
+  }
+
+  .reaction-results-equation-row {
+    min-height: 36px;
+  }
+
+  .reaction-results-bottom-formula {
+    min-height: 41px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .reaction-results-panel {
+    width: 93vw;
+    height: 93vh;
+
+    padding: 13px;
+
+    border-width: 8px;
+  }
+
+  .reaction-results-header {
+    top: -8px;
+
+    width: 340px;
+    height: 50px;
+  }
+
+  .reaction-results-header h1 {
+    font-size: 21px;
+  }
+
+  .reaction-results-side-button {
+    right: -58px;
+
+    width: 58px;
+    height: 135px;
+  }
+
+  .reaction-results-inner {
+    padding:
+      44px
+      24px
+      17px;
+
+    gap: 22px;
+  }
+
+  .reaction-results-left {
+    width: 34%;
+  }
+
+  .reaction-results-right {
+    width: 66%;
+  }
+
+  .reaction-results-title h1 {
+    margin-bottom: 10px;
+
+    font-size: 20px;
+  }
+
+  .reaction-results-title p {
+    margin-bottom: 12px;
+
+    font-size: 12px;
+  }
+
+  .reaction-results-recall h2 {
+    font-size: 16px;
+  }
+
+  .reaction-results-recall > p,
+  .reaction-results-recall
+  .reaction-results-positive {
+    font-size: 11px;
+  }
+
+  .reaction-results-formula {
+    min-height: 54px;
+  }
+
+  .reaction-results-formula span {
+    font-size: 18px;
+  }
+
+  .reaction-results-tip {
+    margin-top: 10px;
+  }
+
+  .reaction-results-tip-heading {
+    margin-bottom: 5px;
+  }
+
+  .reaction-results-tip-heading h2 {
+    font-size: 14px;
+  }
+
+  .reaction-results-tip p {
+    font-size: 10px;
+  }
+
+  .reaction-results-continue {
+    width: 165px;
+    height: 43px;
+
+    font-size: 13px;
+  }
+
+  .reaction-results-table-header {
+    min-height: 47px;
+  }
+
+  .reaction-results-table-header h2 {
+    font-size: 15px;
+  }
+
+  .reaction-results-table-header span {
+    font-size: 23px;
+  }
+
+  .reaction-results-column-headings {
+    min-height: 40px;
+  }
+
+  .reaction-results-column-headings div {
+    padding:
+      0
+      9px;
+
+    font-size: 11px;
+  }
+
+  .reaction-results-table-row {
+    min-height: 52px;
+  }
+
+  .reaction-results-table-row > div {
+    padding:
+      6px
+      9px;
+  }
+
+  .reaction-results-measurement {
+    font-size: 10px;
+  }
+
+  .reaction-results-symbol {
+    font-size: 16px;
+  }
+
+  .reaction-results-value input {
+    height: 34px;
+
+    padding:
+      0
+      9px;
+
+    font-size: 11px;
+  }
+
+  .reaction-results-unit {
+    font-size: 11px;
+  }
+
+  .reaction-results-equation-row {
+    min-height: 32px;
+  }
+
+  .reaction-results-equation-row span {
+    font-size: 14px;
+  }
+
+  .reaction-results-bottom-formula {
+    min-height: 36px;
+    gap: 8px;
+  }
+
+  .reaction-results-bottom-formula span {
+    font-size: 13px;
+  }
+
+  .reaction-results-bottom-formula p {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 850px) {
+  .reaction-results-panel {
+    width: 95vw;
+    height: 94vh;
+  }
+
+  .reaction-results-inner {
+    padding:
+      41px
+      15px
+      13px;
+
+    gap: 13px;
+  }
+
+  .reaction-results-left {
+    width: 33%;
+  }
+
+  .reaction-results-right {
+    width: 67%;
+  }
+
+  .reaction-results-title h1 {
+    font-size: 15px;
+  }
+
+  .reaction-results-title p {
+    font-size: 9px;
+  }
+
+  .reaction-results-recall {
+    padding: 10px;
+  }
+
+  .reaction-results-recall h2 {
+    font-size: 12px;
+  }
+
+  .reaction-results-recall > p,
+  .reaction-results-recall
+  .reaction-results-positive {
+    font-size: 8px;
+  }
+
+  .reaction-results-formula {
+    min-height: 42px;
+  }
+
+  .reaction-results-formula span {
+    font-size: 13px;
+  }
+
+  .reaction-results-tip {
+    padding:
+      9px
+      10px;
+  }
+
+  .reaction-results-tip p {
+    font-size: 7px;
+  }
+
+  .reaction-results-continue {
+    width: 120px;
+    height: 36px;
+
+    font-size: 10px;
+  }
+
+  .reaction-results-table-header h2 {
+    font-size: 12px;
+  }
+
+  .reaction-results-column-headings div {
+    font-size: 8px;
+  }
+
+  .reaction-results-measurement {
+    font-size: 7px;
+  }
+
+  .reaction-results-symbol {
+    font-size: 12px;
+  }
+
+  .reaction-results-value input {
+    height: 30px;
+    font-size: 8px;
+  }
+
+  .reaction-results-unit {
+    font-size: 8px;
+  }
+
+  .reaction-results-equation-row span,
+  .reaction-results-bottom-formula span {
+    font-size: 10px;
+  }
+
+  .reaction-results-bottom-formula p {
+    font-size: 7px;
+  }
+}
+
+@media (max-height: 750px) {
+  .reaction-results-panel {
+    height: 95vh;
+  }
+
+  .reaction-results-inner {
+    padding-top: 40px;
+  }
+
+  .reaction-results-title h1 {
+    margin-bottom: 7px;
+
+    font-size: 18px;
+  }
+
+  .reaction-results-title p {
+    margin-bottom: 9px;
+
+    font-size: 10px;
+  }
+
+  .reaction-results-recall {
+    padding: 11px;
+  }
+
+  .reaction-results-recall h2 {
+    margin-bottom: 5px;
+
+    font-size: 14px;
+  }
+
+  .reaction-results-recall > p {
+    margin-bottom: 7px;
+
+    font-size: 9px;
+  }
+
+  .reaction-results-formula {
+    min-height: 42px;
+  }
+
+  .reaction-results-formula span {
+    font-size: 15px;
+  }
+
+  .reaction-results-recall
+  .reaction-results-positive {
+    margin-top: 7px;
+
+    font-size: 9px;
+  }
+
+  .reaction-results-tip {
+    margin-top: 8px;
+
+    padding:
+      8px
+      12px;
+  }
+
+  .reaction-results-tip-heading {
+    margin-bottom: 3px;
+  }
+
+  .reaction-results-tip p {
+    margin-bottom: 3px;
+
+    font-size: 8px;
+  }
+
+  .reaction-results-table-header {
+    min-height: 40px;
+  }
+
+  .reaction-results-column-headings {
+    min-height: 34px;
+  }
+
+  .reaction-results-table-row {
+    min-height: 43px;
+  }
+
+  .reaction-results-value input {
+    height: 29px;
+  }
+
+  .reaction-results-equation-row {
+    min-height: 27px;
+  }
+
+  .reaction-results-bottom-formula {
+    min-height: 31px;
+  }
+
+  .reaction-results-continue {
+    height: 36px;
+  }
+}

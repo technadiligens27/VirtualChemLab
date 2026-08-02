@@ -1,4 +1,4 @@
-.main-guidelines {
+.main-guidelines-2 {
   position: fixed;
   inset: 0;
   z-index: 99999;
@@ -10,6 +10,27 @@
   align-items: center;
   justify-content: center;
 
+  pointer-events: none;
+
+  transition:
+    backdrop-filter 0.4s ease,
+    background-color 0.4s ease;
+}
+
+.main-guidelines-2.guideline-overlay-open {
+  background-color: rgba(20, 15, 40, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.main-guidelines-2.guideline-overlay-closed {
+  background-color: transparent;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.hess-guideline {
+  pointer-events: auto;
 }
 
 .hess-guideline {

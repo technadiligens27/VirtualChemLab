@@ -111,7 +111,7 @@ const UI = () => {
     showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu,
     ShowNormalBeakerArrow,setShowNormalBeakerArrow,
     showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow,
-    showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow
+    showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow
   } = useContext(MainGuidelineContext)
 
   const {
@@ -220,10 +220,14 @@ const UI = () => {
 useEffect(() => {
   setShowTestube01Arrow(
     (selectedLesson === 8 && lessonStep === 8) ||
-    (selectedLesson === 7 && lessonStep === 3)
+    (selectedLesson === 7 && lessonStep === 3) ||
+    (selectedLesson === 8 && lessonStep === 32)
   )
-
 }, [selectedLesson, lessonStep, hessGuidelineNumber])
+
+useEffect(()=>{
+  setShowThermometerArrow(selectedLesson === 8 && lessonStep === 30)
+},[selectedLesson, lessonStep])
 
   useEffect(() => {
     setShowDropperArrow(selectedLesson===7 && lessonStep===6)

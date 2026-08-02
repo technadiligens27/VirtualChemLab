@@ -40,7 +40,7 @@ const HoldRight = ({ modeldata }) => {
     selectedModelRight,isDropperPlaced,
     isDropperFilled, 
     setIsPlacePolysterene,isPlacePolysterene,isPourIntoTestube,
-    isPottasiumCarobnateInSpoon,
+    isPottasiumCarobnateInSpoon,isPouringMode
   } = useContext(InteractionContext)
 
   const {
@@ -169,7 +169,7 @@ const transformControlsRef = useRef()
       object.name === "main-testube-02" ||
       object.name === "main-testube-03"
     ) {
-      object.scale.set(1.8, 1.8, 1.8)
+      object.scale.set(1.5, 1.5, 1.5)
     } else if (object.name === "main-filter-paper") {
       object.scale.set(1.3, 1.3, 1.3)
       object.rotation.x = Math.PI / 3
@@ -303,7 +303,7 @@ const transformControlsRef = useRef()
       {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
 
       {
-       !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
+       !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && !isPouringMode &&isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
 
       {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>)}

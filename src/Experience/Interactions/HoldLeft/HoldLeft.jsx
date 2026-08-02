@@ -20,7 +20,7 @@ const HoldLeft = ({ modeldata }) => {
   const {isFillUpBeaker,selectedLeftHand,
     fillBeakerHand,setIsPouring,isStirMode,isLitmusMode,
     selectedRightHand,setPouredFromLeft,rightBeakerFillData,
-    isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel,
+    isFilterFolded,setIsFilterFolded,isFilterInFunnel,setIsFilterInFunnel,isPouringMode,
     isFunnelMode,setIsFunnelMode,selectedModelLeft,isDropperPlaced,isPottasiumCarobnateInTestube01
   } = useContext(InteractionContext)
 
@@ -135,47 +135,51 @@ const HoldLeft = ({ modeldata }) => {
 
     camera.add(object)
 
-    object.position.copy(defaultOffsetRef.current);
-    object.rotation.set(0, 0, 0);
+    object.position.copy(defaultOffsetRef.current)
+    object.rotation.set(0, 0, 0)
 
     if (object.name === "main-spoon") {
       object.rotation.x = Math.PI / 2
       object.rotation.z = Math.PI / 6
       object.scale.set(1, 1, 1)
-    } 
-    else if (
+    } else if (
       object.name === "main-red-litmus" ||
       object.name === "main-blue-litmus"
     ) {
       object.rotation.x = Math.PI / 2
       object.scale.set(1.5, 1.5, 1.5)
-    } 
-    else if (
+    } else if (
       object.name === "main-testube-01" ||
       object.name === "main-testube-02" ||
       object.name === "main-testube-03"
     ) {
-      object.scale.set(1.8, 1.8, 1.8)
-    } 
-    else if(object.name === "main-filter-paper"){
-      object.scale.set(1.3, 1.3, 1.3);
-      object.rotation.x = Math.PI / 3;
+      object.scale.set(1.5, 1.5, 1.5)
+    } else if (
+      object.name === "main-filter-paper"
+    ) {
+      object.scale.set(1.3, 1.3, 1.3)
+      object.rotation.x = Math.PI / 3
       object.rotation.z = 2
-    }
-    else if(object.name === "main-normal-beaker"){
-      object.scale.set(0.9, 0.9, 0.9);
-      
-    }else if(object.name === "main-buirette"){
-      object.scale.set(0.8, 0.8, 0.8);
-      object.position.y+=1
-      
-    }
-    else {
+    } else if (
+      object.name === "main-normal-beaker"
+    ) {
+      object.scale.set(0.9, 0.9, 0.9)
+    } else if (
+      object.name === "main-buirette"
+    ) {
+      object.scale.set(0.8, 0.8, 0.8)
+      object.position.y += 1
+    } else {
       object.scale.set(1, 1, 1)
     }
-    
+
     object.visible = true
     object.frustumCulled = false
+
+    return () => {
+      object.scale.set(1, 1, 1)
+      object.updateMatrixWorld(true)
+    }
   }, [camera, scene, modeldata])
 
   useFrame(() => {
@@ -255,7 +259,9 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
       }
 
       {
-       !isStirMode &&  !isLitmusMode && !isDropperPlaced && isReactionRef.current===false && <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
+       !isStirMode &&  !isLitmusMode && !isDropperPlaced && 
+       isReactionRef.current===false && !isPouringMode &&
+       <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
       }
 
     </>

@@ -179,6 +179,8 @@ const hideLiquidObjects=(root)=>{
   hideSaltBits(scene)
   hidePowderObjects(scene)
 
+ thermometerLiquidRef.current.visible=true;
+
   }, [scene])
 
 

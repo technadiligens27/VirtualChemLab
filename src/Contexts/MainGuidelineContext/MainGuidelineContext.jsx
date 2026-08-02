@@ -41,6 +41,8 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [showBuretteArrow,setShowBuretteArrow] = useState(false);
 
+  const [showThermometerArrow,setShowThermometerArrow] = useState(false);
+
   
 
   const resetLessonGuidelines = () => {
@@ -158,7 +160,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowBalanceArrow,
 
         showBuretteArrow,
-        setShowBuretteArrow
+        setShowBuretteArrow,
+
+        showThermometerArrow,
+        setShowThermometerArrow
 
 
       }}

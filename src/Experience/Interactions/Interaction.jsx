@@ -85,11 +85,14 @@ const Interaction = () => {
       {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') && isPlacePolysterene
          && isPlaceThermometer && <PlaceThermometer beakerParentRef={normalBeakerRef} beakerRef={mainPolystereneRef}/>}
 
+      {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') 
+         && isPlaceThermometer && <PlaceThermometer  beakerRef={normalBeakerRef}/>}   
+
       {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
        && isPlacePolysterene && <StirModePolysterene heightOffset={1}/>}   
 
-       {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={200}/>} 
-       {isPlaceThermometer && <FillThermometer amount={200}/> }
+       {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={0.6}/>} 
+       {isPlaceThermometer && <FillThermometer amount={0.6}/> }
 
     </>
   );

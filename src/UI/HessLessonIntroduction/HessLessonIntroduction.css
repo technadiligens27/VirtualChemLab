@@ -1,0 +1,811 @@
+.hess-introduction-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  transition:
+    backdrop-filter 0.4s ease,
+    background-color 0.4s ease;
+}
+
+.hess-introduction-overlay-open {
+  background-color: rgba(20, 15, 40, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.hess-introduction-overlay-closed {
+  background-color: transparent;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.hess-introduction-panel {
+  width: 90vw;
+  height: 88vh;
+
+  padding: 18px;
+
+  background-color: #fcf8f3;
+  border: 10px solid #fdc843;
+  border-radius: 18px;
+
+  box-sizing: border-box;
+  position: relative;
+
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.hess-introduction-header {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+
+  width: 420px;
+  height: 65px;
+
+  background-color: #fdc843;
+
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.hess-introduction-header h1 {
+  margin: 0;
+
+  font-size: 25px;
+  font-weight: 700;
+
+  color: #351c7c;
+}
+
+.hess-introduction-side-button {
+  position: absolute;
+  right: -70px;
+  top: 50%;
+
+  width: 70px;
+  height: 160px;
+
+  padding: 0;
+  border: none;
+
+  background-color: #fdc843;
+
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+}
+
+.hess-introduction-side-button img {
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hess-introduction-side-button:hover {
+  background-color: #f2bb2e;
+}
+
+.hess-introduction-side-button:active {
+  background-color: #e7ac16;
+}
+
+.hess-introduction-inner {
+  width: 100%;
+  height: 100%;
+
+  padding:
+    42px
+    48px
+    25px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: white;
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.hess-introduction-top {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+.hess-introduction-heading {
+  width: 68%;
+}
+
+.hess-introduction-heading h1 {
+  margin:
+    0
+    0
+    18px;
+
+  font-size: 29px;
+  line-height: 1.25;
+  padding-top: 5px;
+
+  color: #351c7c;
+}
+
+.hess-introduction-heading p {
+
+
+  max-width: 900px;
+
+  font-size: 17px;
+  line-height: 1.7;
+
+  color: #425466;
+}
+
+.hess-introduction-objective {
+  width: 330px;
+
+  border: 2px solid #9b82d7;
+  border-radius: 14px;
+
+  overflow: hidden;
+  flex-shrink: 0;
+
+  background-color: #f7f3fc;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+
+.hess-objective-header {
+  min-height: 58px;
+
+  padding:
+    0
+    24px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #432191,
+      #7254b5
+    );
+}
+
+.hess-objective-icon {
+  width: 32px;
+  height: 32px;
+
+  border: 3px solid white;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  color: white;
+}
+
+.hess-objective-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  color: white;
+}
+
+.hess-objective-content {
+  padding:
+    17px
+    24px;
+}
+
+.hess-objective-content p {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.65;
+
+  color: #526170;
+}
+
+.hess-reactions-section {
+  width: 90%;
+  position: absolute;
+  top: 32%;
+}
+
+.hess-reactions-title {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+.hess-flask-icon {
+  font-size: 31px;
+
+  color: #351c7c;
+}
+
+.hess-reactions-title h1 {
+  margin: 0;
+
+  font-size: 22px;
+
+  color: #351c7c;
+
+  white-space: nowrap;
+}
+
+.hess-title-line {
+  width: 50%;
+  height: 2px;
+
+  background-color: #c7b8ea;
+}
+
+.hess-reactions-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.hess-reaction-row {
+  width: 100%;
+
+  display: flex;
+
+  gap: 16px;
+}
+
+.hess-reaction-label {
+  width: 250px;
+  min-height: 82px;
+
+  padding:
+    12px
+    14px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.hess-reaction-label h1 {
+  margin:
+    0
+    0
+    6px;
+
+  font-size: 18px;
+  text-align: center;
+
+  color: #26334d;
+}
+
+.hess-reaction-label p {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.hess-reaction-details {
+  width: 100%;
+  min-height: 82px;
+
+  padding:
+    12px
+    24px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+.hess-reaction-equation {
+  width: 67%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hess-reaction-equation span {
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 18px;
+  font-style: italic;
+
+  color: #29334f;
+
+  white-space: nowrap;
+}
+
+.hess-reaction-equation sub {
+  font-size: 65%;
+}
+
+.hess-reaction-explanation {
+  width: 50%;
+}
+
+.hess-reaction-explanation p {
+  margin:
+    0
+    0
+    4px;
+
+  font-size: 14px;
+  line-height: 1.45;
+
+  color: #425466;
+}
+
+.hess-reaction-one
+.hess-reaction-label {
+  background-color: #f4faf2;
+  border: 2px solid #83bc75;
+}
+
+.hess-reaction-one
+.hess-reaction-label p {
+  color: #4b9b41;
+}
+
+.hess-reaction-one
+.hess-reaction-details {
+  background-color: #f8fcf7;
+  border: 2px solid #83bc75;
+}
+
+.hess-reaction-two
+.hess-reaction-label {
+  background-color: #f3f8ff;
+  border: 2px solid #74aaf0;
+}
+
+.hess-reaction-two
+.hess-reaction-label p {
+  color: #2874d0;
+}
+
+.hess-reaction-two
+.hess-reaction-details {
+  background-color: #f6faff;
+  border: 2px solid #74aaf0;
+}
+
+.hess-reaction-three
+.hess-reaction-label {
+  background-color: #f8f4ff;
+  border: 2px solid #a58adf;
+}
+
+.hess-reaction-three
+.hess-reaction-label p {
+  color: #6850b8;
+}
+
+.hess-reaction-three
+.hess-reaction-details {
+  background-color: #faf7ff;
+  border: 2px solid #a58adf;
+}
+
+.hess-calculated-label h {
+  line-height: 1.15;
+}
+
+.hess-introduction-bottom {
+  width: 100%;
+
+  margin-top: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+
+  gap: 40px;
+  position: absolute;
+  bottom: 5%;
+}
+
+.hess-important-box {
+  width: 68%;
+  min-height: 75px;
+
+  padding:
+    12px
+    210px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  background-color: #fffaf0;
+  border: 2px solid #efbe4b;
+  border-radius: 11px;
+}
+
+.hess-important-icon {
+  width: 39px;
+  height: 39px;
+
+  border: 3px solid #8c6817;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 25px;
+  font-weight: 700;
+
+  color: #8c6817;
+
+  transform: rotate(45deg);
+}
+
+.hess-important-icon::first-letter {
+  transform: rotate(-45deg);
+}
+
+.hess-important-box h3 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #765715;
+}
+
+.hess-important-text {
+  margin-left: 20px;
+}
+
+.hess-important-text p {
+  margin:
+    0
+    0
+    5px;
+
+  font-size: 14px;
+
+  color: #5d594e;
+}
+
+.hess-start-lesson-button {
+  width: 210px;
+  height: 56px;
+  border: none;
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      135deg,
+      #351c7c,
+      #43239a
+    );
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.hess-start-lesson-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0
+    8px
+    18px
+    rgba(53, 28, 124, 0.25);
+}
+
+.hess-start-lesson-button:active {
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES
+   Everything above is untouched (original design/rules).
+   Below only adjusts sizing/layout at smaller breakpoints so nothing
+   overflows, overlaps, or gets clipped on tablets and phones.
+   ========================================================================== */
+
+/* ---- Large tablets / small laptops (<=1200px) ---- */
+@media (max-width: 1200px) {
+  .hess-introduction-panel {
+    width: 94vw;
+    height: 92vh;
+  }
+
+  .hess-important-box {
+    padding: 12px 60px;
+  }
+}
+
+/* ---- Tablets (<=1024px) ---- */
+@media (max-width: 1024px) {
+  .hess-introduction-panel {
+    width: 96vw;
+    height: 94vh;
+  }
+
+  .hess-introduction-inner {
+    padding: 36px 28px 20px;
+    overflow-y: auto;
+  }
+
+  .hess-introduction-top {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .hess-introduction-heading {
+    width: 100%;
+  }
+
+  .hess-introduction-heading h1 {
+    font-size: 25px;
+  }
+
+  .hess-introduction-heading p {
+    font-size: 16px;
+  }
+
+  .hess-introduction-objective {
+    position: static;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .hess-reactions-section {
+    position: static;
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .hess-reaction-row {
+    flex-wrap: wrap;
+  }
+
+  .hess-reaction-label {
+    width: 100%;
+  }
+
+  .hess-reaction-details {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hess-reaction-equation,
+  .hess-reaction-explanation {
+    width: 100%;
+  }
+
+  .hess-introduction-bottom {
+    position: static;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    gap: 20px;
+  }
+
+  .hess-important-box {
+    width: 100%;
+    padding: 14px 24px;
+  }
+
+  .hess-start-lesson-button {
+    width: 100%;
+  }
+
+  .hess-introduction-side-button {
+    right: -50px;
+    width: 50px;
+    height: 120px;
+  }
+}
+
+/* ---- Phones (<=768px) ---- */
+@media (max-width: 768px) {
+  .hess-introduction-panel {
+    width: 100vw;
+    height: 100vh;
+    border-width: 6px;
+    border-radius: 0;
+  }
+
+  .hess-introduction-header {
+    width: 85%;
+    max-width: 320px;
+    height: 55px;
+  }
+
+  .hess-introduction-header h1 {
+    font-size: 19px;
+  }
+
+  .hess-introduction-inner {
+    padding: 30px 18px 18px;
+    border-radius: 8px;
+  }
+
+  .hess-introduction-heading h1 {
+    font-size: 21px;
+  }
+
+  .hess-introduction-heading p {
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .hess-objective-header {
+    min-height: 50px;
+    padding: 0 16px;
+  }
+
+  .hess-objective-header h2 {
+    font-size: 17px;
+  }
+
+  .hess-objective-content {
+    padding: 14px 16px;
+  }
+
+  .hess-reactions-title h1 {
+    font-size: 19px;
+  }
+
+  .hess-title-line {
+    width: 30%;
+  }
+
+  .hess-reaction-label h1 {
+    font-size: 16px;
+  }
+
+  .hess-reaction-equation span {
+    font-size: 15px;
+    white-space: normal;
+  }
+
+  .hess-reaction-explanation p {
+    font-size: 13px;
+  }
+
+  .hess-important-box {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .hess-important-text {
+    margin-left: 0;
+  }
+
+  .hess-introduction-side-button {
+    right: -40px;
+    width: 40px;
+    height: 100px;
+  }
+
+  .hess-introduction-side-button img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ---- Small phones (<=480px) ---- */
+@media (max-width: 480px) {
+  .hess-introduction-header {
+    width: 92%;
+    height: 48px;
+  }
+
+  .hess-introduction-header h1 {
+    font-size: 16px;
+  }
+
+  .hess-introduction-inner {
+    padding: 26px 14px 14px;
+  }
+
+  .hess-introduction-heading h1 {
+    font-size: 18px;
+  }
+
+  .hess-introduction-heading p {
+    font-size: 13.5px;
+  }
+
+  .hess-reaction-details {
+    padding: 12px 14px;
+  }
+
+  .hess-reaction-equation span {
+    font-size: 13px;
+  }
+
+  .hess-start-lesson-button {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .hess-introduction-side-button {
+    display: none;
+  }
+}
