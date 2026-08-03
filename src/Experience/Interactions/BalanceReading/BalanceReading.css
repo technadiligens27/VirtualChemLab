@@ -20,6 +20,8 @@
 
   white-space: nowrap;
   pointer-events: none;
+  z-index: 99;
+  position: relative;
 }
 
 .balance-model-screen span {

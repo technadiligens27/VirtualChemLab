@@ -3,16 +3,19 @@ import {
   useEffect,
   useRef,
 } from "react"
+
 import { useFrame } from "@react-three/fiber"
+import * as THREE from "three"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const StirModePolysterene = ({
-  heightOffset = 0,
-  xOffset = 0,
-  zOffset = 0,
-  stirRadius = 0.003,
+  heightOffset = 10,
+  xOffset = -0.1,
+  zOffset = -0.5,
+  stirRadius = 0.08,
   stirSpeed = 4,
 }) => {
   const {
@@ -20,21 +23,44 @@ const StirModePolysterene = ({
     mainPolystereneRef,
   } = useContext(ModelContext)
 
-  const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
+  const {
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-  useEffect(()=>{
-    if(selectedLesson===8 && lessonStep ==33){
-        setLessonStep(34)
-    }
-  },[lessonStep,selectedLesson])
+  const {setShowBubbles} = useContext(InteractionContext)
 
   const originalTransformRef = useRef(null)
-
   const stirPointRef = useRef(null)
 
   const isStirringRef = useRef(false)
   const angleRef = useRef(0)
   const stopTimerRef = useRef(null)
+
+  const hasCompletedTwoRotationsRef =
+    useRef(false)
+
+  const stirCentreWorldRef = useRef(
+    new THREE.Vector3()
+  )
+
+  const spoonTargetWorldRef = useRef(
+    new THREE.Vector3()
+  )
+
+  useEffect(() => {
+    if (
+      selectedLesson === 8 &&
+      lessonStep === 33
+    ) {
+      setLessonStep(34)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
 
   useEffect(() => {
     const spoon = spoonRef?.current
@@ -45,6 +71,7 @@ const StirModePolysterene = ({
       console.log(
         "Spoon or polystyrene cup was not found"
       )
+
       return
     }
 
@@ -73,42 +100,74 @@ const StirModePolysterene = ({
       console.log(
         "Stir point was not found inside the polystyrene cup"
       )
+
       return
     }
 
     stirPointRef.current = stirPoint
 
-    // Attach spoon to stir point
+    angleRef.current = 0
+    hasCompletedTwoRotationsRef.current =
+      false
+
     stirPoint.add(spoon)
 
-    spoon.position.set(
-      xOffset + stirRadius,
-      heightOffset,
-      zOffset
+    stirPoint.updateWorldMatrix(
+      true,
+      false
     )
 
-    // Keep spoon tilted like real stirring
+    stirPoint.getWorldPosition(
+      stirCentreWorldRef.current
+    )
+
+    spoonTargetWorldRef.current.set(
+      stirCentreWorldRef.current.x +
+        xOffset +
+        stirRadius,
+
+      stirCentreWorldRef.current.y +
+        heightOffset,
+
+      stirCentreWorldRef.current.z +
+        zOffset
+    )
+
+    stirPoint.worldToLocal(
+      spoonTargetWorldRef.current
+    )
+
+    spoon.position.copy(
+      spoonTargetWorldRef.current
+    )
+
     spoon.rotation.set(
       Math.PI / 7,
       0,
       -Math.PI / 12
     )
 
-    spoon.scale.set(0.5, 2, 1)
+    spoon.scale.set(
+      0.5,
+      0.5,
+      0.5
+    )
+
     spoon.updateMatrixWorld(true)
 
     const handleWheel = (event) => {
-      // Only stir when scrolling down
       if (event.deltaY <= 0) return
 
       isStirringRef.current = true
 
-      clearTimeout(stopTimerRef.current)
+      clearTimeout(
+        stopTimerRef.current
+      )
 
-      // Stop stirring shortly after scrolling stops
-      stopTimerRef.current = setTimeout(() => {
-        isStirringRef.current = false
-      }, 150)
+      stopTimerRef.current =
+        setTimeout(() => {
+          isStirringRef.current = false
+        }, 150)
     }
 
     window.addEventListener(
@@ -123,10 +182,16 @@ const StirModePolysterene = ({
         handleWheel
       )
 
-      clearTimeout(stopTimerRef.current)
+      clearTimeout(
+        stopTimerRef.current
+      )
 
       isStirringRef.current = false
       stirPointRef.current = null
+
+      angleRef.current = 0
+      hasCompletedTwoRotationsRef.current =
+        false
 
       const original =
         originalTransformRef.current
@@ -166,10 +231,12 @@ const StirModePolysterene = ({
 
   useFrame((_, delta) => {
     const spoon = spoonRef?.current
+    const stirPoint =
+      stirPointRef.current
 
     if (
       !spoon ||
-      !stirPointRef.current ||
+      !stirPoint ||
       !isStirringRef.current
     ) {
       return
@@ -178,24 +245,58 @@ const StirModePolysterene = ({
     angleRef.current +=
       stirSpeed * delta
 
-    const angle = angleRef.current
+    const angle =
+      angleRef.current
 
-    // Move the spoon around the cup
-    spoon.position.x =
-      xOffset +
-      Math.cos(angle) * stirRadius
+    stirPoint.updateWorldMatrix(
+      true,
+      false
+    )
 
-    spoon.position.z =
-      zOffset +
-      Math.sin(angle) * stirRadius
+    stirPoint.getWorldPosition(
+      stirCentreWorldRef.current
+    )
 
-    spoon.position.y =
-      heightOffset
+    spoonTargetWorldRef.current.set(
+      stirCentreWorldRef.current.x +
+        xOffset +
+        Math.cos(angle) *
+          stirRadius,
 
-    // Turn spoon around the centre
+      stirCentreWorldRef.current.y +
+        heightOffset,
+
+      stirCentreWorldRef.current.z +
+        zOffset +
+        Math.sin(angle) *
+          stirRadius
+    )
+
+    stirPoint.worldToLocal(
+      spoonTargetWorldRef.current
+    )
+
+    spoon.position.copy(
+      spoonTargetWorldRef.current
+    )
+
     spoon.rotation.y = -angle
 
     spoon.updateMatrixWorld(true)
+
+    const twoFullRotations =
+      Math.PI * 4
+
+    if (
+      angleRef.current >=
+        twoFullRotations &&
+      !hasCompletedTwoRotationsRef.current
+    ) {
+      hasCompletedTwoRotationsRef.current =
+        true
+
+      setShowBubbles(true)
+    }
   })
 
   return null

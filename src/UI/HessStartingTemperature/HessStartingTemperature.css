@@ -1,0 +1,668 @@
+.hess-temperature-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px 85px 20px 20px;
+
+  box-sizing: border-box;
+
+  font-family: "Nunito", sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.hess-temperature-overlay-open {
+  background-color: rgba(31, 20, 50, 0.25);
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.hess-temperature-overlay-closed {
+  background-color: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+
+  pointer-events: none;
+}
+
+.hess-temperature-wrapper {
+  position: relative;
+
+  width: min(1250px, 100%);
+  height: min(700px, calc(100vh - 40px));
+
+  padding: 8px;
+
+  border: 9px solid #ffc94d;
+  border-radius: 22px;
+
+  background-color: #fffaf3;
+
+  box-sizing: border-box;
+}
+
+.hess-temperature-inner {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 55% 45%;
+
+  padding: 65px 30px 25px;
+
+  border-radius: 15px;
+
+  background-color: #ffffff;
+
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hess-temperature-label {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  z-index: 2;
+
+  width: 340px;
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 0 0 32px 32px;
+
+  background: linear-gradient(
+    135deg,
+    #ffd35f,
+    #ffc447
+  );
+
+  transform: translateX(-50%);
+}
+
+.hess-temperature-label h1 {
+  margin: 0;
+
+  color: #2f2386;
+
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.hess-temperature-left {
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px 20px;
+}
+
+.hess-temperature-heading h1 {
+  margin: 0 0 18px;
+
+  color: #31247f;
+
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.hess-temperature-reading {
+  width: 100%;
+  min-height: 120px;
+
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  padding: 17px 28px;
+
+  border: 2px solid #d4c2ff;
+  border-radius: 24px;
+
+  background: linear-gradient(
+    135deg,
+    #f1ecff,
+    #fbf9ff
+  );
+
+  box-sizing: border-box;
+}
+
+.hess-temperature-icon {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #9167ff,
+    #6f4ce8
+  );
+}
+
+.hess-temperature-icon span {
+  color: #ffffff;
+
+  font-size: 40px;
+  line-height: 1;
+}
+
+.hess-temperature-reading h2 {
+  margin: 0;
+
+  color: #37228f;
+
+  font-size: clamp(52px, 5vw, 74px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.hess-temperature-reading h2 span {
+  font-size: 0.58em;
+}
+
+.hess-temperature-explanation {
+  margin-top: 18px;
+  padding: 18px 24px;
+
+  border: 2px solid #ddd1fa;
+  border-radius: 20px;
+
+  background: linear-gradient(
+    135deg,
+    #fbfaff,
+    #f4f0ff
+  );
+
+  box-sizing: border-box;
+}
+
+.hess-temperature-explanation-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hess-temperature-info-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #7654dd,
+    #5d3fc2
+  );
+
+  color: #ffffff;
+
+  font-size: 23px;
+  font-weight: 900;
+  font-family: serif;
+}
+
+.hess-temperature-explanation-title h2 {
+  margin: 0;
+
+  color: #33237e;
+
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.hess-temperature-explanation > p {
+  margin: 14px 0 15px 54px;
+
+  max-width: 540px;
+
+  color: #5d6d80;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.hess-temperature-divider {
+  width: calc(100% - 54px);
+  height: 2px;
+
+  margin-left: 54px;
+
+  background-color: #dfd5f5;
+}
+
+.hess-temperature-room {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 14px;
+}
+
+.hess-temperature-room-icon {
+  width: 40px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #7655db;
+
+  font-size: 35px;
+  font-weight: 900;
+}
+
+.hess-temperature-room p {
+  margin: 0;
+
+  color: #5d6d80;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.hess-temperature-room strong {
+  color: #37228f;
+
+  font-size: 1.05em;
+  font-weight: 900;
+}
+
+.hess-temperature-button {
+  width: 210px;
+  min-height: 52px;
+
+  margin-top: 18px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: linear-gradient(
+    135deg,
+    #432098,
+    #33207e
+  );
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.hess-temperature-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 20px
+    rgba(57, 32, 137, 0.24);
+}
+
+.hess-temperature-button:active {
+  transform: translateY(0);
+}
+
+.hess-temperature-right {
+  position: relative;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hess-temperature-right > img {
+  width: 90%;
+  height: 90%;
+
+  object-fit: contain;
+
+  filter: drop-shadow(
+    0 14px 14px rgba(58, 54, 78, 0.14)
+  );
+}
+
+.hess-temperature-reading-label {
+  position: absolute;
+  top: 42%;
+  right: 0;
+
+  min-width: 150px;
+
+  padding: 12px 16px;
+
+  border: 2px solid #8b65e6;
+  border-radius: 14px;
+
+  background-color: rgba(255, 255, 255, 0.96);
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.hess-temperature-reading-label::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  right: 100%;
+
+  width: 52px;
+  height: 2px;
+
+  background-color: #8b65e6;
+
+  transform: translateY(-50%);
+}
+
+.hess-temperature-reading-label::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 47px);
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background-color: #8b65e6;
+
+  transform: translateY(-50%);
+}
+
+.hess-temperature-reading-label p {
+  margin: 0 0 4px;
+
+  color: #5b448f;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hess-temperature-reading-label h2 {
+  margin: 0;
+
+  color: #37228f;
+
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.hess-temperature-side-container {
+  position: absolute;
+  top: 50%;
+  right: -62px;
+  z-index: 5;
+
+  width: 62px;
+  height: 140px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 0 24px 24px 0;
+
+  background: linear-gradient(
+    135deg,
+    #ffd35f,
+    #ffc447
+  );
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+}
+
+.hess-temperature-side-container img {
+  width: 34px;
+  height: 34px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+.hess-temperature-overlay-closed
+  .hess-temperature-side-container {
+  pointer-events: auto;
+}
+
+@media (max-height: 760px) {
+  .hess-temperature-overlay {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .hess-temperature-wrapper {
+    height: calc(100vh - 24px);
+  }
+
+  .hess-temperature-inner {
+    padding-top: 58px;
+  }
+
+  .hess-temperature-label {
+    height: 60px;
+  }
+
+  .hess-temperature-label h1 {
+    font-size: 25px;
+  }
+
+  .hess-temperature-heading h1 {
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+
+  .hess-temperature-reading {
+    min-height: 95px;
+
+    padding: 12px 22px;
+  }
+
+  .hess-temperature-icon {
+    width: 62px;
+    height: 62px;
+  }
+
+  .hess-temperature-icon span {
+    font-size: 34px;
+  }
+
+  .hess-temperature-reading h2 {
+    font-size: 58px;
+  }
+
+  .hess-temperature-explanation {
+    margin-top: 12px;
+    padding: 13px 20px;
+  }
+
+  .hess-temperature-explanation-title h2 {
+    font-size: 19px;
+  }
+
+  .hess-temperature-explanation > p {
+    margin-top: 9px;
+    margin-bottom: 9px;
+
+    font-size: 14px;
+  }
+
+  .hess-temperature-room {
+    margin-top: 9px;
+  }
+
+  .hess-temperature-room p {
+    font-size: 14px;
+  }
+
+  .hess-temperature-button {
+    min-height: 45px;
+
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .hess-temperature-overlay {
+    padding-right: 72px;
+  }
+
+  .hess-temperature-wrapper {
+    width: 100%;
+  }
+
+  .hess-temperature-inner {
+    grid-template-columns: 58% 42%;
+
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .hess-temperature-left {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .hess-temperature-reading {
+    gap: 20px;
+
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .hess-temperature-reading-label {
+    display: none;
+  }
+
+  .hess-temperature-right > img {
+    width: 100%;
+    height: 88%;
+  }
+}
+
+@media (max-width: 760px) {
+  .hess-temperature-overlay {
+    padding: 12px 60px 12px 12px;
+  }
+
+  .hess-temperature-wrapper {
+    height: calc(100vh - 24px);
+
+    border-width: 7px;
+  }
+
+  .hess-temperature-inner {
+    display: flex;
+    flex-direction: column;
+
+    padding: 58px 15px 18px;
+
+    overflow-y: auto;
+  }
+
+  .hess-temperature-label {
+    width: 260px;
+    height: 58px;
+  }
+
+  .hess-temperature-label h1 {
+    font-size: 22px;
+  }
+
+  .hess-temperature-left {
+    padding: 5px;
+  }
+
+  .hess-temperature-heading h1 {
+    font-size: 21px;
+  }
+
+  .hess-temperature-reading {
+    min-height: 90px;
+  }
+
+  .hess-temperature-reading h2 {
+    font-size: 52px;
+  }
+
+  .hess-temperature-explanation > p {
+    margin-left: 0;
+  }
+
+  .hess-temperature-divider {
+    width: 100%;
+
+    margin-left: 0;
+  }
+
+  .hess-temperature-right {
+    min-height: 260px;
+
+    margin-top: 12px;
+  }
+
+  .hess-temperature-right > img {
+    width: 80%;
+    height: 260px;
+  }
+
+  .hess-temperature-side-container {
+    right: -50px;
+
+    width: 50px;
+    height: 110px;
+
+    border-radius: 0 18px 18px 0;
+  }
+
+  .hess-temperature-side-container img {
+    width: 28px;
+    height: 28px;
+  }
+}

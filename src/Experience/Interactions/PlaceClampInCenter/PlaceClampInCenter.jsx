@@ -50,6 +50,8 @@ const PlaceClampInCenter = () => {
     clamp.position.copy(worldPosition)
     clamp.position.y += 7
     clamp.position.x += -2.5
+    clamp.position.z += 2
+
 
     clamp.updateMatrixWorld(true)
 

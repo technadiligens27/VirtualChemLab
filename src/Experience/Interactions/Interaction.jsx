@@ -25,13 +25,14 @@ import PourFromBurette from "./PourFromBurrette/PourFromBurrette";
 import PlaceThermometer from "./PlaceThermometer/PlaceThermometer";
 import StirModePolysterene from "./StirModePolysterene/StirModePolysterene";
 import FillThermometer from "./FillThermometer/FillThermometer";
+import ReleaseGasBubbles from "../ReleaseGasBubbles/ReleaseGasBubbles";
 
 const Interaction = () => {
   const {
     isFillUpBeaker,selectedRightHand,selectedLeftHand,fillBeakerHand,setIsDragging,isStirMode,isAddSalt,
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
-     mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode
+     mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles
   } = useContext(InteractionContext);
 
   const {testube01Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef} = useContext(ModelContext)
@@ -89,10 +90,15 @@ const Interaction = () => {
          && isPlaceThermometer && <PlaceThermometer  beakerRef={normalBeakerRef}/>}   
 
       {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
-       && isPlacePolysterene && <StirModePolysterene heightOffset={1}/>}   
+       && isPlacePolysterene && <StirModePolysterene heightOffset={2}/>}   
 
        {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={0.6}/>} 
-       {isPlaceThermometer && <FillThermometer amount={0.6}/> }
+       {/* {isPlaceThermometer && <FillThermometer amount={0.6}/> } */}
+
+        {/* {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') 
+         && isPlacePolysterene && <ReleaseGasBubbles modelRef={mainPolystereneRef} />}   */}
+
+       {showBubbles && <ReleaseGasBubbles/>}  
 
     </>
   );

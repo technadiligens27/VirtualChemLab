@@ -92,7 +92,10 @@ export const InteractionProvider = ({ children }) => {
   const [isThermometerRisen,setIsThermometerRisen] = useState(false);
 
   const [isHessGuideline,setIsHessGuideline] = useState(false);
-  const [hessGuidelineNumber,setHessGuidelineNumber] = useState(false)
+  const [hessGuidelineNumber,setHessGuidelineNumber] = useState(false);
+
+  const [showEnthalyResultOne,setShowEnthalyResultOne] = useState(false);
+  const [showBubbles,setShowBubbles] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -171,7 +174,9 @@ export const InteractionProvider = ({ children }) => {
   setIsPolystereneStirMode(false);
   setIsPottasiumCarobnateInTestube01(false);
   setIsHessGuideline(false);
-  setHessGuidelineNumber(false)
+  setHessGuidelineNumber(false);
+  setShowEnthalyResultOne(false);
+  setShowBubbles(false)
 }
 
   return (
@@ -227,8 +232,9 @@ export const InteractionProvider = ({ children }) => {
         isPottasiumCarobnateInTestube01,setIsPottasiumCarobnateInTestube01,
         isThermometerRisen,setIsThermometerRisen,
         isHessGuideline,setIsHessGuideline,
-        hessGuidelineNumber,setHessGuidelineNumber
-        
+        hessGuidelineNumber,setHessGuidelineNumber,
+        showEnthalyResultOne,setShowEnthalyResultOne,
+        showBubbles,setShowBubbles
       }}
     >
       {children}

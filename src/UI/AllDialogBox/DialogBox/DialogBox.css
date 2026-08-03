@@ -2,7 +2,6 @@
   position: fixed;
   top: 5px;
   left: 50%;
-  transform: translateX(-50%);
   z-index: 9999;
 
   width: fit-content;
@@ -11,9 +10,10 @@
   min-height: 84px;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
 
   padding: 10px 24px;
 
@@ -21,8 +21,20 @@
   border: 5px solid #f7c741;
   border-radius: 40px;
 
-  box-shadow: 0 8px 20px rgba(80, 65, 20, 0.18);
+  box-shadow:
+    0 8px 20px
+    rgba(80, 65, 20, 0.18);
+
   box-sizing: border-box;
+
+  transform: translateX(-50%);
+}
+
+.dialog-box-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .dialog-icon-container {
@@ -41,6 +53,7 @@
 .dialog-icon-container img {
   width: 24px;
   height: 24px;
+
   object-fit: contain;
 }
 
@@ -48,19 +61,65 @@
   margin: 0;
 
   color: #343434;
-  font-family: "Baloo Bhai 2", sans-serif;
+
+  font-family:
+    "Baloo Bhai 2",
+    sans-serif;
+
   font-size: 18px;
   font-weight: 500;
   line-height: 1.3;
   text-align: center;
 }
 
+.dialog-box-container > button {
+  min-width: 130px;
+  height: 40px;
+
+  padding: 0 24px;
+
+  border: none;
+  border-radius: 16px;
+
+  background-color: #351c7c;
+  color: #ffffff;
+
+  font-family:
+    "Baloo Bhai 2",
+    sans-serif;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dialog-box-container > button:hover {
+  background-color: #472592;
+
+  transform: translateY(-1px);
+}
+
+.dialog-box-container > button:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 600px) {
   .dialog-box-container {
     width: calc(100% - 30px);
     min-width: 0;
+
     padding: 10px 16px;
+
     border-width: 4px;
+  }
+
+  .dialog-box-inner {
+    gap: 7px;
   }
 
   .dialog-icon-container {
@@ -75,5 +134,12 @@
 
   .dialog-box-text {
     font-size: 15px;
+  }
+
+  .dialog-box-container > button {
+    min-width: 115px;
+    height: 36px;
+
+    font-size: 14px;
   }
 }

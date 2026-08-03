@@ -26,11 +26,7 @@ const BalanceReading = ({
   const [displayMass, setDisplayMass] =
     useState(0)
 
-  const currentFinalMass =
-    selectedLesson === 8 &&
-    lessonStep === 40
-      ? 21.7
-      : finalMass
+  const currentFinalMass = (selectedLesson === 8 && lessonStep >= 40 ? 21.7 : finalMass)
 
   useEffect(() => {
     let attempts = 0
@@ -122,6 +118,7 @@ const BalanceReading = ({
       distanceFactor={0.5}
       position={[0, -0.35, 0.02]}
       rotation={[-Math.PI / 2, 0, 0]}
+      zIndexRange={[100, 0]}
     >
       <div className="balance-model-screen">
         {displayMass.toFixed(2)}

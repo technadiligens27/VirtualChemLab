@@ -9,48 +9,44 @@ import { gsap } from "gsap"
 import "./HessReactionOneResults.css"
 
 const HessReactionOneResults = ({
-  initialMass = "",
-  finalMass = "",
-  startingTemperature = "",
-  highestTemperature = "",
+  massWithPowder = 24.70,
+  massAfterEmptying = 21.72,
+  startingTemperature = 22.0,
+  highestTemperature = 31.5,
   onButtonContinue,
 }) => {
-  const resultsPanelRef = useRef(null)
+  const resultsRef = useRef(null)
   const arrowRef = useRef(null)
 
   const isResultsOpenRef = useRef(true)
 
-  const [isResultsOpen, setIsResultsOpen] =
-    useState(true)
+  const [
+    isResultsOpen,
+    setIsResultsOpen,
+  ] = useState(true)
 
-  const [massWithSolid, setMassWithSolid] =
-    useState(initialMass)
+  const massUsed =
+    massWithPowder -
+    massAfterEmptying
 
-  const [massAfterEmptying, setMassAfterEmptying] =
-    useState(finalMass)
-
-  const [startTemperature, setStartTemperature] =
-    useState(startingTemperature)
-
-  const [highestTemp, setHighestTemp] =
-    useState(highestTemperature)
+  const temperatureChange =
+    highestTemperature -
+    startingTemperature
 
   useLayoutEffect(() => {
-    const resultsPanel =
-      resultsPanelRef.current
-
+    const results = resultsRef.current
     const arrow = arrowRef.current
 
-    if (!resultsPanel || !arrow) return
+    if (!results || !arrow) return
 
     const getClosedPosition = () => {
       return -(
         window.innerWidth / 2 +
-        resultsPanel.offsetWidth / 2
+        results.offsetWidth / 2
       )
     }
 
-    gsap.set(resultsPanel, {
+    gsap.set(results, {
       x: getClosedPosition(),
     })
 
@@ -58,7 +54,7 @@ const HessReactionOneResults = ({
       rotation: 0,
     })
 
-    gsap.to(resultsPanel, {
+    gsap.to(results, {
       x: 0,
       duration: 0.8,
       delay: 0.2,
@@ -75,7 +71,7 @@ const HessReactionOneResults = ({
     const handleResize = () => {
       if (isResultsOpenRef.current) return
 
-      gsap.set(resultsPanel, {
+      gsap.set(results, {
         x: getClosedPosition(),
       })
     }
@@ -91,42 +87,38 @@ const HessReactionOneResults = ({
         handleResize
       )
 
-      gsap.killTweensOf(resultsPanel)
+      gsap.killTweensOf(results)
       gsap.killTweensOf(arrow)
     }
   }, [])
 
   const getClosedPosition = () => {
-    const resultsPanel =
-      resultsPanelRef.current
+    const results = resultsRef.current
 
-    if (!resultsPanel) return 0
+    if (!results) return 0
 
     return -(
       window.innerWidth / 2 +
-      resultsPanel.offsetWidth / 2
+      results.offsetWidth / 2
     )
   }
 
-  const animateResultsPanel = (
+  const animateResults = (
     shouldOpen,
     onAnimationComplete
   ) => {
-    const resultsPanel =
-      resultsPanelRef.current
-
+    const results = resultsRef.current
     const arrow = arrowRef.current
 
-    if (!resultsPanel || !arrow) return
+    if (!results || !arrow) return
 
     isResultsOpenRef.current = shouldOpen
-
     setIsResultsOpen(shouldOpen)
 
-    gsap.killTweensOf(resultsPanel)
+    gsap.killTweensOf(results)
     gsap.killTweensOf(arrow)
 
-    gsap.to(resultsPanel, {
+    gsap.to(results, {
       x: shouldOpen
         ? 0
         : getClosedPosition(),
@@ -146,99 +138,40 @@ const HessReactionOneResults = ({
     const nextOpenState =
       !isResultsOpenRef.current
 
-    animateResultsPanel(nextOpenState)
+    animateResults(nextOpenState)
   }
 
   const handleContinue = () => {
-    animateResultsPanel(false, () => {
+    animateResults(false, () => {
       if (onButtonContinue) {
-        onButtonContinue({
-          massWithSolid:
-            Number(massWithSolid),
-          massAfterEmptying:
-            Number(massAfterEmptying),
-          massUsed:
-            Number(massUsed),
-          startingTemperature:
-            Number(startTemperature),
-          highestTemperature:
-            Number(highestTemp),
-          temperatureChange:
-            Number(temperatureChange),
-        })
+        onButtonContinue()
       }
     })
   }
 
-  const calculateDifference = (
-    firstValue,
-    secondValue
-  ) => {
-    const firstNumber =
-      Number(firstValue)
-
-    const secondNumber =
-      Number(secondValue)
-
-    if (
-      Number.isNaN(firstNumber) ||
-      Number.isNaN(secondNumber) ||
-      firstValue === "" ||
-      secondValue === ""
-    ) {
-      return ""
-    }
-
-    return (
-      firstNumber - secondNumber
-    ).toFixed(2)
-  }
-
-  const massUsed = calculateDifference(
-    massWithSolid,
-    massAfterEmptying
-  )
-
-  const temperatureChange =
-    calculateDifference(
-      highestTemp,
-      startTemperature
-    )
-
-  const isTemperaturePositive =
-    Number(temperatureChange) > 0
-
-  const isFormComplete =
-    massWithSolid !== "" &&
-    massAfterEmptying !== "" &&
-    startTemperature !== "" &&
-    highestTemp !== "" &&
-    Number(massUsed) > 0 &&
-    isTemperaturePositive
-
   return (
     <div
-      className={`reaction-results-overlay ${
+      className={`reaction-one-results-overlay ${
         isResultsOpen
-          ? "reaction-results-overlay-open"
-          : "reaction-results-overlay-closed"
+          ? "reaction-one-results-overlay-open"
+          : "reaction-one-results-overlay-closed"
       }`}
     >
       <div
-        className="reaction-results-panel"
-        ref={resultsPanelRef}
+        className="reaction-one-results"
+        ref={resultsRef}
       >
-        <div className="reaction-results-header">
-          <h1>What to do</h1>
+        <div className="reaction-one-results-header">
+          <h1>Reaction 01 Results</h1>
         </div>
 
         <button
-          className="reaction-results-side-button"
+          className="reaction-one-results-side"
           onClick={handleResultsToggle}
           aria-label={
             isResultsOpen
-              ? "Close results section"
-              : "Open results section"
+              ? "Close reaction results"
+              : "Open reaction results"
           }
         >
           <img
@@ -248,286 +181,157 @@ const HessReactionOneResults = ({
           />
         </button>
 
-        <div className="reaction-results-inner">
-          <div className="reaction-results-left">
-            <div className="reaction-results-title">
-              <h1>
-                Step 14 — Complete the
-                first results section
-              </h1>
+        <div className="reaction-one-results-inner">
+          <div className="reaction-one-results-title">
+            <h1>Results for Reaction 01</h1>
 
-              <p>
-                Complete the results table using
-                the measurements recorded during
-                Reaction 1.
-              </p>
-            </div>
+            <h2>
+              Potassium carbonate +
+              hydrochloric acid
+            </h2>
 
-            <div className="reaction-results-recall">
-              <h2>Recall</h2>
-
-              <p>
-                The temperature change should be
-                calculated as:
-              </p>
-
-              <div className="reaction-results-formula">
-                <span>
-                  ΔT<sub>1</sub>
-                  {" = "}
-                  T<sub>highest</sub>
-                  {" − "}
-                  T<sub>start</sub>
-                </span>
-              </div>
-
-              <p className="reaction-results-positive">
-                The temperature change should be
-                positive.
-              </p>
-            </div>
-
-            <div className="reaction-results-tip">
-              <div className="reaction-results-tip-heading">
-                <span>☼</span>
-
-                <h2>Tip</h2>
-              </div>
-
-              <p>
-                Record all values to two decimal
-                places.
-              </p>
-
-              <p>
-                The mass of potassium carbonate
-                used is calculated by weighing
-                by difference.
-              </p>
-            </div>
-
-            <button
-              className="reaction-results-continue"
-              onClick={handleContinue}
-              disabled={!isFormComplete}
-            >
-              Continue
-            </button>
+            <p>
+              Review the recorded measurements
+              and calculate the temperature
+              change.
+            </p>
           </div>
 
-          <div className="reaction-results-right">
-            <div className="reaction-results-table-box">
-              <div className="reaction-results-table-header">
-                <h2>
-                  Results Table — Reaction 1
-                </h2>
+          <div className="reaction-one-results-table">
+            <div className="reaction-one-results-row reaction-one-results-table-header">
+              <div>Measurement</div>
+              <div>Formula</div>
+              <div>Value</div>
+              <div>Unit</div>
+            </div>
 
-                <span>⚗</span>
+            <div className="reaction-one-results-row">
+              <div>
+                Mass of test tube with
+                potassium carbonate
               </div>
 
-              <div className="reaction-results-column-headings">
-                <div>Measurement</div>
-                <div>Symbol</div>
-                <div>Value</div>
-                <div>Unit</div>
+              <div>
+                m<sub>1</sub>
               </div>
 
-              <div className="reaction-results-table-row">
-                <div className="reaction-results-measurement">
-                  Mass of test tube with
-                  potassium carbonate
-                </div>
-
-                <div className="reaction-results-symbol">
-                  m<sub>1</sub>
-                </div>
-
-                <div className="reaction-results-value">
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={massWithSolid}
-                    onChange={(event) => {
-                      setMassWithSolid(
-                        event.target.value
-                      )
-                    }}
-                    placeholder="0.00"
-                  />
-                </div>
-
-                <div className="reaction-results-unit">
-                  g
-                </div>
+              <div className="reaction-one-results-value">
+                {massWithPowder.toFixed(2)}
               </div>
 
-              <div className="reaction-results-table-row">
-                <div className="reaction-results-measurement">
-                  Mass of test tube after
-                  emptying
-                </div>
+              <div>g</div>
+            </div>
 
-                <div className="reaction-results-symbol">
-                  m<sub>2</sub>
-                </div>
-
-                <div className="reaction-results-value">
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={massAfterEmptying}
-                    onChange={(event) => {
-                      setMassAfterEmptying(
-                        event.target.value
-                      )
-                    }}
-                    placeholder="0.00"
-                  />
-                </div>
-
-                <div className="reaction-results-unit">
-                  g
-                </div>
+            <div className="reaction-one-results-row">
+              <div>
+                Mass of test tube after
+                emptying
               </div>
 
-              <div className="reaction-results-table-row reaction-results-calculated-row">
-                <div className="reaction-results-measurement">
-                  Mass of potassium carbonate
-                  used
-                </div>
-
-                <div className="reaction-results-symbol">
-                  m<sub>used</sub>
-                </div>
-
-                <div className="reaction-results-value">
-                  <input
-                    type="text"
-                    value={
-                      massUsed || "0.00"
-                    }
-                    readOnly
-                  />
-                </div>
-
-                <div className="reaction-results-unit">
-                  g
-                </div>
+              <div>
+                m<sub>2</sub>
               </div>
 
-              <div className="reaction-results-equation-row">
-                <span>
-                  m<sub>used</sub>
-                  {" = "}
-                  m<sub>1</sub>
-                  {" − "}
-                  m<sub>2</sub>
-                </span>
+              <div className="reaction-one-results-value">
+                {massAfterEmptying.toFixed(2)}
               </div>
 
-              <div className="reaction-results-table-row">
-                <div className="reaction-results-measurement">
-                  Starting temperature
-                </div>
+              <div>g</div>
+            </div>
 
-                <div className="reaction-results-symbol">
-                  T<sub>start</sub>
-                </div>
-
-                <div className="reaction-results-value">
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={startTemperature}
-                    onChange={(event) => {
-                      setStartTemperature(
-                        event.target.value
-                      )
-                    }}
-                    placeholder="0.00"
-                  />
-                </div>
-
-                <div className="reaction-results-unit">
-                  °C
-                </div>
+            <div className="reaction-one-results-row">
+              <div>
+                Mass of potassium carbonate
+                used
               </div>
 
-              <div className="reaction-results-table-row">
-                <div className="reaction-results-measurement">
-                  Highest temperature
-                </div>
-
-                <div className="reaction-results-symbol">
-                  T<sub>highest</sub>
-                </div>
-
-                <div className="reaction-results-value">
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={highestTemp}
-                    onChange={(event) => {
-                      setHighestTemp(
-                        event.target.value
-                      )
-                    }}
-                    placeholder="0.00"
-                  />
-                </div>
-
-                <div className="reaction-results-unit">
-                  °C
-                </div>
+              <div>
+                m<sub>1</sub> − m
+                <sub>2</sub>
               </div>
 
-              <div className="reaction-results-table-row reaction-results-final-row">
-                <div className="reaction-results-measurement">
-                  Temperature change
-                </div>
-
-                <div className="reaction-results-symbol">
-                  ΔT<sub>1</sub>
-                </div>
-
-                <div className="reaction-results-value">
-                  <input
-                    className={
-                      temperatureChange &&
-                      !isTemperaturePositive
-                        ? "reaction-results-invalid"
-                        : ""
-                    }
-                    type="text"
-                    value={
-                      temperatureChange ||
-                      "0.00"
-                    }
-                    readOnly
-                  />
-                </div>
-
-                <div className="reaction-results-unit">
-                  °C
-                </div>
+              <div className="reaction-one-results-value">
+                {massUsed.toFixed(2)}
               </div>
 
-              <div className="reaction-results-bottom-formula">
-                <span>
-                  ΔT<sub>1</sub>
-                  {" = "}
-                  T<sub>highest</sub>
-                  {" − "}
-                  T<sub>start</sub>
-                </span>
+              <div>g</div>
+            </div>
 
-                <p>
-                  Temperature change should be
-                  positive
-                </p>
+            <div className="reaction-one-results-row">
+              <div>
+                Starting temperature
               </div>
+
+              <div>
+                T<sub>start</sub>
+              </div>
+
+              <div className="reaction-one-results-value">
+                {startingTemperature.toFixed(1)}
+              </div>
+
+              <div>°C</div>
+            </div>
+
+            <div className="reaction-one-results-row">
+              <div>
+                Highest temperature
+              </div>
+
+              <div>
+                T<sub>highest</sub>
+              </div>
+
+              <div className="reaction-one-results-value">
+                {highestTemperature.toFixed(1)}
+              </div>
+
+              <div>°C</div>
+            </div>
+
+            <div className="reaction-one-results-row reaction-one-results-final">
+              <div>
+                Temperature change
+              </div>
+
+              <div>
+                ΔT<sub>1</sub> = T
+                <sub>highest</sub> − T
+                <sub>start</sub>
+              </div>
+
+              <div className="reaction-one-results-change">
+                +
+                {temperatureChange.toFixed(1)}
+              </div>
+
+              <div>°C</div>
             </div>
           </div>
+
+          <div className="reaction-one-results-observation">
+            <div className="reaction-one-results-info">
+              i
+            </div>
+
+            <div>
+              <h2>Observation</h2>
+
+              <p>
+                The temperature increased.
+                Reaction 01 released heat, so it
+                is an
+                <strong> exothermic reaction.</strong>
+              </p>
+            </div>
+          </div>
+
+          <button
+            className="reaction-one-results-button"
+            onClick={handleContinue}
+          >
+            Continue
+          </button>
         </div>
       </div>
     </div>

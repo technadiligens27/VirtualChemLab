@@ -5,140 +5,147 @@ import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
 import LessonGuide from "../../LessonGuide/LessonGuide";
 import LessonDetails from "../../LessonDetails/LessonDetails";
 import HessGuidelines from "../../HessGuidelines/HessGuidelines";
-import HessReactionResult from "../../HessReactionResult/HessReactionResult";
 import HessLessonIntroduction from "../../HessLessonIntroduction/HessLessonIntroduction";
 import HessReactionOneResults from "../../HessReactionOneResults/HessReactionOneResults";
+import HessStartingTemperature from "../../HessStartingTemperature/HessStartingTemperature";
 
 
 const EnthalpyHessLaw = () =>{
 
-  const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber} = useContext(InteractionContext)
+  const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber,
+    showEnthalyResultOne,setShowEnthalyResultOne} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
 
   const Enthalpy = [
-    {
-      step1:
-        "In this experiment, copper sulfate solution is mixed with sodium hydroxide solution. The reaction produces a light blue copper hydroxide precipitate.",
+  {
+    step1:
+      "In this experiment, potassium carbonate reacts with hydrochloric acid inside a polystyrene cup. The temperature change is measured and later used in Hess’s Law calculations.",
 
-      step2:
-        "Click the normal beaker and select the Left Hand option to pick it up.",
+    step2:
+      "Click the normal beaker and select the Left Hand option to pick it up.",
 
-      step3:
-        "Click the Polysterene Cup and select the Right Hand option.",
+    step3:
+      "Click the polystyrene cup and select the Right Hand option to pick it up.",
 
-      step4:
-        "Click the Polysterene Cup and select Place in Beaker",
+    step4:
+      "Click the polystyrene cup and select Place in Beaker.",
 
-      step5:
-        "Now Lest Keep the Beaker back in the table- Click Beaker and press Keep Back on Table",
+    step5:
+      "Click the normal beaker and select Keep Back on Table.",
 
-      step6:
-        "Click the Testube and select Left Hand Option",
+    step6:
+      "Click the test tube and select the Left Hand option.",
 
-      step7:
-        "Click the Spatula and Select Right Hand Option",
+    step7:
+      "Click the spatula and select the Right Hand option.",
 
-      step8:
-        "Click the Pottasium Carbonate Container and Select Take Pottasium Carbonate",
+    step8:
+      "Click the potassium carbonate container and select Take Potassium Carbonate.",
 
-      step9:
-        "Click the spoon and select Pour Into Testube.",
+    step9:
+      "Click the spatula and select Pour into Test Tube.",
 
-      step10:
-        "Now scroll down mouse to rotate the spoon",
+    step10:
+      "Scroll down to rotate the spatula and transfer the potassium carbonate into the test tube.",
 
-      step11:
-        "Click the spoon and disable Pour Mode",
+    step11:
+      "Click the spatula and disable Pour Mode.",
 
-      step12:
-        "Now click the digital balance and select Place Balance",  
+    step12:
+      "Click the digital balance and select Place Balance.",
 
-      step13:
-        "Now click the Spoon and select Keep Back on Table",  
-      step14:
-        "Now click the Testube and select Weigh Testube",    
+    step13:
+      "Click the spatula and select Keep Back on Table.",
 
-      step15:
-        "Now click the Testube again and select Keep on Table",    
+    step14:
+      "Click the test tube and select Weigh Test Tube.",
 
-      step16:
-        "Now Click The Buirette and Select Left Hand Option",  
-        
-      step17:
-        "Now Click The Buirette and Select Add Liquid Option",  
+    step15:
+      "Click the test tube again and select Keep on Table.",
 
-      step18:
-        "Add HCL 50 ml",  
+    step16:
+      "Click the burette and select the Left Hand option.",
 
-      step19:
-        "Select Normal Beaker And Take it to Right Hand",
-      
-      step20:
-        "Now Lets Remove the balance by clikcing on the digital balance and electing remove balance",  
+    step17:
+      "Click the burette and select Add Liquid.",
 
-      step21:
-        "Now click the burette and select Clamp Burette",  
+    step18:
+      "Add 50 mL of hydrochloric acid to the burette.",
 
-      step22:
-        "Now click the burette and select Clamp Burette",  
+    step19:
+      "Click the normal beaker and select the Right Hand option.",
 
-      step23:
-        "Now Click the Burrette and select Place In Center",  
-      
-      step24:
-        "Now Click the Normal Beaker and select Place Beaker",
+    step20:
+      "Click the digital balance and select Remove Balance.",
 
-      step25:
-        "Now scroll down to Pour HCL to Polysterene cup",
-        
-     step26:
-        "Now Click the beaker and click remove beaker", 
-      step27:
-        "Now Click the trhe Burette Clamp and click remove From center",  
-        
-      step28:
-        "Now Click the the Thermometer and Select Right Hand Option",   
+    step21:
+      "Click the burette and select Clamp Burette.",
 
-      step29:
-        "Now clik the thermometer again press Place Thermometer",    
+    step22:
+      "Click the burette clamp and select the required clamp option.",
 
-      step30:
-        "Now CLick testuvbe and select Right hand option",   
+    step23:
+      "Click the burette clamp and select Place in Centre.",
 
-      step31:
-        "Now clikc beaker again and select Stir", 
-        
-      step32:
-        "Now press P fro Puring mode",  
-      step33:
-        "Now scroll dwon to stie and pour from testuve", 
-        
-      step34:
-        "Press P to exit PouringMode",  
+    step24:
+      "Click the normal beaker and select Place Beaker.",
 
-      step35:
-        "Now click Normal Beaker and press UnStir to remove the spatula",   
-      step36:
-        "Now lets take the balance again to reweigh the testube",
-      step37:
-        "Now clikc Testube and press Weigh Testube", 
-        
-      step38:
-        "Click Normal beaker select Remove Thermometer",
-        
-      step39:
-        "Click Thermometer select Reset Thermometer",
-        
-      step40:
-        "Click Beaker and select Dispose Cup", 
-      step41:
-        "Keep Thermometer In Table ",
-        
-      step42:
-        "44",  
-    },
-  ]
+    step25:
+      "Scroll down to pour hydrochloric acid from the burette into the polystyrene cup.",
+
+    step26:
+      "Click the normal beaker and select Remove Beaker.",
+
+    step27:
+      "Click the burette clamp and select Remove from Centre.",
+
+    step28:
+      "Click the thermometer and select the Right Hand option.",
+
+    step29:
+      "Click the thermometer again and select Place Thermometer.",
+
+    step30:
+      "Click the test tube and select the Right Hand option.",
+
+    step31:
+      "Click the normal beaker and select Stir.",
+
+    step32:
+      "Press P to enter Pouring Mode.",
+
+    step33:
+      "Scroll down to stir the mixture and gradually pour the potassium carbonate from the test tube.",
+
+    step34:
+      "Press P again to exit Pouring Mode.",
+
+    step35:
+      "Click the normal beaker and select Unstir to remove the stirring tool.",
+
+    step36:
+      "Place the digital balance again to reweigh the emptied test tube.",
+
+    step37:
+      "Click the test tube and select Weigh Test Tube.",
+
+    step38:
+      "Click the normal beaker and select Remove Thermometer.",
+
+    step39:
+      "Click the thermometer and select Reset Thermometer.",
+
+    step40:
+      "Click the normal beaker and select Dispose Cup.",
+
+    step41:
+      "Click the thermometer and select Keep Back on Table.",
+
+    step42:
+      "Reaction 1 is complete. Review the recorded results before continuing.",
+  },
+]
 
   const lessonDetailsData = [
   {
@@ -317,7 +324,7 @@ const EnthalpyHessLaw = () =>{
     {
   id: 5,
 
-  title: "Add Hydrochloric Acid to the Polystyrene Cup",
+  title: "Add HCL Acid to the Polystyrene Cup",
 
   description:
     "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. The hydrochloric acid can then be delivered accurately into the polystyrene cup.",
@@ -346,15 +353,10 @@ const EnthalpyHessLaw = () =>{
 
   implementationSteps: [
     "Pick up the test tube containing the potassium carbonate.",
-    "Keep the thermometer inside the polystyrene cup.",
-    "Pick up the stirring rod with the other hand.",
     "Position the test tube above the polystyrene cup.",
     "Add the potassium carbonate gradually to the hydrochloric acid.",
     "Stir the mixture continuously while adding the potassium carbonate.",
-    "Make sure all the potassium carbonate is transferred into the cup.",
-    "Continue stirring while observing the thermometer reading.",
-    "Wait until the temperature reaches its highest value and begins to stabilise.",
-    "Record the highest temperature reached during the reaction.",
+    "Wait until the temperature reaches its highest value ",
   ],
 
   image: "./addPotassiumCarbonateAndStir.png",
@@ -405,11 +407,11 @@ const EnthalpyHessLaw = () =>{
         }
 
         {
-          (lessonStep>=18 && lessonStep<=29)  && <HessGuidelines guidelineData={guidelineData[4]}/>
+          (lessonStep>=18 && lessonStep<=30)  && <HessGuidelines guidelineData={guidelineData[4]}/>
         }
 
         {
-          (lessonStep>=30 &&  lessonStep<=31)  && <HessGuidelines guidelineData={guidelineData[2]}/>
+          (lessonStep>=31 &&  lessonStep<=31)  && <HessStartingTemperature />
         }
 
         {
@@ -417,8 +419,9 @@ const EnthalpyHessLaw = () =>{
         }
 
         {
-          lessonStep==40  && <HessReactionOneResults/>
+          showEnthalyResultOne && <HessReactionOneResults/>
         }
+
          
 
         {/* {lessonStep===2 && 
@@ -592,11 +595,16 @@ const EnthalpyHessLaw = () =>{
       } 
 
       {lessonStep ===40 && 
-           <DialogBox text={Enthalpy[0].step38}/>
+           <DialogBox text={Enthalpy[0].step38} 
+           onbtnClick={() => {
+            setShowEnthalyResultOne(true)
+            }}/>
       }
 
       {lessonStep ===41 && 
-           <DialogBox text={Enthalpy[0].step39}/>
+           <DialogBox text={Enthalpy[0].step39} onbtnClick={() => {
+            setShowEnthalyResultOne(true)
+            }}/>
       }
 
       {lessonStep ===42 && 

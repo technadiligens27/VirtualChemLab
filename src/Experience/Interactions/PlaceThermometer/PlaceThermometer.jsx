@@ -11,8 +11,8 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 const PlaceThermometer = ({
   beakerParentRef,
   beakerRef,
-  heightOffset = 3,
-  xOffset = 0,
+  heightOffset = 4,
+  xOffset = -0.2,
   zOffset = 0,
 }) => {
   const { mainThermometerRef } = useContext(ModelContext)
@@ -143,7 +143,7 @@ const PlaceThermometer = ({
     thermometer.rotation.set(
       0,
       0,
-      -Math.PI / 8
+      0
     )
 
     thermometer.scale.set(1, 1, 1)

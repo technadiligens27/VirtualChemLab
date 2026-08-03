@@ -178,6 +178,9 @@ const transformControlsRef = useRef()
       object.scale.set(0.9, 0.9, 0.9);
       object.position.y+=1
       
+    }else if(object.name === "mainThermometer"){
+      object.scale.set(1.3, 1.3, 1.3);
+      
     } else {
       object.scale.set(1, 1, 1)
     }

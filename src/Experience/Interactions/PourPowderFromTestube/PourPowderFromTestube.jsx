@@ -3,8 +3,9 @@ import {
   useEffect,
   useRef,
 } from "react"
+
 import { useFrame } from "@react-three/fiber"
-import { select } from "three/tsl"
+
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
@@ -18,9 +19,15 @@ const PourPowderFromTestube = ({
   powderFadeSpeed = 0.5,
   model,
 }) => {
+  const {
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-  const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
-  const {setIsPottasiumCarobnateInTestube01} = useContext(InteractionContext)
+  const {
+    setIsPottasiumCarobnateInTestube01,
+  } = useContext(InteractionContext)
 
   const powderParticlesRef = useRef([])
   const testTubePowderMeshesRef = useRef([])
@@ -28,6 +35,7 @@ const PourPowderFromTestube = ({
   const elapsedTimeRef = useRef(0)
   const wasPouringRef = useRef(false)
   const shouldFadePowderRef = useRef(false)
+  const hasCompletedRef = useRef(false)
 
   useEffect(() => {
     if (!model) return
@@ -54,7 +62,9 @@ const PourPowderFromTestube = ({
       }
 
       if (
-        name.includes("testube01-powder")
+        name.includes(
+          "testube01-powder"
+        )
       ) {
         child.visible = true
 
@@ -65,7 +75,14 @@ const PourPowderFromTestube = ({
         child.material.opacity = 1
         child.material.needsUpdate = true
 
-        insidePowderMeshes.push(child)
+        insidePowderMeshes.push({
+          object: child,
+
+          isBottomResidue:
+            name.includes(
+              "testube01-powder-bottom"
+            ),
+        })
       }
     })
 
@@ -140,6 +157,7 @@ const PourPowderFromTestube = ({
     ) {
       elapsedTimeRef.current = 0
       shouldFadePowderRef.current = false
+      hasCompletedRef.current = false
 
       powderParticlesRef.current.forEach(
         (particle) => {
@@ -153,7 +171,9 @@ const PourPowderFromTestube = ({
       )
 
       testTubePowderMeshesRef.current.forEach(
-        (powder) => {
+        (powderData) => {
+          const powder = powderData.object
+
           powder.visible = true
           powder.material.transparent = true
           powder.material.opacity = 1
@@ -173,6 +193,8 @@ const PourPowderFromTestube = ({
 
       return
     }
+
+    if (hasCompletedRef.current) return
 
     elapsedTimeRef.current += delta
 
@@ -227,12 +249,20 @@ const PourPowderFromTestube = ({
       shouldFadePowderRef.current = true
     }
 
-    if (!shouldFadePowderRef.current) {
-      return
-    }
+    if (!shouldFadePowderRef.current) return
 
     testTubePowderMeshesRef.current.forEach(
-      (powder) => {
+      (powderData) => {
+        const powder = powderData.object
+
+        if (powderData.isBottomResidue) {
+          powder.visible = true
+          powder.material.opacity = 1
+          powder.material.needsUpdate = true
+
+          return
+        }
+
         powder.material.opacity =
           Math.max(
             powder.material.opacity -
@@ -251,21 +281,38 @@ const PourPowderFromTestube = ({
       }
     )
 
-    const allInsidePowderHidden =
+    const allMainPowderHidden =
       testTubePowderMeshesRef.current.length >
         0 &&
       testTubePowderMeshesRef.current.every(
-        (powder) =>
-          powder.material.opacity <= 0
+        (powderData) => {
+          if (
+            powderData.isBottomResidue
+          ) {
+            return true
+          }
+
+          return (
+            powderData.object.material
+              .opacity <= 0
+          )
+        }
       )
 
-    if (allInsidePowderHidden) {
-      shouldFadePowderRef.current = false
+    if (!allMainPowderHidden) return
 
-      if(lessonStep ===35 && selectedLesson===8){
-        setLessonStep(36)
-        setIsPottasiumCarobnateInTestube01(false)
-      }
+    shouldFadePowderRef.current = false
+    hasCompletedRef.current = true
+
+    if (
+      lessonStep === 35 &&
+      selectedLesson === 8
+    ) {
+      setLessonStep(36)
+
+      setIsPottasiumCarobnateInTestube01(
+        false
+      )
     }
   })
 

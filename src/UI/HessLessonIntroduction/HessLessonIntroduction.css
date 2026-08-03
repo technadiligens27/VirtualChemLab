@@ -30,7 +30,7 @@
 }
 
 .hess-introduction-panel {
-  width: 90vw;
+  width: 80vw;
   height: 88vh;
 
   padding: 18px;
@@ -466,7 +466,7 @@
 .hess-introduction-bottom {
   width: 100%;
 
-  margin-top: auto;
+  /* margin-top: auto; */
 
   display: flex;
   align-items: center;
@@ -474,16 +474,16 @@
 
   gap: 40px;
   position: absolute;
-  bottom: 5%;
+  bottom: 2%;
 }
 
 .hess-important-box {
   width: 68%;
-  min-height: 75px;
+  min-height: 45px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
 
-  padding:
-    12px
-    210px;
 
   box-sizing: border-box;
 

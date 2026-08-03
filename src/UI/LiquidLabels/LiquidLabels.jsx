@@ -145,7 +145,10 @@ const LiquidLabels = ({
 
   return (
     <group ref={labelRef}>
-      <Html center>
+      <Html 
+      center
+      zIndexRange={[100,0]}
+      >
         <div className="liquid-label">
           <span className="liquid-name">
             {fillData?.name || "Unknown liquid"}
