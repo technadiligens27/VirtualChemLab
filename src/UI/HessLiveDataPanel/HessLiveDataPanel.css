@@ -1,0 +1,453 @@
+.hess-live-data-panel {
+  position: fixed;
+  top: 49%;
+  right: 1.8rem;
+  right: -2.3%;
+
+  z-index: 99998;
+
+  width: min(
+    24rem,
+    31vw
+  );
+
+  max-height: 96vh;
+
+  transform: translateY(-50%);
+
+  border: 0.45rem solid #ffc84d;
+  border-radius: 1.7rem;
+
+  background-color: #fffdf9;
+
+  box-shadow:
+    0 1.4rem 3rem
+      rgba(41, 28, 77, 0.22),
+    0 0.25rem 0.8rem
+      rgba(41, 28, 77, 0.12);
+
+  font-family:
+    "Nunito",
+    sans-serif;
+
+  overflow: visible;
+}
+
+.hess-live-data-inner {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 1.2rem;
+
+  overflow: hidden;
+}
+
+.hess-live-data-header {
+  position: relative;
+
+  min-height: 5rem;
+
+
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    #ffd160,
+    #ffc247
+  );
+
+  text-align: center;
+}
+
+/* .hess-live-data-header::after {
+  content: "";
+
+  position: absolute;
+  bottom: -1.3rem;
+  left: 50%;
+
+  width: 68%;
+  height: 2.2rem;
+
+  transform: translateX(-50%);
+
+  border-radius:
+    0
+    0
+    2rem
+    2rem;
+
+  background-color: #ffc84d;
+
+  z-index: -1;
+} */
+
+.hess-live-data-header h1 {
+  margin: 0;
+
+  color: #352080;
+
+  font-size: clamp(
+    1.15rem,
+    1.45vw,
+    1.55rem
+  );
+
+  font-weight: 900;
+
+  line-height: 1.1;
+}
+
+.hess-live-data-header p {
+  margin:
+    0.25rem
+    0
+    0;
+
+  color: #5d469f;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.12rem;
+}
+
+.hess-live-data-content {
+  padding:
+    1.55rem
+    1.4rem
+    0.75rem;
+}
+
+.hess-live-data-section {
+  width: 100%;
+}
+
+.hess-live-data-solid-section {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+
+  border-top: 1px solid
+    rgba(116, 85, 200, 0.22);
+}
+
+.hess-live-data-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.hess-live-data-section-title h2 {
+  margin: 0;
+
+  color: #38227f;
+
+  font-size: 0.98rem;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.035rem;
+}
+
+.hess-live-data-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+
+  flex-shrink: 0;
+
+  border: 0.2rem solid
+    rgba(131, 96, 221, 0.25);
+
+  border-radius: 50%;
+
+  background-color: #8b66df;
+
+  box-shadow:
+    0 0 0 0.25rem
+      rgba(139, 102, 223, 0.1);
+}
+
+.hess-live-data-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 0.65rem 0 0.15rem;
+
+  background-color:
+    rgba(120, 91, 191, 0.22);
+}
+
+.hess-live-data-row {
+  width: 100%;
+  min-height: 3.15rem;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+  gap: 0.8rem;
+
+  padding:
+    0.30rem
+    0;
+
+  border-bottom: 1px dashed
+    rgba(100, 110, 137, 0.17);
+}
+
+.hess-live-data-row:last-child {
+  border-bottom: none;
+}
+
+.hess-live-data-label {
+  min-width: 0;
+}
+
+.hess-live-data-label p {
+  margin: 0;
+
+  color: #526078;
+
+  font-size: clamp(
+    0.96rem,
+    0.85vw,
+    0.9rem
+  );
+
+  font-weight: 700;
+
+  line-height: 1.25;
+}
+
+.hess-live-data-label span {
+  display: block;
+
+  margin-top: 0.15rem;
+
+  color: #8790a1;
+
+  font-size: 0.65rem;
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+.hess-live-data-label sub {
+  font-size: 0.68em;
+}
+
+.hess-live-data-value {
+  min-width: 6.6rem;
+
+  padding:
+    0.55rem
+    0.65rem;
+
+  border-radius: 0.7rem;
+
+  background-color: #f7f4fb;
+
+  text-align: right;
+}
+
+.hess-live-data-value p {
+  margin: 0;
+
+  color: #38227f;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.hess-live-data-value-live p {
+  color: #f05c18;
+}
+
+.hess-live-data-value-highest p {
+  color: #f05c18;
+}
+
+.hess-live-data-value-complete p {
+  color: #159447;
+}
+
+.hess-live-data-footer {
+  margin:
+    0
+    1.4rem
+    1.25rem;
+
+  padding:
+    0.75rem
+    0.9rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  border: 1px solid
+    rgba(128, 91, 218, 0.32);
+
+  border-radius: 0.85rem;
+
+  background-color: #f5f0ff;
+}
+
+.hess-live-data-footer p {
+  margin: 0;
+
+  color: #7658c8;
+
+  font-size: 0.76rem;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.hess-live-data-info-icon {
+  width: 1.55rem;
+  height: 1.55rem;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0.13rem solid #7658c8;
+  border-radius: 50%;
+
+  color: #7658c8;
+
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.hess-live-data-toggle {
+  position: absolute;
+  top: 50%;
+  left: -15%;
+
+  width: 3.3rem;
+  height: 6.7rem;
+
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius:
+    1.2rem
+    0
+    0
+    1.2rem;
+
+  background: linear-gradient(
+    135deg,
+    #ffd35e,
+    #ffbd3f
+  );
+
+  cursor: pointer;
+
+  box-shadow:
+    -0.5rem
+    0.3rem
+    1rem
+    rgba(50, 32, 92, 0.16);
+
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hess-live-data-toggle:hover {
+  filter: brightness(1.04);
+
+  transform:
+    translateY(-50%)
+    scale(1.03);
+}
+
+.hess-live-data-toggle:active {
+  transform:
+    translateY(-50%)
+    scale(0.97);
+}
+
+.hess-live-data-toggle-arrow {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 2rem;
+  font-weight: 900;
+
+  line-height: 1;
+}
+
+.hess-live-data-value-pending {
+  min-width: 5.8rem;
+
+  background-color: #f4f1f8;
+
+  text-align: center;
+}
+
+.hess-live-data-value-pending p {
+  color: #8b829b;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+@media (
+  max-width: 1100px
+) {
+  .hess-live-data-panel {
+    width: 22rem;
+    right: 1rem;
+  }
+
+  .hess-live-data-content {
+    padding:
+      1.35rem
+      1.15rem
+      0.65rem;
+  }
+
+  .hess-live-data-footer {
+    margin:
+      0
+      1.15rem
+      1rem;
+  }
+}
+
+@media (
+  max-height: 760px
+) {
+  .hess-live-data-panel {
+    width: 21rem;
+
+    transform:
+      translateY(-50%)
+      scale(0.88);
+
+    transform-origin:
+      right center;
+  }
+}

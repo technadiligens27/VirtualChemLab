@@ -8,6 +8,8 @@ import HessGuidelines from "../../HessGuidelines/HessGuidelines";
 import HessLessonIntroduction from "../../HessLessonIntroduction/HessLessonIntroduction";
 import HessReactionOneResults from "../../HessReactionOneResults/HessReactionOneResults";
 import HessStartingTemperature from "../../HessStartingTemperature/HessStartingTemperature";
+import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview";
+import HessLiveDataPanel from "../../HessLiveDataPanel/HessLiveDataPanel";
 
 
 const EnthalpyHessLaw = () =>{
@@ -71,7 +73,7 @@ const EnthalpyHessLaw = () =>{
       "Click the burette and select Add Liquid.",
 
     step18:
-      "Add 50 mL of hydrochloric acid to the burette.",
+      "Add 30 cm³ of hydrochloric acid to the burette.",
 
     step19:
       "Click the normal beaker and select the Right Hand option.",
@@ -304,14 +306,14 @@ const EnthalpyHessLaw = () =>{
       title: "Weigh Test Tube and Potassium Carbonate",
 
       description:
-        "Measure and record the combined mass of the test tube, cap, and potassium carbonate. This measurement will later be used to determine the exact mass of potassium carbonate added to the hydrochloric acid.",
+        "Measure and record the combined mass of the test tube and potassium carbonate. This measurement will later be used to determine the exact mass of potassium carbonate added to the hydrochloric acid.",
 
       implementationSteps: [
         "Place the digital balance in the centre of the workspace.",
         "Close the test tube securely with its cap.",
-        "Place the test tube on the centre of the balance pan.",
+        "Place the test tube on the centre of the balance.",
         "Wait until the balance reading becomes stable.",
-        "Record the combined mass of the test tube, cap, and potassium carbonate.",
+        "Record the combined mass of the test tube and potassium carbonate.",
       ],
 
       image: "./weighTestube.png",
@@ -352,7 +354,6 @@ const EnthalpyHessLaw = () =>{
     "Add the potassium carbonate to the hydrochloric acid while stirring continuously. Observe the thermometer and record the highest stable temperature reached during the reaction.",
 
   implementationSteps: [
-    "Pick up the test tube containing the potassium carbonate.",
     "Position the test tube above the polystyrene cup.",
     "Add the potassium carbonate gradually to the hydrochloric acid.",
     "Stir the mixture continuously while adding the potassium carbonate.",
@@ -387,14 +388,91 @@ const EnthalpyHessLaw = () =>{
             onContinue={() => setLessonStep(2)}
           />
         } */}
-
+{/* 
         {
           lessonStep===1 && <HessLessonIntroduction
             onStartLesson={() => {
               setLessonStep(2)
   }}
 />
+        } */}
+
+
+
+
+        {
+         lessonStep===1 && <EnthalpyLessonOverview onStartLesson={() => {
+              setLessonStep(2)
+  }}/>
         }
+
+        {(lessonStep >=1 && lessonStep <17) &&   <HessLiveDataPanel
+                  reactionNumber={1}
+
+                  // volumeOfSolution={30}
+                  // solutionDensity={1}
+
+                  // startingTemperature={22}
+                  // currentTemperature={31.2}
+                  // highestTemperature={31.5}
+
+                  // massWithPowder={24.7}
+                  // massAfterEmptying={21.72}
+        />}
+
+        {lessonStep >=17 && lessonStep<21 &&  <HessLiveDataPanel
+                  reactionNumber={1}
+
+                  // volumeOfSolution={30}
+                  // solutionDensity={1}
+
+                  // startingTemperature={22}
+                  // currentTemperature={31.2}
+                  // highestTemperature={31.5}
+
+                  massWithPowder={24.7}
+                  // massAfterEmptying={21.72}
+        />}
+
+        {lessonStep >=21 && lessonStep<32 &&  <HessLiveDataPanel
+                  reactionNumber={1}
+                  volumeOfSolution={30}
+                  solutionDensity={1}
+
+                  // startingTemperature={22}
+                  // currentTemperature={31.2}
+                  // highestTemperature={31.5}
+
+                  massWithPowder={24.7}
+                  // massAfterEmptying={21.72}
+        />}
+
+        {lessonStep >=32 &&  <HessLiveDataPanel
+                  reactionNumber={1}
+                  volumeOfSolution={30}
+                  solutionDensity={1}
+
+                  startingTemperature={22}
+                  // currentTemperature={31.2}
+                  // highestTemperature={31.5}
+
+                  massWithPowder={24.7}
+                  // massAfterEmptying={21.72}
+        />}
+
+        {lessonStep >=40 &&  <HessLiveDataPanel
+                  reactionNumber={1}
+                  volumeOfSolution={30}
+                  solutionDensity={1}
+
+                  startingTemperature={22}
+                  // currentTemperature={31.2}
+                  highestTemperature={42.5}
+
+                  massWithPowder={24.7}
+                  massAfterEmptying={21.70}
+        />}                        
+
 
         {(lessonStep >= 2 && lessonStep <= 7 ) && ( <HessGuidelines guidelineData={guidelineData[0]}/>)}
         
@@ -596,15 +674,11 @@ const EnthalpyHessLaw = () =>{
 
       {lessonStep ===40 && 
            <DialogBox text={Enthalpy[0].step38} 
-           onbtnClick={() => {
-            setShowEnthalyResultOne(true)
-            }}/>
+          />
       }
 
       {lessonStep ===41 && 
-           <DialogBox text={Enthalpy[0].step39} onbtnClick={() => {
-            setShowEnthalyResultOne(true)
-            }}/>
+           <DialogBox text={Enthalpy[0].step39} />
       }
 
       {lessonStep ===42 && 
@@ -616,7 +690,9 @@ const EnthalpyHessLaw = () =>{
       }
 
       {lessonStep ===44 && 
-           <DialogBox text={Enthalpy[0].step42}/>
+           <DialogBox text={Enthalpy[0].step42} onbtnClick={() => {
+            setShowEnthalyResultOne(true)
+            }}/>
       }      
 
         </>

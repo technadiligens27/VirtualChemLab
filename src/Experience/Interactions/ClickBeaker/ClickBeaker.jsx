@@ -1905,7 +1905,8 @@ const renderHeldObjectButtons = () => {
  return (
   <>
     {selectedObject && !isFillBeakerBoxOpen && (
-      <Html position={selectedObject.position} center>
+      <Html position={selectedObject.position} center
+      zIndexRange={[100,0]}>
         <div className="click-btn-container">
           {selectedObject.isHolding
             ? renderHeldObjectButtons()

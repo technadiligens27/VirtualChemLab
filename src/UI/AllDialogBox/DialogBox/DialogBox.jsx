@@ -1,9 +1,14 @@
+import { useContext } from "react"
 import "./DialogBox.css"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const DialogBox = ({
   text,
   onbtnClick,
 }) => {
+
+  const {showEnthalyResultOne} = useContext(InteractionContext)
+
   return (
     <div className="dialog-box-container">
       <div className="dialog-box-inner">
@@ -19,11 +24,24 @@ const DialogBox = ({
         </p>
       </div>
 
-      {onbtnClick && (
-        <button onClick={onbtnClick}>
-          Results
-        </button>
-      )}
+      {
+        !showEnthalyResultOne ? (
+          onbtnClick && (
+            <button className="result-btn" onClick={onbtnClick}>
+              Results
+            </button>
+          )
+        ) : (
+          onbtnClick && (
+            <button className="question-btn" onClick={onbtnClick}>
+              Continue (Reaction 02)
+            </button>
+          )
+        )
+      }
+
+      
+      
     </div>
   )
 }

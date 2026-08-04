@@ -35,8 +35,9 @@
 
 .hess-guideline {
   width: 70vw;
-  height: 75vh;
+  height: 80vh;
   padding: 18px;
+  padding-top: 30px;
 
   background-color: #fcf8f3;
   border: 10px solid #fdc843;
@@ -70,8 +71,9 @@
 
 .hess-title-container h1 {
   margin: 0 0 14px;
-  font-size: 29px;
+  font-size: 32px;
   color: #351C7C;
+  width: 180%;
 }
 
 .hess-left > p {

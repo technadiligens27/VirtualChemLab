@@ -86,7 +86,7 @@ const LessonMenu = () => {
       id: 8,
       name: "Enthalpy Change Using Hess’s Law",
       imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes, and use Hess’s Law to find the enthalpy change for potassium hydrogencarbonate decomposition.",
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
       number: 8,
       divider: "purple",
     },

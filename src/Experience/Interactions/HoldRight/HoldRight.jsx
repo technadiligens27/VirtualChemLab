@@ -306,7 +306,8 @@ const transformControlsRef = useRef()
       {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
 
       {
-       !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && !isPouringMode &&isReactionRef.current ===false &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
+       !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && !isPouringMode &&isReactionRef.current ===false &&  selectedRightHand.name!=='mainThermometer' 
+        &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
       }
 
       {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>)}

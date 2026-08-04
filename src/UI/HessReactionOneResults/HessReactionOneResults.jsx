@@ -9,7 +9,7 @@ import { gsap } from "gsap"
 import "./HessReactionOneResults.css"
 
 const HessReactionOneResults = ({
-  massWithPowder = 24.70,
+  massWithPowder = 24.7,
   massAfterEmptying = 21.72,
   startingTemperature = 22.0,
   highestTemperature = 31.5,
@@ -69,7 +69,11 @@ const HessReactionOneResults = ({
     })
 
     const handleResize = () => {
-      if (isResultsOpenRef.current) return
+      if (
+        isResultsOpenRef.current
+      ) {
+        return
+      }
 
       gsap.set(results, {
         x: getClosedPosition(),
@@ -93,7 +97,8 @@ const HessReactionOneResults = ({
   }, [])
 
   const getClosedPosition = () => {
-    const results = resultsRef.current
+    const results =
+      resultsRef.current
 
     if (!results) return 0
 
@@ -107,13 +112,20 @@ const HessReactionOneResults = ({
     shouldOpen,
     onAnimationComplete
   ) => {
-    const results = resultsRef.current
-    const arrow = arrowRef.current
+    const results =
+      resultsRef.current
+
+    const arrow =
+      arrowRef.current
 
     if (!results || !arrow) return
 
-    isResultsOpenRef.current = shouldOpen
-    setIsResultsOpen(shouldOpen)
+    isResultsOpenRef.current =
+      shouldOpen
+
+    setIsResultsOpen(
+      shouldOpen
+    )
 
     gsap.killTweensOf(results)
     gsap.killTweensOf(arrow)
@@ -122,13 +134,18 @@ const HessReactionOneResults = ({
       x: shouldOpen
         ? 0
         : getClosedPosition(),
+
       duration: 0.8,
       ease: "power3.inOut",
-      onComplete: onAnimationComplete,
+
+      onComplete:
+        onAnimationComplete,
     })
 
     gsap.to(arrow, {
-      rotation: shouldOpen ? 180 : 0,
+      rotation:
+        shouldOpen ? 180 : 0,
+
       duration: 0.8,
       ease: "power3.inOut",
     })
@@ -138,36 +155,46 @@ const HessReactionOneResults = ({
     const nextOpenState =
       !isResultsOpenRef.current
 
-    animateResults(nextOpenState)
+    animateResults(
+      nextOpenState
+    )
   }
 
   const handleContinue = () => {
-    animateResults(false, () => {
-      if (onButtonContinue) {
-        onButtonContinue()
+    animateResults(
+      false,
+      () => {
+        if (onButtonContinue) {
+          onButtonContinue()
+        }
       }
-    })
+    )
   }
 
   return (
     <div
-      className={`reaction-one-results-overlay ${
+      className={`reaction1-results-overlay ${
         isResultsOpen
-          ? "reaction-one-results-overlay-open"
-          : "reaction-one-results-overlay-closed"
+          ? "reaction1-results-overlay-open"
+          : "reaction1-results-overlay-closed"
       }`}
     >
       <div
-        className="reaction-one-results"
         ref={resultsRef}
+        className="reaction1-results"
       >
-        <div className="reaction-one-results-header">
-          <h1>Reaction 01 Results</h1>
+        <div className="reaction1-results-header">
+          <h1>
+            Reaction 01 Results
+          </h1>
         </div>
 
         <button
-          className="reaction-one-results-side"
-          onClick={handleResultsToggle}
+          type="button"
+          className="reaction1-results-side"
+          onClick={
+            handleResultsToggle
+          }
           aria-label={
             isResultsOpen
               ? "Close reaction results"
@@ -181,9 +208,11 @@ const HessReactionOneResults = ({
           />
         </button>
 
-        <div className="reaction-one-results-inner">
-          <div className="reaction-one-results-title">
-            <h1>Results for Reaction 01</h1>
+        <div className="reaction1-results-inner">
+          <div className="reaction1-results-title">
+            <h1>
+              Results for Reaction 01
+            </h1>
 
             <h2>
               Potassium carbonate +
@@ -191,21 +220,32 @@ const HessReactionOneResults = ({
             </h2>
 
             <p>
-              Review the recorded measurements
-              and calculate the temperature
-              change.
+              Review the recorded
+              measurements and calculate
+              the temperature change.
             </p>
           </div>
 
-          <div className="reaction-one-results-table">
-            <div className="reaction-one-results-row reaction-one-results-table-header">
-              <div>Measurement</div>
-              <div>Formula</div>
-              <div>Value</div>
-              <div>Unit</div>
+          <div className="reaction1-results-table">
+            <div className="reaction1-results-row reaction1-results-table-header">
+              <div>
+                Measurement
+              </div>
+
+              <div>
+                Formula
+              </div>
+
+              <div>
+                Value
+              </div>
+
+              <div>
+                Unit
+              </div>
             </div>
 
-            <div className="reaction-one-results-row">
+            <div className="reaction1-results-row">
               <div>
                 Mass of test tube with
                 potassium carbonate
@@ -215,14 +255,18 @@ const HessReactionOneResults = ({
                 m<sub>1</sub>
               </div>
 
-              <div className="reaction-one-results-value">
-                {massWithPowder.toFixed(2)}
+              <div className="reaction1-results-value">
+                {massWithPowder.toFixed(
+                  2
+                )}
               </div>
 
-              <div>g</div>
+              <div>
+                g
+              </div>
             </div>
 
-            <div className="reaction-one-results-row">
+            <div className="reaction1-results-row">
               <div>
                 Mass of test tube after
                 emptying
@@ -232,17 +276,21 @@ const HessReactionOneResults = ({
                 m<sub>2</sub>
               </div>
 
-              <div className="reaction-one-results-value">
-                {massAfterEmptying.toFixed(2)}
+              <div className="reaction1-results-value">
+                {massAfterEmptying.toFixed(
+                  2
+                )}
               </div>
 
-              <div>g</div>
+              <div>
+                g
+              </div>
             </div>
 
-            <div className="reaction-one-results-row">
+            <div className="reaction1-results-row">
               <div>
-                Mass of potassium carbonate
-                used
+                Mass of potassium
+                carbonate used
               </div>
 
               <div>
@@ -250,14 +298,16 @@ const HessReactionOneResults = ({
                 <sub>2</sub>
               </div>
 
-              <div className="reaction-one-results-value">
+              <div className="reaction1-results-value">
                 {massUsed.toFixed(2)}
               </div>
 
-              <div>g</div>
+              <div>
+                g
+              </div>
             </div>
 
-            <div className="reaction-one-results-row">
+            <div className="reaction1-results-row">
               <div>
                 Starting temperature
               </div>
@@ -266,14 +316,18 @@ const HessReactionOneResults = ({
                 T<sub>start</sub>
               </div>
 
-              <div className="reaction-one-results-value">
-                {startingTemperature.toFixed(1)}
+              <div className="reaction1-results-value">
+                {startingTemperature.toFixed(
+                  1
+                )}
               </div>
 
-              <div>°C</div>
+              <div>
+                °C
+              </div>
             </div>
 
-            <div className="reaction-one-results-row">
+            <div className="reaction1-results-row">
               <div>
                 Highest temperature
               </div>
@@ -282,14 +336,18 @@ const HessReactionOneResults = ({
                 T<sub>highest</sub>
               </div>
 
-              <div className="reaction-one-results-value">
-                {highestTemperature.toFixed(1)}
+              <div className="reaction1-results-value">
+                {highestTemperature.toFixed(
+                  1
+                )}
               </div>
 
-              <div>°C</div>
+              <div>
+                °C
+              </div>
             </div>
 
-            <div className="reaction-one-results-row reaction-one-results-final">
+            <div className="reaction1-results-row reaction1-results-final">
               <div>
                 Temperature change
               </div>
@@ -300,35 +358,47 @@ const HessReactionOneResults = ({
                 <sub>start</sub>
               </div>
 
-              <div className="reaction-one-results-change">
+              <div className="reaction1-results-change">
                 +
-                {temperatureChange.toFixed(1)}
+                {temperatureChange.toFixed(
+                  1
+                )}
               </div>
 
-              <div>°C</div>
+              <div>
+                °C
+              </div>
             </div>
           </div>
 
-          <div className="reaction-one-results-observation">
-            <div className="reaction-one-results-info">
+          <div className="reaction1-results-observation">
+            <div className="reaction1-results-info">
               i
             </div>
 
             <div>
-              <h2>Observation</h2>
+              <h2>
+                Observation
+              </h2>
 
               <p>
-                The temperature increased.
-                Reaction 01 released heat, so it
-                is an
-                <strong> exothermic reaction.</strong>
+                The temperature
+                increased. Reaction 01
+                released heat, so it is an
+                <strong>
+                  {" "}
+                  exothermic reaction.
+                </strong>
               </p>
             </div>
           </div>
 
           <button
-            className="reaction-one-results-button"
-            onClick={handleContinue}
+            type="button"
+            className="reaction1-results-button"
+            onClick={
+              handleContinue
+            }
           >
             Continue
           </button>

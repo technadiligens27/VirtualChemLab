@@ -7,7 +7,7 @@ import { useFrame } from "@react-three/fiber"
 
 const ReleaseGasBubbles = ({
   modelRef,
-  riseDistance = 1,
+  riseDistance = 3,
   minimumSpeed = 0.15,
   maximumSpeed = 0.3,
   releaseDelay = 1.5,
@@ -15,6 +15,8 @@ const ReleaseGasBubbles = ({
 }) => {
   const bubblesRef = useRef([])
   const elapsedTimeRef = useRef(0)
+
+  console.log('Bubbles')
 
   useEffect(() => {
     const model = modelRef?.current

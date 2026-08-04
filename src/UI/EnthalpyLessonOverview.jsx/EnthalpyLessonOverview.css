@@ -1,0 +1,790 @@
+.reaction-one-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+
+  box-sizing: border-box;
+
+  background-color: rgba(20, 15, 40, 0.35);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.reaction-one-container {
+  position: relative;
+
+  width: 80vw;
+  height: 85vh;
+
+  padding: 45px 48px 34px ;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 253, 247, 0.98)
+    );
+
+  border: 11px solid #ffc846;
+  border-radius: 28px;
+
+  box-shadow:
+    0 24px 60px rgba(18, 12, 45, 0.3),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.reaction-one-progress {
+  position: absolute;
+  top: 28px;
+  left: 30px;
+
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 0 20px 0 0;
+
+  background-color: rgba(255, 255, 255, 0.8);
+
+  border: 2px solid #ebe5f5;
+  border-radius: 25px;
+}
+
+.reaction-one-progress-number {
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 22px;
+
+  color: #28137e;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  background-color: #ffffff;
+
+  border: 2px solid #ded1f4;
+  border-radius: 23px;
+}
+
+.reaction-one-progress-dots {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reaction-one-dot {
+  width: 20px;
+  height: 10px;
+
+  display: block;
+
+  background-color: #dedde3;
+
+  border-radius: 10px;
+}
+
+.reaction-one-dot-active {
+  background:
+    linear-gradient(
+      135deg,
+      #3a178e,
+      #693fc6
+    );
+}
+
+.reaction-one-top-title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: min(380px, 32vw);
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd65a,
+      #ffbd36
+    );
+
+  border-radius: 0 0 38px 38px;
+
+  box-shadow:
+    0 8px 18px rgba(255, 180, 40, 0.16);
+}
+
+.reaction-one-top-title h1 {
+  margin: 0;
+
+  color: #2d1485;
+
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.reaction-one-content {
+  min-height: 0;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.9fr)
+    minmax(300px, 0.82fr);
+  gap: 42px;
+
+  flex: 1;
+}
+
+.reaction-one-main {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.reaction-one-heading {
+  margin-bottom: 20px;
+}
+
+.reaction-one-label {
+  margin: 0 0 6px;
+
+  color: #8a7caa;
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.reaction-one-heading h1 {
+  margin: 0;
+
+  color: #2e177e;
+
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.12;
+}
+
+.reaction-one-type {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 20px;
+  padding: 8px 22px 8px 10px;
+
+  color: #278a32;
+
+  font-size: 16px;
+  font-weight: 800;
+font-family: "Baloo Thambi 2", sans-serif;
+  background-color: #eff9ec;
+
+  border: 2px solid #bfe2bb;
+  border-radius: 35px;
+}
+
+.reaction-one-fire-icon {
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #2d9a37;
+
+  font-size: 27px;
+  font-weight: 900;
+
+  background-color: #ffffff;
+
+  border: 2px solid #8dcc87;
+  border-radius: 50%;
+}
+
+.reaction-one-equation {
+  min-height: 85px;
+
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239, 250, 235, 0.95),
+      rgba(255, 255, 255, 0.95)
+    );
+
+  border: 2px solid #62ad5d;
+  border-radius: 18px;
+
+  box-shadow:
+    0 10px 25px rgba(69, 151, 66, 0.08);
+}
+
+.reaction-one-flask-icon {
+  width: 78px;
+  min-width: 78px;
+  height: 78px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #41a23e;
+
+  font-size: 34px;
+
+  background-color: #e4f5df;
+
+  border-radius: 50%;
+}
+
+.reaction-one-equation-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  color: #1f2a4b;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.reaction-one-equation-text sub {
+  font-size: 60%;
+}
+
+.reaction-one-arrow {
+  padding: 0 4px;
+
+  font-size: 1.25em;
+}
+
+.reaction-one-notice {
+  margin-top: 25px;
+}
+
+.reaction-one-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 12px;
+}
+
+.reaction-one-eye-icon {
+  width: 54px;
+  min-width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #4f28a5;
+
+  font-size: 30px;
+
+  background-color: #f6f1ff;
+
+  border: 2px solid #dfd3f5;
+  border-radius: 50%;
+}
+
+.reaction-one-section-heading h2 {
+  margin: 0;
+
+  color: #341985;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.reaction-one-heading-line {
+  width: 100%;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #d7c9f1,
+      transparent
+    );
+}
+
+.reaction-one-notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding-left: 6px;
+}
+
+.reaction-one-notice-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.reaction-one-check {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7042c3,
+      #49209d
+    );
+
+  border-radius: 50%;
+}
+
+.reaction-one-notice-item p {
+  margin: 0;
+
+  color: #34405f;
+
+  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1.45;
+}
+
+.reaction-one-information {
+  align-self: start;
+
+  margin-top: 6px;
+
+  overflow: hidden;
+
+  background-color: #ffffff;
+
+  border: 2px solid #9f7adf;
+  border-radius: 20px;
+
+  box-shadow:
+    0 14px 28px rgba(68, 35, 143, 0.1);
+}
+
+.reaction-one-information-header {
+  min-height: 78px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 0 28px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4820a0,
+      #6d3dc0
+    );
+}
+
+.reaction-one-information-icon {
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+  font-size: 23px;
+  font-weight: 800;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+}
+
+.reaction-one-information-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.reaction-one-information-content {
+  padding: 28px 30px 30px;
+}
+
+.reaction-one-information-content p {
+  margin: 0 0 16px;
+
+  color: #3f4a68;
+
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.reaction-one-information-content p:last-child {
+  margin-bottom: 0;
+}
+
+.reaction-one-footer {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+  align-items: center;
+  gap: 40px;
+
+  margin-top: 24px;
+}
+
+.reaction-one-important {
+  min-height: 82px;
+
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  padding: 12px 25px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffaf0,
+      #fffdf8
+    );
+
+  border: 2px solid #f0b32f;
+  border-radius: 17px;
+}
+
+.reaction-one-warning-icon {
+  width: 47px;
+  min-width: 47px;
+  height: 47px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #9a6b10;
+
+  font-size: 28px;
+  font-weight: 900;
+
+  border: 3px solid #a97917;
+  border-radius: 13px;
+
+  transform: rotate(45deg);
+}
+
+.reaction-one-warning-icon::first-letter {
+  transform: rotate(-45deg);
+}
+
+.reaction-one-important p {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin: 0;
+
+  color: #3f4964;
+
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.5;
+}
+
+.reaction-one-important strong {
+  color: #765018;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+  font-size: 22px;
+}
+
+.reaction-one-next-button {
+  min-width: 265px;
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+
+  padding: 0 35px;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 23px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #682fc2,
+      #3d1698
+    );
+
+  border: none;
+  border-radius: 40px;
+
+  box-shadow:
+    0 13px 25px rgba(75, 30, 165, 0.23);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+;  
+}
+
+.reaction-one-next-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 17px 30px rgba(75, 30, 165, 0.3);
+}
+
+.reaction-one-next-button:active {
+  transform: translateY(0);
+}
+
+.reaction-one-next-arrow {
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.reaction-one-side-button {
+  position: absolute;
+  top: 50%;
+  right: -1px;
+
+  width: 58px;
+  height: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 50px;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffd34c,
+      #ffb934
+    );
+
+  border: none;
+  border-radius: 24px 0 0 24px;
+
+  box-shadow:
+    -8px 0 18px rgba(255, 176, 36, 0.14);
+}
+
+@media (max-width: 1150px) {
+  .reaction-one-container {
+    height: min(94vh, 850px);
+
+    padding:
+      95px
+      38px
+      28px;
+  }
+
+  .reaction-one-content {
+    grid-template-columns:
+      minmax(0, 1.55fr)
+      minmax(270px, 0.75fr);
+    gap: 25px;
+  }
+
+  .reaction-one-equation {
+    gap: 18px;
+
+    padding: 16px 20px;
+  }
+
+  .reaction-one-flask-icon {
+    width: 62px;
+    min-width: 62px;
+    height: 62px;
+
+    font-size: 36px;
+  }
+
+  .reaction-one-footer {
+    gap: 22px;
+  }
+
+  .reaction-one-next-button {
+    min-width: 210px;
+  }
+}
+
+@media (max-width: 900px) {
+  .reaction-one-container {
+    width: 96vw;
+    height: 95vh;
+
+    padding:
+      88px
+      25px
+      24px;
+
+    border-width: 7px;
+  }
+
+  .reaction-one-content {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .reaction-one-information {
+    display: none;
+  }
+
+  .reaction-one-heading h1 {
+    font-size: 31px;
+  }
+
+  .reaction-one-equation {
+    min-height: 105px;
+  }
+
+  .reaction-one-footer {
+    grid-template-columns: 1fr auto;
+  }
+
+  .reaction-one-important {
+    min-height: 70px;
+  }
+
+  .reaction-one-next-button {
+    min-width: 165px;
+    height: 66px;
+
+    font-size: 20px;
+  }
+
+  .reaction-one-side-button {
+    display: none;
+  }
+}
+
+@media (max-height: 760px) {
+  .reaction-one-container {
+    padding-top: 82px;
+    padding-bottom: 20px;
+  }
+
+  .reaction-one-heading {
+    margin-bottom: 12px;
+  }
+
+  .reaction-one-type {
+    margin-bottom: 12px;
+  }
+
+  .reaction-one-equation {
+    min-height: 105px;
+  }
+
+  .reaction-one-notice {
+    margin-top: 15px;
+  }
+
+  .reaction-one-notice-list {
+    gap: 8px;
+  }
+
+  .reaction-one-footer {
+    margin-top: 14px;
+  }
+
+  .reaction-one-important {
+    min-height: 65px;
+  }
+
+  .reaction-one-next-button {
+    height: 65px;
+  }
+}

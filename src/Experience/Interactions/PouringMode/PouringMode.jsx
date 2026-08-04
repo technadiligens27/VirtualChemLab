@@ -33,7 +33,7 @@ const PouringMode = ({ hand }) => {
     setPouringModeHand,
     isPouringMode,setIsPouringMode,
     rightBeakerFillData,leftBeakerFillData,
-    isPottasiumCarobnateInTestube01
+    isPottasiumCarobnateInTestube01,setShowBubbles
   } = useContext(InteractionContext)
 
   const {testube01Ref} = useContext(ModelContext)
@@ -422,7 +422,8 @@ const PouringMode = ({ hand }) => {
         setPouringModeHand(null)
 
         if(lessonStep===36 && selectedLesson ===8){
-          setLessonStep(37)
+          setLessonStep(37);
+          setShowBubbles(false)
         }
 
         return

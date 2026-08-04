@@ -284,12 +284,12 @@ const StirModePolysterene = ({
 
     spoon.updateMatrixWorld(true)
 
-    const twoFullRotations =
-      Math.PI * 4
+    const oneFullRotation =
+      Math.PI * 2
 
     if (
       angleRef.current >=
-        twoFullRotations &&
+        oneFullRotation &&
       !hasCompletedTwoRotationsRef.current
     ) {
       hasCompletedTwoRotationsRef.current =

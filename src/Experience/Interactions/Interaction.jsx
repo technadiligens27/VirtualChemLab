@@ -98,7 +98,7 @@ const Interaction = () => {
         {/* {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') 
          && isPlacePolysterene && <ReleaseGasBubbles modelRef={mainPolystereneRef} />}   */}
 
-       {showBubbles && <ReleaseGasBubbles/>}  
+       {showBubbles && <ReleaseGasBubbles modelRef={mainPolystereneRef}/>}  
 
     </>
   );
