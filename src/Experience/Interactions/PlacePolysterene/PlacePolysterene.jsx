@@ -14,6 +14,12 @@ const PlacePolysterene = ({beakerRef,polystereneRef,hand,}) => {
     }
   },[lessonStep,selectedLesson])
 
+  useEffect(()=>{
+    if(lessonStep===4 && selectedLesson ===9){
+      setLessonStep(5)
+    }
+  },[lessonStep,selectedLesson])
+
   useEffect(() => {
     const beaker = beakerRef?.current
     const cup = polystereneRef?.current

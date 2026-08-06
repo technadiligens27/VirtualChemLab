@@ -78,6 +78,8 @@ const EnthalpyHessLaw = () =>{
     step19:
       "Click the normal beaker and select the Right Hand option.",
 
+     
+
     step20:
       "Click the digital balance and select Remove Balance.",
 
@@ -98,6 +100,9 @@ const EnthalpyHessLaw = () =>{
 
     step26:
       "Click the normal beaker and select Remove Beaker.",
+
+    step26_5:
+      "Click the normal beaker and select Cover Polysterene Cup.",   
 
     step27:
       "Click the burette clamp and select Remove from Centre.",
@@ -146,6 +151,9 @@ const EnthalpyHessLaw = () =>{
 
     step42:
       "Reaction 1 is complete. Review the recorded results before continuing.",
+
+    step43:
+      "43",  
   },
 ]
 
@@ -401,10 +409,17 @@ const EnthalpyHessLaw = () =>{
 
 
         {
-         lessonStep===1 && <EnthalpyLessonOverview onStartLesson={() => {
-              setLessonStep(2)
-  }}/>
+         lessonStep===1 && <EnthalpyLessonOverview
+          reactionData={enthalpyReactionData[1]}
+          onStartLesson={() => {
+            setLessonStep(2)
+          }}
+        />
         }
+
+        
+
+
 
         {(lessonStep >=1 && lessonStep <17) &&   <HessLiveDataPanel
                   reactionNumber={1}
@@ -613,11 +628,14 @@ const EnthalpyHessLaw = () =>{
 
        {lessonStep ===25 && 
            <DialogBox text={Enthalpy[0].step23}/>
-       }  
+       }
+       
 
        {lessonStep ===26 && 
            <DialogBox text={Enthalpy[0].step24}/>
        }
+
+
 
        {lessonStep ===27 && 
            <DialogBox text={Enthalpy[0].step25}/>
@@ -626,6 +644,10 @@ const EnthalpyHessLaw = () =>{
 
        {lessonStep ===28 && 
            <DialogBox text={Enthalpy[0].step26}/>
+       } 
+
+       {lessonStep ===28.5 && 
+           <DialogBox text={Enthalpy[0].step26_5}/>
        } 
 
        {lessonStep ===29 && 
@@ -692,8 +714,19 @@ const EnthalpyHessLaw = () =>{
       {lessonStep ===44 && 
            <DialogBox text={Enthalpy[0].step42} onbtnClick={() => {
             setShowEnthalyResultOne(true)
-            }}/>
-      }      
+            }}
+
+            onbtn2Click={() => {
+            setLessonStep(45)
+            }}            
+           />
+      }     
+
+      {
+         lessonStep===45 && <EnthalpyLessonOverview onStartLesson={() => {
+              setLessonStep(2)
+         }}/>
+        } 
 
         </>
     )

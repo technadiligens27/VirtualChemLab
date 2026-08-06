@@ -47,12 +47,12 @@ const HoldLeft = ({ modeldata }) => {
   const mouseRef = useRef(new THREE.Vector2())
   const isDraggingRef = useRef(false)
 
-  useEffect(()=>{
-    if(lessonStep===3 && isMainGuideline){
-      setLessonStep(4);
-      setShowNormalBeakerArrow(false)
-    }
-  },[lessonStep])
+  // useEffect(()=>{
+  //   if(lessonStep===3 && isMainGuideline){
+  //     setLessonStep(4);
+  //     setShowNormalBeakerArrow(false)
+  //   }
+  // },[lessonStep])
 
   useEffect(()=>{
     if(selectedLesson===8 && lessonStep ===8){
@@ -66,6 +66,23 @@ const HoldLeft = ({ modeldata }) => {
     }
   },[selectedLesson,lessonStep])
 
+  useEffect(()=>{
+    if(selectedLesson===9 && lessonStep ===2){
+      setLessonStep(3)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===9 && lessonStep ===6){
+      setLessonStep(7)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===9 && lessonStep ===16){
+      setLessonStep(17)
+    }
+  },[selectedLesson,lessonStep])
   
 
   useEffect(() => {

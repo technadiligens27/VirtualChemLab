@@ -37,6 +37,12 @@ const PlaceThermometer = ({
       }
     },[lessonStep,selectedLesson])
 
+     useEffect(()=>{
+      if(lessonStep===29 && selectedLesson===9){
+        setLessonStep(30)
+      }
+    },[lessonStep,selectedLesson])   
+
   useEffect(() => {
     if (
       selectedRightHand?.name ===

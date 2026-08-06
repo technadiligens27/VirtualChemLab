@@ -524,6 +524,17 @@ const PourPowderFromTestube = ({
         false
       )
     }
+
+    if (
+      lessonStep === 32 &&
+      selectedLesson === 9
+    ) {
+      setLessonStep(33)
+
+      setIsPottasiumCarobnateInTestube01(
+        false
+      )
+    }
   })
 
   return null

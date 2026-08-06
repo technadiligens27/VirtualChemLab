@@ -141,6 +141,13 @@ const PourFromBurette = ({
       ) {
         setLessonStep(28)
       }
+
+      if (
+        selectedLesson === 9 &&
+        lessonStep === 24
+      ) {
+        setLessonStep(25)
+      }
     }
   })
 

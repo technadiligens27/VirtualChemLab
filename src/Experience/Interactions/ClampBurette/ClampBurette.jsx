@@ -34,6 +34,19 @@ const ClampBurette = () => {
     setLessonStep,
   ])
 
+    useEffect(() => {
+    if (
+      selectedLesson === 9 &&
+      lessonStep === 21
+    ) {
+      setLessonStep(22)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
   useEffect(() => {
     const clamp = buretteClampRef?.current
     const burette = mainBuiretteRef?.current

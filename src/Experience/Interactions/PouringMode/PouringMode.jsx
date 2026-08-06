@@ -93,7 +93,30 @@ const PouringMode = ({ hand }) => {
     selectedRightHand,
   ])
 
+useEffect(() => {
+  const isTestube01Selected =
+    selectedLeftHand?.name === "main-testube-01" ||
+    selectedRightHand?.name === "main-testube-01"
 
+  if (!isTestube01Selected) return
+
+  const testTube = testube01Ref.current
+
+  if (!testTube) return
+
+  testTube.traverse((child) => {
+    const childName =
+      child.name?.toLowerCase() || ""
+
+    if (childName.includes("cap")) {
+      child.visible = false
+    }
+  })
+}, [
+  selectedLeftHand,
+  selectedRightHand,
+  testube01Ref,
+])
 
   /*
    * Clear local pouring state after the lab is reset.
@@ -412,7 +435,7 @@ const PouringMode = ({ hand }) => {
        * Exit pouring mode.
        */
       if (pouringModeHand === requestedHand && activeObject) {
-        if(isTutorialMode && isPouringMode && lessonStep>8 && selectedLesson!==8){
+        if(isTutorialMode && isPouringMode && lessonStep>8 && selectedLesson!==8 && selectedLesson !==9){
           setShowErrorMsgNo(12)
           return
         }
@@ -423,6 +446,11 @@ const PouringMode = ({ hand }) => {
 
         if(lessonStep===36 && selectedLesson ===8){
           setLessonStep(37);
+          setShowBubbles(false)
+        }
+
+        if(lessonStep===33 && selectedLesson ===9){
+          setLessonStep(34);
           setShowBubbles(false)
         }
 
@@ -467,14 +495,18 @@ const PouringMode = ({ hand }) => {
       setActiveObject(targetObject)
       setPouringModeHand(requestedHand)
 
-        if(selectedLesson===8 && lessonStep ==34){
+      if(selectedLesson===8 && lessonStep ==34){
         setLessonStep(35)
        }
 
-       if(selectedLesson!==8){
-              setLessonStep(10)
+      if(selectedLesson===9 && lessonStep ==31){
+        setLessonStep(32)
+       } 
 
-       }
+      //  if(selectedLesson!==8){
+      //         setLessonStep(10)
+
+      //  }
 
     }
 

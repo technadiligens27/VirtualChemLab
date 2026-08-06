@@ -236,7 +236,40 @@ const transformControlsRef = useRef()
     if(lessonStep===4 && selectedLesson===8 && isTutorialMode){
       setLessonStep(5)
     }
-  })
+  },[lessonStep,isMainGuideline])
+
+  useEffect(()=>{
+    if(lessonStep===3 && selectedLesson===9 ){
+      setLessonStep(4)
+    }
+  },[lessonStep,isMainGuideline])
+
+  useEffect(()=>{
+    if(lessonStep===7 && selectedLesson===9 ){
+      setLessonStep(8)
+    }
+  },[lessonStep,isMainGuideline])  
+
+  
+  useEffect(()=>{
+    if(lessonStep===19 && selectedLesson===9 ){
+      setLessonStep(20)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(lessonStep===28 && selectedLesson===9 ){
+      setLessonStep(29)
+    }
+  },[lessonStep,selectedLesson])
+  
+  
+  useEffect(()=>{
+    if(lessonStep===30 && selectedLesson===9 ){
+      setLessonStep(31)
+    }
+  },[lessonStep,selectedLesson])   
+
 
   return (
     <>

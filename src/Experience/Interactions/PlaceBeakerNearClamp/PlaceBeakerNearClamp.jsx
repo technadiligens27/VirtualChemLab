@@ -38,6 +38,20 @@ const PlaceBeakerNearClamp = ({
     setLessonStep,
   ])
 
+
+  useEffect(() => {
+    if (
+      lessonStep === 23 &&
+      selectedLesson === 9
+    ) {
+      setLessonStep(24)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])  
+
   useEffect(() => {
     const beaker = beakerRef?.current
     const clamp = buretteClampRef?.current

@@ -19,7 +19,7 @@ const ChemEnvironment = () => {
          arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
          arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef,mainPolysterene2Ref,
-         thermometerLiquidRef
+         thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef
   } = useContext(ModelContext);
 
 
@@ -163,8 +163,9 @@ const hideLiquidObjects=(root)=>{
     conicalBeakerLiquidRef.current.visible = false;
   }
 
-  saltContainerRef.current = scene.getObjectByName('salt-container')
+  // saltContainerRef.current = scene.getObjectByName('salt-container')
   pottasiumCarbonateContainerRef.current = scene.getObjectByName('pottasium-carbonate-container');
+  potassiumHydrogenCarbonateRef.current = scene.getObjectByName('potassium-hydrogencarbonate')
 
   digitalBalanceRef.current = scene.getObjectByName('mainMassBalance');
   balancePositionRef.current = scene.getObjectByName('balance-position')
@@ -172,7 +173,8 @@ const hideLiquidObjects=(root)=>{
   mainBuiretteRef.current = scene.getObjectByName('main-buirette');
   buretteClampRef.current = scene.getObjectByName('mainBuretteClamp');
   mainThermometerRef.current = scene.getObjectByName('mainThermometer');
-  thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid')
+  thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid');
+  mainPolystereneLid.current = scene.getObjectByName('polysterene-cup-lid');
   
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
@@ -209,8 +211,8 @@ const hideLiquidObjects=(root)=>{
       arrowSpoonRef.current = scene.getObjectByName('spoon-arrow')
       arrowSpoonRef.current.visible = false
 
-      arrowSaltContainerRef.current = scene.getObjectByName('salt-container-arrow');
-      arrowSaltContainerRef.current.visible = false;
+      // arrowSaltContainerRef.current = scene.getObjectByName('salt-container-arrow');
+      // arrowSaltContainerRef.current.visible = false;
 
       arrowDropperRef.current =  scene.getObjectByName('dropper-arrow');
       arrowDropperRef.current.visible = false;
@@ -239,6 +241,11 @@ const hideLiquidObjects=(root)=>{
       arrowThermometerRef.current = scene.getObjectByName('thermometer-arrow');
       arrowThermometerRef.current.visible = false
 
+      arrowLidPolysterene.current = scene.getObjectByName('polysterene-lid-arrow');
+      arrowLidPolysterene.current.visible = false;
+
+      arrowPotassiumHydrogenCarbonateRef.current = scene.getObjectByName('potassium-hydrogencarbonate-arrow')
+      arrowPotassiumHydrogenCarbonateRef.current.visible = false
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)
@@ -265,7 +272,8 @@ useEffect(() => {
     mainPolystereneRef,
     digitalBalanceRef,
     mainBuiretteRef,
-    thermometerLiquidRef
+    thermometerLiquidRef,
+    mainPolystereneLid
   ]
 
   labModels.forEach((modelRef) => {

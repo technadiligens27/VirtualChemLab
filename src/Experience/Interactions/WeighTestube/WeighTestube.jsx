@@ -4,6 +4,8 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 const WeighTestube = ({ testubeRef }) => {
   const { trayPointRef } = useContext(ModelContext)
 
+  console.log('rendered')
+
   useEffect(() => {
     const trayPoint = trayPointRef?.current
     const testube = testubeRef?.current

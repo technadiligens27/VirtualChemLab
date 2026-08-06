@@ -82,9 +82,18 @@ const LessonMenu = () => {
     //   divider: "purple",
     // },
 
-            {
+    {
       id: 8,
       name: "Enthalpy Change Using Hess’s Law",
+      imgPath: "./AlkaliTest.png",
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+      number: 8,
+      divider: "purple",
+    },
+
+    {
+      id: 9,
+      name: "Enthalpy Change Reaction 2",
       imgPath: "./AlkaliTest.png",
       text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
       number: 8,

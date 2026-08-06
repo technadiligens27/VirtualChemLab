@@ -36,6 +36,33 @@ const PlaceDigitalBalance = () => {
   ])
 
   useEffect(() => {
+    if (
+      selectedLesson === 9 &&
+      lessonStep === 12
+    ) {
+      setLessonStep(13)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
+  
+  useEffect(() => {
+    if (
+      selectedLesson === 9 &&
+      lessonStep === 34
+    ) {
+      setLessonStep(35)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
     const balancePosition =
       balancePositionRef?.current
 

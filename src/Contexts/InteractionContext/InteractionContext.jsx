@@ -95,7 +95,13 @@ export const InteractionProvider = ({ children }) => {
   const [hessGuidelineNumber,setHessGuidelineNumber] = useState(false);
 
   const [showEnthalyResultOne,setShowEnthalyResultOne] = useState(false);
-  const [showBubbles,setShowBubbles] = useState(false)
+  const [showBubbles,setShowBubbles] = useState(false);
+
+  const [showPolystereneLidArrow,setShowPolystereneLidArrow] = useState(false);
+
+  const [isPolystereneCovered,setIsPolystereneCovered] = useState(false);
+
+  const [isPotassiumHydrogenCarbonateInSpoon,setIsPotassiumHydrogenCarbonateInSpoon] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -176,7 +182,10 @@ export const InteractionProvider = ({ children }) => {
   setIsHessGuideline(false);
   setHessGuidelineNumber(false);
   setShowEnthalyResultOne(false);
-  setShowBubbles(false)
+  setShowBubbles(false);
+  setShowPolystereneLidArrow(false);
+  setIsPolystereneCovered(false);
+  setIsPotassiumHydrogenCarbonateInSpoon(false)
 }
 
   return (
@@ -234,7 +243,11 @@ export const InteractionProvider = ({ children }) => {
         isHessGuideline,setIsHessGuideline,
         hessGuidelineNumber,setHessGuidelineNumber,
         showEnthalyResultOne,setShowEnthalyResultOne,
-        showBubbles,setShowBubbles
+        showBubbles,setShowBubbles,
+        showPolystereneLidArrow,setShowPolystereneLidArrow,
+        isPolystereneCovered,setIsPolystereneCovered,
+        setIsPotassiumHydrogenCarbonateInSpoon,isPotassiumHydrogenCarbonateInSpoon
+        
       }}
     >
       {children}

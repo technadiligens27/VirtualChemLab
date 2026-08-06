@@ -66,6 +66,19 @@ const PourIntoTestubeFromSpoon = ({
     setLessonStep,
   ])
 
+    useEffect(() => {
+    if (
+      selectedLesson === 9 &&
+      lessonStep === 9
+    ) {
+      setLessonStep(10)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
   useEffect(() => {
     const testTube =
       testubeRef?.current
@@ -505,6 +518,21 @@ testTube.traverse((child) => {
       lessonStep === 12
     ) {
       setLessonStep(13)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    isPotassiumTransferred,
+    setLessonStep,
+  ])
+
+    useEffect(() => {
+    if (
+      isPotassiumTransferred &&
+      selectedLesson === 9 &&
+      lessonStep === 10
+    ) {
+      setLessonStep(11)
     }
   }, [
     lessonStep,

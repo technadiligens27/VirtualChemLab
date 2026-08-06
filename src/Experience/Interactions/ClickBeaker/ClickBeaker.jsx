@@ -47,8 +47,8 @@ const ClickObject = () => {
     setIsPottasiumCarobnateInSpoon,setIsPourIntoTestube,
     isPourIntoTestube,setIsWeighTestube,isWeighTestube,
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
-    isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,
-    isThermometerRisen,setIsThermometerRisen
+    isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,setIsPotassiumHydrogenCarbonateInSpoon,
+    isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered
 
   } = useContext(InteractionContext)
 
@@ -78,7 +78,8 @@ const ClickObject = () => {
     buretteClampRef,
     mainThermometerRef,
     mainPolysterene2Ref,
-    thermometerLiquidRef
+    thermometerLiquidRef,
+    potassiumHydrogenCarbonateRef
     
   } = useContext(ModelContext)
 
@@ -187,8 +188,12 @@ const ClickObject = () => {
       {
         name:'mainPolysterene2',
         ref:mainPolysterene2Ref
-      }
-    ],
+      },
+      {
+        name : 'potassium-hydrogencarbonate',
+        ref:potassiumHydrogenCarbonateRef
+    }
+      ],
     [
       normalBeakerRef,
       conicalBeakerRef,
@@ -203,14 +208,14 @@ const ClickObject = () => {
       filterPaperRef,
       filterFoldedPaperRef,
       funnelRef,
-      saltContainerRef,
       mainDropperRef,
       mainPolystereneRef,
       pottasiumCarbonateContainerRef,
       digitalBalanceRef,
       mainBuiretteRef,
       buretteClampRef,
-      mainPolysterene2Ref
+      mainPolysterene2Ref,
+      potassiumHydrogenCarbonateRef
     ]
   )
 
@@ -423,7 +428,12 @@ const ClickObject = () => {
   const handlePlaceBeakerRemove = ()=>{
     setIsBeakerNearClamp(false)
     if(lessonStep===28 && selectedLesson===8){
-      setLessonStep(29);
+      setLessonStep(28.5);
+      moveObjectToLeftHand()
+    }
+
+    if(lessonStep===25 && selectedLesson===9){
+      setLessonStep(26);
       moveObjectToLeftHand()
     }
   }
@@ -567,44 +577,46 @@ const ClickObject = () => {
     }
   }
 
+  
+
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
     if (!handData?.ref?.current) return
 
-    if (
-      handData.name === "main-spoon" &&
-      selectedLesson === 8 &&
-      lessonStep === 15
-    ) {
+    if (handData.name === "main-spoon" &&selectedLesson === 8 && lessonStep === 15) {
       setLessonStep(16)
     }
 
-    if (
-      hand === "left" &&
-      selectedLesson === 8 &&
-      lessonStep === 7
-    ) {
+    if (handData.name === "main-spoon" && selectedLesson === 9 && lessonStep === 14) {
+      setLessonStep(15)
+    }
+
+    if(lessonStep===5 && selectedLesson ===9 && handData.name === "main-normal-beaker"){
+      setLessonStep(6)
+    }
+
+
+    if (hand === "left" &&selectedLesson === 8 &&lessonStep === 7) {
       setLessonStep(8)
     }
 
-    if (
-      handData.name === "main-spoon" &&
-      isPourIntoTestube
-    ) {
+    if (handData.name === "main-spoon" &&isPourIntoTestube) {
       setIsPourIntoTestube(false)
     }
 
-    if (
-      handData.name === "main-testube-01" &&
-      isWeighTestube
-    ) {
-      if (
-        lessonStep === 17 &&
-        selectedLesson === 8
-      ) {
+
+    if ( handData.name === "main-testube-01" && isWeighTestube) {
+      console.log('WeighlessonsStep:',lessonStep)
+console.log('isWeighTestube:',isWeighTestube)
+      if (lessonStep === 17 && selectedLesson === 8) {
         setLessonStep(18)
       }
+      
+      if (lessonStep === 15 && selectedLesson === 9) {
+        setLessonStep(16)
+      }
+
     }
 
     if (handData.name === "mainThermometer") {
@@ -614,6 +626,10 @@ const ClickObject = () => {
       ) {
         setLessonStep(44)
       }
+
+
+      
+
     }
 
     const object = handData.ref.current
@@ -785,10 +801,10 @@ const ClickObject = () => {
     }
 
 
-    if (lessonStep === 3) {
-      setShowErrorMsgNo(1)
-      return false
-    }
+    // if (lessonStep === 3) {
+    //   setShowErrorMsgNo(1)
+    //   return false
+    // }
 
     return true
   }
@@ -947,7 +963,10 @@ const ClickObject = () => {
           (selectedLesson === 7 &&
             (lessonStep === 4 || lessonStep === 11)) ||
           (selectedLesson === 8 &&
-            lessonStep === 19)
+            lessonStep === 19) ||
+          (selectedLesson === 9 &&
+            lessonStep === 17)
+          
 
         if (!isAllowedStep) {
           setShowErrorMsgNo(4)
@@ -979,8 +998,14 @@ const ClickObject = () => {
    const togglePourIntoTestTube = () => {
       setIsPourIntoTestube((previousValue) => {
         if (previousValue) {
-          if(selectedLesson===8 && lessonStep === 13)
-          setLessonStep(14)
+          if(selectedLesson===8 && lessonStep === 13){
+            setLessonStep(14)
+          }
+
+          if(selectedLesson ===9 && lessonStep ===11){
+            setLessonStep(12)
+          }
+          
         }
 
         return !previousValue
@@ -1017,12 +1042,23 @@ const ClickObject = () => {
       }
 
     const handleWeighTestTube = () => {
-        if (isBalancePlaced &&selectedLesson === 8 &&(lessonStep === 16 || lessonStep === 17 || lessonStep===39) && isTestTube(selectedObject?.name)){
+        if (isBalancePlaced && (selectedLesson === 8 || selectedLesson ===9 ) &&(lessonStep === 16 || lessonStep === 17 ||
+           lessonStep===39 || lessonStep===13 || lessonStep==35) && isTestTube(selectedObject?.name)){
           setIsWeighTestube(true)
+
 
         if(selectedLesson===8 &&  lessonStep===39){
           setLessonStep(40)
         }  
+
+        if(selectedLesson===9 && lessonStep=== 13){
+          setLessonStep(14)
+        }
+
+        if(selectedLesson===9 && lessonStep=== 35){
+          setLessonStep(36)
+        }
+
 
           if (lessonStep === 16) {
             setLessonStep(17)
@@ -1038,7 +1074,7 @@ const ClickObject = () => {
 
   const handleMainHoldingAction = () => {
       // All held test tubes in Lesson 8 use weighing
-      if (selectedLesson === 8 && isTestTube(selectedObject?.name)) {
+      if ((selectedLesson === 8 || selectedLesson===9) && isTestTube(selectedObject?.name)) {
         handleWeighTestTube()
         return
       }
@@ -1068,7 +1104,7 @@ const ClickObject = () => {
   const getMainHoldingButtonText = () => {
   // In Lesson 8, test tubes are weighed,
   // not filled using Add Liquid
-  if ( selectedLesson === 8 && isTestTube(selectedObject?.name)) {
+  if ( (selectedLesson === 8 || selectedLesson ===9) && isTestTube(selectedObject?.name)) {
     return "Weigh Test Tube"
   }
 
@@ -1111,11 +1147,29 @@ const canShowMainHoldingButton = () => {
 
 
 const renderHandSelectionButtons = () => {
-  if ( isTutorialMode && selectedLesson === 1 && lessonStep === 6 && selectedObject?.name !== "main-spoon") {
+  if (
+    isTutorialMode &&
+    selectedLesson !== 9
+  ) {
     return <p>Can't pick now</p>
   }
 
-  if (isTutorialMode && lessonStep !== 3 && lessonStep !== 6 && selectedLesson !==8) {
+  if (
+    isTutorialMode &&
+    selectedLesson === 1 &&
+    lessonStep === 6 &&
+    selectedObject?.name !== "main-spoon"
+  ) {
+    return <p>Can't pick now</p>
+  }
+
+  if (
+    isTutorialMode &&
+    lessonStep !== 3 &&
+    lessonStep !== 6 &&
+    selectedLesson !== 8 &&
+    selectedLesson !== 9
+  ) {
     return <p>Can't pick now</p>
   }
 
@@ -1160,6 +1214,13 @@ const handlePlacePolysterene = () => {
       setSelectedObject(null)
       return
     }
+
+    if ( selectedLesson === 9 && lessonStep === 4) {
+      setIsPlacePolysterene(true)
+      setSelectedObject(null)
+      return
+    }
+
   }
 
   if(!isTutorialMode){
@@ -1259,15 +1320,19 @@ const handlePlacePolysterene = () => {
     setLessonStep(18)
   }
 
+    if (
+    selectedLesson === 9 &&
+    lessonStep === 15
+  ) {
+    setLessonStep(16)
+  }
   console.log(
     "Test tube moved directly from balance to table"
   )
 }
 
  const handleRemoveTestTube = () => {
-    if (
-      !isWeighTestube ||
-      !isTestTube(selectedObject?.name)
+    if ( !isWeighTestube || !isTestTube(selectedObject?.name)
     ) {
       return
     }
@@ -1297,6 +1362,10 @@ const handlePlaceBalance = () => {
       setSelectedObject(null)
       if(isBalancePlaced && selectedLesson ===8 && lessonStep ===22){
         setLessonStep(23)
+      }
+
+      if(isBalancePlaced && selectedLesson ===9 && lessonStep ===20){
+        setLessonStep(21)
       }
   }
 
@@ -1384,8 +1453,20 @@ const handlePlaceBalance = () => {
     }
   }
 
+  const coverPolystereneCup = ()=>{
+    setIsPolystereneCovered(true)
+  }
+
+  const removePolystereneLid = ()=>{
+    setIsPolystereneCovered(false)
+  }
+
   const addPottasiumCarbinateToSpoon = ()=>{
     setIsPottasiumCarobnateInSpoon(true);
+  }
+
+  const addPotassiumHydrogencarbonateToSpoon = ()=>{
+    setIsPotassiumHydrogenCarbonateInSpoon(true)
   }
 
   useEffect(()=>{
@@ -1396,6 +1477,10 @@ const handlePlaceBalance = () => {
     setIsClampInCenter(false)
     if(selectedLesson ===8 && lessonStep===29){
       setLessonStep(30)
+    }
+
+    if(selectedLesson ===9 && lessonStep===27){
+      setLessonStep(28)
     }
   }
 
@@ -1458,6 +1543,16 @@ const handlePlaceBalance = () => {
     }
   }
 
+  const renderPotassiumHydrogencarbonateTableButtons = ()=>{
+    if (selectedObject?.name === "potassium-hydrogencarbonate") {
+      return (
+        <button onClick={addPotassiumHydrogencarbonateToSpoon}>
+          Take Potassium Hydrogencarbonate
+        </button>
+      )
+    }
+  }
+
   const renderPottasiumCarbinateTableButtons = ()=>{
     if (selectedObject?.name === "pottasium-carbonate-container") {
       return (
@@ -1505,6 +1600,9 @@ const handlePlaceBalance = () => {
     const saltButtons = renderSaltContainerTableButtons()
     if (saltButtons) return saltButtons
 
+    const PotassiumHydrogencarbonate =renderPotassiumHydrogencarbonateTableButtons()
+    if(PotassiumHydrogencarbonate) return PotassiumHydrogencarbonate
+
     const potassiumButtons =
       renderPottasiumCarbinateTableButtons()
 
@@ -1520,28 +1618,28 @@ const handlePlaceBalance = () => {
 
   const renderNormalBeakerHeldButtons=()=>{
       //----------------Tutorial Mode-------------////
-      if ( selectedLesson === 8 && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
-    return (
-      <>
-        <button
-          onClick={() =>
-            keepBackOnTable(selectedObject.hand)
-          }
-        >
-          Keep Back On Table
-        </button>
+      if ( (selectedLesson === 8 || selectedLesson === 9) && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
+        return (
+        <>
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
 
-        {!isBeakerNearClamp && (
-          <>
-            {/* <button onClick={openFillBeakerBox}>
-              Add Liquid
-            </button> */}
+          {!isBeakerNearClamp && (
+            <>
+              {/* <button onClick={openFillBeakerBox}>
+                Add Liquid
+              </button> */}
 
-            <button onClick={handlePlaceBeaker}>
-              Place Beaker
-            </button>
-          </>
-        )}
+              <button onClick={handlePlaceBeaker}>
+                Place Beaker
+              </button>
+            </>
+          )}
 
         {isBeakerNearClamp && (
           <button onClick={handlePlaceBeakerRemove}>
@@ -1579,9 +1677,29 @@ const handlePlaceBalance = () => {
             </button>
           )
         }
+
+        {
+          lessonStep===28.5 && selectedLesson ===8 && (
+            <button onClick={coverPolystereneCup}>
+              Cover Cup
+            </button>
+          )
+
+        }
+
+        {
+          lessonStep===26 && selectedLesson ===9 && (
+            <button onClick={coverPolystereneCup}>
+              Cover Cup
+            </button>
+          )
+
+        }
       </>
     )
   }
+
+
 
   //-----------------Free Roam--------------////
   if(selectedObject.name === "main-normal-beaker" && !isTutorialMode){
@@ -1632,6 +1750,15 @@ const handlePlaceBalance = () => {
               Remove Thermometer
             </button>
           )
+        }
+
+        {
+          
+            <button onClick={coverPolystereneCup}>
+              Cover Cup
+            </button>
+          
+
         }
       </>
     )

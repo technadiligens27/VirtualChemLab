@@ -26,13 +26,16 @@ import PlaceThermometer from "./PlaceThermometer/PlaceThermometer";
 import StirModePolysterene from "./StirModePolysterene/StirModePolysterene";
 import FillThermometer from "./FillThermometer/FillThermometer";
 import ReleaseGasBubbles from "../ReleaseGasBubbles/ReleaseGasBubbles";
+import CoverPolysterene from "../../UI/CoverPolysterene/CoverPolysterene";
+import StirUsingThermometer from "../StirUsingThermometer/StirUsingThermometer";
 
 const Interaction = () => {
   const {
     isFillUpBeaker,selectedRightHand,selectedLeftHand,fillBeakerHand,setIsDragging,isStirMode,isAddSalt,
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
-     mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles
+     mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
+     isPotassiumHydrogenCarbonateInSpoon
   } = useContext(InteractionContext);
 
   const {testube01Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef} = useContext(ModelContext)
@@ -68,16 +71,16 @@ const Interaction = () => {
       <AllArrows/>
       {isAddSalt && <AddSaltToSpoon/>}      
       {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}
+      {isPotassiumHydrogenCarbonateInSpoon && <AddPottasiumCarobnateToSpoon/>}
+
       {isBalancePlaced && <PlaceDigitalBalance/>}
-      {isWeighTestube && selectedLesson===8 &&<WeighTestube testubeRef={testube01Ref}/>}
+      {isWeighTestube && (selectedLesson===8 || selectedLesson===9) &&<WeighTestube testubeRef={testube01Ref}/>}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
-      {selectedLesson===8  &&  <BalanceReading 
-        balanceRef={digitalBalanceRef}
-        isWeighTestube={isWeighTestube}
-        finalMass={24.7}
-        />
-      }
+      {selectedLesson===8  &&  <BalanceReading  balanceRef={digitalBalanceRef} isWeighTestube={isWeighTestube} finalMass={24.7}/>}
+
+      {selectedLesson===9 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={25.67}/>}
+      
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
       {isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
@@ -99,6 +102,10 @@ const Interaction = () => {
          && isPlacePolysterene && <ReleaseGasBubbles modelRef={mainPolystereneRef} />}   */}
 
        {showBubbles && <ReleaseGasBubbles modelRef={mainPolystereneRef}/>}  
+       {isPolystereneCovered && <CoverPolysterene/>}
+
+       {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
+       && isPlacePolysterene && <StirUsingThermometer/>}
 
     </>
   );

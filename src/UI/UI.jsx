@@ -22,6 +22,7 @@ import LessonDetails from "./LessonDetails/LessonDetails"
 import LessonSummary from "./LessonSummary/LessonSummary"
 import EnthalpyHessLaw from "./AllLessons/EnthalpyHessLaw/EnthalpyHessLaw"
 import HessGuidelines from "./HessGuidelines/HessGuidelines"
+import EnthalpyHessReaction02 from "./EnthalpyHessReaction02/EnthalpyHessReaction02"
 
 const mainContent = [
   {
@@ -203,11 +204,11 @@ const UI = () => {
     )
   }, [selectedLesson,lessonStep,setShowRedLitmusArrow])
 
-  useEffect(()=>{
-    setShowArrowConicalArrow(
-      lessonStep===6 && selectedLesson !==1 && selectedLesson!==7 && selectedLesson !==3 && selectedLesson !==8
-    )
-  },[lessonStep,showConicalArrow])
+  // useEffect(()=>{
+  //   setShowArrowConicalArrow(
+  //     lessonStep===6 && selectedLesson !==1 && selectedLesson!==7 && selectedLesson !==3 && selectedLesson !==8
+  //   )
+  // },[lessonStep,showConicalArrow])
 
   useEffect(()=>{
     setShowSpoonArrow((selectedLesson==1 && lessonStep===6) || (selectedLesson===8 && lessonStep ===9))
@@ -426,7 +427,14 @@ useEffect(() => {
         isLessonStart &&
         selectedLesson === 8 && (
           <EnthalpyHessLaw />
+        )}
+
+     {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 9 && (
+          <EnthalpyHessReaction02 />
         )}     
+        
 
       <AllErrors />
 

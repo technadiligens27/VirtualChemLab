@@ -5,6 +5,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 const DialogBox = ({
   text,
   onbtnClick,
+  onbtn2Click
 }) => {
 
   const {showEnthalyResultOne} = useContext(InteractionContext)
@@ -32,7 +33,7 @@ const DialogBox = ({
             </button>
           )
         ) : (
-          onbtnClick && (
+          onbtn2Click && (
             <button className="question-btn" onClick={onbtnClick}>
               Continue (Reaction 02)
             </button>
