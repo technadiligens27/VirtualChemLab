@@ -100,6 +100,15 @@ const LessonMenu = () => {
       divider: "purple",
     },
 
+    {
+      id: 10,
+      name: "Rates of Hydrolysis of Halogenoalkanes",
+      imgPath: "./AlkaliTest.png",
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+      number: 10,
+      divider: "purple",
+    },
+
 
   ]
 

@@ -1,0 +1,807 @@
+.safety-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px;
+
+  box-sizing: border-box;
+
+  background-color: rgba(20, 15, 40, 0.35);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.safety-container {
+  position: relative;
+
+  width: 88vw;
+  height: 92vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding:
+    82px
+    52px
+    24px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.99),
+      rgba(255, 253, 247, 0.99)
+    );
+
+  border: 9px solid #ffc846;
+  border-radius: 34px;
+
+  box-shadow:
+    0 26px 65px rgba(18, 12, 45, 0.3),
+    inset 0 0 0 2px
+      rgba(255, 255, 255, 0.8);
+}
+
+.safety-top-title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: min(370px, 32vw);
+  height: 67px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd65a,
+      #ffbd36
+    );
+
+  border-radius: 0 0 38px 38px;
+
+  box-shadow:
+    0 9px 20px rgba(255, 180, 40, 0.2);
+}
+
+.safety-top-title h1 {
+  margin: 0;
+
+  color: #3b208d;
+
+  font-family:
+    "Baloo Thambi 2",
+    sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.safety-content {
+  min-height: 0;
+
+  display: grid;
+  grid-template-columns:
+    minmax(340px, 0.9fr)
+    minmax(440px, 1.1fr);
+  gap: 45px;
+
+  flex: 1;
+}
+
+.safety-left-section {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.safety-heading {
+  margin-bottom: 20px;
+}
+
+.safety-heading h2 {
+  margin: 0 0 10px;
+
+  color: #3a208d;
+
+  font-family:
+    "Baloo Thambi 2",
+    sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.safety-description {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.safety-description p {
+  margin: 0;
+
+  color: #3f465d;
+
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.55;
+}
+
+.safety-illustration-card {
+  position: relative;
+
+  min-height: 0;
+
+  flex: 1;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fffdf8
+    );
+
+  border: 2px solid #e7dac3;
+  border-radius: 22px;
+
+  box-shadow:
+    0 14px 30px rgba(57, 35, 111, 0.07);
+}
+
+.safety-illustration-glow {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+
+  width: 60%;
+  aspect-ratio: 1;
+
+  transform: translateX(-50%);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(224, 211, 248, 0.75),
+      rgba(243, 237, 253, 0.28) 58%,
+      transparent 72%
+    );
+
+  border-radius: 50%;
+}
+
+.safety-goggles-image {
+  position: absolute;
+  left: 8%;
+  bottom: 9%;
+
+  width: 62%;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 14px 10px
+      rgba(68, 40, 125, 0.12)
+    );
+}
+
+.safety-flask-image {
+  position: absolute;
+  right: 7%;
+  bottom: 10%;
+
+  width: 32%;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 13px 9px
+      rgba(55, 121, 170, 0.14)
+    );
+}
+
+.safety-shield {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+
+  width: 155px;
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 65px;
+  font-weight: 900;
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
+
+  background:
+    linear-gradient(
+      135deg,
+      #9a82bd,
+      #62468f
+    );
+
+  border:
+    9px solid
+    rgba(218, 207, 237, 0.95);
+  border-radius:
+    30px
+    30px
+    70px
+    30px;
+
+  box-shadow:
+    0 15px 25px
+      rgba(74, 49, 124, 0.18);
+}
+
+.safety-shield::before {
+  content: "";
+
+  position: absolute;
+  inset: 9px;
+
+  border:
+    2px solid
+    rgba(255, 255, 255, 0.55);
+  border-radius:
+    22px
+    22px
+    62px
+    22px;
+}
+
+.safety-shield span {
+  position: relative;
+  z-index: 1;
+
+  transform: rotate(-45deg);
+}
+
+.safety-sparkle {
+  position: absolute;
+
+  color: #8f71ba;
+
+  font-size: 28px;
+}
+
+.safety-sparkle-one {
+  top: 35%;
+  left: 14%;
+}
+
+.safety-sparkle-two {
+  top: 25%;
+  right: 17%;
+
+  font-size: 20px;
+}
+
+.safety-instruction-list {
+  min-height: 0;
+
+  display: grid;
+  grid-template-rows:
+    repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.safety-instruction-card {
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  padding: 13px 25px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #fffefa
+    );
+
+  border: 2px solid #ebe1d3;
+  border-radius: 20px;
+
+  box-shadow:
+    0 9px 20px rgba(51, 31, 95, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.safety-instruction-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 13px 25px
+      rgba(51, 31, 95, 0.09);
+}
+
+.safety-instruction-icon {
+  width: 85px;
+  min-width: 85px;
+  height: 85px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 47px;
+  font-weight: 800;
+
+  border-radius: 50%;
+}
+
+.safety-instruction-icon img {
+  width: 55%;
+  height: 55%;
+
+  object-fit: contain;
+}
+
+.safety-instruction-icon-purple {
+  color: #4a2995;
+
+  background-color: #f0eafe;
+}
+
+.safety-instruction-icon-yellow {
+  color: #e9a600;
+
+  background-color: #fff4d7;
+}
+
+.safety-instruction-icon-red {
+  color: #cc3238;
+
+  background-color: #fde8e9;
+}
+
+.safety-instruction-icon-green {
+  color: #65b941;
+
+  background-color: #eaf7e4;
+}
+
+.safety-instruction-information {
+  min-width: 0;
+}
+
+.safety-instruction-information h3 {
+  margin: 0 0 5px;
+
+  color: #382083;
+
+  font-family:
+    "Baloo Thambi 2",
+    sans-serif;
+  font-size: clamp(17px, 1.35vw, 22px);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.safety-instruction-information p {
+  margin: 0;
+
+  color: #3e465d;
+
+  font-size: clamp(15px, 1.2vw, 19px);
+  line-height: 1.42;
+}
+
+.safety-important {
+  position: relative;
+
+  min-height: 82px;
+
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  margin-top: 20px;
+  padding: 11px 28px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf5,
+      #fff8df
+    );
+
+  border: 2px solid #f1ba3c;
+  border-radius: 17px;
+}
+
+.safety-important-icon {
+  width: 52px;
+  min-width: 52px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 27px;
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffcb33,
+      #f1a900
+    );
+
+  border-radius:
+    14px
+    14px
+    24px
+    24px;
+
+  box-shadow:
+    0 8px 16px
+      rgba(238, 166, 0, 0.2);
+}
+
+.safety-important-text {
+  position: relative;
+  z-index: 2;
+}
+
+.safety-important-text strong {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #492690;
+
+  font-family:
+    "Baloo Thambi 2",
+    sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.safety-important-text p {
+  margin: 0;
+
+  color: #4e5262;
+
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.safety-important-decoration {
+  position: absolute;
+  right: 28px;
+  bottom: -5px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+
+  color: rgba(239, 176, 41, 0.25);
+
+  font-size: 52px;
+}
+
+.safety-important-decoration span:nth-child(2) {
+  font-size: 75px;
+}
+
+.safety-important-decoration span:nth-child(3) {
+  font-size: 42px;
+}
+
+.safety-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 16px;
+}
+
+.safety-back-button,
+.safety-continue-button {
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  padding: 0 28px;
+
+  font-family:
+    "Baloo Thambi 2",
+    sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  border-radius: 32px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.safety-back-button {
+  color: #43228f;
+
+  background-color: #ffffff;
+
+  border: 2px solid #cdbce9;
+}
+
+.safety-back-button:hover {
+  transform: translateX(-3px);
+
+  box-shadow:
+    0 8px 17px
+      rgba(74, 38, 150, 0.12);
+}
+
+.safety-back-arrow {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.safety-continue-button {
+  min-width: 205px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6630bd,
+      #421895
+    );
+
+  border: none;
+
+  box-shadow:
+    0 12px 23px
+      rgba(73, 31, 157, 0.25);
+}
+
+.safety-continue-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 16px 28px
+      rgba(73, 31, 157, 0.32);
+}
+
+.safety-back-button:active,
+.safety-continue-button:active {
+  transform: translateY(0);
+}
+
+.safety-continue-arrow {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+@media (max-width: 1150px) {
+  .safety-container {
+    width: 94vw;
+
+    padding:
+      78px
+      35px
+      22px;
+  }
+
+  .safety-content {
+    grid-template-columns:
+      minmax(300px, 0.8fr)
+      minmax(390px, 1.2fr);
+    gap: 28px;
+  }
+
+  .safety-instruction-card {
+    gap: 18px;
+
+    padding: 10px 18px;
+  }
+
+  .safety-instruction-icon {
+    width: 70px;
+    min-width: 70px;
+    height: 70px;
+
+    font-size: 39px;
+  }
+
+  .safety-shield {
+    width: 125px;
+    height: 145px;
+
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 900px) {
+  .safety-container {
+    width: 96vw;
+    height: 95vh;
+
+    padding:
+      75px
+      25px
+      20px;
+
+    border-width: 7px;
+  }
+
+  .safety-content {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .safety-left-section {
+    display: none;
+  }
+
+  .safety-instruction-list {
+    gap: 12px;
+  }
+
+  .safety-important {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .safety-container {
+    padding:
+      70px
+      16px
+      16px;
+  }
+
+  .safety-top-title {
+    width: 250px;
+    height: 58px;
+  }
+
+  .safety-top-title h1 {
+    font-size: 23px;
+  }
+
+  .safety-instruction-card {
+    gap: 13px;
+
+    padding: 10px 13px;
+  }
+
+  .safety-instruction-icon {
+    width: 58px;
+    min-width: 58px;
+    height: 58px;
+
+    font-size: 31px;
+  }
+
+  .safety-important {
+    min-height: 70px;
+
+    gap: 14px;
+
+    padding: 9px 15px;
+  }
+
+  .safety-important-icon {
+    width: 43px;
+    min-width: 43px;
+    height: 48px;
+  }
+
+  .safety-important-decoration {
+    display: none;
+  }
+
+  .safety-back-button,
+  .safety-continue-button {
+    height: 52px;
+
+    padding: 0 20px;
+
+    font-size: 16px;
+  }
+
+  .safety-continue-button {
+    min-width: 155px;
+  }
+}
+
+@media (max-height: 760px) {
+  .safety-container {
+    padding-top: 68px;
+    padding-bottom: 16px;
+  }
+
+  .safety-top-title {
+    height: 57px;
+  }
+
+  .safety-heading {
+    margin-bottom: 12px;
+  }
+
+  .safety-heading h2 {
+    margin-bottom: 4px;
+
+    font-size: 24px;
+  }
+
+  .safety-instruction-list {
+    gap: 9px;
+  }
+
+  .safety-instruction-icon {
+    width: 65px;
+    min-width: 65px;
+    height: 65px;
+  }
+
+  .safety-important {
+    min-height: 67px;
+
+    margin-top: 12px;
+  }
+
+  .safety-footer {
+    margin-top: 10px;
+  }
+
+  .safety-back-button,
+  .safety-continue-button {
+    height: 50px;
+  }
+}

@@ -79,8 +79,8 @@ const ClickObject = () => {
     mainThermometerRef,
     mainPolysterene2Ref,
     thermometerLiquidRef,
-    potassiumHydrogenCarbonateRef
-    
+    potassiumHydrogenCarbonateRef,
+    kettleRef    
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -192,7 +192,12 @@ const ClickObject = () => {
       {
         name : 'potassium-hydrogencarbonate',
         ref:potassiumHydrogenCarbonateRef
-    }
+     },
+
+      {
+        name:'kettle',
+        ref:kettleRef
+      },     
       ],
     [
       normalBeakerRef,
@@ -215,7 +220,8 @@ const ClickObject = () => {
       mainBuiretteRef,
       buretteClampRef,
       mainPolysterene2Ref,
-      potassiumHydrogenCarbonateRef
+      potassiumHydrogenCarbonateRef,
+      kettleRef
     ]
   )
 
@@ -596,6 +602,14 @@ const ClickObject = () => {
       setLessonStep(6)
     }
 
+    if(lessonStep===8 && selectedLesson ===10 && handData.name === "main-normal-beaker"){
+      setLessonStep(9)
+    }
+
+    if(lessonStep===9 && selectedLesson ===10 && handData.name === "kettle"){
+      setLessonStep(10)
+    }
+
 
     if (hand === "left" &&selectedLesson === 8 &&lessonStep === 7) {
       setLessonStep(8)
@@ -605,10 +619,21 @@ const ClickObject = () => {
       setIsPourIntoTestube(false)
     }
 
+    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===14) {
+      setLessonStep(15)
+    }
+
+    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===17) {
+      setLessonStep(18)
+    }
+
+    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===18) {
+      setLessonStep(19)
+    }
+
 
     if ( handData.name === "main-testube-01" && isWeighTestube) {
-      console.log('WeighlessonsStep:',lessonStep)
-console.log('isWeighTestube:',isWeighTestube)
+
       if (lessonStep === 17 && selectedLesson === 8) {
         setLessonStep(18)
       }
@@ -723,6 +748,15 @@ console.log('isWeighTestube:',isWeighTestube)
       setSelectedObject(null)
       return
     }
+
+     if (
+    selectedLesson === 10 &&
+    selectedItem.name === "mainMassBalance"
+  ) {
+    setSelectedObject(null)
+    return
+  }
+
 
     setClickedModel(selectedItem.name)
 
@@ -1149,7 +1183,7 @@ const canShowMainHoldingButton = () => {
 const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
-    selectedLesson !== 9
+    selectedLesson !== 9 && selectedLesson !==10
   ) {
     return <p>Can't pick now</p>
   }
@@ -1168,7 +1202,8 @@ const renderHandSelectionButtons = () => {
     lessonStep !== 3 &&
     lessonStep !== 6 &&
     selectedLesson !== 8 &&
-    selectedLesson !== 9
+    selectedLesson !== 9 && 
+    selectedLesson !==10 
   ) {
     return <p>Can't pick now</p>
   }
@@ -1444,6 +1479,58 @@ const handlePlaceBalance = () => {
     }
 
   }
+
+  const labelTestube = (modelName) => {
+  if (modelName === "main-testube-01") {
+    testube01Ref.current?.traverse((child) => {
+      if (child.name?.toLowerCase().includes("label")) {
+        child.visible = true
+
+        child.traverse((labelChild) => {
+          labelChild.visible = true
+        })
+      }
+    })
+  }
+
+  if (modelName === "main-testube-02") {
+    testube02Ref.current?.traverse((child) => {
+      if (child.name?.toLowerCase().includes("label")) {
+        child.visible = true
+
+        child.traverse((labelChild) => {
+          labelChild.visible = true
+        })
+      }
+    })
+  }
+
+  if (modelName === "main-testube-03") {
+    testube03Ref.current?.traverse((child) => {
+      if (child.name?.toLowerCase().includes("label")) {
+        child.visible = true
+
+        child.traverse((labelChild) => {
+          labelChild.visible = true
+        })
+      }
+    })
+  }
+
+  if(isTutorialMode){
+    if(selectedLesson===10 && lessonStep===11){
+      setLessonStep(12)
+    }
+
+    if(selectedLesson===10 && lessonStep===13){
+      setLessonStep(14)
+    }
+
+    if(selectedLesson===10 && lessonStep===16){
+      setLessonStep(17)
+    }
+  }
+}
 
   const disposeCup = ()=>{
     setIsPlacePolysterene(false)
@@ -1858,6 +1945,40 @@ const renderTestubeHeldButtons = ()=>{
             Remove Test Tube
           </button>
         </>
+      )
+    }
+
+    if(selectedLesson==10 && (lessonStep==11 ||lessonStep==13 || lessonStep===16 ) && isTestTube(selectedObject.name)){
+      return (
+        <>
+          {selectedObject?.name === "main-testube-01" && (
+            <button onClick={() => labelTestube("main-testube-01")}>
+              Label
+            </button>
+          )}
+
+          {selectedObject?.name === "main-testube-02" && (
+            <button onClick={() => labelTestube("main-testube-02")}>
+              Label
+            </button>
+          )}
+
+
+          {selectedObject?.name === "main-testube-03" && (
+            <button onClick={() => labelTestube("main-testube-03")}>
+              Label
+            </button>
+          )}
+        </>
+      )
+
+    }
+
+    if(!isTutorialMode){
+      return(
+        <button onClick={()=>labelTestube('main-testube-01')}>
+          Label Testtube
+        </button>
       )
     }
 }

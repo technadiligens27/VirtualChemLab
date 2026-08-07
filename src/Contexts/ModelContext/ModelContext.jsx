@@ -31,7 +31,8 @@ export const ModelProvider = ({ children }) => {
   const mainThermometerRef = useRef(null);
   const mainPolysterene2Ref = useRef(null);
   const mainPolystereneLid = useRef(null);
-  const potassiumHydrogenCarbonateRef = useRef(null)
+  const potassiumHydrogenCarbonateRef = useRef(null);
+  const kettleRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -61,7 +62,7 @@ export const ModelProvider = ({ children }) => {
   const arrowThermometerRef = useRef(null);
   const arrowLidPolysterene = useRef(null);
   const arrowPotassiumHydrogenCarbonateRef = useRef(null)
-
+  const arrowKettleRef = useRef()
   const saltContainerRef = useRef(null)
   const balancePositionRef = useRef(null)
   const trayPointRef = useRef(null)
@@ -104,7 +105,8 @@ export const ModelProvider = ({ children }) => {
         arrowThermometerRef,
         mainPolysterene2Ref,thermometerLiquidRef,
         mainPolystereneLid,arrowLidPolysterene,
-        potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef
+        potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
+        kettleRef,arrowKettleRef
       }}
     >
       {children}

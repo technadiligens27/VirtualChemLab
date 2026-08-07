@@ -35,7 +35,7 @@ const acids = [
   { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
 ]
 
-  const amounts = [10, 30, 50, 100]
+  const amounts = [50, 100,200,250]
 
   useEffect(()=>{
     if(lessonStep === 4){

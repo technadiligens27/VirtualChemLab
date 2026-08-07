@@ -6,7 +6,11 @@ import {
   useState,
 } from "react"
 
-import { useFrame, useThree } from "@react-three/fiber"
+import {
+  useFrame,
+  useThree,
+} from "@react-three/fiber"
+
 import * as THREE from "three"
 
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
@@ -15,6 +19,7 @@ import PouringLiquid from "../PouringLiquid/PouringLiquid"
 import PourFromTestube from "../PourFromTestube/PourFromTestube"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import PourPowderFromTestube from "../PourPowderFromTestube/PourPowderFromTestube"
+import PourFromKettle from "../Pouring/PourFromKettle/PourFromKettle"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -31,40 +36,59 @@ const PouringMode = ({ hand }) => {
 
     pouringModeHand,
     setPouringModeHand,
-    isPouringMode,setIsPouringMode,
-    rightBeakerFillData,leftBeakerFillData,
-    isPottasiumCarobnateInTestube01,setShowBubbles
+
+    isPouringMode,
+    setIsPouringMode,
+
+    rightBeakerFillData,
+    leftBeakerFillData,
+
+    isPottasiumCarobnateInTestube01,
+    setShowBubbles,beakerFillFinished
   } = useContext(InteractionContext)
 
-  const {testube01Ref} = useContext(ModelContext)
+  const {
+    testube01Ref,
+  } = useContext(ModelContext)
 
   const {
     lessonStep,
     setLessonStep,
     setShowErrorMsgNo,
-    labResetKey,isTutorialMode,
-    selectedLesson
-    
-  } = useContext(MainGuidelineContext)
-
+    labResetKey,
+    isTutorialMode,
+    selectedLesson,
+  } = useContext(
+    MainGuidelineContext
+  )
 
   const emptyRef = useRef(null)
 
   const rotationZRef = useRef(0)
+
   const baseRotationRef = useRef(
     new THREE.Euler(0, 0, 0)
   )
 
-  const originalPositionRef = useRef(null)
-  const originalRotationRef = useRef(null)
+  const originalPositionRef =
+    useRef(null)
 
-  const otherOriginalPositionRef = useRef(null)
-  const otherOriginalRotationRef = useRef(null)
+  const originalRotationRef =
+    useRef(null)
 
-  const activeOtherObjectRef = useRef(null)
+  const otherOriginalPositionRef =
+    useRef(null)
 
-  const [activeObject, setActiveObject] =
-    useState(null)
+  const otherOriginalRotationRef =
+    useRef(null)
+
+  const activeOtherObjectRef =
+    useRef(null)
+
+  const [
+    activeObject,
+    setActiveObject,
+  ] = useState(null)
 
   /*
    * Find the mouth of the receiving object.
@@ -74,69 +98,106 @@ const PouringMode = ({ hand }) => {
 
     const receivingObject =
       hand === "right"
-        ? selectedLeftHand?.ref?.current
-        : selectedRightHand?.ref?.current
+        ? selectedLeftHand
+            ?.ref
+            ?.current
+        : selectedRightHand
+            ?.ref
+            ?.current
 
     if (!receivingObject) return
 
-    receivingObject.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() || ""
+    receivingObject.traverse(
+      (child) => {
+        const childName =
+          child.name
+            ?.toLowerCase() || ""
 
-      if (childName.includes("mouth")) {
-        emptyRef.current = child
+        if (
+          childName.includes(
+            "mouth"
+          )
+        ) {
+          emptyRef.current =
+            child
+        }
       }
-    })
+    )
   }, [
     hand,
     selectedLeftHand,
     selectedRightHand,
   ])
 
-useEffect(() => {
-  const isTestube01Selected =
-    selectedLeftHand?.name === "main-testube-01" ||
-    selectedRightHand?.name === "main-testube-01"
+  useEffect(() => {
+    const isTestube01Selected =
+      selectedLeftHand?.name ===
+        "main-testube-01" ||
+      selectedRightHand?.name ===
+        "main-testube-01"
 
-  if (!isTestube01Selected) return
-
-  const testTube = testube01Ref.current
-
-  if (!testTube) return
-
-  testTube.traverse((child) => {
-    const childName =
-      child.name?.toLowerCase() || ""
-
-    if (childName.includes("cap")) {
-      child.visible = false
+    if (!isTestube01Selected) {
+      return
     }
-  })
-}, [
-  selectedLeftHand,
-  selectedRightHand,
-  testube01Ref,
-])
+
+    const testTube =
+      testube01Ref.current
+
+    if (!testTube) return
+
+    testTube.traverse(
+      (child) => {
+        const childName =
+          child.name
+            ?.toLowerCase() || ""
+
+        if (
+          childName.includes(
+            "cap"
+          )
+        ) {
+          child.visible = false
+        }
+      }
+    )
+  }, [
+    selectedLeftHand,
+    selectedRightHand,
+    testube01Ref,
+  ])
 
   /*
    * Clear local pouring state after the lab is reset.
-   *
-   * resetInteractions() sets pouringModeHand to null.
-   * This stops useFrame() from controlling the old object.
    */
   useLayoutEffect(() => {
-    if (pouringModeHand === hand) return
+    if (
+      pouringModeHand === hand
+    ) {
+      return
+    }
 
     rotationZRef.current = 0
-    baseRotationRef.current.set(0, 0, 0)
 
-    originalPositionRef.current = null
-    originalRotationRef.current = null
+    baseRotationRef.current.set(
+      0,
+      0,
+      0
+    )
 
-    otherOriginalPositionRef.current = null
-    otherOriginalRotationRef.current = null
+    originalPositionRef.current =
+      null
 
-    activeOtherObjectRef.current = null
+    originalRotationRef.current =
+      null
+
+    otherOriginalPositionRef.current =
+      null
+
+    otherOriginalRotationRef.current =
+      null
+
+    activeOtherObjectRef.current =
+      null
 
     setActiveObject(null)
   }, [
@@ -156,19 +217,27 @@ useEffect(() => {
       if (hand === "right") {
         return {
           targetObject:
-            selectedRightHand?.ref?.current,
+            selectedRightHand
+              ?.ref
+              ?.current,
 
           otherObject:
-            selectedLeftHand?.ref?.current,
+            selectedLeftHand
+              ?.ref
+              ?.current,
         }
       }
 
       return {
         targetObject:
-          selectedLeftHand?.ref?.current,
+          selectedLeftHand
+            ?.ref
+            ?.current,
 
         otherObject:
-          selectedRightHand?.ref?.current,
+          selectedRightHand
+            ?.ref
+            ?.current,
       }
     }
 
@@ -189,11 +258,15 @@ useEffect(() => {
         otherOriginalRotationRef.current =
           otherObject.rotation.clone()
       } else {
-        otherOriginalPositionRef.current = null
-        otherOriginalRotationRef.current = null
+        otherOriginalPositionRef.current =
+          null
+
+        otherOriginalRotationRef.current =
+          null
       }
 
-      activeOtherObjectRef.current = otherObject
+      activeOtherObjectRef.current =
+        otherObject
     }
 
     const restoreOriginalTransforms = (
@@ -218,8 +291,11 @@ useEffect(() => {
         )
       }
 
-      if (otherObject &&otherOriginalPositionRef.current) {
-          otherObject.position.copy(
+      if (
+        otherObject &&
+        otherOriginalPositionRef.current
+      ) {
+        otherObject.position.copy(
           otherOriginalPositionRef.current
         )
       }
@@ -233,34 +309,53 @@ useEffect(() => {
         )
       }
 
-      targetObject?.updateMatrixWorld(true)
-      otherObject?.updateMatrixWorld(true)
+      targetObject
+        ?.updateMatrixWorld(true)
+
+      otherObject
+        ?.updateMatrixWorld(true)
     }
 
-    const resetLocalPouringState = () => {
-      rotationZRef.current = 0
-      baseRotationRef.current.set(0, 0, 0)
+    const resetLocalPouringState =
+      () => {
+        rotationZRef.current = 0
 
-      setIsPouring(false)
-      setPouredFromLeft(false)
-      setPouredFromRight(false)
+        baseRotationRef.current.set(
+          0,
+          0,
+          0
+        )
 
-      setActiveObject(null)
+        setIsPouring(false)
 
-      originalPositionRef.current = null
-      originalRotationRef.current = null
+        setPouredFromLeft(false)
+        setPouredFromRight(false)
 
-      otherOriginalPositionRef.current = null
-      otherOriginalRotationRef.current = null
+        setActiveObject(null)
 
-      activeOtherObjectRef.current = null
-    }
+        originalPositionRef.current =
+          null
+
+        originalRotationRef.current =
+          null
+
+        otherOriginalPositionRef.current =
+          null
+
+        otherOriginalRotationRef.current =
+          null
+
+        activeOtherObjectRef.current =
+          null
+      }
 
     const moveRightHandObject = (
       targetObject,
       otherObject
     ) => {
-      if (!emptyRef.current) return
+      if (!emptyRef.current) {
+        return
+      }
 
       if (otherObject) {
         otherObject.position.set(
@@ -270,16 +365,28 @@ useEffect(() => {
         )
       }
 
+      const targetObjectName =
+        targetObject?.name
+          ?.toLowerCase() || ""
+
       const otherObjectName =
-        otherObject?.name?.toLowerCase() || ""
+        otherObject?.name
+          ?.toLowerCase() || ""
+
+      const isKettle =
+        targetObjectName.includes("kettle")
 
       const isConicalFlask =
         otherObjectName.includes(
           "main-conical-flask"
         )
 
-      if (isConicalFlask && otherObject) {
-        otherObject.rotation.y = Math.PI
+      if (
+        isConicalFlask &&
+        otherObject
+      ) {
+        otherObject.rotation.y =
+          Math.PI
       }
 
       const worldPosition =
@@ -294,7 +401,20 @@ useEffect(() => {
           worldPosition.clone()
         )
 
-      if (isConicalFlask) {
+      /*
+       * Special kettle position
+       */
+      if (isKettle) {
+        localPosition.add(
+          new THREE.Vector3(
+            1.5,
+            0.3,
+            -0.8
+          )
+        )
+      } else if (
+        isConicalFlask
+      ) {
         localPosition.add(
           new THREE.Vector3(
             2,
@@ -316,15 +436,21 @@ useEffect(() => {
         localPosition
       )
 
-      targetObject.updateMatrixWorld(true)
-      otherObject?.updateMatrixWorld(true)
+      targetObject.updateMatrixWorld(
+        true
+      )
+
+      otherObject
+        ?.updateMatrixWorld(true)
     }
 
     const moveLeftHandObject = (
       targetObject,
       otherObject
     ) => {
-      if (!emptyRef.current) return
+      if (!emptyRef.current) {
+        return
+      }
 
       if (otherObject) {
         otherObject.position.set(
@@ -334,8 +460,18 @@ useEffect(() => {
         )
       }
 
+      const targetObjectName =
+        targetObject?.name
+          ?.toLowerCase() || ""
+
       const otherObjectName =
-        otherObject?.name?.toLowerCase() || ""
+        otherObject?.name
+          ?.toLowerCase() || ""
+
+      const isKettle =
+        targetObjectName.includes(
+          "kettle"
+        )
 
       const isNormalBeaker =
         otherObjectName.includes(
@@ -354,7 +490,20 @@ useEffect(() => {
           worldPosition.clone()
         )
 
-      if (isNormalBeaker) {
+      /*
+       * Special kettle position
+       */
+      if (isKettle) {
+        localPosition.add(
+          new THREE.Vector3(
+            -1.5,
+            0.3,
+            -0.8
+          )
+        )
+      } else if (
+        isNormalBeaker
+      ) {
         localPosition.add(
           new THREE.Vector3(
             -1,
@@ -376,18 +525,28 @@ useEffect(() => {
         localPosition
       )
 
-      targetObject.updateMatrixWorld(true)
-      otherObject?.updateMatrixWorld(true)
+      targetObject.updateMatrixWorld(
+        true
+      )
+
+      otherObject
+        ?.updateMatrixWorld(true)
     }
 
     const setStartingRotation = (
       targetObject
     ) => {
       rotationZRef.current = 0
-      baseRotationRef.current.set(0, 0, 0)
+
+      baseRotationRef.current.set(
+        0,
+        0,
+        0
+      )
 
       const targetName =
-        targetObject.name?.toLowerCase() || ""
+        targetObject.name
+          ?.toLowerCase() || ""
 
       const isRightNormalBeaker =
         hand === "right" &&
@@ -395,24 +554,41 @@ useEffect(() => {
           "main-normal-beaker"
         )
 
-      if (isRightNormalBeaker) {
-        baseRotationRef.current.y = Math.PI
+      if (
+        isRightNormalBeaker
+      ) {
+        baseRotationRef.current.y =
+          Math.PI
       }
 
       targetObject.rotation.copy(
         baseRotationRef.current
       )
 
-      targetObject.updateMatrixWorld(true)
+      targetObject.updateMatrixWorld(
+        true
+      )
     }
 
-    const handleKeyDown = (event) => {
-      if (event.code !== "KeyP") return
+    const handleKeyDown = (
+      event
+    ) => {
+      if (
+        event.code !== "KeyP"
+      ) {
+        return
+      }
 
       const requestedHand =
-        event.shiftKey ? "left" : "right"
+        event.shiftKey
+          ? "left"
+          : "right"
 
-      if (requestedHand !== hand) return
+      if (
+        requestedHand !== hand
+      ) {
+        return
+      }
 
       /*
        * Prevent both hands from entering
@@ -420,7 +596,8 @@ useEffect(() => {
        */
       if (
         pouringModeHand &&
-        pouringModeHand !== requestedHand
+        pouringModeHand !==
+          requestedHand
       ) {
         setShowErrorMsgNo(3)
         return
@@ -434,23 +611,56 @@ useEffect(() => {
       /*
        * Exit pouring mode.
        */
-      if (pouringModeHand === requestedHand && activeObject) {
-        if(isTutorialMode && isPouringMode && lessonStep>8 && selectedLesson!==8 && selectedLesson !==9){
+      if (
+        pouringModeHand ===
+          requestedHand &&
+        activeObject
+      ) {
+        if (
+          isTutorialMode &&
+          isPouringMode &&
+          lessonStep > 8 &&
+          selectedLesson !== 8 &&
+          selectedLesson !== 9
+        ) {
           setShowErrorMsgNo(12)
           return
         }
-        restoreOriginalTransforms(activeObject,activeOtherObjectRef.current)
+
+        restoreOriginalTransforms(
+          activeObject,
+          activeOtherObjectRef.current
+        )
 
         resetLocalPouringState()
+
         setPouringModeHand(null)
 
-        if(lessonStep===36 && selectedLesson ===8){
-          setLessonStep(37);
+        if (
+          lessonStep === 36 &&
+          selectedLesson === 8
+        ) {
+          setLessonStep(37)
+
           setShowBubbles(false)
         }
 
-        if(lessonStep===33 && selectedLesson ===9){
-          setLessonStep(34);
+        if (
+          lessonStep === 33 &&
+          selectedLesson === 9
+        ) {
+          setLessonStep(34)
+
+          setShowBubbles(false)
+        }
+
+
+        if (
+          lessonStep === 7 &&
+          selectedLesson === 10
+        ) {
+          setLessonStep(8)
+
           setShowBubbles(false)
         }
 
@@ -486,28 +696,35 @@ useEffect(() => {
         )
       }
 
-      setStartingRotation(targetObject)
+      setStartingRotation(
+        targetObject
+      )
 
       setIsPouring(false)
+
       setPouredFromLeft(false)
+
       setPouredFromRight(false)
 
-      setActiveObject(targetObject)
-      setPouringModeHand(requestedHand)
+      setActiveObject(
+        targetObject
+      )
 
-      if(selectedLesson===8 && lessonStep ==34){
+      setPouringModeHand(
+        requestedHand
+      )
+
+      if (selectedLesson === 8 &&lessonStep == 34) {
         setLessonStep(35)
-       }
+      }
 
-      if(selectedLesson===9 && lessonStep ==31){
+      if (selectedLesson === 9 &&lessonStep == 31) {
         setLessonStep(32)
-       } 
+      }
 
-      //  if(selectedLesson!==8){
-      //         setLessonStep(10)
-
-      //  }
-
+      if(selectedLesson===10 && lessonStep===5){
+        setLessonStep(6)
+      }
     }
 
     window.addEventListener(
@@ -536,81 +753,102 @@ useEffect(() => {
     setPouringModeHand,
     isPouringMode,
     lessonStep,
-    isTutorialMode
+    isTutorialMode,selectedLesson,lessonStep
   ])
 
   /*
-   * Rotate the pouring object with
-   * the mouse wheel.
+   * Hide test tube cap
    */
-
   useEffect(() => {
-  if (selectedLesson == 8){
-     const testTube = testube01Ref.current
-
-  if (!testTube) return
-
-  testTube.traverse((child) => {
     if (
-      child.name
-        ?.toLowerCase()
-        .includes("cap")
+      selectedLesson == 8
     ) {
-      child.visible = false
-    }
-  })
-  }
+      const testTube =
+        testube01Ref.current
 
- 
-}, [
-  selectedLesson,
-  testube01Ref,
-])
+      if (!testTube) return
 
-useEffect(() => {
-  const handleWheel = (event) => {
-    if (
-      !activeObject ||
-      pouringModeHand !== hand
-    ) {
-      return
-    }
-
-    event.preventDefault()
-
-    const maxRotation = Math.PI / 5
-    const rotationSpeed = 0.15
-
-    if (event.deltaY > 0) {
-      // Scroll down: rotate the beaker the other way
-      rotationZRef.current = Math.min(
-        rotationZRef.current + rotationSpeed,
-        maxRotation
-      )
-    } else {
-      // Scroll up: return the beaker to its original position
-      rotationZRef.current = Math.max(
-        rotationZRef.current - rotationSpeed,
-        0
+      testTube.traverse(
+        (child) => {
+          if (
+            child.name
+              ?.toLowerCase()
+              .includes("cap")
+          ) {
+            child.visible =
+              false
+          }
+        }
       )
     }
-  }
-
-  window.addEventListener("wheel", handleWheel, {
-    passive: false,
-  })
-
-  return () => {
-    window.removeEventListener("wheel", handleWheel)
-  }
-}, [activeObject, pouringModeHand, hand])
+  }, [
+    selectedLesson,
+    testube01Ref,
+  ])
 
   /*
-   * Continuously apply the pouring rotation.
-   *
-   * The pouringModeHand check is important:
-   * after reset it becomes null, so this frame
-   * loop immediately stops controlling the model.
+   * Mouse wheel pouring rotation
+   */
+  useEffect(() => {
+    const handleWheel = (
+      event
+    ) => {
+      if (
+        !activeObject ||
+        pouringModeHand !== hand
+      ) {
+        return
+      }
+
+      event.preventDefault()
+
+      const maxRotation =
+        Math.PI / 5
+
+      const rotationSpeed =
+        0.15
+
+      if (
+        event.deltaY > 0
+      ) {
+        rotationZRef.current =
+          Math.min(
+            rotationZRef.current +
+              rotationSpeed,
+            maxRotation
+          )
+      } else {
+        rotationZRef.current =
+          Math.max(
+            rotationZRef.current -
+              rotationSpeed,
+            0
+          )
+      }
+    }
+
+    window.addEventListener(
+      "wheel",
+      handleWheel,
+      {
+        passive: false,
+      }
+    )
+
+    return () => {
+      window.removeEventListener(
+        "wheel",
+        handleWheel
+      )
+    }
+  }, [
+    activeObject,
+    pouringModeHand,
+    hand,
+  ])
+
+  /*
+   * Apply pouring rotation
    */
   useFrame(() => {
     if (
@@ -627,14 +865,19 @@ useEffect(() => {
         rotationZRef.current
     )
 
-    const pouringAngle = Math.PI / 5
+    const pouringAngle =
+      Math.PI / 5
 
     const pouringNow =
-      Math.abs(rotationZRef.current) >=
-      pouringAngle
+      !beakerFillFinished &&
+      Math.abs(rotationZRef.current) >= pouringAngle
 
-    if (pouringNow !== isPouring) {
-      setIsPouring(pouringNow)
+    if (
+      pouringNow !== isPouring
+    ) {
+      setIsPouring(
+        pouringNow
+      )
     }
   })
 
@@ -649,11 +892,20 @@ useEffect(() => {
           />
         )} */}
 
-      {hand==='right' && selectedRightHand.name==='main-testube-01' && !isPottasiumCarobnateInTestube01  && <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
-      {hand==='left' && selectedLeftHand.name==='main-testube-01' && !isPottasiumCarobnateInTestube01  && <PourFromTestube isPouring={isPouring} hand={"left"} model={testube01Ref.current} liquidColor={leftBeakerFillData.color} />}
+      {hand === "right" && selectedRightHand.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 &&
+       <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
 
-      {hand==='left' && selectedLeftHand.name==='main-testube-01' && isPottasiumCarobnateInTestube01 && <PourPowderFromTestube isPouring={isPouring}  model={testube01Ref.current}/>}
-      {hand==='right' && selectedRightHand.name==='main-testube-01' && isPottasiumCarobnateInTestube01 && <PourPowderFromTestube isPouring={isPouring}  model={testube01Ref.current}/>}
+      {hand === "right" && selectedRightHand.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 && 
+      <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
+
+      {hand === "left" && selectedLeftHand.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && 
+      <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
+
+      {hand === "right" && selectedRightHand.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && 
+      <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
+
+      {hand==='right' && !beakerFillFinished && selectedRightHand.name === 'kettle' && selectedLeftHand.name==='main-normal-beaker' &&
+      <PourFromKettle isPouring={isPouring}  />}
 
     </>
   )

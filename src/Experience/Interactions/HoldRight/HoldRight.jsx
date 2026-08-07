@@ -181,6 +181,9 @@ const transformControlsRef = useRef()
     }else if(object.name === "mainThermometer"){
       object.scale.set(1.3, 1.3, 1.3);
       
+    }else if(object.name === "kettle"){
+      object.scale.set(0.75, 0.75, 0.75);
+      
     } else {
       object.scale.set(1, 1, 1)
     }
@@ -223,11 +226,16 @@ const transformControlsRef = useRef()
     }
   },[selectedLesson,lessonStep])
 
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===4){
+      setLessonStep(5)
+    }
+  },[selectedLesson,lessonStep])
   
   // General step change
 
   useEffect(()=>{
-    if(lessonStep===6 && isMainGuideline && selectedLesson !==8){
+    if(lessonStep===6 && isMainGuideline && selectedLesson !==8 && selectedLesson !==10){
       setLessonStep(7)
     }
   },[lessonStep,isMainGuideline])
@@ -270,6 +278,12 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,selectedLesson])   
 
+  useEffect(()=>{
+    if(lessonStep===12 && selectedLesson===10 ){
+      setLessonStep(13)
+    }
+  },[lessonStep,selectedLesson])     
+
 
   return (
     <>
@@ -286,7 +300,9 @@ const transformControlsRef = useRef()
         selectedLeftHand &&
         selectedRightHand && (
           <PouringMode hand="right" />
-        )}
+      )}
+
+         
 
       {isStirMode &&
         selectedRightHand?.name === "main-spoon" &&

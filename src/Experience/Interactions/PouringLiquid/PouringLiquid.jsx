@@ -413,7 +413,7 @@ const PouringLiquid = ({
     /*
      * The source object has no liquid.
      */
-    if (!hasLiquid) {
+    if (!hasLiquid && model.name!=='kettle') {
       if (
         !noLiquidLoggedRef.current
       ) {

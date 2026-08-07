@@ -31,10 +31,10 @@ const MainExperience = () => {
       document.exitPointerLock()
     }
   }, [isSitting])
-useEffect(() => {
-  console.log("isSitting:", isSitting)
-  console.log("isMainGuideline:", isMainGuideline)
-}, [isSitting, isMainGuideline])
+// useEffect(() => {
+//   console.log("isSitting:", isSitting)
+//   console.log("isMainGuideline:", isMainGuideline)
+// }, [isSitting, isMainGuideline])
 
   return (
     <Canvas

@@ -101,7 +101,10 @@ export const InteractionProvider = ({ children }) => {
 
   const [isPolystereneCovered,setIsPolystereneCovered] = useState(false);
 
-  const [isPotassiumHydrogenCarbonateInSpoon,setIsPotassiumHydrogenCarbonateInSpoon] = useState(false)
+  const [isPotassiumHydrogenCarbonateInSpoon,setIsPotassiumHydrogenCarbonateInSpoon] = useState(false);
+
+  const [fillBeakerLiquid,setFillBeakerLiquid] = useState(false);
+  const [beakerFillFinished,setBeakerFillFinished] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -185,7 +188,9 @@ export const InteractionProvider = ({ children }) => {
   setShowBubbles(false);
   setShowPolystereneLidArrow(false);
   setIsPolystereneCovered(false);
-  setIsPotassiumHydrogenCarbonateInSpoon(false)
+  setIsPotassiumHydrogenCarbonateInSpoon(false);
+  setFillBeakerLiquid(false);
+  setBeakerFillFinished(false)
 }
 
   return (
@@ -246,7 +251,8 @@ export const InteractionProvider = ({ children }) => {
         showBubbles,setShowBubbles,
         showPolystereneLidArrow,setShowPolystereneLidArrow,
         isPolystereneCovered,setIsPolystereneCovered,
-        setIsPotassiumHydrogenCarbonateInSpoon,isPotassiumHydrogenCarbonateInSpoon
+        setIsPotassiumHydrogenCarbonateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
+        fillBeakerLiquid,setFillBeakerLiquid,beakerFillFinished,setBeakerFillFinished
         
       }}
     >

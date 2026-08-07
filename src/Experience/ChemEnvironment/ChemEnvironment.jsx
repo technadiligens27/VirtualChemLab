@@ -19,7 +19,8 @@ const ChemEnvironment = () => {
          arrowPolystereneRef,mainPolystereneRef,pottasiumCarbonateContainerRef,arrowPottasiumCarbonateRef,
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
          arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef,mainPolysterene2Ref,
-         thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef
+         thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
+         kettleRef,arrowKettleRef
   } = useContext(ModelContext);
 
 
@@ -34,6 +35,22 @@ const ChemEnvironment = () => {
   objectRef.current.traverse((child) => {
     if (child.name?.toLowerCase().includes("pour")) {
       child.visible = false
+    }
+  })
+}
+
+const hideLabelObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase() || ""
+
+    if (childName.includes("label")) {
+      child.visible = false
+
+      child.traverse((labelChild) => {
+        labelChild.visible = false
+      })
     }
   })
 }
@@ -147,6 +164,8 @@ const hideLiquidObjects=(root)=>{
     mainPolysterene2Ref.current = scene.getObjectByName('mainPolysterene2')
     testube01CapRef.current = scene.getObjectByName('testube-cap')
     testube01CapRef.current.visible = false
+    kettleRef.current = scene.getObjectByName('kettle')
+    kettleRef.current.visible = false
 
     filterFoldedPaperRef.current = scene.getObjectByName('main-folded-paper')
     filterFoldedPaperRef.current.visible = false;
@@ -180,6 +199,7 @@ const hideLiquidObjects=(root)=>{
   hideLiquidObjects(scene)
   hideSaltBits(scene)
   hidePowderObjects(scene)
+  hideLabelObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
 
@@ -245,7 +265,10 @@ const hideLiquidObjects=(root)=>{
       arrowLidPolysterene.current.visible = false;
 
       arrowPotassiumHydrogenCarbonateRef.current = scene.getObjectByName('potassium-hydrogencarbonate-arrow')
-      arrowPotassiumHydrogenCarbonateRef.current.visible = false
+      arrowPotassiumHydrogenCarbonateRef.current.visible = false;
+
+      arrowKettleRef.current = scene.getObjectByName('kettle-arrow');
+      arrowKettleRef.current.visible = false
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)

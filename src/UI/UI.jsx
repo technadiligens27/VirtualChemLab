@@ -23,6 +23,7 @@ import LessonSummary from "./LessonSummary/LessonSummary"
 import EnthalpyHessLaw from "./AllLessons/EnthalpyHessLaw/EnthalpyHessLaw"
 import HessGuidelines from "./HessGuidelines/HessGuidelines"
 import EnthalpyHessReaction02 from "./EnthalpyHessReaction02/EnthalpyHessReaction02"
+import HydrolysisReaction from "./HydrolysisReaction/HydrolysisReaction"
 
 const mainContent = [
   {
@@ -433,7 +434,13 @@ useEffect(() => {
         isLessonStart &&
         selectedLesson === 9 && (
           <EnthalpyHessReaction02 />
-        )}     
+        )}
+
+     {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 10 && (
+          <HydrolysisReaction />
+        )}           
         
 
       <AllErrors />
