@@ -107,6 +107,8 @@ const Interaction = () => {
        {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
        && isPlacePolysterene && <StirUsingThermometer/>}
 
+       
+
     </>
   );
 };

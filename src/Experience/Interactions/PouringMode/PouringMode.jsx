@@ -20,6 +20,7 @@ import PourFromTestube from "../PourFromTestube/PourFromTestube"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import PourPowderFromTestube from "../PourPowderFromTestube/PourPowderFromTestube"
 import PourFromKettle from "../Pouring/PourFromKettle/PourFromKettle"
+import PourFromGraduatedCylinder from "../Pouring/PourFromGraduatedCylinder/PourFromGraduatedCylinder"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -374,7 +375,9 @@ const PouringMode = ({ hand }) => {
           ?.toLowerCase() || ""
 
       const isKettle =
-        targetObjectName.includes("kettle")
+        targetObjectName.includes("kettle");
+
+      const isGraduatedCylinder =  targetObjectName.includes("main-graduated-cylinder"); 
 
       const isConicalFlask =
         otherObjectName.includes(
@@ -419,6 +422,16 @@ const PouringMode = ({ hand }) => {
           new THREE.Vector3(
             2,
             -0.3,
+            -0.5
+          )
+        )
+      } else if(
+        isGraduatedCylinder
+      ){
+        localPosition.add(
+          new THREE.Vector3(
+            3,
+            -0.5,
             -0.5
           )
         )
@@ -616,16 +629,16 @@ const PouringMode = ({ hand }) => {
           requestedHand &&
         activeObject
       ) {
-        if (
-          isTutorialMode &&
-          isPouringMode &&
-          lessonStep > 8 &&
-          selectedLesson !== 8 &&
-          selectedLesson !== 9
-        ) {
-          setShowErrorMsgNo(12)
-          return
-        }
+        // if (
+        //   isTutorialMode &&
+        //   isPouringMode &&
+        //   lessonStep > 8 &&
+        //   selectedLesson !== 8 &&
+        //   selectedLesson !== 9
+        // ) {
+        //   setShowErrorMsgNo(12)
+        //   return
+        // }
 
         restoreOriginalTransforms(
           activeObject,
@@ -662,6 +675,15 @@ const PouringMode = ({ hand }) => {
           setLessonStep(8)
 
           setShowBubbles(false)
+        }
+
+        if (
+          lessonStep === 24 &&
+          selectedLesson === 10
+        ) {
+          setLessonStep(25)
+
+          // setShowBubbles(false)
         }
 
         return
@@ -724,6 +746,14 @@ const PouringMode = ({ hand }) => {
 
       if(selectedLesson===10 && lessonStep===5){
         setLessonStep(6)
+      }
+
+      if(selectedLesson===10 && lessonStep===22){
+        setLessonStep(23)
+      }
+
+      if(selectedLesson===10 && lessonStep===29){
+        setLessonStep(30)
       }
     }
 
@@ -868,9 +898,9 @@ const PouringMode = ({ hand }) => {
     const pouringAngle =
       Math.PI / 5
 
-    const pouringNow =
-      !beakerFillFinished &&
-      Math.abs(rotationZRef.current) >= pouringAngle
+const pouringNow =
+  (selectedLesson !== 9 || !beakerFillFinished) &&
+  Math.abs(rotationZRef.current) >= pouringAngle
 
     if (
       pouringNow !== isPouring
@@ -905,7 +935,11 @@ const PouringMode = ({ hand }) => {
       <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
 
       {hand==='right' && !beakerFillFinished && selectedRightHand.name === 'kettle' && selectedLeftHand.name==='main-normal-beaker' &&
-      <PourFromKettle isPouring={isPouring}  />}
+      <PourFromKettle isPouring={isPouring}/>}
+
+      {hand==='right' &&  selectedRightHand.name === 'main-graduated-cylinder' && <PourFromGraduatedCylinder isPouring={isPouring}/> }
+
+
 
     </>
   )

@@ -9,7 +9,7 @@ const FillBeakerBox = () => {
     setIsFillUpBeaker,
     fillBeakerHand,
     setLeftBeakerFillData,
-    setRightBeakerFillData,
+    setRightBeakerFillData,fillBeakerModel
   } = useContext(InteractionContext)
 
   const {setSelectedLesson,selectedLesson,isMainGuideline,
@@ -22,20 +22,58 @@ const FillBeakerBox = () => {
 
   const [selectedAmount, setSelectedAmount] = useState("")
 
-const acids = [
-  // { name: "Salt (NaCl)", color: "#F5F5F5",imgPath:'./water.png' },
-  { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-  { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
-  { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
-  { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
-  { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
-  { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.png' },
-  { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
-  { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
-  { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
-]
+// const acids = [
+//   // { name: "Salt (NaCl)", color: "#F5F5F5",imgPath:'./water.png' },
+//   { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
+//   { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
+//   { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
+//   { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
+//   { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
+//   { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.png' },
+//   { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
+//   { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
+//   { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
+// ]
 
-  const amounts = [50, 100,200,250]
+  const getAcids = ()=>{
+    if(selectedLesson ===10){
+      return [
+          { name: "Water (H2O)", color: "#0073a0", imgPath: "./water.png" },
+          { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
+          { name: "Hydrochloric Acid (HCl)", color: "#f8fafc", imgPath: "./Hcl.png" },
+          { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe", imgPath: "./Protein.png" },
+          { name: "Starch solution", color: "#e5e7eb", imgPath: "./starch.png" },
+          { name: "Iodine solution", color: "#92400e", imgPath: "./Iodine.png" },
+          { name: "Copper Sulfate (CuSO4)", color: "#2563eb", imgPath: "./CuSo4.png" },
+          { name: "Protein Sample", color: "#F5F1D8", imgPath: "./Protein.png" },
+      ]
+    }else{
+      return [
+        { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
+        { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
+        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
+        { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
+        { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
+        { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.png' },
+        { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
+        { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
+        { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
+      ]
+    }
+  }
+
+  const acids = getAcids()
+
+  const getAmounts = () => {
+    if (fillBeakerModel === "main-graduated-cylinder") {
+      return [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    }
+
+    return [50, 100, 200, 250]
+  }
+
+  const amounts = getAmounts()
+  
 
   useEffect(()=>{
     if(lessonStep === 4){
@@ -178,11 +216,24 @@ const acids = [
     }
   },[selectedLesson,lessonStep])
 
-    useEffect(()=>{
+  useEffect(()=>{
     if(lessonStep===11 && selectedLesson ===7){
       setLessonStep(12)
     }
   },[lessonStep,selectedLesson])
+
+
+  useEffect(()=>{
+    if(lessonStep===20 && selectedLesson ===10){
+      setLessonStep(20.5)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(lessonStep===27 && selectedLesson ===10){
+      setLessonStep(28)
+    }
+  },[lessonStep,selectedLesson])    
 
   return (
     <div className="fill-dialog-overlay">

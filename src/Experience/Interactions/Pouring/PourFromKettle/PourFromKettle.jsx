@@ -14,7 +14,7 @@ const PourFromKettle = ({
   isPouring,
 }) => {
   const {
-    kettleRef,
+    kettleRef,normalBeakerRef
   } = useContext(ModelContext)
 
   const {
@@ -78,7 +78,7 @@ const PourFromKettle = ({
   return (
     <>
       {fillBeakerLiquid && (
-        <FillLiquidBeaker amount={45} color={"#0073a0"} />
+        <FillLiquidBeaker modelRef={normalBeakerRef} amount={45} color={"#0073a0"} />
       )}
     </>
   )

@@ -23,10 +23,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
   const { lessonStep, setLessonStep,selectedLesson } =
     useContext(MainGuidelineContext)
 
-  const fillData =
-    hand === "left"
-      ? leftBeakerFillData
-      : rightBeakerFillData
+  const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
 
   const liquidMeshesRef = useRef([])
   const amountRef = useRef(0)
@@ -298,7 +295,7 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       )
     ) {
       amountRef.current =
-        selectedAmount * 0.5
+        selectedAmount * 1.1
 
       speedRef.current = 20
     }
@@ -446,8 +443,16 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       setLessonStep(21)
     }
 
+    if(selectedLesson ===10 && lessonStep ===20.5){
+      setLessonStep(21)
+    }
+
     if(selectedLesson ===9 && lessonStep ===18){
       setLessonStep(19)
+    }
+
+    if(selectedLesson ===10 && lessonStep ===28){
+      setLessonStep(29)
     }
 
 

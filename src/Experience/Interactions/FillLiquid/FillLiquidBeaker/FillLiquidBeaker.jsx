@@ -6,14 +6,16 @@ import {
 
 import { useFrame } from "@react-three/fiber"
 
-import { ModelContext } from "../../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
 import LiquidLabels from "../../../../UI/LiquidLabels/LiquidLabels"
 
-const FillLiquidBeaker = ({ amount, color }) => {
-  const { normalBeakerRef } = useContext(ModelContext)
-
+const FillLiquidBeaker = ({
+  modelRef,
+  amount,
+  color,
+}) => {
   const {
     setBeakerFillFinished,
     setIsPouring,
@@ -29,11 +31,9 @@ const FillLiquidBeaker = ({ amount, color }) => {
   const isFinishedRef = useRef(false)
 
   useEffect(() => {
-    if (!normalBeakerRef.current || liquidRef.current) {
-      return
-    }
+    if (!modelRef?.current || liquidRef.current) return
 
-    normalBeakerRef.current.traverse((child) => {
+    modelRef.current.traverse((child) => {
       const childName = child.name?.toLowerCase() || ""
 
       if (child.isMesh && childName.includes("liquid")) {
@@ -48,12 +48,10 @@ const FillLiquidBeaker = ({ amount, color }) => {
         }
       }
     })
-  }, [normalBeakerRef, color])
+  }, [modelRef, color])
 
   useFrame((_, delta) => {
-    if (!normalBeakerRef.current || !liquidRef.current) {
-      return
-    }
+    if (!modelRef?.current || !liquidRef.current) return
 
     liquidRef.current.visible = true
 
@@ -78,7 +76,10 @@ const FillLiquidBeaker = ({ amount, color }) => {
 
   return (
     <>
-      <LiquidLabels modelRef={normalBeakerRef} hand={"left"} />
+      <LiquidLabels
+        modelRef={modelRef}
+        hand="left"
+      />
     </>
   )
 }

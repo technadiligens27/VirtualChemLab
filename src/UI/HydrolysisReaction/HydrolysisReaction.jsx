@@ -52,6 +52,20 @@ const HydrolysisReaction = ()=>{
         {lessonStep === 16 && <DialogBox text={'Now click Tetsube and select label'}/>}
         {lessonStep === 17 && <DialogBox text={'Now keep the right hand testube back in table'}/>}
         {lessonStep === 18 && <DialogBox text={'Now keep the Left hand testube back in table'}/>}
+        {lessonStep === 19 && <DialogBox text={'Click Measuring Cylinder and select Right Hand Option'}/>}
+        {lessonStep === 20 && <DialogBox text={'Click Measuring Cylinder and select Add Liquid'}/>}
+        {lessonStep === 20.5 && <DialogBox text={'Take 5cm3 of Ethanol'}/>}
+        {lessonStep === 21 && <DialogBox text={'Take the Iodinebutan Testube to Left Hand Option'}/>}
+        {lessonStep === 22 && <DialogBox text={'Press P to enter Pour Mode'}/>}
+        {lessonStep === 23 && <DialogBox text={'Scroll down to Pour'}/>}
+        {lessonStep === 24 && <DialogBox text={'Press P to exit Pour Mode'}/>}
+        {lessonStep === 25 && <DialogBox text={'Keep Testube back on Table'}/>}
+        {lessonStep === 26 && <DialogBox text={'Now take the With the bromobutane label'}/>}
+        {lessonStep === 27 && <DialogBox text={'Click Measuring Cylinder and select Add Liquid'}/>}
+        {lessonStep === 28 && <DialogBox text={'Take 5cm3 of Ethanol again'}/>}
+        {lessonStep === 29 && <DialogBox text={'Press P to enter Pour Mode'}/>}
+        {lessonStep === 30 && <DialogBox text={'Scroll down to Pour'}/>}
+        {lessonStep === 31 && <DialogBox text={'31'}/>}
 
         </>
     )

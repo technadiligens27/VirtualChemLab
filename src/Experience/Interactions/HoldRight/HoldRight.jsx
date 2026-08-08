@@ -174,6 +174,10 @@ const transformControlsRef = useRef()
       object.scale.set(1.3, 1.3, 1.3)
       object.rotation.x = Math.PI / 3
       object.rotation.z = -2
+    }else if (object.name === "main-graduated-cylinder") {
+      object.scale.set(1, 1.2, 1)
+      // object.rotation.x = Math.PI / 3
+      // object.rotation.z = -2
     }else if(object.name === "main-buirette"){
       object.scale.set(0.9, 0.9, 0.9);
       object.position.y+=1
@@ -284,7 +288,11 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,selectedLesson])     
 
-
+  useEffect(()=>{
+    if(lessonStep===19 && selectedLesson===10 ){
+      setLessonStep(20)
+    }
+  },[lessonStep,selectedLesson])   
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (

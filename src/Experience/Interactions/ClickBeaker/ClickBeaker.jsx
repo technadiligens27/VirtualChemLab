@@ -48,7 +48,8 @@ const ClickObject = () => {
     isPourIntoTestube,setIsWeighTestube,isWeighTestube,
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
     isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,setIsPotassiumHydrogenCarbonateInSpoon,
-    isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered
+    isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
+    fillBeakerModel,setFillBeakerModel
 
   } = useContext(InteractionContext)
 
@@ -623,6 +624,10 @@ const ClickObject = () => {
       setLessonStep(15)
     }
 
+    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===25) {
+      setLessonStep(26)
+    }
+
     if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===17) {
       setLessonStep(18)
     }
@@ -964,70 +969,56 @@ const ClickObject = () => {
 
 
   const openFillBeakerBox = () => {
-      if (!selectedObject) return
+  if (!selectedObject) return
 
-      if (isTutorialMode) {
-        if (
-          selectedLesson === 7 &&
-          lessonStep !== 11 &&
-          lessonStep !== 4
-        ) {
-          setShowErrorMsgNo(4)
-          setSelectedObject(null)
-          return
-        }
-      }
+  // if (isTutorialMode) {
+  //   if (selectedLesson === 7 && lessonStep !== 11 && lessonStep !== 4) {
+  //     setShowErrorMsgNo(4)
+  //     setSelectedObject(null)
+  //     return
+  //   }
+  // }
 
-      if (
-        isMainGuideline &&
-        lessonStep === 8 &&
-        selectedObject.hand === "left" &&
-        selectedLesson !== 8
-      ) {
-        setShowErrorMsgNo(4)
-        setSelectedObject(null)
-        return
-      }
+  // if (isMainGuideline && lessonStep === 8 && selectedObject.hand === "left" && selectedLesson !== 8) {
+  //   setShowErrorMsgNo(4)
+  //   setSelectedObject(null)
+  //   return
+  // }
 
-      if (isMainGuideline) {
-        const isAllowedStep =
-          lessonStep === 4 ||
-          lessonStep === 7 ||
-          lessonStep === 8 ||
-          (selectedLesson === 7 &&
-            (lessonStep === 4 || lessonStep === 11)) ||
-          (selectedLesson === 8 &&
-            lessonStep === 19) ||
-          (selectedLesson === 9 &&
-            lessonStep === 17)
-          
+  if (isMainGuideline) {
+    const isAllowedStep =
+      lessonStep === 4 ||
+      lessonStep === 7 ||
+      lessonStep === 8 ||
+      (selectedLesson === 7 && (lessonStep === 4 || lessonStep === 11)) ||
+      (selectedLesson === 8 && lessonStep === 19) ||
+      (selectedLesson === 9 && lessonStep === 17) ||
+      (selectedLesson === 10 && lessonStep === 20) ||
+      (selectedLesson === 10 && lessonStep === 27)
 
-        if (!isAllowedStep) {
-          setShowErrorMsgNo(4)
-          setSelectedObject(null)
-          return
-        }
+    // if (!isAllowedStep) {
+    //   setShowErrorMsgNo(4)
+    //   setSelectedObject(null)
+    //   return
+    // }
 
-        if (
-          selectedLesson === 3 &&
-          lessonStep !== 4
-        ) {
-          setShowErrorMsgNo(4)
-          setSelectedObject(null)
-          return
-        }
-      }
+    // if (selectedLesson === 3 && lessonStep !== 4) {
+    //   setShowErrorMsgNo(4)
+    //   setSelectedObject(null)
+    //   return
+    // }
+  }
 
-      const selectedHand = selectedObject.hand
+  const selectedHand = selectedObject.hand
 
-      setIsLitmusMode(false)
-      setIsStirMode(false)
-      setIsFillUpBeaker(false)
-
-      setFillBeakerHand(selectedHand)
-      setIsFillBeakerBoxOpen(true)
-      setSelectedObject(null)
-    }
+  setIsLitmusMode(false)
+  setIsStirMode(false)
+  setIsFillUpBeaker(false)
+  setFillBeakerModel(selectedObject.name)
+  setFillBeakerHand(selectedHand)
+  setIsFillBeakerBoxOpen(true)
+  setSelectedObject(null)
+}
 
    const togglePourIntoTestTube = () => {
       setIsPourIntoTestube((previousValue) => {
@@ -1586,9 +1577,6 @@ const handlePlaceBalance = () => {
     }
   }
 
-  useEffect(()=>{
-    console.log('isPlacePolysterene:',isPlacePolysterene)
-  },[isPlacePolysterene])
 
 
   const renderClampTableButtons=()=>{
@@ -1974,13 +1962,13 @@ const renderTestubeHeldButtons = ()=>{
 
     }
 
-    if(!isTutorialMode){
-      return(
-        <button onClick={()=>labelTestube('main-testube-01')}>
-          Label Testtube
-        </button>
-      )
-    }
+    // if(!isTutorialMode){
+    //   return(
+    //     <button onClick={()=>labelTestube('main-testube-01')}>
+    //       Label Testtube
+    //     </button>
+    //   )
+    // }
 }
 
 const renderPolystereneHeldButtons=()=>{
