@@ -297,6 +297,14 @@ const transformControlsRef = useRef()
       setLessonStep(20)
     }
   },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===42 && selectedLesson===10 ){
+      setLessonStep(43)
+    }
+  },[lessonStep,selectedLesson])   
+
+
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (

@@ -8,18 +8,21 @@ import { useThree } from "@react-three/fiber"
 import * as THREE from "three"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
-const PipetteMode = ({
-  modelRef,
-  xOffset = 0,
-  yOffset = 3,
-  zOffset = 0,
-}) => {
+const PipetteMode = ({modelRef,xOffset = 0,yOffset = 3,zOffset = 0}) => {
   const { pipetteRef } = useContext(ModelContext)
+  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const { camera } = useThree()
 
-  const originalTransformRef = useRef(null)
+  const originalTransformRef = useRef(null);
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep===44){
+      setLessonStep(45)
+    }
+  },[lessonStep,selectedLesson])
 
   useEffect(() => {
     if (!modelRef?.current || !pipetteRef?.current) return
@@ -92,14 +95,7 @@ const PipetteMode = ({
 
       originalTransformRef.current = null
     }
-  }, [
-    modelRef,
-    pipetteRef,
-    camera,
-    xOffset,
-    yOffset,
-    zOffset,
-  ])
+  }, [modelRef,pipetteRef,camera,xOffset,yOffset,zOffset])
 
   return null
 }

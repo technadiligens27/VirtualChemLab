@@ -75,7 +75,12 @@ const HydrolysisReaction = ()=>{
         {lessonStep === 38 && <DialogBox text={'Press P to exit Pour Mode'}/>}
         {lessonStep === 39 && <DialogBox text={'Keep Measuring Cylinder Back on Table'}/>}
         {lessonStep === 40 && <DialogBox text={'Keep Testube On Table'}/>}
-        {lessonStep === 41 && <DialogBox text={'41'}/>}
+        {lessonStep === 41 && <DialogBox text={'Select Iodobutane Bottle to Left hand'}/>}
+        {lessonStep === 42 && <DialogBox text={'Select Pipette To Right Hand'}/>}
+        {lessonStep === 43 && <DialogBox text={'Scroll Down to Squeeze Pipette'}/>}
+        {lessonStep === 44 && <DialogBox text={'Click Pipette Again And select Take Liquid'}/>}
+        {lessonStep === 45 && <DialogBox text={'Scroll Upwards to take Liquid'}/>}
+        {lessonStep === 46 && <DialogBox text={'46'}/>}
 
         </>
     )

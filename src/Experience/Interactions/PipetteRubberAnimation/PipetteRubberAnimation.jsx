@@ -5,12 +5,15 @@ import {
 } from "react"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PipetteRubberAnimation = ({
   rubberScaleSpeed = 0.1,
   rubberMinScaleX = 0.45,
 }) => {
   const { pipetteRef } = useContext(ModelContext)
+  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const rubberRef = useRef(null)
   const originalRubberScaleXRef = useRef(null)
@@ -47,18 +50,36 @@ const PipetteRubberAnimation = ({
     const originalScaleX = originalRubberScaleXRef.current
 
     if (direction === "down") {
+      const previousScaleX = rubber.scale.x
+
       rubber.scale.x = Math.max(
         rubber.scale.x - rubberScaleSpeed,
         rubberMinScaleX
       )
+
+      if (previousScaleX > rubberMinScaleX && rubber.scale.x === rubberMinScaleX) {
+        if(selectedLesson===10 && lessonStep===43){
+          setLessonStep(44)
+        }
+      }
     }
 
     if (direction === "up") {
-      rubber.scale.x = Math.min(
-        rubber.scale.x + rubberScaleSpeed,
-        originalScaleX
-      )
-    }
+        const previousScaleX = rubber.scale.x
+
+        rubber.scale.x = Math.min(
+          rubber.scale.x + rubberScaleSpeed,
+          originalScaleX
+        )
+
+        if (previousScaleX < originalScaleX && rubber.scale.x === originalScaleX) {
+          console.log("Rubber fully released")
+
+          if (selectedLesson === 10 && lessonStep === 45) {
+            setLessonStep(46)
+          }
+        }
+      }
 
     rubber.updateMatrixWorld(true)
   }
@@ -80,8 +101,11 @@ const PipetteRubberAnimation = ({
       window.removeEventListener("wheel", handleWheel)
     }
   }, [
-    rubberScaleSpeed,
-    rubberMinScaleX,
+  rubberScaleSpeed,
+  rubberMinScaleX,
+  selectedLesson,
+  lessonStep,
+  setLessonStep,
   ])
 
   return null
