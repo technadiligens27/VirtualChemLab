@@ -686,6 +686,24 @@ const PouringMode = ({ hand }) => {
           // setShowBubbles(false)
         }
 
+        if (
+          lessonStep === 31 &&
+          selectedLesson === 10
+        ) {
+          setLessonStep(32)
+
+          // setShowBubbles(false)
+        }
+
+        if (
+          lessonStep === 38 &&
+          selectedLesson === 10
+        ) {
+          setLessonStep(39)
+
+          // setShowBubbles(false)
+        }
+
         return
       }
 
@@ -754,6 +772,10 @@ const PouringMode = ({ hand }) => {
 
       if(selectedLesson===10 && lessonStep===29){
         setLessonStep(30)
+      }
+
+      if(selectedLesson===10 && lessonStep===36){
+        setLessonStep(37)
       }
     }
 

@@ -28,6 +28,7 @@ import FillThermometer from "./FillThermometer/FillThermometer";
 import ReleaseGasBubbles from "../ReleaseGasBubbles/ReleaseGasBubbles";
 import CoverPolysterene from "../../UI/CoverPolysterene/CoverPolysterene";
 import StirUsingThermometer from "../StirUsingThermometer/StirUsingThermometer";
+import PipetteMode from "./PipetteMode/PipetteMode";
 
 const Interaction = () => {
   const {
@@ -35,10 +36,10 @@ const Interaction = () => {
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
-     isPotassiumHydrogenCarbonateInSpoon
+     isPotassiumHydrogenCarbonateInSpoon,isPipetteMode
   } = useContext(InteractionContext);
 
-  const {testube01Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef} = useContext(ModelContext)
+  const {testube01Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
@@ -106,6 +107,8 @@ const Interaction = () => {
 
        {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
        && isPlacePolysterene && <StirUsingThermometer/>}
+
+       {(selectedLeftHand?.name === "iodobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode modelRef={iodobutaneBottleRef}/>}
 
        
 

@@ -20,6 +20,7 @@ import DropperScrollAnimation from "../DropperScrollAnimation/DropperScrollAnima
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
 import PlacePolysterene from "../PlacePolysterene/PlacePolysterene"
 import PourIntoTestubeFromSpoon from "../PourIntoTestubeFromSpoon/PourIntoTestubeFromSpoon"
+import PipetteRubberAnimation from "../PipetteRubberAnimation/PipetteRubberAnimation"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -181,6 +182,9 @@ const transformControlsRef = useRef()
     }else if(object.name === "main-buirette"){
       object.scale.set(0.9, 0.9, 0.9);
       object.position.y+=1
+      
+    }else if(object.name === "pipette"){
+      object.scale.set(1.1, 1.8, 1.1);
       
     }else if(object.name === "mainThermometer"){
       object.scale.set(1.3, 1.3, 1.3);
@@ -380,6 +384,10 @@ const transformControlsRef = useRef()
             xOffset={0.6}
           />
         )
+      }
+
+      {
+        selectedRightHand.name==='pipette' && <PipetteRubberAnimation/>
       }  
   </>
   )

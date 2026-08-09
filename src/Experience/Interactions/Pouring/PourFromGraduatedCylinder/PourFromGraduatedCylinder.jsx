@@ -19,7 +19,7 @@ const PourFromGraduatedCylinder = ({
 }) => {
   const {
     graduatedBeakerRef,
-    testube01Ref,testube02Ref
+    testube01Ref,testube02Ref,testube03Ref
   } = useContext(ModelContext)
 
   const {
@@ -88,6 +88,14 @@ const PourFromGraduatedCylinder = ({
         if(selectedLesson===10 && lessonStep ===23){
           setLessonStep(24)
         }
+
+        if(selectedLesson===10 && lessonStep ===30){
+          setLessonStep(31)
+        }
+
+        if(selectedLesson===10 && lessonStep ===37){
+          setLessonStep(38)
+        }
       }
 
       return
@@ -108,25 +116,36 @@ const PourFromGraduatedCylinder = ({
     )
   })
 
-  return (
-    <>
-      {selectedLeftHand.name === "main-testube-01" && fillTestubeLiquid && (
-        <FillLiquidBeaker
-          modelRef={testube01Ref}
-          amount={50}
-          color="#f3f4f6"
-        />
-      )}
+    return (
+      <>
+        {selectedLeftHand?.name === "main-testube-01" && fillTestubeLiquid && isPouring && (
+          <FillLiquidBeaker
+            modelRef={testube01Ref}
+            amount={50}
+            color="#f3f4f6"
+            isPouring={isPouring}
+          />
+        )}
 
-      {selectedLeftHand.name === "main-testube-02" && fillTestubeLiquid && (
-        <FillLiquidBeaker
-          modelRef={testube02Ref}
-          amount={50}
-          color="#f3f4f6"
-        />
-      )}
-    </>
-  )
+        {selectedLeftHand?.name === "main-testube-02" && fillTestubeLiquid && isPouring && (
+          <FillLiquidBeaker
+            modelRef={testube02Ref}
+            amount={50}
+            color="#f3f4f6"
+            isPouring={isPouring}
+          />
+        )}
+
+        {selectedLeftHand?.name === "main-testube-03" && fillTestubeLiquid && isPouring && (
+          <FillLiquidBeaker
+            modelRef={testube03Ref}
+            amount={50}
+            color="#f3f4f6"
+            isPouring={isPouring}
+          />
+        )}
+      </>
+    )
 }
 
 export default PourFromGraduatedCylinder

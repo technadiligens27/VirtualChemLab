@@ -65,7 +65,17 @@ const HydrolysisReaction = ()=>{
         {lessonStep === 28 && <DialogBox text={'Take 5cm3 of Ethanol again'}/>}
         {lessonStep === 29 && <DialogBox text={'Press P to enter Pour Mode'}/>}
         {lessonStep === 30 && <DialogBox text={'Scroll down to Pour'}/>}
-        {lessonStep === 31 && <DialogBox text={'31'}/>}
+        {lessonStep === 31 && <DialogBox text={'Press P to exit Pour Mode'}/>}
+        {lessonStep === 32 && <DialogBox text={'Keep Testube Back on Table'}/>}
+        {lessonStep === 33 && <DialogBox text={'Take the last Testube labelled (chlorobutane)'}/>}
+        {lessonStep === 34 && <DialogBox text={'Click Measuring Cylinder and select Add Liquid'}/>}
+        {lessonStep === 35 && <DialogBox text={'Take 5cm3 of Ethanol again'}/>}
+        {lessonStep === 36 && <DialogBox text={'Press P to enter Pour Mode'}/>}
+        {lessonStep === 37 && <DialogBox text={'Scroll down to Pour'}/>}
+        {lessonStep === 38 && <DialogBox text={'Press P to exit Pour Mode'}/>}
+        {lessonStep === 39 && <DialogBox text={'Keep Measuring Cylinder Back on Table'}/>}
+        {lessonStep === 40 && <DialogBox text={'Keep Testube On Table'}/>}
+        {lessonStep === 41 && <DialogBox text={'41'}/>}
 
         </>
     )
