@@ -32,9 +32,11 @@ export const ModelProvider = ({ children }) => {
   const mainPolysterene2Ref = useRef(null);
   const mainPolystereneLid = useRef(null);
   const potassiumHydrogenCarbonateRef = useRef(null);
-  const kettleRef = useRef(null)
-  const pipetteRef = useRef(null)
-  const iodobutaneBottleRef = useRef(null)
+  const kettleRef = useRef(null);
+  const pipetteRef = useRef(null);
+  const iodobutaneBottleRef = useRef(null);
+  const bromobutaneBottleRef = useRef(null);
+  const chlorobutaneBottleRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -109,7 +111,8 @@ export const ModelProvider = ({ children }) => {
         mainPolystereneLid,arrowLidPolysterene,
         potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
         kettleRef,arrowKettleRef,pipetteRef,
-        iodobutaneBottleRef
+        iodobutaneBottleRef,bromobutaneBottleRef,
+        chlorobutaneBottleRef
       }}
     >
       {children}

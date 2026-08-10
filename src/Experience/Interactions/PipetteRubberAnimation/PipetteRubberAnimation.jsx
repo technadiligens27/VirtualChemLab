@@ -2,21 +2,28 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import FillPipette from "../FillLiquid/FIllPipette/FIllPipette"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+
 
 const PipetteRubberAnimation = ({
   rubberScaleSpeed = 0.1,
   rubberMinScaleX = 0.45,
+
 }) => {
   const { pipetteRef } = useContext(ModelContext)
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const { selectedLesson, lessonStep, setLessonStep } = useContext(MainGuidelineContext)
+  const {fillPippette,setFillPipette,isPipetteFilled,setPipetteDroplet} = useContext(InteractionContext)
 
   const rubberRef = useRef(null)
   const originalRubberScaleXRef = useRef(null)
+
+  const [fillAmount, setFillAmount] = useState(0)
 
   useEffect(() => {
     if (!pipetteRef?.current) return
@@ -58,28 +65,39 @@ const PipetteRubberAnimation = ({
       )
 
       if (previousScaleX > rubberMinScaleX && rubber.scale.x === rubberMinScaleX) {
-        if(selectedLesson===10 && lessonStep===43){
+        if(isPipetteFilled){
+          setPipetteDroplet(true)
+        }
+        if (selectedLesson === 10 && lessonStep === 43) {
           setLessonStep(44)
         }
       }
     }
 
     if (direction === "up") {
-        const previousScaleX = rubber.scale.x
+      const previousScaleX = rubber.scale.x
 
-        rubber.scale.x = Math.min(
-          rubber.scale.x + rubberScaleSpeed,
-          originalScaleX
-        )
+      rubber.scale.x = Math.min(
+        rubber.scale.x + rubberScaleSpeed,
+        originalScaleX
+      )
 
-        if (previousScaleX < originalScaleX && rubber.scale.x === originalScaleX) {
-          console.log("Rubber fully released")
+      if(!isPipetteFilled){
+        setFillPipette(true)
 
-          if (selectedLesson === 10 && lessonStep === 45) {
-            setLessonStep(46)
-          }
+      }
+      if (previousScaleX < originalScaleX && rubber.scale.x === originalScaleX) {
+        console.log("Rubber fully released")
+
+        if (selectedLesson === 10 && lessonStep === 45) {
+          setLessonStep(46)
+        }
+
+        if (selectedLesson === 10 && lessonStep === 55) {
+          setLessonStep(56)
         }
       }
+    }
 
     rubber.updateMatrixWorld(true)
   }
@@ -101,14 +119,21 @@ const PipetteRubberAnimation = ({
       window.removeEventListener("wheel", handleWheel)
     }
   }, [
-  rubberScaleSpeed,
-  rubberMinScaleX,
-  selectedLesson,
-  lessonStep,
-  setLessonStep,
+    rubberScaleSpeed,
+    rubberMinScaleX,
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+    isPipetteFilled
   ])
 
-  return null
+  return (
+    <>
+   
+    </>
+
+
+  )
 }
 
 export default PipetteRubberAnimation

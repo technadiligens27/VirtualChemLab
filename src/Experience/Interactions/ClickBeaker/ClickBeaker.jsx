@@ -81,7 +81,8 @@ const ClickObject = () => {
     mainPolysterene2Ref,
     thermometerLiquidRef,
     potassiumHydrogenCarbonateRef,
-    kettleRef,pipetteRef,iodobutaneBottleRef
+    kettleRef,pipetteRef,iodobutaneBottleRef,
+    bromobutaneBottleRef,chlorobutaneBottleRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -206,7 +207,15 @@ const ClickObject = () => {
       {
         name:'iodobutane-bottle',
         ref:iodobutaneBottleRef
-      }    
+      },
+      {
+        name:'bromobutane-bottle',
+        ref:bromobutaneBottleRef
+      },
+      {
+        name:'chlorobutane-bottle',
+        ref:chlorobutaneBottleRef
+      }
       ],
     [
       normalBeakerRef,
@@ -230,7 +239,9 @@ const ClickObject = () => {
       buretteClampRef,
       mainPolysterene2Ref,
       potassiumHydrogenCarbonateRef,
-      kettleRef,pipetteRef
+      kettleRef,pipetteRef,
+      bromobutaneBottleRef,
+      chlorobutaneBottleRef
     ]
   )
 
@@ -644,6 +655,11 @@ const ClickObject = () => {
       setLessonStep(33)
     }
 
+    
+    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===62) {
+      setLessonStep(63)
+    }
+
     if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===18) {
       setLessonStep(19)
     }
@@ -652,9 +668,20 @@ const ClickObject = () => {
       setLessonStep(41)
     }
 
+    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===52) {
+      setLessonStep(53)
+    }
 
     if (handData.name === "main-graduated-cylinder" && selectedLesson===10 && lessonStep ===39) {
       setLessonStep(40)
+    }
+
+    if (handData.name === "iodobutane-bottle" && selectedLesson===10 && lessonStep ===47) {
+      setLessonStep(48)
+    }
+
+    if (handData.name === "bromobutane-bottle" && selectedLesson===10 && lessonStep ===57) {
+      setLessonStep(58)
     }
 
 
@@ -2038,10 +2065,28 @@ const renderPolystereneHeldButtons=()=>{
 
 const handlePipetteMode = ()=>{
   setIsPipetteMode(true)
+  setSelectedObject(null)
 }
 
 const handleRemovePipetteMode =()=>{
   setIsPipetteMode(false)
+    setSelectedObject(null)
+
+  if(selectedLesson===10 && lessonStep ===46){
+    setLessonStep(47)
+  }
+
+  if(selectedLesson===10 && lessonStep ===51){
+    setLessonStep(52)
+  }
+
+  if(selectedLesson===10 && lessonStep ===56){
+    setLessonStep(57)
+  }
+
+  if(selectedLesson===10 && lessonStep ===61){
+    setLessonStep(62)
+  }
 }
 
 const renderPipetteHeldButtons = () => {
@@ -2054,7 +2099,7 @@ const renderPipetteHeldButtons = () => {
 
         {!isPipetteMode && (
           <button onClick={handlePipetteMode}>
-            Take Liquid
+            Pipette Mode
           </button>
         )}
 

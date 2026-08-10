@@ -14,7 +14,7 @@ const HydrolysisReaction = ()=>{
     showEnthalyResultOne,setShowEnthalyResultOne} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
-  const {digitalBalanceRef,kettleRef} = useContext(ModelContext)
+  const {digitalBalanceRef,kettleRef,chlorobutaneBottleRef} = useContext(ModelContext)
 
   useEffect(()=>{
     if(digitalBalanceRef.current){
@@ -23,7 +23,11 @@ const HydrolysisReaction = ()=>{
     if(kettleRef.current){
         kettleRef.current.visible = true
     }
-  },[digitalBalanceRef])
+
+    // if(chlorobutaneBottleRef.current){
+    //   chlorobutaneBottleRef.current.visible = true
+    // }
+  },[digitalBalanceRef,chlorobutaneBottleRef,kettleRef])
 
     return(
         <>
@@ -80,7 +84,26 @@ const HydrolysisReaction = ()=>{
         {lessonStep === 43 && <DialogBox text={'Scroll Down to Squeeze Pipette'}/>}
         {lessonStep === 44 && <DialogBox text={'Click Pipette Again And select Take Liquid'}/>}
         {lessonStep === 45 && <DialogBox text={'Scroll Upwards to take Liquid'}/>}
-        {lessonStep === 46 && <DialogBox text={'46'}/>}
+        {lessonStep === 46 && <DialogBox text={'CLick Pipette and select Exit Pipette Mode'}/>}
+        {lessonStep === 47 && <DialogBox text={'Kepp Iodobutane bottle back in Table'}/>}
+        {lessonStep === 48 && <DialogBox text={'Now Take Testube containing Iodobutane'}/>}
+        {lessonStep === 49 && <DialogBox text={'Now click Pipette and select Pipette Mode'}/>}
+        {lessonStep === 50 && <DialogBox text={'Now scroll Down to pour a dropelt to the testube'}/>}
+        {lessonStep === 51 && <DialogBox text={'Now exit Pippete Mode'}/>}
+        {lessonStep === 52 && <DialogBox text={'Keep Back The Testube on The Table'}/>}
+        {lessonStep === 53 && <DialogBox text={'Now Take Bromobutane Bottle into Left Hand'}/>}
+        {lessonStep === 54 && <DialogBox text={'Now Select Pipette and click Pipette Mode'}/>}
+        {lessonStep === 55 && <DialogBox text={'Scroll Upwards to take Liquid'}/>}
+        {lessonStep === 56 && <DialogBox text={'Now exit Pippete Mode'}/>}
+        {lessonStep === 57 && <DialogBox text={'Keep borobutane Bottle Back on Table'}/>}
+        {lessonStep === 58 && <DialogBox text={'Take Testube Containe Label Borobutane'}/>}
+        {lessonStep === 59 && <DialogBox text={'Click Pipette and select Pipette Mode'}/>}
+        {lessonStep === 60 && <DialogBox text={'Scroll Down to Pour'}/>}
+        {lessonStep === 61 && <DialogBox text={'Exit Pipette Mode'}/>}
+        {lessonStep === 62 && <DialogBox text={'Keep Bromobutane Tetsube back in Table'}/>}
+        {lessonStep === 63 && <DialogBox text={'Take Chlorobutane Bottle to Left Hand'}/>}
+        {lessonStep === 64 && <DialogBox text={'Click Pippete and Click Pipette Mode'}/>}
+        {lessonStep === 65 && <DialogBox text={'65'}/>}
 
         </>
     )

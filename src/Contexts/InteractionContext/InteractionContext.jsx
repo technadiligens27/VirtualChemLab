@@ -110,7 +110,11 @@ export const InteractionProvider = ({ children }) => {
 
   const [fillBeakerModel,setFillBeakerModel] = useState(false);
 
-  const [isPipetteMode,setIsPipetteMode] = useState(false)
+  const [isPipetteMode,setIsPipetteMode] = useState(false);
+
+  const [fillPippette,setFillPipette] = useState(false);
+  const [pipetteDroplet,setPipetteDroplet] = useState(false);
+  const [isPipetteFilled,setIsPipetteFilled] = useState(false)
 
 
 
@@ -201,7 +205,10 @@ export const InteractionProvider = ({ children }) => {
   setBeakerFillFinished(false);
   setFillBeakerModel(null);
   setFillTestubeLiquid(true);
-  setIsPipetteMode(true)
+  setIsPipetteMode(true);
+  setFillPipette(false);
+  setPipetteDroplet(false);
+  setIsPipetteFilled(false)
 }
 
   return (
@@ -265,7 +272,10 @@ export const InteractionProvider = ({ children }) => {
         setIsPotassiumHydrogenCarbonateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
         fillBeakerLiquid,setFillBeakerLiquid,beakerFillFinished,setBeakerFillFinished,
         fillBeakerModel,setFillBeakerModel,fillTestubeLiquid,setFillTestubeLiquid,
-        isPipetteMode,setIsPipetteMode
+        isPipetteMode,setIsPipetteMode,
+        fillPippette,setFillPipette,
+        pipetteDroplet,setPipetteDroplet,
+        isPipetteFilled,setIsPipetteFilled
         
       }}
     >

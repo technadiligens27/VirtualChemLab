@@ -29,6 +29,8 @@ import ReleaseGasBubbles from "../ReleaseGasBubbles/ReleaseGasBubbles";
 import CoverPolysterene from "../../UI/CoverPolysterene/CoverPolysterene";
 import StirUsingThermometer from "../StirUsingThermometer/StirUsingThermometer";
 import PipetteMode from "./PipetteMode/PipetteMode";
+import FillPipette from "./FillLiquid/FIllPipette/FIllPipette";
+import PipetteDroplets from "./PipetteDroplets/PipetteDroplets";
 
 const Interaction = () => {
   const {
@@ -36,12 +38,17 @@ const Interaction = () => {
     setIsAddSalt,isPottasiumCarobnateInSpoon,isBalancePlaced,isWeighTestube,isBuiretteClamped,
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
-     isPotassiumHydrogenCarbonateInSpoon,isPipetteMode
+     isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette
   } = useContext(InteractionContext);
 
-  const {testube01Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef} = useContext(ModelContext)
+  const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,bromobutaneBottleRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
+
+  useEffect(()=>{
+    console.log("fillPippette:",fillPippette)
+  },[fillPippette])
+
 
   const clickBeakerOption=()=>{
     if(isTutorialMode){
@@ -61,6 +68,7 @@ const Interaction = () => {
     console.log('selectedLeftHand:',selectedRightHand);
 
   },[isPlacePolysterene,isPolystereneStirMode,selectedLeftHand,selectedRightHand])
+
 
   return (
     <>
@@ -109,8 +117,20 @@ const Interaction = () => {
        && isPlacePolysterene && <StirUsingThermometer/>}
 
        {(selectedLeftHand?.name === "iodobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode modelRef={iodobutaneBottleRef}/>}
+      
+       {(selectedLeftHand?.name === "main-testube-01" && selectedRightHand?.name === "pipette") &&
+        isPipetteMode &&<PipetteMode modelRef={testube01Ref} yOffset={4} xOffset={-0.2}/>}
 
-       
+        {(selectedLeftHand?.name === "main-testube-02" && selectedRightHand?.name === "pipette") &&
+        isPipetteMode &&<PipetteMode modelRef={testube02Ref} yOffset={4} xOffset={-0.2}/>}
+
+       {(selectedLeftHand?.name === "bromobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode modelRef={bromobutaneBottleRef}/>}
+ 
+
+       {fillPippette && isPipetteMode && (<FillPipette/>)} 
+
+      {pipetteDroplet && <PipetteDroplets/>}
+
 
     </>
   );

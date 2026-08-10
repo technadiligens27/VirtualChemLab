@@ -126,7 +126,33 @@ const HoldLeft = ({ modeldata }) => {
     if(selectedLesson===10 && lessonStep ===41){
       setLessonStep(42)
     }
+  },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===48){
+      setLessonStep(49)
+    }
+  },[selectedLesson,lessonStep])   
+  
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===53){
+      setLessonStep(54)
+    }
+  },[selectedLesson,lessonStep])
+  
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===58){
+      setLessonStep(59)
+    }
   },[selectedLesson,lessonStep])    
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===63){
+      setLessonStep(64)
+    }
+  },[selectedLesson,lessonStep])   
+  
 
   useEffect(() => {
     const canvas = gl.domElement
