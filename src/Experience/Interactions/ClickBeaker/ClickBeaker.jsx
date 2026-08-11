@@ -724,6 +724,10 @@ const ClickObject = () => {
       setLessonStep(89)
     }
 
+    if (handData.name === "main-testube-05" && selectedLesson===10 && lessonStep ===95) {
+      setLessonStep(96)
+    }
+
 
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
@@ -1521,6 +1525,7 @@ const handlePlaceBalance = () => {
       })
     }     
 
+
   }
 
 
@@ -1739,6 +1744,7 @@ const handlePlaceBalance = () => {
       setLessonStep(88)
     }
 
+    setSelectedRightHand(null)
     setSelectedObject(null)
   }
 

@@ -48,13 +48,13 @@ const PlaceTestubeInBeaker = ({
 
     testube.scale.set(scale, scale, scale)
 
-    if (hand === "right") {
-      setSelectedRightHand(null)
-    }
+    // if (hand === "right") {
+    //   setSelectedRightHand(null)
+    // }
 
-    if (hand === "left") {
-      setSelectedLeftHand(null)
-    }
+    // if (hand === "left") {
+    //   setSelectedLeftHand(null)
+    // }
   }, [normalBeakerRef, testubeRef, xPos, yPos, zPos, scale, hand])
 
   return null

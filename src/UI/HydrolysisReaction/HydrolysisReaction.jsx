@@ -14,7 +14,7 @@ const HydrolysisReaction = ()=>{
     showEnthalyResultOne,setShowEnthalyResultOne} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
-  const {digitalBalanceRef,kettleRef,chlorobutaneBottleRef} = useContext(ModelContext)
+  const {digitalBalanceRef,kettleRef,chlorobutaneBottleRef,mainDropperRef} = useContext(ModelContext)
 
   useEffect(()=>{
     if(digitalBalanceRef.current){
@@ -22,6 +22,10 @@ const HydrolysisReaction = ()=>{
     }
     if(kettleRef.current){
         kettleRef.current.visible = true
+    }
+
+    if(mainDropperRef.current){
+      mainDropperRef.current.visible = false
     }
 
     // if(chlorobutaneBottleRef.current){
@@ -134,6 +138,8 @@ const HydrolysisReaction = ()=>{
         {lessonStep === 93 && <DialogBox text={'Click Add Lqiuid '}/>}
         {lessonStep === 94 && <DialogBox text={'Silver Nitrate Add 5cm3 '}/>}
         {lessonStep === 95 && <DialogBox text={'Keep RIght HAnd Testube Back '}/>}
+        {lessonStep === 96 && <DialogBox text={'Clck Third Testube and Get it to Right Hand'}/>}
+        {lessonStep === 97 && <DialogBox text={'97'}/>}
 
         </>
     )
