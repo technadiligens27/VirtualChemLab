@@ -18,6 +18,10 @@ export const ModelProvider = ({ children }) => {
   const testube01Ref = useRef(null);
   const testube02Ref = useRef(null);
   const testube03Ref = useRef(null);
+  const testube04Ref = useRef(null);
+  const testube05Ref = useRef(null);
+  const testube06Ref = useRef(null);
+  
   const filterPaperRef = useRef(null);
   const filterFoldedPaperRef = useRef(null);
   const funnelRef = useRef(null)
@@ -112,7 +116,7 @@ export const ModelProvider = ({ children }) => {
         potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
         kettleRef,arrowKettleRef,pipetteRef,
         iodobutaneBottleRef,bromobutaneBottleRef,
-        chlorobutaneBottleRef
+        chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref
       }}
     >
       {children}

@@ -20,7 +20,7 @@ const ChemEnvironment = () => {
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
          arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef,mainPolysterene2Ref,
          thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
-         kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef
+         kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref
   } = useContext(ModelContext);
 
 
@@ -67,6 +67,21 @@ const hideLabelObjects = (root) => {
     }
   })
 }
+
+ const hideBungObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("bung")) {
+      child.visible = false
+      // console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
+
+
 
  const hidePowderObjects = (root) => {
   if (!root) return
@@ -158,6 +173,9 @@ const hideLiquidObjects=(root)=>{
     testube01Ref.current = scene.getObjectByName('main-testube-01');
     testube02Ref.current = scene.getObjectByName('main-testube-02');
     testube03Ref.current = scene.getObjectByName('main-testube-03');
+    testube04Ref.current = scene.getObjectByName('main-testube-04')
+    testube05Ref.current = scene.getObjectByName('main-testube-05')
+    testube06Ref.current = scene.getObjectByName('main-testube-06')
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
@@ -208,6 +226,7 @@ const hideLiquidObjects=(root)=>{
   hideSaltBits(scene)
   hidePowderObjects(scene)
   hideLabelObjects(scene)
+  hideBungObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
 

@@ -152,7 +152,36 @@ const HoldLeft = ({ modeldata }) => {
       setLessonStep(64)
     }
   },[selectedLesson,lessonStep])   
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===74){
+      setLessonStep(75)
+    }
+  },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===68){
+      setLessonStep(69)
+    }
+  },[selectedLesson,lessonStep])   
   
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===79){
+      setLessonStep(80)
+    }
+  },[selectedLesson,lessonStep])   
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===89){
+      setLessonStep(90)
+    }
+  },[selectedLesson,lessonStep])     
+ 
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===82){
+      setLessonStep(83)
+    }
+  },[selectedLesson,lessonStep])      
 
   useEffect(() => {
     const canvas = gl.domElement
@@ -237,7 +266,10 @@ const HoldLeft = ({ modeldata }) => {
     } else if (
       object.name === "main-testube-01" ||
       object.name === "main-testube-02" ||
-      object.name === "main-testube-03"
+      object.name === "main-testube-03" ||
+      object.name === "main-testube-04" ||
+      object.name === "main-testube-05" ||
+      object.name === "main-testube-06"      
     ) {
       object.scale.set(1.5, 1.5, 1.5)
     } else if (

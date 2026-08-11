@@ -96,6 +96,12 @@ const PipetteRubberAnimation = ({
         if (selectedLesson === 10 && lessonStep === 55) {
           setLessonStep(56)
         }
+
+        if (selectedLesson === 10 && lessonStep === 65) {
+          setLessonStep(66)
+        }
+
+
       }
     }
 

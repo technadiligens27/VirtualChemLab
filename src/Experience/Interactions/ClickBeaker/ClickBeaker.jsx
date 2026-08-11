@@ -49,7 +49,7 @@ const ClickObject = () => {
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
     isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,setIsPotassiumHydrogenCarbonateInSpoon,
     isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
-    fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode
+    fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker
 
   } = useContext(InteractionContext)
 
@@ -66,6 +66,9 @@ const ClickObject = () => {
     testube01Ref,
     testube02Ref,
     testube03Ref,
+    testube04Ref,
+    testube05Ref,
+    testube06Ref,
 
     filterPaperRef,
     filterFoldedPaperRef,
@@ -140,6 +143,18 @@ const ClickObject = () => {
       {
         name: "main-testube-03",
         ref: testube03Ref,
+      },
+            {
+        name: "main-testube-04",
+        ref: testube04Ref,
+      },
+      {
+        name: "main-testube-05",
+        ref: testube05Ref,
+      },
+      {
+        name: "main-testube-06",
+        ref: testube06Ref,
       },
       {
         name: "main-filter-paper",
@@ -241,7 +256,8 @@ const ClickObject = () => {
       potassiumHydrogenCarbonateRef,
       kettleRef,pipetteRef,
       bromobutaneBottleRef,
-      chlorobutaneBottleRef
+      chlorobutaneBottleRef,
+      testube04Ref,testube05Ref,testube06Ref
     ]
   )
 
@@ -668,8 +684,20 @@ const ClickObject = () => {
       setLessonStep(41)
     }
 
+    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===72) {
+      setLessonStep(73)
+    }
+
+    if (handData.name === "pipette" && selectedLesson===10 && lessonStep ===73) {
+      setLessonStep(74)
+    }
+
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===52) {
       setLessonStep(53)
+    }
+
+    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===78) {
+      setLessonStep(79)
     }
 
     if (handData.name === "main-graduated-cylinder" && selectedLesson===10 && lessonStep ===39) {
@@ -682,6 +710,18 @@ const ClickObject = () => {
 
     if (handData.name === "bromobutane-bottle" && selectedLesson===10 && lessonStep ===57) {
       setLessonStep(58)
+    }
+
+    if (handData.name === "chlorobutane-bottle" && selectedLesson===10 && lessonStep ===67) {
+      setLessonStep(68)
+    }
+
+    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===81) {
+      setLessonStep(82)
+    }
+
+    if (handData.name === "main-normal-beaker" && selectedLesson===10 && lessonStep ===88) {
+      setLessonStep(89)
     }
 
 
@@ -1443,6 +1483,46 @@ const handlePlaceBalance = () => {
       }
   }
 
+  const handleShowBung=(modelName)=>{
+
+    if(selectedLesson===10 && lessonStep ===75){
+      setLessonStep(76)
+    }
+
+    if(selectedLesson===10 && lessonStep ===77){
+      setLessonStep(78)
+    }
+
+    if(selectedLesson===10 && lessonStep ===80){
+      setLessonStep(81)
+    }
+
+    if(modelName==="main-testube-01"){
+      testube01Ref.current.traverse((child)=>{
+        if(child.isMesh && child.name.includes('bung')){
+          child.visible=true
+        }
+      })
+    }
+
+    if(modelName==="main-testube-02"){
+      testube02Ref.current.traverse((child)=>{
+        if(child.isMesh && child.name.includes('bung')){
+          child.visible=true
+        }
+      })
+    }
+    
+    if(modelName==="main-testube-03"){
+      testube03Ref.current.traverse((child)=>{
+        if(child.isMesh && child.name.includes('bung')){
+          child.visible=true
+        }
+      })
+    }     
+
+  }
+
 
 
   useEffect(()=>{
@@ -1623,6 +1703,47 @@ const handlePlaceBalance = () => {
     if(lessonStep===37 && selectedLesson===8){
       setLessonStep(38)
     }
+  }
+
+  const placeTestubeInBeaker = () => {
+    if (selectedObject.name === "main-testube-01") {
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube1: true,
+      }))
+    }
+
+    if (selectedObject.name === "main-testube-02") {
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube2: true,
+      }))
+    }
+
+    if (selectedObject.name === "main-testube-03") {
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube3: true,
+      }))
+    }
+
+    if (selectedLesson === 10 && lessonStep === 83) {
+      setLessonStep(84)
+    }
+
+    if (selectedLesson === 10 && lessonStep === 85) {
+      setLessonStep(86)
+    }
+
+    if (selectedLesson === 10 && lessonStep === 87) {
+      setLessonStep(88)
+    }
+
+    setSelectedObject(null)
+  }
+
+  const removeTestubeInBeaker = ()=>{
+    setTestubeInBeaker(false)
   }
 
 
@@ -2010,13 +2131,47 @@ const renderTestubeHeldButtons = ()=>{
 
     }
 
-    // if(!isTutorialMode){
-    //   return(
-    //     <button onClick={()=>labelTestube('main-testube-01')}>
-    //       Label Testtube
-    //     </button>
-    //   )
-    // }
+    if(selectedLesson===10 && (lessonStep===75 || lessonStep===77 || lessonStep===80 || lessonStep===89) && isTestTube(selectedObject.name)){
+      return(
+        <>
+          <button onClick={()=>handleShowBung(selectedObject.name)}>
+            Place Bung
+          </button>       
+        </>
+      )
+
+    }
+
+     if(selectedLesson===10 && (lessonStep==83 || lessonStep===85 || lessonStep===87) && isTestTube(selectedObject.name)){
+      return(
+        <>
+          <button onClick={placeTestubeInBeaker}>
+            Place In Beaker
+          </button>     
+        </>
+      )
+
+    }
+
+    if(!isTutorialMode){
+      return(
+        <>
+          <button onClick={()=>handleShowBung(selectedObject.name)}>
+            Place Bung
+          </button>
+
+          <button onClick={()=>{keepBackOnTable(selectedObject.hand)}}>
+            Keep Back On Table
+          </button>
+
+          <button onClick={placeTestubeInBeaker}>
+            Place In Beaker
+          </button>
+              
+        </>
+
+      )
+    }
 }
 
 const renderPolystereneHeldButtons=()=>{
@@ -2086,6 +2241,14 @@ const handleRemovePipetteMode =()=>{
 
   if(selectedLesson===10 && lessonStep ===61){
     setLessonStep(62)
+  }
+
+  if(selectedLesson===10 && lessonStep ===66){
+    setLessonStep(67)
+  }
+
+  if(selectedLesson===10 && lessonStep ===71){
+    setLessonStep(72)
   }
 }
 

@@ -38,14 +38,15 @@ const FillBeakerBox = () => {
   const getAcids = ()=>{
     if(selectedLesson ===10){
       return [
-          { name: "Water (H2O)", color: "#0073a0", imgPath: "./water.png" },
-          { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
-          { name: "Hydrochloric Acid (HCl)", color: "#f8fafc", imgPath: "./Hcl.png" },
-          { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe", imgPath: "./Protein.png" },
-          { name: "Starch solution", color: "#e5e7eb", imgPath: "./starch.png" },
-          { name: "Iodine solution", color: "#92400e", imgPath: "./Iodine.png" },
-          { name: "Copper Sulfate (CuSO4)", color: "#2563eb", imgPath: "./CuSo4.png" },
-          { name: "Protein Sample", color: "#F5F1D8", imgPath: "./Protein.png" },
+        { name: "Water (H2O)", color: "#0073a0", imgPath: "./water.png" },
+        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
+        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc", imgPath: "./Hcl.png" },
+        { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe", imgPath: "./Protein.png" },
+        { name: "Starch solution", color: "#e5e7eb", imgPath: "./starch.png" },
+        { name: "Iodine solution", color: "#92400e", imgPath: "./Iodine.png" },
+        { name: "Copper Sulfate (CuSO4)", color: "#2563eb", imgPath: "./CuSo4.png" },
+        // { name: "Protein Sample", color: "#F5F1D8", imgPath: "./Protein.png" },
+        { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./SilverNitrate.png" },
       ]
     }else{
       return [
@@ -65,8 +66,8 @@ const FillBeakerBox = () => {
   const acids = getAcids()
 
   const getAmounts = () => {
-    if (fillBeakerModel === "main-graduated-cylinder") {
-      return [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    if (fillBeakerModel === "main-graduated-cylinder" || "main-testube-04" || "main-testube-05") {
+      return [5, 10, 20,  30, ,40, 50]
     }
 
     return [50, 100, 200, 250]
@@ -241,9 +242,18 @@ const FillBeakerBox = () => {
     }
   },[lessonStep,selectedLesson]) 
   
-  
 
+  useEffect(()=>{
+    if(lessonStep===90 && selectedLesson ===10){
+      setLessonStep(91)
+    }
+  },[lessonStep,selectedLesson])   
 
+  useEffect(()=>{
+    if(lessonStep===93 && selectedLesson ===10){
+      setLessonStep(94)
+    }
+  },[lessonStep,selectedLesson])   
   return (
     <div className="fill-dialog-overlay">
       <div className="fill-dialog">

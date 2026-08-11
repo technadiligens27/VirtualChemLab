@@ -168,7 +168,10 @@ const transformControlsRef = useRef()
     } else if (
       object.name === "main-testube-01" ||
       object.name === "main-testube-02" ||
-      object.name === "main-testube-03"
+      object.name === "main-testube-03" ||
+      object.name === "main-testube-04" ||
+      object.name === "main-testube-05" ||
+      object.name === "main-testube-06"    
     ) {
       object.scale.set(1.5, 1.5, 1.5)
     } else if (object.name === "main-filter-paper") {
@@ -304,6 +307,29 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,selectedLesson])   
 
+  useEffect(()=>{
+    if(lessonStep===76 && selectedLesson===10 ){
+      setLessonStep(77)
+    }
+  },[lessonStep,selectedLesson]) 
+
+  useEffect(()=>{
+    if(lessonStep===84 && selectedLesson===10 ){
+      setLessonStep(85)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===86 && selectedLesson===10 ){
+      setLessonStep(87)
+    }
+  },[lessonStep,selectedLesson])
+  
+  useEffect(()=>{
+    if(lessonStep===92 && selectedLesson===10 ){
+      setLessonStep(93)
+    }
+  },[lessonStep,selectedLesson])    
 
   return (
     <>

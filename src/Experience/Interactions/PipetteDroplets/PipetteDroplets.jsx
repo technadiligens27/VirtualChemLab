@@ -89,6 +89,10 @@ const PipetteDroplets = ({
       if (lessonStep === 60 && selectedLesson === 10) {
         setLessonStep(61)
       }
+
+      if (selectedLesson === 10 && lessonStep === 70) {
+          setLessonStep(71)
+        }
       setFillPipette(false);
       setIsPipetteFilled(false)
     }

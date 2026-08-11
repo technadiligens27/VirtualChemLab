@@ -49,6 +49,10 @@ const PipetteMode = ({
     if(selectedLesson===10 && lessonStep ===64){
       setLessonStep(65)
     }
+
+    if(selectedLesson===10 && lessonStep ===69){
+      setLessonStep(70)
+    }
   }, [
     lessonStep,
     selectedLesson,
