@@ -9,16 +9,20 @@ import { useFrame } from "@react-three/fiber"
 import { InteractionContext } from "../../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
-import LiquidLabels from "../../../../UI/LiquidLabels/LiquidLabels"
+import AddMoreLiquid from "../../AddMoreLiquid/AddMoreLiquid"
 
 const FillLiquidBeaker = ({
   modelRef,
   amount,
   color,
+  isPouring,
+  pourModelRef,
 }) => {
   const {
     setBeakerFillFinished,
     setIsPouring,
+    isAddMoreLiquid,
+    setIsAddMoreLiquid,
   } = useContext(InteractionContext)
 
   const {
@@ -31,7 +35,7 @@ const FillLiquidBeaker = ({
   const isFinishedRef = useRef(false)
 
   useEffect(() => {
-    if (!modelRef?.current || liquidRef.current) return
+    if (!modelRef?.current) return
 
     modelRef.current.traverse((child) => {
       const childName = child.name?.toLowerCase() || ""
@@ -39,19 +43,42 @@ const FillLiquidBeaker = ({
       if (child.isMesh && childName.includes("liquid")) {
         liquidRef.current = child
 
-        if (child.material) {
-          child.material = child.material.clone()
-        }
+        if (child.material) child.material = child.material.clone()
 
         if (color) {
           child.material.color.set(color)
+          child.material.needsUpdate = true
         }
       }
     })
+
+    if (!liquidRef.current) console.log("❌ No liquid child found")
   }, [modelRef, color])
+
+  useEffect(() => {
+    if (!isPouring || !liquidRef.current || !pourModelRef?.current) return
+
+    let pourLiquidHasLiquid = false
+
+    pourModelRef.current.traverse((child) => {
+      const childName = child.name?.toLowerCase() || ""
+
+      if (child.isMesh && childName.includes("liquid") && child.scale.y > 0) {
+        pourLiquidHasLiquid = true
+      }
+    })
+
+    if (liquidRef.current.scale.y > 0 && pourLiquidHasLiquid) {
+      setIsAddMoreLiquid(true)
+    }
+  }, [isPouring, pourModelRef, setIsAddMoreLiquid])
 
   useFrame((_, delta) => {
     if (!modelRef?.current || !liquidRef.current) return
+    if (!isPouring) return
+
+    // AddMoreLiquid handles the animation instead
+    if (isAddMoreLiquid) return
 
     liquidRef.current.visible = true
 
@@ -76,10 +103,14 @@ const FillLiquidBeaker = ({
 
   return (
     <>
-      <LiquidLabels
-        modelRef={modelRef}
-        hand="left"
-      />
+      {isAddMoreLiquid && isPouring && (
+        <AddMoreLiquid
+          pourModelRef={pourModelRef}
+          liquidRef={liquidRef}
+          amount={10}
+          speed={10}
+        />
+      )}
     </>
   )
 }

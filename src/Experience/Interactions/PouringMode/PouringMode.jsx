@@ -45,11 +45,11 @@ const PouringMode = ({ hand }) => {
     leftBeakerFillData,
 
     isPottasiumCarobnateInTestube01,
-    setShowBubbles,beakerFillFinished
+    setShowBubbles,beakerFillFinished,
   } = useContext(InteractionContext)
 
   const {
-    testube01Ref,
+    testube01Ref,testube04Ref,testube05Ref,testube06Ref
   } = useContext(ModelContext)
 
   const {
@@ -378,6 +378,7 @@ const PouringMode = ({ hand }) => {
         targetObjectName.includes("kettle");
 
       const isGraduatedCylinder =  targetObjectName.includes("main-graduated-cylinder"); 
+      const isTestube04 = targetObjectName.includes("main-testube-04");
 
       const isConicalFlask =
         otherObjectName.includes(
@@ -432,6 +433,16 @@ const PouringMode = ({ hand }) => {
           new THREE.Vector3(
             3,
             -0.5,
+            -0.5
+          )
+        )
+      }else if(
+        isTestube04
+      ){
+        localPosition.add(
+          new THREE.Vector3(
+            2.5,
+            -0.4,
             -0.5
           )
         )
@@ -704,6 +715,15 @@ const PouringMode = ({ hand }) => {
           // setShowBubbles(false)
         }
 
+        if (
+          selectedLesson  === 10 &&
+          lessonStep === 111
+        ) {
+          setLessonStep(112)
+
+          // setShowBubbles(false)
+        }
+
         return
       }
 
@@ -776,6 +796,9 @@ const PouringMode = ({ hand }) => {
 
       if(selectedLesson===10 && lessonStep===36){
         setLessonStep(37)
+      }
+      if(selectedLesson===10 && lessonStep===109){
+        setLessonStep(110)
       }
     }
 
@@ -947,8 +970,11 @@ const pouringNow =
       {hand === "right" && selectedRightHand.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 &&
        <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
 
-      {hand === "right" && selectedRightHand.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 && 
-      <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
+      {hand === "right" && selectedRightHand.name === "main-testube-04" &&  
+      <PourFromTestube isPouring={isPouring} hand={"right"} model={testube04Ref.current} liquidColor={rightBeakerFillData.color} />}
+
+      {hand === "right" && selectedRightHand.name === "main-testube-05" &&  
+      <PourFromTestube isPouring={isPouring} hand={"right"} model={testube05Ref.current} liquidColor={rightBeakerFillData.color} />}
 
       {hand === "left" && selectedLeftHand.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && 
       <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
@@ -957,7 +983,7 @@ const pouringNow =
       <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
 
       {hand==='right' && !beakerFillFinished && selectedRightHand.name === 'kettle' && selectedLeftHand.name==='main-normal-beaker' &&
-      <PourFromKettle isPouring={isPouring}/>}
+      <PourFromKettle color={"#0073a0"} isPouring={isPouring}/>}
 
       {hand==='right' &&  selectedRightHand.name === 'main-graduated-cylinder' && <PourFromGraduatedCylinder isPouring={isPouring}/> }
 

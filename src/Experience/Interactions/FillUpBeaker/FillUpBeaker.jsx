@@ -466,6 +466,11 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     if(selectedLesson ===10 && lessonStep ===94){
       setLessonStep(95)
     }
+
+    if(selectedLesson ===10 && lessonStep ===98){
+      setLessonStep(99)
+    }
+    
     
     if (lessonStep === 5) {
       setLessonStep(6)

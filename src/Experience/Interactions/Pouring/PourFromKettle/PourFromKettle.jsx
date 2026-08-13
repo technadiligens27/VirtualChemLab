@@ -12,9 +12,11 @@ import FillLiquidBeaker from "../../FillLiquid/FillLiquidBeaker/FillLiquidBeaker
 
 const PourFromKettle = ({
   isPouring,
+  color,
 }) => {
   const {
-    kettleRef,normalBeakerRef
+    kettleRef,
+    normalBeakerRef,
   } = useContext(ModelContext)
 
   const {
@@ -25,9 +27,7 @@ const PourFromKettle = ({
   const pourLiquidRef = useRef(null)
 
   useEffect(() => {
-    if (!kettleRef?.current) {
-      return
-    }
+    if (!kettleRef?.current) return
 
     pourLiquidRef.current = null
 
@@ -37,25 +37,28 @@ const PourFromKettle = ({
       if (child.isMesh && childName.includes("pour-fluid")) {
         pourLiquidRef.current = child
 
+        child.material = child.material.clone()
+
+        if (color) {
+          child.material.color.set(color)
+          child.material.needsUpdate = true
+        }
+
         child.visible = false
         child.scale.set(1, 0, 1)
       }
     })
 
     return () => {
-      if (!pourLiquidRef.current) {
-        return
-      }
+      if (!pourLiquidRef.current) return
 
       pourLiquidRef.current.visible = false
       pourLiquidRef.current.scale.y = 0
     }
-  }, [kettleRef])
+  }, [kettleRef, color])
 
   useFrame((_, delta) => {
-    if (!pourLiquidRef.current) {
-      return
-    }
+    if (!pourLiquidRef.current) return
 
     if (!isPouring) {
       pourLiquidRef.current.visible = false
@@ -78,7 +81,12 @@ const PourFromKettle = ({
   return (
     <>
       {fillBeakerLiquid && (
-        <FillLiquidBeaker modelRef={normalBeakerRef} amount={45} color={"#0073a0"} />
+        <FillLiquidBeaker
+          modelRef={normalBeakerRef}
+          amount={45}
+          color={color}
+          isPouring={isPouring}
+        />
       )}
     </>
   )

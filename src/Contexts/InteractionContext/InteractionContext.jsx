@@ -122,6 +122,9 @@ export const InteractionProvider = ({ children }) => {
       tube3: false,
     })
 
+  const [isAddMoreLiquid,setIsAddMoreLiquid] = useState(false);
+  const [isReactionTimerRunning,setIsReactionTimerRunning] = useState(false)
+
 
 
   const resetInteractions = () => {
@@ -219,7 +222,13 @@ export const InteractionProvider = ({ children }) => {
     tube1: false,
     tube2: false,
     tube3: false,
+    tube4:false,
+    tube5:false,
+    tube6:false
   })
+
+  setIsAddMoreLiquid(false);
+  setIsReactionTimerRunning(false);
 }
 
   return (
@@ -287,7 +296,9 @@ export const InteractionProvider = ({ children }) => {
         fillPippette,setFillPipette,
         pipetteDroplet,setPipetteDroplet,
         isPipetteFilled,setIsPipetteFilled,
-        testubesInBeaker,setTestubesInBeaker
+        testubesInBeaker,setTestubesInBeaker,
+        isAddMoreLiquid,setIsAddMoreLiquid,
+        isReactionTimerRunning,setIsReactionTimerRunning
         
       }}
     >

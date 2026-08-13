@@ -55,6 +55,12 @@ const HoldLeft = ({ modeldata }) => {
   // },[lessonStep])
 
   useEffect(()=>{
+    if(lessonStep===3 && selectedLesson===8){
+      setLessonStep(4)
+    }
+  },[lessonStep,selectedLesson])
+
+  useEffect(()=>{
     if(selectedLesson===8 && lessonStep ===8){
       setLessonStep(9)
     }
@@ -182,6 +188,15 @@ const HoldLeft = ({ modeldata }) => {
       setLessonStep(83)
     }
   },[selectedLesson,lessonStep])      
+
+ 
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===100){
+      setLessonStep(101)
+    }
+  },[selectedLesson,lessonStep])
+  
+
 
   useEffect(() => {
     const canvas = gl.domElement

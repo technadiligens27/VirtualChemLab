@@ -269,7 +269,8 @@ const ClickObject = () => {
 
   const isDropper = (name) =>name === "main-dropper"
 
-  const isTestTube = (name) => name === "main-testube-01" || name === "main-testube-02" || name === "main-testube-03"
+  const isTestTube = (name) => name === "main-testube-01" || name === "main-testube-02" || name === "main-testube-03" 
+                                        || name === "main-testube-04" || name === "main-testube-05" || name === "main-testube-06"
 
   const isFlatFilterPaper = (name) =>
     name?.toLowerCase().includes("filter-paper")
@@ -463,6 +464,10 @@ const ClickObject = () => {
   }
 
   const handlePlaceBeaker = () => {
+    if(selectedLesson===8 && lessonStep!==26){
+      setShowErrorMsgNo(1)
+      return
+    }
   setIsBeakerNearClamp(true);
   setSelectedObject(null);
 }
@@ -638,6 +643,10 @@ const ClickObject = () => {
       setLessonStep(6)
     }
 
+    if(lessonStep===106  && selectedLesson === 10 && handData.name === "main-normal-beaker"){
+      setLessonStep(107)
+    }
+
     if(lessonStep===8 && selectedLesson ===10 && handData.name === "main-normal-beaker"){
       setLessonStep(9)
     }
@@ -686,6 +695,10 @@ const ClickObject = () => {
 
     if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===72) {
       setLessonStep(73)
+    }
+
+    if (handData.name === "main-testube-04" && selectedLesson===10 && lessonStep ===99) {
+      setLessonStep(100)
     }
 
     if (handData.name === "pipette" && selectedLesson===10 && lessonStep ===73) {
@@ -912,8 +925,14 @@ const ClickObject = () => {
       if(objectName !=='main-dropper'){
         setShowErrorMsgNo(12)
         return false
-      }
-        
+      }        
+    }
+
+    if(lessonStep==8){
+        if(objectName !== "mainPolysterene"){
+          setShowErrorMsgNo(1)
+          return false
+        }
     }
 
 
@@ -931,11 +950,18 @@ const ClickObject = () => {
       }
     }
 
+    //--------------Selected Lesson 08---------------------------
 
-    // if (lessonStep === 3) {
-    //   setShowErrorMsgNo(1)
-    //   return false
-    // }
+    if(selectedLesson==-8){
+      if(lessonStep==3){
+        setShowErrorMsgNo(1)
+        return false
+      }
+      if(lessonStep===7 && objectName !=="main-testube-01"){
+        setShowErrorMsgNo(1)
+        return false
+      }
+    }
 
     return true
   }
@@ -943,12 +969,27 @@ const ClickObject = () => {
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
     
-    if(selectedLesson===8 && lessonStep===8){
-      if (objectName !== "main-testube-01") {
-        setShowErrorMsgNo(1)
-        return false
+    // if(selectedLesson===8 && lessonStep===8){{
+    //   if (objectName !== "main-testube-01") {
+    //     setShowErrorMsgNo(1)
+    //     return false
+    //   }
+    // }
+
+    if(selectedLesson ===8){
+      if(lessonStep===8){
+        if (objectName !== "main-testube-01") {
+          setShowErrorMsgNo(1)
+          return false
       }
     }
+      if(lessonStep===8){
+        if(objectName !== "mainPolysterene"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+  }
 
     if(selectedLesson===8 && lessonStep ==3){
       if (objectName !== "main-normal-beaker") {
@@ -964,6 +1005,14 @@ const ClickObject = () => {
       }
 
       return true
+    }
+
+    if(selectedLesson===10){
+      if(lessonStep===3){
+        if(objectName !== "main-normal-beaker"){
+          setShowErrorMsgNo(1)
+        }
+      }
     }
 
 
@@ -1266,7 +1315,7 @@ const canShowMainHoldingButton = () => {
 const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
-    selectedLesson !== 9 && selectedLesson !==10
+    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8
   ) {
     return <p>Can't pick now</p>
   }
@@ -1501,6 +1550,11 @@ const handlePlaceBalance = () => {
       setLessonStep(81)
     }
 
+    if (selectedLesson === 10 && lessonStep === 112) {
+      setLessonStep(113)
+    }
+
+
     if(modelName==="main-testube-01"){
       testube01Ref.current.traverse((child)=>{
         if(child.isMesh && child.name.includes('bung')){
@@ -1673,10 +1727,18 @@ const handlePlaceBalance = () => {
   }
 
   const addPottasiumCarbinateToSpoon = ()=>{
+    if(selectedLesson===8 && lessonStep!==10){
+      setShowErrorMsgNo(1)
+      return
+    }
     setIsPottasiumCarobnateInSpoon(true);
   }
 
   const addPotassiumHydrogencarbonateToSpoon = ()=>{
+    if(selectedLesson===8 && lessonStep!==12){
+      setShowErrorMsgNo(1)
+      return
+    }
     setIsPotassiumHydrogenCarbonateInSpoon(true)
   }
 
@@ -1732,6 +1794,26 @@ const handlePlaceBalance = () => {
       }))
     }
 
+    if (selectedObject.name === "main-testube-04") {
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube4: true,
+      }))
+    }
+
+    if (selectedObject.name === "main-testube-05") {
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube5: true,
+      }))
+    }
+    if (selectedObject.name === "main-testube-06") {
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube6: true,
+      }))
+    }
+
     if (selectedLesson === 10 && lessonStep === 83) {
       setLessonStep(84)
     }
@@ -1744,12 +1826,44 @@ const handlePlaceBalance = () => {
       setLessonStep(88)
     }
 
+    if (selectedLesson === 10 && lessonStep === 101) {
+      setLessonStep(102)
+    }
+
+    if (selectedLesson === 10 && lessonStep === 103) {
+      setLessonStep(104)
+    }
+
+    if (selectedLesson === 10 && lessonStep === 105) {
+      setLessonStep(106)
+    }
+
+
+
     setSelectedRightHand(null)
     setSelectedObject(null)
   }
 
   const removeTestubeInBeaker = ()=>{
     setTestubeInBeaker(false)
+  }
+
+
+  const removeBung = (modelName)=>{
+    if(modelName==="main-testube-01"){
+      testube01Ref.current.traverse((child)=>{
+        if(child.isMesh && child.name.includes('bung')){
+          child.visible=false
+        }
+      })
+    }
+
+    if(selectedLesson===10 && lessonStep==108){
+      setLessonStep(109)
+    
+    }
+
+    setSelectedObject(null)
   }
 
 
@@ -1844,6 +1958,10 @@ const handlePlaceBalance = () => {
   
 
   const renderTableObjectButtons = () => {
+
+    const  normaleBeakerButtons = renderNormalBeakerTableButtons()
+    if (normaleBeakerButtons) return normaleBeakerButtons
+
     const clampButtons = renderClampTableButtons()
     if (clampButtons) return clampButtons
 
@@ -1864,6 +1982,51 @@ const handlePlaceBalance = () => {
     if (balanceButtons) return balanceButtons
 
     return renderHandSelectionButtons()
+
+  }
+
+  const handleRemoveTubes = () => {
+  if (!testube01Ref.current || !testube04Ref.current) return
+
+  setSelectedLeftHand({
+    hand: "left",
+    name: "main-testube-01",
+    ref: testube01Ref,
+    originalParent: testube01Ref.current.parent,
+    originalPosition: testube01Ref.current.position.clone(),
+    originalRotation: testube01Ref.current.rotation.clone(),
+  })
+
+  setSelectedRightHand({
+    hand: "right",
+    name: "main-testube-04",
+    ref: testube04Ref,
+    originalParent: testube04Ref.current.parent,
+    originalPosition: testube04Ref.current.position.clone(),
+    originalRotation: testube04Ref.current.rotation.clone(),
+  })
+
+  setTestubesInBeaker((prev) => ({
+    ...prev,
+    tube1: false,
+    tube4: false,
+  }))
+
+  setSelectedObject(null)
+
+  if (selectedLesson === 10 && lessonStep === 107) {
+    setLessonStep(108)
+  }
+}
+  
+  const renderNormalBeakerTableButtons = ()=>{
+    if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && lessonStep==107) {
+      return (
+        <button onClick={()=>{handleRemoveTubes()}}>
+          Remove Tubes from Water Bath
+        </button>
+      )
+    }
   }
 
   const renderNormalBeakerHeldButtons=()=>{
@@ -1945,6 +2108,8 @@ const handlePlaceBalance = () => {
           )
 
         }
+
+
       </>
     )
   }
@@ -2148,7 +2313,19 @@ const renderTestubeHeldButtons = ()=>{
 
     }
 
-     if(selectedLesson===10 && (lessonStep==83 || lessonStep===85 || lessonStep===87) && isTestTube(selectedObject.name)){
+    if(selectedLesson===10 && (lessonStep===108) && isTestTube(selectedObject.name)){
+      return(
+        <>
+          <button onClick={()=>{removeBung(selectedObject.name)}}>
+            Remove Bung
+          </button>       
+        </>
+      )
+
+    }
+
+     if(selectedLesson===10 && (lessonStep==83 || lessonStep===85 || lessonStep===87 || lessonStep===101  || 
+      lessonStep===103 || lessonStep===105 ||lessonStep===112) && isTestTube(selectedObject.name)){
       return(
         <>
           <button onClick={placeTestubeInBeaker}>
@@ -2162,16 +2339,20 @@ const renderTestubeHeldButtons = ()=>{
     if(!isTutorialMode){
       return(
         <>
-          <button onClick={()=>handleShowBung(selectedObject.name)}>
+          {/* <button onClick={()=>handleShowBung(selectedObject.name)}>
             Place Bung
-          </button>
+          </button> */}
 
           <button onClick={()=>{keepBackOnTable(selectedObject.hand)}}>
             Keep Back On Table
           </button>
 
-          <button onClick={placeTestubeInBeaker}>
+          {/* <button onClick={placeTestubeInBeaker}>
             Place In Beaker
+          </button> */}
+
+          <button onClick={openFillBeakerBox}>
+            Add Liquid
           </button>
               
         </>

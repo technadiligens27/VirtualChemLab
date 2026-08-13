@@ -1,0 +1,295 @@
+.reaction-timer {
+  position: fixed;
+
+  top: 120px;
+  right: 35px;
+
+  width: 320px;
+
+  z-index: 1000;
+
+  font-family: inherit;
+
+  filter: drop-shadow(
+    0 14px 30px rgba(50, 30, 100, 0.22)
+  );
+}
+
+
+.reaction-timer-header {
+  height: 85px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 0 28px;
+
+  background: linear-gradient(
+    135deg,
+    #5222b7,
+    #7040ce
+  );
+
+  border: 2px solid #a87cff;
+  border-bottom: none;
+
+  border-radius: 24px 24px 0 0;
+
+  color: white;
+}
+
+
+.reaction-timer-header p {
+  margin: 0;
+
+  font-size: 23px;
+  font-weight: 800;
+}
+
+
+.reaction-timer-icon {
+  position: relative;
+
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  border: 3px solid white;
+  border-radius: 50%;
+}
+
+
+.reaction-timer-clock-hand {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 3px;
+  height: 13px;
+
+  background: white;
+
+  border-radius: 10px;
+
+  transform-origin: bottom center;
+
+  transform:
+    translate(-50%, -100%)
+    rotate(0deg);
+}
+
+
+.reaction-timer-clock-hand::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 13px;
+  height: 3px;
+
+  background: white;
+
+  border-radius: 10px;
+
+  transform-origin: left center;
+
+  transform: rotate(45deg);
+}
+
+
+.reaction-timer-body {
+  padding: 30px 30px 26px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 2px solid #a87cff;
+  border-top: none;
+
+  border-radius: 0 0 24px 24px;
+
+  backdrop-filter: blur(12px);
+}
+
+
+.reaction-timer-status {
+  margin: 0 0 12px;
+
+  text-align: center;
+
+  font-size: 17px;
+  font-weight: 500;
+
+  color: #606884;
+}
+
+
+.reaction-timer-body h2 {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 52px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  color: #4f26b5;
+}
+
+
+.reaction-timer-divider {
+  position: relative;
+
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+
+  margin: 10px 0 18px;
+}
+
+
+.reaction-timer-divider::before {
+  content: "";
+
+  width: 100%;
+  height: 2px;
+
+  background: #d4c4fa;
+}
+
+
+.reaction-timer-divider span {
+  position: absolute;
+
+  left: 50%;
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background: #7040ce;
+
+  transform: translateX(-50%);
+}
+
+
+.reaction-timer-info {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 15px 16px;
+
+  background: #f1ebff;
+
+  border: 1px solid #e2d5ff;
+
+  border-radius: 15px;
+}
+
+
+.reaction-timer-info-icon {
+  width: 30px;
+  height: 30px;
+
+  min-width: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #6735c3;
+
+  color: white;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+
+.reaction-timer-info p {
+  margin: 0;
+
+  color: #56607d;
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+
+.reaction-timer-small-status {
+  width: 230px;
+
+  margin: 20px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 12px 18px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  border-radius: 100px;
+
+  box-shadow:
+    0 10px 25px rgba(30, 20, 60, 0.12);
+
+  backdrop-filter: blur(10px);
+}
+
+
+.reaction-timer-small-status span {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #7040ce;
+
+  animation: reactionTimerPulse 1.2s infinite;
+}
+
+
+.reaction-timer-small-status p {
+  margin: 0;
+
+  color: #402195;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+@keyframes reactionTimerPulse {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}

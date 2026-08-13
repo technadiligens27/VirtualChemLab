@@ -10,6 +10,7 @@ import HessReactionOneResults from "../../HessReactionOneResults/HessReactionOne
 import HessStartingTemperature from "../../HessStartingTemperature/HessStartingTemperature";
 import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview";
 import HessLiveDataPanel from "../../HessLiveDataPanel/HessLiveDataPanel";
+import { enthalpyReactionData } from "../../Data/enthalpyReactionData/enthalpyReactionData"
 
 
 const EnthalpyHessLaw = () =>{

@@ -44,13 +44,13 @@ const Interaction = () => {
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
-          bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef} = useContext(ModelContext)
+          bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
-  useEffect(()=>{
-    console.log("fillPippette:",fillPippette)
-  },[fillPippette])
+  // useEffect(()=>{
+  //   console.log("fillPippette:",fillPippette)
+  // },[fillPippette])
 
 
   const clickBeakerOption=()=>{
@@ -138,9 +138,12 @@ const Interaction = () => {
 
       {pipetteDroplet && <PipetteDroplets/>}
 
-      {testubesInBeaker.tube1 && <PlaceTestubeInBeaker testubeRef={testube01Ref} hand="right" xPos={-1} scale={0.8} />}
-      {testubesInBeaker.tube2 && <PlaceTestubeInBeaker testubeRef={testube02Ref} hand="right" xPos={0} scale={0.8} />}
-      {testubesInBeaker.tube3 && <PlaceTestubeInBeaker testubeRef={testube03Ref} hand="right" xPos={1} scale={0.8} />}
+      {testubesInBeaker.tube1 && <PlaceTestubeInBeaker testubeRef={testube01Ref} hand="right" xPos={-1}            scale={0.8} />}
+      {testubesInBeaker.tube2 && <PlaceTestubeInBeaker testubeRef={testube02Ref} hand="right" xPos={0}             scale={0.8} />}
+      {testubesInBeaker.tube3 && <PlaceTestubeInBeaker testubeRef={testube03Ref} hand="right" xPos={1}             scale={0.8} />}
+      {testubesInBeaker.tube4 && <PlaceTestubeInBeaker testubeRef={testube04Ref} hand="right" xPos={-2}  zPos={-1.5} scale={0.8} />}
+      {testubesInBeaker.tube5 && <PlaceTestubeInBeaker testubeRef={testube05Ref} hand="right" xPos={0}  zPos={-1.5} scale={0.8} />}
+      {testubesInBeaker.tube6 && <PlaceTestubeInBeaker testubeRef={testube06Ref} hand="right" xPos={-1}   zPos={-1.5}scale={0.8} />}
 
 
 

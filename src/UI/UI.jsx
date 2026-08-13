@@ -24,6 +24,7 @@ import EnthalpyHessLaw from "./AllLessons/EnthalpyHessLaw/EnthalpyHessLaw"
 import HessGuidelines from "./HessGuidelines/HessGuidelines"
 import EnthalpyHessReaction02 from "./EnthalpyHessReaction02/EnthalpyHessReaction02"
 import HydrolysisReaction from "./HydrolysisReaction/HydrolysisReaction"
+import ReactionTimer from "./ReactionTimer/ReactionTimer"
 
 const mainContent = [
   {
@@ -120,9 +121,14 @@ const UI = () => {
     isSitting,
     clickedModel,
     isObjectInfo,
-    chairStep,setHessGuidelineNumber,hessGuidelineNumber
+    chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,setIsReactionTimerRunning,isPouring
   } = useContext(InteractionContext)
 
+
+  useEffect(()=>{
+    console.log("isReactionTimerRunning:",isReactionTimerRunning)
+    console.log("isPouring:",isPouring)
+  },[isReactionTimerRunning])
 
 
   // ------------------------ Lesson 08 -------------
@@ -291,6 +297,8 @@ useEffect(() => {
         )}
 
         <AllErrors />
+
+        {isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
       </>
     )
   }
@@ -440,8 +448,10 @@ useEffect(() => {
         isLessonStart &&
         selectedLesson === 10 && (
           <HydrolysisReaction />
-        )}           
-        
+        )}          
+
+
+        {isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
 
       <AllErrors />
 
