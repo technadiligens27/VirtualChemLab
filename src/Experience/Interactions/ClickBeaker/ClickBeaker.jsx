@@ -952,7 +952,7 @@ const ClickObject = () => {
 
     //--------------Selected Lesson 08---------------------------
 
-    if(selectedLesson==-8){
+    if(selectedLesson==8){
       if(lessonStep==3){
         setShowErrorMsgNo(1)
         return false
@@ -961,6 +961,68 @@ const ClickObject = () => {
         setShowErrorMsgNo(1)
         return false
       }
+    }
+    //--------------------Selected Lesson 10--------
+
+    if(selectedLesson===10){
+      if([3, 10,11,18,41,74,75,79,89].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return false
+      }
+      if(lessonStep==4 && objectName!=="kettle"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+      if(lessonStep==12 && objectName!=="main-testube-02"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==19 && objectName!=="main-graduated-cylinder"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==42 && objectName!=="pipette"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==76 && objectName!=="main-testube-02"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==84 && objectName!=="main-testube-01"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==86 && objectName!=="main-testube-03"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==92 && objectName!=="main-testube-05"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==96 && objectName!=="main-testube-06"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==102 && objectName!=="main-testube-04"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==104 && objectName!=="main-testube-05"){
+        setShowErrorMsgNo(1)
+        return false 
+      }      
+      
     }
 
     return true
@@ -1007,12 +1069,97 @@ const ClickObject = () => {
       return true
     }
 
+    //---------------Selected Lesson 10-------------//
+
     if(selectedLesson===10){
+
+      if([19,20].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return false
+      }
+
       if(lessonStep===3){
         if(objectName !== "main-normal-beaker"){
           setShowErrorMsgNo(1)
+          return false
         }
       }
+
+      if(lessonStep==10 && objectName !=='main-testube-01'){
+         setShowErrorMsgNo(1)
+        return false  
+      }
+
+      if(lessonStep==15 && objectName!=="main-testube-03"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==21 && objectName!=="main-testube-01"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==26 && objectName!=="main-testube-02"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==33 && objectName!=="main-testube-03"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==41 && objectName!=="iodobutane-bottle"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==53 && objectName!=="bromobutane-bottle"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==58 && objectName!=="main-testube-02"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==63 && objectName!=="chlorobutane-bottle"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==68 && objectName!=="main-testube-03"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==74 && objectName!=="main-testube-01"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==79 && objectName!=="main-testube-03"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==82 && objectName!=="main-normal-beaker"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==89 && objectName!=="main-testube-04"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if(lessonStep==100 && objectName!=="main-normal-beaker"){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
     }
 
 
@@ -1731,6 +1878,11 @@ const handlePlaceBalance = () => {
       setShowErrorMsgNo(1)
       return
     }
+
+    if(selectedLesson ===10){
+      setShowErrorMsgNo(1)
+      return
+    }
     setIsPottasiumCarobnateInSpoon(true);
   }
 
@@ -1738,6 +1890,11 @@ const handlePlaceBalance = () => {
     if(selectedLesson===8 && lessonStep!==12){
       setShowErrorMsgNo(1)
       return
+    }
+
+    if(selectedLesson===10){
+      setShowErrorMsgNo(1)
+      return      
     }
     setIsPotassiumHydrogenCarbonateInSpoon(true)
   }

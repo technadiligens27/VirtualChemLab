@@ -1,6 +1,13 @@
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
+
 import { useFrame } from "@react-three/fiber"
+
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const AddMoreLiquid = ({
   liquidRef,
@@ -11,15 +18,31 @@ const AddMoreLiquid = ({
   const targetYRef = useRef(null)
   const pourLiquidRef = useRef(null)
   const pourStartScaleRef = useRef(null)
+  const pouringFinishedRef = useRef(false)
 
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-    console.log("AddMore")
+  const {
+    setShowIodobutanePrecipitate,
+    setIsAddMoreLiquid,
+    setIsPouring,
+  } = useContext(InteractionContext)
+
   useEffect(() => {
     if (!liquidRef?.current) return
 
-    targetYRef.current = liquidRef.current.scale.y + amount
-  }, [liquidRef, amount])
+    targetYRef.current =
+      liquidRef.current.scale.y + amount
+
+    pouringFinishedRef.current = false
+  }, [
+    liquidRef,
+    amount,
+  ])
 
   useEffect(() => {
     if (!pourModelRef?.current) return
@@ -27,27 +50,68 @@ const AddMoreLiquid = ({
     pourLiquidRef.current = null
 
     pourModelRef.current.traverse((child) => {
-      const childName = child.name?.toLowerCase() || ""
+      const childName =
+        child.name?.toLowerCase() || ""
 
-      if (childName.includes("liquid")) {
-        pourLiquidRef.current = child
-        pourStartScaleRef.current = child.scale.y
-      }
+      if (!childName.includes("liquid")) return
+      if (!child.isMesh) return
+
+      pourLiquidRef.current = child
+
+      pourStartScaleRef.current =
+        child.scale.y
     })
   }, [pourModelRef])
 
-
-  useEffect(()=>{
-    if(selectedLesson===10 && lessonStep===110){
-        setLessonStep(111)
+  useEffect(() => {
+    if (selectedLesson === 10 && lessonStep === 110) {
+      setLessonStep(111)
     }
-  },[selectedLesson,lessonStep])
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
 
   useFrame((_, delta) => {
     if (!liquidRef?.current || targetYRef.current === null) return
+    if (!pourLiquidRef.current) return
+    if (pouringFinishedRef.current) return
 
-    const currentY = liquidRef.current.scale.y
-    const targetY = targetYRef.current
+    const currentY =
+      liquidRef.current.scale.y
+
+    const targetY =
+      targetYRef.current
+
+    const pourCurrentY =
+      pourLiquidRef.current.scale.y
+
+    /*
+      Source test tube is empty.
+
+      Stop pouring completely.
+    */
+
+    if (pourCurrentY <= 0) {
+      pourLiquidRef.current.scale.y = 0
+      pourLiquidRef.current.visible = false
+
+      pouringFinishedRef.current = true
+
+      setIsPouring(false)
+      setIsAddMoreLiquid(false)
+      setShowIodobutanePrecipitate(true)
+
+      console.log("Pouring finished")
+
+      return
+    }
+
+    /*
+      Increase receiving liquid only
+      while the source still has liquid.
+    */
 
     if (currentY < targetY) {
       liquidRef.current.scale.y = Math.min(
@@ -56,19 +120,36 @@ const AddMoreLiquid = ({
       )
     }
 
-    if (pourLiquidRef.current && pourLiquidRef.current.scale.y > 0) {
-      pourLiquidRef.current.scale.y = Math.max(
-        pourLiquidRef.current.scale.y - speed * delta,
-        0
-      )
+    /*
+      Reduce liquid inside source
+      test tube.
+    */
 
-      if (pourLiquidRef.current.scale.y === 0) {
-        pourLiquidRef.current.visible = false
-      }
+    pourLiquidRef.current.scale.y = Math.max(
+      pourCurrentY - speed * delta,
+      0
+    )
+
+    /*
+      Catch the exact frame where
+      source becomes empty.
+    */
+
+    if (pourLiquidRef.current.scale.y <= 0) {
+      pourLiquidRef.current.scale.y = 0
+      pourLiquidRef.current.visible = false
+
+      pouringFinishedRef.current = true
+
+      setIsPouring(false)
+      setIsAddMoreLiquid(false)
+      setShowIodobutanePrecipitate(true)
+
+      console.log("Pouring finished")
     }
   })
 
-  return null
+  return <></>
 }
 
 export default AddMoreLiquid

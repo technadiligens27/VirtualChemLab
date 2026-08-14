@@ -55,7 +55,7 @@ const FillBeakerBox = () => {
         { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
         { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
         { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
-        { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.png' },
+        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
         { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
         { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
         { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },

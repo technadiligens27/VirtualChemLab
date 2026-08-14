@@ -10,6 +10,7 @@ import { InteractionContext } from "../../../../Contexts/InteractionContext/Inte
 import { MainGuidelineContext } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 import AddMoreLiquid from "../../AddMoreLiquid/AddMoreLiquid"
+import IodobutaneHydolysisReaction from "../../../AllReactions/IodobutaneHydolysisReaction/IodobutaneHydolysisReaction"
 
 const FillLiquidBeaker = ({
   modelRef,
@@ -22,7 +23,8 @@ const FillLiquidBeaker = ({
     setBeakerFillFinished,
     setIsPouring,
     isAddMoreLiquid,
-    setIsAddMoreLiquid,
+    setIsAddMoreLiquid,showIodobutanePrecipitate,
+    setShowIodobutanePrecipitate
   } = useContext(InteractionContext)
 
   const {
@@ -111,6 +113,9 @@ const FillLiquidBeaker = ({
           speed={10}
         />
       )}
+
+          {showIodobutanePrecipitate && <IodobutaneHydolysisReaction modelRef={modelRef} liquidRef={liquidRef}/>}
+
     </>
   )
 }

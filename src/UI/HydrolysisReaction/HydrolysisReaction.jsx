@@ -352,7 +352,7 @@ const guidelineData = [
         {lessonStep === 76 && <DialogBox text={'Take Testube to Right Hand'}/>}
         {lessonStep === 77 && <DialogBox text={'Click tetsube again and select Place Bung'}/>}
         {lessonStep === 78 && <DialogBox text={'Keep Testube Left Back On Table'}/>}
-        {lessonStep === 79 && <DialogBox text={'Now Take the Bromotubane Testube to Left Hand'}/>}
+        {lessonStep === 79 && <DialogBox text={'Now Take the Chlorobutane  Testube to Left Hand'}/>}
         {lessonStep === 80 && <DialogBox text={'Select testube and clikc Place Bung'}/>}
         {lessonStep === 81 && <DialogBox text={'Keep Chlorobutane Testube in Table'}/>}
 

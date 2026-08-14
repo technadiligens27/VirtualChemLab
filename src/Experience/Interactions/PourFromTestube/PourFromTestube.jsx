@@ -73,7 +73,7 @@ const PourFromTestube = ({isPouring,hand,model,liquidColor}) => {
     if(isPouring){
       setIsReactionTimerRunning(true)
     }
-  },[isPouring,isReactionTimerRunning])
+  },[isPouring])
 
   useFrame((_, delta) => {
     const pour = pourRef.current

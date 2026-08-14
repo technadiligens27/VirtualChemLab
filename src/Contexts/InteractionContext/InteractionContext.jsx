@@ -125,7 +125,7 @@ export const InteractionProvider = ({ children }) => {
   const [isAddMoreLiquid,setIsAddMoreLiquid] = useState(false);
   const [isReactionTimerRunning,setIsReactionTimerRunning] = useState(false)
 
-
+  const [showIodobutanePrecipitate,setShowIodobutanePrecipitate] = useState(false)  
 
   const resetInteractions = () => {
   // Empty both hands
@@ -229,6 +229,7 @@ export const InteractionProvider = ({ children }) => {
 
   setIsAddMoreLiquid(false);
   setIsReactionTimerRunning(false);
+  setShowIodobutanePrecipitate(false)
 }
 
   return (
@@ -298,7 +299,8 @@ export const InteractionProvider = ({ children }) => {
         isPipetteFilled,setIsPipetteFilled,
         testubesInBeaker,setTestubesInBeaker,
         isAddMoreLiquid,setIsAddMoreLiquid,
-        isReactionTimerRunning,setIsReactionTimerRunning
+        isReactionTimerRunning,setIsReactionTimerRunning,
+        showIodobutanePrecipitate,setShowIodobutanePrecipitate
         
       }}
     >

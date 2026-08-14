@@ -451,7 +451,7 @@ useEffect(() => {
         )}          
 
 
-        {isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
+     {isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
 
       <AllErrors />
 

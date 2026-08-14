@@ -391,11 +391,11 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
       }
 
-      {
+      {/* {
        !isStirMode &&  !isLitmusMode && !isDropperPlaced && 
        isReactionRef.current===false && !isPouringMode &&
        <LiquidLabels modelRef={modeldata.ref} hand={'left'}/>
-      }
+      } */}
 
     </>
   )

@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
 } from "react"
+
 import { useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
@@ -20,8 +21,11 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     setIsFillUpBeaker,
   } = useContext(InteractionContext)
 
-  const { lessonStep, setLessonStep,selectedLesson } =
-    useContext(MainGuidelineContext)
+  const {
+    lessonStep,
+    setLessonStep,
+    selectedLesson,
+  } = useContext(MainGuidelineContext)
 
   const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
 
@@ -31,26 +35,18 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
   const fillCompletedRef = useRef(false)
 
   const isConicalFlaskRef = useRef(false)
-  const isRoundBottomFlaskRef =
-    useRef(false)
+  const isRoundBottomFlaskRef = useRef(false)
 
   const startXScaleRef = useRef(1)
   const targetXScaleRef = useRef(1)
 
   const labelGroupRef = useRef(null)
-  const labelPositionRef = useRef(
-    new THREE.Vector3()
-  )
+  const labelPositionRef = useRef(new THREE.Vector3())
 
-  const [showLabel, setShowLabel] =
-    useState(false)
+  const [showLabel, setShowLabel] = useState(false)
 
   useEffect(() => {
-    if (
-      lessonStep === 5 ||
-      lessonStep === 8 ||
-      lessonStep === 9
-    ) {
+    if (lessonStep === 5 || lessonStep === 8 || lessonStep === 9) {
       fillCompletedRef.current = false
     }
   }, [lessonStep])
@@ -64,72 +60,55 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
 
     setShowLabel(false)
 
-    const beakerName =
-      beakerRef.current.name || ""
+    const beakerName = beakerRef.current.name || ""
+    const lowerBeakerName = beakerName.toLowerCase()
 
-    const lowerBeakerName =
-      beakerName.toLowerCase()
+    const selectedAmount = Number(fillData.amount)
 
-    const selectedAmount = Number(
-      fillData.amount
-    )
+    const liquidName = fillData?.name?.toLowerCase() || ""
 
-    const liquidName =
-      fillData?.name?.toLowerCase() || ""
+    const isWater = liquidName.includes("water") || liquidName.includes("h2o")
+    const isEthanol = liquidName.includes("ethanol") || liquidName.includes("c2h5oh")
 
-    const isWater =
-      liquidName.includes("water") ||
-      liquidName.includes("h2o")
+    console.log("Selected amount:", selectedAmount)
 
-    console.log(
-      "Selected amount:",
-      selectedAmount
-    )
+    console.log("Selected liquid:", {
+      liquidName,
+      isWater,
+      isEthanol,
+    })
 
-    isConicalFlaskRef.current =
-      lowerBeakerName.includes(
-        "conical-flask"
-      )
-
-    isRoundBottomFlaskRef.current =
-      lowerBeakerName.includes(
-        "round-bottom-flask"
-      )
+    isConicalFlaskRef.current = lowerBeakerName.includes("conical-flask")
+    isRoundBottomFlaskRef.current = lowerBeakerName.includes("round-bottom-flask")
 
     let selectedLiquidMesh = null
 
     /*
       Hide all liquid meshes first.
 
-      The conical flask selects its liquid
-      mesh based on the chosen amount:
-
+      Conical flask liquids:
       conical-liquid-25
       conical-liquid-50
       conical-liquid-75
       conical-liquid-100
     */
+
     beakerRef.current.traverse((child) => {
       if (!child.isMesh) return
 
-      const childName =
-        child.name?.toLowerCase() || ""
+      const childName = child.name?.toLowerCase() || ""
 
-      if (!childName.includes("liquid")) {
-        return
-      }
+      if (!childName.includes("liquid")) return
 
       child.visible = false
 
       if (isConicalFlaskRef.current) {
-        const requiredName =
-          `conical-liquid-${selectedAmount}`
+        const requiredName = `conical-liquid-${selectedAmount}`
 
         console.log("Checking:", {
           childName,
           requiredName,
-          matches:
-            childName === requiredName,
+          matches: childName === requiredName,
         })
 
         if (childName === requiredName) {
@@ -139,57 +118,65 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
         return
       }
 
-      /*
-        Other containers use their first
-        available liquid mesh.
-      */
       if (!selectedLiquidMesh) {
         selectedLiquidMesh = child
       }
     })
 
     if (!selectedLiquidMesh) {
-      console.log(
-        "Liquid mesh not found:",
-        {
-          beakerName,
-          selectedAmount,
-          expectedName:
-            `conical-liquid-${selectedAmount}`,
-        }
-      )
+      console.log("Liquid mesh not found:", {
+        beakerName,
+        selectedAmount,
+        expectedName: `conical-liquid-${selectedAmount}`,
+      })
 
       return
     }
 
     selectedLiquidMesh.visible = true
 
-    liquidMeshesRef.current.push(
-      selectedLiquidMesh
-    )
+    liquidMeshesRef.current.push(selectedLiquidMesh)
 
     setShowLabel(true)
 
     /*
-      Apply the selected liquid colour.
+      Apply selected liquid material.
 
-      Water is made slightly transparent.
-      Other liquids remain fully opaque.
+      Water:
+      Transparent.
+
+      Ethanol:
+      Colorless and transparent.
+
+      Other liquids:
+      Normal opaque colour.
     */
+
     const updateMaterial = (material) => {
       if (!material) return material
 
-      const clonedMaterial =
-        material.clone()
+      const clonedMaterial = material.clone()
 
-      clonedMaterial.color?.set(
-        fillData.color
-      )
+      clonedMaterial.color?.set(fillData.color)
 
-      if (isWater) {
+      if (isEthanol) {
+        clonedMaterial.color?.set("#f5fbff")
+
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0.58
+        clonedMaterial.depthWrite = false
+
+        if ("roughness" in clonedMaterial) clonedMaterial.roughness = 0.1
+        if ("metalness" in clonedMaterial) clonedMaterial.metalness = 0
+        if ("transmission" in clonedMaterial) clonedMaterial.transmission = 0.3
+        if ("thickness" in clonedMaterial) clonedMaterial.thickness = 0.2
+      } else if (isWater) {
         clonedMaterial.transparent = true
         clonedMaterial.opacity = 0.35
         clonedMaterial.depthWrite = false
+
+        if ("roughness" in clonedMaterial) clonedMaterial.roughness = 0.1
+        if ("metalness" in clonedMaterial) clonedMaterial.metalness = 0
       } else {
         clonedMaterial.transparent = false
         clonedMaterial.opacity = 1
@@ -201,37 +188,27 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       return clonedMaterial
     }
 
-    if (
-      Array.isArray(
-        selectedLiquidMesh.material
-      )
-    ) {
+    if (Array.isArray(selectedLiquidMesh.material)) {
       selectedLiquidMesh.material =
-        selectedLiquidMesh.material.map(
-          updateMaterial
-        )
-    } else if (
-      selectedLiquidMesh.material
-    ) {
+        selectedLiquidMesh.material.map(updateMaterial)
+    } else if (selectedLiquidMesh.material) {
       selectedLiquidMesh.material =
-        updateMaterial(
-          selectedLiquidMesh.material
-        )
+        updateMaterial(selectedLiquidMesh.material)
     }
 
     /*
-      Start near zero so the liquid grows
-      upward from the container bottom.
+      Start near zero so liquid grows upward.
     */
+
     selectedLiquidMesh.scale.y = 0.001
     selectedLiquidMesh.scale.x = 1
 
     speedRef.current = 1
 
     /*
-      Conical flask liquid meshes already
-      have their correct final size.
+      Conical flask.
     */
+
     if (isConicalFlaskRef.current) {
       amountRef.current = 1
       speedRef.current = 1.5
@@ -240,96 +217,64 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
     /*
       Normal beaker.
     */
-    else if (
-      lowerBeakerName.includes(
-        "normal-beaker"
-      )
-    ) {
-      amountRef.current =
-        selectedAmount * 0.55
 
+    else if (lowerBeakerName.includes("normal-beaker")) {
+      amountRef.current = selectedAmount * 0.55
       speedRef.current = 20
     }
 
     /*
       Test tube.
     */
-    else if (
-      lowerBeakerName.includes(
-        "testube"
-      ) ||
-      lowerBeakerName.includes(
-        "test-tube"
-      )
-    ) {
-      amountRef.current =
-        selectedAmount * 1.2
 
+    else if (lowerBeakerName.includes("testube") || lowerBeakerName.includes("test-tube")) {
+      amountRef.current = selectedAmount * 1.2
       speedRef.current = 20
     }
 
     /*
       Round-bottom flask.
     */
-    else if (
-      isRoundBottomFlaskRef.current
-    ) {
-      amountRef.current =
-        selectedAmount * 0.04
 
+    else if (isRoundBottomFlaskRef.current) {
+      amountRef.current = selectedAmount * 0.04
       speedRef.current = 20
 
       startXScaleRef.current = 0.8
       targetXScaleRef.current = 1.2
 
-      selectedLiquidMesh.scale.x =
-        startXScaleRef.current
+      selectedLiquidMesh.scale.x = startXScaleRef.current
     }
 
     /*
       Graduated cylinder.
     */
-    else if (
-      lowerBeakerName.includes(
-        "graduated-cylinder"
-      )
-    ) {
-      amountRef.current =
-        selectedAmount * 1.1
 
+    else if (lowerBeakerName.includes("graduated-cylinder")) {
+      amountRef.current = selectedAmount * 1.1
       speedRef.current = 20
     }
 
     /*
-     Buirette Container
+      Burette.
     */
 
-
-    else if (
-      lowerBeakerName.includes(
-        "main-buirette"
-      ) 
-    ) {
-      amountRef.current =
-        selectedAmount /63
-
+    else if (lowerBeakerName.includes("main-buirette")) {
+      amountRef.current = selectedAmount / 63
       speedRef.current = 0.4
     }
-    
-        /*
-      Fallback container.
+
+    /*
+      Fallback.
     */
 
-
     else {
-      amountRef.current =
-        selectedAmount * 0.2
-
+      amountRef.current = selectedAmount * 0.2
       speedRef.current = 20
     }
 
     console.log(
-      "Selected liquid:",
+      "Selected liquid mesh:",
       selectedLiquidMesh.name
     )
   }, [
@@ -341,97 +286,81 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
   ])
 
   useFrame((state, delta) => {
-    if (
-      liquidMeshesRef.current.length === 0
-    ) {
-      return
-    }
-
+    if (liquidMeshesRef.current.length === 0) return
     if (fillCompletedRef.current) return
 
     let isFillDone = true
 
-    liquidMeshesRef.current.forEach(
-      (mesh) => {
-        if (!mesh) return
+    liquidMeshesRef.current.forEach((mesh) => {
+      if (!mesh) return
+
+      /*
+        Conical flask.
+      */
+
+      if (isConicalFlaskRef.current) {
+        mesh.scale.y = Math.min(
+          mesh.scale.y + speedRef.current * delta,
+          1
+        )
+
+        if (mesh.scale.y < 1) {
+          isFillDone = false
+        }
+      }
+
+      /*
+        Other containers.
+      */
+
+      else {
+        if (!amountRef.current) {
+          isFillDone = false
+          return
+        }
+
+        mesh.scale.y = Math.min(
+          mesh.scale.y + speedRef.current * delta,
+          amountRef.current
+        )
 
         /*
-          Conical flask.
+          Round-bottom flask horizontal expansion.
         */
-        if (isConicalFlaskRef.current) {
-          mesh.scale.y = Math.min(
-            mesh.scale.y +
-              speedRef.current * delta,
+
+        if (isRoundBottomFlaskRef.current) {
+          const fillProgress = THREE.MathUtils.clamp(
+            mesh.scale.y / amountRef.current,
+            0,
             1
           )
 
-          if (mesh.scale.y < 1) {
-            isFillDone = false
-          }
+          mesh.scale.x = THREE.MathUtils.lerp(
+            startXScaleRef.current,
+            targetXScaleRef.current,
+            fillProgress
+          )
         }
 
-        /*
-          Other containers.
-        */
-        else {
-          if (!amountRef.current) {
-            isFillDone = false
-            return
-          }
-
-          mesh.scale.y = Math.min(
-            mesh.scale.y +
-              speedRef.current * delta,
-            amountRef.current
-          )
-
-          /*
-            Expand round-bottom flask liquid
-            horizontally while filling.
-          */
-          if (
-            isRoundBottomFlaskRef.current
-          ) {
-            const fillProgress =
-              THREE.MathUtils.clamp(
-                mesh.scale.y /
-                  amountRef.current,
-                0,
-                1
-              )
-
-            mesh.scale.x =
-              THREE.MathUtils.lerp(
-                startXScaleRef.current,
-                targetXScaleRef.current,
-                fillProgress
-              )
-          }
-
-          if (
-            mesh.scale.y <
-            amountRef.current
-          ) {
-            isFillDone = false
-          }
-        }
-
-        /*
-          Move the label above the liquid.
-        */
-        if (labelGroupRef.current) {
-          mesh.getWorldPosition(
-            labelPositionRef.current
-          )
-
-          labelPositionRef.current.y += 1
-
-          labelGroupRef.current.position.copy(
-            labelPositionRef.current
-          )
+        if (mesh.scale.y < amountRef.current) {
+          isFillDone = false
         }
       }
-    )
+
+      /*
+        Move label above liquid.
+      */
+
+      if (labelGroupRef.current) {
+        mesh.getWorldPosition(labelPositionRef.current)
+
+        labelPositionRef.current.y += 1
+
+        labelGroupRef.current.position.copy(
+          labelPositionRef.current
+        )
+      }
+    })
 
     if (!isFillDone) return
 
@@ -439,39 +368,38 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
 
     setIsFillUpBeaker(false)
 
-    if(selectedLesson ===8 && lessonStep ===20){
+    if (selectedLesson === 8 && lessonStep === 20) {
       setLessonStep(21)
     }
 
-    if(selectedLesson ===10 && lessonStep ===20.5){
+    if (selectedLesson === 10 && lessonStep === 20.5) {
       setLessonStep(21)
     }
 
-    if(selectedLesson ===9 && lessonStep ===18){
+    if (selectedLesson === 9 && lessonStep === 18) {
       setLessonStep(19)
     }
 
-    if(selectedLesson ===10 && lessonStep ===28){
+    if (selectedLesson === 10 && lessonStep === 28) {
       setLessonStep(29)
     }
 
-    if(selectedLesson ===10 && lessonStep ===35){
+    if (selectedLesson === 10 && lessonStep === 35) {
       setLessonStep(36)
     }
 
-    if(selectedLesson ===10 && lessonStep ===91){
+    if (selectedLesson === 10 && lessonStep === 91) {
       setLessonStep(92)
     }
 
-    if(selectedLesson ===10 && lessonStep ===94){
+    if (selectedLesson === 10 && lessonStep === 94) {
       setLessonStep(95)
     }
 
-    if(selectedLesson ===10 && lessonStep ===98){
+    if (selectedLesson === 10 && lessonStep === 98) {
       setLessonStep(99)
     }
-    
-    
+
     if (lessonStep === 5) {
       setLessonStep(6)
     }
@@ -489,12 +417,10 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
             <div
               className="liquid-label"
               style={{
-                borderColor:
-                  fillData?.color,
+                borderColor: fillData?.color,
               }}
             >
-              {fillData?.name ||
-                "Liquid"}
+              {fillData?.name || "Liquid"}
             </div>
           </Html>
         </group>
