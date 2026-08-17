@@ -226,19 +226,62 @@ const guidelineData = [
   },
 
   {
-    id: 9,
+    id: "9",
 
-    title: "Compare the Reaction Rates",
+    title: "Measure the Iodobutane Reaction",
 
     description:
-      "Compare the times taken for cloudiness to appear in the three mixtures. A shorter time means that hydrolysis occurred more rapidly because halide ions were produced more quickly.",
+      "Observe the Iodobutane reaction and measure the time taken for cloudiness or precipitate to appear.",
 
     implementationSteps: [
-      "Record the reaction time for Iodobutane.",
-      "Record the reaction time for Bromobutane.",
-      "Record the reaction time for Chlorobutane.",
-      "Arrange the compounds from fastest to slowest hydrolysis.",
-      "Use the results to compare the effect of the carbon-halogen bond on the rate of hydrolysis.",
+      "Start timing the Iodobutane reaction.",
+      "Observe the mixture carefully.",
+      "Watch for cloudiness or precipitate.",
+      "Record the reaction time.",
+    ],
+
+    image: "./compareHydrolysisResults.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 10,
+
+    title: "Measure the Bromobutane Reaction",
+
+    description:
+      "Observe the Bromobutane reaction and measure the time taken for cloudiness or precipitate to appear.",
+
+    implementationSteps: [
+      "Start timing the Bromobutane reaction.",
+      "Observe the mixture carefully.",
+      "Watch for cloudiness or precipitate.",
+      "Record the reaction time.",
+    ],
+
+    image: "./compareHydrolysisResults.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 11,
+
+    title: "Measure the Chlorobutane Reaction",
+
+    description:
+      "Observe the Chlorobutane reaction and measure the time taken for cloudiness or precipitate to appear.",
+
+    implementationSteps: [
+      "Start timing the Chlorobutane reaction.",
+      "Observe the mixture carefully.",
+      "Watch for cloudiness or precipitate.",
+      "Record the reaction time.",
     ],
 
     image: "./compareHydrolysisResults.png",
@@ -395,9 +438,21 @@ const guidelineData = [
         {lessonStep === 108 && <DialogBox text={'Now Click Tetsube with Iodobutane adn remvoe bung'}/>}
         {lessonStep === 109 && <DialogBox text={'Click P for Pouring Mode'}/>}
         {lessonStep === 110 && <DialogBox text={'Scroll Down To Pour'}/>}
-        {lessonStep === 111 && <DialogBox text={'Press P to exit Pouring Mode'}/>}
-        {lessonStep === 112 && <DialogBox text={'Select LEft HAbd and select Place Bung'}/>}
-        {lessonStep === 113 && <DialogBox text={'Observe The Reaction'}/>}
+        {lessonStep === 111 && <DialogBox text={'you can see cliudinnes with precipaitate occuring and Keep Observing'}/>}
+        {lessonStep === 112 && <DialogBox text={'Press P to exit Pouring Mode'}/>}
+        {lessonStep === 113 && <DialogBox text={'Keep Left Testtube back In Table'}/>}
+        {lessonStep === 114 && <DialogBox text={'Keep Right Testtube back In Table'}/>}
+        {lessonStep === 115 && <DialogBox text={'Now Click The Beaker And TAake Bromobutane and SilverNitrate Testube (Remove Tubes from Water Bath)'}/>}
+        {lessonStep === 116 && <DialogBox text={'Select Held Testtube and Remove Bung'}/>}
+        {lessonStep === 117 && <DialogBox text={'Press P for Pouring Mode'}/>}
+        {lessonStep === 118 && <DialogBox text={'Scroll Down To Pour'}/>}
+        {lessonStep === 119 && <DialogBox text={'119'}/>}
+
+
+
+        {/* {lessonStep >=114 && <HessGuidelines guidelineData={guidelineData[8]}/>} */}
+
+
 
         </>
     )

@@ -2,6 +2,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 
 import { useFrame } from "@react-three/fiber"
@@ -25,6 +26,9 @@ const PourFromKettle = ({
   } = useContext(InteractionContext)
 
   const pourLiquidRef = useRef(null)
+  const hasReachedFullScaleRef = useRef(false)
+
+  const [pourStreamFullyScaled, setPourStreamFullyScaled] = useState(false)
 
   useEffect(() => {
     if (!kettleRef?.current) return
@@ -57,6 +61,14 @@ const PourFromKettle = ({
     }
   }, [kettleRef, color])
 
+  useEffect(() => {
+    if (isPouring) return
+
+    hasReachedFullScaleRef.current = false
+    setPourStreamFullyScaled(false)
+    setFillBeakerLiquid(false)
+  }, [isPouring, setFillBeakerLiquid])
+
   useFrame((_, delta) => {
     if (!pourLiquidRef.current) return
 
@@ -66,21 +78,27 @@ const PourFromKettle = ({
       return
     }
 
-    if (!fillBeakerLiquid) {
-      setFillBeakerLiquid(true)
-    }
-
     pourLiquidRef.current.visible = true
 
     pourLiquidRef.current.scale.y = Math.min(
       pourLiquidRef.current.scale.y + delta * 50,
       25
     )
+
+    if (pourLiquidRef.current.scale.y >= 25 && !hasReachedFullScaleRef.current) {
+      hasReachedFullScaleRef.current = true
+
+      setPourStreamFullyScaled(true)
+      setFillBeakerLiquid(true)
+
+      console.log("Pour stream fully scaled")
+      console.log("Beaker filling started")
+    }
   })
 
   return (
     <>
-      {fillBeakerLiquid && (
+      {fillBeakerLiquid && pourStreamFullyScaled && (
         <FillLiquidBeaker
           modelRef={normalBeakerRef}
           amount={45}

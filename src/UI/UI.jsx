@@ -25,6 +25,7 @@ import HessGuidelines from "./HessGuidelines/HessGuidelines"
 import EnthalpyHessReaction02 from "./EnthalpyHessReaction02/EnthalpyHessReaction02"
 import HydrolysisReaction from "./HydrolysisReaction/HydrolysisReaction"
 import ReactionTimer from "./ReactionTimer/ReactionTimer"
+import HCLTitration from "./AllLessons/HCLTitration/HCLTitration"
 
 const mainContent = [
   {
@@ -450,6 +451,11 @@ useEffect(() => {
           <HydrolysisReaction />
         )}          
 
+     {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 11 && (
+          <HCLTitration/>
+        )}     
 
      {isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
 
@@ -459,9 +465,9 @@ useEffect(() => {
         <InfoDialogBox clickedModel={clickedModel} />
       )} */}
 
-      {isObjectInfo && (
-        <InfoBox clickedModel={clickedModel} />
-      )}
+      {isObjectInfo && (<InfoBox clickedModel={clickedModel} />)}
+
+      
 
     </>
   )

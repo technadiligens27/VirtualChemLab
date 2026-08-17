@@ -63,15 +63,15 @@ const AddMoreLiquid = ({
     })
   }, [pourModelRef])
 
-  useEffect(() => {
-    if (selectedLesson === 10 && lessonStep === 110) {
-      setLessonStep(111)
-    }
-  }, [
-    selectedLesson,
-    lessonStep,
-    setLessonStep,
-  ])
+  // useEffect(() => {
+  //   if (selectedLesson === 10 && lessonStep === 110) {
+  //     setLessonStep(111)
+  //   }
+  // }, [
+  //   selectedLesson,
+  //   lessonStep,
+  //   setLessonStep,
+  // ])
 
   useFrame((_, delta) => {
     if (!liquidRef?.current || targetYRef.current === null) return

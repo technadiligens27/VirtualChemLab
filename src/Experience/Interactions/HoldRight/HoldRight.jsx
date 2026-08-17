@@ -21,6 +21,8 @@ import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionConte
 import PlacePolysterene from "../PlacePolysterene/PlacePolysterene"
 import PourIntoTestubeFromSpoon from "../PourIntoTestubeFromSpoon/PourIntoTestubeFromSpoon"
 import PipetteRubberAnimation from "../PipetteRubberAnimation/PipetteRubberAnimation"
+import VolumetricPipetteMode from "../VolumetricPipetteMode/VolumetricPipetteMode"
+import VolumetricRubberAnimation from "../VolumetricRubberAnimation/VolumetricRubberAnimation"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -245,11 +247,11 @@ const transformControlsRef = useRef()
   
   // General step change
 
-  useEffect(()=>{
-    if(lessonStep===6 && isMainGuideline && selectedLesson !==8 && selectedLesson !==10){
-      setLessonStep(7)
-    }
-  },[lessonStep,isMainGuideline])
+  // useEffect(()=>{
+  //   if(lessonStep===6 && isMainGuideline && selectedLesson !==8 && selectedLesson !==10){
+  //     setLessonStep(7)
+  //   }
+  // },[lessonStep,isMainGuideline])
 
   useEffect(()=>{
     if(lessonStep===4 && selectedLesson===8 && isTutorialMode){
@@ -351,6 +353,12 @@ const transformControlsRef = useRef()
     }
   },[selectedLesson,lessonStep])   
 
+   useEffect(()=>{
+    if(selectedLesson===11 && lessonStep ===3){
+      setLessonStep(4)
+    }
+  },[selectedLesson,lessonStep]) 
+
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
@@ -443,6 +451,10 @@ const transformControlsRef = useRef()
       {
         selectedRightHand.name==='pipette' && <PipetteRubberAnimation/>
       }  
+
+      {
+        selectedRightHand?.name === 'volumetric-pipette' && <VolumetricRubberAnimation/>
+      }
   </>
   )
 }

@@ -49,7 +49,7 @@ const ClickObject = () => {
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
     isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,setIsPotassiumHydrogenCarbonateInSpoon,
     isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
-    fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker
+    fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode
 
   } = useContext(InteractionContext)
 
@@ -85,7 +85,7 @@ const ClickObject = () => {
     thermometerLiquidRef,
     potassiumHydrogenCarbonateRef,
     kettleRef,pipetteRef,iodobutaneBottleRef,
-    bromobutaneBottleRef,chlorobutaneBottleRef
+    bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -101,6 +101,13 @@ const ClickObject = () => {
   const flatOriginalTransformRef = useRef(null)
   const foldedOriginalTransformRef = useRef(null);
   const thermometerOriginalTransformRef = useRef(null)
+
+  const testube01RackRef = useRef(null)  
+  const testube02RackRef = useRef(null)
+  const testube03RackRef = useRef(null)
+  const testube04RackRef = useRef(null)
+  const testube05RackRef = useRef(null)
+  const testube06RackRef = useRef(null)
 
   const selectableObjects = useMemo(
     () => [
@@ -230,6 +237,10 @@ const ClickObject = () => {
       {
         name:'chlorobutane-bottle',
         ref:chlorobutaneBottleRef
+      },
+      {
+        name:'volumetric-pipette',
+        ref:volumetricPipetteRef
       }
       ],
     [
@@ -257,7 +268,8 @@ const ClickObject = () => {
       kettleRef,pipetteRef,
       bromobutaneBottleRef,
       chlorobutaneBottleRef,
-      testube04Ref,testube05Ref,testube06Ref
+      testube04Ref,testube05Ref,testube06Ref,
+      volumetricPipetteRef
     ]
   )
 
@@ -629,6 +641,30 @@ const ClickObject = () => {
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
+    //--------Selected Lesson 10--------------
+
+    if(selectedLesson==10){
+
+      if([5,20,21,22,23,24,26,27,29,30,31,33,34,36,37,38,42,43,44,45,46,48,49,50,51,53,54,55,56,58,59,60,61,63,64,65,66,69,70,71,75,
+        76,77,80,82,83,84,85,86,87,90,91
+
+      ].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+
+      if(hand==='right' && [14,25,32,47,52,57,62,67,68,72,78,79,81].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return        
+      }
+
+      if(hand==='left' && [17,39,92,95].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return        
+      }      
+
+    }
+
     if (!handData?.ref?.current) return
 
     if (handData.name === "main-spoon" &&selectedLesson === 8 && lessonStep === 15) {
@@ -711,6 +747,14 @@ const ClickObject = () => {
 
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===78) {
       setLessonStep(79)
+    }
+
+    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===113) {
+      setLessonStep(114)
+    }
+
+    if (handData.name === "main-testube-04" && selectedLesson===10 && lessonStep ===114) {
+      setLessonStep(115)
     }
 
     if (handData.name === "main-graduated-cylinder" && selectedLesson===10 && lessonStep ===39) {
@@ -1259,6 +1303,8 @@ const ClickObject = () => {
   const openFillBeakerBox = () => {
   if (!selectedObject) return
 
+
+
   // if (isTutorialMode) {
   //   if (selectedLesson === 7 && lessonStep !== 11 && lessonStep !== 4) {
   //     setShowErrorMsgNo(4)
@@ -1275,20 +1321,22 @@ const ClickObject = () => {
 
   if (isMainGuideline) {
     const isAllowedStep =
-      lessonStep === 4 ||
-      lessonStep === 7 ||
-      lessonStep === 8 ||
+      // lessonStep === 4 ||
+      // lessonStep === 7 ||
+      // lessonStep === 8 ||
       (selectedLesson === 7 && (lessonStep === 4 || lessonStep === 11)) ||
       (selectedLesson === 8 && lessonStep === 19) ||
       (selectedLesson === 9 && lessonStep === 17) ||
       (selectedLesson === 10 && lessonStep === 20) ||
-      (selectedLesson === 10 && lessonStep === 27)
+      (selectedLesson === 10 && lessonStep === 27) ||
+      (selectedLesson===10 && ([20,34,90,93,97].includes(lessonStep))) ||
+      (selectedLesson===11 && ([4].includes(lessonStep)) )
 
-    // if (!isAllowedStep) {
-    //   setShowErrorMsgNo(4)
-    //   setSelectedObject(null)
-    //   return
-    // }
+    if (!isAllowedStep) {
+      setShowErrorMsgNo(4)
+      setSelectedObject(null)
+      return
+    }
 
     // if (selectedLesson === 3 && lessonStep !== 4) {
     //   setShowErrorMsgNo(4)
@@ -1462,7 +1510,7 @@ const canShowMainHoldingButton = () => {
 const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
-    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8
+    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11
   ) {
     return <p>Can't pick now</p>
   }
@@ -1476,16 +1524,16 @@ const renderHandSelectionButtons = () => {
     return <p>Can't pick now</p>
   }
 
-  if (
-    isTutorialMode &&
-    lessonStep !== 3 &&
-    lessonStep !== 6 &&
-    selectedLesson !== 8 &&
-    selectedLesson !== 9 && 
-    selectedLesson !==10 
-  ) {
-    return <p>Can't pick now</p>
-  }
+  // if (
+  //   isTutorialMode &&
+  //   lessonStep !== 3 &&
+  //   lessonStep !== 6 &&
+  //   selectedLesson !== 8 &&
+  //   selectedLesson !== 9 && 
+  //   selectedLesson !==10 
+  // ) {
+  //   return <p>Can't pick now</p>
+  // }
 
   if (isObjectInfo) return null
 
@@ -1930,6 +1978,55 @@ const handlePlaceBalance = () => {
   }
 
   const placeTestubeInBeaker = () => {
+
+    if (!testube01RackRef.current && testube01Ref.current) {
+      testube01RackRef.current = {
+        parent: testube01Ref.current.parent,
+        position: testube01Ref.current.position.clone(),
+        rotation: testube01Ref.current.rotation.clone(),
+      }
+    }
+
+    if (!testube02RackRef.current && testube02Ref.current) {
+      testube02RackRef.current = {
+        parent: testube02Ref.current.parent,
+        position: testube02Ref.current.position.clone(),
+        rotation: testube02Ref.current.rotation.clone(),
+      }
+    }
+
+    if (!testube03RackRef.current && testube03Ref.current) {
+      testube03RackRef.current = {
+        parent: testube03Ref.current.parent,
+        position: testube03Ref.current.position.clone(),
+        rotation: testube03Ref.current.rotation.clone(),
+      }
+    }
+
+    if (!testube04RackRef.current && testube04Ref.current) {
+      testube04RackRef.current = {
+        parent: testube04Ref.current.parent,
+        position: testube04Ref.current.position.clone(),
+        rotation: testube04Ref.current.rotation.clone(),
+      }
+    }
+
+    if (!testube06RackRef.current && testube06Ref.current) {
+      testube06RackRef.current = {
+        parent: testube06Ref.current.parent,
+        position: testube06Ref.current.position.clone(),
+        rotation: testube06Ref.current.rotation.clone(),
+      }
+    }
+
+    if (!testube05RackRef.current && testube05Ref.current) {
+      testube05RackRef.current = {
+        parent: testube05Ref.current.parent,
+        position: testube05Ref.current.position.clone(),
+        rotation: testube05Ref.current.rotation.clone(),
+      }
+    }
+
     if (selectedObject.name === "main-testube-01") {
       setTestubesInBeaker((prev) => ({
         ...prev,
@@ -2015,10 +2112,32 @@ const handlePlaceBalance = () => {
       })
     }
 
-    if(selectedLesson===10 && lessonStep==108){
-      setLessonStep(109)
+    if(modelName==="main-testube-02"){
+      testube02Ref.current.traverse((child)=>{
+        if(child.isMesh && child.name.includes('bung')){
+          child.visible=false
+        }
+      })
+    } 
+
+    if(modelName==="main-testube-03"){
+      testube03Ref.current.traverse((child)=>{
+        if(child.isMesh && child.name.includes('bung')){
+          child.visible=false
+        }
+      })
+    }       
     
+
+    if(selectedLesson===10 && lessonStep==108){
+      setLessonStep(109)    
     }
+
+    if(selectedLesson===10 && lessonStep==116){
+      setLessonStep(117)    
+    }
+
+ 
 
     setSelectedObject(null)
   }
@@ -2143,41 +2262,124 @@ const handlePlaceBalance = () => {
   }
 
   const handleRemoveTubes = () => {
-  if (!testube01Ref.current || !testube04Ref.current) return
+    if (selectedLesson !== 10) return
 
-  setSelectedLeftHand({
-    hand: "left",
-    name: "main-testube-01",
-    ref: testube01Ref,
-    originalParent: testube01Ref.current.parent,
-    originalPosition: testube01Ref.current.position.clone(),
-    originalRotation: testube01Ref.current.rotation.clone(),
-  })
+    if (lessonStep === 107) {
 
-  setSelectedRightHand({
-    hand: "right",
-    name: "main-testube-04",
-    ref: testube04Ref,
-    originalParent: testube04Ref.current.parent,
-    originalPosition: testube04Ref.current.position.clone(),
-    originalRotation: testube04Ref.current.rotation.clone(),
-  })
+      if (!testube01Ref.current || !testube04Ref.current) return
+      if (!testube01RackRef.current || !testube04RackRef.current) return
 
-  setTestubesInBeaker((prev) => ({
-    ...prev,
-    tube1: false,
-    tube4: false,
-  }))
+      const tube1Rack = testube01RackRef.current
+      const tube4Rack = testube04RackRef.current
 
-  setSelectedObject(null)
+      setSelectedLeftHand({
+        hand: "left",
+        name: "main-testube-01",
+        ref: testube01Ref,
 
-  if (selectedLesson === 10 && lessonStep === 107) {
-    setLessonStep(108)
+        originalParent: tube1Rack.parent,
+        originalPosition: tube1Rack.position.clone(),
+        originalRotation: tube1Rack.rotation.clone(),
+      })
+
+      setSelectedRightHand({
+        hand: "right",
+        name: "main-testube-04",
+        ref: testube04Ref,
+
+        originalParent: tube4Rack.parent,
+        originalPosition: tube4Rack.position.clone(),
+        originalRotation: tube4Rack.rotation.clone(),
+      })
+
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube1: false,
+        tube4: false,
+      }))
+
+      setLessonStep(108)
+    }
+
+    if (lessonStep === 115) {
+      if (!testube02Ref.current || !testube05Ref.current) return
+      if (!testube02RackRef.current || !testube05RackRef.current) return
+
+      const tube2Rack = testube02RackRef.current
+      const tube5Rack = testube05RackRef.current
+
+      setSelectedLeftHand({
+        hand: "left",
+        name: "main-testube-02",
+        ref: testube02Ref,
+
+        originalParent: tube2Rack.parent,
+        originalPosition: tube2Rack.position.clone(),
+        originalRotation: tube2Rack.rotation.clone(),
+      })
+
+      setSelectedRightHand({
+        hand: "right",
+        name: "main-testube-05",
+        ref: testube05Ref,
+
+        originalParent: tube5Rack.parent,
+        originalPosition: tube5Rack.position.clone(),
+        originalRotation: tube5Rack.rotation.clone(),
+      })
+
+      setTestubesInBeaker((prev) => ({
+        ...prev,
+        tube2: false,
+        tube5: false,
+      }))
+
+      setLessonStep(116)
+    }
+
+    setSelectedObject(null)
   }
-}
+
+  const handleVolumetricPippeteMode = ()=>{
+    setIsVolumetricPipetteMode(true)
+  }
+  const removeVolumetricPippeteMode = ()=>{
+    setIsVolumetricPipetteMode(false)
+  }
+  const renderVolumetricPippeteHeldButtons=()=>{
+    if(isTutorialMode){
+      if (selectedObject.name === "volumetric-pipette" && selectedLesson===11 && (lessonStep==8)) {
+        return (
+          <button onClick={handleVolumetricPippeteMode}>
+            Pipette Mode
+          </button>
+        )
+      } 
+    }
+
+    if(!isTutorialMode){
+      console.log("Hello")
+      if(selectedObject.name === "volumetric-pipette" && !isVolumetricPipetteMode){
+          return (
+          <button onClick={handleVolumetricPippeteMode}>
+            Pipette Mode
+          </button>
+        )
+      }
+
+      if(selectedObject.name === "volumetric-pipette" && isVolumetricPipetteMode){
+          return (
+          <button onClick={removeVolumetricPippeteMode}>
+            Exit Pipette Mode
+          </button>
+        )
+      }
+    }
+  
+  }
   
   const renderNormalBeakerTableButtons = ()=>{
-    if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && lessonStep==107) {
+    if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && (lessonStep==107 || lessonStep===115)) {
       return (
         <button onClick={()=>{handleRemoveTubes()}}>
           Remove Tubes from Water Bath
@@ -2470,7 +2672,7 @@ const renderTestubeHeldButtons = ()=>{
 
     }
 
-    if(selectedLesson===10 && (lessonStep===108) && isTestTube(selectedObject.name)){
+    if(selectedLesson===10 && (lessonStep===108 || lessonStep==116) && isTestTube(selectedObject.name)){
       return(
         <>
           <button onClick={()=>{removeBung(selectedObject.name)}}>
@@ -2670,6 +2872,10 @@ const renderFunnelHeldButtons=()=>{
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
+
+  const volumetricPippetteButtons = renderVolumetricPippeteHeldButtons()
+  if(volumetricPippetteButtons ) return volumetricPippetteButtons 
+
   const normalBeakerButtons =
     renderNormalBeakerHeldButtons()
 
@@ -2710,6 +2916,7 @@ const renderHeldObjectButtons = () => {
 
   const iodobutaneButtons = renderIodobutaneHeldButtons()
   if(iodobutaneButtons) return iodobutaneButtons
+
 
   if ( isFilterFolded && isFoldedFilterPaper(selectedObject.name)) {
     return (
@@ -2807,17 +3014,22 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={mainBuiretteRef}
-      multiplier={1.5}
+      multiplier={1.2}
     />
 
     <ClickHitbox
       modelRef={buretteClampRef}
-      multiplier={1.5}    
+      multiplier={1.1}    
     />
 
     <ClickHitbox
       modelRef={mainThermometerRef}
-      multiplier={1.5}
+      multiplier={1.2}
+    />
+
+    <ClickHitbox
+      modelRef={volumetricPipetteRef}
+      multiplier={1.2}
     />
 
 

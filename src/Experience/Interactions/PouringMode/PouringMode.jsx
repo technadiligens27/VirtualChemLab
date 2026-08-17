@@ -45,11 +45,15 @@ const PouringMode = ({ hand }) => {
     leftBeakerFillData,
 
     isPottasiumCarobnateInTestube01,
-    setShowBubbles,beakerFillFinished,
+    setShowBubbles,
+    beakerFillFinished,
   } = useContext(InteractionContext)
 
   const {
-    testube01Ref,testube04Ref,testube05Ref,testube06Ref
+    testube01Ref,
+    testube04Ref,
+    testube05Ref,
+    testube06Ref,
   } = useContext(ModelContext)
 
   const {
@@ -59,9 +63,7 @@ const PouringMode = ({ hand }) => {
     labResetKey,
     isTutorialMode,
     selectedLesson,
-  } = useContext(
-    MainGuidelineContext
-  )
+  } = useContext(MainGuidelineContext)
 
   const emptyRef = useRef(null)
 
@@ -71,20 +73,13 @@ const PouringMode = ({ hand }) => {
     new THREE.Euler(0, 0, 0)
   )
 
-  const originalPositionRef =
-    useRef(null)
+  const originalPositionRef = useRef(null)
+  const originalRotationRef = useRef(null)
 
-  const originalRotationRef =
-    useRef(null)
+  const otherOriginalPositionRef = useRef(null)
+  const otherOriginalRotationRef = useRef(null)
 
-  const otherOriginalPositionRef =
-    useRef(null)
-
-  const otherOriginalRotationRef =
-    useRef(null)
-
-  const activeOtherObjectRef =
-    useRef(null)
+  const activeOtherObjectRef = useRef(null)
 
   const [
     activeObject,
@@ -92,75 +87,52 @@ const PouringMode = ({ hand }) => {
   ] = useState(null)
 
   /*
-   * Find the mouth of the receiving object.
+   * Find mouth of receiving object.
    */
   useEffect(() => {
     emptyRef.current = null
 
     const receivingObject =
       hand === "right"
-        ? selectedLeftHand
-            ?.ref
-            ?.current
-        : selectedRightHand
-            ?.ref
-            ?.current
+        ? selectedLeftHand?.ref?.current
+        : selectedRightHand?.ref?.current
 
     if (!receivingObject) return
 
-    receivingObject.traverse(
-      (child) => {
-        const childName =
-          child.name
-            ?.toLowerCase() || ""
+    receivingObject.traverse((child) => {
+      const childName = child.name?.toLowerCase() || ""
 
-        if (
-          childName.includes(
-            "mouth"
-          )
-        ) {
-          emptyRef.current =
-            child
-        }
+      if (childName.includes("mouth")) {
+        emptyRef.current = child
       }
-    )
+    })
   }, [
     hand,
     selectedLeftHand,
     selectedRightHand,
   ])
 
+  /*
+   * Hide Test Tube 01 cap when selected.
+   */
   useEffect(() => {
     const isTestube01Selected =
-      selectedLeftHand?.name ===
-        "main-testube-01" ||
-      selectedRightHand?.name ===
-        "main-testube-01"
+      selectedLeftHand?.name === "main-testube-01" ||
+      selectedRightHand?.name === "main-testube-01"
 
-    if (!isTestube01Selected) {
-      return
-    }
+    if (!isTestube01Selected) return
 
-    const testTube =
-      testube01Ref.current
+    const testTube = testube01Ref.current
 
     if (!testTube) return
 
-    testTube.traverse(
-      (child) => {
-        const childName =
-          child.name
-            ?.toLowerCase() || ""
+    testTube.traverse((child) => {
+      const childName = child.name?.toLowerCase() || ""
 
-        if (
-          childName.includes(
-            "cap"
-          )
-        ) {
-          child.visible = false
-        }
+      if (childName.includes("cap")) {
+        child.visible = false
       }
-    )
+    })
   }, [
     selectedLeftHand,
     selectedRightHand,
@@ -168,14 +140,10 @@ const PouringMode = ({ hand }) => {
   ])
 
   /*
-   * Clear local pouring state after the lab is reset.
+   * Clear local pouring state after reset.
    */
   useLayoutEffect(() => {
-    if (
-      pouringModeHand === hand
-    ) {
-      return
-    }
+    if (pouringModeHand === hand) return
 
     rotationZRef.current = 0
 
@@ -185,20 +153,13 @@ const PouringMode = ({ hand }) => {
       0
     )
 
-    originalPositionRef.current =
-      null
+    originalPositionRef.current = null
+    originalRotationRef.current = null
 
-    originalRotationRef.current =
-      null
+    otherOriginalPositionRef.current = null
+    otherOriginalRotationRef.current = null
 
-    otherOriginalPositionRef.current =
-      null
-
-    otherOriginalRotationRef.current =
-      null
-
-    activeOtherObjectRef.current =
-      null
+    activeOtherObjectRef.current = null
 
     setActiveObject(null)
   }, [
@@ -208,155 +169,97 @@ const PouringMode = ({ hand }) => {
   ])
 
   /*
-   * Enter and exit pouring mode with:
+   * Enter / Exit Pouring Mode
    *
-   * P         = right hand
-   * Shift + P = left hand
+   * P         = Right Hand
+   * Shift + P = Left Hand
    */
   useEffect(() => {
     const getPouringObjects = () => {
       if (hand === "right") {
         return {
-          targetObject:
-            selectedRightHand
-              ?.ref
-              ?.current,
-
-          otherObject:
-            selectedLeftHand
-              ?.ref
-              ?.current,
+          targetObject: selectedRightHand?.ref?.current,
+          otherObject: selectedLeftHand?.ref?.current,
         }
       }
 
       return {
-        targetObject:
-          selectedLeftHand
-            ?.ref
-            ?.current,
-
-        otherObject:
-          selectedRightHand
-            ?.ref
-            ?.current,
+        targetObject: selectedLeftHand?.ref?.current,
+        otherObject: selectedRightHand?.ref?.current,
       }
     }
 
-    const saveOriginalTransforms = (
-      targetObject,
-      otherObject
-    ) => {
-      originalPositionRef.current =
-        targetObject.position.clone()
-
-      originalRotationRef.current =
-        targetObject.rotation.clone()
+    const saveOriginalTransforms = (targetObject, otherObject) => {
+      originalPositionRef.current = targetObject.position.clone()
+      originalRotationRef.current = targetObject.rotation.clone()
 
       if (otherObject) {
-        otherOriginalPositionRef.current =
-          otherObject.position.clone()
-
-        otherOriginalRotationRef.current =
-          otherObject.rotation.clone()
+        otherOriginalPositionRef.current = otherObject.position.clone()
+        otherOriginalRotationRef.current = otherObject.rotation.clone()
       } else {
-        otherOriginalPositionRef.current =
-          null
-
-        otherOriginalRotationRef.current =
-          null
+        otherOriginalPositionRef.current = null
+        otherOriginalRotationRef.current = null
       }
 
-      activeOtherObjectRef.current =
-        otherObject
+      activeOtherObjectRef.current = otherObject
     }
 
-    const restoreOriginalTransforms = (
-      targetObject,
-      otherObject
-    ) => {
-      if (
-        targetObject &&
-        originalPositionRef.current
-      ) {
+    const restoreOriginalTransforms = (targetObject, otherObject) => {
+      if (targetObject && originalPositionRef.current) {
         targetObject.position.copy(
           originalPositionRef.current
         )
       }
 
-      if (
-        targetObject &&
-        originalRotationRef.current
-      ) {
+      if (targetObject && originalRotationRef.current) {
         targetObject.rotation.copy(
           originalRotationRef.current
         )
       }
 
-      if (
-        otherObject &&
-        otherOriginalPositionRef.current
-      ) {
+      if (otherObject && otherOriginalPositionRef.current) {
         otherObject.position.copy(
           otherOriginalPositionRef.current
         )
       }
 
-      if (
-        otherObject &&
-        otherOriginalRotationRef.current
-      ) {
+      if (otherObject && otherOriginalRotationRef.current) {
         otherObject.rotation.copy(
           otherOriginalRotationRef.current
         )
       }
 
-      targetObject
-        ?.updateMatrixWorld(true)
-
-      otherObject
-        ?.updateMatrixWorld(true)
+      targetObject?.updateMatrixWorld(true)
+      otherObject?.updateMatrixWorld(true)
     }
 
-    const resetLocalPouringState =
-      () => {
-        rotationZRef.current = 0
+    const resetLocalPouringState = () => {
+      rotationZRef.current = 0
 
-        baseRotationRef.current.set(
-          0,
-          0,
-          0
-        )
+      baseRotationRef.current.set(
+        0,
+        0,
+        0
+      )
 
-        setIsPouring(false)
+      setIsPouring(false)
 
-        setPouredFromLeft(false)
-        setPouredFromRight(false)
+      setPouredFromLeft(false)
+      setPouredFromRight(false)
 
-        setActiveObject(null)
+      setActiveObject(null)
 
-        originalPositionRef.current =
-          null
+      originalPositionRef.current = null
+      originalRotationRef.current = null
 
-        originalRotationRef.current =
-          null
+      otherOriginalPositionRef.current = null
+      otherOriginalRotationRef.current = null
 
-        otherOriginalPositionRef.current =
-          null
+      activeOtherObjectRef.current = null
+    }
 
-        otherOriginalRotationRef.current =
-          null
-
-        activeOtherObjectRef.current =
-          null
-      }
-
-    const moveRightHandObject = (
-      targetObject,
-      otherObject
-    ) => {
-      if (!emptyRef.current) {
-        return
-      }
+    const moveRightHandObject = (targetObject, otherObject) => {
+      if (!emptyRef.current) return
 
       if (otherObject) {
         otherObject.position.set(
@@ -366,35 +269,22 @@ const PouringMode = ({ hand }) => {
         )
       }
 
-      const targetObjectName =
-        targetObject?.name
-          ?.toLowerCase() || ""
+      const targetObjectName = targetObject?.name?.toLowerCase() || ""
+      const otherObjectName = otherObject?.name?.toLowerCase() || ""
 
-      const otherObjectName =
-        otherObject?.name
-          ?.toLowerCase() || ""
+      const isKettle = targetObjectName.includes("kettle")
+      const isGraduatedCylinder = targetObjectName.includes("main-graduated-cylinder")
+      const isTestube04 = targetObjectName.includes("main-testube-04")
+      const isTestube05 = targetObjectName.includes("main-testube-05")
+      const isTestube06 = targetObjectName.includes("main-testube-06")
 
-      const isKettle =
-        targetObjectName.includes("kettle");
+      const isConicalFlask = otherObjectName.includes("main-conical-flask")
 
-      const isGraduatedCylinder =  targetObjectName.includes("main-graduated-cylinder"); 
-      const isTestube04 = targetObjectName.includes("main-testube-04");
-
-      const isConicalFlask =
-        otherObjectName.includes(
-          "main-conical-flask"
-        )
-
-      if (
-        isConicalFlask &&
-        otherObject
-      ) {
-        otherObject.rotation.y =
-          Math.PI
+      if (isConicalFlask && otherObject) {
+        otherObject.rotation.y = Math.PI
       }
 
-      const worldPosition =
-        new THREE.Vector3()
+      const worldPosition = new THREE.Vector3()
 
       emptyRef.current.getWorldPosition(
         worldPosition
@@ -405,9 +295,6 @@ const PouringMode = ({ hand }) => {
           worldPosition.clone()
         )
 
-      /*
-       * Special kettle position
-       */
       if (isKettle) {
         localPosition.add(
           new THREE.Vector3(
@@ -416,9 +303,7 @@ const PouringMode = ({ hand }) => {
             -0.8
           )
         )
-      } else if (
-        isConicalFlask
-      ) {
+      } else if (isConicalFlask) {
         localPosition.add(
           new THREE.Vector3(
             2,
@@ -426,9 +311,7 @@ const PouringMode = ({ hand }) => {
             -0.5
           )
         )
-      } else if(
-        isGraduatedCylinder
-      ){
+      } else if (isGraduatedCylinder) {
         localPosition.add(
           new THREE.Vector3(
             3,
@@ -436,9 +319,7 @@ const PouringMode = ({ hand }) => {
             -0.5
           )
         )
-      }else if(
-        isTestube04
-      ){
+      } else if (isTestube04 || isTestube05 || isTestube06) {
         localPosition.add(
           new THREE.Vector3(
             2.5,
@@ -460,21 +341,13 @@ const PouringMode = ({ hand }) => {
         localPosition
       )
 
-      targetObject.updateMatrixWorld(
-        true
-      )
+      targetObject.updateMatrixWorld(true)
 
-      otherObject
-        ?.updateMatrixWorld(true)
+      otherObject?.updateMatrixWorld(true)
     }
 
-    const moveLeftHandObject = (
-      targetObject,
-      otherObject
-    ) => {
-      if (!emptyRef.current) {
-        return
-      }
+    const moveLeftHandObject = (targetObject, otherObject) => {
+      if (!emptyRef.current) return
 
       if (otherObject) {
         otherObject.position.set(
@@ -484,26 +357,13 @@ const PouringMode = ({ hand }) => {
         )
       }
 
-      const targetObjectName =
-        targetObject?.name
-          ?.toLowerCase() || ""
+      const targetObjectName = targetObject?.name?.toLowerCase() || ""
+      const otherObjectName = otherObject?.name?.toLowerCase() || ""
 
-      const otherObjectName =
-        otherObject?.name
-          ?.toLowerCase() || ""
+      const isKettle = targetObjectName.includes("kettle")
+      const isNormalBeaker = otherObjectName.includes("main-normal-beaker")
 
-      const isKettle =
-        targetObjectName.includes(
-          "kettle"
-        )
-
-      const isNormalBeaker =
-        otherObjectName.includes(
-          "main-normal-beaker"
-        )
-
-      const worldPosition =
-        new THREE.Vector3()
+      const worldPosition = new THREE.Vector3()
 
       emptyRef.current.getWorldPosition(
         worldPosition
@@ -514,9 +374,6 @@ const PouringMode = ({ hand }) => {
           worldPosition.clone()
         )
 
-      /*
-       * Special kettle position
-       */
       if (isKettle) {
         localPosition.add(
           new THREE.Vector3(
@@ -525,9 +382,7 @@ const PouringMode = ({ hand }) => {
             -0.8
           )
         )
-      } else if (
-        isNormalBeaker
-      ) {
+      } else if (isNormalBeaker) {
         localPosition.add(
           new THREE.Vector3(
             -1,
@@ -549,17 +404,12 @@ const PouringMode = ({ hand }) => {
         localPosition
       )
 
-      targetObject.updateMatrixWorld(
-        true
-      )
+      targetObject.updateMatrixWorld(true)
 
-      otherObject
-        ?.updateMatrixWorld(true)
+      otherObject?.updateMatrixWorld(true)
     }
 
-    const setStartingRotation = (
-      targetObject
-    ) => {
+    const setStartingRotation = (targetObject) => {
       rotationZRef.current = 0
 
       baseRotationRef.current.set(
@@ -568,61 +418,37 @@ const PouringMode = ({ hand }) => {
         0
       )
 
-      const targetName =
-        targetObject.name
-          ?.toLowerCase() || ""
+      const targetName = targetObject.name?.toLowerCase() || ""
 
       const isRightNormalBeaker =
         hand === "right" &&
-        targetName.includes(
-          "main-normal-beaker"
-        )
+        targetName.includes("main-normal-beaker")
 
-      if (
-        isRightNormalBeaker
-      ) {
-        baseRotationRef.current.y =
-          Math.PI
+      if (isRightNormalBeaker) {
+        baseRotationRef.current.y = Math.PI
       }
 
       targetObject.rotation.copy(
         baseRotationRef.current
       )
 
-      targetObject.updateMatrixWorld(
-        true
-      )
+      targetObject.updateMatrixWorld(true)
     }
 
-    const handleKeyDown = (
-      event
-    ) => {
-      if (
-        event.code !== "KeyP"
-      ) {
-        return
-      }
+    const handleKeyDown = (event) => {
+      if (event.code !== "KeyP") return
 
       const requestedHand =
         event.shiftKey
           ? "left"
           : "right"
 
-      if (
-        requestedHand !== hand
-      ) {
-        return
-      }
+      if (requestedHand !== hand) return
 
       /*
-       * Prevent both hands from entering
-       * pouring mode at the same time.
+       * Prevent both hands entering pouring mode.
        */
-      if (
-        pouringModeHand &&
-        pouringModeHand !==
-          requestedHand
-      ) {
+      if (pouringModeHand && pouringModeHand !== requestedHand) {
         setShowErrorMsgNo(3)
         return
       }
@@ -633,24 +459,9 @@ const PouringMode = ({ hand }) => {
       } = getPouringObjects()
 
       /*
-       * Exit pouring mode.
+       * EXIT POURING MODE
        */
-      if (
-        pouringModeHand ===
-          requestedHand &&
-        activeObject
-      ) {
-        // if (
-        //   isTutorialMode &&
-        //   isPouringMode &&
-        //   lessonStep > 8 &&
-        //   selectedLesson !== 8 &&
-        //   selectedLesson !== 9
-        // ) {
-        //   setShowErrorMsgNo(12)
-        //   return
-        // }
-
+      if (pouringModeHand === requestedHand && activeObject) {
         restoreOriginalTransforms(
           activeObject,
           activeOtherObjectRef.current
@@ -660,82 +471,51 @@ const PouringMode = ({ hand }) => {
 
         setPouringModeHand(null)
 
-        if (
-          lessonStep === 36 &&
-          selectedLesson === 8
-        ) {
+        // Lesson 8
+        if (selectedLesson === 8 && lessonStep === 36) {
           setLessonStep(37)
-
           setShowBubbles(false)
         }
 
-        if (
-          lessonStep === 33 &&
-          selectedLesson === 9
-        ) {
+        // Lesson 9
+        if (selectedLesson === 9 && lessonStep === 33) {
           setLessonStep(34)
-
           setShowBubbles(false)
         }
 
-
-        if (
-          lessonStep === 7 &&
-          selectedLesson === 10
-        ) {
+        // Lesson 10
+        if (selectedLesson === 10 && lessonStep === 7) {
           setLessonStep(8)
-
           setShowBubbles(false)
         }
 
-        if (
-          lessonStep === 24 &&
-          selectedLesson === 10
-        ) {
+        if (selectedLesson === 10 && lessonStep === 24) {
           setLessonStep(25)
-
-          // setShowBubbles(false)
         }
 
-        if (
-          lessonStep === 31 &&
-          selectedLesson === 10
-        ) {
+        if (selectedLesson === 10 && lessonStep === 31) {
           setLessonStep(32)
-
-          // setShowBubbles(false)
         }
 
-        if (
-          lessonStep === 38 &&
-          selectedLesson === 10
-        ) {
+        if (selectedLesson === 10 && lessonStep === 38) {
           setLessonStep(39)
-
-          // setShowBubbles(false)
         }
 
-        if (
-          selectedLesson  === 10 &&
-          lessonStep === 111
-        ) {
-          setLessonStep(112)
+        // if (selectedLesson === 10 && lessonStep === 112) {
+        //   setLessonStep(112)
+        // }
 
-          // setShowBubbles(false)
+        if (selectedLesson === 10 && lessonStep === 112) {
+          setLessonStep(113)
         }
 
         return
       }
 
       /*
-       * Enter pouring mode.
+       * ENTER POURING MODE
        */
-      if (
-        !emptyRef.current ||
-        !targetObject
-      ) {
-        return
-      }
+      if (!emptyRef.current || !targetObject) return
 
       setIsPouringMode(true)
 
@@ -763,7 +543,6 @@ const PouringMode = ({ hand }) => {
       setIsPouring(false)
 
       setPouredFromLeft(false)
-
       setPouredFromRight(false)
 
       setActiveObject(
@@ -774,31 +553,39 @@ const PouringMode = ({ hand }) => {
         requestedHand
       )
 
-      if (selectedLesson === 8 &&lessonStep == 34) {
+      // Lesson 8
+      if (selectedLesson === 8 && lessonStep === 34) {
         setLessonStep(35)
       }
 
-      if (selectedLesson === 9 &&lessonStep == 31) {
+      // Lesson 9
+      if (selectedLesson === 9 && lessonStep === 31) {
         setLessonStep(32)
       }
 
-      if(selectedLesson===10 && lessonStep===5){
+      // Lesson 10
+      if (selectedLesson === 10 && lessonStep === 5) {
         setLessonStep(6)
       }
 
-      if(selectedLesson===10 && lessonStep===22){
+      if (selectedLesson === 10 && lessonStep === 22) {
         setLessonStep(23)
       }
 
-      if(selectedLesson===10 && lessonStep===29){
+      if (selectedLesson === 10 && lessonStep === 29) {
         setLessonStep(30)
       }
 
-      if(selectedLesson===10 && lessonStep===36){
+      if (selectedLesson === 10 && lessonStep === 36) {
         setLessonStep(37)
       }
-      if(selectedLesson===10 && lessonStep===109){
+
+      if (selectedLesson === 10 && lessonStep === 109) {
         setLessonStep(110)
+      }
+
+      if (selectedLesson === 10 && lessonStep === 117) {
+        setLessonStep(118)
       }
     }
 
@@ -828,34 +615,25 @@ const PouringMode = ({ hand }) => {
     setPouringModeHand,
     isPouringMode,
     lessonStep,
-    isTutorialMode,selectedLesson,lessonStep
+    isTutorialMode,
+    selectedLesson,
   ])
 
   /*
-   * Hide test tube cap
+   * Hide cap for Lesson 8
    */
   useEffect(() => {
-    if (
-      selectedLesson == 8
-    ) {
-      const testTube =
-        testube01Ref.current
+    if (selectedLesson !== 8) return
 
-      if (!testTube) return
+    const testTube = testube01Ref.current
 
-      testTube.traverse(
-        (child) => {
-          if (
-            child.name
-              ?.toLowerCase()
-              .includes("cap")
-          ) {
-            child.visible =
-              false
-          }
-        }
-      )
-    }
+    if (!testTube) return
+
+    testTube.traverse((child) => {
+      if (child.name?.toLowerCase().includes("cap")) {
+        child.visible = false
+      }
+    })
   }, [
     selectedLesson,
     testube01Ref,
@@ -865,40 +643,24 @@ const PouringMode = ({ hand }) => {
    * Mouse wheel pouring rotation
    */
   useEffect(() => {
-    const handleWheel = (
-      event
-    ) => {
-      if (
-        !activeObject ||
-        pouringModeHand !== hand
-      ) {
-        return
-      }
+    const handleWheel = (event) => {
+      if (!activeObject || pouringModeHand !== hand) return
 
       event.preventDefault()
 
-      const maxRotation =
-        Math.PI / 5
+      const maxRotation = Math.PI / 5
+      const rotationSpeed = 0.15
 
-      const rotationSpeed =
-        0.15
-
-      if (
-        event.deltaY > 0
-      ) {
-        rotationZRef.current =
-          Math.min(
-            rotationZRef.current +
-              rotationSpeed,
-            maxRotation
-          )
+      if (event.deltaY > 0) {
+        rotationZRef.current = Math.min(
+          rotationZRef.current + rotationSpeed,
+          maxRotation
+        )
       } else {
-        rotationZRef.current =
-          Math.max(
-            rotationZRef.current -
-              rotationSpeed,
-            0
-          )
+        rotationZRef.current = Math.max(
+          rotationZRef.current - rotationSpeed,
+          0
+        )
       }
     }
 
@@ -926,69 +688,101 @@ const PouringMode = ({ hand }) => {
    * Apply pouring rotation
    */
   useFrame(() => {
-    if (
-      !activeObject ||
-      pouringModeHand !== hand
-    ) {
-      return
-    }
+    if (!activeObject || pouringModeHand !== hand) return
 
     activeObject.rotation.set(
       baseRotationRef.current.x,
       baseRotationRef.current.y,
-      baseRotationRef.current.z +
-        rotationZRef.current
+      baseRotationRef.current.z + rotationZRef.current
     )
 
-    const pouringAngle =
-      Math.PI / 5
+    const pouringAngle = Math.PI / 5
 
-const pouringNow =
-  (selectedLesson !== 9 || !beakerFillFinished) &&
-  Math.abs(rotationZRef.current) >= pouringAngle
+    const pouringNow =
+      (selectedLesson !== 9 || !beakerFillFinished) &&
+      Math.abs(rotationZRef.current) >= pouringAngle
 
-    if (
-      pouringNow !== isPouring
-    ) {
-      setIsPouring(
-        pouringNow
-      )
+    if (pouringNow !== isPouring) {
+      setIsPouring(pouringNow)
     }
   })
 
   return (
     <>
-      {/* {activeObject &&
-        pouringModeHand === hand && (
-          <PouringLiquid
-            model={activeObject}
-            hand={hand}
-            isPouring={isPouring}
-          />
-        )} */}
+      {/* 
+      {activeObject && pouringModeHand === hand && (
+        <PouringLiquid
+          model={activeObject}
+          hand={hand}
+          isPouring={isPouring}
+        />
+      )}
+      */}
 
-      {hand === "right" && selectedRightHand.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 &&
-       <PourFromTestube isPouring={isPouring} hand={"right"} model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
+      {hand === "right" && selectedRightHand?.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 && (
+        <PourFromTestube
+          isPouring={isPouring}
+          hand="right"
+          model={testube01Ref.current}
+          liquidColor={rightBeakerFillData.color}
+        />
+      )}
 
-      {hand === "right" && selectedRightHand.name === "main-testube-04" &&  
-      <PourFromTestube isPouring={isPouring} hand={"right"} model={testube04Ref.current} liquidColor={rightBeakerFillData.color} />}
-
-      {hand === "right" && selectedRightHand.name === "main-testube-05" &&  
-      <PourFromTestube isPouring={isPouring} hand={"right"} model={testube05Ref.current} liquidColor={rightBeakerFillData.color} />}
-
-      {hand === "left" && selectedLeftHand.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && 
-      <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
-
-      {hand === "right" && selectedRightHand.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && 
-      <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
-
-      {hand==='right' && !beakerFillFinished && selectedRightHand.name === 'kettle' && selectedLeftHand.name==='main-normal-beaker' &&
-      <PourFromKettle color={"#0073a0"} isPouring={isPouring}/>}
-
-      {hand==='right' &&  selectedRightHand.name === 'main-graduated-cylinder' && <PourFromGraduatedCylinder isPouring={isPouring}/> }
-
+      {hand === "right" && selectedRightHand?.name === "main-testube-04" && (
+        <PourFromTestube
+          isPouring={isPouring}
+          hand="right"
+          model={testube04Ref.current}
+          liquidColor={rightBeakerFillData.color}
+        />
+      )}
 
 
+      {hand === "right" && selectedRightHand?.name === "main-testube-05" && (
+        <PourFromTestube
+          isPouring={isPouring}
+          hand="right"
+          model={testube05Ref.current}
+          liquidColor={rightBeakerFillData.color}
+        />
+      )}
+
+
+      {hand === "right" && selectedRightHand?.name === "main-testube-06" && (
+        <PourFromTestube
+          isPouring={isPouring}
+          hand="right"
+          model={testube06Ref.current}
+          liquidColor={rightBeakerFillData.color}
+        />
+      )}
+
+      {hand === "left" && selectedLeftHand?.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && (
+        <PourPowderFromTestube
+          isPouring={isPouring}
+          model={testube01Ref.current}
+        />
+      )}
+
+      {hand === "right" && selectedRightHand?.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && (
+        <PourPowderFromTestube
+          isPouring={isPouring}
+          model={testube01Ref.current}
+        />
+      )}
+
+      {hand === "right" && !beakerFillFinished && selectedRightHand?.name === "kettle" && selectedLeftHand?.name === "main-normal-beaker" && (
+        <PourFromKettle
+          color="#0073a0"
+          isPouring={isPouring}
+        />
+      )}
+
+      {hand === "right" && selectedRightHand?.name === "main-graduated-cylinder" && (
+        <PourFromGraduatedCylinder
+          isPouring={isPouring}
+        />
+      )}
     </>
   )
 }

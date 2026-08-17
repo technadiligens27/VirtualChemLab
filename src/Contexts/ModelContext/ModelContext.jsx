@@ -40,11 +40,13 @@ export const ModelProvider = ({ children }) => {
   const pipetteRef = useRef(null);
   const iodobutaneBottleRef = useRef(null);
   const bromobutaneBottleRef = useRef(null);
-  const chlorobutaneBottleRef = useRef(null)
+  const chlorobutaneBottleRef = useRef(null);
+  const volumetricRef = useRef(null)
+  const volumetricPipetteRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
-  const thermometerLiquidRef = useRef(null)
+  const thermometerLiquidRef = useRef(null);
 
   const saltRef = useRef(null);
 
@@ -116,7 +118,8 @@ export const ModelProvider = ({ children }) => {
         potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
         kettleRef,arrowKettleRef,pipetteRef,
         iodobutaneBottleRef,bromobutaneBottleRef,
-        chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref
+        chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
+        volumetricRef,volumetricPipetteRef
       }}
     >
       {children}

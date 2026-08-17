@@ -14,6 +14,8 @@ import FunnelMode from "../FunnelMode/FunnelMode"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
 import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
+import VolumetricPipetteMode from "../VolumetricPipetteMode/VolumetricPipetteMode"
+import VolumetricRubberAnimation from "../VolumetricRubberAnimation/VolumetricRubberAnimation"
 
 const HoldLeft = ({ modeldata }) => {
 
@@ -196,7 +198,11 @@ const HoldLeft = ({ modeldata }) => {
     }
   },[selectedLesson,lessonStep])
   
-
+  useEffect(()=>{
+    if(selectedLesson===11 && lessonStep ===6){
+      setLessonStep(7)
+    }
+  },[selectedLesson,lessonStep])
 
   useEffect(() => {
     const canvas = gl.domElement
@@ -302,6 +308,10 @@ const HoldLeft = ({ modeldata }) => {
     ) {
       object.scale.set(0.8, 0.8, 0.8)
       object.position.y += 1
+    }else if (
+      object.name === "volumetric-pipette"
+    ) {
+      object.scale.set(0.4, 0.4, 0.4)
     } else {
       object.scale.set(1, 1, 1)
     }
@@ -391,6 +401,11 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
       }
 
+      {modeldata?.name === "volumetric-pipette" && (
+        <VolumetricRubberAnimation
+          modelRef={modeldata.ref}
+        />
+      )}
       {/* {
        !isStirMode &&  !isLitmusMode && !isDropperPlaced && 
        isReactionRef.current===false && !isPouringMode &&

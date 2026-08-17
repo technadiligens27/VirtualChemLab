@@ -32,6 +32,7 @@ import PipetteMode from "./PipetteMode/PipetteMode";
 import FillPipette from "./FillLiquid/FIllPipette/FIllPipette";
 import PipetteDroplets from "./PipetteDroplets/PipetteDroplets";
 import PlaceTestubeInBeaker from "./PlaceTestubeInBeaker/PlaceTestubeInBeaker";
+import VolumetricPipetteMode from "./VolumetricPipetteMode/VolumetricPipetteMode";
 
 const Interaction = () => {
   const {
@@ -40,7 +41,8 @@ const Interaction = () => {
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
-     testubesInBeaker
+     testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode
+
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -145,7 +147,9 @@ const Interaction = () => {
       {testubesInBeaker.tube5 && <PlaceTestubeInBeaker testubeRef={testube05Ref} hand="right" xPos={0}  zPos={-1.5} scale={0.8} />}
       {testubesInBeaker.tube6 && <PlaceTestubeInBeaker testubeRef={testube06Ref} hand="right" xPos={-1}   zPos={-1.5}scale={0.8} />}
 
-
+      {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-normal-beaker' &&
+        <VolumetricPipetteMode modelRef={normalBeakerRef}/>
+      }
 
     </>
   );

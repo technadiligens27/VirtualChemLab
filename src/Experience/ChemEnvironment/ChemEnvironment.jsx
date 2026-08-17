@@ -20,7 +20,8 @@ const ChemEnvironment = () => {
          digitalBalanceRef,arrowBalanceRef,balancePositionRef,trayPointRef,testube01CapRef,mainBuiretteRef,
          arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef,mainPolysterene2Ref,
          thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
-         kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref
+         kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
+         volumetricRef,volumetricPipetteRef
   } = useContext(ModelContext);
 
 
@@ -185,6 +186,8 @@ const hideLiquidObjects=(root)=>{
     testube01CapRef.current.visible = false
     kettleRef.current = scene.getObjectByName('kettle')
     kettleRef.current.visible = false
+    volumetricRef.current = scene.getObjectByName('volumetric-flask');
+    volumetricPipetteRef.current = scene.getObjectByName('volumetric-pipette')
 
     iodobutaneBottleRef.current = scene.getObjectByName('iodobutane-bottle');
     bromobutaneBottleRef.current = scene.getObjectByName('bromobutane-bottle')

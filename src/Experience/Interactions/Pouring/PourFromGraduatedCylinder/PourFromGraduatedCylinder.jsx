@@ -2,14 +2,16 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 
 import { useFrame } from "@react-three/fiber"
 
 import { ModelContext } from "../../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../../Contexts/InteractionContext/InteractionContext"
-import FillLiquidBeaker from "../../FillLiquid/FillLiquidBeaker/FillLiquidBeaker"
 import { MainGuidelineContext } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import FillLiquidBeaker from "../../FillLiquid/FillLiquidBeaker/FillLiquidBeaker"
 
 const PourFromGraduatedCylinder = ({
   isPouring,
@@ -19,20 +21,28 @@ const PourFromGraduatedCylinder = ({
 }) => {
   const {
     graduatedBeakerRef,
-    testube01Ref,testube02Ref,testube03Ref
+    testube01Ref,
+    testube02Ref,
+    testube03Ref,
   } = useContext(ModelContext)
 
   const {
     fillTestubeLiquid,
-    setFillTestubeLiquid,selectedLeftHand
+    setFillTestubeLiquid,
+    selectedLeftHand,
   } = useContext(InteractionContext)
 
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
   const pourLiquidRef = useRef(null)
   const cylinderLiquidRef = useRef(null)
   const isPourFinishedRef = useRef(false)
 
+  const [isPourFullyScaled, setIsPourFullyScaled] = useState(false)
 
   useEffect(() => {
     if (!graduatedBeakerRef?.current) return
@@ -47,7 +57,7 @@ const PourFromGraduatedCylinder = ({
         child.scale.set(1, 0, 1)
       }
 
-      if (child.isMesh && childName.includes("liquid") ) {
+      if (child.isMesh && childName.includes("liquid")) {
         cylinderLiquidRef.current = child
       }
     })
@@ -63,6 +73,7 @@ const PourFromGraduatedCylinder = ({
   useEffect(() => {
     if (isPouring) {
       isPourFinishedRef.current = false
+      setIsPourFullyScaled(false)
     }
   }, [isPouring])
 
@@ -72,6 +83,11 @@ const PourFromGraduatedCylinder = ({
     if (!isPouring) {
       pourLiquidRef.current.visible = false
       pourLiquidRef.current.scale.y = 0
+
+      if (isPourFullyScaled) {
+        setIsPourFullyScaled(false)
+      }
+
       return
     }
 
@@ -82,26 +98,28 @@ const PourFromGraduatedCylinder = ({
       pourLiquidRef.current.visible = false
       pourLiquidRef.current.scale.y = 0
 
+      if (isPourFullyScaled) {
+        setIsPourFullyScaled(false)
+      }
+
       if (!isPourFinishedRef.current) {
         isPourFinishedRef.current = true
 
-        if(selectedLesson===10 && lessonStep ===23){
+        if (selectedLesson === 10 && lessonStep === 23) {
           setLessonStep(24)
         }
 
-        if(selectedLesson===10 && lessonStep ===30){
+        if (selectedLesson === 10 && lessonStep === 30) {
           setLessonStep(31)
         }
 
-        if(selectedLesson===10 && lessonStep ===37){
+        if (selectedLesson === 10 && lessonStep === 37) {
           setLessonStep(38)
         }
       }
 
       return
     }
-
-    if (!fillTestubeLiquid) setFillTestubeLiquid(true)
 
     pourLiquidRef.current.visible = true
 
@@ -110,42 +128,55 @@ const PourFromGraduatedCylinder = ({
       fallDistance
     )
 
+    if (pourLiquidRef.current.scale.y >= fallDistance && !isPourFullyScaled) {
+      setIsPourFullyScaled(true)
+
+      if (!fillTestubeLiquid) {
+        setFillTestubeLiquid(true)
+      }
+    }
+
     cylinderLiquidRef.current.scale.y = Math.max(
       cylinderLiquidRef.current.scale.y - delta * liquidDecreaseSpeed,
       0
     )
   })
 
-    return (
-      <>
-        {selectedLeftHand?.name === "main-testube-01" && fillTestubeLiquid && isPouring && (
-          <FillLiquidBeaker
-            modelRef={testube01Ref}
-            amount={50}
-            color="#f3f4f6"
-            isPouring={isPouring}
-          />
-        )}
+  const canFillTestTube =
+    fillTestubeLiquid &&
+    isPouring &&
+    isPourFullyScaled
 
-        {selectedLeftHand?.name === "main-testube-02" && fillTestubeLiquid && isPouring && (
-          <FillLiquidBeaker
-            modelRef={testube02Ref}
-            amount={50}
-            color="#f3f4f6"
-            isPouring={isPouring}
-          />
-        )}
+  return (
+    <>
+      {selectedLeftHand?.name === "main-testube-01" && canFillTestTube && (
+        <FillLiquidBeaker
+          modelRef={testube01Ref}
+          amount={20}
+          color="#f3f4f6"
+          isPouring={canFillTestTube}
+        />
+      )}
 
-        {selectedLeftHand?.name === "main-testube-03" && fillTestubeLiquid && isPouring && (
-          <FillLiquidBeaker
-            modelRef={testube03Ref}
-            amount={50}
-            color="#f3f4f6"
-            isPouring={isPouring}
-          />
-        )}
-      </>
-    )
+      {selectedLeftHand?.name === "main-testube-02" && canFillTestTube && (
+        <FillLiquidBeaker
+          modelRef={testube02Ref}
+          amount={50}
+          color="#f3f4f6"
+          isPouring={canFillTestTube}
+        />
+      )}
+
+      {selectedLeftHand?.name === "main-testube-03" && canFillTestTube && (
+        <FillLiquidBeaker
+          modelRef={testube03Ref}
+          amount={50}
+          color="#f3f4f6"
+          isPouring={canFillTestTube}
+        />
+      )}
+    </>
+  )
 }
 
 export default PourFromGraduatedCylinder

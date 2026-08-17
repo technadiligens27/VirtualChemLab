@@ -114,7 +114,7 @@ const FillLiquidBeaker = ({
         />
       )}
 
-          {showIodobutanePrecipitate && <IodobutaneHydolysisReaction modelRef={modelRef} liquidRef={liquidRef}/>}
+      {showIodobutanePrecipitate && <IodobutaneHydolysisReaction modelRef={modelRef} liquidRef={liquidRef}/>}
 
     </>
   )

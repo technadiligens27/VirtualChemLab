@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import "./ReactionTimer.css"
+import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const ReactionTimer = ({
   isRunning,
   onStop,
-  text
+  text,
+  stopTime = 7,
 }) => {
   const [elapsedTime, setElapsedTime] = useState(0)
+
+  const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
 
   const startTimeRef = useRef(null)
   const intervalRef = useRef(null)
@@ -31,6 +35,21 @@ const ReactionTimer = ({
 
       const elapsed = (Date.now() - startTimeRef.current) / 1000
 
+      if (stopTime !== null && elapsed >= stopTime) {
+        setElapsedTime(stopTime)
+
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+
+        onStop?.()
+
+
+        
+        console.log("⏹️ Reaction timer stopped at:", stopTime)
+
+        return
+      }
+
       setElapsedTime(elapsed)
     }, 100)
 
@@ -40,7 +59,7 @@ const ReactionTimer = ({
         intervalRef.current = null
       }
     }
-  }, [isRunning])
+  }, [isRunning, stopTime, onStop])
 
   const minutes = Math.floor(elapsedTime / 60)
   const seconds = Math.floor(elapsedTime % 60)
@@ -50,19 +69,15 @@ const ReactionTimer = ({
 
   return (
     <div className="reaction-timer">
-
       <div className="reaction-timer-header">
-
         <div className="reaction-timer-icon">
           <span className="reaction-timer-clock-hand"></span>
         </div>
 
         <p>Reaction Time</p>
-
       </div>
 
       <div className="reaction-timer-body">
-
         <p className="reaction-timer-status">
           {isRunning ? "Reaction in progress..." : "Reaction stopped"}
         </p>
@@ -76,7 +91,6 @@ const ReactionTimer = ({
         </div>
 
         <div className="reaction-timer-info">
-
           <div className="reaction-timer-info-icon">
             i
           </div>
@@ -84,23 +98,18 @@ const ReactionTimer = ({
           <p>
             {text}
           </p>
-
         </div>
-
       </div>
 
       {isRunning && (
         <div className="reaction-timer-small-status">
-
           <span></span>
 
           <p>
             Reaction in progress...
           </p>
-
         </div>
       )}
-
     </div>
   )
 }

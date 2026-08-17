@@ -89,7 +89,7 @@ const FillBeakerBox = () => {
 
     const amount = Number(selectedAmount)
 
-    const checkFill = (chemical, correctAmount, nextStep) => {
+    const checkFill = (chemical, correctAmount) => {
       const isCorrectChemical = selectedAcidData.name === chemical
       const isCorrectAmount = amount === correctAmount
 
@@ -98,55 +98,18 @@ const FillBeakerBox = () => {
         return false
       }
 
-      setLessonStep(nextStep)
       return true
     }
 
-    if (selectedLesson === 2 && lessonStep === 5) {
-      if (!checkFill("Hydrochloric Acid (HCl)", 50, 6)) return
-    }
+    if(selectedLesson===10){
+      if(lessonStep===20.5 || lessonStep===28 || lessonStep===35){
+        if(!checkFill("Ethanol (C2H5OH)",5)) return
+      }
 
-    if (selectedLesson === 2 && lessonStep === 8) {
-      if (!checkFill("Universal indicator", 50, 9)) return
+      if(lessonStep===91 || lessonStep===98 || lessonStep===94){
+        if(!checkFill('Silver Nitrate (AgNO3)',5)) return
+      }
     }
-
-    if (selectedLesson === 6 && lessonStep === 5) {
-      if (!checkFill("Hydrochloric Acid (HCl)", 50, 6)) return
-    }
-
-    if (selectedLesson === 6 && lessonStep === 8) {
-      if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
-    }
-
-    if (selectedLesson === 4 && lessonStep === 5) {
-      if (!checkFill("Starch solution", 50, 6)) return
-    }
-
-    if (selectedLesson === 4 && lessonStep === 8) {
-      if (!checkFill("Iodine solution", 50, 9)) return
-    }
-
-    if (selectedLesson === 5 && lessonStep === 5) {
-      if (!checkFill("Copper Sulfate (CuSO4)", 50, 6)) return
-    } 
-    
-    if (selectedLesson === 5 && lessonStep === 8) {
-      if (!checkFill("Sodium Hydroxide (NaOH)", 50, 9)) return
-    }
-
-    if (selectedLesson === 1 && lessonStep === 5) {
-      if (!checkFill("Water (H2O)", 50, 6)) return
-    }
-
-    if (selectedLesson === 7 && lessonStep === 5) {
-      if (!checkFill("Biuret Reagent", 50, 6)) return
-    }
-
-    if (selectedLesson === 7 && lessonStep === 12) {
-      if (!checkFill("Protein Sample", 50, 13)) return
-    }
-
-    
 
     const fillData = {
       name: selectedAcidData.name,
@@ -260,7 +223,14 @@ const FillBeakerBox = () => {
     if(lessonStep===97 && selectedLesson ===10){
       setLessonStep(98)
     }
-  },[lessonStep,selectedLesson])   
+  },[lessonStep,selectedLesson])  
+  
+  
+  useEffect(()=>{
+    if(lessonStep===3 && selectedLesson ===11){
+      setLessonStep(4)
+    }
+  },[lessonStep,selectedLesson])    
 
   return (
     <div className="fill-dialog-overlay">

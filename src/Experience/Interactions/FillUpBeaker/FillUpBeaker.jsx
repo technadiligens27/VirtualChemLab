@@ -400,13 +400,17 @@ const FillUpBeaker = ({ beakerRef, hand }) => {
       setLessonStep(99)
     }
 
-    if (lessonStep === 5) {
+    if(selectedLesson===11 && lessonStep === 5){
       setLessonStep(6)
     }
 
-    if (lessonStep === 8) {
-      setLessonStep(9)
-    }
+    // if (lessonStep === 5) {
+    //   setLessonStep(6)
+    // }
+
+    // if (lessonStep === 8) {
+    //   setLessonStep(9)
+    // }
   })
 
   return (

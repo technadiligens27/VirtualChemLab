@@ -126,6 +126,10 @@ export const InteractionProvider = ({ children }) => {
   const [isReactionTimerRunning,setIsReactionTimerRunning] = useState(false)
 
   const [showIodobutanePrecipitate,setShowIodobutanePrecipitate] = useState(false)  
+  const [shouldResetRotation, setShouldResetRotation] = useState(false);
+
+  const [isVolumetricPipetteMode,setIsVolumetricPipetteMode] = useState(false)
+  const [isVolumetricPipetteFilled,setIsVolumetricPipetteFilled] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -229,7 +233,10 @@ export const InteractionProvider = ({ children }) => {
 
   setIsAddMoreLiquid(false);
   setIsReactionTimerRunning(false);
-  setShowIodobutanePrecipitate(false)
+  setShowIodobutanePrecipitate(false);
+  setShouldResetRotation(false);
+  setIsVolumetricPipetteMode(false);
+  setIsVolumetricPipetteFilled(false)
 }
 
   return (
@@ -300,7 +307,10 @@ export const InteractionProvider = ({ children }) => {
         testubesInBeaker,setTestubesInBeaker,
         isAddMoreLiquid,setIsAddMoreLiquid,
         isReactionTimerRunning,setIsReactionTimerRunning,
-        showIodobutanePrecipitate,setShowIodobutanePrecipitate
+        showIodobutanePrecipitate,setShowIodobutanePrecipitate,
+        shouldResetRotation, setShouldResetRotation,
+        isVolumetricPipetteMode,setIsVolumetricPipetteMode,
+        isVolumetricPipetteFilled,setIsVolumetricPipetteFilled
         
       }}
     >

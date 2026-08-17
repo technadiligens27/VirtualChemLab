@@ -109,6 +109,14 @@ const LessonMenu = () => {
       divider: "purple",
     },
 
+    {
+      id: 11,
+      name: "HCl Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 11,
+      divider: "purple",
+    },  
 
   ]
 

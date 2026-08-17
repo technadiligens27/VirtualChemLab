@@ -8,43 +8,37 @@ import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const IodobutaneHydolysisReaction = ({
   liquidRef,
   modelRef,
 
-  // Total visual reaction duration
   reactionDuration = 15,
-
-  // Time when cloudiness is first considered visible
   cloudinessVisibleTime = 5,
 
-  // Final opacity of the liquid
   targetOpacity = 0.85,
-
-  // Final liquid yellow color
   liquidTargetColor = "#e5b61c",
 
-  // Final opacity of powder particles
   powderTargetOpacity = 1,
-
-  // Powder color
   powderColor = "#E6B82E",
 
-  // Powder position spread
   powderXRadius = 0.3,
   powderYRadius = 0.7,
   powderZRadius = 0.1,
 
-  // Powder size
   powderScaleMultiplier = 0.6,
-
-  // Random powder size variation
   powderScaleRandomness = 0,
 }) => {
   const {
     setIsReactionTimerRunning,
   } = useContext(InteractionContext)
+
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
   const liquidMaterialsRef = useRef([])
   const liquidStartColorsRef = useRef([])
@@ -63,6 +57,7 @@ const IodobutaneHydolysisReaction = ({
   const reactionProgressRef = useRef(0)
 
   const cloudinessTriggeredRef = useRef(false)
+  const reactionFinishedRef = useRef(false)
 
   const targetColorRef = useRef(
     new THREE.Color(
@@ -76,6 +71,9 @@ const IodobutaneHydolysisReaction = ({
     )
   }, [liquidTargetColor])
 
+  /*
+   * Prepare liquid material
+   */
   useEffect(() => {
     if (!liquidRef?.current) return
 
@@ -83,14 +81,12 @@ const IodobutaneHydolysisReaction = ({
     liquidStartColorsRef.current = []
     liquidStartOpacitiesRef.current = []
 
-    const liquid =
-      liquidRef.current
+    const liquid = liquidRef.current
 
     const prepareMaterial = (material) => {
       if (!material) return null
 
-      const clonedMaterial =
-        material.clone()
+      const clonedMaterial = material.clone()
 
       clonedMaterial.transparent = true
       clonedMaterial.depthWrite = false
@@ -118,15 +114,13 @@ const IodobutaneHydolysisReaction = ({
     }
 
     if (Array.isArray(liquid.material)) {
-      liquid.material =
-        liquid.material.map(
-          prepareMaterial
-        )
+      liquid.material = liquid.material.map(
+        prepareMaterial
+      )
     } else if (liquid.material) {
-      liquid.material =
-        prepareMaterial(
-          liquid.material
-        )
+      liquid.material = prepareMaterial(
+        liquid.material
+      )
     }
 
     return () => {
@@ -136,6 +130,9 @@ const IodobutaneHydolysisReaction = ({
     }
   }, [liquidRef])
 
+  /*
+   * Prepare powder particles
+   */
   useEffect(() => {
     if (!modelRef?.current || !liquidRef?.current) return
 
@@ -150,6 +147,7 @@ const IodobutaneHydolysisReaction = ({
     reactionProgressRef.current = 0
 
     cloudinessTriggeredRef.current = false
+    reactionFinishedRef.current = false
 
     modelRef.current.traverse((child) => {
       const childName =
@@ -171,10 +169,7 @@ const IodobutaneHydolysisReaction = ({
     })
 
     if (powders.length === 0) {
-      console.log(
-        "No powder objects found"
-      )
-
+      console.log("No powder objects found")
       return
     }
 
@@ -341,6 +336,7 @@ const IodobutaneHydolysisReaction = ({
       reactionProgressRef.current = 0
 
       cloudinessTriggeredRef.current = false
+      reactionFinishedRef.current = false
     }
   }, [
     modelRef,
@@ -355,25 +351,45 @@ const IodobutaneHydolysisReaction = ({
 
   useFrame((_, delta) => {
     /*
-      Increase reaction time.
-    */
-
+     * Increase reaction time
+     */
     reactionTimeRef.current =
       Math.min(
-        reactionTimeRef.current +
-          delta,
+        reactionTimeRef.current + delta,
         reactionDuration
       )
 
     /*
-      Stop reaction timer when
-      cloudiness becomes visible.
-    */
-
+     * Cloudiness first becomes visible
+     */
     if (reactionTimeRef.current >= cloudinessVisibleTime && !cloudinessTriggeredRef.current) {
       cloudinessTriggeredRef.current = true
 
       setIsReactionTimerRunning(false)
+
+      if (modelRef?.current) {
+        modelRef.current.traverse((child) => {
+          const childName =
+            child.name?.toLowerCase() || ""
+
+          if (childName.includes("bung")) {
+            child.visible = true
+
+            console.log(
+              "Bung visible:",
+              child.name
+            )
+          }
+        })
+      }
+
+      if (selectedLesson === 10 && lessonStep === 110) {
+        setLessonStep(111)
+      }
+
+      if (selectedLesson === 10 && lessonStep === 117) {
+        setLessonStep(118)
+      }
 
       console.log(
         "Cloudiness visible - timer stopped"
@@ -381,9 +397,8 @@ const IodobutaneHydolysisReaction = ({
     }
 
     /*
-      Convert time to 0 → 1 progress.
-    */
-
+     * Convert reaction time to 0 → 1
+     */
     reactionProgressRef.current =
       reactionDuration > 0
         ? reactionTimeRef.current /
@@ -394,12 +409,19 @@ const IodobutaneHydolysisReaction = ({
       reactionProgressRef.current
 
     /*
-      LIQUID COLOR + OPACITY
+     * FULL REACTION FINISHED
+     */
+    if (reactionProgress >= 1 && !reactionFinishedRef.current) {
+      reactionFinishedRef.current = true
 
-      Both gradually reach their
-      final values at reactionDuration.
-    */
+      if(selectedLesson===10 && lessonStep===111){
+        setLessonStep(112)
+      }
+    }
 
+    /*
+     * Liquid color + opacity
+     */
     liquidMaterialsRef.current.forEach(
       (material, index) => {
         if (!material) return
@@ -439,13 +461,8 @@ const IodobutaneHydolysisReaction = ({
     if (powderObjectsRef.current.length === 0) return
 
     /*
-      POWDER AMOUNT
-
-      0 sec = 0%
-      halfway = 50%
-      reactionDuration = 100%
-    */
-
+     * Gradually reveal powder
+     */
     const currentVisiblePowderCount =
       Math.floor(
         powderObjectsRef.current.length *
@@ -466,12 +483,8 @@ const IodobutaneHydolysisReaction = ({
     }
 
     /*
-      POWDER OPACITY
-
-      Also reaches full opacity at
-      reactionDuration.
-    */
-
+     * Powder opacity
+     */
     const powderOpacity =
       THREE.MathUtils.lerp(
         0,
