@@ -387,8 +387,8 @@ const IodobutaneHydolysisReaction = ({
         setLessonStep(111)
       }
 
-      if (selectedLesson === 10 && lessonStep === 117) {
-        setLessonStep(118)
+      if (selectedLesson === 10 && lessonStep === 118) {
+        setLessonStep(119)
       }
 
       console.log(
@@ -416,6 +416,10 @@ const IodobutaneHydolysisReaction = ({
 
       if(selectedLesson===10 && lessonStep===111){
         setLessonStep(112)
+      }
+
+      if (selectedLesson === 10 && lessonStep === 119){
+        setLessonStep(120)
       }
     }
 

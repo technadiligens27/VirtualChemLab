@@ -15,7 +15,7 @@ const VolumetricPipetteMode = ({
   const { volumetricPipetteRef } = useContext(ModelContext)
   const {selectedLesson,lessonStep,setLessonStep}= useContext(MainGuidelineContext)
   
-
+  console.log("Pipette Mode")
   const originalPipettePositionRef = useRef(null)
   const originalPipetteRotationRef = useRef(null)
   const originalPipetteScaleRef = useRef(null)
@@ -27,6 +27,9 @@ const VolumetricPipetteMode = ({
   useEffect(()=>{
     if(selectedLesson===11 && lessonStep===8){
         setLessonStep(9)
+    }
+    if(selectedLesson===11 && lessonStep===13){
+      setLessonStep(14)
     }
   },[selectedLesson,lessonStep])
 

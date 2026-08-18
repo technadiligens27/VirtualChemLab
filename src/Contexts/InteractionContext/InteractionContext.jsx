@@ -125,11 +125,18 @@ export const InteractionProvider = ({ children }) => {
   const [isAddMoreLiquid,setIsAddMoreLiquid] = useState(false);
   const [isReactionTimerRunning,setIsReactionTimerRunning] = useState(false)
 
-  const [showIodobutanePrecipitate,setShowIodobutanePrecipitate] = useState(false)  
+  const [showIodobutanePrecipitate,setShowIodobutanePrecipitate] = useState(false);
+  const [showBromobutanePrecipitate,setShowBromobutanePrecipitate] = useState(false);
+  const [showChlorobutanePrecipitate,setShowChlorobutanePrecipitate]  = useState(false);
+
   const [shouldResetRotation, setShouldResetRotation] = useState(false);
 
   const [isVolumetricPipetteMode,setIsVolumetricPipetteMode] = useState(false)
-  const [isVolumetricPipetteFilled,setIsVolumetricPipetteFilled] = useState(false)
+  const [isVolumetricPipetteFilled,setIsVolumetricPipetteFilled] = useState(false);
+  const [fillVolumetricPipette,setFillVolumetricPipette] = useState(false);
+  const [pourFromVolumetricPipette,setPourFromVolumetricPipette] = useState(false);
+
+
 
   const resetInteractions = () => {
   // Empty both hands
@@ -236,7 +243,11 @@ export const InteractionProvider = ({ children }) => {
   setShowIodobutanePrecipitate(false);
   setShouldResetRotation(false);
   setIsVolumetricPipetteMode(false);
-  setIsVolumetricPipetteFilled(false)
+  setIsVolumetricPipetteFilled(false);
+  setFillVolumetricPipette(false);
+  setPourFromVolumetricPipette(false);
+  setShowBromobutanePrecipitate(false);
+  setShowChlorobutanePrecipitate(false)
 }
 
   return (
@@ -310,7 +321,11 @@ export const InteractionProvider = ({ children }) => {
         showIodobutanePrecipitate,setShowIodobutanePrecipitate,
         shouldResetRotation, setShouldResetRotation,
         isVolumetricPipetteMode,setIsVolumetricPipetteMode,
-        isVolumetricPipetteFilled,setIsVolumetricPipetteFilled
+        isVolumetricPipetteFilled,setIsVolumetricPipetteFilled,
+        fillVolumetricPipette,setFillVolumetricPipette,
+        pourFromVolumetricPipette,setPourFromVolumetricPipette,
+        showBromobutanePrecipitate,setShowBromobutanePrecipitate,
+        showChlorobutanePrecipitate,setShowChlorobutanePrecipitate 
         
       }}
     >

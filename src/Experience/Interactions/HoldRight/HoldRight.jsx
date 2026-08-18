@@ -197,6 +197,9 @@ const transformControlsRef = useRef()
     }else if(object.name === "kettle"){
       object.scale.set(0.75, 0.75, 0.75);
       
+    }else if(object.name === "volumetric-flask"){
+      object.scale.set(1, 1, 1);
+      object.position.y+=1     
     } else {
       object.scale.set(1, 1, 1)
     }
@@ -358,6 +361,12 @@ const transformControlsRef = useRef()
       setLessonStep(4)
     }
   },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===11 && lessonStep===12){
+      setLessonStep(13)
+    }
+  },[selectedLesson,lessonStep])
 
   return (
     <>

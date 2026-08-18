@@ -52,6 +52,7 @@ export const ModelProvider = ({ children }) => {
 
   const normalPrecipitateRef = useRef(null)
 
+  const arrowVolumetricPipette = useRef(null)
   const arrowChairRef = useRef(null);
   const arrowNormalBeakerRef = useRef(null);
   const arrowConicalFlaskRef = useRef(null)
@@ -119,7 +120,7 @@ export const ModelProvider = ({ children }) => {
         kettleRef,arrowKettleRef,pipetteRef,
         iodobutaneBottleRef,bromobutaneBottleRef,
         chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
-        volumetricRef,volumetricPipetteRef
+        volumetricRef,volumetricPipetteRef,arrowVolumetricPipette
       }}
     >
       {children}

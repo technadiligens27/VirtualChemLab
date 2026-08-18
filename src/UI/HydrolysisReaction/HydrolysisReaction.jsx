@@ -446,7 +446,11 @@ const guidelineData = [
         {lessonStep === 116 && <DialogBox text={'Select Held Testtube and Remove Bung'}/>}
         {lessonStep === 117 && <DialogBox text={'Press P for Pouring Mode'}/>}
         {lessonStep === 118 && <DialogBox text={'Scroll Down To Pour'}/>}
-        {lessonStep === 119 && <DialogBox text={'119'}/>}
+        {lessonStep === 119 && <DialogBox text={'you can see cliudinnes with precipaitate occuring and Keep Observing'}/>}
+        {lessonStep === 120 && <DialogBox text={'Press P to exit Pouring Mode'}/>}
+        {lessonStep === 121 && <DialogBox text={'Keep Left Testtube back In Table'}/>}
+        {lessonStep === 122 && <DialogBox text={'Keep Right Testtube back In Table'}/>}
+        {lessonStep === 123 && <DialogBox text={'123'}/>}
 
 
 

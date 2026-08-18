@@ -230,7 +230,15 @@ const FillBeakerBox = () => {
     if(lessonStep===3 && selectedLesson ===11){
       setLessonStep(4)
     }
-  },[lessonStep,selectedLesson])    
+  },[lessonStep,selectedLesson]) 
+  
+  
+  
+  useEffect(()=>{
+    if(lessonStep===18 && selectedLesson ===11){
+      setLessonStep(19)
+    }
+  },[lessonStep,selectedLesson])   
 
   return (
     <div className="fill-dialog-overlay">

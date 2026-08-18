@@ -12,7 +12,7 @@ const HCLTitration = ()=>{
 
 
   const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber,
-    showEnthalyResultOne,setShowEnthalyResultOne} = useContext(InteractionContext)
+    showEnthalyResultOne,setShowEnthalyResultOne,setIsVolumetricPipetteFilled} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
   const {digitalBalanceRef,kettleRef,chlorobutaneBottleRef,mainDropperRef} = useContext(ModelContext)    
@@ -41,6 +41,18 @@ const HCLTitration = ()=>{
             {lessonStep===7 && <DialogBox text={"Scroll Down to squeeze filler"}/>}
             {lessonStep===8 && <DialogBox text={"Click Volumetric Pipette and select Pipette Mode"}/>}
             {lessonStep===9 && <DialogBox text={"Scoll Upwards to release Pipette Filler and get Liquid"}/>}
+            {lessonStep===10 && <DialogBox text={"Exit Pipette Mode"}/>}
+            {lessonStep===11 && <DialogBox text={"Keep Normal Beaker In Table"}/>}
+            {lessonStep===12 && <DialogBox text={"Take Volumetric Flask"}/>}
+            {lessonStep===13 && <DialogBox text={"Go to Pipette Mode"}/>}
+            {lessonStep===14 && <DialogBox text={"Scroll Down To Release Liquid"}/>}
+            {lessonStep===15 && <DialogBox text={"Exit Pipette Mode"}/>}
+            {lessonStep===16 && <DialogBox text={"Keep Pipette to Left Hand"}/>}
+            {lessonStep===17 && <DialogBox text={"Take Normal Beaker to Left Hand"}/>}
+            {lessonStep===18 && <DialogBox text={"Click Add Liquid in Normal Beaker"}/>}
+            {lessonStep===19 && <DialogBox text={"Add Water 30cm3"}/>}
+            {lessonStep===20 && <DialogBox text={"Press Shift + P for Pouring Mode"}/>}
+            {lessonStep===21 && <DialogBox text={"Scroll Down to Pour"}/>}
 
         </>
     )

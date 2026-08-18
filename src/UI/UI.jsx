@@ -115,14 +115,16 @@ const UI = () => {
     showTestube01Arrow,showDropperArrow,setShowDropperArrow,showLessonMenu,
     ShowNormalBeakerArrow,setShowNormalBeakerArrow,
     showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow,
-    showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow
+    showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow,
+    showVolumetricArrow,setShowVolumetricArrow
+    
   } = useContext(MainGuidelineContext)
 
   const {
     isSitting,
     clickedModel,
     isObjectInfo,
-    chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,setIsReactionTimerRunning,isPouring
+    chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,setIsReactionTimerRunning,isPouring,
   } = useContext(InteractionContext)
 
 
@@ -135,9 +137,7 @@ const UI = () => {
   // ------------------------ Lesson 08 -------------
 
   useEffect(() => {
-    setShowNormalBeakerArrow(
-      selectedLesson === 8 &&
-      (lessonStep === 3 || lessonStep === 21)
+    setShowNormalBeakerArrow((selectedLesson===8 && [3,8].includes(lessonStep)) || (selectedLesson===11 && [3].includes(lessonStep))
     )
   }, [selectedLesson, lessonStep])
 
@@ -159,7 +159,9 @@ const UI = () => {
     setShowBalanceArrow(lessonStep===14 && selectedLesson === 8)
   },[selectedLesson,lessonStep])
 
-
+  useEffect(()=>{
+    setShowVolumetricArrow((selectedLesson==11 && ([6].includes(lessonStep))))
+  },[selectedLesson,lessonStep])
 
   //-------------------------------------------------
 

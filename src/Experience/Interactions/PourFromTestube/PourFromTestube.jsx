@@ -230,7 +230,7 @@ const PourFromTestube = ({
       {selectedLeftHand?.name === "main-testube-02" && selectedRightHand?.name === "main-testube-05" && (
         <FillLiquidBeaker
           modelRef={testube02Ref}
-          amount={50}
+          amount={80}
           color="#f3f4f6"
           isPouring={canActuallyPour}
           pourModelRef={testube05Ref}
@@ -240,7 +240,7 @@ const PourFromTestube = ({
       {selectedLeftHand?.name === "main-testube-03" && selectedRightHand?.name === "main-testube-06" && (
         <FillLiquidBeaker
           modelRef={testube03Ref}
-          amount={50}
+          amount={70}
           color="#f3f4f6"
           isPouring={canActuallyPour}
           pourModelRef={testube06Ref}

@@ -85,7 +85,8 @@ const ClickObject = () => {
     thermometerLiquidRef,
     potassiumHydrogenCarbonateRef,
     kettleRef,pipetteRef,iodobutaneBottleRef,
-    bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef
+    bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
+    volumetricRef
   } = useContext(ModelContext)
 
   const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -239,7 +240,11 @@ const ClickObject = () => {
         ref:chlorobutaneBottleRef
       },
       {
-        name:'volumetric-pipette',
+        name:'volumetric-flask',
+        ref:volumetricRef
+      },
+      {
+        name:"volumetric-pipette",
         ref:volumetricPipetteRef
       }
       ],
@@ -269,6 +274,7 @@ const ClickObject = () => {
       bromobutaneBottleRef,
       chlorobutaneBottleRef,
       testube04Ref,testube05Ref,testube06Ref,
+      volumetricPipetteRef,volumetricRef,
       volumetricPipetteRef
     ]
   )
@@ -785,6 +791,22 @@ const ClickObject = () => {
       setLessonStep(96)
     }
 
+    console.log("lesson:",lessonStep)
+
+    if (handData.name === "main-normal-beaker" && selectedLesson===11 && lessonStep ===11) {
+      setLessonStep(12)
+    }
+
+    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===121) {
+      setLessonStep(122)
+    }
+    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===122) {
+      setLessonStep(123)
+    }
+
+    if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===16) {
+      setLessonStep(17)
+    }
 
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
@@ -1330,7 +1352,7 @@ const ClickObject = () => {
       (selectedLesson === 10 && lessonStep === 20) ||
       (selectedLesson === 10 && lessonStep === 27) ||
       (selectedLesson===10 && ([20,34,90,93,97].includes(lessonStep))) ||
-      (selectedLesson===11 && ([4].includes(lessonStep)) )
+      (selectedLesson===11 && ([4,18].includes(lessonStep)) )
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -1978,56 +2000,24 @@ const handlePlaceBalance = () => {
   }
 
   const placeTestubeInBeaker = () => {
+    if (!selectedObject) return
 
-    if (!testube01RackRef.current && testube01Ref.current) {
-      testube01RackRef.current = {
-        parent: testube01Ref.current.parent,
-        position: testube01Ref.current.position.clone(),
-        rotation: testube01Ref.current.rotation.clone(),
-      }
-    }
+    const handData =
+      selectedObject.hand === "left"
+        ? selectedLeftHand
+        : selectedRightHand
 
-    if (!testube02RackRef.current && testube02Ref.current) {
-      testube02RackRef.current = {
-        parent: testube02Ref.current.parent,
-        position: testube02Ref.current.position.clone(),
-        rotation: testube02Ref.current.rotation.clone(),
-      }
-    }
-
-    if (!testube03RackRef.current && testube03Ref.current) {
-      testube03RackRef.current = {
-        parent: testube03Ref.current.parent,
-        position: testube03Ref.current.position.clone(),
-        rotation: testube03Ref.current.rotation.clone(),
-      }
-    }
-
-    if (!testube04RackRef.current && testube04Ref.current) {
-      testube04RackRef.current = {
-        parent: testube04Ref.current.parent,
-        position: testube04Ref.current.position.clone(),
-        rotation: testube04Ref.current.rotation.clone(),
-      }
-    }
-
-    if (!testube06RackRef.current && testube06Ref.current) {
-      testube06RackRef.current = {
-        parent: testube06Ref.current.parent,
-        position: testube06Ref.current.position.clone(),
-        rotation: testube06Ref.current.rotation.clone(),
-      }
-    }
-
-    if (!testube05RackRef.current && testube05Ref.current) {
-      testube05RackRef.current = {
-        parent: testube05Ref.current.parent,
-        position: testube05Ref.current.position.clone(),
-        rotation: testube05Ref.current.rotation.clone(),
-      }
-    }
+    if (!handData) return
 
     if (selectedObject.name === "main-testube-01") {
+      if (!testube01RackRef.current) {
+        testube01RackRef.current = {
+          parent: handData.originalParent,
+          position: handData.originalPosition.clone(),
+          rotation: handData.originalRotation.clone(),
+        }
+      }
+
       setTestubesInBeaker((prev) => ({
         ...prev,
         tube1: true,
@@ -2035,6 +2025,14 @@ const handlePlaceBalance = () => {
     }
 
     if (selectedObject.name === "main-testube-02") {
+      if (!testube02RackRef.current) {
+        testube02RackRef.current = {
+          parent: handData.originalParent,
+          position: handData.originalPosition.clone(),
+          rotation: handData.originalRotation.clone(),
+        }
+      }
+
       setTestubesInBeaker((prev) => ({
         ...prev,
         tube2: true,
@@ -2042,6 +2040,14 @@ const handlePlaceBalance = () => {
     }
 
     if (selectedObject.name === "main-testube-03") {
+      if (!testube03RackRef.current) {
+        testube03RackRef.current = {
+          parent: handData.originalParent,
+          position: handData.originalPosition.clone(),
+          rotation: handData.originalRotation.clone(),
+        }
+      }
+
       setTestubesInBeaker((prev) => ({
         ...prev,
         tube3: true,
@@ -2049,6 +2055,14 @@ const handlePlaceBalance = () => {
     }
 
     if (selectedObject.name === "main-testube-04") {
+      if (!testube04RackRef.current) {
+        testube04RackRef.current = {
+          parent: handData.originalParent,
+          position: handData.originalPosition.clone(),
+          rotation: handData.originalRotation.clone(),
+        }
+      }
+
       setTestubesInBeaker((prev) => ({
         ...prev,
         tube4: true,
@@ -2056,12 +2070,29 @@ const handlePlaceBalance = () => {
     }
 
     if (selectedObject.name === "main-testube-05") {
+      if (!testube05RackRef.current) {
+        testube05RackRef.current = {
+          parent: handData.originalParent,
+          position: handData.originalPosition.clone(),
+          rotation: handData.originalRotation.clone(),
+        }
+      }
+
       setTestubesInBeaker((prev) => ({
         ...prev,
         tube5: true,
       }))
     }
+
     if (selectedObject.name === "main-testube-06") {
+      if (!testube06RackRef.current) {
+        testube06RackRef.current = {
+          parent: handData.originalParent,
+          position: handData.originalPosition.clone(),
+          rotation: handData.originalRotation.clone(),
+        }
+      }
+
       setTestubesInBeaker((prev) => ({
         ...prev,
         tube6: true,
@@ -2092,9 +2123,14 @@ const handlePlaceBalance = () => {
       setLessonStep(106)
     }
 
+    if (selectedObject.hand === "left") {
+      setSelectedLeftHand(null)
+    }
 
+    if (selectedObject.hand === "right") {
+      setSelectedRightHand(null)
+    }
 
-    setSelectedRightHand(null)
     setSelectedObject(null)
   }
 
@@ -2302,60 +2338,73 @@ const handlePlaceBalance = () => {
     }
 
     if (lessonStep === 115) {
-      if (!testube02Ref.current || !testube05Ref.current) return
-      if (!testube02RackRef.current || !testube05RackRef.current) return
+  if (!testube02Ref.current || !testube05Ref.current) return
+  if (!testube02RackRef.current || !testube05RackRef.current) return
 
-      const tube2Rack = testube02RackRef.current
-      const tube5Rack = testube05RackRef.current
+  setSelectedLeftHand({
+    hand: "left",
+    name: "main-testube-02",
+    ref: testube02Ref,
+    originalParent: testube02RackRef.current.parent,
+    originalPosition: testube02RackRef.current.position.clone(),
+    originalRotation: testube02RackRef.current.rotation.clone(),
+  })
 
-      setSelectedLeftHand({
-        hand: "left",
-        name: "main-testube-02",
-        ref: testube02Ref,
+  setSelectedRightHand({
+    hand: "right",
+    name: "main-testube-05",
+    ref: testube05Ref,
+    originalParent: testube05RackRef.current.parent,
+    originalPosition: testube05RackRef.current.position.clone(),
+    originalRotation: testube05RackRef.current.rotation.clone(),
+  })
 
-        originalParent: tube2Rack.parent,
-        originalPosition: tube2Rack.position.clone(),
-        originalRotation: tube2Rack.rotation.clone(),
-      })
+  setTestubesInBeaker((prev) => ({
+    ...prev,
+    tube2: false,
+    tube5: false,
+  }))
 
-      setSelectedRightHand({
-        hand: "right",
-        name: "main-testube-05",
-        ref: testube05Ref,
+  setLessonStep(116)
+  setSelectedObject(null)
 
-        originalParent: tube5Rack.parent,
-        originalPosition: tube5Rack.position.clone(),
-        originalRotation: tube5Rack.rotation.clone(),
-      })
-
-      setTestubesInBeaker((prev) => ({
-        ...prev,
-        tube2: false,
-        tube5: false,
-      }))
-
-      setLessonStep(116)
-    }
-
+  return
+}
     setSelectedObject(null)
   }
 
   const handleVolumetricPippeteMode = ()=>{
+    console.log(isVolumetricPipetteMode)
     setIsVolumetricPipetteMode(true)
   }
   const removeVolumetricPippeteMode = ()=>{
+    if(selectedLesson===11 && lessonStep===10){
+      setLessonStep(11)
+    }
+    if(selectedLesson===11 && lessonStep===15){
+      setLessonStep(16)
+    }
     setIsVolumetricPipetteMode(false)
   }
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
-      if (selectedObject.name === "volumetric-pipette" && selectedLesson===11 && (lessonStep==8)) {
+      if (selectedObject.name === "volumetric-pipette" && selectedLesson===11 && ([8,13].includes(lessonStep))) {
         return (
           <button onClick={handleVolumetricPippeteMode}>
             Pipette Mode
           </button>
         )
-      } 
+      }
+      if(selectedObject.name === "volumetric-pipette" && isVolumetricPipetteMode){
+          return (
+          <button onClick={removeVolumetricPippeteMode}>
+            Exit Pipette Mode
+          </button>
+        )
+      }
     }
+
+
 
     if(!isTutorialMode){
       console.log("Hello")
@@ -2386,6 +2435,14 @@ const handlePlaceBalance = () => {
         </button>
       )
     }
+
+    // if(selectedObject?.name === "main-normal-beaker" && !isTutorialMode){
+    //   return (
+    //     <button onClick={()=>{handleRemoveTubes()}}>
+    //       Remove Tubes from Water Bath
+    //     </button>
+    //   )
+    // }
   }
 
   const renderNormalBeakerHeldButtons=()=>{
@@ -2706,9 +2763,9 @@ const renderTestubeHeldButtons = ()=>{
             Keep Back On Table
           </button>
 
-          {/* <button onClick={placeTestubeInBeaker}>
+          <button onClick={placeTestubeInBeaker}>
             Place In Beaker
-          </button> */}
+          </button>
 
           <button onClick={openFillBeakerBox}>
             Add Liquid

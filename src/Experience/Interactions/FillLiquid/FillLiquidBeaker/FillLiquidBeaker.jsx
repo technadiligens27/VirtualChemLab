@@ -24,7 +24,8 @@ const FillLiquidBeaker = ({
     setIsPouring,
     isAddMoreLiquid,
     setIsAddMoreLiquid,showIodobutanePrecipitate,
-    setShowIodobutanePrecipitate
+    setShowIodobutanePrecipitate,showChlorobutanePrecipitate,setShowChlorobutanePrecipitate,
+    showBromobutanePrecipitate,setShowBromobutanePrecipitate
   } = useContext(InteractionContext)
 
   const {
@@ -75,6 +76,8 @@ const FillLiquidBeaker = ({
     }
   }, [isPouring, pourModelRef, setIsAddMoreLiquid])
 
+  
+
   useFrame((_, delta) => {
     if (!modelRef?.current || !liquidRef.current) return
     if (!isPouring) return
@@ -115,6 +118,41 @@ const FillLiquidBeaker = ({
       )}
 
       {showIodobutanePrecipitate && <IodobutaneHydolysisReaction modelRef={modelRef} liquidRef={liquidRef}/>}
+      {showBromobutanePrecipitate && (
+        <IodobutaneHydolysisReaction
+          liquidRef={liquidRef}
+          modelRef={modelRef}
+          reactionDuration={20}
+          cloudinessVisibleTime={8}
+          targetOpacity={0.85}
+          liquidTargetColor="#B89A62"
+          powderTargetOpacity={1}
+          powderColor="#A88445"
+          powderXRadius={0.3}
+          powderYRadius={0.7}
+          powderZRadius={0.1}
+          powderScaleMultiplier={0.6}
+          powderScaleRandomness={0.1}
+        />
+      )}
+
+      {showChlorobutanePrecipitate && (
+        <IodobutaneHydolysisReaction
+          liquidRef={liquidRef}
+          modelRef={modelRef}
+          reactionDuration={28}
+          cloudinessVisibleTime={12}
+          targetOpacity={0.95}
+          liquidTargetColor="#BFC3C7"
+          powderTargetOpacity={1}
+          powderColor="#D5D8DC"
+          powderXRadius={0.3}
+          powderYRadius={0.7}
+          powderZRadius={0.1}
+          powderScaleMultiplier={0.7}
+          powderScaleRandomness={0.15}
+        />
+      )}
 
     </>
   )

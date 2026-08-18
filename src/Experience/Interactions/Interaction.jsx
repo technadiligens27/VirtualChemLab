@@ -46,7 +46,7 @@ const Interaction = () => {
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
-          bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref} = useContext(ModelContext)
+          bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
@@ -149,6 +149,10 @@ const Interaction = () => {
 
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-normal-beaker' &&
         <VolumetricPipetteMode modelRef={normalBeakerRef}/>
+      }
+
+      {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'volumetric-flask' &&
+        <VolumetricPipetteMode  yOffset={4} modelRef={volumetricRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
       }
 
     </>

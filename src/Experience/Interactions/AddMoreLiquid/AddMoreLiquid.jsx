@@ -30,6 +30,8 @@ const AddMoreLiquid = ({
     setShowIodobutanePrecipitate,
     setIsAddMoreLiquid,
     setIsPouring,
+    showBromobutanePrecipitate,setShowBromobutanePrecipitate,
+    showChlorobutanePrecipitate,setShowChlorobutanePrecipitate
   } = useContext(InteractionContext)
 
   useEffect(() => {
@@ -93,20 +95,31 @@ const AddMoreLiquid = ({
       Stop pouring completely.
     */
 
-    if (pourCurrentY <= 0) {
-      pourLiquidRef.current.scale.y = 0
-      pourLiquidRef.current.visible = false
+  if (pourLiquidRef.current.scale.y <= 0) {
+    pourLiquidRef.current.scale.y = 0
+    pourLiquidRef.current.visible = false
 
-      pouringFinishedRef.current = true
+    pouringFinishedRef.current = true
 
-      setIsPouring(false)
-      setIsAddMoreLiquid(false)
+    setIsPouring(false)
+    setIsAddMoreLiquid(false)
+
+    if (liquidRef.current.name === "main-testube-01-liquid") {
       setShowIodobutanePrecipitate(true)
-
-      console.log("Pouring finished")
-
-      return
     }
+
+    if (liquidRef.current.name === "main-testube-02-liquid") {
+      setShowBromobutanePrecipitate(true)
+    }
+
+    if (liquidRef.current.name === "main-testube-03-liquid") {
+      setShowChlorobutanePrecipitate(true)
+    }
+
+    console.log("Pouring finished")
+
+    return
+  }
 
     /*
       Increase receiving liquid only
@@ -143,7 +156,18 @@ const AddMoreLiquid = ({
 
       setIsPouring(false)
       setIsAddMoreLiquid(false)
+      
+    if (liquidRef.current.name === "main-testube-01-liquid") {
       setShowIodobutanePrecipitate(true)
+    }
+
+    if (liquidRef.current.name === "main-testube-02-liquid") {
+      setShowBromobutanePrecipitate(true)
+    }
+
+    if (liquidRef.current.name === "main-testube-03-liquid") {
+      setShowChlorobutanePrecipitate(true)
+    }
 
       console.log("Pouring finished")
     }

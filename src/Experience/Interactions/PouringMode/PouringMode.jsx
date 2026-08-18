@@ -21,6 +21,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import PourPowderFromTestube from "../PourPowderFromTestube/PourPowderFromTestube"
 import PourFromKettle from "../Pouring/PourFromKettle/PourFromKettle"
 import PourFromGraduatedCylinder from "../Pouring/PourFromGraduatedCylinder/PourFromGraduatedCylinder"
+import PourFromBeaker from "../Pouring/PourFromBeaker/PourFromBeaker"
 
 const PouringMode = ({ hand }) => {
   const { camera } = useThree()
@@ -54,6 +55,8 @@ const PouringMode = ({ hand }) => {
     testube04Ref,
     testube05Ref,
     testube06Ref,
+    normalBeakerRef,
+    volumetricRef
   } = useContext(ModelContext)
 
   const {
@@ -445,6 +448,10 @@ const PouringMode = ({ hand }) => {
 
       if (requestedHand !== hand) return
 
+      if (requestedHand === "left" && selectedLesson === 11 && lessonStep === 20) {
+      setLessonStep(21)
+    }
+
       /*
        * Prevent both hands entering pouring mode.
        */
@@ -508,6 +515,10 @@ const PouringMode = ({ hand }) => {
         if (selectedLesson === 10 && lessonStep === 112) {
           setLessonStep(113)
         }
+
+        if (selectedLesson === 10 && lessonStep === 120) {
+          setLessonStep(121)
+        }        
 
         return
       }
@@ -587,6 +598,8 @@ const PouringMode = ({ hand }) => {
       if (selectedLesson === 10 && lessonStep === 117) {
         setLessonStep(118)
       }
+
+ 
     }
 
     window.addEventListener(
@@ -652,15 +665,31 @@ const PouringMode = ({ hand }) => {
       const rotationSpeed = 0.15
 
       if (event.deltaY > 0) {
-        rotationZRef.current = Math.min(
-          rotationZRef.current + rotationSpeed,
-          maxRotation
-        )
-      } else {
-        rotationZRef.current = Math.max(
-          rotationZRef.current - rotationSpeed,
-          0
-        )
+        if (hand === "left") {
+          rotationZRef.current = Math.max(
+            rotationZRef.current - rotationSpeed,
+            -maxRotation
+          )
+        } else {
+          rotationZRef.current = Math.min(
+            rotationZRef.current + rotationSpeed,
+            maxRotation
+          )
+        }
+      }
+
+      if (event.deltaY < 0) {
+        if (hand === "left") {
+          rotationZRef.current = Math.min(
+            rotationZRef.current + rotationSpeed,
+            0
+          )
+        } else {
+          rotationZRef.current = Math.max(
+            rotationZRef.current - rotationSpeed,
+            0
+          )
+        }
       }
     }
 
@@ -783,6 +812,12 @@ const PouringMode = ({ hand }) => {
           isPouring={isPouring}
         />
       )}
+
+      {
+        hand==='left' && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand.name==='volumetric-flask' && (
+          <PourFromBeaker modelRef={normalBeakerRef} isPouring={isPouring} otherModelRef={volumetricRef}/>
+        )
+      }
     </>
   )
 }

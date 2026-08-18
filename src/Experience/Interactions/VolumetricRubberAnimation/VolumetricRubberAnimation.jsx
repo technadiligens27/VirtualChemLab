@@ -4,16 +4,24 @@ import {
   useRef,
 } from "react"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import FillVolumetricPipette from "../FillVolumetricPipette/FillVolumetricPipette";
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
+import PourVolumetricPipette from "../PourVolumetricPipette/PourVolumetricPipette";
 
 const VolumetricRubberAnimation = ({
   modelRef,
   fillerScaleSpeed = 0.1,
   fillerMinScaleX = 0.45,
 }) => {
-  const fillerRef = useRef(null)
-  const originalFillerScaleXRef = useRef(null)
-
-  const {selectedLesson,lessonStep,setLessonStep}= useContext(MainGuidelineContext)
+  const fillerRef = useRef(null);
+  const originalFillerScaleXRef = useRef(null);
+  
+  const {selectedLesson,lessonStep,setLessonStep}= useContext(MainGuidelineContext);
+  const {isVolumetricPipetteMode,setIsVolumetricPipetteFilled,isVolumetricPipetteFilled,fillVolumetricPipette,setFillVolumetricPipette,
+            pourFromVolumetricPipette,setPourFromVolumetricPipette        
+  } = useContext(InteractionContext);
+  const {normalBeakerRef,volumetricRef} = useContext(ModelContext)
 
   useEffect(() => {
     if (!modelRef?.current) return
@@ -58,7 +66,11 @@ const VolumetricRubberAnimation = ({
 
       if (previousScaleX > fillerMinScaleX && filler.scale.x === fillerMinScaleX) {
         console.log("Filler fully pressed down")
-        if(selectedLesson===11 && lessonStep===7){
+        console.log("scroll Lesson Step:",lessonStep);
+        if(isVolumetricPipetteFilled){
+          setPourFromVolumetricPipette(true)     
+        }
+        if(selectedLesson===11 && lessonStep==7){
             setLessonStep(8)
         }
       }
@@ -74,6 +86,11 @@ const VolumetricRubberAnimation = ({
 
       if (previousScaleX < originalScaleX && filler.scale.x === originalScaleX) {
         console.log("Filler fully released")
+
+        if(isVolumetricPipetteMode){
+          setFillVolumetricPipette(true)
+        }
+
       }
     }
 
@@ -99,9 +116,19 @@ const VolumetricRubberAnimation = ({
   }, [
     fillerScaleSpeed,
     fillerMinScaleX,
+    lessonStep,
+    selectedLesson,
+    isVolumetricPipetteMode,
+    isVolumetricPipetteFilled,
+    pourFromVolumetricPipette
   ])
 
-  return null
+  return (
+    <>
+      {fillVolumetricPipette && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}  amount={2}/>}
+      {pourFromVolumetricPipette && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
+    </>
+  )
 }
 
 export default VolumetricRubberAnimation
