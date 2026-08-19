@@ -7,6 +7,7 @@ import {hclTitrationReactionData} from '../../Data/HCLTitrationData/HCLTitration
 import SafetyScreen from "../../SafetyScreen/SafetyScreen.jsx";
 import {safetyInstructionData} from '../../Data/SafetyInstruction/SafetyInstruction.jsx'
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx";
+import HCLTitration2 from "./HCLTitration2.jsx";
 
 const HCLTitration = ()=>{
 
@@ -53,6 +54,33 @@ const HCLTitration = ()=>{
             {lessonStep===19 && <DialogBox text={"Add Water 30cm3"}/>}
             {lessonStep===20 && <DialogBox text={"Press Shift + P for Pouring Mode"}/>}
             {lessonStep===21 && <DialogBox text={"Scroll Down to Pour"}/>}
+            {lessonStep===22 && <DialogBox text={"Press Shift + P to Exit Pour Mode"}/>}
+            {lessonStep===23 && <DialogBox text={"Keep BEaker IN Table"}/>}
+            {lessonStep===23.5 && <DialogBox text={"Place Bung"}/>}
+            {lessonStep===24 && <DialogBox text={"Scroll Downward to make vlumtri upright 0/3"}/>}
+            {lessonStep===25 && <DialogBox text={"Scroll Upwards 0/3"}/>}
+            {lessonStep===26 && <DialogBox text={"Scroll Downwards 1/3"}/>}
+            {lessonStep===27 && <DialogBox text={"Scroll Upwards 1/3"}/>}
+            {lessonStep===28 && <DialogBox text={"Scroll Downwards 2/3"}/>}
+            {lessonStep===29 && <DialogBox text={"Scroll Upwards 2/3"}/>}
+            {lessonStep===30 && <DialogBox text={"Take Burette to Left Hand"}/>}
+            {lessonStep===31 && <DialogBox text={"Click Add Liquid"}/>}
+            {lessonStep===32 && <DialogBox text={"NaOH 30cm3"}/>}
+            {lessonStep===33 && <DialogBox text={"Clamp Burette"}/>}
+            {lessonStep===34 && <DialogBox text={"Pick Up Volumetric Pipette"}/>}
+            {lessonStep===35 && <DialogBox text={"Scroll Down to squeeze pipette"}/>}
+            {lessonStep===36 && <DialogBox text={"Click Pipette Mode"}/>}
+            {lessonStep===37 && <DialogBox text={"Scroll Upwards to get Lqiuid"}/>}
+            {lessonStep===38 && <DialogBox text={"Exit Pipette Mode"}/>}
+            {lessonStep===39 && <DialogBox text={"Keep Flask in Table"}/>}
+            {lessonStep===40 && <DialogBox text={"Take Conical Flask to RIght"}/>}
+            {lessonStep===41 && <DialogBox text={"Enter Pipette Mode"}/>}
+            {lessonStep===42 && <DialogBox text={"Scroll Down to fill"}/>}
+            {lessonStep===43 && <DialogBox text={"Exit Pipette Mode"}/>}
+            {lessonStep===44 && <DialogBox text={"Keep Pipette in Table"}/>}
+            {lessonStep===45 && <DialogBox text={"Keep Conical Flask In Table"}/>}
+
+            {lessonStep===46 && <HCLTitration2/>}
 
         </>
     )

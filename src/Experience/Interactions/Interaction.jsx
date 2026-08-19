@@ -41,12 +41,13 @@ const Interaction = () => {
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
-     testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode
+     testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette
 
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
-          bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef} = useContext(ModelContext)
+          bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
+        conicalBeakerRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
@@ -98,7 +99,7 @@ const Interaction = () => {
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
       {isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
-      {isBuiretteClamped && <PourFromBurette /> }
+      {isBuiretteClamped && isClampInCenter && <PourFromBurette /> }
 
       {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') && isPlacePolysterene
          && isPlaceThermometer && <PlaceThermometer beakerParentRef={normalBeakerRef} beakerRef={mainPolystereneRef}/>}
@@ -150,9 +151,11 @@ const Interaction = () => {
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-normal-beaker' &&
         <VolumetricPipetteMode modelRef={normalBeakerRef}/>
       }
-
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'volumetric-flask' &&
         <VolumetricPipetteMode  yOffset={4} modelRef={volumetricRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
+      }
+      {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-Conical-Flask' &&
+        <VolumetricPipetteMode  yOffset={4} modelRef={conicalBeakerRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
       }
 
     </>

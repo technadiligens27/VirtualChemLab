@@ -7,6 +7,7 @@ import {
 import { useFrame } from "@react-three/fiber"
 
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const PourVolumetricPipette = ({
   modelRef,
@@ -22,6 +23,8 @@ const PourVolumetricPipette = ({
     lessonStep,
     setLessonStep,
   } = useContext(MainGuidelineContext)
+
+  const {setPourFromVolumetricPipette,pourFromVolumetricPipette,isVolumetricPipetteFilled} = useContext(InteractionContext)
 
   const pourRef = useRef(null)
   const modelLiquidRef = useRef(null)
@@ -99,6 +102,11 @@ const PourVolumetricPipette = ({
     otherLiquidAmount,
   ])
 
+  useEffect(()=>{
+    console.log("OtherModelRef:",otherModelRef.current)
+  },[otherModelRef])
+
+
   useFrame((_, delta) => {
     if (!pourRef.current || !modelLiquidRef.current || !otherLiquidRef.current) return
     if (isFinishedRef.current) return
@@ -163,14 +171,19 @@ const PourVolumetricPipette = ({
       console.log("Volumetric pipette pouring finished")
       console.log("Pipette liquid final:", modelLiquidRef.current.scale.y)
       console.log("Other liquid final:", otherLiquidRef.current.scale.y)
-
+      setPourFromVolumetricPipette(false)
       if (selectedLesson === 11 && lessonStep === 14) {
         setLessonStep(15)
       }
     }
   })
 
-  return null
+  return (
+    <>
+
+      
+    </>
+  )
 }
 
 export default PourVolumetricPipette

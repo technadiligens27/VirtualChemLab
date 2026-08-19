@@ -422,19 +422,22 @@ const EnthalpyHessLaw = () =>{
 
 
 
-        {(lessonStep >=1 && lessonStep <17) &&   <HessLiveDataPanel
-                  reactionNumber={1}
+      {(lessonStep >= 1 && lessonStep < 17) && (
+        <HessLiveDataPanel
+          reactionNumber={1}
 
-                  // volumeOfSolution={30}
-                  // solutionDensity={1}
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
 
-                  // startingTemperature={22}
-                  // currentTemperature={31.2}
-                  // highestTemperature={31.5}
+          autoHideConditions={[
+            { selectedLesson: 8, lessonStep: 4 },
+          ]}
 
-                  // massWithPowder={24.7}
-                  // massAfterEmptying={21.72}
-        />}
+          autoShowConditions={[
+            { selectedLesson: 8, lessonStep: 3 },
+          ]}
+        />
+      )}
 
         {lessonStep >=17 && lessonStep<21 &&  <HessLiveDataPanel
                   reactionNumber={1}
@@ -445,8 +448,12 @@ const EnthalpyHessLaw = () =>{
                   // startingTemperature={22}
                   // currentTemperature={31.2}
                   // highestTemperature={31.5}
-
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
                   massWithPowder={24.7}
+                autoHideConditions={[
+            { selectedLesson: 8, lessonStep: 18 },
+          ]}
                   // massAfterEmptying={21.72}
         />}
 
@@ -461,6 +468,11 @@ const EnthalpyHessLaw = () =>{
 
                   massWithPowder={24.7}
                   // massAfterEmptying={21.72}
+                  selectedLesson={selectedLesson}
+                  lessonStep={lessonStep}
+                  massWithPowder={24.7}
+                  autoHideConditions={[{ selectedLesson: 8, lessonStep: 20 },
+          ]}
         />}
 
         {lessonStep >=32 &&  <HessLiveDataPanel

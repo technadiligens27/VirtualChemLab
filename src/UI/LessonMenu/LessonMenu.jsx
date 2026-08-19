@@ -117,7 +117,14 @@ const LessonMenu = () => {
       number: 11,
       divider: "purple",
     },  
-
+    {
+      id: 11.1,
+      name: "HCl Titration Part 2",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 11.1,
+      divider: "purple",
+    }, 
   ]
 
   const lessonsPerPage = 3
@@ -132,13 +139,18 @@ const LessonMenu = () => {
     setIsMainGuideline(true)
   }, [setIsMainGuideline])
 
-  const startLesson = (lessonId) => {
-    setSelectedLesson(lessonId)
-    setIsLessonStart(true)
-    setShowLessonMenu(false)
-    setSelectedMainGuideline(null)
+const startLesson = (lessonId) => {
+  setSelectedLesson(lessonId)
+  setIsLessonStart(true)
+  setShowLessonMenu(false)
+  setSelectedMainGuideline(null)
+
+  if (lessonId === 11.1) {
+    setLessonStep(46)
+  } else {
     setLessonStep(1)
   }
+}
 
   const changePage = (newPage) => {
     if (

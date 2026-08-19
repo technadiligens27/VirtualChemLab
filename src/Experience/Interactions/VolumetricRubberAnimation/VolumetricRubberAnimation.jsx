@@ -8,6 +8,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import FillVolumetricPipette from "../FillVolumetricPipette/FillVolumetricPipette";
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import PourVolumetricPipette from "../PourVolumetricPipette/PourVolumetricPipette";
+import FillConicalBeaker from "../FillConicalBeaker/FillConicalBeaker";
 
 const VolumetricRubberAnimation = ({
   modelRef,
@@ -19,9 +20,9 @@ const VolumetricRubberAnimation = ({
   
   const {selectedLesson,lessonStep,setLessonStep}= useContext(MainGuidelineContext);
   const {isVolumetricPipetteMode,setIsVolumetricPipetteFilled,isVolumetricPipetteFilled,fillVolumetricPipette,setFillVolumetricPipette,
-            pourFromVolumetricPipette,setPourFromVolumetricPipette        
+            pourFromVolumetricPipette,setPourFromVolumetricPipette,selectedRightHand        
   } = useContext(InteractionContext);
-  const {normalBeakerRef,volumetricRef} = useContext(ModelContext)
+  const {normalBeakerRef,volumetricRef,conicalBeakerRef} = useContext(ModelContext)
 
   useEffect(() => {
     if (!modelRef?.current) return
@@ -67,12 +68,25 @@ const VolumetricRubberAnimation = ({
       if (previousScaleX > fillerMinScaleX && filler.scale.x === fillerMinScaleX) {
         console.log("Filler fully pressed down")
         console.log("scroll Lesson Step:",lessonStep);
-        if(isVolumetricPipetteFilled){
-          setPourFromVolumetricPipette(true)     
-        }
+                console.log("selectedLesson:",selectedLesson);
+
         if(selectedLesson===11 && lessonStep==7){
             setLessonStep(8)
         }
+        if(selectedLesson===11 && lessonStep==35){
+            setLessonStep(36)
+        }
+        if(selectedLesson===11 && lessonStep==42){
+            setLessonStep(43)
+        }
+
+        if(isVolumetricPipetteFilled){
+          setPourFromVolumetricPipette(true)     
+        }
+            console.log("asjxnsa")
+
+
+
       }
     }
 
@@ -86,8 +100,10 @@ const VolumetricRubberAnimation = ({
 
       if (previousScaleX < originalScaleX && filler.scale.x === originalScaleX) {
         console.log("Filler fully released")
-
-        if(isVolumetricPipetteMode){
+        if(selectedLesson===11 && lessonStep===37){
+          setLessonStep(38)
+        }
+        if(isVolumetricPipetteMode && !fillVolumetricPipette){
           setFillVolumetricPipette(true)
         }
 
@@ -96,6 +112,11 @@ const VolumetricRubberAnimation = ({
 
     filler.updateMatrixWorld(true)
   }
+
+
+  useEffect(()=>{
+    console.log("fillVolumetricPipette:",fillVolumetricPipette)
+  },[fillVolumetricPipette])
 
   useEffect(() => {
     const handleWheel = (event) => {
@@ -123,10 +144,15 @@ const VolumetricRubberAnimation = ({
     pourFromVolumetricPipette
   ])
 
+
+
   return (
     <>
-      {fillVolumetricPipette && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}  amount={2}/>}
-      {pourFromVolumetricPipette && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
+      {fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}  amount={2}/>}
+     
+      {selectedRightHand?.name==='volumetric-flask' && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
+
+      {selectedRightHand?.name==="main-Conical-Flask" && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}  otherLiquidAmount={0.2}/>}
     </>
   )
 }

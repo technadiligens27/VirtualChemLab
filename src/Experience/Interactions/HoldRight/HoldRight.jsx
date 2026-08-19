@@ -23,6 +23,7 @@ import PourIntoTestubeFromSpoon from "../PourIntoTestubeFromSpoon/PourIntoTestub
 import PipetteRubberAnimation from "../PipetteRubberAnimation/PipetteRubberAnimation"
 import VolumetricPipetteMode from "../VolumetricPipetteMode/VolumetricPipetteMode"
 import VolumetricRubberAnimation from "../VolumetricRubberAnimation/VolumetricRubberAnimation"
+import InvertModel from "../InvertModel/InvertModel"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -43,14 +44,14 @@ const HoldRight = ({ modeldata }) => {
     selectedModelRight,isDropperPlaced,
     isDropperFilled, 
     setIsPlacePolysterene,isPlacePolysterene,isPourIntoTestube,
-    isPottasiumCarobnateInSpoon,isPouringMode
+    isPottasiumCarobnateInSpoon,isPouringMode,isVolumetricPipetteMode
   } = useContext(InteractionContext)
 
   const {
     filterFoldedPaperRef,
     filterPaperRef,
     funnelRef,
-    spoonRef
+    spoonRef,volumetricRef
   } = useContext(ModelContext)
 
   const {lessonStep,isMainGuideline,setLessonStep,selectedLesson,isTutorialMode,
@@ -199,7 +200,6 @@ const transformControlsRef = useRef()
       
     }else if(object.name === "volumetric-flask"){
       object.scale.set(1, 1, 1);
-      object.position.y+=1     
     } else {
       object.scale.set(1, 1, 1)
     }
@@ -368,6 +368,12 @@ const transformControlsRef = useRef()
     }
   },[selectedLesson,lessonStep])
 
+  useEffect(()=>{
+    if(selectedLesson===11 && lessonStep===40){
+      setLessonStep(41)
+    }
+  },[selectedLesson,lessonStep])  
+
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
@@ -463,6 +469,9 @@ const transformControlsRef = useRef()
 
       {
         selectedRightHand?.name === 'volumetric-pipette' && <VolumetricRubberAnimation/>
+      }
+      {
+       selectedLesson===11 && ([24,25,26,27,28,29,30].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask' && !isVolumetricPipetteMode && <InvertModel modelRef={volumetricRef}/>
       }
   </>
   )

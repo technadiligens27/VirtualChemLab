@@ -33,7 +33,9 @@ const FillVolumetricPipette = ({
     setLessonStep,
   } = useContext(MainGuidelineContext)
 
-  const {setIsVolumetricPipetteFilled,isVolumetricPipetteFilled} = useContext(InteractionContext)
+  const {setIsVolumetricPipetteFilled,isVolumetricPipetteFilled,setFillVolumetricPipette} = useContext(InteractionContext)
+
+  console.log("Fill Volumetric123")
 
   useEffect(() => {
     if (selectedLesson === 11 && lessonStep === 9) {
@@ -108,6 +110,7 @@ const FillVolumetricPipette = ({
       console.log("Pipette liquid:", amount)
       console.log("Other liquid:", decreaseAmount)
       setIsVolumetricPipetteFilled(true)
+      setFillVolumetricPipette(false)
     }
   })
 

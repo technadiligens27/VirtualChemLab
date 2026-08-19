@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -20,6 +21,12 @@ const HessLiveDataPanel = ({
 
   massWithPowder,
   massAfterEmptying,
+
+  selectedLesson,
+  lessonStep,
+
+  autoHideConditions = [],
+  autoShowConditions = [],
 }) => {
   const panelRef = useRef(null)
   const arrowRef = useRef(null)
@@ -34,36 +41,78 @@ const HessLiveDataPanel = ({
   const massOfSolution =
     volumeOfSolution != null &&
     solutionDensity != null
-      ? volumeOfSolution *
-        solutionDensity
+      ? volumeOfSolution * solutionDensity
       : null
 
   const temperatureChange =
     startingTemperature != null &&
     highestTemperature != null
-      ? highestTemperature -
-        startingTemperature
+      ? highestTemperature - startingTemperature
       : null
 
   const massOfPowderUsed =
     massWithPowder != null &&
     massAfterEmptying != null
-      ? massWithPowder -
-        massAfterEmptying
+      ? massWithPowder - massAfterEmptying
       : null
+
+  const getClosedPosition = () => {
+    const panel = panelRef.current
+
+    if (!panel) return 0
+
+    return panel.offsetWidth - 34
+  }
+
+  const openPanel = () => {
+    const panel = panelRef.current
+    const arrow = arrowRef.current
+
+    if (!panel || !arrow) return
+
+    isPanelOpenRef.current = true
+    setIsPanelOpen(true)
+
+    gsap.to(panel, {
+      x: -60,
+      duration: 0.65,
+      ease: "power3.inOut",
+    })
+
+    gsap.to(arrow, {
+      rotation: 0,
+      duration: 0.65,
+      ease: "power3.inOut",
+    })
+  }
+
+  const closePanel = () => {
+    const panel = panelRef.current
+    const arrow = arrowRef.current
+
+    if (!panel || !arrow) return
+
+    isPanelOpenRef.current = false
+    setIsPanelOpen(false)
+
+    gsap.to(panel, {
+      x: getClosedPosition(),
+      duration: 0.65,
+      ease: "power3.inOut",
+    })
+
+    gsap.to(arrow, {
+      rotation: 180,
+      duration: 0.65,
+      ease: "power3.inOut",
+    })
+  }
 
   useLayoutEffect(() => {
     const panel = panelRef.current
     const arrow = arrowRef.current
 
     if (!panel || !arrow) return
-
-    const getClosedPosition = () => {
-      return (
-        panel.offsetWidth -
-        34
-      )
-    }
 
     gsap.set(panel, {
       x: getClosedPosition(),
@@ -88,7 +137,6 @@ const HessLiveDataPanel = ({
     })
 
     isPanelOpenRef.current = true
-
     setIsPanelOpen(true)
 
     const handleResize = () => {
@@ -112,39 +160,55 @@ const HessLiveDataPanel = ({
     }
   }, [])
 
+  // AUTO HIDE / AUTO SHOW
+  useEffect(() => {
+    const shouldAutoHide =
+      autoHideConditions.some(
+        (condition) =>
+          condition.selectedLesson === selectedLesson &&
+          condition.lessonStep === lessonStep
+      )
+
+    const shouldAutoShow =
+      autoShowConditions.some(
+        (condition) =>
+          condition.selectedLesson === selectedLesson &&
+          condition.lessonStep === lessonStep
+      )
+
+    if (shouldAutoHide) {
+      console.log(
+        "Auto hiding Hess panel:",
+        selectedLesson,
+        lessonStep
+      )
+
+      closePanel()
+      return
+    }
+
+    if (shouldAutoShow) {
+      console.log(
+        "Auto showing Hess panel:",
+        selectedLesson,
+        lessonStep
+      )
+
+      openPanel()
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    autoHideConditions,
+    autoShowConditions,
+  ])
+
   const handlePanelToggle = () => {
-    const panel = panelRef.current
-    const arrow = arrowRef.current
-
-    if (!panel || !arrow) return
-
-    const nextOpenState =
-      !isPanelOpenRef.current
-
-    isPanelOpenRef.current =
-      nextOpenState
-
-    setIsPanelOpen(
-      nextOpenState
-    )
-
-    gsap.to(panel, {
-      x: nextOpenState
-        ? -60
-        : panel.offsetWidth - 34,
-
-      duration: 0.65,
-      ease: "power3.inOut",
-    })
-
-    gsap.to(arrow, {
-      rotation: nextOpenState
-        ? 0
-        : 180,
-
-      duration: 0.65,
-      ease: "power3.inOut",
-    })
+    if (isPanelOpenRef.current) {
+      closePanel()
+    } else {
+      openPanel()
+    }
   }
 
   const getDisplayValue = (
@@ -228,6 +292,7 @@ const HessLiveDataPanel = ({
       </button>
 
       <div className="hess-live-data-inner">
+
         <div className="hess-live-data-header">
           <h1>
             Reaction {reactionNumber}
@@ -239,7 +304,9 @@ const HessLiveDataPanel = ({
         </div>
 
         <div className="hess-live-data-content">
+
           <div className="hess-live-data-section">
+
             <div className="hess-live-data-section-title">
               <span className="hess-live-data-dot" />
 
@@ -332,30 +399,6 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
-            {/* <div className="hess-live-data-row">
-              <div className="hess-live-data-label">
-                <p>
-                  Current temperature
-                </p>
-              </div>
-
-              <div
-                className={`hess-live-data-value ${
-                  currentTemperature == null
-                    ? "hess-live-data-value-pending"
-                    : "hess-live-data-value-live"
-                }`}
-              >
-                <p>
-                  {getDisplayValue(
-                    currentTemperature,
-                    1,
-                    "°C"
-                  )}
-                </p>
-              </div>
-            </div> */}
-
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
@@ -404,9 +447,11 @@ const HessLiveDataPanel = ({
                 </p>
               </div>
             </div>
+
           </div>
 
           <div className="hess-live-data-section hess-live-data-solid-section">
+
             <div className="hess-live-data-section-title">
               <span className="hess-live-data-dot" />
 
@@ -494,7 +539,9 @@ const HessLiveDataPanel = ({
                 </p>
               </div>
             </div>
+
           </div>
+
         </div>
 
         <div className="hess-live-data-footer">
@@ -506,6 +553,7 @@ const HessLiveDataPanel = ({
             Values update automatically.
           </p>
         </div>
+
       </div>
     </div>
   )

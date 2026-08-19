@@ -26,6 +26,7 @@ import EnthalpyHessReaction02 from "./EnthalpyHessReaction02/EnthalpyHessReactio
 import HydrolysisReaction from "./HydrolysisReaction/HydrolysisReaction"
 import ReactionTimer from "./ReactionTimer/ReactionTimer"
 import HCLTitration from "./AllLessons/HCLTitration/HCLTitration"
+import HCLTitration2 from "./AllLessons/HCLTitration/HCLTitration2"
 
 const mainContent = [
   {
@@ -469,7 +470,11 @@ useEffect(() => {
 
       {isObjectInfo && (<InfoBox clickedModel={clickedModel} />)}
 
-      
+      {
+        selectedLesson===11.1 && (
+          <HCLTitration2/>
+        )
+      }
 
     </>
   )

@@ -86,10 +86,10 @@ const ClickObject = () => {
     potassiumHydrogenCarbonateRef,
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
-    volumetricRef
+    volumetricRef,volumetricBung
   } = useContext(ModelContext)
 
-  const { lessonStep, setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
+  const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
     useContext(MainGuidelineContext)
 
  const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,
@@ -693,6 +693,10 @@ const ClickObject = () => {
       setLessonStep(9)
     }
 
+    if(lessonStep===23 && selectedLesson ===11 && handData.name === "main-normal-beaker"){
+      setLessonStep(23.5)
+    }
+
     if(lessonStep===9 && selectedLesson ===10 && handData.name === "kettle"){
       setLessonStep(10)
     }
@@ -807,7 +811,18 @@ const ClickObject = () => {
     if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===16) {
       setLessonStep(17)
     }
+    if (handData.name === "volumetric-flask" && selectedLesson===11 && lessonStep ===39) {
+      setLessonStep(40)
+    }
 
+    if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===44) {
+      setLessonStep(45)
+    }   
+    
+    if (handData.name === "main-Conical-Flask" && selectedLesson===11 && lessonStep ===45) {
+      setLessonStep(46)
+      setSelectedLesson(11.1)
+    }      
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
       if (lessonStep === 17 && selectedLesson === 8) {
@@ -1111,12 +1126,12 @@ const ClickObject = () => {
           return false
       }
     }
-      if(lessonStep===8){
-        if(objectName !== "mainPolysterene"){
-          setShowErrorMsgNo(1)
-          return false
-        }
-      }
+      // if(lessonStep===8){
+      //   if(objectName !== "mainPolysterene"){
+      //     setShowErrorMsgNo(1)
+      //     return false
+      //   }
+      // }
   }
 
     if(selectedLesson===8 && lessonStep ==3){
@@ -1352,7 +1367,7 @@ const ClickObject = () => {
       (selectedLesson === 10 && lessonStep === 20) ||
       (selectedLesson === 10 && lessonStep === 27) ||
       (selectedLesson===10 && ([20,34,90,93,97].includes(lessonStep))) ||
-      (selectedLesson===11 && ([4,18].includes(lessonStep)) )
+      (selectedLesson===11 && ([4,18,31].includes(lessonStep)) )
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -2384,11 +2399,19 @@ const handlePlaceBalance = () => {
     if(selectedLesson===11 && lessonStep===15){
       setLessonStep(16)
     }
+
+    if(selectedLesson===11 && lessonStep===38){
+      setLessonStep(39)
+    }
+
+    if(selectedLesson===11 && lessonStep===43){
+      setLessonStep(44)
+    }    
     setIsVolumetricPipetteMode(false)
   }
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
-      if (selectedObject.name === "volumetric-pipette" && selectedLesson===11 && ([8,13].includes(lessonStep))) {
+      if (selectedObject.name === "volumetric-pipette" && selectedLesson===11 && ([8,13,36,41].includes(lessonStep))) {
         return (
           <button onClick={handleVolumetricPippeteMode}>
             Pipette Mode
@@ -2777,6 +2800,33 @@ const renderTestubeHeldButtons = ()=>{
     }
 }
 
+const placeVolmetricBung = ()=>{
+  if(selectedLesson===11 && lessonStep===23.5){
+    setLessonStep(24)
+  }
+   volumetricBung.current.visible = true
+}
+
+const renderVolumetricHeldButtons = ()=>{
+      if (selectedObject.name === "volumetric-flask") {
+        return (
+          <>
+            <button
+              onClick={() =>
+                keepBackOnTable(selectedObject.hand)
+              }
+            >
+              Keep Back On Table
+            </button>
+
+            <button onClick={placeVolmetricBung} >
+              Place Bung
+            </button>
+          </>
+    )
+  }
+}
+
 const renderPolystereneHeldButtons=()=>{
     if (selectedObject.name === "mainPolysterene") {
     return (
@@ -2929,6 +2979,8 @@ const renderFunnelHeldButtons=()=>{
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
+  const volumetricButtons = renderVolumetricHeldButtons()
+  if(volumetricButtons) return volumetricButtons
 
   const volumetricPippetteButtons = renderVolumetricPippeteHeldButtons()
   if(volumetricPippetteButtons ) return volumetricPippetteButtons 
@@ -2950,7 +3002,6 @@ const renderHeldObjectButtons = () => {
 
   const testTubeButtons =
     renderTestubeHeldButtons()
-
   if (testTubeButtons) return testTubeButtons
 
   const polystyreneButtons =

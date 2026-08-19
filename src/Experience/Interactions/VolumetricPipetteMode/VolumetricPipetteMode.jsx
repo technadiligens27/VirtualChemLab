@@ -31,6 +31,13 @@ const VolumetricPipetteMode = ({
     if(selectedLesson===11 && lessonStep===13){
       setLessonStep(14)
     }
+    if(selectedLesson===11 && lessonStep===36){
+      setLessonStep(37)
+    }
+    if(selectedLesson===11 && lessonStep===41){
+      setLessonStep(42)
+    }    
+
   },[selectedLesson,lessonStep])
 
   useEffect(() => {

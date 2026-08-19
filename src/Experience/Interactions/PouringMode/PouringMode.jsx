@@ -518,7 +518,11 @@ const PouringMode = ({ hand }) => {
 
         if (selectedLesson === 10 && lessonStep === 120) {
           setLessonStep(121)
-        }        
+        }  
+        
+        if (selectedLesson === 11 && lessonStep === 22) {
+          setLessonStep(23)
+        }  
 
         return
       }
