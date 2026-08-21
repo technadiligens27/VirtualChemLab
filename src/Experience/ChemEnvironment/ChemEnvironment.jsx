@@ -21,7 +21,7 @@ const ChemEnvironment = () => {
          arrowBuirette,buretteClampRef,arrowBuretteClampRef,mainThermometerRef,arrowThermometerRef,mainPolysterene2Ref,
          thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
          kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
-         volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef
+         volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef,phenopthalineBottleRef
   } = useContext(ModelContext);
 
 
@@ -123,6 +123,19 @@ const hideLiquidObjects=(root)=>{
   })
 }
 
+const hideCloudObjects=(root)=>{
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("cloud")) {
+      child.visible = false
+      // console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
+
 
   useEffect(() => {
   console.log("Available animations:", names)
@@ -191,7 +204,7 @@ const hideLiquidObjects=(root)=>{
     volumetricBung.current = scene.getObjectByName('volumetric-bung')
     volumetricBung.current.visible = false
 
-    conicalBeakerLiquidRef.current=scene.getObjectByName('conical-liquid-50');
+    conicalBeakerLiquidRef.current=scene.getObjectByName('conical-liquid-25.');
     BuretteLiquidRef.current=scene.getObjectByName('')
 
     iodobutaneBottleRef.current = scene.getObjectByName('iodobutane-bottle');
@@ -228,13 +241,16 @@ const hideLiquidObjects=(root)=>{
   mainThermometerRef.current = scene.getObjectByName('mainThermometer');
   thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid');
   mainPolystereneLid.current = scene.getObjectByName('polysterene-cup-lid');
-  
+  phenopthalineBottleRef.current = scene.getObjectByName('phenopthaline-dropper-bottle')
+
+
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
   hideSaltBits(scene)
   hidePowderObjects(scene)
   hideLabelObjects(scene)
   hideBungObjects(scene)
+  hideCloudObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
 

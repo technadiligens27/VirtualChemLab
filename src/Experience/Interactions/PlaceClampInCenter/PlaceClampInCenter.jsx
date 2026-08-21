@@ -26,6 +26,17 @@ const PlaceClampInCenter = () => {
     }
   },[lessonStep,selectedLesson])
 
+  useEffect(()=>{
+    if(selectedLesson===11.1 && lessonStep===50){
+      setLessonStep(51)
+    }
+  },[lessonStep,selectedLesson]) 
+
+  useEffect(()=>{
+    if(selectedLesson===11.1 && lessonStep===67){
+      setLessonStep(68)
+    }
+  },[lessonStep,selectedLesson])  
   useEffect(() => {
     const clamp = buretteClampRef?.current
     const centerPosition =

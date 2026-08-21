@@ -33,6 +33,10 @@ import FillPipette from "./FillLiquid/FIllPipette/FIllPipette";
 import PipetteDroplets from "./PipetteDroplets/PipetteDroplets";
 import PlaceTestubeInBeaker from "./PlaceTestubeInBeaker/PlaceTestubeInBeaker";
 import VolumetricPipetteMode from "./VolumetricPipetteMode/VolumetricPipetteMode";
+import PhenopthalinePourMode from "./PhenopthalinePourMode/PhenopthalinePourMode";
+import FillConicalBeaker from "./FillConicalBeaker/FillConicalBeaker";
+import HCLTitrationReaction from "../AllReactions/HCLTitrationReaction/HCLTitrationReaction";
+import CleanBeaker from "./CleanBeaker/CleanBeaker";
 
 const Interaction = () => {
   const {
@@ -41,13 +45,13 @@ const Interaction = () => {
     setIsBuiretteClamped,isClampInCenter,isBeakerNearClamp,isPlaceThermometer,isPlacePolysterene,
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
-     testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette
-
+     testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
+,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
-        conicalBeakerRef} = useContext(ModelContext)
+        conicalBeakerRef,phenopthalineBottleRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
@@ -98,8 +102,9 @@ const Interaction = () => {
       
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
-      {isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
-      {isBuiretteClamped && isClampInCenter && <PourFromBurette /> }
+      {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
+      {selectedRightHand?.name==='main-Conical-Flask' && isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={conicalBeakerRef}/>}
+
 
       {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') && isPlacePolysterene
          && isPlaceThermometer && <PlaceThermometer beakerParentRef={normalBeakerRef} beakerRef={mainPolystereneRef}/>}
@@ -157,6 +162,16 @@ const Interaction = () => {
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-Conical-Flask' &&
         <VolumetricPipetteMode  yOffset={4} modelRef={conicalBeakerRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
       }
+
+      {
+        isPhenopthalinePourMode && <PhenopthalinePourMode modelRef={phenopthalineBottleRef} otherModelRef={conicalBeakerRef}/>
+      }
+
+      {/* {showHCLTitrationReaction && <HCLTitrationReaction modelRef={conicalBeakerRef}/>} */}
+      {isCleanBeaker && selectedRightHand?.name==="main-Conical-Flask" && <CleanBeaker
+        modelRef={conicalBeakerRef}
+        onDone={() => setIsCleanBeaker(false)}
+      />}
 
     </>
   );

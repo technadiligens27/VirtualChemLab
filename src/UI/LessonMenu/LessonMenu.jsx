@@ -146,7 +146,7 @@ const startLesson = (lessonId) => {
   setSelectedMainGuideline(null)
 
   if (lessonId === 11.1) {
-    setLessonStep(46)
+    setLessonStep(45)
   } else {
     setLessonStep(1)
   }

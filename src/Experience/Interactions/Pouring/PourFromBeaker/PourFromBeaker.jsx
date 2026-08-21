@@ -16,6 +16,8 @@ const PourFromBeaker = ({
   pourSpeed = 1,
 }) => {
 
+
+  console.log("Pour From BEaker")
   const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const pourRef = useRef(null)

@@ -49,7 +49,8 @@ const ClickObject = () => {
     isClampInCenter,setIsClampInCenter,setIsPlaceThermometer,
     isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,setIsPotassiumHydrogenCarbonateInSpoon,
     isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
-    fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode
+    fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,
+    setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker
 
   } = useContext(InteractionContext)
 
@@ -86,7 +87,7 @@ const ClickObject = () => {
     potassiumHydrogenCarbonateRef,
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
-    volumetricRef,volumetricBung
+    volumetricRef,volumetricBung,phenopthalineBottleRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -246,6 +247,10 @@ const ClickObject = () => {
       {
         name:"volumetric-pipette",
         ref:volumetricPipetteRef
+      },
+      {
+        name:"phenopthaline-dropper-bottle",
+        ref:phenopthalineBottleRef
       }
       ],
     [
@@ -275,7 +280,7 @@ const ClickObject = () => {
       chlorobutaneBottleRef,
       testube04Ref,testube05Ref,testube06Ref,
       volumetricPipetteRef,volumetricRef,
-      volumetricPipetteRef
+      volumetricPipetteRef,phenopthalineBottleRef
     ]
   )
 
@@ -486,6 +491,8 @@ const ClickObject = () => {
       setShowErrorMsgNo(1)
       return
     }
+
+    
   setIsBeakerNearClamp(true);
   setSelectedObject(null);
 }
@@ -501,6 +508,18 @@ const ClickObject = () => {
       setLessonStep(26);
       moveObjectToLeftHand()
     }
+
+    if(lessonStep===53 && selectedLesson===11.1){
+      setLessonStep(54);      
+    }
+
+    if(lessonStep===70 && selectedLesson===11.1){
+      setLessonStep(71);      
+    }
+  }
+
+  const handleCleanBeaker = ()=>{
+    setIsCleanBeaker(true);
   }
 
   const moveObjectToLeftHand = () => {
@@ -817,12 +836,15 @@ const ClickObject = () => {
 
     if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===44) {
       setLessonStep(45)
+      setSelectedLesson(11.1)
     }   
     
-    if (handData.name === "main-Conical-Flask" && selectedLesson===11 && lessonStep ===45) {
-      setLessonStep(46)
-      setSelectedLesson(11.1)
-    }      
+    if (handData.name === "phenopthaline-dropper-bottle" && selectedLesson===11.1 && lessonStep ===49) {
+      setLessonStep(50)
+    }  
+    if (handData.name === "phenopthaline-dropper-bottle" && selectedLesson===11.1 && lessonStep ===62) {
+      setLessonStep(63)
+    }        
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
       if (lessonStep === 17 && selectedLesson === 8) {
@@ -1367,7 +1389,9 @@ const ClickObject = () => {
       (selectedLesson === 10 && lessonStep === 20) ||
       (selectedLesson === 10 && lessonStep === 27) ||
       (selectedLesson===10 && ([20,34,90,93,97].includes(lessonStep))) ||
-      (selectedLesson===11 && ([4,18,31].includes(lessonStep)) )
+      (selectedLesson===11 && ([4,18,31].includes(lessonStep)) ) ||
+      (selectedLesson===11.1 && ([55,56,64].includes(lessonStep)))
+
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -1417,27 +1441,58 @@ const ClickObject = () => {
       setSelectedObject(null)
     }
 
+    useEffect(()=>{
+      console.log("isBuiretteClamped:",isBuiretteClamped)
+    },[isBuiretteClamped])
 
-    const handleClampBurette = () => {
-        setIsBuiretteClamped((previousValue) => !previousValue)
 
-        if (selectedObject?.hand === "left") {
-          setSelectedLeftHand(null)
-        }
+const handleClampBurette = () => {
+  // CURRENT false = we are about to CLAMP
+  if (!isBuiretteClamped) {
+    if (selectedObject?.hand === "left") {
+      setSelectedLeftHand(null)
+    }
 
-        if (selectedObject?.hand === "right") {
-          setSelectedRightHand(null)
-        }
+    if (selectedObject?.hand === "right") {
+      setSelectedRightHand(null)
+    }
+  }
 
-        setSelectedObject(null)
+  // CURRENT true = we are about to UNCLAMP
+  if (isBuiretteClamped) {
+    setSelectedLeftHand({
+      hand: "left",
+      name: "main-buirette",
+      ref: mainBuiretteRef,
 
-        if (
-          selectedLesson === 8 &&
-          lessonStep === 23
-        ) {
-          setLessonStep(24)
-        }
-      }
+      originalParent: mainBuiretteRef.current.parent,
+      originalPosition:
+        mainBuiretteRef.current.position.clone(),
+      originalRotation:
+        mainBuiretteRef.current.rotation.clone(),
+    })
+
+    console.log(
+      "✅ Burette moved to left hand after unclamping"
+    )
+  }
+
+  setIsBuiretteClamped(
+    (previousValue) => !previousValue
+  )
+
+  setSelectedObject(null)
+
+  if (
+    selectedLesson === 8 &&
+    lessonStep === 23
+  ) {
+    setLessonStep(24)
+  }
+  if(selectedLesson===11.1 && lessonStep ===63){
+      setLessonStep(64)
+    }  
+}
 
     const handleWeighTestTube = () => {
         if (isBalancePlaced && (selectedLesson === 8 || selectedLesson ===9 ) &&(lessonStep === 16 || lessonStep === 17 ||
@@ -1547,7 +1602,7 @@ const canShowMainHoldingButton = () => {
 const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
-    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11
+    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11 && selectedLesson !==11.1
   ) {
     return <p>Can't pick now</p>
   }
@@ -1997,6 +2052,10 @@ const handlePlaceBalance = () => {
     if(selectedLesson ===9 && lessonStep===27){
       setLessonStep(28)
     }
+
+    if(selectedLesson ===11.1 && lessonStep===57){
+      setLessonStep(58)
+    }
   }
 
   const handlePolystereneStirMode = ()=>{
@@ -2209,7 +2268,7 @@ const handlePlaceBalance = () => {
           
           {
             isBuiretteClamped &&
-            <button>
+            <button  onClick={handleClampBurette}>
               Unclamped
             </button>
           }
@@ -2449,7 +2508,42 @@ const handlePlaceBalance = () => {
     }
   
   }
+
+  const handleRemovePhenopthalinPourMode=()=>{
+     setIsPhenopthalinePourMode(false)
+     if(selectedLesson===11.1 && lessonStep==48){
+          setLessonStep(49)
+     }
+     if(selectedLesson===11.1 && lessonStep==61){
+          setLessonStep(62)
+     }
+  }
   
+  const renderPhenopthalineHeldButtons = ()=>{
+    if(selectedObject?.name === "phenopthaline-dropper-bottle"){
+      return(
+        <>
+         {!isPhenopthalinePourMode && (
+            <button onClick={() => setIsPhenopthalinePourMode(true)}>
+              Pour Mode
+            </button>
+          )}
+
+          {isPhenopthalinePourMode && (
+            <button onClick={() => handleRemovePhenopthalinPourMode()}>
+              Exit Pour Mode
+            </button>
+          )}
+                  <button onClick={() => keepBackOnTable(selectedObject.hand)}>
+          Keep Back In  Table
+        </button>  
+    
+        </>
+
+      )
+    }
+  }
+
   const renderNormalBeakerTableButtons = ()=>{
     if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && (lessonStep==107 || lessonStep===115)) {
       return (
@@ -2466,6 +2560,45 @@ const handlePlaceBalance = () => {
     //     </button>
     //   )
     // }
+  }
+
+  const renderConicalHeldButtons = () => {
+    if (selectedObject.name === "main-Conical-Flask") {
+      if (isTutorialMode) {
+        if (
+          selectedLesson === 11.1 &&
+          (lessonStep === 51 || lessonStep==68 )&&
+          !isBeakerNearClamp
+        ) {
+          return (
+            <button onClick={handlePlaceBeaker}>
+              Place Beaker
+            </button>
+          )
+        }
+        if (
+          selectedLesson === 11.1 &&
+          (lessonStep === 53 || lessonStep === 70)
+        ) {
+          return (
+            <button onClick={handlePlaceBeakerRemove}>
+              Remove Beaker
+            </button>
+          )
+        }
+
+        if (
+          selectedLesson === 11.1 && lessonStep === 54) {
+          return (
+            <button onClick={handleCleanBeaker}>
+              Clean Flask
+            </button>
+          )
+        }
+      }
+    }
+
+    return null
   }
 
   const renderNormalBeakerHeldButtons=()=>{
@@ -2978,6 +3111,12 @@ const renderFunnelHeldButtons=()=>{
 
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
+
+  const concialFlaskButtons =  renderConicalHeldButtons()
+  if(concialFlaskButtons) return concialFlaskButtons
+
+  const phenopthalineButtons = renderPhenopthalineHeldButtons()
+  if(phenopthalineButtons) return phenopthalineButtons
 
   const volumetricButtons = renderVolumetricHeldButtons()
   if(volumetricButtons) return volumetricButtons

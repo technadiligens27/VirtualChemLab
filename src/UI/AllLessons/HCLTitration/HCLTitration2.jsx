@@ -5,32 +5,440 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx"
+import HessGuidelines from "../../HessGuidelines/HessGuidelines.jsx"
+import ResultsSheet from "../../ResultSheet/ResultSheet.jsx"
+import {hclTitrationResultsData} from '../../Data/HCLTitrationData/HCLTitrationData.jsx'
 
 const HCLTitration2 = () => {
   const {
-    setIsVolumetricPipetteFilled,setIsBuiretteClamped 
+    setIsVolumetricPipetteFilled,
+    setIsBuiretteClamped,
+    setSelectedRightHand,
   } = useContext(InteractionContext)
 
   const {
     lessonStep,
-    selectedLesson,setSafetyStep
+    selectedLesson,
+    setSafetyStep,
   } = useContext(MainGuidelineContext)
 
   const {
-    conicalBeakerRef,mainBuiretteRef,gogglesRef,gloverightRef,gloveleftRef,volumetricBung,volumetricRef
+    conicalBeakerRef,
+    mainBuiretteRef,
+    gogglesRef,
+    gloverightRef,
+    gloveleftRef,
+    volumetricBung,
+    volumetricRef,
   } = useContext(ModelContext)
 
-  useEffect(()=>{
-    setIsBuiretteClamped(true)
-    setSafetyStep(4)
-  },[])
+  const guidelineData = [
+  {
+    id: 1,
 
-  useEffect(()=>{
-    gogglesRef.current.visible=false;
-    gloverightRef.current.visible=false;
-    gloveleftRef.current.visible=false;
-    volumetricBung.current.visible=true
-  },[])
+    title: "Prepare the Hydrochloric Acid",
+
+    description:
+      "Transfer hydrochloric acid into a clean beaker so that an accurate 25.0 cm³ portion can be measured using a volumetric pipette.",
+
+    implementationSteps: [
+      "Pick up the normal beaker.",
+      "Select Add Liquid.",
+      "Add 25 cm³ of hydrochloric acid to the beaker.",
+      "Pick up the volumetric pipette with the other hand.",
+      "Prepare to measure the hydrochloric acid accurately.",
+    ],
+
+    image: "./BeakerHcl.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 2,
+
+    title: "Measure the Hydrochloric Acid",
+
+    description:
+      "Use the volumetric pipette and safety filler to accurately measure the hydrochloric acid before transferring it into the volumetric flask.",
+
+    implementationSteps: [
+      "Position the volumetric pipette in the hydrochloric acid.",
+      "Squeeze the pipette filler.",
+      "Enter Pipette Mode.",
+      "Release the filler slowly to draw hydrochloric acid into the pipette.",
+      "Fill the pipette to the required calibration level.",
+      "Exit Pipette Mode.",
+    ],
+
+    image: "./measureHCLWithPipette.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 3,
+
+    title: "Transfer the Acid to the Volumetric Flask",
+
+    description:
+      "Transfer the measured hydrochloric acid from the volumetric pipette into the volumetric flask so that the acid can be diluted accurately.",
+
+    implementationSteps: [
+      "Place the beaker back on the table.",
+      "Pick up the volumetric flask.",
+      "Position the filled volumetric pipette above the flask.",
+      "Enter Pipette Mode.",
+      "Release the hydrochloric acid into the volumetric flask.",
+      "Exit Pipette Mode when the pipette is empty.",
+    ],
+
+    image: "./transferHCLToVolumetricFlask.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 4,
+
+    title: "Dilute the Hydrochloric Acid",
+
+    description:
+      "Add distilled water to the hydrochloric acid in the volumetric flask. Dilution produces the solution that will later be used for the titration.",
+
+    implementationSteps: [
+      "Pick up the normal beaker.",
+      "Add approximately 30 cm³ of distilled water.",
+      "Enter Pour Mode.",
+      "Pour the water into the volumetric flask.",
+      "Exit Pour Mode.",
+      "Place the beaker back on the table.",
+    ],
+
+    image: "./diluteHCL.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 5,
+
+    title: "Mix the Diluted Hydrochloric Acid",
+
+    description:
+      "Seal the volumetric flask and mix the contents thoroughly so that the hydrochloric acid is evenly distributed throughout the solution.",
+
+    implementationSteps: [
+      "Fit the bung securely into the volumetric flask.",
+      "Hold the volumetric flask upright.",
+      "Invert the flask.",
+      "Return it upright.",
+      "Repeat the inversion several times.",
+      "Make sure the solution is thoroughly mixed.",
+    ],
+
+    image: "./mixVolumetricFlask.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 6,
+
+    title: "Prepare the Burette",
+
+    description:
+      "Prepare the burette with standardised sodium hydroxide solution. The sodium hydroxide will be added gradually to the hydrochloric acid during the titration.",
+
+    implementationSteps: [
+      "Pick up the burette.",
+      "Select Add Liquid.",
+      "Add sodium hydroxide solution to the burette.",
+      "Clamp the burette securely.",
+      "Make sure the burette is positioned vertically.",
+    ],
+
+    image: "./prepareBuretteNaOH.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 7,
+
+    title: "Prepare the Conical Flask",
+
+    description:
+      "Use the volumetric pipette to transfer an accurate portion of the diluted hydrochloric acid into the conical flask.",
+
+    implementationSteps: [
+      "Pick up the volumetric pipette.",
+      "Position it in the diluted hydrochloric acid.",
+      "Squeeze the pipette filler.",
+      "Enter Pipette Mode.",
+      "Draw the diluted acid into the pipette.",
+      "Transfer the measured acid into the conical flask.",
+      "Return the pipette to the table.",
+    ],
+
+    image: "./prepareConicalFlaskHCL.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 8,
+
+    title: "Add Phenolphthalein Indicator",
+
+    description:
+      "Add a small amount of phenolphthalein indicator to the hydrochloric acid. The indicator allows the endpoint of the titration to be identified by a permanent pale-pink colour.",
+
+    implementationSteps: [
+      "Pick up the phenolphthalein dropper bottle.",
+      "Position the dropper above the conical flask.",
+      "Enter Pour Mode.",
+      "Add 2–3 drops of phenolphthalein.",
+      "Exit Pour Mode.",
+      "Return the phenolphthalein bottle to the table.",
+    ],
+
+    image: "./addPhenolphthalein.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 9,
+
+    title: "Perform the Rough Titration",
+
+    description:
+      "Place the conical flask beneath the burette and gradually add sodium hydroxide. The rough titration provides an approximate volume needed to reach the endpoint.",
+
+    implementationSteps: [
+      "Place the burette clamp in the centre.",
+      "Position the conical flask beneath the burette.",
+      "Open the burette and begin adding sodium hydroxide.",
+      "Observe the colour of the solution while titrating.",
+      "Continue until a pale-pink endpoint is reached.",
+      "Remove the conical flask from beneath the burette.",
+    ],
+
+    image: "./roughTitration.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 10,
+
+    title: "Prepare for the Accurate Titration",
+
+    description:
+      "After completing the rough titration, clean the conical flask and prepare a fresh portion of hydrochloric acid for a more accurate titration.",
+
+    implementationSteps: [
+      "Select the conical flask.",
+      "Clean the flask to remove the previous reaction mixture.",
+      "Select Add Liquid.",
+      "Add a fresh portion of hydrochloric acid.",
+      "Prepare the flask for another titration.",
+    ],
+
+    image: "./cleanConicalFlask.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 11,
+
+    title: "Add Indicator for the Accurate Titration",
+
+    description:
+      "Add fresh phenolphthalein to the new hydrochloric acid sample before carrying out the accurate titration.",
+
+    implementationSteps: [
+      "Pick up the phenolphthalein dropper bottle.",
+      "Position it above the conical flask.",
+      "Enter Pour Mode.",
+      "Add 2–3 drops of phenolphthalein.",
+      "Exit Pour Mode.",
+      "Return the dropper bottle to the table.",
+    ],
+
+    image: "./addPhenolphthaleinTrial.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 12,
+
+    title: "Prepare the Burette Again",
+
+    description:
+      "Prepare the burette with sufficient sodium hydroxide solution before beginning the accurate titration.",
+
+    implementationSteps: [
+      "Remove the burette from the centre if necessary.",
+      "Pick up the burette.",
+      "Select Add Liquid.",
+      "Add sodium hydroxide solution.",
+      "Clamp the burette securely.",
+      "Place the burette and clamp back in the centre.",
+    ],
+
+    image: "./refillBurette.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 13,
+
+    title: "Perform the Accurate Titration",
+
+    description:
+      "Carry out the titration carefully, adding sodium hydroxide gradually as the endpoint approaches. The correct endpoint is reached when a very pale pink colour remains in the flask.",
+
+    implementationSteps: [
+      "Place the conical flask beneath the burette.",
+      "Begin adding sodium hydroxide.",
+      "Observe the reaction mixture carefully.",
+      "Reduce the addition rate as the endpoint approaches.",
+      "Continue until a permanent pale-pink colour appears.",
+      "Stop adding sodium hydroxide immediately.",
+      "Remove the conical flask.",
+    ],
+
+    image: "./accurateTitration.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+  {
+    id: 14,
+
+    title: "Record the Titration Result",
+
+    description:
+      "Use the burette readings to determine the volume of sodium hydroxide required to neutralise the hydrochloric acid.",
+
+    implementationSteps: [
+      "Record the initial burette reading.",
+      "Record the final burette reading.",
+      "Calculate the titre from the difference between the readings.",
+      "Record the result.",
+      "Repeat the titration if another concordant result is required.",
+    ],
+
+    image: "./titrationResults.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+]
+
+  // =========================================================
+  // INITIALIZE HCL TITRATION PART 2 SHORTCUT STATE
+  // =========================================================
+
+  useEffect(() => {
+    if (selectedLesson !== 11.1) return
+
+    console.log("Initializing HCl Titration Part 2 shortcut...")
+
+    // -------------------------
+    // SAFETY STATE
+    // -------------------------
+
+    setSafetyStep(4)
+
+    if (gogglesRef?.current) {
+      gogglesRef.current.visible = false
+    }
+
+    if (gloverightRef?.current) {
+      gloverightRef.current.visible = false
+    }
+
+    if (gloveleftRef?.current) {
+      gloveleftRef.current.visible = false
+    }
+
+    // -------------------------
+    // BURETTE STATE
+    // -------------------------
+
+    setIsBuiretteClamped(true)
+
+    // -------------------------
+    // VOLUMETRIC FLASK BUNG
+    // -------------------------
+
+    if (volumetricBung?.current) {
+      volumetricBung.current.visible = true
+    }
+
+    // -------------------------
+    // CONICAL FLASK -> RIGHT HAND
+    // -------------------------
+
+    if (conicalBeakerRef?.current) {
+      const conicalFlask = conicalBeakerRef.current
+
+      setSelectedRightHand({
+        hand: "right",
+        name: "main-Conical-Flask",
+        ref: conicalBeakerRef,
+
+        originalParent: conicalFlask.parent,
+        originalPosition: conicalFlask.position.clone(),
+        originalRotation: conicalFlask.rotation.clone(),
+      })
+
+      console.log(
+        "✅ Shortcut State: Conical Flask moved to right hand"
+      )
+    } else {
+      console.log(
+        "❌ Shortcut State: Conical Flask ref not found"
+      )
+    }
+  }, [selectedLesson])
+
+  // =========================================================
+  // INITIALIZE LIQUID LEVELS
+  // =========================================================
 
   useEffect(() => {
     if (selectedLesson !== 11.1) return
@@ -41,6 +449,10 @@ const HCLTitration2 = () => {
         !mainBuiretteRef?.current ||
         !volumetricRef?.current
       ) {
+        console.log(
+          "Waiting for HCl Titration Part 2 models..."
+        )
+
         return
       }
 
@@ -48,67 +460,107 @@ const HCLTitration2 = () => {
       let buretteLiquidFound = false
       let volumetricLiquidFound = false
 
-      // -------------------------
+      // =====================================================
       // CONICAL FLASK LIQUID
-      // -------------------------
+      // =====================================================
 
-      conicalBeakerRef.current.traverse((child) => {
-        const childName =
-          child.name?.toLowerCase() || ""
+      conicalBeakerRef.current.traverse(
+        (child) => {
+          const childName =
+            child.name?.toLowerCase() || ""
 
-        if (childName.includes("liquid")) {
-          child.visible = true
-          child.scale.y = 0.2
-          child.updateMatrixWorld(true)
+          if (childName.includes("liquid")) {
+            child.visible = true
 
-          conicalLiquidFound = true
+            child.scale.y = 0.4
 
+            // Set liquid opacity
+            if (child.material) {
+              child.material =
+                child.material.clone()
+
+              child.material.transparent =
+                true
+
+              child.material.opacity =
+                0.3
+
+              child.material.needsUpdate =
+                true
+            }
+
+            child.updateMatrixWorld(true)
+
+            conicalLiquidFound = true
+
+          }
         }
-      })
+      )
 
-      // -------------------------
+      // =====================================================
       // BURETTE LIQUID
-      // -------------------------
+      // =====================================================
 
-      mainBuiretteRef.current.traverse((child) => {
-        const childName =
-          child.name?.toLowerCase() || ""
+      mainBuiretteRef.current.traverse(
+        (child) => {
+          const childName =
+            child.name?.toLowerCase() || ""
 
-        if (childName.includes("liquid")) {
-          child.visible = true
-          child.scale.y = 1
-          child.updateMatrixWorld(true)
+          if (childName.includes("liquid")) {
+            child.visible = true
 
-          buretteLiquidFound = true
+            child.scale.y = 0.6
 
+            child.updateMatrixWorld(true)
+
+            buretteLiquidFound = true
+
+            console.log(
+              "✅ Burette liquid initialized"
+            )
+          }
         }
-      })
+      )
 
-      volumetricRef.current.traverse((child) => {
-        const childName =
-          child.name?.toLowerCase() || ""
+      // =====================================================
+      // VOLUMETRIC FLASK LIQUID
+      // =====================================================
 
-        if (childName.includes("liquid")) {
-          child.visible = true
-          child.scale.y = 0.6
-          child.updateMatrixWorld(true)
+      volumetricRef.current.traverse(
+        (child) => {
+          const childName =
+            child.name?.toLowerCase() || ""
 
-          volumetricLiquidFound = true
+          if (childName.includes("liquid")) {
+            child.visible = true
 
+            child.scale.y = 0.6
+
+            child.updateMatrixWorld(true)
+
+            volumetricLiquidFound = true
+
+            console.log(
+              "✅ Volumetric Flask liquid initialized"
+            )
+          }
         }
-      })
+      )
 
-      // Only stop checking once both liquids were found
+      // =====================================================
+      // EVERYTHING READY
+      // =====================================================
+
       if (
         conicalLiquidFound &&
         buretteLiquidFound &&
         volumetricLiquidFound
       ) {
-        console.log(
-          "HCl Titration Part 2 state initialized"
-        )
-
         setIsVolumetricPipetteFilled(false)
+
+        console.log(
+          "✅ HCl Titration Part 2 shortcut fully initialized"
+        )
 
         clearInterval(interval)
       }
@@ -120,15 +572,86 @@ const HCLTitration2 = () => {
   }, [
     selectedLesson,
     conicalBeakerRef,
-    mainBuiretteRef,volumetricRef,
+    mainBuiretteRef,
+    volumetricRef,
     setIsVolumetricPipetteFilled,
   ])
 
+  // =========================================================
+  // GUIDELINES
+  // =========================================================
+
   return (
     <>
-      {lessonStep === 46 && (
-        <DialogBox text="46" />
+
+     {lessonStep >= 45 && lessonStep <= 49 && (
+        <HessGuidelines guidelineData={guidelineData[7]} />
       )}
+
+      {lessonStep === 45 && (<DialogBox text="Take Phenolphthalein Dropper Bottle to Left Hand"/>)}
+      {lessonStep === 46 && (<DialogBox text="Position the Phenolphthalein Dropper above the Conical Flask (Press Pour Mode)"/>)}
+      {lessonStep === 47 && (<DialogBox text="Squeeze the Dropper to add 2–3 drops of Phenolphthalein"/>)}
+      {lessonStep === 48 && (<DialogBox text="Click Phenolphthalein Dropper and Exit Pour Mode"/>)}
+      {lessonStep === 49 && (<DialogBox text="Keep Phenolphthalein Dropper back on Table"/>)}
+
+      {lessonStep >= 50 && lessonStep <= 53 && (
+        <HessGuidelines guidelineData={guidelineData[8]} />
+      )}
+
+      {lessonStep === 50 && (<DialogBox text="Place Clamp In Centre"/>)}
+      {lessonStep === 51 && (<DialogBox text="Place Conical Flask Near Clamp"/>)}
+      {lessonStep === 52 && (<DialogBox text="Scroll donw to Pour"/>)}
+      {lessonStep === 53 && (<DialogBox text="Remove Conical Flask"/>)}
+
+
+      {lessonStep >= 54 && lessonStep <= 57 && (
+        <HessGuidelines guidelineData={guidelineData[9]} />
+      )}
+
+
+      {lessonStep === 54 && (<DialogBox text="Click Conical Flask and click Clean Flask "/>)}
+      {lessonStep === 55 && (<DialogBox text="Click Add Liquid"/>)}
+      {lessonStep === 56 && (<DialogBox text="HCL 30cm3"/>)}
+      {lessonStep === 57 && (<DialogBox text="Remove Burette from centre"/>)}
+
+      {lessonStep >= 58 && lessonStep <= 62 && (
+        <HessGuidelines guidelineData={guidelineData[10]} />
+      )}
+
+      {lessonStep === 58 && (<DialogBox text="Take Phenolphthalein Dropper Bottle to Left Hand"/>)}
+      {lessonStep === 59 && (<DialogBox text="Press Pour Mode"/>)}
+      {lessonStep === 60 && (<DialogBox text="Squeeze the Dropper to add 2–3 drops of Phenolphthalein"/>)}
+      {lessonStep === 61 && (<DialogBox text="Click Phenolphthalein Dropper and Exit Pour Mode"/>)}
+      {lessonStep === 62 && (<DialogBox text="Keep Phenolphthalein Dropper back on Table"/>)}
+    
+      {lessonStep >= 63 && lessonStep <= 67 && (
+        <HessGuidelines guidelineData={guidelineData[11]} />
+      )}
+
+
+      {lessonStep === 63 && (<DialogBox text="Click Burette and get it to Left Hand"/>)}
+      {lessonStep === 64 && (<DialogBox text="Click Add Liquid"/>)}
+      {lessonStep === 65 && (<DialogBox text="HCL 30cm3"/>)}
+      {lessonStep === 66 && (<DialogBox text="Clamp"/>)}
+      {lessonStep === 67 && (<DialogBox text="Place In Centre"/>)}
+      {lessonStep === 68 && (<DialogBox text="Place Conical Flask in Burette"/>)}
+
+      {lessonStep >= 68 && lessonStep <= 70 && (
+        <HessGuidelines guidelineData={guidelineData[12]} />
+      )}
+
+
+      {lessonStep === 69 && (<DialogBox text="scroll down"/>)}
+      {lessonStep === 70 && (<DialogBox text="Remove Copnical Flaks"/>)}
+      {lessonStep === 71 && (<DialogBox text="71"/>)}
+
+
+      {lessonStep === 71 && (
+        <ResultsSheet data={hclTitrationResultsData}
+         />
+      )}
+
+
     </>
   )
 }

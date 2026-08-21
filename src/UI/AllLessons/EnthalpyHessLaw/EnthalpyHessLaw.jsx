@@ -470,7 +470,6 @@ const EnthalpyHessLaw = () =>{
                   // massAfterEmptying={21.72}
                   selectedLesson={selectedLesson}
                   lessonStep={lessonStep}
-                  massWithPowder={24.7}
                   autoHideConditions={[{ selectedLesson: 8, lessonStep: 20 },
           ]}
         />}

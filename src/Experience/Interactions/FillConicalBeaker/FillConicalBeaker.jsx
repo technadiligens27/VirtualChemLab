@@ -7,8 +7,12 @@ import { useFrame } from "@react-three/fiber"
 
 const FillConicalBeaker = ({
   modelRef,
+
   amount = 1,
   fillSpeed = 1,
+
+  // Liquid opacity
+  opacity = 0.3,
 }) => {
   const liquidRef = useRef(null)
 
@@ -16,7 +20,7 @@ const FillConicalBeaker = ({
   const progressRef = useRef(0)
   const isFinishedRef = useRef(false)
 
-  console.log("FIll Conical Beaker")
+  console.log("Fill Conical Beaker")
 
   useEffect(() => {
     if (!modelRef?.current) return
@@ -33,23 +37,66 @@ const FillConicalBeaker = ({
     })
 
     if (!liquidRef.current) {
-      console.log("Conical beaker liquid not found")
+      console.log(
+        "Conical beaker liquid not found"
+      )
+
       return
     }
 
-    liquidRef.current.visible = true
+    const liquid =
+      liquidRef.current
+
+    // ==========================================
+    // SHOW LIQUID
+    // ==========================================
+
+    liquid.visible = true
+
+    // ==========================================
+    // SET LIQUID OPACITY
+    // ==========================================
+
+    if (liquid.material) {
+      // Clone material so other objects
+      // using the same material are not affected
+      liquid.material =
+        liquid.material.clone()
+
+      liquid.material.transparent =
+        true
+
+      liquid.material.opacity =
+        opacity
+
+      liquid.material.needsUpdate =
+        true
+    }
+
+    // ==========================================
+    // SAVE STARTING SCALE
+    // ==========================================
 
     startScaleYRef.current =
-      liquidRef.current.scale.y
+      liquid.scale.y
 
     progressRef.current = 0
     isFinishedRef.current = false
 
     console.log(
       "Conical beaker liquid found:",
-      liquidRef.current
+      liquid
     )
-  }, [modelRef, amount])
+
+    console.log(
+      "Liquid opacity:",
+      opacity
+    )
+  }, [
+    modelRef,
+    amount,
+    opacity,
+  ])
 
   useFrame((_, delta) => {
     if (!liquidRef.current) return
@@ -58,10 +105,11 @@ const FillConicalBeaker = ({
     progressRef.current +=
       fillSpeed * delta
 
-    const progress = Math.min(
-      progressRef.current,
-      1
-    )
+    const progress =
+      Math.min(
+        progressRef.current,
+        1
+      )
 
     liquidRef.current.scale.y =
       startScaleYRef.current +
@@ -71,15 +119,24 @@ const FillConicalBeaker = ({
       ) *
         progress
 
-    liquidRef.current.updateMatrixWorld(true)
+    liquidRef.current.updateMatrixWorld(
+      true
+    )
+
+    // ==========================================
+    // FILLING FINISHED
+    // ==========================================
 
     if (progress >= 1) {
       liquidRef.current.scale.y =
         amount
 
-      liquidRef.current.updateMatrixWorld(true)
+      liquidRef.current.updateMatrixWorld(
+        true
+      )
 
-      isFinishedRef.current = true
+      isFinishedRef.current =
+        true
 
       console.log(
         "Conical beaker filling finished"

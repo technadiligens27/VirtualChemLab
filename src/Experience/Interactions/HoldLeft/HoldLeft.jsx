@@ -222,7 +222,22 @@ const HoldLeft = ({ modeldata }) => {
     if(selectedLesson===11 && lessonStep ===34){
       setLessonStep(35)
     }
+  },[selectedLesson,lessonStep])
+  
+  useEffect(()=>{
+    if(selectedLesson===11.1 && lessonStep ===45){
+      setLessonStep(46)
+    }
   },[selectedLesson,lessonStep]) 
+  
+  useEffect(()=>{
+    if(selectedLesson===11.1 && lessonStep ===58){
+      setLessonStep(59)
+    }
+  },[selectedLesson,lessonStep]) 
+
+   
+
   useEffect(() => {
     const canvas = gl.domElement
 
@@ -331,6 +346,10 @@ const HoldLeft = ({ modeldata }) => {
       object.name === "volumetric-pipette"
     ) {
       object.scale.set(0.4, 0.4, 0.4)
+    }else if (
+      object.name === "phenopthaline-dropper-bottle"
+    ){
+      object.scale.set(1, 1.2, 1)
     } else {
       object.scale.set(1, 1, 1)
     }

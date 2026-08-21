@@ -136,7 +136,12 @@ export const InteractionProvider = ({ children }) => {
   const [fillVolumetricPipette,setFillVolumetricPipette] = useState(false);
   const [pourFromVolumetricPipette,setPourFromVolumetricPipette] = useState(false);
 
+  const [isPhenopthalinePourMode,setIsPhenopthalinePourMode] = useState(false);
+  const [pourDroplets,setPourDroplets] = useState(false)
 
+  const [showHCLTitrationReaction,setShowHCLTitrationReaction] = useState(false)
+
+  const [isCleanBeaker,setIsCleanBeaker] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -247,7 +252,10 @@ export const InteractionProvider = ({ children }) => {
   setFillVolumetricPipette(false);
   setPourFromVolumetricPipette(false);
   setShowBromobutanePrecipitate(false);
-  setShowChlorobutanePrecipitate(false)
+  setShowChlorobutanePrecipitate(false);
+  setIsPhenopthalinePourMode(false);
+  setPourDroplets(false);
+  setIsCleanBeaker(false)
 }
 
   return (
@@ -325,7 +333,11 @@ export const InteractionProvider = ({ children }) => {
         fillVolumetricPipette,setFillVolumetricPipette,
         pourFromVolumetricPipette,setPourFromVolumetricPipette,
         showBromobutanePrecipitate,setShowBromobutanePrecipitate,
-        showChlorobutanePrecipitate,setShowChlorobutanePrecipitate 
+        showChlorobutanePrecipitate,setShowChlorobutanePrecipitate,
+        isPhenopthalinePourMode,setIsPhenopthalinePourMode,
+        pourDroplets,setPourDroplets,
+        showHCLTitrationReaction,setShowHCLTitrationReaction,
+        isCleanBeaker,setIsCleanBeaker
         
       }}
     >
