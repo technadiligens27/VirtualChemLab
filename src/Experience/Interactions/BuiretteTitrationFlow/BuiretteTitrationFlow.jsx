@@ -12,6 +12,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 import HCLTitrationReaction from "../../AllReactions/HCLTitrationReaction/HCLTitrationReaction"
+import SwirlModel from "../SwirlModel/SwirlModel"
 
 const BuiretteTitrationFlow = ({
   modelRef,
@@ -19,7 +20,7 @@ const BuiretteTitrationFlow = ({
   totalTime = 10,
 
   totalLiquidDecreasePercent = 80,
-  dropletDecreasePercent = 10,
+  dropletDecreasePercent = 12,
 
   streamTimeRatio = 0.8,
 
@@ -33,11 +34,9 @@ const BuiretteTitrationFlow = ({
 
   endpointHoldTime = 5,
 }) => {
-  // ==========================================
-  // CONTEXT
-  // ==========================================
 
   const { conicalBeakerRef } = useContext(ModelContext)
+  const [showSwirlModel, setShowSwirlModel] = useState(false)
 
   const {
     showHCLTitrationReaction,
@@ -275,30 +274,27 @@ const BuiretteTitrationFlow = ({
   // ==========================================
 
   useEffect(() => {
-    const handleWheel = (event) => {
-      if (event.deltaY <= 0) return
-      if (isStartedRef.current) return
-      if (finishedRef.current) return
-      if (!liquidRef.current) return
+      const handleWheel = (event) => {
+        if (event.deltaY <= 0) return
+        if (isStartedRef.current) return
+        if (finishedRef.current) return
+        if (!liquidRef.current) return
 
-      isStartedRef.current = true
-      elapsedTimeRef.current = 0
-      titrationProgressRef.current = 0
-      dropletPhaseStartedRef.current =
-        false
+        isStartedRef.current = true
+        elapsedTimeRef.current = 0
+        titrationProgressRef.current = 0
+        dropletPhaseStartedRef.current = false
 
-      setEndpointConfirmed(false)
-      setShowHCLTitrationReaction(true)
-      setReactionPhase("stream")
+        setEndpointConfirmed(false)
+        setShowHCLTitrationReaction(true)
 
-      console.log(
-        "✅ Titration started"
-      )
+        // render SwirlModel
+        setShowSwirlModel(true)
 
-      console.log(
-        "🧪 Reaction phase: STREAM"
-      )
-    }
+        setReactionPhase("stream")
+
+        console.log("✅ Titration started")
+      }
 
     window.addEventListener(
       "wheel",
@@ -575,43 +571,34 @@ const BuiretteTitrationFlow = ({
     endpointHoldTime,
   ])
 
-  // ==========================================
-  // RENDER
-  // ==========================================
-
   return (
     <>
       {showHCLTitrationReaction && (
         <HCLTitrationReaction
           modelRef={conicalBeakerRef}
           amount={0.1}
-          progressRef={
-            titrationProgressRef
-          }
+          progressRef={titrationProgressRef}
+          reactionPhase={reactionPhase}
+          endpointConfirmed={endpointConfirmed}
 
-          reactionPhase={
-            reactionPhase
-          }
-
-          endpointConfirmed={
-            endpointConfirmed
-          }
-
-          // STREAM
           streamCloudColor="#FF6FA8"
           streamCloudOpacity={0.32}
 
-          // NEAR ENDPOINT
           dropletCloudColor="#ff7db3"
           dropletCloudOpacity={0.5}
 
           cloudShowSpeed={5}
           cloudFadeSpeed={2.5}
 
-          // CORRECT ENDPOINT
           endpointColor="#F3AFC8"
           endpointOpacity={0.38}
           endpointColorSpeed={1.2}
+        />
+      )}
+
+      {showSwirlModel && (
+        <SwirlModel
+          modelRef={conicalBeakerRef}
         />
       )}
     </>

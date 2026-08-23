@@ -306,14 +306,16 @@ const HCLTitrationReaction = ({
       liquidMaterial.color.copy(endpointColorRef.current)
       liquidMaterial.opacity = endpointOpacity
       liquidMaterial.needsUpdate = true
+      
+      if(selectedLesson==11.1 && lessonStep==52){
+        setLessonStep(53)
+      }
+      if(selectedLesson==11.1 && lessonStep==69){
+        setLessonStep(70)
+      }
     }
 
-    if(selectedLesson==11.1 && lessonStep==52){
-      setLessonStep(53)
-    }
-    if(selectedLesson==11.1 && lessonStep==69){
-      setLessonStep(70)
-    }
+
   })
 
   return null

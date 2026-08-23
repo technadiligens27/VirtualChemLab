@@ -8,6 +8,7 @@ import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx"
 import HessGuidelines from "../../HessGuidelines/HessGuidelines.jsx"
 import ResultsSheet from "../../ResultSheet/ResultSheet.jsx"
 import {hclTitrationResultsData} from '../../Data/HCLTitrationData/HCLTitrationData.jsx'
+import HCLTitrationLiveDataPanel from "../../HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel.jsx"
 
 const HCLTitration2 = () => {
   const {
@@ -580,9 +581,151 @@ const HCLTitration2 = () => {
   // =========================================================
   // GUIDELINES
   // =========================================================
-
   return (
     <>
+
+      <HCLTitrationLiveDataPanel
+        normalBeakerAmount={null}
+        volumetricFlaskAmount={
+          lessonStep >= 45
+            ? 30
+            : null
+        }
+        conicalFlaskAmount={
+          lessonStep >= 45 && lessonStep < 54
+            ? 25
+            : lessonStep >= 54 && lessonStep < 57
+            ? 0
+            : lessonStep >= 57
+            ? 30
+            : null
+        }
+        buretteNaOHAmount={
+          lessonStep >= 45 && lessonStep < 52
+            ? 30
+            : lessonStep >= 53 && lessonStep < 65
+            ? 5.2
+            : lessonStep >= 65 && lessonStep < 69
+            ? 30
+            : lessonStep >= 70
+            ? 5.3
+            : null
+        }
+        initialBuretteReading={
+          lessonStep >= 50
+            ? 0
+            : null
+        }
+        currentBuretteReading={
+          lessonStep >= 53 && lessonStep < 65
+            ? 24.8
+            : lessonStep >= 70
+            ? 24.7
+            : lessonStep === 52 || lessonStep === 69
+            ? null
+            : lessonStep >= 50
+            ? 0
+            : null
+        }
+        naohDelivered={
+          lessonStep >= 53 && lessonStep < 65
+            ? 24.8
+            : lessonStep >= 70
+            ? 24.7
+            : null
+        }
+        endpointStatus={
+          lessonStep >= 45 && lessonStep < 48
+            ? "Not ready"
+            : lessonStep >= 48 && lessonStep < 52
+            ? "Ready"
+            : lessonStep === 52
+            ? "Approaching"
+            : lessonStep >= 53 && lessonStep < 54
+            ? "Reached"
+            : lessonStep >= 54 && lessonStep < 61
+            ? "Not ready"
+            : lessonStep >= 61 && lessonStep < 69
+            ? "Ready"
+            : lessonStep === 69
+            ? "Approaching"
+            : lessonStep >= 70
+            ? "Reached"
+            : null
+        }
+        roughTitre={
+          lessonStep >= 53
+            ? 24.8
+            : null
+        }
+        trialOne={
+          lessonStep >= 53
+            ? 24.7
+            : null
+        }
+        
+        trialTwo={ lessonStep >= 71   ? 24.75   : null }
+
+        meanTitre={
+          lessonStep >= 71
+            ? 24.73
+            : null
+        }
+        selectedLesson={selectedLesson}
+        lessonStep={lessonStep}
+        autoShowConditions={[
+          {
+            selectedLesson: 11.1,
+            lessonStep: 48,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 52,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 53,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 55,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 57,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 61,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 65,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 69,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 70,
+          },
+
+          {
+            selectedLesson: 11.1,
+            lessonStep: 71,
+          },
+        ]}
+        autoHideDelay={3000}
+      />
 
      {lessonStep >= 45 && lessonStep <= 49 && (
         <HessGuidelines guidelineData={guidelineData[7]} />

@@ -221,7 +221,7 @@ const FillUpBeaker = ({
       clonedMaterial.color?.set(
         fillData.color
       )
-
+      
       // ======================================
       // ETHANOL
       // ======================================
@@ -332,7 +332,11 @@ const FillUpBeaker = ({
         clonedMaterial.depthWrite =
           true
       }
-
+      if (lowerBeakerName.includes("main-buirette")) {
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0.6
+        clonedMaterial.depthWrite = false
+      }
       clonedMaterial.needsUpdate =
         true
 
