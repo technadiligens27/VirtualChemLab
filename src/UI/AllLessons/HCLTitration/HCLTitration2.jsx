@@ -472,7 +472,7 @@ const HCLTitration2 = () => {
           if (childName.includes("liquid")) {
             child.visible = true
 
-            child.scale.y = 0.4
+            child.scale.y = 0.3
 
             // Set liquid opacity
             if (child.material) {
@@ -509,7 +509,7 @@ const HCLTitration2 = () => {
           if (childName.includes("liquid")) {
             child.visible = true
 
-            child.scale.y = 0.6
+            child.scale.y = 0.45
 
             child.updateMatrixWorld(true)
 
@@ -534,7 +534,7 @@ const HCLTitration2 = () => {
           if (childName.includes("liquid")) {
             child.visible = true
 
-            child.scale.y = 0.6
+            child.scale.y = 0.8
 
             child.updateMatrixWorld(true)
 

@@ -1,4 +1,9 @@
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
+
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -10,14 +15,20 @@ const PhenopthalinePourDroplets = ({
 
   fallSpeed = 12,
   dropletDelay = 0.8,
-  fallDistance = 30,
+  fallDistance = 20,
 
   dropletColor = "#ffffff",
   dropletOpacity = 1,
 }) => {
-  const { setPourDroplets } = useContext(InteractionContext)
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
-  
+  const {
+    setPourDroplets,
+  } = useContext(InteractionContext)
+
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
   const dropletsRef = useRef([])
   const originalPositionsRef = useRef([])
@@ -25,6 +36,10 @@ const PhenopthalinePourDroplets = ({
 
   const elapsedTimeRef = useRef(0)
   const isFinishedRef = useRef(false)
+
+  // ==========================================
+  // FIND DROPLETS
+  // ==========================================
 
   useEffect(() => {
     if (!modelRef?.current) return
@@ -35,12 +50,17 @@ const PhenopthalinePourDroplets = ({
       const childName =
         child.name?.toLowerCase() || ""
 
-      if (childName.includes("droplet")) {
+      if (
+        childName.includes("droplet")
+      ) {
         foundDroplets.push(child)
       }
     })
 
-    // ONLY USE FIRST 3 DROPLETS
+    // ========================================
+    // ONLY FIRST 3
+    // ========================================
+
     const threeDroplets =
       foundDroplets.slice(0, 3)
 
@@ -53,48 +73,80 @@ const PhenopthalinePourDroplets = ({
       return
     }
 
-    dropletsRef.current = threeDroplets
+    dropletsRef.current =
+      threeDroplets
+
+    // ========================================
+    // STORE ORIGINAL POSITIONS
+    // ========================================
 
     originalPositionsRef.current =
-      threeDroplets.map((droplet) =>
-        droplet.position.clone()
+      threeDroplets.map(
+        (droplet) =>
+          droplet.position.clone()
       )
+
+    // ========================================
+    // STORE ORIGINAL MATERIALS
+    // ========================================
 
     originalMaterialsRef.current =
-      threeDroplets.map((droplet) =>
-        droplet.material || null
+      threeDroplets.map(
+        (droplet) =>
+          droplet.material || null
       )
 
-    threeDroplets.forEach((droplet) => {
-      droplet.visible = true
+    // ========================================
+    // PREPARE DROPLETS
+    // ========================================
 
-      if (droplet.material) {
-        droplet.material =
-          droplet.material.clone()
+    threeDroplets.forEach(
+      (droplet) => {
+        // IMPORTANT:
+        // all droplets start hidden
+        droplet.visible = false
 
-        droplet.material.color =
-          new THREE.Color(dropletColor)
+        if (droplet.material) {
+          droplet.material =
+            droplet.material.clone()
 
-        droplet.material.transparent = true
-        droplet.material.opacity =
-          dropletOpacity
+          droplet.material.color =
+            new THREE.Color(
+              dropletColor
+            )
 
-        droplet.material.needsUpdate = true
+          droplet.material.transparent =
+            true
+
+          droplet.material.opacity =
+            dropletOpacity
+
+          droplet.material.needsUpdate =
+            true
+        }
+
+        droplet.updateMatrixWorld(true)
       }
-    })
+    )
 
     elapsedTimeRef.current = 0
     isFinishedRef.current = false
 
     console.log(
-      "✅ Starting exactly 3 droplets"
+      "✅ Starting 3 droplets one by one"
     )
+
+    // ========================================
+    // CLEANUP
+    // ========================================
 
     return () => {
       threeDroplets.forEach(
         (droplet, index) => {
           const originalPosition =
-            originalPositionsRef.current[index]
+            originalPositionsRef.current[
+              index
+            ]
 
           if (originalPosition) {
             droplet.position.copy(
@@ -103,10 +155,14 @@ const PhenopthalinePourDroplets = ({
           }
 
           if (
-            originalMaterialsRef.current[index]
+            originalMaterialsRef.current[
+              index
+            ]
           ) {
             droplet.material =
-              originalMaterialsRef.current[index]
+              originalMaterialsRef.current[
+                index
+              ]
           }
 
           droplet.visible = false
@@ -116,7 +172,10 @@ const PhenopthalinePourDroplets = ({
       )
 
       dropletsRef.current = []
+
       elapsedTimeRef.current = 0
+
+      isFinishedRef.current = false
     }
   }, [
     modelRef,
@@ -124,10 +183,18 @@ const PhenopthalinePourDroplets = ({
     dropletOpacity,
   ])
 
-  useFrame((_, delta) => {
-    if (isFinishedRef.current) return
+  // ==========================================
+  // ANIMATION
+  // ==========================================
 
-    if (dropletsRef.current.length !== 3) {
+  useFrame((_, delta) => {
+    if (isFinishedRef.current) {
+      return
+    }
+
+    if (
+      dropletsRef.current.length !== 3
+    ) {
       return
     }
 
@@ -138,69 +205,133 @@ const PhenopthalinePourDroplets = ({
     dropletsRef.current.forEach(
       (droplet, index) => {
         const originalPosition =
-          originalPositionsRef.current[index]
+          originalPositionsRef.current[
+            index
+          ]
 
-        if (!originalPosition) return
+        if (!originalPosition) {
+          return
+        }
+
+        // ====================================
+        // THIS DROPLET'S START TIME
+        // ====================================
 
         const startTime =
           index * dropletDelay
+
+        // ====================================
+        // NOT STARTED YET
+        // KEEP HIDDEN
+        // ====================================
 
         if (
           elapsedTimeRef.current <
           startTime
         ) {
+          droplet.visible = false
           return
         }
+
+        // ====================================
+        // STARTED
+        // MAKE THIS DROPLET VISIBLE
+        // ====================================
 
         const targetZ =
           originalPosition.z -
           fallDistance
 
-        if (
-          droplet.position.z <= targetZ
-        ) {
-          droplet.position.z = targetZ
+        // ====================================
+        // ALREADY FINISHED
+        // ====================================
 
-          droplet.visible = false
+        if (
+          droplet.position.z <=
+          targetZ
+        ) {
+          droplet.position.z =
+            targetZ
+
+          droplet.visible =
+            false
 
           finishedCount += 1
 
           return
         }
 
+        // ====================================
+        // CURRENT DROPLET FALLING
+        // ====================================
+
+        droplet.visible = true
+
         droplet.position.z -=
           fallSpeed * delta
 
-        if (
-          droplet.position.z <= targetZ
-        ) {
-          droplet.position.z = targetZ
+        // ====================================
+        // DROPLET REACHED TARGET
+        // ====================================
 
-          droplet.visible = false
+        if (
+          droplet.position.z <=
+          targetZ
+        ) {
+          droplet.position.z =
+            targetZ
+
+          droplet.visible =
+            false
 
           finishedCount += 1
         }
 
-        droplet.updateMatrixWorld(true)
+        droplet.updateMatrixWorld(
+          true
+        )
       }
     )
 
-    // EXACTLY 3 FINISHED
+    // ========================================
+    // ALL 3 FINISHED
+    // ========================================
+
     if (
       finishedCount === 3 &&
       !isFinishedRef.current
     ) {
       isFinishedRef.current = true
 
+      // Make absolutely sure
+      // everything is hidden
+      dropletsRef.current.forEach(
+        (droplet) => {
+          droplet.visible = false
+          droplet.updateMatrixWorld(
+            true
+          )
+        }
+      )
+
       console.log(
         "✅ Exactly 3 phenolphthalein droplets poured - FINISHED"
       )
-      if(selectedLesson===11.1 && lessonStep===47){
+
+      if (
+        selectedLesson === 11.1 &&
+        lessonStep === 47
+      ) {
         setLessonStep(48)
       }
-      if(selectedLesson===11.1 && lessonStep===60){
+
+      if (
+        selectedLesson === 11.1 &&
+        lessonStep === 60
+      ) {
         setLessonStep(61)
       }
+
       setPourDroplets(false)
     }
   })

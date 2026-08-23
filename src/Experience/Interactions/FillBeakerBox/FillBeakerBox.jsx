@@ -66,9 +66,16 @@ const FillBeakerBox = () => {
   const acids = getAcids()
 
   const getAmounts = () => {
-    if (fillBeakerModel === "main-graduated-cylinder" || "main-testube-04" || "main-testube-05") {
-      return [5, 10, 20,  30, ,40, 50]
+
+    if(selectedLesson ===11){
+      if (fillBeakerModel === "main-normal-beaker") {
+        return [10, 25, 50, 100, 250]
+      }   
     }
+
+    if (fillBeakerModel === "main-graduated-cylinder" || "main-testube-04" || "main-testube-05") {
+      return [5, 10, 20,  25, 30, 50]
+    } 
 
     return [50, 100, 200, 250]
   }

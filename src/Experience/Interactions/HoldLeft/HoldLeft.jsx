@@ -350,7 +350,7 @@ const HoldLeft = ({ modeldata }) => {
       object.name === "phenopthaline-dropper-bottle"
     ){
       object.scale.set(1, 1.2, 1)
-    } else {
+    }else {
       object.scale.set(1, 1, 1)
     }
 

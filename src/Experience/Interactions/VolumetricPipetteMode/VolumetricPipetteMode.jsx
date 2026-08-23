@@ -12,10 +12,9 @@ const VolumetricPipetteMode = ({
   modelScale = 0.8,
   pipetteScale = 0.5,
 }) => {
-  const { volumetricPipetteRef } = useContext(ModelContext)
+  const { volumetricPipetteRef, volumetricBung } = useContext(ModelContext)
   const {selectedLesson,lessonStep,setLessonStep}= useContext(MainGuidelineContext)
   
-  console.log("Pipette Mode")
   const originalPipettePositionRef = useRef(null)
   const originalPipetteRotationRef = useRef(null)
   const originalPipetteScaleRef = useRef(null)
@@ -23,6 +22,27 @@ const VolumetricPipetteMode = ({
   const originalModelPositionRef = useRef(null)
   const originalModelRotationRef = useRef(null)
   const originalModelScaleRef = useRef(null)
+
+  const originalBungVisibilityRef = useRef(false)
+
+  useEffect(() => {
+    if (!volumetricBung?.current) return
+
+    // Store whatever visibility it had BEFORE entering mode
+    originalBungVisibilityRef.current =
+      volumetricBung.current.visible
+
+    // While in Volumetric Pipette Mode, bung is always hidden
+    volumetricBung.current.visible = false
+
+    return () => {
+      if (!volumetricBung?.current) return
+
+      // Restore exactly what it was before
+      volumetricBung.current.visible =
+        originalBungVisibilityRef.current
+    }
+  }, [volumetricBung])
 
   useEffect(()=>{
     if(selectedLesson===11 && lessonStep===8){

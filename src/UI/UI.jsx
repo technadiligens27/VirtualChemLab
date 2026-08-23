@@ -27,6 +27,7 @@ import HydrolysisReaction from "./HydrolysisReaction/HydrolysisReaction"
 import ReactionTimer from "./ReactionTimer/ReactionTimer"
 import HCLTitration from "./AllLessons/HCLTitration/HCLTitration"
 import HCLTitration2 from "./AllLessons/HCLTitration/HCLTitration2"
+import HCLTitrationLiveDataPanel from "./HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel"
 
 const mainContent = [
   {

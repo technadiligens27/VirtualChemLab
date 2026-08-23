@@ -120,6 +120,10 @@ const FillUpBeaker = ({
         "c2h5oh"
       )
 
+    const isHCL =
+      liquidName.includes("hydrochloric acid") ||
+      liquidName.includes("hcl")  
+
     console.log(
       "Selected amount:",
       selectedAmount
@@ -298,6 +302,20 @@ const FillUpBeaker = ({
           clonedMaterial.metalness =
             0
         }
+      }else if (isHCL) {
+        clonedMaterial.color?.set("#f5fbff")
+
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0.4
+        clonedMaterial.depthWrite = false
+
+        if ("roughness" in clonedMaterial) {
+          clonedMaterial.roughness = 0.1
+        }
+
+        if ("metalness" in clonedMaterial) {
+          clonedMaterial.metalness = 0
+        }
       }
 
       // ======================================
@@ -378,10 +396,17 @@ const FillUpBeaker = ({
         "normal-beaker"
       )
     ) {
-      amountRef.current =
-        selectedAmount * 0.55
+      if (
+        selectedLesson === 11 &&
+        selectedAmount === 250
+      ) {
+        amountRef.current = 1
+      } else {
+        amountRef.current =
+          selectedAmount /100
+      }
 
-      speedRef.current = 20
+      speedRef.current = 0.3
     }
 
     // ========================================

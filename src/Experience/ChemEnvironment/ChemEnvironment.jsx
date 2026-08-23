@@ -97,6 +97,19 @@ const hideLabelObjects = (root) => {
   })
 }
 
+ const hideDropletObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("droplet")) {
+      child.visible = false
+      // console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
+
 const hideSaltBits = (root) => {
   if (!root) return
 
@@ -136,6 +149,18 @@ const hideCloudObjects=(root)=>{
   })
 }
 
+const hideVerticalObjects=(root)=>{
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase()
+
+    if (childName?.includes("vertical")) {
+      child.visible = false
+      // console.log("Precipitate hidden:", child.name)
+    }
+  })
+}
 
   useEffect(() => {
   console.log("Available animations:", names)
@@ -251,6 +276,8 @@ const hideCloudObjects=(root)=>{
   hideLabelObjects(scene)
   hideBungObjects(scene)
   hideCloudObjects(scene)
+  hideVerticalObjects(scene);
+  hideDropletObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
 

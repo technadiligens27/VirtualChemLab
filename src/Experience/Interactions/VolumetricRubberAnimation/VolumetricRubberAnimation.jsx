@@ -83,9 +83,6 @@ const VolumetricRubberAnimation = ({
         if(isVolumetricPipetteFilled){
           setPourFromVolumetricPipette(true)     
         }
-            console.log("asjxnsa")
-
-
 
       }
     }
@@ -148,8 +145,10 @@ const VolumetricRubberAnimation = ({
 
   return (
     <>
-      {fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}  amount={2}/>}
-     
+      {fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
+    
+      {selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
+
       {selectedRightHand?.name==='volumetric-flask' && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
 
       {selectedRightHand?.name==="main-Conical-Flask" && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}  otherLiquidAmount={0.2}/>}

@@ -103,7 +103,7 @@ const Interaction = () => {
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
       {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
-      {selectedRightHand?.name==='main-Conical-Flask' && isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={conicalBeakerRef}/>}
+      {selectedRightHand?.name==='main-Conical-Flask' && isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.3} heightOffset ={-4} scaleOffset={0.45} beakerRef={conicalBeakerRef}/>}
 
 
       {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') && isPlacePolysterene
@@ -157,7 +157,7 @@ const Interaction = () => {
         <VolumetricPipetteMode modelRef={normalBeakerRef}/>
       }
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'volumetric-flask' &&
-        <VolumetricPipetteMode  yOffset={4} modelRef={volumetricRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
+        <VolumetricPipetteMode  yOffset={4} modelRef={volumetricRef} modelScale ={ 0.7} pipetteScale = {0.4} decreaseAmount={0.2}  modelYOffset={-1.5}/>
       }
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-Conical-Flask' &&
         <VolumetricPipetteMode  yOffset={4} modelRef={conicalBeakerRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>

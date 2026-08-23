@@ -12,13 +12,14 @@ const PourFromBeaker = ({
   otherModelRef,
   isPouring,
   pourAmount = 10,
-  liquidAmount = 0.4,
-  pourSpeed = 1,
+  liquidAmount = 0.8,
+  pourSpeed = 0.1,
 }) => {
-
-
-  console.log("Pour From BEaker")
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
   const pourRef = useRef(null)
   const liquidRef = useRef(null)
@@ -38,48 +39,124 @@ const PourFromBeaker = ({
     liquidRef.current = null
     otherLiquidRef.current = null
 
-    modelRef.current.traverse((child) => {
-      const childName = child.name?.toLowerCase() || ""
+    // =========================================
+    // FIND SOURCE POUR + SOURCE LIQUID
+    // =========================================
 
-      if (childName.includes("pour")) {
+    modelRef.current.traverse((child) => {
+      if (!child.isMesh) return
+
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (
+        childName.includes("pour") &&
+        !pourRef.current
+      ) {
         pourRef.current = child
       }
 
-      if (childName.includes("liquid")) {
+      if (
+        childName.includes("liquid") &&
+        !childName.includes("pour") &&
+        !liquidRef.current
+      ) {
         liquidRef.current = child
       }
     })
 
-    otherModelRef.current.traverse((child) => {
-      const childName = child.name?.toLowerCase() || ""
+    // =========================================
+    // FIND RECEIVER LIQUID
+    // =========================================
 
-      if (childName.includes("liquid")) {
+    otherModelRef.current.traverse((child) => {
+      if (!child.isMesh) return
+
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (
+        childName.includes("liquid") &&
+        !childName.includes("pour") &&
+        !otherLiquidRef.current
+      ) {
         otherLiquidRef.current = child
       }
     })
 
-    if (pourRef.current && liquidRef.current) {
-      pourRef.current.material = liquidRef.current.material.clone()
+    console.log(
+      "SOURCE LIQUID:",
+      liquidRef.current?.name
+    )
+
+    console.log(
+      "POUR:",
+      pourRef.current?.name
+    )
+
+    console.log(
+      "RECEIVER LIQUID:",
+      otherLiquidRef.current?.name
+    )
+
+    // =========================================
+    // COPY SOURCE LIQUID MATERIAL TO POUR
+    // =========================================
+
+    if (
+      pourRef.current &&
+      liquidRef.current
+    ) {
+      if (
+        Array.isArray(
+          liquidRef.current.material
+        )
+      ) {
+        pourRef.current.material =
+          liquidRef.current.material.map(
+            (material) =>
+              material.clone()
+          )
+      } else {
+        pourRef.current.material =
+          liquidRef.current.material.clone()
+      }
+
+      pourRef.current.material.needsUpdate =
+        true
+
       pourRef.current.scale.y = 0
       pourRef.current.visible = false
+
+      console.log(
+        "✅ Pour material copied from:",
+        liquidRef.current.name
+      )
     }
 
     progressRef.current = 0
     isFinishedRef.current = false
     hasSourceLiquidRef.current = false
-  }, [modelRef, otherModelRef])
+  }, [
+    modelRef,
+    otherModelRef,
+  ])
 
   useEffect(() => {
-    if (!pourRef.current || !liquidRef.current || !otherLiquidRef.current) return
+    if (
+      !pourRef.current ||
+      !liquidRef.current ||
+      !otherLiquidRef.current
+    ) {
+      return
+    }
 
     if (isPouring) {
-      sourceStartScaleRef.current = liquidRef.current.scale.y
-      otherStartScaleRef.current = otherLiquidRef.current.scale.y
+      sourceStartScaleRef.current =
+        liquidRef.current.scale.y
 
-      /*
-        Check whether source actually
-        contains liquid.
-      */
+      otherStartScaleRef.current =
+        otherLiquidRef.current.scale.y
 
       hasSourceLiquidRef.current =
         liquidRef.current.scale.y > 0
@@ -88,7 +165,9 @@ const PourFromBeaker = ({
         pourRef.current.scale.y = 0
         pourRef.current.visible = false
 
-        console.log("Cannot pour: source liquid is empty")
+        console.log(
+          "Cannot pour: source liquid is empty"
+        )
 
         return
       }
@@ -116,14 +195,16 @@ const PourFromBeaker = ({
   useFrame((_, delta) => {
     if (!isPouring) return
     if (!hasSourceLiquidRef.current) return
-    if (!pourRef.current || !liquidRef.current || !otherLiquidRef.current) return
-    if (isFinishedRef.current) return
 
-    /*
-      Extra safety:
-      if source becomes empty,
-      immediately stop transfer.
-    */
+    if (
+      !pourRef.current ||
+      !liquidRef.current ||
+      !otherLiquidRef.current
+    ) {
+      return
+    }
+
+    if (isFinishedRef.current) return
 
     if (liquidRef.current.scale.y <= 0) {
       liquidRef.current.scale.y = 0
@@ -135,53 +216,59 @@ const PourFromBeaker = ({
       hasSourceLiquidRef.current = false
       isFinishedRef.current = true
 
-      console.log("Pour stopped: source liquid empty")
+      console.log(
+        "Pour stopped: source liquid empty"
+      )
 
       return
     }
 
-    progressRef.current = Math.min(
-      progressRef.current + pourSpeed * delta,
-      1
-    )
+    progressRef.current =
+      Math.min(
+        progressRef.current +
+          pourSpeed * delta,
+        1
+      )
 
-    const progress = progressRef.current
+    const progress =
+      progressRef.current
 
-    /*
-      Pour stream grows.
-    */
+    // =========================================
+    // POUR STREAM
+    // =========================================
 
     pourRef.current.visible = true
 
     pourRef.current.scale.y =
       pourAmount * progress
 
-    /*
-      Source liquid decreases.
-    */
+    // =========================================
+    // SOURCE LIQUID DECREASE
+    // =========================================
 
     liquidRef.current.scale.y =
-      sourceStartScaleRef.current * (1 - progress)
+      sourceStartScaleRef.current *
+      (1 - progress)
 
-    /*
-      Receiver increases ONLY because
-      source liquid exists.
-    */
+    // =========================================
+    // RECEIVER LIQUID INCREASE
+    // =========================================
 
     otherLiquidRef.current.scale.y =
       otherStartScaleRef.current +
       liquidAmount * progress
 
-    /*
-      Everything finishes together.
-    */
+    // =========================================
+    // FINISH
+    // =========================================
 
     if (progress >= 1) {
       liquidRef.current.scale.y = 0
       liquidRef.current.visible = false
 
       otherLiquidRef.current.scale.y =
-        otherStartScaleRef.current + liquidAmount
+        otherStartScaleRef.current +
+        liquidAmount
 
       pourRef.current.scale.y = 0
       pourRef.current.visible = false
@@ -189,8 +276,14 @@ const PourFromBeaker = ({
       hasSourceLiquidRef.current = false
       isFinishedRef.current = true
 
-      console.log("Beaker pouring finished")
-      if(selectedLesson==11 && lessonStep===21){
+      console.log(
+        "Beaker pouring finished"
+      )
+
+      if (
+        selectedLesson === 11 &&
+        lessonStep === 21
+      ) {
         setLessonStep(22)
       }
     }

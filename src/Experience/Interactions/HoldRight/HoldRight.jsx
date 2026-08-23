@@ -152,7 +152,7 @@ const transformControlsRef = useRef()
     
       if (object.name === "main-normal-beaker") {
         object.rotation.y = Math.PI // 180 degrees
-        object.scale.set(0.9, 0.9, 0.9);
+        object.scale.set(0.8, 0.8, 0.8);
       }
     else if (object.name === "main-spoon") {
       object.rotation.set(
