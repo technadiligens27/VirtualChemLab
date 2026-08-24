@@ -4,7 +4,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 const WeighTestube = ({ testubeRef }) => {
   const { trayPointRef } = useContext(ModelContext)
 
-  console.log('rendered')
+  console.log("rendered")
 
   useEffect(() => {
     const trayPoint = trayPointRef?.current
@@ -17,6 +17,7 @@ const WeighTestube = ({ testubeRef }) => {
       return
     }
 
+    // Show cap while weighing
     testube.traverse((child) => {
       if (
         child.isMesh &&
@@ -30,17 +31,30 @@ const WeighTestube = ({ testubeRef }) => {
     trayPoint.add(testube)
 
     testube.position.set(0, 0, 0)
+
     testube.rotation.set(
       0,
       0,
       Math.PI / 2
     )
+
     testube.scale.set(1, 1, 1)
 
     testube.updateMatrixWorld(true)
 
-    // No cleanup here.
-    // The buttons now control where the tube goes.
+    return () => {
+      // Hide cap when WeighTestube unmounts
+      testube.traverse((child) => {
+        if (
+          child.isMesh &&
+          child.name?.toLowerCase().includes("cap")
+        ) {
+          child.visible = false
+        }
+      })
+
+      console.log("WeighTestube unmounted - cap hidden")
+    }
   }, [trayPointRef, testubeRef])
 
   return null

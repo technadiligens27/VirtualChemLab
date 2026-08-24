@@ -522,7 +522,23 @@ const PouringMode = ({ hand }) => {
         
         if (selectedLesson === 11 && lessonStep === 22) {
           setLessonStep(23)
-        }  
+        }
+        
+        if (selectedLesson === 12 && lessonStep === 20) {
+          setLessonStep(21)
+        } 
+        
+        if (selectedLesson === 12.1 && lessonStep === 29) {
+          setLessonStep(30)
+        }
+
+        if (selectedLesson === 12.1 && lessonStep === 35) {
+          setLessonStep(36)
+        }
+
+        if (selectedLesson === 12.1 && lessonStep === 41) {
+          setLessonStep(42)
+        }
 
         return
       }
@@ -601,6 +617,22 @@ const PouringMode = ({ hand }) => {
 
       if (selectedLesson === 10 && lessonStep === 117) {
         setLessonStep(118)
+      }
+
+      if (selectedLesson === 12 && lessonStep === 18) {
+        setLessonStep(19)
+      }
+
+      if (selectedLesson === 12.1 && lessonStep === 27) {
+        setLessonStep(28)
+      }
+
+      if (selectedLesson === 12.1 && lessonStep === 33) {
+        setLessonStep(34)
+      }
+
+      if (selectedLesson === 12.1 && lessonStep === 39) {
+        setLessonStep(40)
       }
 
  
@@ -818,8 +850,37 @@ const PouringMode = ({ hand }) => {
       )}
 
       {
-        hand==='left' && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand.name==='volumetric-flask' && (
-          <PourFromBeaker modelRef={normalBeakerRef} isPouring={isPouring} otherModelRef={volumetricRef}/>
+        ([11, 11.1].includes(selectedLesson)) &&
+        hand === "left" &&
+        selectedLeftHand?.name === "main-normal-beaker" &&
+        selectedRightHand?.name === "volumetric-flask" && (
+          <PourFromBeaker
+            modelRef={normalBeakerRef}
+            otherModelRef={volumetricRef}
+            isPouring={isPouring}
+          />
+        )
+     }
+
+      {/* {
+       selectedLesson==12.1 && lessonStep===28 && hand==='left' && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand.name==='volumetric-flask' && (
+          <PourFromBeaker 
+            modelRef={normalBeakerRef} 
+            isPouring={isPouring} 
+            otherModelRef={volumetricRef}
+            liquidAmount = {0.2}
+            otherLiquidOpacity = {0.55}/>
+        )
+      } */}
+
+      {
+       selectedLesson==12.1 && ([28,34,40].includes(lessonStep)) && hand==='left' && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand.name==='volumetric-flask' && (
+          <PourFromBeaker 
+            modelRef={normalBeakerRef} 
+            isPouring={isPouring} 
+            otherModelRef={volumetricRef}
+            liquidAmount = {0.2}
+            otherLiquidOpacity = {0.55}/>
         )
       }
     </>

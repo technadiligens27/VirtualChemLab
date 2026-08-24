@@ -400,14 +400,13 @@ const FillUpBeaker = ({
         "normal-beaker"
       )
     ) {
-      if (
-        selectedLesson === 11 &&
-        selectedAmount === 250
-      ) {
+      if ( selectedLesson === 11 && selectedAmount === 250) {
         amountRef.current = 1
+      }else if(selectedLesson === 12 && selectedAmount === 100){
+        amountRef.current = 0.4
       } else {
         amountRef.current =
-          selectedAmount /100
+        selectedAmount /100
       }
 
       speedRef.current = 0.3
@@ -714,6 +713,27 @@ const FillUpBeaker = ({
     ) {
       setLessonStep(66)
     }
+
+    if (
+      selectedLesson === 12 &&
+      lessonStep === 17
+    ) {
+      setLessonStep(18)
+    }
+
+    if (
+      selectedLesson === 12.1 &&
+      lessonStep === 31
+    ) {
+      setLessonStep(32)
+    }
+
+    if (
+      selectedLesson === 12.1 &&
+      lessonStep === 37
+    ) {
+      setLessonStep(38)
+    }   
   })
 
   // ==========================================

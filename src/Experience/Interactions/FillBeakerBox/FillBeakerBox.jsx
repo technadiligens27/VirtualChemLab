@@ -67,7 +67,7 @@ const FillBeakerBox = () => {
 
   const getAmounts = () => {
 
-    if(selectedLesson ===11){
+    if(selectedLesson ===11 || selectedLesson===12){
       if (fillBeakerModel === "main-normal-beaker") {
         return [10, 25, 50, 100, 250]
       }   
@@ -263,7 +263,25 @@ const FillBeakerBox = () => {
     if(lessonStep===64 && selectedLesson ===11.1){
       setLessonStep(65)
     }
-  },[lessonStep,selectedLesson])   
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(lessonStep===16 && selectedLesson ===12){
+      setLessonStep(17)
+    }
+  },[lessonStep,selectedLesson]) 
+
+  useEffect(()=>{
+    if(lessonStep===30 && selectedLesson ===12.1){
+      setLessonStep(31)
+    }
+  },[lessonStep,selectedLesson])
+  
+  useEffect(()=>{
+    if(lessonStep===36 && selectedLesson ===12.1){
+      setLessonStep(37)
+    }
+  },[lessonStep,selectedLesson])    
 
   return (
     <div className="fill-dialog-overlay">

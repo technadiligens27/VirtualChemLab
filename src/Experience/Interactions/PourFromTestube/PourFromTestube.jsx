@@ -37,13 +37,12 @@ const PourFromTestube = ({
   const {
     selectedRightHand,
     selectedLeftHand,
-
     setIsReactionTimerRunning,
     setIsPouring,
   } = useContext(InteractionContext)
 
   const {
-    setShowErrorMsgNo,
+    setShowErrorMsgNo,selectedLesson
   } = useContext(MainGuidelineContext)
 
   /*
@@ -60,7 +59,6 @@ const PourFromTestube = ({
       if (name.includes("pour")) {
         pourRef.current = child
 
-        console.log("Pour Found:", child.name)
 
         child.visible = false
         child.scale.y = 0
@@ -141,6 +139,11 @@ const PourFromTestube = ({
    * Start timer only when actual liquid can pour
    */
   useEffect(() => {
+
+    if(selectedLesson ===12){
+      return
+    }
+
     if (isPouring && sourceHasLiquid) {
       setIsReactionTimerRunning(true)
     }

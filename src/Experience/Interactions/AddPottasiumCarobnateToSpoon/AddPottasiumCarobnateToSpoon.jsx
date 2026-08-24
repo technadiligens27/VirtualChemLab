@@ -23,7 +23,11 @@ const AddPottasiumCarobnateToSpoon = () => {
     }
   },[lessonStep,selectedLesson])
 
-
+  useEffect(()=>{
+    if(selectedLesson==12 && lessonStep==8){
+        setLessonStep(9)
+    }
+  },[lessonStep,selectedLesson])
   useEffect(() => {
     const spoon = spoonRef.current
 

@@ -247,7 +247,26 @@ const transformControlsRef = useRef()
       setLessonStep(5)
     }
   },[selectedLesson,lessonStep])
-  
+
+  useEffect(()=>{
+    if(selectedLesson===12 && lessonStep ===7){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===12.1 && lessonStep ===22){
+      setLessonStep(23)
+    }
+  },[selectedLesson,lessonStep])  
+
+  useEffect(()=>{
+    if(selectedLesson===12.1 && lessonStep ===26){
+      setLessonStep(27)
+    }
+  },[selectedLesson,lessonStep])  
+
+    
   // General step change
 
   // useEffect(()=>{

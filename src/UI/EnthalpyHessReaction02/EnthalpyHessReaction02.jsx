@@ -4,9 +4,10 @@ import { InteractionContext } from "../../Contexts/InteractionContext/Interactio
 import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 import EnthalpyLessonOverview from "../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview"
+import DialogBox from "../AllDialogBox/DialogBox/DialogBox"
+import HessLiveDataPanel from "../HessLiveDataPanel/HessLiveDataPanel"
 
 import { enthalpyReactionData } from "../Data/enthalpyReactionData/enthalpyReactionData"
-import DialogBox from "../AllDialogBox/DialogBox/DialogBox"
 
 const EnthalpyHessReaction02 = () => {
   const {
@@ -33,143 +34,364 @@ const EnthalpyHessReaction02 = () => {
         />
       )}
 
-      {
-        lessonStep===2 && <DialogBox text={'Click Beaker and Select Left Hand Option'}/>
-      }
+      {/* =====================================================
+          HESS LIVE DATA PANEL
+         ===================================================== */}
 
-      {
-        lessonStep===3 && <DialogBox text={'Click Polysterene Cup and Select Right Hand Option'}/>
-      }
+      {/* Nothing measured yet */}
+      {lessonStep >= 2 && lessonStep < 14 && (
+        <HessLiveDataPanel
+          reactionNumber={2}
 
-      {
-        lessonStep===4 && <DialogBox text={'Click Polysterene Cup and Select Place In Beaker'}/>
-      }
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+        />
+      )}
 
-      {
-        lessonStep===5 && <DialogBox text={'Keep Beaker In Table'}/>
-      }
+      {/* Test tube + KHCO3 has now been weighed */}
+      {lessonStep >= 14 && lessonStep < 19 && (
+        <HessLiveDataPanel
+          reactionNumber={2}
 
-      {
-        lessonStep===6 && <DialogBox text={'Select Testube and select Left Hand'}/>
-      }
+          massWithPowder={25.67}
 
-      {
-        lessonStep===7 && <DialogBox text={'Select Spatula and select Right Hand Option'}/>
-      }
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+        />
+      )}
 
-      {
-        lessonStep===8 && <DialogBox text={'Click Potassium Hydrogencarbonate container And Select Potassium Hydrogencarbonate'}/>
-      }
+      {/* 30 cm³ HCl has now been prepared */}
+      {lessonStep >= 19 && lessonStep < 30 && (
+        <HessLiveDataPanel
+          reactionNumber={2}
 
-      {
-        lessonStep===9 && <DialogBox text={'Click the Test tube and select Pour Into Testube'}/>
-      }
+          volumeOfSolution={30}
+          solutionDensity={1}
 
-      {
-        lessonStep===10 && <DialogBox text={'Scroll Down to Pour'}/>
-      }
+          massWithPowder={24.7}
 
-      {
-        lessonStep===11 && <DialogBox text={'Click the Spatula And Disable Pour Mode'}/>
-      }
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+        />
+      )}
 
-      {
-        lessonStep===12 && <DialogBox text={'Click the Digital balance and select Place Balance.'}/>
-      }
+      {/* Thermometer placed - initial temperature known */}
+      {lessonStep >= 30 && lessonStep < 34 && (
+        <HessLiveDataPanel
+          reactionNumber={2}
 
-      {
-        lessonStep===13 && <DialogBox text={'Click the Test Tube and select Weigh Testube.'}/>
-      }
+          volumeOfSolution={30}
+          solutionDensity={1}
 
-      {
-        lessonStep===14 && <DialogBox text={'Click the spatula and select Keep Back on Table.'}/>
-      }
+          startingTemperature={22}
 
-      {
-        lessonStep===15 && <DialogBox text={'Click the test tube again and select Keep on Table.'}/>
-      }
+          massWithPowder={24.7}
 
-      {
-        lessonStep===16 && <DialogBox text={'Click the burette and select the Left Hand option.'}/>
-      }
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+        />
+      )}
 
-      {
-        lessonStep===17 && <DialogBox text={'Click the burette and select Add Liquid.'}/>
-      }
+      {/* Reaction has occurred - temperature has fallen */}
+      {lessonStep >= 34 && lessonStep < 36 && (
+        <HessLiveDataPanel
+          reactionNumber={2}
 
-      {
-        lessonStep===18 && <DialogBox text={'Add 30 cm³ of hydrochloric acid to the burette.'}/>
-      }
+          volumeOfSolution={30}
+          solutionDensity={1}
 
-      {
-        lessonStep===19 && <DialogBox text={'Click the normal beaker and select the Right Hand option.'}/>
-      }
+          startingTemperature={22}
 
-      {
-        lessonStep===20 && <DialogBox text={'Click the Digital balance and select Remove Balance.'}/>
-      }
+          // Use whichever temperature prop
+          // your HessLiveDataPanel supports for Reaction 2.
+          //
+          // currentTemperature={...}
+          // lowestTemperature={...}
 
-      {
-        lessonStep===21 && <DialogBox text={'Click the Burette and select Clamp Burette.'}/>
-      }
+          massWithPowder={24.7}
 
-      {
-        lessonStep===22 && <DialogBox text={'Click the Burette clamp and select Place in Centre.'}/>
-      }
-      {
-        lessonStep===23 && <DialogBox text={'Click the normal beaker and select Place Beaker.'}/>
-      }
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+        />
+      )}
 
-      {
-        lessonStep===24 && <DialogBox text={'Scroll down to pour hydrochloric acid from the burette into the polystyrene cup.'}/>
-      }
+      {/* Empty test tube has been reweighed */}
+      {lessonStep >= 36 && (
+        <HessLiveDataPanel
+          reactionNumber={2}
 
-      {
-        lessonStep===25 && <DialogBox text={'Click the normal beaker and select Remove Beaker.'}/>
-      }
+          volumeOfSolution={30}
+          solutionDensity={1}
 
-      {
-        lessonStep===26 && <DialogBox text={'Click the normal beaker and select Cover Polysterene Cup.'}/>
-      }
+          startingTemperature={22}
 
-      {
-        lessonStep===27 && <DialogBox text={'Click the burette clamp and select Remove from Centre.'}/>
-      }
+          // lowestTemperature={...}
 
-      {
-        lessonStep===28 && <DialogBox text={'Click the Thermometer and select the Right Hand option.'}/>
-      }
+          massWithPowder={24.7}
 
-      {
-        lessonStep===29 && <DialogBox text={'Click the Thermometer again and select Place Thermometer.'}/>
-      }
+          // Replace with Reaction 2 value
+          massAfterEmptying={21.7}
 
-      {
-        lessonStep===30 && <DialogBox text={'Click the test tube and select the Right Hand option.'}/>
-      }
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+        />
+      )}
 
-      {
-        lessonStep===31 && <DialogBox text={'Press P to enter Pouring Mode.'}/>
-      }
+      {/* =====================================================
+          LESSON STEPS
+         ===================================================== */}
 
-      {
-        lessonStep===32 && <DialogBox text={'Scroll down to stir the mixture and gradually pour the potassium carbonate from the test tube'}/>
-      }
+      {lessonStep === 2 && (
+        <DialogBox
+          text={"Click Beaker and Select Left Hand Option"}
+        />
+      )}
 
-      {
-        lessonStep===33 && <DialogBox text={'Press P again to exit Pouring Mode.'}/>
-      }
-      {
-        lessonStep===34 && <DialogBox text={'Place the digital balance again to reweigh the emptied test tube.'}/>
-      }
+      {lessonStep === 3 && (
+        <DialogBox
+          text={"Click Polysterene Cup and Select Right Hand Option"}
+        />
+      )}
 
-      {
-        lessonStep===35 && <DialogBox text={'Click the test tube and select Weigh Test Tube.'}/>
-      }
+      {lessonStep === 4 && (
+        <DialogBox
+          text={"Click Polysterene Cup and Select Place In Beaker"}
+        />
+      )}
 
-      {
-        lessonStep===36 && <DialogBox text={'36'}/>
-      }
+      {lessonStep === 5 && (
+        <DialogBox
+          text={"Keep Beaker In Table"}
+        />
+      )}
+
+      {lessonStep === 6 && (
+        <DialogBox
+          text={"Select Testube and select Left Hand"}
+        />
+      )}
+
+      {lessonStep === 7 && (
+        <DialogBox
+          text={"Select Spatula and select Right Hand Option"}
+        />
+      )}
+
+      {lessonStep === 8 && (
+        <DialogBox
+          text={
+            "Click Potassium Hydrogencarbonate container And Select Potassium Hydrogencarbonate"
+          }
+        />
+      )}
+
+      {lessonStep === 9 && (
+        <DialogBox
+          text={"Click the Test tube and select Pour Into Testube"}
+        />
+      )}
+
+      {lessonStep === 10 && (
+        <DialogBox
+          text={"Scroll Down to Pour"}
+        />
+      )}
+
+      {lessonStep === 11 && (
+        <DialogBox
+          text={"Click the Spatula And Disable Pour Mode"}
+        />
+      )}
+
+      {lessonStep === 12 && (
+        <DialogBox
+          text={
+            "Click the Digital balance and select Place Balance."
+          }
+        />
+      )}
+
+      {lessonStep === 13 && (
+        <DialogBox
+          text={
+            "Click the Test Tube and select Weigh Testube."
+          }
+        />
+      )}
+
+      {lessonStep === 14 && (
+        <DialogBox
+          text={
+            "Click the spatula and select Keep Back on Table."
+          }
+        />
+      )}
+
+      {lessonStep === 15 && (
+        <DialogBox
+          text={
+            "Click the test tube again and select Keep on Table."
+          }
+        />
+      )}
+
+      {lessonStep === 16 && (
+        <DialogBox
+          text={
+            "Click the burette and select the Left Hand option."
+          }
+        />
+      )}
+
+      {lessonStep === 17 && (
+        <DialogBox
+          text={"Click the burette and select Add Liquid."}
+        />
+      )}
+
+      {lessonStep === 18 && (
+        <DialogBox
+          text={
+            "Add 30 cm³ of hydrochloric acid to the burette."
+          }
+        />
+      )}
+
+      {lessonStep === 19 && (
+        <DialogBox
+          text={
+            "Click the normal beaker and select the Right Hand option."
+          }
+        />
+      )}
+
+      {lessonStep === 20 && (
+        <DialogBox
+          text={
+            "Click the Digital balance and select Remove Balance."
+          }
+        />
+      )}
+
+      {lessonStep === 21 && (
+        <DialogBox
+          text={
+            "Click the Burette and select Clamp Burette."
+          }
+        />
+      )}
+
+      {lessonStep === 22 && (
+        <DialogBox
+          text={
+            "Click the Burette clamp and select Place in Centre."
+          }
+        />
+      )}
+
+      {lessonStep === 23 && (
+        <DialogBox
+          text={
+            "Click the normal beaker and select Place Beaker."
+          }
+        />
+      )}
+
+      {lessonStep === 24 && (
+        <DialogBox
+          text={
+            "Scroll down to pour hydrochloric acid from the burette into the polystyrene cup."
+          }
+        />
+      )}
+
+      {lessonStep === 25 && (
+        <DialogBox
+          text={
+            "Click the normal beaker and select Remove Beaker."
+          }
+        />
+      )}
+
+      {lessonStep === 26 && (
+        <DialogBox
+          text={
+            "Click the normal beaker and select Cover Polysterene Cup."
+          }
+        />
+      )}
+
+      {lessonStep === 27 && (
+        <DialogBox
+          text={
+            "Click the burette clamp and select Remove from Centre."
+          }
+        />
+      )}
+
+      {lessonStep === 28 && (
+        <DialogBox
+          text={
+            "Click the Thermometer and select the Right Hand option."
+          }
+        />
+      )}
+
+      {lessonStep === 29 && (
+        <DialogBox
+          text={
+            "Click the Thermometer again and select Place Thermometer."
+          }
+        />
+      )}
+
+      {lessonStep === 30 && (
+        <DialogBox
+          text={
+            "Click the test tube and select the Right Hand option."
+          }
+        />
+      )}
+
+      {lessonStep === 31 && (
+        <DialogBox
+          text={"Press P to enter Pouring Mode."}
+        />
+      )}
+
+      {lessonStep === 32 && (
+        <DialogBox
+          text={
+            "Scroll down to stir the mixture and gradually pour the potassium hydrogencarbonate from the test tube."
+          }
+        />
+      )}
+
+      {lessonStep === 33 && (
+        <DialogBox
+          text={"Press P again to exit Pouring Mode."}
+        />
+      )}
+
+      {lessonStep === 34 && (
+        <DialogBox
+          text={
+            "Place the digital balance again to reweigh the emptied test tube."
+          }
+        />
+      )}
+
+      {lessonStep === 35 && (
+        <DialogBox
+          text={
+            "Click the test tube and select Weigh Test Tube."
+          }
+        />
+      )}
+
+      {lessonStep === 36 && (
+        <DialogBox text={"36"} />
+      )}
     </>
   )
 }

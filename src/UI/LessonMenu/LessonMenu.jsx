@@ -82,32 +82,32 @@ const LessonMenu = () => {
     //   divider: "purple",
     // },
 
-    {
-      id: 8,
-      name: "Enthalpy Change Using Hess’s Law",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 8,
-      divider: "purple",
-    },
+    // {
+    //   id: 8,
+    //   name: "Enthalpy Change Using Hess’s Law",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+    //   number: 8,
+    //   divider: "purple",
+    // },
 
-    {
-      id: 9,
-      name: "Enthalpy Change Reaction 2",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 8,
-      divider: "purple",
-    },
+    // {
+    //   id: 9,
+    //   name: "Enthalpy Change Reaction 2",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+    //   number: 8,
+    //   divider: "purple",
+    // },
 
-    {
-      id: 10,
-      name: "Rates of Hydrolysis of Halogenoalkanes",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 10,
-      divider: "purple",
-    },
+    // {
+    //   id: 10,
+    //   name: "Rates of Hydrolysis of Halogenoalkanes",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+    //   number: 10,
+    //   divider: "purple",
+    // },
 
     {
       id: 11,
@@ -125,6 +125,22 @@ const LessonMenu = () => {
       number: 11.1,
       divider: "purple",
     }, 
+    {
+      id: 12,
+      name: "Sulfamic Acid–NaOH Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 11.1,
+      divider: "purple",
+    },
+    {
+      id: 12.1,
+      name: "Sulfamic Acid–NaOH Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 12.1,
+      divider: "purple",
+    },
   ]
 
   const lessonsPerPage = 3

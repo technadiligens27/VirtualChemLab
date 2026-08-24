@@ -52,19 +52,18 @@ const PourIntoTestubeFromSpoon = ({
 
   const powderRevealFinishedRef =
     useRef(false)
+    
+ useEffect(() => { 
+  if (selectedLesson === 12 && lessonStep === 9){
+    setLessonStep(10)
+  } 
+   }, [lessonStep, selectedLesson, setLessonStep])
 
-  useEffect(() => {
-    if (
-      selectedLesson === 8 &&
-      lessonStep === 11
-    ) {
-      setLessonStep(12)
-    }
-  }, [
-    lessonStep,
-    selectedLesson,
-    setLessonStep,
-  ])
+useEffect(() => { 
+  if (selectedLesson === 8 && lessonStep === 11){
+    setLessonStep(12)
+  } 
+   }, [lessonStep, selectedLesson, setLessonStep])
 
     useEffect(() => {
     if (
@@ -541,6 +540,21 @@ testTube.traverse((child) => {
     setLessonStep,
   ])
 
+
+    useEffect(() => {
+    if (
+      isPotassiumTransferred &&
+      selectedLesson === 12 &&
+      lessonStep === 10
+    ) {
+      setLessonStep(11)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    isPotassiumTransferred,
+    setLessonStep,
+  ])  
   useFrame((_, delta) => {
     const potassiumPieces =
       potassiumPiecesRef.current

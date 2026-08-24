@@ -9,6 +9,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import BuiretteTitrationFlow from "../BuiretteTitrationFlow/BuiretteTitrationFlow"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import PourFromBurette from "../PourFromBurrette/PourFromBurrette"
 
 const PlaceBeakerNearClamp = ({
   beakerRef,
@@ -35,6 +36,19 @@ const PlaceBeakerNearClamp = ({
       selectedLesson === 8
     ) {
       setLessonStep(27)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
+    useEffect(() => {
+    if (
+      lessonStep === 23 &&
+      selectedLesson === 9
+    ) {
+      setLessonStep(24)
     }
   }, [
     lessonStep,
@@ -167,7 +181,7 @@ const PlaceBeakerNearClamp = ({
   return (
     <>
       {beakerRef?.current?.name==='main-Conical-Flask' && <BuiretteTitrationFlow modelRef={mainBuiretteRef}/>}
-      {beakerRef?.current?.name==='main-normal-beaker' && isBuiretteClamped && isClampInCenter && <PourFromBurette /> }
+      {beakerRef?.current?.name==='main-normal-beaker' && isBuiretteClamped && isClampInCenter && <PourFromBurette/> }
       
     </>
   )

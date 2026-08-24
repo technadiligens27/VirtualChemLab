@@ -28,6 +28,8 @@ import ReactionTimer from "./ReactionTimer/ReactionTimer"
 import HCLTitration from "./AllLessons/HCLTitration/HCLTitration"
 import HCLTitration2 from "./AllLessons/HCLTitration/HCLTitration2"
 import HCLTitrationLiveDataPanel from "./HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel"
+import SulfamicAcidNaOHTitration from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration"
+import SulfamicAcidNaOHTitration02 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration02"
 
 const mainContent = [
   {
@@ -476,6 +478,18 @@ useEffect(() => {
           <HCLTitration2/>
         )
       }
+
+      {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson === 12 && (
+          <SulfamicAcidNaOHTitration/>
+        )}
+
+       {
+        selectedLesson===12.1 && (
+          <SulfamicAcidNaOHTitration02/>
+        )
+       } 
 
     </>
   )

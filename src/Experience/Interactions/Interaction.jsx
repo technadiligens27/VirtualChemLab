@@ -37,6 +37,8 @@ import PhenopthalinePourMode from "./PhenopthalinePourMode/PhenopthalinePourMode
 import FillConicalBeaker from "./FillConicalBeaker/FillConicalBeaker";
 import HCLTitrationReaction from "../AllReactions/HCLTitrationReaction/HCLTitrationReaction";
 import CleanBeaker from "./CleanBeaker/CleanBeaker";
+import ShowBeakerPrecipitate from "./ShowBeakerPrecipitate/ShowBeakerPrecipitate";
+import SwirlModel from "./SwirlModel/SwirlModel";
 
 const Interaction = () => {
   const {
@@ -46,7 +48,7 @@ const Interaction = () => {
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
-,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker
+,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -91,15 +93,19 @@ const Interaction = () => {
       {isAddSalt && <AddSaltToSpoon/>}      
       {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}
       {isPotassiumHydrogenCarbonateInSpoon && <AddPottasiumCarobnateToSpoon/>}
+      {isSulfamicInSpoon && <AddPottasiumCarobnateToSpoon/>}
 
       {isBalancePlaced && <PlaceDigitalBalance/>}
-      {isWeighTestube && (selectedLesson===8 || selectedLesson===9) &&<WeighTestube testubeRef={testube01Ref}/>}
+      {isWeighTestube && ([8,9,12].includes(selectedLesson)) &&<WeighTestube testubeRef={testube01Ref}/>}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
       {selectedLesson===8  &&  <BalanceReading  balanceRef={digitalBalanceRef} isWeighTestube={isWeighTestube} finalMass={24.7}/>}
 
       {selectedLesson===9 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={25.67}/>}
-      
+
+      {selectedLesson===12 && lessonStep===6 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
+      {selectedLesson===12 && lessonStep===12 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={24.22}/>}
+
       {isBuiretteClamped &&  <ClampBurette/>}  
       {isClampInCenter && <PlaceClampInCenter/>}
       {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
@@ -172,6 +178,19 @@ const Interaction = () => {
         modelRef={conicalBeakerRef}
         onDone={() => setIsCleanBeaker(false)}
       />}
+
+      {selectedLesson === 12 &&
+        lessonStep === 20 && (
+          <ShowBeakerPrecipitate
+            modelRef={
+              normalBeakerRef
+            }
+            fullOpacity={1}
+            duration={4}
+          />
+        )}
+
+      {selectedLesson ===12.1 && (lessonStep ===32 || lessonStep===38) && <SwirlModel modelRef={normalBeakerRef} useTargetSwirls={true}/> }
 
     </>
   );

@@ -50,7 +50,8 @@ const ClickObject = () => {
     isPlaceThermometer,setIsPolystereneStirMode,isPolystereneStirMode,setIsPotassiumHydrogenCarbonateInSpoon,
     isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
     fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,
-    setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker
+    setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker,
+    isSulfamicInSpoon,setIsSulfamicInSpoon,
 
   } = useContext(InteractionContext)
 
@@ -87,7 +88,8 @@ const ClickObject = () => {
     potassiumHydrogenCarbonateRef,
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
-    volumetricRef,volumetricBung,phenopthalineBottleRef
+    volumetricRef,volumetricBung,phenopthalineBottleRef,
+    sulfamicBottleRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -251,6 +253,10 @@ const ClickObject = () => {
       {
         name:"phenopthaline-dropper-bottle",
         ref:phenopthalineBottleRef
+      },
+      {
+        name:"sulfamic-bottle",
+        ref:sulfamicBottleRef
       }
       ],
     [
@@ -280,7 +286,8 @@ const ClickObject = () => {
       chlorobutaneBottleRef,
       testube04Ref,testube05Ref,testube06Ref,
       volumetricPipetteRef,volumetricRef,
-      volumetricPipetteRef,phenopthalineBottleRef
+      volumetricPipetteRef,phenopthalineBottleRef,
+      sulfamicBottleRef
     ]
   )
 
@@ -552,6 +559,40 @@ const ClickObject = () => {
     "moved to left hand"
   )
 }
+
+  const moveObjectToRightHand = () => {
+    if (!selectedObject?.isHolding) return
+
+    if (selectedRightHand) {
+      console.log("Right hand is already full")
+      return
+    }
+
+    const currentHandData =
+      selectedObject.hand === "left"
+        ? selectedLeftHand
+        : selectedRightHand
+
+    if (!currentHandData) return
+
+    setSelectedRightHand({
+      ...currentHandData,
+      hand: "right",
+    })
+
+    if (selectedObject.hand === "left") {
+      setSelectedLeftHand(null)
+    }
+
+    setSelectedObject(null)
+
+    console.log(
+      currentHandData.name,
+      "moved to right hand"
+    )
+  }
+
+
   const handlePlaceBuretteInCentre = () => {
     console.log("Place burette in centre")
     setIsClampInCenter(true)
@@ -692,8 +733,16 @@ const ClickObject = () => {
 
     if (!handData?.ref?.current) return
 
+    if (handData.name === "main-spoon" &&selectedLesson === 12 && lessonStep === 13) {
+      setLessonStep(14)
+    }
+
     if (handData.name === "main-spoon" &&selectedLesson === 8 && lessonStep === 15) {
       setLessonStep(16)
+    }
+
+    if (handData.name === "main-spoon" &&selectedLesson === 12.1 && lessonStep === 25) {
+      setLessonStep(26)
     }
 
     if (handData.name === "main-spoon" && selectedLesson === 9 && lessonStep === 14) {
@@ -735,6 +784,11 @@ const ClickObject = () => {
 
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===25) {
       setLessonStep(26)
+    }
+
+    if (handData.name === "main-testube-01" && selectedLesson===12 && lessonStep ===21) {
+      setLessonStep(22)
+      setSelectedLesson(12.1)
     }
 
     if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===17) {
@@ -1266,12 +1320,12 @@ const ClickObject = () => {
     }
 
 
-    if (lessonStep === 3) {
-      if (objectName !== "main-normal-beaker") {
-        setShowErrorMsgNo(1)
-        return false
-      }
-    }
+    // if (lessonStep === 3) {
+    //   if (objectName !== "main-normal-beaker") {
+    //     setShowErrorMsgNo(1)
+    //     return false
+    //   }
+    // }
 
     return true
   }
@@ -1311,10 +1365,17 @@ const ClickObject = () => {
   }
 
   const toggleStirMode = () => {
+
   if ( isTutorialMode && selectedLesson === 1 && lessonStep === 7) {
     setShowErrorMsgNo(4)
     setSelectedObject(null)
     return
+  }
+
+  if(isStirMode){
+    if(selectedLesson===12.1 && lessonStep ===24){
+      setLessonStep(25)
+    }
   }
 
   setIsLitmusMode(false)
@@ -1390,7 +1451,9 @@ const ClickObject = () => {
       (selectedLesson === 10 && lessonStep === 27) ||
       (selectedLesson===10 && ([20,34,90,93,97].includes(lessonStep))) ||
       (selectedLesson===11 && ([4,18,31].includes(lessonStep)) ) ||
-      (selectedLesson===11.1 && ([55,56,64].includes(lessonStep)))
+      (selectedLesson===11.1 && ([55,56,64].includes(lessonStep))) ||
+      (selectedLesson ===12 && ([16].includes(lessonStep))) ||
+      (selectedLesson ==12.1) && ([30,36].includes(lessonStep))
 
 
     if (!isAllowedStep) {
@@ -1428,6 +1491,9 @@ const ClickObject = () => {
             setLessonStep(12)
           }
           
+          if(selectedLesson===12 && lessonStep===11){
+            setLessonStep(12)
+          }
         }
 
         return !previousValue
@@ -1494,40 +1560,57 @@ const handleClampBurette = () => {
     }  
 }
 
-    const handleWeighTestTube = () => {
-        if (isBalancePlaced && (selectedLesson === 8 || selectedLesson ===9 ) &&(lessonStep === 16 || lessonStep === 17 ||
-           lessonStep===39 || lessonStep===13 || lessonStep==35) && isTestTube(selectedObject?.name)){
-          setIsWeighTestube(true)
+  const weighedTestTubeHandDataRef = useRef(null)
 
+  const handleWeighTestTube = () => {
+    if (
+      isBalancePlaced &&
+      [8, 9, 12].includes(selectedLesson) &&
+      [16, 17, 39, 13, 35, 5,12].includes(lessonStep) &&
+      isTestTube(selectedObject?.name)
+    ) {
+      weighedTestTubeHandDataRef.current =
+      selectedObject.hand === "left"
+        ? { ...selectedLeftHand }
+        : { ...selectedRightHand }
 
-        if(selectedLesson===8 &&  lessonStep===39){
-          setLessonStep(40)
-        }  
+      setIsWeighTestube(true)
 
-        if(selectedLesson===9 && lessonStep=== 13){
-          setLessonStep(14)
-        }
-
-        if(selectedLesson===9 && lessonStep=== 35){
-          setLessonStep(36)
-        }
-
-
-          if (lessonStep === 16) {
-            setLessonStep(17)
-          }
-
-          setSelectedObject(null)
-          return
-        }
-
-        setShowErrorMsgNo(4)
-        setSelectedObject(null)
+      if (selectedLesson === 12 && lessonStep === 5) {
+        setLessonStep(6)
       }
+
+      if (selectedLesson === 12 && lessonStep === 12) {
+        setLessonStep(13)
+      }
+
+      if (selectedLesson === 8 && lessonStep === 39) {
+        setLessonStep(40)
+      }
+
+      if (selectedLesson === 9 && lessonStep === 13) {
+        setLessonStep(14)
+      }
+
+      if (selectedLesson === 9 && lessonStep === 35) {
+        setLessonStep(36)
+      }
+
+      if (lessonStep === 16) {
+        setLessonStep(17)
+      }
+
+      setSelectedObject(null)
+      return
+    }
+
+    setShowErrorMsgNo(4)
+    setSelectedObject(null)
+  }
 
   const handleMainHoldingAction = () => {
       // All held test tubes in Lesson 8 use weighing
-      if ((selectedLesson === 8 || selectedLesson===9) && isTestTube(selectedObject?.name)) {
+      if (([8,9,12].includes(selectedLesson)) && isTestTube(selectedObject?.name)) {
         handleWeighTestTube()
         return
       }
@@ -1557,7 +1640,7 @@ const handleClampBurette = () => {
   const getMainHoldingButtonText = () => {
   // In Lesson 8, test tubes are weighed,
   // not filled using Add Liquid
-  if ( (selectedLesson === 8 || selectedLesson ===9) && isTestTube(selectedObject?.name)) {
+  if ( (selectedLesson === 8 || selectedLesson ===9 || selectedLesson===12) && isTestTube(selectedObject?.name)) {
     return "Weigh Test Tube"
   }
 
@@ -1602,7 +1685,8 @@ const canShowMainHoldingButton = () => {
 const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
-    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11 && selectedLesson !==11.1
+    selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11 &&
+     selectedLesson !==11.1 && selectedLesson !== 12 && selectedLesson !== 12.1
   ) {
     return <p>Can't pick now</p>
   }
@@ -1786,21 +1870,84 @@ const handlePlacePolysterene = () => {
 }
 
  const handleRemoveTestTube = () => {
-    if ( !isWeighTestube || !isTestTube(selectedObject?.name)
-    ) {
-      return
-    }
+  if (
+    !isWeighTestube ||
+    !isTestTube(selectedObject?.name)
+  ) {
+    return
+  }
 
+  const previousHandData =
+    weighedTestTubeHandDataRef.current
+
+  if (!previousHandData) {
     console.log(
-      "Test tube removed from balance"
+      "Previous test tube hand data not found"
     )
+    return
+  }
 
-    // HoldLeft/HoldRight will place it back
-    // in the previously selected hand
+  // Lesson 12 Step 14
+  // Force test tube into RIGHT hand
+  if (
+    selectedLesson === 12 &&
+    lessonStep === 14
+  ) {
+    setSelectedRightHand({
+      ...previousHandData,
+      hand: "right",
+    })
+
+    setSelectedLeftHand(null)
+
     setIsWeighTestube(false)
 
+    weighedTestTubeHandDataRef.current =
+      null
+
+    setLessonStep(15)
     setSelectedObject(null)
+
+    return
+  }
+
+  // Normally return to original hand
+  if (
+    previousHandData.hand === "left"
+  ) {
+    setSelectedLeftHand(
+      previousHandData
+    )
+  }
+
+  if (
+    previousHandData.hand === "right"
+  ) {
+    setSelectedRightHand(
+      previousHandData
+    )
+  }
+
+  if (
+    selectedLesson === 12 &&
+    lessonStep === 6
+  ) {
+    setLessonStep(7)
+  }
+
+  console.log(
+    "Test tube removed from balance →",
+    previousHandData.hand
+  )
+
+  setIsWeighTestube(false)
+
+  weighedTestTubeHandDataRef.current =
+    null
+
+  setSelectedObject(null)
 }
+
 const handlePlaceBalance = () => {
   setIsBalancePlaced(true)
   setSelectedObject(null)
@@ -2283,11 +2430,25 @@ const handlePlaceBalance = () => {
     }
   }
 
+  const addSulfamicAcidToSpoon = ()=>{
+    setIsSulfamicInSpoon(true)
+  }
+
   const renderSaltContainerTableButtons=()=>{
     if (selectedObject?.name === "salt-container") {
       return (
         <button onClick={addSaltToSpoon}>
           Take Salt
+        </button>
+      )
+    }
+  }
+
+  const renderSulfamicTableButtons = ()=>{
+    if(selectedObject?.name === "sulfamic-bottle"){
+      return(
+        <button onClick={addSulfamicAcidToSpoon}>
+          Take Sulfamic Acid
         </button>
       )
     }
@@ -2344,6 +2505,9 @@ const handlePlaceBalance = () => {
   
 
   const renderTableObjectButtons = () => {
+
+    const SulfamicTableButtons=  renderSulfamicTableButtons()
+    if(SulfamicTableButtons) return SulfamicTableButtons
 
     const  normaleBeakerButtons = renderNormalBeakerTableButtons()
     if (normaleBeakerButtons) return normaleBeakerButtons
@@ -3109,8 +3273,56 @@ const renderFunnelHeldButtons=()=>{
 }
 
 
+const renderHeldSpoonButtons = () => {
+  if (isSpoon(selectedObject.name)) {
+    if (!isTutorialMode) {
+      return (
+        <>
+          <button onClick={toggleStirMode}>
+            {isStirMode
+              ? "Exit Stir Mode"
+              : "Stir Mode"}
+          </button>
+
+          <button
+            onClick={() =>
+              keepBackOnTable(
+                selectedObject.hand
+              )
+            }
+          >
+            Keep Back On Table
+          </button>
+        </>
+      )
+    }
+
+    if (isTutorialMode && selectedLesson===12.1 && ([23,24].includes(lessonStep))) {
+      return (
+        <>
+          <button onClick={toggleStirMode}>
+            {isStirMode
+              ? "Exit Stir Mode"
+              : "Stir Mode"}
+          </button>
+
+
+        </>
+      )
+    }
+
+
+
+  }
+
+  return null
+}
+
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
+
+  const SpoonButtons = renderHeldSpoonButtons()
+  if(SpoonButtons) return SpoonButtons
 
   const concialFlaskButtons =  renderConicalHeldButtons()
   if(concialFlaskButtons) return concialFlaskButtons

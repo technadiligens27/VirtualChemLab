@@ -1,278 +1,582 @@
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
+
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
-
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const StirReaction = ({
-  hand,
-  spoonRef,
-  beakerRef,
+  modelRef,
+
+  targetColor = "#EAFBFF",
+
+  liquidOpacity = 0.35,
+
+  duration = 2,
+
+  hasPrecipitate = false,
+
+  isActive = true,
 }) => {
-  const liquidRef = useRef(null)
 
-  // Store every salt child inside the spoon
-  const saltMeshesRef = useRef([])
+  const {selectedLesson,lessonSteop,setLessonStep} = useContext(MainGuidelineContext)
 
-  const canReactRef = useRef(false)
-  const reactionFinishedRef = useRef(false)
+  const liquidRef =
+    useRef(null)
 
-  const targetColorRef = useRef(
-    new THREE.Color("#EAFBFF")
-  )
+  const precipitateMeshesRef =
+    useRef([])
 
-  const {
-    rightBeakerFillData,
-    leftBeakerFillData,
-  } = useContext(InteractionContext)
+  const precipitateStartOpacityRef =
+    useRef(new Map())
 
-  const {
-    selectedLesson,
-    lessonStep,
-    setLessonStep,
-  } = useContext(MainGuidelineContext)
+  const startColorRef =
+    useRef(
+      new THREE.Color()
+    )
 
-  /*
-    hand represents the spoon hand,
-    so the beaker is in the opposite hand.
-  */
-  const beakerFillData =
-    hand === "left"
-      ? rightBeakerFillData
-      : leftBeakerFillData
+  const targetColorRef =
+    useRef(
+      new THREE.Color(
+        targetColor
+      )
+    )
+
+  const elapsedRef =
+    useRef(0)
+
+  const finishedRef =
+    useRef(false)
+
+  const currentColorRef =
+    useRef(
+      new THREE.Color()
+    )
+
+  // =========================================================
+  // INITIALIZE REACTION
+  // =========================================================
 
   useEffect(() => {
     if (
-      !spoonRef?.current ||
-      !beakerRef?.current
+      !modelRef?.current
     ) {
       return
     }
 
-    liquidRef.current = null
-    saltMeshesRef.current = []
+    liquidRef.current =
+      null
 
-    canReactRef.current = false
-    reactionFinishedRef.current = false
+    precipitateMeshesRef.current =
+      []
 
-    /*
-      Find the visible liquid inside the beaker.
-    */
-    beakerRef.current.traverse((child) => {
-      const name =
-        child.name?.toLowerCase() || ""
+    precipitateStartOpacityRef.current =
+      new Map()
 
-      if (
-        child.isMesh &&
-        child.visible &&
-        name.includes("liquid")
-      ) {
-        liquidRef.current = child
-      }
-    })
+    elapsedRef.current =
+      0
 
-    /*
-      Find every visible salt child
-      inside the spoon.
-    */
-    spoonRef.current.traverse((child) => {
-      const name =
-        child.name?.toLowerCase() || ""
+    finishedRef.current =
+      false
 
-      if (
-        child.isMesh &&
-        child.visible &&
-        name.includes("salt")
-      ) {
-        /*
-          Clone the material but preserve
-          its current opacity.
+    targetColorRef.current.set(
+      targetColor
+    )
 
-          Do not reset opacity to 1 because
-          StirReaction may mount again.
-        */
-        if (Array.isArray(child.material)) {
-          child.material =
-            child.material.map((material) => {
-              const clonedMaterial =
-                material.clone()
+    // =======================================================
+    // FIND LIQUID + PRECIPITATE
+    // =======================================================
 
-              clonedMaterial.transparent = true
-              clonedMaterial.opacity =
-                material.opacity ?? 1
+    modelRef.current.traverse(
+      (child) => {
+        const name =
+          child.name
+            ?.toLowerCase() ||
+          ""
 
-              clonedMaterial.needsUpdate = true
+        // ---------------------------------------------------
+        // LIQUID
+        // ---------------------------------------------------
 
-              return clonedMaterial
-            })
-        } else if (child.material) {
-          const currentOpacity =
-            child.material.opacity ?? 1
-
-          child.material =
-            child.material.clone()
-
-          child.material.transparent = true
-          child.material.opacity =
-            currentOpacity
-
-          child.material.needsUpdate = true
+        if (
+          child.isMesh &&
+          name.includes(
+            "liquid"
+          )
+        ) {
+          liquidRef.current =
+            child
         }
 
-        saltMeshesRef.current.push(child)
-      }
-    })
+        // ---------------------------------------------------
+        // PRECIPITATE
+        // ---------------------------------------------------
 
-    const liquidName =
-      beakerFillData?.name?.toLowerCase() ||
-      ""
-
-    const isWater =
-      liquidName.includes("water") ||
-      liquidName.includes("h2o")
-
-    if (
-      !isWater ||
-      !liquidRef.current ||
-      saltMeshesRef.current.length === 0
-    ) {
-      return
-    }
-
-    /*
-      Prepare the water material.
-    */
-    if (
-      Array.isArray(
-        liquidRef.current.material
-      )
-    ) {
-      liquidRef.current.material =
-        liquidRef.current.material.map(
-          (material) => {
-            const clonedMaterial =
-              material.clone()
-
-            clonedMaterial.transparent = true
-            clonedMaterial.opacity = 0.35
-            clonedMaterial.depthWrite = false
-            clonedMaterial.needsUpdate = true
-
-            return clonedMaterial
-          }
-        )
-    } else if (
-      liquidRef.current.material
-    ) {
-      liquidRef.current.material =
-        liquidRef.current.material.clone()
-
-      liquidRef.current.material.transparent =
-        true
-
-      liquidRef.current.material.opacity =
-        0.35
-
-      liquidRef.current.material.depthWrite =
-        false
-
-      liquidRef.current.material.needsUpdate =
-        true
-    }
-
-    canReactRef.current = true
-  }, [
-    spoonRef,
-    beakerRef,
-    hand,
-    beakerFillData?.name,
-  ])
-
-  useFrame((_, delta) => {
-    if (!canReactRef.current) return
-    if (reactionFinishedRef.current) return
-
-    let highestSaltOpacity = 0
-
-    /*
-      Fade every salt child mesh.
-    */
-    saltMeshesRef.current.forEach(
-      (saltMesh) => {
-        if (!saltMesh?.material) return
-
-        if (Array.isArray(saltMesh.material)) {
-          saltMesh.material.forEach(
-            (material) => {
-              material.opacity = Math.max(
-                0,
-                material.opacity -
-                  delta * 1.2
-              )
-
-              highestSaltOpacity = Math.max(
-                highestSaltOpacity,
-                material.opacity
-              )
-            }
+        if (
+          hasPrecipitate &&
+          child.isMesh &&
+          name.includes(
+            "precipitate"
           )
-        } else {
-          saltMesh.material.opacity =
-            Math.max(
-              0,
-              saltMesh.material.opacity -
-                delta * 1.2
+        ) {
+          if (
+            Array.isArray(
+              child.material
             )
+          ) {
+            child.material =
+              child.material.map(
+                (material) => {
+                  const cloned =
+                    material.clone()
 
-          highestSaltOpacity = Math.max(
-            highestSaltOpacity,
-            saltMesh.material.opacity
+                  cloned.transparent =
+                    true
+
+                  cloned.needsUpdate =
+                    true
+
+                  return cloned
+                }
+              )
+          } else if (
+            child.material
+          ) {
+            child.material =
+              child.material.clone()
+
+            child.material.transparent =
+              true
+
+            child.material.needsUpdate =
+              true
+          }
+
+          // -----------------------------------------------
+          // STORE CURRENT STARTING OPACITY
+          // -----------------------------------------------
+
+          if (
+            Array.isArray(
+              child.material
+            )
+          ) {
+            const opacities =
+              child.material.map(
+                (material) =>
+                  material.opacity ?? 1
+              )
+
+            precipitateStartOpacityRef.current.set(
+              child.uuid,
+              opacities
+            )
+          } else if (
+            child.material
+          ) {
+            precipitateStartOpacityRef.current.set(
+              child.uuid,
+              child.material.opacity ??
+                1
+            )
+          }
+
+          precipitateMeshesRef.current.push(
+            child
           )
         }
       }
     )
 
-    /*
-      Change the liquid colour.
-    */
-    const liquid = liquidRef.current
+    // =======================================================
+    // CHECK LIQUID
+    // =======================================================
 
-    if (Array.isArray(liquid?.material)) {
+    if (
+      !liquidRef.current
+    ) {
+      console.log(
+        "Liquid child not found"
+      )
+
+      return
+    }
+
+    // =======================================================
+    // PREPARE LIQUID
+    // =======================================================
+
+    const liquid =
+      liquidRef.current
+
+    if (
+      Array.isArray(
+        liquid.material
+      )
+    ) {
+      liquid.material =
+        liquid.material.map(
+          (material) => {
+            const cloned =
+              material.clone()
+
+            cloned.transparent =
+              true
+
+            cloned.opacity =
+              liquidOpacity
+
+            cloned.depthWrite =
+              false
+
+            cloned.needsUpdate =
+              true
+
+            return cloned
+          }
+        )
+
+      const firstMaterial =
+        liquid.material[0]
+
+      if (
+        firstMaterial?.color
+      ) {
+        startColorRef.current.copy(
+          firstMaterial.color
+        )
+      }
+    } else if (
+      liquid.material
+    ) {
+      liquid.material =
+        liquid.material.clone()
+
+      liquid.material.transparent =
+        true
+
+      liquid.material.opacity =
+        liquidOpacity
+
+      liquid.material.depthWrite =
+        false
+
+      liquid.material.needsUpdate =
+        true
+
+      if (
+        liquid.material.color
+      ) {
+        startColorRef.current.copy(
+          liquid.material.color
+        )
+      }
+    }
+
+    console.log(
+      "Liquid found:",
+      liquidRef.current.name
+    )
+
+    if (
+      hasPrecipitate
+    ) {
+      console.log(
+        "Precipitate children found:",
+        precipitateMeshesRef.current
+          .length
+      )
+    }
+  }, [
+    modelRef,
+    targetColor,
+    liquidOpacity,
+    hasPrecipitate,
+  ])
+
+  // =========================================================
+  // REACTION
+  // =========================================================
+
+  useFrame((_, delta) => {
+    // -------------------------------------------------------
+    // PAUSE WHEN USER IS NOT STIRRING
+    // -------------------------------------------------------
+
+    if (!isActive) return
+
+    if (
+      !liquidRef.current
+    ) {
+      return
+    }
+
+    // -------------------------------------------------------
+    // ONCE FINISHED -> NEVER RUN AGAIN
+    // -------------------------------------------------------
+
+    if (
+      finishedRef.current
+    ) {
+      return
+    }
+
+    // -------------------------------------------------------
+    // UPDATE TIME
+    // -------------------------------------------------------
+
+    elapsedRef.current +=
+      delta
+
+    const safeDuration =
+      Math.max(
+        duration,
+        0.001
+      )
+
+    const progress =
+      THREE.MathUtils.clamp(
+        elapsedRef.current /
+          safeDuration,
+        0,
+        1
+      )
+
+    // =======================================================
+    // LIQUID COLOR
+    // =======================================================
+
+    currentColorRef.current.lerpColors(
+      startColorRef.current,
+      targetColorRef.current,
+      progress
+    )
+
+    const liquid =
+      liquidRef.current
+
+    if (
+      Array.isArray(
+        liquid.material
+      )
+    ) {
       liquid.material.forEach(
         (material) => {
-          material.color?.lerp(
-            targetColorRef.current,
-            delta * 1.2
-          )
+          if (
+            material.color
+          ) {
+            material.color.copy(
+              currentColorRef.current
+            )
+          }
+
+          material.opacity =
+            liquidOpacity
+
+          material.needsUpdate =
+            true
         }
       )
-    } else {
-      liquid?.material?.color?.lerp(
-        targetColorRef.current,
-        delta * 1.2
+    } else if (
+      liquid.material
+    ) {
+      if (
+        liquid.material.color
+      ) {
+        liquid.material.color.copy(
+          currentColorRef.current
+        )
+      }
+
+      liquid.material.opacity =
+        liquidOpacity
+
+      liquid.material.needsUpdate =
+        true
+    }
+
+    // =======================================================
+    // PRECIPITATE FADE
+    // =======================================================
+
+    if (
+      hasPrecipitate
+    ) {
+      precipitateMeshesRef.current.forEach(
+        (precipitate) => {
+          if (
+            !precipitate
+              ?.material
+          ) {
+            return
+          }
+
+          const startOpacity =
+            precipitateStartOpacityRef.current.get(
+              precipitate.uuid
+            )
+
+          // -----------------------------------------------
+          // ARRAY MATERIAL
+          // -----------------------------------------------
+
+          if (
+            Array.isArray(
+              precipitate.material
+            )
+          ) {
+            precipitate.material.forEach(
+              (
+                material,
+                index
+              ) => {
+                const originalOpacity =
+                  Array.isArray(
+                    startOpacity
+                  )
+                    ? startOpacity[
+                        index
+                      ] ?? 1
+                    : 1
+
+                material.opacity =
+                  THREE.MathUtils.lerp(
+                    originalOpacity,
+                    0,
+                    progress
+                  )
+
+                material.needsUpdate =
+                  true
+              }
+            )
+          }
+
+          // -----------------------------------------------
+          // SINGLE MATERIAL
+          // -----------------------------------------------
+
+          else {
+            const originalOpacity =
+              typeof startOpacity ===
+              "number"
+                ? startOpacity
+                : 1
+
+            precipitate.material.opacity =
+              THREE.MathUtils.lerp(
+                originalOpacity,
+                0,
+                progress
+              )
+
+            precipitate.material.needsUpdate =
+              true
+          }
+        }
       )
     }
 
-    /*
-      Hide every salt child only after
-      all materials have faded.
-    */
-    if (highestSaltOpacity <= 0.01) {
-      saltMeshesRef.current.forEach(
-        (saltMesh) => {
-          saltMesh.visible = false
-        }
-      )
+    // =======================================================
+    // REACTION FINISHED
+    // =======================================================
 
-      reactionFinishedRef.current = true
-      canReactRef.current = false
+    if (
+      progress >= 1
+    ) {
+      // -----------------------------------------------------
+      // PRECIPITATE STAYS GONE
+      // -----------------------------------------------------
 
       if (
-        selectedLesson === 1 &&
-        lessonStep === 9
+        hasPrecipitate
       ) {
-        setLessonStep(10)
+        precipitateMeshesRef.current.forEach(
+          (precipitate) => {
+            if (
+              !precipitate
+            ) {
+              return
+            }
+
+            if (
+              Array.isArray(
+                precipitate.material
+              )
+            ) {
+              precipitate.material.forEach(
+                (material) => {
+                  material.opacity =
+                    0
+
+                  material.needsUpdate =
+                    true
+                }
+              )
+            } else if (
+              precipitate.material
+            ) {
+              precipitate.material.opacity =
+                0
+
+              precipitate.material.needsUpdate =
+                true
+            }
+
+            precipitate.visible =
+              false
+          }
+        )
+      }
+
+      // -----------------------------------------------------
+      // FORCE FINAL LIQUID COLOR
+      // -----------------------------------------------------
+
+      if (
+        Array.isArray(
+          liquid.material
+        )
+      ) {
+        liquid.material.forEach(
+          (material) => {
+            material.color?.copy(
+              targetColorRef.current
+            )
+
+            material.opacity =
+              liquidOpacity
+
+            material.needsUpdate =
+              true
+          }
+        )
+      } else if (
+        liquid.material
+      ) {
+        liquid.material.color?.copy(
+          targetColorRef.current
+        )
+
+        liquid.material.opacity =
+          liquidOpacity
+
+        liquid.material.needsUpdate =
+          true
+      }
+
+      finishedRef.current =
+        true
+
+      console.log(
+        "✅ Stir reaction finished"
+      )
+
+      if(selectedLesson===12.1 && lessonSteop===24){
+        setLessonStep(25)
       }
     }
   })

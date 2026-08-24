@@ -38,12 +38,17 @@ const StirMode = ({
     new THREE.Vector3()
   )
 
-  const foundStirPointRef = useRef(false)
+  const foundStirPointRef =
+    useRef(false)
 
-  const targetAngleRef = useRef(0)
-  const currentAngleRef = useRef(0)
+  const targetAngleRef =
+    useRef(0)
 
-  const scrollStopTimerRef = useRef(null)
+  const currentAngleRef =
+    useRef(0)
+
+  const scrollStopTimerRef =
+    useRef(null)
 
   const originalBeakerPositionRef =
     useRef(null)
@@ -54,15 +59,15 @@ const StirMode = ({
   const originalSpoonRotationRef =
     useRef(null)
 
-  /*
-   * Store the reset version that existed
-   * when this StirMode session started.
-   */
   const stirStartResetVersionRef =
     useRef(0)
 
   const radius = 0.2
   const heightOffset = 0.5
+
+  // =========================================================
+  // LESSON STEP CHANGES
+  // =========================================================
 
   useEffect(() => {
     if (
@@ -77,9 +82,23 @@ const StirMode = ({
     setLessonStep,
   ])
 
-  /*
-   * Prepare objects for Stir Mode.
-   */
+  useEffect(() => {
+    if (
+      selectedLesson === 12.1 &&
+      lessonStep === 23
+    ) {
+      setLessonStep(24)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  // =========================================================
+  // PREPARE STIR MODE
+  // =========================================================
+
   useEffect(() => {
     if (
       !beakerRef?.current ||
@@ -88,24 +107,25 @@ const StirMode = ({
       return
     }
 
-    const beaker = beakerRef.current
-    const spoon = spoonRef.current
+    const beaker =
+      beakerRef.current
 
-    /*
-     * Save which reset version this
-     * Stir Mode session belongs to.
-     */
+    const spoon =
+      spoonRef.current
+
     stirStartResetVersionRef.current =
       labResetVersionRef.current
 
     targetAngleRef.current = 0
     currentAngleRef.current = 0
-    foundStirPointRef.current = false
 
-    /*
-     * Save the positions before entering
-     * Stir Mode.
-     */
+    foundStirPointRef.current =
+      false
+
+    // -------------------------------------------------------
+    // SAVE ORIGINAL POSITIONS
+    // -------------------------------------------------------
+
     originalBeakerPositionRef.current =
       beaker.position.clone()
 
@@ -115,9 +135,10 @@ const StirMode = ({
     originalSpoonRotationRef.current =
       spoon.rotation.clone()
 
-    /*
-     * Move the beaker to the stirring area.
-     */
+    // -------------------------------------------------------
+    // MOVE BEAKER
+    // -------------------------------------------------------
+
     if (hand === "left") {
       beaker.position.x -= 2.5
     }
@@ -128,82 +149,96 @@ const StirMode = ({
 
     beaker.updateMatrixWorld(true)
 
-    /*
-     * Find the hidden stir-point object.
-     */
+    // -------------------------------------------------------
+    // FIND STIR POINT
+    // -------------------------------------------------------
+
     beaker.traverse((child) => {
       const childName =
         child.name?.toLowerCase() || ""
 
-      if (childName.includes("stir")) {
+      if (
+        childName.includes("stir")
+      ) {
         child.visible = true
-        child.updateMatrixWorld(true)
+
+        child.updateMatrixWorld(
+          true
+        )
 
         child.getWorldPosition(
           centerWorldRef.current
         )
 
-        foundStirPointRef.current = true
+        foundStirPointRef.current =
+          true
       }
     })
 
-    /*
-     * Cleanup when StirMode unmounts.
-     */
+    // =======================================================
+    // CLEANUP
+    // =======================================================
+
     return () => {
       setIsStirring(false)
 
-      foundStirPointRef.current = false
+      foundStirPointRef.current =
+        false
+
       targetAngleRef.current = 0
       currentAngleRef.current = 0
 
-      if (scrollStopTimerRef.current) {
+      if (
+        scrollStopTimerRef.current
+      ) {
         clearTimeout(
           scrollStopTimerRef.current
         )
 
-        scrollStopTimerRef.current = null
+        scrollStopTimerRef.current =
+          null
       }
 
-      /*
-       * Check whether the entire lab was reset.
-       */
       const wasFullLabReset =
         labResetVersionRef.current !==
         stirStartResetVersionRef.current
 
-      /*
-       * Always hide the helper stir point.
-       */
+      // -----------------------------------------------------
+      // HIDE STIR POINT
+      // -----------------------------------------------------
+
       beaker.traverse((child) => {
         const childName =
           child.name?.toLowerCase() || ""
 
-        if (childName.includes("stir")) {
+        if (
+          childName.includes("stir")
+        ) {
           child.visible = false
         }
       })
 
-      /*
-       * A full reset is happening.
-       *
-       * Do not restore the pre-stir positions,
-       * because resetModel() has already restored
-       * the true original lab positions.
-       */
+      // -----------------------------------------------------
+      // FULL LAB RESET
+      // -----------------------------------------------------
+
       if (wasFullLabReset) {
-        originalBeakerPositionRef.current = null
-        originalSpoonPositionRef.current = null
-        originalSpoonRotationRef.current = null
+        originalBeakerPositionRef.current =
+          null
+
+        originalSpoonPositionRef.current =
+          null
+
+        originalSpoonRotationRef.current =
+          null
 
         return
       }
 
-      /*
-       * Normal Exit Stir Mode:
-       * restore the positions from before
-       * Stir Mode started.
-       */
+      // -----------------------------------------------------
+      // NORMAL EXIT
+      // -----------------------------------------------------
+
       if (
         originalBeakerPositionRef.current
       ) {
@@ -231,9 +266,14 @@ const StirMode = ({
       beaker.updateMatrixWorld(true)
       spoon.updateMatrixWorld(true)
 
-      originalBeakerPositionRef.current = null
-      originalSpoonPositionRef.current = null
-      originalSpoonRotationRef.current = null
+      originalBeakerPositionRef.current =
+        null
+
+      originalSpoonPositionRef.current =
+        null
+
+      originalSpoonRotationRef.current =
+        null
     }
   }, [
     beakerRef,
@@ -243,9 +283,10 @@ const StirMode = ({
     labResetVersionRef,
   ])
 
-  /*
-   * Mouse-wheel stirring.
-   */
+  // =========================================================
+  // MOUSE WHEEL
+  // =========================================================
+
   useEffect(() => {
     const handleWheel = (event) => {
       const labWasReset =
@@ -267,7 +308,9 @@ const StirMode = ({
 
       setIsStirring(true)
 
-      if (scrollStopTimerRef.current) {
+      if (
+        scrollStopTimerRef.current
+      ) {
         clearTimeout(
           scrollStopTimerRef.current
         )
@@ -282,7 +325,9 @@ const StirMode = ({
     window.addEventListener(
       "wheel",
       handleWheel,
-      { passive: false }
+      {
+        passive: false,
+      }
     )
 
     return () => {
@@ -291,12 +336,15 @@ const StirMode = ({
         handleWheel
       )
 
-      if (scrollStopTimerRef.current) {
+      if (
+        scrollStopTimerRef.current
+      ) {
         clearTimeout(
           scrollStopTimerRef.current
         )
 
-        scrollStopTimerRef.current = null
+        scrollStopTimerRef.current =
+          null
       }
     }
   }, [
@@ -305,9 +353,10 @@ const StirMode = ({
     labResetVersionRef,
   ])
 
-  /*
-   * Move the spoon every frame.
-   */
+  // =========================================================
+  // SPOON MOVEMENT
+  // =========================================================
+
   useFrame((_, delta) => {
     const labWasReset =
       labResetVersionRef.current !==
@@ -322,7 +371,8 @@ const StirMode = ({
       return
     }
 
-    const spoon = spoonRef.current
+    const spoon =
+      spoonRef.current
 
     currentAngleRef.current =
       THREE.MathUtils.lerp(
@@ -332,12 +382,14 @@ const StirMode = ({
       )
 
     const x =
-      Math.cos(currentAngleRef.current) *
-      radius
+      Math.cos(
+        currentAngleRef.current
+      ) * radius
 
     const z =
-      Math.sin(currentAngleRef.current) *
-      radius
+      Math.sin(
+        currentAngleRef.current
+      ) * radius
 
     centerLocalRef.current.copy(
       centerWorldRef.current
@@ -356,26 +408,43 @@ const StirMode = ({
       centerLocalRef.current.z + z
     )
 
-    spoon.lookAt(centerWorldRef.current)
+    spoon.lookAt(
+      centerWorldRef.current
+    )
 
     spoon.rotateX(-1.4285)
     spoon.rotateY(-5.3011)
     spoon.rotateZ(0.0213)
   })
 
+  // =========================================================
+  // RESET CHECK
+  // =========================================================
+
   const labWasReset =
     labResetVersionRef.current !==
     stirStartResetVersionRef.current
 
+  // =========================================================
+  // RENDER
+  // =========================================================
+
   return (
     <>
       {isStirMode &&
-        isStirring &&
         !labWasReset && (
           <StirReaction
-            hand={hand}
-            spoonRef={spoonRef}
-            beakerRef={beakerRef}
+            modelRef={beakerRef}
+
+            targetColor="#EAFBFF"
+
+            liquidOpacity={0.35}
+
+            duration={2}
+
+            hasPrecipitate={true}
+
+            isActive={isStirring}
           />
         )}
     </>

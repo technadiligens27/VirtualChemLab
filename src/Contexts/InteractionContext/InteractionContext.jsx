@@ -143,6 +143,8 @@ export const InteractionProvider = ({ children }) => {
 
   const [isCleanBeaker,setIsCleanBeaker] = useState(false)
 
+  const [isSulfamicInSpoon,setIsSulfamicInSpoon] = useState(false)
+
   const resetInteractions = () => {
   // Empty both hands
   setSelectedLeftHand(false)
@@ -255,7 +257,8 @@ export const InteractionProvider = ({ children }) => {
   setShowChlorobutanePrecipitate(false);
   setIsPhenopthalinePourMode(false);
   setPourDroplets(false);
-  setIsCleanBeaker(false)
+  setIsCleanBeaker(false);
+  setIsSulfamicInSpoon(false)
 }
 
   return (
@@ -337,7 +340,8 @@ export const InteractionProvider = ({ children }) => {
         isPhenopthalinePourMode,setIsPhenopthalinePourMode,
         pourDroplets,setPourDroplets,
         showHCLTitrationReaction,setShowHCLTitrationReaction,
-        isCleanBeaker,setIsCleanBeaker
+        isCleanBeaker,setIsCleanBeaker,
+        isSulfamicInSpoon,setIsSulfamicInSpoon
         
       }}
     >
