@@ -313,6 +313,10 @@ const HCLTitrationReaction = ({
       if(selectedLesson==11.1 && lessonStep==69){
         setLessonStep(70)
       }
+
+      if(selectedLesson==12.2 && lessonStep==84){
+        setLessonStep(85)
+      }
     }
 
 

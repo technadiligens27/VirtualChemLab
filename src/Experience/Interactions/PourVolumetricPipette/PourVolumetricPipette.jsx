@@ -340,6 +340,13 @@ const PourVolumetricPipette = ({
     ) {
       setLessonStep(15)
     }
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 74
+    ) {
+      setLessonStep(75)
+    }    
   }
 
   // ==========================================

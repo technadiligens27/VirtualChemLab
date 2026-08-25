@@ -13,6 +13,7 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 
 import HCLTitrationReaction from "../../AllReactions/HCLTitrationReaction/HCLTitrationReaction"
 import SwirlModel from "../SwirlModel/SwirlModel"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const BuiretteTitrationFlow = ({
   modelRef,
@@ -41,7 +42,11 @@ const BuiretteTitrationFlow = ({
   const {
     showHCLTitrationReaction,
     setShowHCLTitrationReaction,
+    showSulfamicAcidNaOHTitration,
+    setShowSulfamicAcidNaOHTitration
   } = useContext(InteractionContext)
+
+  const {selectedLesson} = useContext(MainGuidelineContext)
 
   // ==========================================
   // REACTION STATE
@@ -286,7 +291,14 @@ const BuiretteTitrationFlow = ({
         dropletPhaseStartedRef.current = false
 
         setEndpointConfirmed(false)
-        setShowHCLTitrationReaction(true)
+
+        if([11.1,11].includes(selectedLesson)){
+         setShowHCLTitrationReaction(true)
+        }
+
+        if([12.2].includes(selectedLesson)){
+          setShowSulfamicAcidNaOHTitration(true)
+        }
 
         // render SwirlModel
         setShowSwirlModel(true)
@@ -595,6 +607,31 @@ const BuiretteTitrationFlow = ({
           endpointColorSpeed={1.2}
         />
       )}
+
+    {showSulfamicAcidNaOHTitration && (
+      <HCLTitrationReaction
+        modelRef={conicalBeakerRef}
+        amount={0.1}
+        progressRef={titrationProgressRef}
+        reactionPhase={reactionPhase}
+        endpointConfirmed={endpointConfirmed}
+
+        // Temporary acidic patches while sulfamic acid enters
+        streamCloudColor="#F28C28"
+        streamCloudOpacity={0.3}
+
+        dropletCloudColor="#E45A2A"
+        dropletCloudOpacity={0.45}
+
+        cloudShowSpeed={5}
+        cloudFadeSpeed={2.5}
+
+        // Persistent methyl-orange endpoint
+        endpointColor="#F28C28"
+        endpointOpacity={0.42}
+        endpointColorSpeed={1.2}
+      />
+    )}
 
       {showSwirlModel && (
         <SwirlModel

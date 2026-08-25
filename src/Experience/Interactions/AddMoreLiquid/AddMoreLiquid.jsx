@@ -34,6 +34,12 @@ const AddMoreLiquid = ({
     showChlorobutanePrecipitate,setShowChlorobutanePrecipitate
   } = useContext(InteractionContext)
 
+  useEffect(()=>{
+    if(selectedLesson===12.1 && lessonStep===42){
+      setLessonStep(43)
+    }
+  },[selectedLesson,lessonStep])
+
   useEffect(() => {
     if (!liquidRef?.current) return
 

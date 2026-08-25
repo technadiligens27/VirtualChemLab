@@ -733,8 +733,17 @@ const FillUpBeaker = ({
       lessonStep === 37
     ) {
       setLessonStep(38)
-    }   
-  })
+    } 
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 65
+    ) {
+      setLessonStep(66)
+    }  
+
+  }
+)
 
   // ==========================================
   // UI

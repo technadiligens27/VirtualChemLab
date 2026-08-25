@@ -1,118 +1,413 @@
-import { useEffect, useRef } from "react"
-import { useFrame } from "@react-three/fiber"
-import * as THREE from "three"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 
-const FunnelMode = ({ beakerRef, funnelRef, hand }) => {
-  const targetWorldPos = useRef(new THREE.Vector3())
-  const targetLocalPos = useRef(new THREE.Vector3())
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import PouringModeInFunnelMode from "../PouringModeInFunnelMode/PouringModeInFunnelMode"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
-  const originalBeakerPosRef = useRef(null)
-  const originalBeakerRotRef = useRef(null)
+const FunnelMode = ({
+  modelRef,
+  funnelRef,
 
-  const originalFunnelPosRef = useRef(null)
-  const originalFunnelRotRef = useRef(null)
+  funnelScale = 1,
+  modelScale = 1,
 
-  // If funnel is in left hand, beaker is usually in right hand, so move beaker left
-  const beakerOffsetLeftRef = useRef(new THREE.Vector3(-4.5, 0, 0))
+  funnelYOffset = 0,
+  modelYOffset = 0,
+  modelXOffset = 0,
+}) => {
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  // If funnel is in right hand, beaker is usually in left hand, so move beaker right
-  const beakerOffsetRightRef = useRef(new THREE.Vector3(4, 0, 0))
+  const {
+    volumetricRef,
+    mainBuiretteRef,
+  } = useContext(
+    ModelContext
+  )
 
-  // Funnel height settings
-  const minFunnelHeight = 1.2
-  const maxFunnelHeight = 5.2
-  const funnelHeightRef = useRef(4.5)
+  const {
+    isPouringModeFunnelMode,
+    setIsPouringModeFunnelMode,
+  } = useContext(
+    InteractionContext
+  )
 
-  const scrollSpeed = 0.01
+  // =====================================================
+  // ORIGINAL MODEL TRANSFORMS
+  // =====================================================
+
+  const originalModelPositionRef =
+    useRef(null)
+
+  const originalModelRotationRef =
+    useRef(null)
+
+  const originalModelScaleRef =
+    useRef(null)
+
+  // =====================================================
+  // ORIGINAL FUNNEL TRANSFORMS
+  // =====================================================
+
+  const originalFunnelParentRef =
+    useRef(null)
+
+  const originalFunnelPositionRef =
+    useRef(null)
+
+  const originalFunnelRotationRef =
+    useRef(null)
+
+  const originalFunnelScaleRef =
+    useRef(null)
+
+  const originalFunnelVisibleRef =
+    useRef(null)
+
+  // =====================================================
+  // LESSON STEP
+  // =====================================================
 
   useEffect(() => {
-    if (!beakerRef?.current || !funnelRef?.current) return
-
-    originalBeakerPosRef.current = beakerRef.current.position.clone()
-    originalBeakerRotRef.current = beakerRef.current.rotation.clone()
-
-    originalFunnelPosRef.current = funnelRef.current.position.clone()
-    originalFunnelRotRef.current = funnelRef.current.rotation.clone()
-
-    return () => {
-      if (beakerRef?.current && originalBeakerPosRef.current) {
-        beakerRef.current.position.copy(originalBeakerPosRef.current)
-        beakerRef.current.rotation.copy(originalBeakerRotRef.current)
-      }
-
-      if (funnelRef?.current && originalFunnelPosRef.current) {
-        funnelRef.current.position.copy(originalFunnelPosRef.current)
-        funnelRef.current.rotation.copy(originalFunnelRotRef.current)
-      }
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 54
+    ) {
+      setLessonStep(55)
     }
-  }, [beakerRef, funnelRef])
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  // =====================================================
+  // P
+  // ENTER / EXIT INNER POURING MODE
+  // =====================================================
 
   useEffect(() => {
-    const handleWheel = (e) => {
-      e.preventDefault()
+    const handleKeyDown = (event) => {
+      if (event.code !== "KeyP") return
 
-      if (e.deltaY < 0) {
-        funnelHeightRef.current += scrollSpeed * Math.abs(e.deltaY)
-      }
+      setIsPouringModeFunnelMode(
+        (prev) => {
+          const next = !prev
 
-      if (e.deltaY > 0) {
-        funnelHeightRef.current -= scrollSpeed * Math.abs(e.deltaY)
-      }
+          if (next) {
+            console.log(
+              "ENTERING PouringModeInFunnelMode"
+            )
+          } else {
+            console.log(
+              "EXITING PouringModeInFunnelMode"
+            )
 
-      funnelHeightRef.current = THREE.MathUtils.clamp(
-        funnelHeightRef.current,
-        minFunnelHeight,
-        maxFunnelHeight
+            if (
+              selectedLesson === 12.2 &&
+              lessonStep === 58
+            ) {
+              setLessonStep(59)
+            }
+          }
+
+          return next
+        }
       )
     }
 
-    window.addEventListener("wheel", handleWheel, { passive: false })
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    )
 
     return () => {
-      window.removeEventListener("wheel", handleWheel)
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      )
     }
-  }, [])
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+    setIsPouringModeFunnelMode,
+  ])
 
-  useFrame(() => {
-    if (!beakerRef?.current || !funnelRef?.current) return
-    if (!originalBeakerPosRef.current) return
+  // =====================================================
+  // RESET INNER POURING MODE WHEN
+  // WHOLE FUNNEL MODE UNMOUNTS
+  // =====================================================
 
-    const beakerOffset =
-      hand === "right"
-        ? beakerOffsetRightRef.current
-        : beakerOffsetLeftRef.current
+  useEffect(() => {
+    return () => {
+      setIsPouringModeFunnelMode(
+        false
+      )
+    }
+  }, [
+    setIsPouringModeFunnelMode,
+  ])
 
-    const targetBeakerPos = originalBeakerPosRef.current
-      .clone()
-      .add(beakerOffset)
+  // =====================================================
+  // SAVE ORIGINALS
+  // ATTACH FUNNEL TO MOUTH
+  // =====================================================
 
-    beakerRef.current.position.lerp(targetBeakerPos, 0.1)
+  useEffect(() => {
+    if (!modelRef?.current) return
+    if (!funnelRef?.current) return
 
-    let stirPoint = null
+    const model =
+      modelRef.current
 
-    beakerRef.current.traverse((child) => {
-      if (child.name?.toLowerCase().includes("stir")) {
-        stirPoint = child
+    const funnel =
+      funnelRef.current
+
+    // ===================================================
+    // SAVE MODEL BEFORE CHANGING ANYTHING
+    // ===================================================
+
+    originalModelPositionRef.current =
+      model.position.clone()
+
+    originalModelRotationRef.current =
+      model.rotation.clone()
+
+    originalModelScaleRef.current =
+      model.scale.clone()
+
+    // ===================================================
+    // SAVE FUNNEL BEFORE ATTACHING
+    // ===================================================
+
+    originalFunnelParentRef.current =
+      funnel.parent
+
+    originalFunnelPositionRef.current =
+      funnel.position.clone()
+
+    originalFunnelRotationRef.current =
+      funnel.rotation.clone()
+
+    originalFunnelScaleRef.current =
+      funnel.scale.clone()
+
+    originalFunnelVisibleRef.current =
+      funnel.visible
+
+    // ===================================================
+    // FIND MOUTH
+    // ===================================================
+
+    let mouthObject = null
+
+    model.traverse((child) => {
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (
+        childName.includes("mouth")
+      ) {
+        mouthObject = child
       }
     })
 
-    if (!stirPoint) return
+    if (!mouthObject) {
+      console.log(
+        "Mouth child not found"
+      )
 
-    stirPoint.getWorldPosition(targetWorldPos.current)
-
-    targetLocalPos.current.copy(targetWorldPos.current)
-
-    if (funnelRef.current.parent) {
-      funnelRef.current.parent.worldToLocal(targetLocalPos.current)
+      return
     }
 
-    targetLocalPos.current.y += funnelHeightRef.current
+    // ===================================================
+    // MODIFY MODEL
+    // ===================================================
 
-    funnelRef.current.position.lerp(targetLocalPos.current, 0.1)
-    funnelRef.current.visible = true
-  })
+    model.scale.setScalar(
+      modelScale
+    )
 
-  return null
+    model.position.x +=
+      modelXOffset
+
+    model.position.y +=
+      modelYOffset
+
+    model.updateMatrixWorld(true)
+
+    // ===================================================
+    // ATTACH FUNNEL
+    // ===================================================
+
+    mouthObject.add(
+      funnel
+    )
+
+    funnel.position.set(
+      0,
+      funnelYOffset,
+      0
+    )
+
+    funnel.rotation.set(
+      0,
+      0,
+      0
+    )
+
+    funnel.scale.setScalar(
+      funnelScale
+    )
+
+    funnel.visible = true
+
+    funnel.updateMatrixWorld(true)
+
+    console.log(
+      "Funnel attached to mouth"
+    )
+
+    // ===================================================
+    // RESTORE WHEN FUNNELMODE UNMOUNTS
+    // ===================================================
+
+    return () => {
+      // -----------------------------------------------
+      // RESTORE MODEL
+      // -----------------------------------------------
+
+      if (modelRef?.current) {
+        const model =
+          modelRef.current
+
+        if (
+          originalModelPositionRef.current
+        ) {
+          model.position.copy(
+            originalModelPositionRef.current
+          )
+        }
+
+        if (
+          originalModelRotationRef.current
+        ) {
+          model.rotation.copy(
+            originalModelRotationRef.current
+          )
+        }
+
+        if (
+          originalModelScaleRef.current
+        ) {
+          model.scale.copy(
+            originalModelScaleRef.current
+          )
+        }
+
+        model.updateMatrixWorld(true)
+      }
+
+      // -----------------------------------------------
+      // RESTORE FUNNEL
+      // -----------------------------------------------
+
+      if (funnelRef?.current) {
+        const funnel =
+          funnelRef.current
+
+        // Restore parent FIRST
+        if (
+          originalFunnelParentRef.current
+        ) {
+          originalFunnelParentRef.current.add(
+            funnel
+          )
+        }
+
+        // Then restore local transform
+        if (
+          originalFunnelPositionRef.current
+        ) {
+          funnel.position.copy(
+            originalFunnelPositionRef.current
+          )
+        }
+
+        if (
+          originalFunnelRotationRef.current
+        ) {
+          funnel.rotation.copy(
+            originalFunnelRotationRef.current
+          )
+        }
+
+        if (
+          originalFunnelScaleRef.current
+        ) {
+          funnel.scale.copy(
+            originalFunnelScaleRef.current
+          )
+        }
+
+        if (
+          originalFunnelVisibleRef.current !==
+          null
+        ) {
+          funnel.visible =
+            originalFunnelVisibleRef.current
+        }
+
+        funnel.updateMatrixWorld(true)
+
+        console.log(
+          "Funnel restored to original pose"
+        )
+      }
+    }
+  }, [
+    modelRef,
+    funnelRef,
+    funnelScale,
+    modelScale,
+    funnelYOffset,
+    modelYOffset,
+    modelXOffset,
+  ])
+
+  // =====================================================
+  // RENDER
+  // =====================================================
+
+  return (
+    <>
+      {isPouringModeFunnelMode && (
+        <PouringModeInFunnelMode
+          modelRef={
+            mainBuiretteRef
+          }
+          pouringModelRef={
+            volumetricRef
+          }
+          modelScale={0.6}
+          pouringModelScale={0.6}
+          pouringModelXOffset={1.2}
+          pouringModelYOffset={1}
+        />
+      )}
+    </>
+  )
 }
 
 export default FunnelMode

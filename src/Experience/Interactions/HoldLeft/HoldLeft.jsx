@@ -246,7 +246,25 @@ const HoldLeft = ({ modeldata }) => {
     if(selectedLesson===12 && lessonStep ===15){
       setLessonStep(16)
     }
+  },[selectedLesson,lessonStep]) 
+  
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep ===52){
+      setLessonStep(53)
+    }
   },[selectedLesson,lessonStep])    
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep ===66){
+      setLessonStep(67)
+    }
+  },[selectedLesson,lessonStep])
+  
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep ===77){
+      setLessonStep(78)
+    }
+  },[selectedLesson,lessonStep]) 
 
   useEffect(() => {
     const canvas = gl.domElement
@@ -444,11 +462,7 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
           />
       )}
 
-      {
-        isFunnelMode  &&
-        <FunnelMode beakerRef={selectedRightHand.ref} funnelRef={funnelRef} hand='left'/>
-      }
-
+      
       {modeldata?.name === "volumetric-pipette" && (
         <VolumetricRubberAnimation
           modelRef={modeldata.ref}

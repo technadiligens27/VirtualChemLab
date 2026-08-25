@@ -51,7 +51,7 @@ const ClickObject = () => {
     isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
     fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,
     setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker,
-    isSulfamicInSpoon,setIsSulfamicInSpoon,
+    isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark
 
   } = useContext(InteractionContext)
 
@@ -89,7 +89,8 @@ const ClickObject = () => {
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
     volumetricRef,volumetricBung,phenopthalineBottleRef,
-    sulfamicBottleRef
+    sulfamicBottleRef,methylBottleRef,
+    naohBottleRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -257,6 +258,14 @@ const ClickObject = () => {
       {
         name:"sulfamic-bottle",
         ref:sulfamicBottleRef
+      },
+      {
+        name:"methyl-dropper-bottle",
+        ref:methylBottleRef
+      },
+      {
+        name:"NaOH-bottle",
+        ref:naohBottleRef
       }
       ],
     [
@@ -287,7 +296,8 @@ const ClickObject = () => {
       testube04Ref,testube05Ref,testube06Ref,
       volumetricPipetteRef,volumetricRef,
       volumetricPipetteRef,phenopthalineBottleRef,
-      sulfamicBottleRef
+      sulfamicBottleRef,methylBottleRef,
+      naohBottleRef
     ]
   )
 
@@ -733,6 +743,10 @@ const ClickObject = () => {
 
     if (!handData?.ref?.current) return
 
+    if (handData.name === "methyl-dropper-bottle" &&selectedLesson === 12.2 && lessonStep === 81) {
+      setLessonStep(82)
+    }
+
     if (handData.name === "main-spoon" &&selectedLesson === 12 && lessonStep === 13) {
       setLessonStep(14)
     }
@@ -751,6 +765,10 @@ const ClickObject = () => {
 
     if(lessonStep===5 && selectedLesson ===9 && handData.name === "main-normal-beaker"){
       setLessonStep(6)
+    }
+
+    if(lessonStep===71 && selectedLesson ===12.2 && handData.name === "main-normal-beaker"){
+      setLessonStep(72)
     }
 
     if(lessonStep===106  && selectedLesson === 10 && handData.name === "main-normal-beaker"){
@@ -780,6 +798,10 @@ const ClickObject = () => {
 
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===14) {
       setLessonStep(15)
+    }
+
+    if (handData.name === "volumetric-pipette" && selectedLesson===12.2 && lessonStep ===76) {
+      setLessonStep(77)
     }
 
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===25) {
@@ -868,10 +890,13 @@ const ClickObject = () => {
       setLessonStep(96)
     }
 
-    console.log("lesson:",lessonStep)
 
     if (handData.name === "main-normal-beaker" && selectedLesson===11 && lessonStep ===11) {
       setLessonStep(12)
+    }
+
+    if (handData.name === "main-normal-beaker" && selectedLesson===12.2 && lessonStep ===50) {
+      setLessonStep(51)
     }
 
     if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===121) {
@@ -888,6 +913,14 @@ const ClickObject = () => {
       setLessonStep(40)
     }
 
+    if (handData.name === "volumetric-flask" && selectedLesson===12.2 && lessonStep ===59) {
+      setLessonStep(60)
+    }
+
+    if (handData.name === "volumetric-flask" && selectedLesson===12.2 && lessonStep ===51) {
+      setLessonStep(52)
+    }
+
     if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===44) {
       setLessonStep(45)
       setSelectedLesson(11.1)
@@ -898,7 +931,13 @@ const ClickObject = () => {
     }  
     if (handData.name === "phenopthaline-dropper-bottle" && selectedLesson===11.1 && lessonStep ===62) {
       setLessonStep(63)
-    }        
+    }   
+    
+   if (handData.name === "main-funnel" && selectedLesson===12.2 && lessonStep ===62) {
+      setLessonStep(63)
+    }
+    
+    
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
       if (lessonStep === 17 && selectedLesson === 8) {
@@ -1358,11 +1397,128 @@ const ClickObject = () => {
   setSelectedRightHand(data)
   setSelectedObject(null)
 }
+const funnelModeHandDataRef =
+  useRef(null)
 
-  const toggleFunnelMode = () => {
-    setIsFunnelMode((prev) => !prev)
+const funnelModelHandRef =
+  useRef(null)
+
+const toggleFunnelMode = () => {
+  // =====================================================
+  // ENTER FUNNEL MODE
+  // =====================================================
+
+  if (!isFunnelMode) {
+    const funnelHand =
+      selectedObject?.hand
+
+    if (!funnelHand) return
+
+    const funnelHandData =
+      funnelHand === "left"
+        ? selectedLeftHand
+        : selectedRightHand
+
+    if (!funnelHandData) return
+
+    // Save COMPLETE funnel hand data
+    funnelModeHandDataRef.current = {
+      ...funnelHandData,
+
+      originalPosition:
+        funnelHandData.originalPosition?.clone(),
+
+      originalRotation:
+        funnelHandData.originalRotation?.clone(),
+    }
+
+    // Model is in opposite hand
+    const modelHand =
+      funnelHand === "left"
+        ? "right"
+        : "left"
+
+    funnelModelHandRef.current =
+      modelHand
+
+    // Free funnel hand
+    if (funnelHand === "left") {
+      setSelectedLeftHand(null)
+    }
+
+    if (funnelHand === "right") {
+      setSelectedRightHand(null)
+    }
+
+    setIsFunnelMode(true)
+
+    setSelectedObject(null)
+
+    return
+  }
+
+  // =====================================================
+  // EXIT FUNNEL MODE
+  // =====================================================
+
+  if (isFunnelMode) {
+    const modelHand =
+      funnelModelHandRef.current
+
+    const savedFunnelData =
+      funnelModeHandDataRef.current
+
+    if (!savedFunnelData) {
+      console.log(
+        "Saved funnel hand data not found"
+      )
+
+      return
+    }
+
+    // -----------------------------------------------------
+    // MODEL LEFT
+    // FUNNEL RETURNS RIGHT
+    // -----------------------------------------------------
+
+    if (modelHand === "left") {
+      setSelectedRightHand({
+        ...savedFunnelData,
+        hand: "right",
+      })
+
+      console.log(
+        "Funnel returned to RIGHT hand"
+      )
+    }
+
+    // -----------------------------------------------------
+    // MODEL RIGHT
+    // FUNNEL RETURNS LEFT
+    // -----------------------------------------------------
+
+    if (modelHand === "right") {
+      setSelectedLeftHand({
+        ...savedFunnelData,
+        hand: "left",
+      })
+
+      console.log(
+        "Funnel returned to LEFT hand"
+      )
+    }
+
+    setIsFunnelMode(false)
+
+    funnelModelHandRef.current =
+      null
+
+    funnelModeHandDataRef.current =
+      null
+
     setSelectedObject(null)
   }
+}
 
   const toggleStirMode = () => {
 
@@ -1453,8 +1609,8 @@ const ClickObject = () => {
       (selectedLesson===11 && ([4,18,31].includes(lessonStep)) ) ||
       (selectedLesson===11.1 && ([55,56,64].includes(lessonStep))) ||
       (selectedLesson ===12 && ([16].includes(lessonStep))) ||
-      (selectedLesson ==12.1) && ([30,36].includes(lessonStep))
-
+      (selectedLesson ==12.1) && ([30,36].includes(lessonStep)) ||
+      (selectedLesson ==12.2) && ([64].includes(lessonStep))
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -1558,6 +1714,10 @@ const handleClampBurette = () => {
   if(selectedLesson===11.1 && lessonStep ===63){
       setLessonStep(64)
     }  
+
+  if(selectedLesson===12.2 && lessonStep ===61){
+      setLessonStep(62)
+    }   
 }
 
   const weighedTestTubeHandDataRef = useRef(null)
@@ -1686,7 +1846,7 @@ const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
     selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11 &&
-     selectedLesson !==11.1 && selectedLesson !== 12 && selectedLesson !== 12.1
+     selectedLesson !==11.1 && selectedLesson !== 12 && selectedLesson !== 12.1 && selectedLesson !== 12.2
   ) {
     return <p>Can't pick now</p>
   }
@@ -2629,12 +2789,20 @@ const handlePlaceBalance = () => {
 
     if(selectedLesson===11 && lessonStep===43){
       setLessonStep(44)
-    }    
+    }
+    
+    if(selectedLesson===12.2 && lessonStep===70){
+      setLessonStep(71)
+    } 
+
+    if(selectedLesson===12.2 && lessonStep===75){
+      setLessonStep(76)
+    }
     setIsVolumetricPipetteMode(false)
   }
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
-      if (selectedObject.name === "volumetric-pipette" && selectedLesson===11 && ([8,13,36,41].includes(lessonStep))) {
+      if (selectedObject.name === "volumetric-pipette" && [11,12.2].includes(selectedLesson) && ([8,13,36,41,68,73].includes(lessonStep))) {
         return (
           <button onClick={handleVolumetricPippeteMode}>
             Pipette Mode
@@ -2680,6 +2848,10 @@ const handlePlaceBalance = () => {
      }
      if(selectedLesson===11.1 && lessonStep==61){
           setLessonStep(62)
+     }
+
+     if(selectedLesson===12.2 && lessonStep==80){
+          setLessonStep(81)
      }
   }
   
@@ -2730,19 +2902,21 @@ const handlePlaceBalance = () => {
     if (selectedObject.name === "main-Conical-Flask") {
       if (isTutorialMode) {
         if (
-          selectedLesson === 11.1 &&
-          (lessonStep === 51 || lessonStep==68 )&&
+          [11.1, 12.2].includes(selectedLesson) &&
+          [51, 68, 83].includes(lessonStep) &&
           !isBeakerNearClamp
         ) {
           return (
             <button onClick={handlePlaceBeaker}>
-              Place Beaker
+              Place Near Beaker
             </button>
           )
         }
+
         if (
           selectedLesson === 11.1 &&
-          (lessonStep === 53 || lessonStep === 70)
+          (lessonStep === 53 ||
+            lessonStep === 70)
         ) {
           return (
             <button onClick={handlePlaceBeakerRemove}>
@@ -2752,7 +2926,9 @@ const handlePlaceBalance = () => {
         }
 
         if (
-          selectedLesson === 11.1 && lessonStep === 54) {
+          selectedLesson === 11.1 &&
+          lessonStep === 54
+        ) {
           return (
             <button onClick={handleCleanBeaker}>
               Clean Flask
@@ -2985,9 +3161,15 @@ const renderBuretteHeldButtons = ()=>{
           <button onClick={handleClampBurette}>
             {isBuiretteClamped ? "Unclamp" : "Clamp"}
           </button>
+
+          <button onClick={()=>{toggleFunnelMode();setLessonStep(61)}}>
+            Exit Funnel Mode
+          </button>
         </>
       )
     }
+
+    
 }
 
 
@@ -3101,8 +3283,14 @@ const placeVolmetricBung = ()=>{
   if(selectedLesson===11 && lessonStep===23.5){
     setLessonStep(24)
   }
+
+  if(selectedLesson===12.1 && lessonStep===43){
+    setLessonStep(44)
+  }
    volumetricBung.current.visible = true
 }
+
+
 
 const renderVolumetricHeldButtons = ()=>{
       if (selectedObject.name === "volumetric-flask") {
@@ -3119,6 +3307,12 @@ const renderVolumetricHeldButtons = ()=>{
             <button onClick={placeVolmetricBung} >
               Place Bung
             </button>
+
+            {selectedLesson === 12.1 && lessonStep === 42 && (
+              <button onClick={()=>{setLessonStep(43)}}>
+                Fill to Mark (250 cm³)
+              </button>
+            )}
           </>
     )
   }
@@ -3239,7 +3433,7 @@ const renderIodobutaneHeldButtons=()=>{
 }
 
 const renderFunnelHeldButtons=()=>{
-    if (isFunnel(selectedObject.name)) {
+    if (isFunnel(selectedObject?.name)) {
     return (
       <>
         <button onClick={toggleFunnelMode}>
@@ -3269,6 +3463,31 @@ const renderFunnelHeldButtons=()=>{
         )}
       </>
     )
+  }
+}
+
+const renderHeldMethylButtons = ()=>{
+  if(selectedObject?.name ==="methyl-dropper-bottle"){
+    if(isTutorialMode){
+      return(
+        <>
+          <button onClick={() => setIsPhenopthalinePourMode(true)}>
+              Pour Mode
+          </button>
+
+          {isPhenopthalinePourMode && (
+            <button onClick={() => handleRemovePhenopthalinPourMode()}>
+              Exit Pour Mode
+            </button>
+          )}
+
+          <button onClick={() =>keepBackOnTable(selectedObject.hand)}>
+            Keep Back On Table
+          </button>
+        
+        </>
+      )
+    }
   }
 }
 
@@ -3321,6 +3540,12 @@ const renderHeldSpoonButtons = () => {
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
+  const methylButtons = renderHeldMethylButtons()
+  if(methylButtons) return methylButtons
+
+  const funnelButtons = renderFunnelHeldButtons()
+  if (funnelButtons) return funnelButtons
+
   const SpoonButtons = renderHeldSpoonButtons()
   if(SpoonButtons) return SpoonButtons
 
@@ -3365,10 +3590,7 @@ const renderHeldObjectButtons = () => {
 
   if (dropperButtons) return dropperButtons
 
-  const funnelButtons =
-    renderFunnelHeldButtons()
 
-  if (funnelButtons) return funnelButtons
 
   const pipetteButtons = renderPipetteHeldButtons()
   if (pipetteButtons) return pipetteButtons

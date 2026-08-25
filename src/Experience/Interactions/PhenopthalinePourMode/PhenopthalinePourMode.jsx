@@ -46,6 +46,9 @@ const PhenopthalinePourMode = ({
     if(selectedLesson===11.1 && lessonStep==59){
       setLessonStep(60)
     }
+    if(selectedLesson===12.2 && lessonStep==78){
+      setLessonStep(79)
+    }
   },[selectedLesson,lessonStep])
 
   useEffect(() => {

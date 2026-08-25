@@ -143,7 +143,12 @@ export const InteractionProvider = ({ children }) => {
 
   const [isCleanBeaker,setIsCleanBeaker] = useState(false)
 
-  const [isSulfamicInSpoon,setIsSulfamicInSpoon] = useState(false)
+  const [isSulfamicInSpoon,setIsSulfamicInSpoon] = useState(false);
+  const [isFillToMark,setIsFillToMark] = useState(null);
+
+  const [isPouringModeFunnelMode,setIsPouringModeFunnelMode] = useState(false);
+
+  const [showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -258,7 +263,10 @@ export const InteractionProvider = ({ children }) => {
   setIsPhenopthalinePourMode(false);
   setPourDroplets(false);
   setIsCleanBeaker(false);
-  setIsSulfamicInSpoon(false)
+  setIsSulfamicInSpoon(false);
+  setIsFillToMark(false);
+  setIsPouringModeFunnelMode(false);
+  setShowSulfamicAcidNaOHTitration(false)
 }
 
   return (
@@ -341,7 +349,11 @@ export const InteractionProvider = ({ children }) => {
         pourDroplets,setPourDroplets,
         showHCLTitrationReaction,setShowHCLTitrationReaction,
         isCleanBeaker,setIsCleanBeaker,
-        isSulfamicInSpoon,setIsSulfamicInSpoon
+        isSulfamicInSpoon,setIsSulfamicInSpoon,
+        isFillToMark,setIsFillToMark,
+        isPouringModeFunnelMode,setIsPouringModeFunnelMode,
+        showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration
+        
         
       }}
     >

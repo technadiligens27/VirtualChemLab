@@ -17,7 +17,7 @@ const InvertModel = ({
   const {
     selectedLesson,
     lessonStep,
-    setLessonStep,
+    setLessonStep,setSelectedLesson
   } = useContext(MainGuidelineContext)
 
   const targetRotationRef = useRef(0)
@@ -341,6 +341,18 @@ const InvertModel = ({
         setLessonStep(29)
       }
 
+      if(selectedLesson===12.1 && lessonStep===44){
+        setLessonStep(45)
+      }
+
+      if(selectedLesson===12.1 && lessonStep===46){
+        setLessonStep(47)
+      }
+
+      if(selectedLesson===12.1 && lessonStep===48){
+        setLessonStep(49)
+      }
+
       console.log(
         "🔄 Flask fully upside down"
       )
@@ -392,6 +404,19 @@ const InvertModel = ({
         lessonStep === 29
       ) {
         setLessonStep(30)
+      }
+
+      if(selectedLesson===12.1 && lessonStep===45){
+        setLessonStep(46)
+      }
+
+      if(selectedLesson===12.1 && lessonStep===47){
+        setLessonStep(48)
+      }
+
+      if(selectedLesson===12.1 && lessonStep===49){
+        setLessonStep(50)
+        setSelectedLesson(12.2)
       }
 
       console.log(

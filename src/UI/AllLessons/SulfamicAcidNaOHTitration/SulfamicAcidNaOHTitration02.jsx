@@ -8,6 +8,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx"
+import SulfamicAcidNaOHTitration03 from "./SulfamicAcidNaOHTitration03.jsx"
 
 const SulfamicAcidNaOHTitration02 = () => {
   const {
@@ -281,7 +282,16 @@ const SulfamicAcidNaOHTitration02 = () => {
       {lessonStep === 39 && (<DialogBox text="Press Shift + P to enter Pour Mode" />)}
       {lessonStep === 40 && (<DialogBox text="Scroll Down to Pour" />)}
       {lessonStep === 41 && (<DialogBox text="Press Shift + P to Exit Pour Mode" />)}
-      {lessonStep === 42 && (<DialogBox text="42" />)}
+      {lessonStep === 42 && (<DialogBox text="Click the Volumetric Falsk and select Fill to Mark (250 cm³)" />)}
+      {lessonStep === 43 && (<DialogBox text="Now click The volumetric Flask and select Place Bung" />)}
+      {lessonStep === 44 && (<DialogBox text="Scroll Downwards 0/3" />)}
+      {lessonStep === 45 && (<DialogBox text="Scroll Upwards 0/3" />)}
+      {lessonStep === 46 && (<DialogBox text="Scroll Downwards 1/3" />)}
+      {lessonStep === 47 && (<DialogBox text="Scroll Upwards 1/3" />)}
+      {lessonStep === 48 && (<DialogBox text="Scroll Downwards 2/3" />)}
+      {lessonStep === 49 && (<DialogBox text="Scroll Upwards 2/3" />)}
+
+      {lessonStep === 50 && <SulfamicAcidNaOHTitration03/>}
 
 
     </>

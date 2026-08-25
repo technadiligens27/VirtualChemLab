@@ -79,6 +79,9 @@ const VolumetricRubberAnimation = ({
         if(selectedLesson===11 && lessonStep==42){
             setLessonStep(43)
         }
+        if(selectedLesson===12.2 && lessonStep==67){
+            setLessonStep(68)
+        }
 
         if(isVolumetricPipetteFilled){
           setPourFromVolumetricPipette(true)     
@@ -99,6 +102,9 @@ const VolumetricRubberAnimation = ({
         console.log("Filler fully released")
         if(selectedLesson===11 && lessonStep===37){
           setLessonStep(38)
+        }
+        if(selectedLesson===12.2 && lessonStep===69){
+          setLessonStep(70)
         }
         if(isVolumetricPipetteMode && !fillVolumetricPipette){
           setFillVolumetricPipette(true)
@@ -145,9 +151,12 @@ const VolumetricRubberAnimation = ({
 
   return (
     <>
-      {fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
+      {fillVolumetricPipette && isVolumetricPipetteMode && selectedRightHand?.name==="main-normal-beaker" && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
     
       {selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
+
+      {selectedRightHand?.name==='main-Conical-Flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}/>}
+
 
       {selectedRightHand?.name==='volumetric-flask' && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
 

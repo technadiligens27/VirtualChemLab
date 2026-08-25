@@ -30,6 +30,7 @@ import HCLTitration2 from "./AllLessons/HCLTitration/HCLTitration2"
 import HCLTitrationLiveDataPanel from "./HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel"
 import SulfamicAcidNaOHTitration from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration"
 import SulfamicAcidNaOHTitration02 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration02"
+import SulfamicAcidNaOHTitration03 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration03"
 
 const mainContent = [
   {
@@ -490,6 +491,12 @@ useEffect(() => {
           <SulfamicAcidNaOHTitration02/>
         )
        } 
+
+       {
+        selectedLesson===12.2 && (
+          <SulfamicAcidNaOHTitration03/>
+        )
+       }
 
     </>
   )

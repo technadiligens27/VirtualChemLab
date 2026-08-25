@@ -39,6 +39,9 @@ import HCLTitrationReaction from "../AllReactions/HCLTitrationReaction/HCLTitrat
 import CleanBeaker from "./CleanBeaker/CleanBeaker";
 import ShowBeakerPrecipitate from "./ShowBeakerPrecipitate/ShowBeakerPrecipitate";
 import SwirlModel from "./SwirlModel/SwirlModel";
+import AddMoreLiquid from "./AddMoreLiquid/AddMoreLiquid";
+import ScaleLiquid from "./ScaleLiquid/ScaleLiquid";
+import FunnelMode from "./FunnelMode/FunnelMode";
 
 const Interaction = () => {
   const {
@@ -48,12 +51,12 @@ const Interaction = () => {
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
-,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon
+,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
-        conicalBeakerRef,phenopthalineBottleRef} = useContext(ModelContext)
+        conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef} = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
 
@@ -77,7 +80,7 @@ const Interaction = () => {
     console.log('isPlacePolysterene:',isPlacePolysterene);
     console.log('isPolystereneStirMode:',isPolystereneStirMode)
     console.log('selectedLeftHand:',selectedLeftHand);
-    console.log('selectedLeftHand:',selectedRightHand);
+    console.log('selectedRightHand:',selectedRightHand);
 
   },[isPlacePolysterene,isPolystereneStirMode,selectedLeftHand,selectedRightHand])
 
@@ -170,7 +173,11 @@ const Interaction = () => {
       }
 
       {
-        isPhenopthalinePourMode && <PhenopthalinePourMode modelRef={phenopthalineBottleRef} otherModelRef={conicalBeakerRef}/>
+       selectedLeftHand?.name==="phenopthaline-dropper-bottle" && isPhenopthalinePourMode && <PhenopthalinePourMode modelRef={phenopthalineBottleRef} otherModelRef={conicalBeakerRef}/>
+      }
+
+      {
+       selectedLeftHand?.name==="methyl-dropper-bottle" && isPhenopthalinePourMode && <PhenopthalinePourMode modelRef={methylBottleRef} otherModelRef={conicalBeakerRef}/>
       }
 
       {/* {showHCLTitrationReaction && <HCLTitrationReaction modelRef={conicalBeakerRef}/>} */}
@@ -191,7 +198,21 @@ const Interaction = () => {
         )}
 
       {selectedLesson ===12.1 && (lessonStep ===32 || lessonStep===38) && <SwirlModel modelRef={normalBeakerRef} useTargetSwirls={true}/> }
+      
+      {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
 
+      {isFunnelMode && <FunnelMode 
+        modelRef={mainBuiretteRef} 
+        funnelRef={funnelRef} 
+        modelScale ={0.6}
+        modelYOffset={-1}
+        funnelYOffset={0.5}
+        hand={'left'}
+        />
+      }    
+
+       
+      
     </>
   );
 };

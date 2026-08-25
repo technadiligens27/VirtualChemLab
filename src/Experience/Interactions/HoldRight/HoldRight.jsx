@@ -391,8 +391,30 @@ const transformControlsRef = useRef()
     if(selectedLesson===11 && lessonStep===40){
       setLessonStep(41)
     }
-  },[selectedLesson,lessonStep])  
+  },[selectedLesson,lessonStep])
+  
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===53){
+      setLessonStep(54)
+    }
+  },[selectedLesson,lessonStep]) 
 
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===55){
+      setLessonStep(56)
+    }
+  },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===63){
+      setLessonStep(64)
+    }
+  },[selectedLesson,lessonStep])   
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===72){
+      setLessonStep(73)
+    }
+  },[selectedLesson,lessonStep])  
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
@@ -403,13 +425,15 @@ const transformControlsRef = useRef()
       )}
 
       {!isStirMode &&
-        !isLitmusMode &&
-        !isFunnelMode && 
         selectedLeftHand &&
-        selectedRightHand && (
+        selectedRightHand && 
+        !isFunnelMode &&  
+        
+        (
           <PouringMode hand="right" />
       )}
 
+      
          
 
       {isStirMode &&
@@ -451,10 +475,7 @@ const transformControlsRef = useRef()
           />
         )}
 
-      {
-        isFunnelMode  &&
-        <FunnelMode beakerRef={selectedLeftHand.ref} funnelRef={funnelRef} hand='right'/>
-      }
+      
 
       {
         isDropperPlaced && <DropperPlaced hand='right' beakerRef={selectedLeftHand.ref}/>
@@ -462,10 +483,6 @@ const transformControlsRef = useRef()
 
       {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
 
-      {
-       !isDropperFilled &&!isStirMode &&  !isLitmusMode && !isDropperPlaced && !isPouringMode &&isReactionRef.current ===false &&  selectedRightHand.name!=='mainThermometer' 
-        &&  <LiquidLabels modelRef={modeldata.ref} hand={'right'}/>
-      }
 
       {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>)}
 
@@ -491,6 +508,10 @@ const transformControlsRef = useRef()
       }
       {
        selectedLesson===11 && ([24,25,26,27,28,29,30].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask' && !isVolumetricPipetteMode && <InvertModel modelRef={volumetricRef}/>
+      }
+
+      {
+       selectedLesson===12.1 && ([44,45,46,47,48,49].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask'  && <InvertModel modelRef={volumetricRef}/>
       }
   </>
   )
