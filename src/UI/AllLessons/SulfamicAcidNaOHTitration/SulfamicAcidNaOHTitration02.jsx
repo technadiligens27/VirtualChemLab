@@ -8,53 +8,89 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx"
+
+import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx"
+
+import {
+  guidelineData,
+} from "../../Data/SulfamicNaOHTitrationData/SulfamicNaOHTitrationData.jsx"
+
 import SulfamicAcidNaOHTitration03 from "./SulfamicAcidNaOHTitration03.jsx"
+
 
 const SulfamicAcidNaOHTitration02 = () => {
   const {
     setSelectedRightHand,
     setSelectedLeftHand,
-  } = useContext(InteractionContext)
+  } = useContext(
+    InteractionContext
+  )
 
   const {
     lessonStep,
     selectedLesson,
-    setSafetyStep,setLessonStep
-  } = useContext(MainGuidelineContext)
+    setSafetyStep,
+    setLessonStep,
+  } = useContext(
+    MainGuidelineContext
+  )
 
   const {
     gogglesRef,
     gloverightRef,
     gloveleftRef,
     normalBeakerRef,
-  } = useContext(ModelContext)
+  } = useContext(
+    ModelContext
+  )
+
 
   // =========================================================
   // INITIALIZE PART 2
   // =========================================================
 
   useEffect(() => {
-    if (selectedLesson !== 12.1) return
-    if (!normalBeakerRef?.current) return
+    if (
+      selectedLesson !== 12.1
+    ) {
+      return
+    }
+
+    if (
+      !normalBeakerRef?.current
+    ) {
+      return
+    }
 
     // =======================================================
     // SAFETY STATE
     // =======================================================
 
     setSafetyStep(4)
+
     setLessonStep(22)
 
-    if (gogglesRef?.current) {
-      gogglesRef.current.visible = false
+    if (
+      gogglesRef?.current
+    ) {
+      gogglesRef.current.visible =
+        false
     }
 
-    if (gloverightRef?.current) {
-      gloverightRef.current.visible = false
+    if (
+      gloverightRef?.current
+    ) {
+      gloverightRef.current.visible =
+        false
     }
 
-    if (gloveleftRef?.current) {
-      gloveleftRef.current.visible = false
+    if (
+      gloveleftRef?.current
+    ) {
+      gloveleftRef.current.visible =
+        false
     }
+
 
     // =======================================================
     // NORMAL BEAKER STATE
@@ -65,6 +101,7 @@ const SulfamicAcidNaOHTitration02 = () => {
         const name =
           child.name?.toLowerCase() || ""
 
+
         // ===================================================
         // LIQUID / WATER
         // ===================================================
@@ -73,14 +110,22 @@ const SulfamicAcidNaOHTitration02 = () => {
           child.isMesh &&
           name.includes("liquid")
         ) {
-          child.visible = true
-          child.scale.y = 0.4
-          child.renderOrder = 1
+          child.visible =
+            true
+
+          child.scale.y =
+            0.4
+
+          child.renderOrder =
+            1
+
 
           const makeWaterMaterial = (
             material
           ) => {
-            if (!material) {
+            if (
+              !material
+            ) {
               return material
             }
 
@@ -91,24 +136,38 @@ const SulfamicAcidNaOHTitration02 = () => {
               "#0073a0"
             )
 
-            cloned.transparent = true
-            cloned.opacity = 0.35
+            cloned.transparent =
+              true
 
-            cloned.depthWrite = false
-            cloned.depthTest = true
+            cloned.opacity =
+              0.35
 
-            if ("roughness" in cloned) {
-              cloned.roughness = 0.1
+            cloned.depthWrite =
+              false
+
+            cloned.depthTest =
+              true
+
+            if (
+              "roughness" in cloned
+            ) {
+              cloned.roughness =
+                0.1
             }
 
-            if ("metalness" in cloned) {
-              cloned.metalness = 0
+            if (
+              "metalness" in cloned
+            ) {
+              cloned.metalness =
+                0
             }
 
-            cloned.needsUpdate = true
+            cloned.needsUpdate =
+              true
 
             return cloned
           }
+
 
           if (
             Array.isArray(
@@ -119,14 +178,21 @@ const SulfamicAcidNaOHTitration02 = () => {
               child.material.map(
                 makeWaterMaterial
               )
-          } else if (child.material) {
+          }
+          else if (
+            child.material
+          ) {
             child.material =
               makeWaterMaterial(
                 child.material
               )
           }
 
-          child.updateMatrixWorld(true)
+
+          child.updateMatrixWorld(
+            true
+          )
+
 
           console.log(
             "Water liquid initialized:",
@@ -134,56 +200,79 @@ const SulfamicAcidNaOHTitration02 = () => {
           )
         }
 
+
         // ===================================================
         // ALL PRECIPITATE CHILDREN
         // ===================================================
 
         if (
           child.isMesh &&
-          name.includes("precipitate")
+          name.includes(
+            "precipitate"
+          )
         ) {
-          child.visible = true
-          child.renderOrder = 10
+          child.visible =
+            true
+
+          child.renderOrder =
+            10
+
 
           // -----------------------------------------------
-          // Make every parent group visible too
+          // MAKE EVERY PARENT GROUP VISIBLE
           // -----------------------------------------------
 
-          let parent = child.parent
+          let parent =
+            child.parent
 
           while (
             parent &&
             parent !==
               normalBeakerRef.current
           ) {
-            parent.visible = true
-            parent = parent.parent
+            parent.visible =
+              true
+
+            parent =
+              parent.parent
           }
+
 
           // -----------------------------------------------
           // PRECIPITATE MATERIAL
           // -----------------------------------------------
 
-          const makePrecipitateMaterial = (
-            material
-          ) => {
-            if (!material) {
-              return material
+          const makePrecipitateMaterial =
+            (
+              material
+            ) => {
+              if (
+                !material
+              ) {
+                return material
+              }
+
+              const cloned =
+                material.clone()
+
+              cloned.transparent =
+                true
+
+              cloned.opacity =
+                1
+
+              cloned.depthWrite =
+                false
+
+              cloned.depthTest =
+                true
+
+              cloned.needsUpdate =
+                true
+
+              return cloned
             }
 
-            const cloned =
-              material.clone()
-
-            cloned.transparent = true
-            cloned.opacity = 1
-
-            cloned.depthWrite = false
-            cloned.depthTest = true
-
-            cloned.needsUpdate = true
-
-            return cloned
-          }
 
           if (
             Array.isArray(
@@ -194,14 +283,21 @@ const SulfamicAcidNaOHTitration02 = () => {
               child.material.map(
                 makePrecipitateMaterial
               )
-          } else if (child.material) {
+          }
+          else if (
+            child.material
+          ) {
             child.material =
               makePrecipitateMaterial(
                 child.material
               )
           }
 
-          child.updateMatrixWorld(true)
+
+          child.updateMatrixWorld(
+            true
+          )
+
 
           console.log(
             "Precipitate visible:",
@@ -211,6 +307,7 @@ const SulfamicAcidNaOHTitration02 = () => {
       }
     )
 
+
     // =======================================================
     // NORMAL BEAKER -> LEFT HAND
     // =======================================================
@@ -218,12 +315,16 @@ const SulfamicAcidNaOHTitration02 = () => {
     const normalBeaker =
       normalBeakerRef.current
 
+
     setSelectedLeftHand({
-      hand: "left",
+      hand:
+        "left",
 
-      name: "main-normal-beaker",
+      name:
+        "main-normal-beaker",
 
-      ref: normalBeakerRef,
+      ref:
+        normalBeakerRef,
 
       originalParent:
         normalBeaker.parent,
@@ -235,25 +336,36 @@ const SulfamicAcidNaOHTitration02 = () => {
         normalBeaker.rotation.clone(),
     })
 
+
     // =======================================================
     // RIGHT HAND EMPTY
     // =======================================================
 
-    setSelectedRightHand(null)
+    setSelectedRightHand(
+      null
+    )
+
 
     console.log(
       "Sulfamic Acid NaOH Titration Part 2 initialized"
     )
+
   }, [
     selectedLesson,
+
     setSafetyStep,
+    setLessonStep,
+
     setSelectedLeftHand,
     setSelectedRightHand,
+
     gloveleftRef,
     gloverightRef,
     gogglesRef,
+
     normalBeakerRef,
   ])
+
 
   // =========================================================
   // GUIDELINES
@@ -261,41 +373,479 @@ const SulfamicAcidNaOHTitration02 = () => {
 
   return (
     <>
-      {lessonStep === 22 && (<DialogBox text="Take Spatula into Right Hand" />)}
-      {lessonStep === 23 && (<DialogBox text="Click Spatula and Select Stir Mode" />)}
-      {lessonStep === 24 && (<DialogBox text="Scroll Down To Stir" />)}
-      {lessonStep === 24 && (<DialogBox text="Click Spatula and Select UnStir Mode" />)}
-      {lessonStep === 25 && (<DialogBox text="Keep Spatula In Table" />)}
-      {lessonStep === 26 && (<DialogBox text="Take Volumetric Flask to Right Hand" />)}
-      {lessonStep === 27 && (<DialogBox text="Press Shift + P to enter Pour Mode" />)}
-      {lessonStep === 28 && (<DialogBox text="Scroll Down to Pour" />)}
-      {lessonStep === 29 && (<DialogBox text="Press Shift + P to Exit Pour Mode" />)}
-      {lessonStep === 30 && (<DialogBox text="Click Add Liquid in Normal Beaker" />)}
-      {lessonStep === 31 && (<DialogBox text="Water 30cm3" />)}
-      {lessonStep === 32 && (<DialogBox text="Scroll Down to Swirl the Beaker to Rinse it" />)}
-      {lessonStep === 33 && (<DialogBox text="Press Shift + P to enter Pour Mode" />)}
-      {lessonStep === 34 && (<DialogBox text="Scroll Down to Pour" />)}
-      {lessonStep === 35 && (<DialogBox text="Press Shift + P to Exit Pour Mode" />)}
-      {lessonStep === 36 && (<DialogBox text="Click Add Liquid in Normal Beaker" />)}
-      {lessonStep === 37 && (<DialogBox text="Water 30cm3" />)}
-      {lessonStep === 38 && (<DialogBox text="Scroll Down to Swirl the Beaker to Rinse it" />)}
-      {lessonStep === 39 && (<DialogBox text="Press Shift + P to enter Pour Mode" />)}
-      {lessonStep === 40 && (<DialogBox text="Scroll Down to Pour" />)}
-      {lessonStep === 41 && (<DialogBox text="Press Shift + P to Exit Pour Mode" />)}
-      {lessonStep === 42 && (<DialogBox text="Click the Volumetric Falsk and select Fill to Mark (250 cm³)" />)}
-      {lessonStep === 43 && (<DialogBox text="Now click The volumetric Flask and select Place Bung" />)}
-      {lessonStep === 44 && (<DialogBox text="Scroll Downwards 0/3" />)}
-      {lessonStep === 45 && (<DialogBox text="Scroll Upwards 0/3" />)}
-      {lessonStep === 46 && (<DialogBox text="Scroll Downwards 1/3" />)}
-      {lessonStep === 47 && (<DialogBox text="Scroll Upwards 1/3" />)}
-      {lessonStep === 48 && (<DialogBox text="Scroll Downwards 2/3" />)}
-      {lessonStep === 49 && (<DialogBox text="Scroll Upwards 2/3" />)}
 
-      {lessonStep === 50 && <SulfamicAcidNaOHTitration03/>}
+      {/* =====================================================
+          GUIDELINE 4
 
+          MIX / DISSOLVE SULFAMIC ACID
+
+          STEPS:
+          22 - 25
+      ===================================================== */}
+
+      {
+        lessonStep === 22 &&
+        (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[3]
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 22 &&
+        (
+          <DialogBox
+            text={
+              "Take Spatula into Right Hand"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 23 &&
+        (
+          <DialogBox
+            text={
+              "Click Spatula and Select Stir Mode"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 24 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Down To Stir"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 24.5 &&
+        (
+          <DialogBox
+            text={
+              "Click Spatula and Select UnStir Mode"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 25 &&
+        (
+          <DialogBox
+            text={
+              "Keep Spatula In Table"
+            }
+          />
+        )
+      }
+
+
+
+      {/* =====================================================
+          GUIDELINE 5
+
+          TRANSFER SULFAMIC ACID SOLUTION
+          TO VOLUMETRIC FLASK
+
+          STEPS:
+          26 - 29
+      ===================================================== */}
+
+      {
+        lessonStep === 26 &&
+        (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[4]
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 26 &&
+        (
+          <DialogBox
+            text={
+              "Take Volumetric Flask to Right Hand"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 27 &&
+        (
+          <DialogBox
+            text={
+              "Press Shift + P to enter Pour Mode"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 28 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Down to Pour"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 29 &&
+        (
+          <DialogBox
+            text={
+              "Press Shift + P to Exit Pour Mode"
+            }
+          />
+        )
+      }
+
+
+
+      {/* =====================================================
+          GUIDELINE 6
+
+          RINSE BEAKER AND TRANSFER WASHINGS
+
+          STEPS:
+          30 - 41
+      ===================================================== */}
+
+      {
+        lessonStep === 30 &&
+        (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[5]
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 30 &&
+        (
+          <DialogBox
+            text={
+              "Click Add Liquid in Normal Beaker"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 31 &&
+        (
+          <DialogBox
+            text={
+              "Water 30cm3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 32 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Down to Swirl the Beaker to Rinse it"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 33 &&
+        (
+          <DialogBox
+            text={
+              "Press Shift + P to enter Pour Mode"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 34 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Down to Pour"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 35 &&
+        (
+          <DialogBox
+            text={
+              "Press Shift + P to Exit Pour Mode"
+            }
+          />
+        )
+      }
+
+      {
+        lessonStep === 36 &&
+        (
+          <DialogBox
+            text={
+              "Click Add Liquid in Normal Beaker"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 37 &&
+        (
+          <DialogBox
+            text={
+              "Water 30cm3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 38 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Down to Swirl the Beaker to Rinse it"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 39 &&
+        (
+          <DialogBox
+            text={
+              "Press Shift + P to enter Pour Mode"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 40 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Down to Pour"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 41 &&
+        (
+          <DialogBox
+            text={
+              "Press Shift + P to Exit Pour Mode"
+            }
+          />
+        )
+      }
+
+
+
+      {/* =====================================================
+          GUIDELINE 7
+
+          FILL VOLUMETRIC FLASK TO 250 cm³ MARK
+
+          STEP:
+          42
+      ===================================================== */}
+
+      {
+        lessonStep === 42 &&
+        (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[6]
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 42 &&
+        (
+          <DialogBox
+            text={
+              "Click the Volumetric Flask and select Fill to Mark (250 cm³)"
+            }
+          />
+        )
+      }
+
+
+
+      {/* =====================================================
+          GUIDELINE 8
+
+          BUNG + MIX STANDARD SOLUTION
+
+          STEPS:
+          43 - 49
+      ===================================================== */}
+
+      {
+        lessonStep === 43 &&
+        (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[7]
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 43 &&
+        (
+          <DialogBox
+            text={
+              "Now click The Volumetric Flask and select Place Bung"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 44 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Downwards 0/3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 45 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Upwards 0/3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 46 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Downwards 1/3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 47 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Upwards 1/3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 48 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Downwards 2/3"
+            }
+          />
+        )
+      }
+
+
+      {
+        lessonStep === 49 &&
+        (
+          <DialogBox
+            text={
+              "Scroll Upwards 2/3"
+            }
+          />
+        )
+      }
+
+
+
+      {/* =====================================================
+          CONTINUE TO PART 3
+      ===================================================== */}
+
+      {
+        lessonStep === 49.5 &&
+        (
+          <SulfamicAcidNaOHTitration03 />
+        )
+      }
 
     </>
   )
 }
+
 
 export default SulfamicAcidNaOHTitration02

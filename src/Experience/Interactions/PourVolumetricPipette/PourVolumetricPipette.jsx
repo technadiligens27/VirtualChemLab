@@ -16,30 +16,45 @@ const PourVolumetricPipette = ({
   amount = 1,
   otherLiquidAmount = 0.25,
 
+  // Receiver liquid appearance
+  otherLiquidColor = "#ffffff",
+  otherLiquidOpacity = null,
+
   scaleSpeed = 0.5,
 }) => {
   const {
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
   const {
     setPourFromVolumetricPipette,
     setIsVolumetricPipetteFilled,
-  } = useContext(InteractionContext)
+  } = useContext(
+    InteractionContext
+  )
 
   // ==========================================
   // REFS
   // ==========================================
 
-  const pourRef = useRef(null)
+  const pourRef =
+    useRef(null)
 
-  const modelLiquidRef = useRef(null)
-  const verticalRef = useRef(null)
-  const otherLiquidRef = useRef(null)
+  const modelLiquidRef =
+    useRef(null)
 
-  const pourStartScaleRef = useRef(0)
+  const verticalRef =
+    useRef(null)
+
+  const otherLiquidRef =
+    useRef(null)
+
+  const pourStartScaleRef =
+    useRef(0)
 
   const modelLiquidStartScaleRef =
     useRef(0)
@@ -87,32 +102,54 @@ const PourVolumetricPipette = ({
     // SOURCE PIPETTE
     // ========================================
 
-    modelRef.current.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() || ""
+    modelRef.current.traverse(
+      (child) => {
+        const childName =
+          child.name?.toLowerCase() || ""
 
-      // Pour stream
-      if (
-        childName.includes("pour")
-      ) {
-        pourRef.current = child
-      }
+        // ======================================
+        // POUR STREAM
+        // ======================================
 
-      // Normal liquid
-      if (
-        childName.includes("liquid") &&
-        !childName.includes("vertical")
-      ) {
-        modelLiquidRef.current = child
-      }
+        if (
+          childName.includes(
+            "pour"
+          )
+        ) {
+          pourRef.current =
+            child
+        }
 
-      // Vertical liquid section
-      if (
-        childName.includes("vertical")
-      ) {
-        verticalRef.current = child
+        // ======================================
+        // NORMAL LIQUID
+        // ======================================
+
+        if (
+          childName.includes(
+            "liquid"
+          ) &&
+          !childName.includes(
+            "vertical"
+          )
+        ) {
+          modelLiquidRef.current =
+            child
+        }
+
+        // ======================================
+        // VERTICAL LIQUID
+        // ======================================
+
+        if (
+          childName.includes(
+            "vertical"
+          )
+        ) {
+          verticalRef.current =
+            child
+        }
       }
-    })
+    )
 
     // ========================================
     // RECEIVER LIQUID
@@ -124,9 +161,12 @@ const PourVolumetricPipette = ({
           child.name?.toLowerCase() || ""
 
         if (
-          childName.includes("liquid")
+          childName.includes(
+            "liquid"
+          )
         ) {
-          otherLiquidRef.current = child
+          otherLiquidRef.current =
+            child
         }
       }
     )
@@ -135,28 +175,39 @@ const PourVolumetricPipette = ({
     // CHECK
     // ========================================
 
-    if (!pourRef.current) {
+    if (
+      !pourRef.current
+    ) {
       console.log(
         "❌ Pour child not found"
       )
+
       return
     }
 
-    if (!modelLiquidRef.current) {
+    if (
+      !modelLiquidRef.current
+    ) {
       console.log(
         "❌ Volumetric pipette liquid not found"
       )
+
       return
     }
 
-    if (!otherLiquidRef.current) {
+    if (
+      !otherLiquidRef.current
+    ) {
       console.log(
         "❌ Other model liquid not found"
       )
+
       return
     }
 
-    if (!verticalRef.current) {
+    if (
+      !verticalRef.current
+    ) {
       console.log(
         "ℹ️ Vertical child not found"
       )
@@ -175,16 +226,145 @@ const PourVolumetricPipette = ({
     otherLiquidStartScaleRef.current =
       otherLiquidRef.current.scale.y
 
-    if (verticalRef.current) {
+    if (
+      verticalRef.current
+    ) {
       verticalStartScaleRef.current =
         verticalRef.current.scale.y
+    }
+
+    // ========================================
+    // RECEIVER LIQUID MATERIAL
+    // ========================================
+
+    if (
+      otherLiquidRef.current &&
+      (
+        otherLiquidColor !== null ||
+        otherLiquidOpacity !== null
+      )
+    ) {
+      const liquid =
+        otherLiquidRef.current
+
+      // ======================================
+      // ARRAY MATERIAL
+      // ======================================
+
+      if (
+        Array.isArray(
+          liquid.material
+        )
+      ) {
+        liquid.material =
+          liquid.material.map(
+            (material) => {
+              const clonedMaterial =
+                material.clone()
+
+              // =================================
+              // COLOR
+              // =================================
+
+              if (
+                otherLiquidColor !== null &&
+                clonedMaterial.color
+              ) {
+                clonedMaterial.color.set(
+                  otherLiquidColor
+                )
+              }
+
+              // =================================
+              // OPACITY
+              // =================================
+
+              if (
+                otherLiquidOpacity !== null
+              ) {
+                clonedMaterial.transparent =
+                  true
+
+                clonedMaterial.opacity =
+                  otherLiquidOpacity
+
+                clonedMaterial.depthWrite =
+                  false
+
+                clonedMaterial.needsUpdate =
+                  true
+              }
+
+              return clonedMaterial
+            }
+          )
+      }
+
+      // ======================================
+      // SINGLE MATERIAL
+      // ======================================
+
+      else if (
+        liquid.material
+      ) {
+        liquid.material =
+          liquid.material.clone()
+
+        // ====================================
+        // COLOR
+        // ====================================
+
+        if (
+          otherLiquidColor !== null &&
+          liquid.material.color
+        ) {
+          liquid.material.color.set(
+            otherLiquidColor
+          )
+        }
+
+        // ====================================
+        // OPACITY
+        // ====================================
+
+        if (
+          otherLiquidOpacity !== null
+        ) {
+          liquid.material.transparent =
+            true
+
+          liquid.material.opacity =
+            otherLiquidOpacity
+
+          liquid.material.depthWrite =
+            false
+
+          liquid.material.needsUpdate =
+            true
+        }
+      }
+
+      liquid.updateMatrixWorld(
+        true
+      )
+
+      console.log(
+        "🎨 Receiver color:",
+        otherLiquidColor
+      )
+
+      console.log(
+        "💧 Receiver opacity:",
+        otherLiquidOpacity
+      )
     }
 
     // ========================================
     // VISIBILITY
     // ========================================
 
-    pourRef.current.visible = true
+    pourRef.current.visible =
+      true
 
     modelLiquidRef.current.visible =
       true
@@ -192,7 +372,9 @@ const PourVolumetricPipette = ({
     otherLiquidRef.current.visible =
       true
 
-    if (verticalRef.current) {
+    if (
+      verticalRef.current
+    ) {
       verticalRef.current.visible =
         true
     }
@@ -201,8 +383,11 @@ const PourVolumetricPipette = ({
     // RESET
     // ========================================
 
-    verticalProgressRef.current = 0
-    liquidProgressRef.current = 0
+    verticalProgressRef.current =
+      0
+
+    liquidProgressRef.current =
+      0
 
     isVerticalFinishedRef.current =
       false
@@ -233,6 +418,8 @@ const PourVolumetricPipette = ({
     otherModelRef,
     amount,
     otherLiquidAmount,
+    otherLiquidColor,
+    otherLiquidOpacity,
   ])
 
   // ==========================================
@@ -240,17 +427,22 @@ const PourVolumetricPipette = ({
   // ==========================================
 
   const finishTransfer = () => {
-    if (isFinishedRef.current) {
+    if (
+      isFinishedRef.current
+    ) {
       return
     }
 
-    isFinishedRef.current = true
+    isFinishedRef.current =
+      true
 
     // ========================================
     // SOURCE NORMAL LIQUID EMPTY
     // ========================================
 
-    if (modelLiquidRef.current) {
+    if (
+      modelLiquidRef.current
+    ) {
       modelLiquidRef.current.scale.y =
         0
 
@@ -262,8 +454,11 @@ const PourVolumetricPipette = ({
     // VERTICAL EMPTY
     // ========================================
 
-    if (verticalRef.current) {
-      verticalRef.current.scale.y = 0
+    if (
+      verticalRef.current
+    ) {
+      verticalRef.current.scale.y =
+        0
 
       verticalRef.current.visible =
         false
@@ -273,7 +468,9 @@ const PourVolumetricPipette = ({
     // RECEIVER FINAL
     // ========================================
 
-    if (otherLiquidRef.current) {
+    if (
+      otherLiquidRef.current
+    ) {
       otherLiquidRef.current.scale.y =
         otherLiquidStartScaleRef.current +
         otherLiquidAmount
@@ -286,30 +483,39 @@ const PourVolumetricPipette = ({
     // POUR STREAM OFF
     // ========================================
 
-    if (pourRef.current) {
-      pourRef.current.scale.y = 0
-      pourRef.current.visible = false
+    if (
+      pourRef.current
+    ) {
+      pourRef.current.scale.y =
+        0
+
+      pourRef.current.visible =
+        false
     }
 
     // ========================================
     // UPDATE
     // ========================================
 
-    modelLiquidRef.current?.updateMatrixWorld(
-      true
-    )
+    modelLiquidRef.current
+      ?.updateMatrixWorld(
+        true
+      )
 
-    verticalRef.current?.updateMatrixWorld(
-      true
-    )
+    verticalRef.current
+      ?.updateMatrixWorld(
+        true
+      )
 
-    otherLiquidRef.current?.updateMatrixWorld(
-      true
-    )
+    otherLiquidRef.current
+      ?.updateMatrixWorld(
+        true
+      )
 
-    pourRef.current?.updateMatrixWorld(
-      true
-    )
+    pourRef.current
+      ?.updateMatrixWorld(
+        true
+      )
 
     console.log(
       "✅ Volumetric pipette pouring finished"
@@ -330,102 +536,239 @@ const PourVolumetricPipette = ({
       otherLiquidRef.current?.scale.y
     )
 
-    setPourFromVolumetricPipette(false)
+    // ========================================
+    // RESET POUR STATE
+    // ========================================
 
-    setIsVolumetricPipetteFilled(false)
+    setPourFromVolumetricPipette(
+      false
+    )
+
+    setIsVolumetricPipetteFilled(
+      false
+    )
+
+    // ========================================
+    // LESSON 11
+    // ========================================
 
     if (
       selectedLesson === 11 &&
       lessonStep === 14
     ) {
-      setLessonStep(15)
+      setLessonStep(
+        15
+      )
     }
+
+    // ========================================
+    // LESSON 12.2
+    // ========================================
 
     if (
       selectedLesson === 12.2 &&
       lessonStep === 74
     ) {
-      setLessonStep(75)
-    }    
+      setLessonStep(
+        75
+      )
+    }
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 98
+    ) {
+      setLessonStep(
+        99
+      )
+    }
   }
 
   // ==========================================
   // ANIMATION
   // ==========================================
 
-  useFrame((_, delta) => {
-    if (
-      !pourRef.current ||
-      !modelLiquidRef.current ||
-      !otherLiquidRef.current
-    ) {
-      return
-    }
+  useFrame(
+    (_, delta) => {
+      if (
+        !pourRef.current ||
+        !modelLiquidRef.current ||
+        !otherLiquidRef.current
+      ) {
+        return
+      }
 
-    if (isFinishedRef.current) {
-      return
-    }
+      if (
+        isFinishedRef.current
+      ) {
+        return
+      }
 
-    // ========================================
-    // STAGE 1
-    //
-    // VERTICAL EMPTIES FIRST
-    // ========================================
+      // ======================================
+      // STAGE 1
+      //
+      // VERTICAL EMPTIES FIRST
+      // ======================================
 
-    if (
-      verticalRef.current &&
-      !isVerticalFinishedRef.current
-    ) {
-      verticalProgressRef.current +=
-        scaleSpeed * delta
+      if (
+        verticalRef.current &&
+        !isVerticalFinishedRef.current
+      ) {
+        verticalProgressRef.current +=
+          scaleSpeed *
+          delta
+
+        const progress =
+          Math.min(
+            verticalProgressRef.current,
+            1
+          )
+
+        // ====================================
+        // VERTICAL SCALE DOWN
+        // ====================================
+
+        verticalRef.current.scale.y =
+          verticalStartScaleRef.current *
+          (
+            1 -
+            progress
+          )
+
+        // ====================================
+        // POUR STREAM
+        // ====================================
+
+        pourRef.current.scale.y =
+          pourStartScaleRef.current +
+          (
+            amount -
+            pourStartScaleRef.current
+          ) *
+          progress
+
+        // ====================================
+        // RECEIVER FIRST HALF
+        // ====================================
+
+        const totalProgress =
+          progress *
+          0.5
+
+        otherLiquidRef.current.scale.y =
+          otherLiquidStartScaleRef.current +
+          otherLiquidAmount *
+          totalProgress
+
+        // ====================================
+        // UPDATE
+        // ====================================
+
+        verticalRef.current.updateMatrixWorld(
+          true
+        )
+
+        pourRef.current.updateMatrixWorld(
+          true
+        )
+
+        otherLiquidRef.current.updateMatrixWorld(
+          true
+        )
+
+        // ====================================
+        // VERTICAL FINISHED
+        // ====================================
+
+        if (
+          progress >=
+          1
+        ) {
+          verticalRef.current.scale.y =
+            0
+
+          verticalRef.current.visible =
+            false
+
+          isVerticalFinishedRef.current =
+            true
+
+          console.log(
+            "✅ Vertical liquid emptied"
+          )
+        }
+
+        return
+      }
+
+      // ======================================
+      // NO VERTICAL CHILD
+      // ======================================
+
+      if (
+        !verticalRef.current &&
+        !isVerticalFinishedRef.current
+      ) {
+        isVerticalFinishedRef.current =
+          true
+      }
+
+      // ======================================
+      // STAGE 2
+      //
+      // NORMAL LIQUID EMPTIES SECOND
+      // ======================================
+
+      liquidProgressRef.current +=
+        scaleSpeed *
+        delta
 
       const progress =
         Math.min(
-          verticalProgressRef.current,
+          liquidProgressRef.current,
           1
         )
 
       // ======================================
-      // VERTICAL SCALE DOWN
+      // NORMAL LIQUID SCALE DOWN
       // ======================================
 
-      verticalRef.current.scale.y =
-        verticalStartScaleRef.current *
-        (1 - progress)
+      modelLiquidRef.current.scale.y =
+        modelLiquidStartScaleRef.current *
+        (
+          1 -
+          progress
+        )
 
       // ======================================
-      // POUR STREAM
+      // KEEP POUR STREAM VISIBLE
       // ======================================
+
+      pourRef.current.visible =
+        true
 
       pourRef.current.scale.y =
-        pourStartScaleRef.current +
-        (
-          amount -
-          pourStartScaleRef.current
-        ) *
-          progress
+        amount
 
       // ======================================
-      // RECEIVER FIRST HALF
+      // RECEIVER SECOND HALF
       // ======================================
 
       const totalProgress =
-        progress * 0.5
+        0.5 +
+        progress *
+        0.5
 
       otherLiquidRef.current.scale.y =
         otherLiquidStartScaleRef.current +
         otherLiquidAmount *
-          totalProgress
+        totalProgress
 
       // ======================================
       // UPDATE
       // ======================================
 
-      verticalRef.current.updateMatrixWorld(
-        true
-      )
-
-      pourRef.current.updateMatrixWorld(
+      modelLiquidRef.current.updateMatrixWorld(
         true
       )
 
@@ -433,112 +776,29 @@ const PourVolumetricPipette = ({
         true
       )
 
-      // ======================================
-      // VERTICAL FINISHED
-      // ======================================
-
-      if (progress >= 1) {
-        verticalRef.current.scale.y = 0
-
-        verticalRef.current.visible =
-          false
-
-        isVerticalFinishedRef.current =
-          true
-
-        console.log(
-          "✅ Vertical liquid emptied"
-        )
-      }
-
-      return
-    }
-
-    // ========================================
-    // NO VERTICAL CHILD
-    // ========================================
-
-    if (
-      !verticalRef.current &&
-      !isVerticalFinishedRef.current
-    ) {
-      isVerticalFinishedRef.current =
+      pourRef.current.updateMatrixWorld(
         true
-    }
-
-    // ========================================
-    // STAGE 2
-    //
-    // NORMAL LIQUID EMPTIES SECOND
-    // ========================================
-
-    liquidProgressRef.current +=
-      scaleSpeed * delta
-
-    const progress =
-      Math.min(
-        liquidProgressRef.current,
-        1
       )
 
-    // ========================================
-    // NORMAL LIQUID SCALE DOWN
-    // ========================================
+      // ======================================
+      // EVERYTHING FINISHED
+      // ======================================
 
-    modelLiquidRef.current.scale.y =
-      modelLiquidStartScaleRef.current *
-      (1 - progress)
+      if (
+        progress >=
+        1
+      ) {
+        modelLiquidRef.current.scale.y =
+          0
 
-    // ========================================
-    // KEEP POUR STREAM VISIBLE
-    // ========================================
+        otherLiquidRef.current.scale.y =
+          otherLiquidStartScaleRef.current +
+          otherLiquidAmount
 
-    pourRef.current.visible = true
-    pourRef.current.scale.y = amount
-
-    // ========================================
-    // RECEIVER SECOND HALF
-    // ========================================
-
-    const totalProgress =
-      0.5 +
-      progress * 0.5
-
-    otherLiquidRef.current.scale.y =
-      otherLiquidStartScaleRef.current +
-      otherLiquidAmount *
-        totalProgress
-
-    // ========================================
-    // UPDATE
-    // ========================================
-
-    modelLiquidRef.current.updateMatrixWorld(
-      true
-    )
-
-    otherLiquidRef.current.updateMatrixWorld(
-      true
-    )
-
-    pourRef.current.updateMatrixWorld(
-      true
-    )
-
-    // ========================================
-    // EVERYTHING FINISHED
-    // ========================================
-
-    if (progress >= 1) {
-      modelLiquidRef.current.scale.y = 0
-
-      otherLiquidRef.current.scale.y =
-        otherLiquidStartScaleRef.current +
-        otherLiquidAmount
-
-      finishTransfer()
+        finishTransfer()
+      }
     }
-  })
+  )
 
   return null
 }

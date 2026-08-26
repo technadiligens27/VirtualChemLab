@@ -69,6 +69,11 @@ const FillVolumetricPipette = ({
     ) {
       setLessonStep(10)
     }
+
+    if(selectedLesson===12.2 && lessonStep===93){
+          setLessonStep(94)
+    }
+    
   }, [
     selectedLesson,
     lessonStep,

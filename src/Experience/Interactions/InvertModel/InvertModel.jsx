@@ -415,7 +415,7 @@ const InvertModel = ({
       }
 
       if(selectedLesson===12.1 && lessonStep===49){
-        setLessonStep(50)
+        setLessonStep(49.5)
         setSelectedLesson(12.2)
       }
 

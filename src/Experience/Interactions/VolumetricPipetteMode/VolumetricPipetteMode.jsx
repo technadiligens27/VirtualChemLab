@@ -63,7 +63,15 @@ const VolumetricPipetteMode = ({
     
     if(selectedLesson===12.2 && lessonStep===73){
       setLessonStep(74)
-    }      
+    }   
+    
+    if(selectedLesson===12.2 && lessonStep===92){
+      setLessonStep(93)
+    }
+
+    if(selectedLesson===12.2 && lessonStep===97){
+      setLessonStep(98)
+    }
 
   },[selectedLesson,lessonStep])
 

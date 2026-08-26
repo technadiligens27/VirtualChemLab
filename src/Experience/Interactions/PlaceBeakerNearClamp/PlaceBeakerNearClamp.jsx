@@ -107,6 +107,19 @@ const PlaceBeakerNearClamp = ({
     setLessonStep,
   ])
 
+    useEffect(() => {
+    if (
+      lessonStep === 102 &&
+      selectedLesson === 12.2
+    ) {
+      setLessonStep(103)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ]) 
+
   useEffect(() => {
     const beaker = beakerRef?.current
     const clamp = buretteClampRef?.current
@@ -193,7 +206,19 @@ const PlaceBeakerNearClamp = ({
 
   return (
     <>
-      {beakerRef?.current?.name==='main-Conical-Flask' && <BuiretteTitrationFlow modelRef={mainBuiretteRef}/>}
+      { [11.1,11].includes(selectedLesson) && beakerRef?.current?.name==='main-Conical-Flask' && 
+      <BuiretteTitrationFlow 
+      modelRef={mainBuiretteRef}/>}
+      
+      { [12.2].includes(selectedLesson) && beakerRef?.current?.name==='main-Conical-Flask' && 
+        <BuiretteTitrationFlow 
+            modelRef={mainBuiretteRef} 
+            liquidDecreaseAmount={ lessonStep ===103 ? 0.494 : 0.496}
+        />
+      }
+
+
+      
       {beakerRef?.current?.name==='main-normal-beaker' && isBuiretteClamped && isClampInCenter && <PourFromBurette/> }
       
     </>

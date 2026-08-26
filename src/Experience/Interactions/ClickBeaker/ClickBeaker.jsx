@@ -533,6 +533,10 @@ const ClickObject = () => {
     if(lessonStep===70 && selectedLesson===11.1){
       setLessonStep(71);      
     }
+
+    if(lessonStep===85 && selectedLesson===12.2){
+      setLessonStep(86);      
+    }
   }
 
   const handleCleanBeaker = ()=>{
@@ -767,8 +771,12 @@ const ClickObject = () => {
       setLessonStep(6)
     }
 
-    if(lessonStep===71 && selectedLesson ===12.2 && handData.name === "main-normal-beaker"){
+    if(lessonStep===71 && selectedLesson ===12.2 && handData.name === "NaOH-bottle"){
       setLessonStep(72)
+    }
+
+    if(lessonStep===95 && selectedLesson ===12.2 && handData.name === "NaOH-bottle"){
+      setLessonStep(96)
     }
 
     if(lessonStep===106  && selectedLesson === 10 && handData.name === "main-normal-beaker"){
@@ -802,6 +810,10 @@ const ClickObject = () => {
 
     if (handData.name === "volumetric-pipette" && selectedLesson===12.2 && lessonStep ===76) {
       setLessonStep(77)
+    }
+
+    if (handData.name === "volumetric-pipette" && selectedLesson===12.2 && lessonStep ===100) {
+      setLessonStep(101)
     }
 
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===25) {
@@ -936,7 +948,9 @@ const ClickObject = () => {
    if (handData.name === "main-funnel" && selectedLesson===12.2 && lessonStep ===62) {
       setLessonStep(63)
     }
-    
+   if (handData.name === "main-Conical-Flask" && selectedLesson===12.2 && lessonStep ===88) {
+      setLessonStep(89)
+    } 
     
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
@@ -1529,7 +1543,7 @@ const toggleFunnelMode = () => {
   }
 
   if(isStirMode){
-    if(selectedLesson===12.1 && lessonStep ===24){
+    if(selectedLesson===12.1 && lessonStep ===24.5){
       setLessonStep(25)
     }
   }
@@ -2363,6 +2377,10 @@ const handlePlaceBalance = () => {
     if(selectedLesson ===11.1 && lessonStep===57){
       setLessonStep(58)
     }
+
+    if(selectedLesson ===12.2 && lessonStep===86){
+      setLessonStep(87)
+    }
   }
 
   const handlePolystereneStirMode = ()=>{
@@ -2798,11 +2816,19 @@ const handlePlaceBalance = () => {
     if(selectedLesson===12.2 && lessonStep===75){
       setLessonStep(76)
     }
+
+    if(selectedLesson===12.2 && lessonStep===94){
+      setLessonStep(95)
+    }
+
+    if(selectedLesson===12.2 && lessonStep===99){
+      setLessonStep(100)
+    }
     setIsVolumetricPipetteMode(false)
   }
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
-      if (selectedObject.name === "volumetric-pipette" && [11,12.2].includes(selectedLesson) && ([8,13,36,41,68,73].includes(lessonStep))) {
+      if (selectedObject.name === "volumetric-pipette" && [11,12.2].includes(selectedLesson) && ([8,13,36,41,68,73,92,97].includes(lessonStep))) {
         return (
           <button onClick={handleVolumetricPippeteMode}>
             Pipette Mode
@@ -2903,7 +2929,7 @@ const handlePlaceBalance = () => {
       if (isTutorialMode) {
         if (
           [11.1, 12.2].includes(selectedLesson) &&
-          [51, 68, 83].includes(lessonStep) &&
+          [51, 68, 83,102].includes(lessonStep) &&
           !isBeakerNearClamp
         ) {
           return (
@@ -2914,9 +2940,8 @@ const handlePlaceBalance = () => {
         }
 
         if (
-          selectedLesson === 11.1 &&
-          (lessonStep === 53 ||
-            lessonStep === 70)
+           [11.1,12.2].includes(selectedLesson) && [53,70,85].includes(lessonStep)
+          
         ) {
           return (
             <button onClick={handlePlaceBeakerRemove}>
@@ -2926,8 +2951,9 @@ const handlePlaceBalance = () => {
         }
 
         if (
-          selectedLesson === 11.1 &&
-          lessonStep === 54
+          [11.1,12.2].includes(selectedLesson)
+          && [54,87].includes(lessonStep)
+         
         ) {
           return (
             <button onClick={handleCleanBeaker}>
@@ -3516,7 +3542,7 @@ const renderHeldSpoonButtons = () => {
       )
     }
 
-    if (isTutorialMode && selectedLesson===12.1 && ([23,24].includes(lessonStep))) {
+    if (isTutorialMode && selectedLesson===12.1 && ([23,24.5].includes(lessonStep))) {
       return (
         <>
           <button onClick={toggleStirMode}>

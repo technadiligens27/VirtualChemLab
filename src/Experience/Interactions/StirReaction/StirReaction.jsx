@@ -22,7 +22,7 @@ const StirReaction = ({
   isActive = true,
 }) => {
 
-  const {selectedLesson,lessonSteop,setLessonStep} = useContext(MainGuidelineContext)
+  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
 
   const liquidRef =
     useRef(null)
@@ -575,8 +575,8 @@ const StirReaction = ({
         "✅ Stir reaction finished"
       )
 
-      if(selectedLesson===12.1 && lessonSteop===24){
-        setLessonStep(25)
+      if(selectedLesson===12.1 && lessonStep===24){
+        setLessonStep(24.5)
       }
     }
   })

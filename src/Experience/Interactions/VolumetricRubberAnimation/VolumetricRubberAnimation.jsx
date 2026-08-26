@@ -22,7 +22,8 @@ const VolumetricRubberAnimation = ({
   const {isVolumetricPipetteMode,setIsVolumetricPipetteFilled,isVolumetricPipetteFilled,fillVolumetricPipette,setFillVolumetricPipette,
             pourFromVolumetricPipette,setPourFromVolumetricPipette,selectedRightHand        
   } = useContext(InteractionContext);
-  const {normalBeakerRef,volumetricRef,conicalBeakerRef} = useContext(ModelContext)
+        
+  const {normalBeakerRef,volumetricRef,conicalBeakerRef,naohBottleRef} = useContext(ModelContext)
 
   useEffect(() => {
     if (!modelRef?.current) return
@@ -66,9 +67,11 @@ const VolumetricRubberAnimation = ({
       )
 
       if (previousScaleX > fillerMinScaleX && filler.scale.x === fillerMinScaleX) {
+
         console.log("Filler fully pressed down")
+
         console.log("scroll Lesson Step:",lessonStep);
-                console.log("selectedLesson:",selectedLesson);
+        console.log("selectedLesson:",selectedLesson);
 
         if(selectedLesson===11 && lessonStep==7){
             setLessonStep(8)
@@ -82,6 +85,11 @@ const VolumetricRubberAnimation = ({
         if(selectedLesson===12.2 && lessonStep==67){
             setLessonStep(68)
         }
+
+        if(selectedLesson===12.2 && lessonStep==91){
+            setLessonStep(92)
+        }
+        
 
         if(isVolumetricPipetteFilled){
           setPourFromVolumetricPipette(true)     
@@ -106,6 +114,8 @@ const VolumetricRubberAnimation = ({
         if(selectedLesson===12.2 && lessonStep===69){
           setLessonStep(70)
         }
+
+        
         if(isVolumetricPipetteMode && !fillVolumetricPipette){
           setFillVolumetricPipette(true)
         }
@@ -157,10 +167,20 @@ const VolumetricRubberAnimation = ({
 
       {selectedRightHand?.name==='main-Conical-Flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}/>}
 
+      {selectedRightHand?.name==='NaOH-bottle' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={naohBottleRef}/>}
+
 
       {selectedRightHand?.name==='volumetric-flask' && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
 
-      {selectedRightHand?.name==="main-Conical-Flask" && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}  otherLiquidAmount={0.2}/>}
+      {[11.1,11].includes(selectedLesson) && selectedRightHand?.name==="main-Conical-Flask" && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}  otherLiquidAmount={0.2}/>}
+
+      {[12.2].includes(selectedLesson) && selectedRightHand?.name==="main-Conical-Flask" && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette 
+        modelRef={modelRef} 
+        otherModelRef={conicalBeakerRef}  
+        otherLiquidAmount={0.2}
+        />        
+        }
+
     </>
   )
 }

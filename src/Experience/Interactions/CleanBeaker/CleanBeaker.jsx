@@ -38,6 +38,13 @@ const CleanBeaker = ({
       setLessonStep(55)
     }
 
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 87
+    ) {
+      setLessonStep(88)
+    }
+
     onDone?.()
   }, [
     modelRef,

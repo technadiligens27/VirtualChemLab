@@ -407,7 +407,7 @@ const transformControlsRef = useRef()
 
   useEffect(()=>{
     if(selectedLesson===12.2 && lessonStep===63){
-      setLessonStep(64)
+      setLessonStep(66)
     }
   },[selectedLesson,lessonStep])   
   useEffect(()=>{
@@ -415,6 +415,18 @@ const transformControlsRef = useRef()
       setLessonStep(73)
     }
   },[selectedLesson,lessonStep])  
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===89){
+      setLessonStep(90)
+    }
+  },[selectedLesson,lessonStep])    
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===96){
+      setLessonStep(97)
+    }
+  },[selectedLesson,lessonStep])      
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (

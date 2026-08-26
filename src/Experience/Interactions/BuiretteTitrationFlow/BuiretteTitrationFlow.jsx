@@ -21,6 +21,11 @@ const BuiretteTitrationFlow = ({
   totalTime = 10,
 
   totalLiquidDecreasePercent = 80,
+
+  // Direct liquid scale decrease amount.
+  // If provided, this overrides totalLiquidDecreasePercent.
+  liquidDecreaseAmount = null,
+
   dropletDecreasePercent = 12,
 
   streamTimeRatio = 0.8,
@@ -35,25 +40,35 @@ const BuiretteTitrationFlow = ({
 
   endpointHoldTime = 5,
 }) => {
+  const {
+    conicalBeakerRef,
+  } = useContext(ModelContext)
 
-  const { conicalBeakerRef } = useContext(ModelContext)
-  const [showSwirlModel, setShowSwirlModel] = useState(false)
+  const [
+    showSwirlModel,
+    setShowSwirlModel,
+  ] = useState(false)
 
   const {
     showHCLTitrationReaction,
     setShowHCLTitrationReaction,
+
     showSulfamicAcidNaOHTitration,
-    setShowSulfamicAcidNaOHTitration
+    setShowSulfamicAcidNaOHTitration,
   } = useContext(InteractionContext)
 
-  const {selectedLesson} = useContext(MainGuidelineContext)
+  const {
+    selectedLesson,
+  } = useContext(MainGuidelineContext)
 
   // ==========================================
   // REACTION STATE
   // ==========================================
 
-  const [reactionPhase, setReactionPhase] =
-    useState("idle")
+  const [
+    reactionPhase,
+    setReactionPhase,
+  ] = useState("idle")
 
   const [
     endpointConfirmed,
@@ -68,30 +83,44 @@ const BuiretteTitrationFlow = ({
   const pourRef = useRef(null)
   const dropletsRef = useRef([])
 
-  const originalDropletPositionsRef = useRef([])
+  const originalDropletPositionsRef =
+    useRef([])
 
   // ==========================================
   // BURETTE LIQUID SCALES
   // ==========================================
 
-  const startLiquidScaleRef = useRef(0)
-  const streamEndScaleRef = useRef(0)
-  const finalLiquidScaleRef = useRef(0)
+  const startLiquidScaleRef =
+    useRef(0)
+
+  const streamEndScaleRef =
+    useRef(0)
+
+  const finalLiquidScaleRef =
+    useRef(0)
 
   // ==========================================
   // ANIMATION STATE
   // ==========================================
 
-  const elapsedTimeRef = useRef(0)
-  const isStartedRef = useRef(false)
-  const finishedRef = useRef(false)
-  const dropletPhaseStartedRef = useRef(false)
+  const elapsedTimeRef =
+    useRef(0)
+
+  const isStartedRef =
+    useRef(false)
+
+  const finishedRef =
+    useRef(false)
+
+  const dropletPhaseStartedRef =
+    useRef(false)
 
   // ==========================================
   // SHARED TITRATION PROGRESS
   // ==========================================
 
-  const titrationProgressRef = useRef(0)
+  const titrationProgressRef =
+    useRef(0)
 
   // ==========================================
   // FIND BURETTE CHILDREN
@@ -100,7 +129,8 @@ const BuiretteTitrationFlow = ({
   useEffect(() => {
     if (!modelRef?.current) return
 
-    const model = modelRef.current
+    const model =
+      modelRef.current
 
     let liquidObject = null
     let pourObject = null
@@ -134,11 +164,14 @@ const BuiretteTitrationFlow = ({
     })
 
     if (!liquidObject) {
-      console.log("❌ Burette liquid not found")
+      console.log(
+        "❌ Burette liquid not found"
+      )
       return
     }
 
-    liquidRef.current = liquidObject
+    liquidRef.current =
+      liquidObject
 
     // ========================================
     // BURETTE LIQUID CALCULATIONS
@@ -150,38 +183,111 @@ const BuiretteTitrationFlow = ({
     startLiquidScaleRef.current =
       currentScale
 
+    // ========================================
+    // TOTAL DECREASE
+    //
+    // If liquidDecreaseAmount is provided,
+    // use that exact scale amount.
+    //
+    // Otherwise use the old percentage logic.
+    // ========================================
+
     const totalDecrease =
-      currentScale *
-      (totalLiquidDecreasePercent / 100)
+      liquidDecreaseAmount !== null
+        ? liquidDecreaseAmount
+        : currentScale *
+          (
+            totalLiquidDecreasePercent /
+            100
+          )
+
+    // ========================================
+    // SPLIT DECREASE BETWEEN:
+    //
+    // 1. Continuous stream
+    // 2. Final droplets
+    // ========================================
 
     const dropletDecrease =
       totalDecrease *
-      (dropletDecreasePercent / 100)
+      (
+        dropletDecreasePercent /
+        100
+      )
 
     const streamDecrease =
-      totalDecrease - dropletDecrease
+      totalDecrease -
+      dropletDecrease
+
+    // ========================================
+    // SCALE AFTER STREAM
+    // ========================================
 
     streamEndScaleRef.current =
       Math.max(
-        currentScale - streamDecrease,
+        currentScale -
+          streamDecrease,
         0
       )
 
+    // ========================================
+    // FINAL SCALE
+    // ========================================
+
     finalLiquidScaleRef.current =
       Math.max(
-        currentScale - totalDecrease,
+        currentScale -
+          totalDecrease,
         0
       )
+
+    // ========================================
+    // DEBUG
+    // ========================================
+
+    console.log(
+      "Starting BURETTE scale:",
+      currentScale
+    )
+
+    console.log(
+      "Liquid decrease amount:",
+      totalDecrease
+    )
+
+    console.log(
+      "Stream decrease:",
+      streamDecrease
+    )
+
+    console.log(
+      "Droplet decrease:",
+      dropletDecrease
+    )
+
+    console.log(
+      "Stream end scale:",
+      streamEndScaleRef.current
+    )
+
+    console.log(
+      "Final BURETTE scale:",
+      finalLiquidScaleRef.current
+    )
 
     // ========================================
     // POUR STREAM
     // ========================================
 
     if (pourObject) {
-      pourRef.current = pourObject
+      pourRef.current =
+        pourObject
 
-      pourObject.visible = false
-      pourObject.scale.y = 0
+      pourObject.visible =
+        false
+
+      pourObject.scale.y =
+        0
     } else {
       console.log(
         "❌ Burette pour child not found"
@@ -202,40 +308,46 @@ const BuiretteTitrationFlow = ({
       selectedDroplets
 
     originalDropletPositionsRef.current =
-      selectedDroplets.map((droplet) =>
-        droplet.position.clone()
+      selectedDroplets.map(
+        (droplet) =>
+          droplet.position.clone()
       )
 
-    selectedDroplets.forEach((droplet) => {
-      droplet.visible = false
-    })
+    selectedDroplets.forEach(
+      (droplet) => {
+        droplet.visible = false
+      }
+    )
 
     // ========================================
     // RESET
     // ========================================
 
-    elapsedTimeRef.current = 0
-    titrationProgressRef.current = 0
+    elapsedTimeRef.current =
+      0
 
-    isStartedRef.current = false
-    finishedRef.current = false
-    dropletPhaseStartedRef.current = false
+    titrationProgressRef.current =
+      0
 
-    setReactionPhase("idle")
-    setEndpointConfirmed(false)
+    isStartedRef.current =
+      false
 
-    console.log("✅ Titration ready")
-    console.log(
-      "Starting BURETTE scale:",
-      currentScale
+    finishedRef.current =
+      false
+
+    dropletPhaseStartedRef.current =
+      false
+
+    setReactionPhase(
+      "idle"
     )
-    console.log(
-      "Stream end scale:",
-      streamEndScaleRef.current
+
+    setEndpointConfirmed(
+      false
     )
+
     console.log(
-      "Final BURETTE scale:",
-      finalLiquidScaleRef.current
+      "✅ Titration ready"
     )
 
     // ========================================
@@ -244,16 +356,18 @@ const BuiretteTitrationFlow = ({
 
     return () => {
       if (pourRef.current) {
-        pourRef.current.visible = false
-        pourRef.current.scale.y = 0
+        pourRef.current.visible =
+          false
+
+        pourRef.current.scale.y =
+          0
       }
 
       dropletsRef.current.forEach(
         (droplet, index) => {
           const originalPosition =
-            originalDropletPositionsRef.current[
-              index
-            ]
+            originalDropletPositionsRef
+              .current[index]
 
           if (originalPosition) {
             droplet.position.copy(
@@ -261,15 +375,19 @@ const BuiretteTitrationFlow = ({
             )
           }
 
-          droplet.visible = false
+          droplet.visible =
+            false
 
-          droplet.updateMatrixWorld(true)
+          droplet.updateMatrixWorld(
+            true
+          )
         }
       )
     }
   }, [
     modelRef,
     totalLiquidDecreasePercent,
+    liquidDecreaseAmount,
     dropletDecreasePercent,
     dropletCount,
   ])
@@ -279,34 +397,97 @@ const BuiretteTitrationFlow = ({
   // ==========================================
 
   useEffect(() => {
-      const handleWheel = (event) => {
-        if (event.deltaY <= 0) return
-        if (isStartedRef.current) return
-        if (finishedRef.current) return
-        if (!liquidRef.current) return
-
-        isStartedRef.current = true
-        elapsedTimeRef.current = 0
-        titrationProgressRef.current = 0
-        dropletPhaseStartedRef.current = false
-
-        setEndpointConfirmed(false)
-
-        if([11.1,11].includes(selectedLesson)){
-         setShowHCLTitrationReaction(true)
-        }
-
-        if([12.2].includes(selectedLesson)){
-          setShowSulfamicAcidNaOHTitration(true)
-        }
-
-        // render SwirlModel
-        setShowSwirlModel(true)
-
-        setReactionPhase("stream")
-
-        console.log("✅ Titration started")
+    const handleWheel = (
+      event
+    ) => {
+      if (
+        event.deltaY <= 0
+      ) {
+        return
       }
+
+      if (
+        isStartedRef.current
+      ) {
+        return
+      }
+
+      if (
+        finishedRef.current
+      ) {
+        return
+      }
+
+      if (
+        !liquidRef.current
+      ) {
+        return
+      }
+
+      isStartedRef.current =
+        true
+
+      elapsedTimeRef.current =
+        0
+
+      titrationProgressRef.current =
+        0
+
+      dropletPhaseStartedRef.current =
+        false
+
+      setEndpointConfirmed(
+        false
+      )
+
+      // ========================================
+      // HCL TITRATION
+      // ========================================
+
+      if (
+        [11.1, 11].includes(
+          selectedLesson
+        )
+      ) {
+        setShowHCLTitrationReaction(
+          true
+        )
+      }
+
+      // ========================================
+      // SULFAMIC ACID + NAOH TITRATION
+      // ========================================
+
+      if (
+        [12.2].includes(
+          selectedLesson
+        )
+      ) {
+        setShowSulfamicAcidNaOHTitration(
+          true
+        )
+      }
+
+      // ========================================
+      // SWIRL MODEL
+      // ========================================
+
+      setShowSwirlModel(
+        true
+      )
+
+      // ========================================
+      // REACTION PHASE
+      // ========================================
+
+      setReactionPhase(
+        "stream"
+      )
+
+      console.log(
+        "✅ Titration started"
+      )
+    }
 
     window.addEventListener(
       "wheel",
@@ -322,17 +503,31 @@ const BuiretteTitrationFlow = ({
         handleWheel
       )
     }
-  }, [setShowHCLTitrationReaction])
+  }, [
+    selectedLesson,
+    setShowHCLTitrationReaction,
+    setShowSulfamicAcidNaOHTitration,
+  ])
 
   // ==========================================
   // TITRATION ANIMATION
   // ==========================================
 
   useFrame((_, delta) => {
-    if (!isStartedRef.current) return
-    if (finishedRef.current) return
+    if (
+      !isStartedRef.current
+    ) {
+      return
+    }
 
-    const liquid = liquidRef.current
+    if (
+      finishedRef.current
+    ) {
+      return
+    }
+
+    const liquid =
+      liquidRef.current
 
     if (!liquid) return
 
@@ -340,7 +535,8 @@ const BuiretteTitrationFlow = ({
     // TIME
     // ========================================
 
-    elapsedTimeRef.current += delta
+    elapsedTimeRef.current +=
+      delta
 
     const elapsed =
       elapsedTimeRef.current
@@ -351,7 +547,8 @@ const BuiretteTitrationFlow = ({
 
     titrationProgressRef.current =
       Math.min(
-        elapsed / totalTime,
+        elapsed /
+          totalTime,
         1
       )
 
@@ -360,19 +557,28 @@ const BuiretteTitrationFlow = ({
     // ========================================
 
     const streamTime =
-      totalTime * streamTimeRatio
+      totalTime *
+      streamTimeRatio
 
     const dropletTime =
-      totalTime - streamTime
+      totalTime -
+      streamTime
 
     // ========================================
     // PHASE 1
+    //
     // CONTINUOUS STREAM
     // ========================================
 
-    if (elapsed < streamTime) {
-      if (pourRef.current) {
-        pourRef.current.visible = true
+    if (
+      elapsed <
+      streamTime
+    ) {
+      if (
+        pourRef.current
+      ) {
+        pourRef.current.visible =
+          true
 
         pourRef.current.scale.y =
           THREE.MathUtils.damp(
@@ -385,7 +591,8 @@ const BuiretteTitrationFlow = ({
 
       const streamProgress =
         Math.min(
-          elapsed / streamTime,
+          elapsed /
+            streamTime,
           1
         )
 
@@ -396,13 +603,16 @@ const BuiretteTitrationFlow = ({
           streamProgress
         )
 
-      liquid.updateMatrixWorld(true)
+      liquid.updateMatrixWorld(
+        true
+      )
 
       return
     }
 
     // ========================================
     // PHASE 2
+    //
     // FINAL DROPLETS
     // ========================================
 
@@ -412,29 +622,42 @@ const BuiretteTitrationFlow = ({
       dropletPhaseStartedRef.current =
         true
 
-      setReactionPhase("droplets")
+      setReactionPhase(
+        "droplets"
+      )
 
       console.log(
         "💧 Reaction phase: DROPLETS"
       )
     }
 
-    if (pourRef.current) {
-      pourRef.current.visible = false
-      pourRef.current.scale.y = 0
+    // ========================================
+    // TURN STREAM OFF
+    // ========================================
+
+    if (
+      pourRef.current
+    ) {
+      pourRef.current.visible =
+        false
+
+      pourRef.current.scale.y =
+        0
     }
 
     const dropletElapsed =
-      elapsed - streamTime
+      elapsed -
+      streamTime
 
     const dropletProgress =
       Math.min(
-        dropletElapsed / dropletTime,
+        dropletElapsed /
+          dropletTime,
         1
       )
 
     // ========================================
-    // BURETTE LIQUID
+    // BURETTE LIQUID DURING DROPLETS
     // ========================================
 
     liquid.scale.y =
@@ -444,45 +667,59 @@ const BuiretteTitrationFlow = ({
         dropletProgress
       )
 
-    liquid.updateMatrixWorld(true)
+    liquid.updateMatrixWorld(
+      true
+    )
 
     // ========================================
     // DROPLET ANIMATION
     // ========================================
 
-    let finishedDroplets = 0
+    let finishedDroplets =
+      0
 
     dropletsRef.current.forEach(
       (droplet, index) => {
         const originalPosition =
-          originalDropletPositionsRef.current[
-            index
-          ]
-
-        if (!originalPosition) return
-
-        const startTime =
-          index * dropletDelay
+          originalDropletPositionsRef
+            .current[index]
 
         if (
-          dropletElapsed < startTime
+          !originalPosition
         ) {
-          droplet.visible = false
+          return
+        }
+
+        const startTime =
+          index *
+          dropletDelay
+
+        if (
+          dropletElapsed <
+          startTime
+        ) {
+          droplet.visible =
+            false
+
           return
         }
 
         // ====================================
-        // DROPLET VISIBILITY FIX
+        // DROPLET VISIBILITY
         // ====================================
 
-        droplet.visible = true
+        droplet.visible =
+          true
 
-        droplet.traverse((child) => {
-          child.visible = true
-        })
+        droplet.traverse(
+          (child) => {
+            child.visible =
+              true
+          }
+        )
 
         // ====================================
-        // EXISTING DROPLET LOGIC
+        // DROPLET FALL
         // ====================================
 
         const targetY =
@@ -490,18 +727,26 @@ const BuiretteTitrationFlow = ({
           dropletFallDistance
 
         droplet.position.y -=
-          dropletFallSpeed * delta
+          dropletFallSpeed *
+          delta
 
         if (
-          droplet.position.y <= targetY
+          droplet.position.y <=
+          targetY
         ) {
-          droplet.position.y = targetY
-          droplet.visible = false
+          droplet.position.y =
+            targetY
 
-          finishedDroplets += 1
+          droplet.visible =
+            false
+
+          finishedDroplets +=
+            1
         }
 
-        droplet.updateMatrixWorld(true)
+        droplet.updateMatrixWorld(
+          true
+        )
       }
     )
 
@@ -510,37 +755,70 @@ const BuiretteTitrationFlow = ({
     // ========================================
 
     if (
-      dropletProgress >= 1 &&
+      dropletProgress >=
+        1 &&
       finishedDroplets ===
         dropletsRef.current.length
     ) {
-      finishedRef.current = true
-      isStartedRef.current = false
+      finishedRef.current =
+        true
 
-      titrationProgressRef.current = 1
+      isStartedRef.current =
+        false
+
+      titrationProgressRef.current =
+        1
+
+      // ======================================
+      // FORCE EXACT FINAL SCALE
+      // ======================================
 
       liquid.scale.y =
         finalLiquidScaleRef.current
 
-      setReactionPhase("endpoint")
+      liquid.updateMatrixWorld(
+        true
+      )
 
-      if (pourRef.current) {
-        pourRef.current.visible = false
-        pourRef.current.scale.y = 0
+      // ======================================
+      // ENDPOINT PHASE
+      // ======================================
+
+      setReactionPhase(
+        "endpoint"
+      )
+
+      // ======================================
+      // STREAM OFF
+      // ======================================
+
+      if (
+        pourRef.current
+      ) {
+        pourRef.current.visible =
+          false
+
+        pourRef.current.scale.y =
+          0
       }
+
+      // ======================================
+      // DROPLETS OFF
+      // ======================================
 
       dropletsRef.current.forEach(
         (droplet) => {
-          droplet.visible = false
+          droplet.visible =
+            false
         }
       )
 
       console.log(
-        "🌸 Pale pink endpoint visual started"
+        "🌸 Endpoint visual started"
       )
 
       console.log(
-        "⏱️ Starting 5-second endpoint timer"
+        `⏱️ Starting ${endpointHoldTime}-second endpoint timer`
       )
 
       console.log(
@@ -551,32 +829,40 @@ const BuiretteTitrationFlow = ({
   })
 
   // ==========================================
-  // 5 SECOND ENDPOINT CONFIRMATION
+  // ENDPOINT CONFIRMATION TIMER
   // ==========================================
 
   useEffect(() => {
     if (
-      reactionPhase !== "endpoint"
+      reactionPhase !==
+      "endpoint"
     ) {
       return
     }
 
-    setEndpointConfirmed(false)
+    setEndpointConfirmed(
+      false
+    )
 
-    const timer = setTimeout(() => {
-      setEndpointConfirmed(true)
+    const timer =
+      setTimeout(() => {
+        setEndpointConfirmed(
+          true
+        )
 
-      console.log(
-        "✅ Endpoint reached"
-      )
+        console.log(
+          "✅ Endpoint reached"
+        )
 
-      console.log(
-        `✅ Pale pink persisted for ${endpointHoldTime} seconds`
-      )
-    }, endpointHoldTime * 1000)
+        console.log(
+          `✅ Endpoint persisted for ${endpointHoldTime} seconds`
+        )
+      }, endpointHoldTime * 1000)
 
     return () => {
-      clearTimeout(timer)
+      clearTimeout(
+        timer
+      )
     }
   }, [
     reactionPhase,
@@ -585,57 +871,107 @@ const BuiretteTitrationFlow = ({
 
   return (
     <>
+      {/* ======================================
+          HCL TITRATION REACTION
+      ====================================== */}
+
       {showHCLTitrationReaction && (
         <HCLTitrationReaction
-          modelRef={conicalBeakerRef}
+          modelRef={
+            conicalBeakerRef
+          }
           amount={0.1}
-          progressRef={titrationProgressRef}
-          reactionPhase={reactionPhase}
-          endpointConfirmed={endpointConfirmed}
+          progressRef={
+            titrationProgressRef
+          }
+          reactionPhase={
+            reactionPhase
+          }
+          endpointConfirmed={
+            endpointConfirmed
+          }
 
           streamCloudColor="#FF6FA8"
-          streamCloudOpacity={0.32}
+          streamCloudOpacity={
+            0.32
+          }
 
           dropletCloudColor="#ff7db3"
-          dropletCloudOpacity={0.5}
+          dropletCloudOpacity={
+            0.5
+          }
 
           cloudShowSpeed={5}
-          cloudFadeSpeed={2.5}
+          cloudFadeSpeed={
+            2.5
+          }
 
           endpointColor="#F3AFC8"
-          endpointOpacity={0.38}
-          endpointColorSpeed={1.2}
+          endpointOpacity={
+            0.38
+          }
+          endpointColorSpeed={
+            1.2
+          }
         />
       )}
 
-    {showSulfamicAcidNaOHTitration && (
-      <HCLTitrationReaction
-        modelRef={conicalBeakerRef}
-        amount={0.1}
-        progressRef={titrationProgressRef}
-        reactionPhase={reactionPhase}
-        endpointConfirmed={endpointConfirmed}
+      {/* ======================================
+          SULFAMIC ACID + NAOH
+      ====================================== */}
 
-        // Temporary acidic patches while sulfamic acid enters
-        streamCloudColor="#F28C28"
-        streamCloudOpacity={0.3}
+      {showSulfamicAcidNaOHTitration && (
+        <HCLTitrationReaction
+          modelRef={
+            conicalBeakerRef
+          }
+          amount={0.1}
+          progressRef={
+            titrationProgressRef
+          }
+          reactionPhase={
+            reactionPhase
+          }
+          endpointConfirmed={
+            endpointConfirmed
+          }
 
-        dropletCloudColor="#E45A2A"
-        dropletCloudOpacity={0.45}
+          // Temporary acidic patches
+          streamCloudColor="#F28C28"
+          streamCloudOpacity={
+            0.3
+          }
 
-        cloudShowSpeed={5}
-        cloudFadeSpeed={2.5}
+          dropletCloudColor="#E45A2A"
+          dropletCloudOpacity={
+            0.45
+          }
 
-        // Persistent methyl-orange endpoint
-        endpointColor="#F28C28"
-        endpointOpacity={0.42}
-        endpointColorSpeed={1.2}
-      />
-    )}
+          cloudShowSpeed={5}
+          cloudFadeSpeed={
+            2.5
+          }
+
+          // Persistent methyl-orange endpoint
+          endpointColor="#F28C28"
+          endpointOpacity={
+            0.42
+          }
+          endpointColorSpeed={
+            1.2
+          }
+        />
+      )}
+
+      {/* ======================================
+          SWIRL MODEL
+      ====================================== */}
 
       {showSwirlModel && (
         <SwirlModel
-          modelRef={conicalBeakerRef}
+          modelRef={
+            conicalBeakerRef
+          }
         />
       )}
     </>
