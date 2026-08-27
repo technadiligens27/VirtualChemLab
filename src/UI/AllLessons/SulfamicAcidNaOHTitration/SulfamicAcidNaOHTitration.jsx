@@ -92,7 +92,7 @@ const SulfamicAcidNaOHTitration = () => {
           WEIGH EMPTY TEST TUBE
       ===================================================== */}
 
-      {lessonStep === 3 && (
+      {lessonStep >= 3 && lessonStep <7 && (
         <SulfamicGuidelines
           guidelineData={
             guidelineData[0]
@@ -134,7 +134,7 @@ const SulfamicAcidNaOHTitration = () => {
           ADD + WEIGH SULFAMIC ACID
       ===================================================== */}
 
-      {lessonStep === 7 && (
+      {lessonStep >= 7 && lessonStep <15 && (
         <SulfamicGuidelines
           guidelineData={
             guidelineData[1]
@@ -210,7 +210,7 @@ const SulfamicAcidNaOHTitration = () => {
           DISSOLVE SULFAMIC ACID
       ===================================================== */}
 
-      {lessonStep === 15 && (
+      {lessonStep >= 15 && lessonStep<22 && (
         <SulfamicGuidelines
           guidelineData={
             guidelineData[2]
@@ -282,43 +282,43 @@ const SulfamicAcidNaOHTitration = () => {
 
 
       {[12, 12.1, 12.2].includes(selectedLesson) && (
-  <SulfamicTitrationLiveDataPanel
-    emptyTestTubeMass={lessonStep >=6 ? 21.72 : null}
-    testTubeWithSulfamicMass={lessonStep >= 13 ? 24.22 : null}
-    sulfamicAcidMass={lessonStep >= 13 ? 2.50 : null}
-    beakerWaterAmount={lessonStep >= 17 && lessonStep < 42 ? 100 : null}
-    volumetricFlaskAmount={lessonStep >= 42 ? 250 : null}
-    buretteSulfamicAmount={selectedLesson === 12.2 ? 50 : null}
-    conicalFlaskNaOHAmount={selectedLesson === 12.2 && lessonStep >= 74 ? 25 : null}
-    indicatorStatus={selectedLesson === 12.2 && lessonStep >= 79 ? "Added" : null}
-    initialBuretteReading={selectedLesson === 12.2 && lessonStep >= 82 ? 0 : null}
-    currentBuretteReading={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
-    sulfamicAcidDelivered={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
-    endpointStatus={selectedLesson === 12.2 && [84, 103].includes(lessonStep) ? "Endpoint reached" : "Waiting"}
-    roughTitre={selectedLesson === 12.2 && lessonStep >= 85 ? 24.80 : null}
-    trialOne={selectedLesson === 12.2 && lessonStep >= 104 ? 24.70 : null}
-    trialTwo={null}
-    meanTitre={null}
-    sulfamicAcidConcentration={null}
-    naohConcentration={null}
-    selectedLesson={selectedLesson}
-    lessonStep={lessonStep}
-    autoShowConditions={[
-      { selectedLesson: 12, lessonStep: 6 },
-      { selectedLesson: 12, lessonStep: 12 },
-      { selectedLesson: 12.1, lessonStep: 42 },
-      { selectedLesson: 12.2, lessonStep: 57 },
-      { selectedLesson: 12.2, lessonStep: 74 },
-      { selectedLesson: 12.2, lessonStep: 84 },
-      { selectedLesson: 12.2, lessonStep: 103 },
-    ]}
-    autoHideConditions={[
-      { selectedLesson: 12, lessonStep: 3 },
-      { selectedLesson: 12.1, lessonStep: 22 },
-      { selectedLesson: 12.2, lessonStep: 50 },
-    ]}
-  />
-)}
+        <SulfamicTitrationLiveDataPanel
+          emptyTestTubeMass={lessonStep >=6 ? 21.72 : null}
+          testTubeWithSulfamicMass={lessonStep >= 13 ? 24.22 : null}
+          sulfamicAcidMass={lessonStep >= 13 ? 2.50 : null}
+          beakerWaterAmount={lessonStep >= 17 && lessonStep < 42 ? 100 : null}
+          volumetricFlaskAmount={lessonStep >= 42 ? 250 : null}
+          buretteSulfamicAmount={selectedLesson === 12.2 ? 50 : null}
+          conicalFlaskNaOHAmount={selectedLesson === 12.2 && lessonStep >= 74 ? 25 : null}
+          indicatorStatus={selectedLesson === 12.2 && lessonStep >= 79 ? "Added" : null}
+          initialBuretteReading={selectedLesson === 12.2 && lessonStep >= 82 ? 0 : null}
+          currentBuretteReading={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
+          sulfamicAcidDelivered={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
+          endpointStatus={selectedLesson === 12.2 && [84, 103].includes(lessonStep) ? "Endpoint reached" : "Waiting"}
+          roughTitre={selectedLesson === 12.2 && lessonStep >= 85 ? 24.80 : null}
+          trialOne={selectedLesson === 12.2 && lessonStep >= 104 ? 24.70 : null}
+          trialTwo={null}
+          meanTitre={null}
+          sulfamicAcidConcentration={null}
+          naohConcentration={null}
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+          autoShowConditions={[
+            { selectedLesson: 12, lessonStep: 6 },
+            { selectedLesson: 12, lessonStep: 12 },
+            { selectedLesson: 12.1, lessonStep: 42 },
+            { selectedLesson: 12.2, lessonStep: 57 },
+            { selectedLesson: 12.2, lessonStep: 74 },
+            { selectedLesson: 12.2, lessonStep: 84 },
+            { selectedLesson: 12.2, lessonStep: 103 },
+          ]}
+          autoHideConditions={[
+            { selectedLesson: 12, lessonStep: 3 },
+            { selectedLesson: 12.1, lessonStep: 22 },
+            { selectedLesson: 12.2, lessonStep: 50 },
+          ]}
+        />
+      )}
     </>
   )
 }

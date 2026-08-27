@@ -42,8 +42,15 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showBuretteArrow,setShowBuretteArrow] = useState(false);
 
   const [showThermometerArrow,setShowThermometerArrow] = useState(false);
-  const [showVolumetricArrow,setShowVolumetricArrow] = useState(false)
-  
+  const [showVolumetricArrow,setShowVolumetricArrow] = useState(false);
+
+  const [showVolumetricFlaskArrow,setShowVolumetricFlaskArrow] = useState(false)  
+
+  const [showFunnelArrow, setShowFunnelArrow] = useState(false);
+
+  const [showNaOHBBottleArrowRef,setShowNaOHBBottleArrowRef] = useState(false)
+
+  const [showSulfamicArrow,setShowSulfamicArrow] = useState(false)
 
   const resetLessonGuidelines = () => {
     labResetVersionRef.current += 1
@@ -166,7 +173,19 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowThermometerArrow,
 
         showVolumetricArrow,
-        setShowVolumetricArrow
+        setShowVolumetricArrow,
+
+        showVolumetricFlaskArrow,
+        setShowVolumetricFlaskArrow,
+
+        showFunnelArrow, 
+        setShowFunnelArrow,
+
+        showNaOHBBottleArrowRef,
+        setShowNaOHBBottleArrowRef,
+
+        showSulfamicArrow,
+        setShowSulfamicArrow
 
 
       }}

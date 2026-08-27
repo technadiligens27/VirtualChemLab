@@ -11,17 +11,16 @@ import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx"
 
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx"
 
-import {
-  guidelineData,
-} from "../../Data/SulfamicNaOHTitrationData/SulfamicNaOHTitrationData.jsx"
+import {guidelineData} from "../../Data/SulfamicNaOHTitrationData/SulfamicNaOHTitrationData.jsx"
 
 import SulfamicAcidNaOHTitration03 from "./SulfamicAcidNaOHTitration03.jsx"
+import SulfamicTitrationLiveDataPanel from "./SulfamicTitrationLiveDataPanel/SulfamicTitrationLiveDataPanel.jsx"
 
 
 const SulfamicAcidNaOHTitration02 = () => {
   const {
     setSelectedRightHand,
-    setSelectedLeftHand,
+    setSelectedLeftHand,selectedLeftHand
   } = useContext(
     InteractionContext
   )
@@ -312,29 +311,30 @@ const SulfamicAcidNaOHTitration02 = () => {
     // NORMAL BEAKER -> LEFT HAND
     // =======================================================
 
-    const normalBeaker =
-      normalBeakerRef.current
+      if (
+      selectedLeftHand?.name !==
+      "main-normal-beaker"
+    ) {
+      const normalBeaker =
+        normalBeakerRef.current
 
+      setSelectedLeftHand({
+        hand: "left",
 
-    setSelectedLeftHand({
-      hand:
-        "left",
+        name: "main-normal-beaker",
 
-      name:
-        "main-normal-beaker",
+        ref: normalBeakerRef,
 
-      ref:
-        normalBeakerRef,
+        originalParent:
+          normalBeaker.parent,
 
-      originalParent:
-        normalBeaker.parent,
+        originalPosition:
+          normalBeaker.position.clone(),
 
-      originalPosition:
-        normalBeaker.position.clone(),
-
-      originalRotation:
-        normalBeaker.rotation.clone(),
-    })
+        originalRotation:
+          normalBeaker.rotation.clone(),
+      })
+    }
 
 
     // =======================================================
@@ -837,11 +837,51 @@ const SulfamicAcidNaOHTitration02 = () => {
       ===================================================== */}
 
       {
-        lessonStep === 49.5 &&
+        lessonStep >= 49.5 &&
         (
           <SulfamicAcidNaOHTitration03 />
         )
       }
+
+
+      {[12, 12.1, 12.2].includes(selectedLesson) && (
+        <SulfamicTitrationLiveDataPanel
+          emptyTestTubeMass={lessonStep >=6 ? 21.72 : null}
+          testTubeWithSulfamicMass={lessonStep >= 13 ? 24.22 : null}
+          sulfamicAcidMass={lessonStep >= 13 ? 2.50 : null}
+          beakerWaterAmount={lessonStep >= 17 && lessonStep < 42 ? 100 : null}
+          volumetricFlaskAmount={lessonStep >= 42 ? 250 : null}
+          buretteSulfamicAmount={selectedLesson === 12.2 ? 50 : null}
+          conicalFlaskNaOHAmount={selectedLesson === 12.2 && lessonStep >= 74 ? 25 : null}
+          indicatorStatus={selectedLesson === 12.2 && lessonStep >= 79 ? "Added" : null}
+          initialBuretteReading={selectedLesson === 12.2 && lessonStep >= 82 ? 0 : null}
+          currentBuretteReading={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
+          sulfamicAcidDelivered={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
+          endpointStatus={selectedLesson === 12.2 && [84, 103].includes(lessonStep) ? "Endpoint reached" : "Waiting"}
+          roughTitre={selectedLesson === 12.2 && lessonStep >= 85 ? 24.80 : null}
+          trialOne={selectedLesson === 12.2 && lessonStep >= 104 ? 24.70 : null}
+          trialTwo={null}
+          meanTitre={null}
+          sulfamicAcidConcentration={null}
+          naohConcentration={null}
+          selectedLesson={selectedLesson}
+          lessonStep={lessonStep}
+          autoShowConditions={[
+            { selectedLesson: 12, lessonStep: 6 },
+            { selectedLesson: 12, lessonStep: 12 },
+            { selectedLesson: 12.1, lessonStep: 42 },
+            { selectedLesson: 12.2, lessonStep: 57 },
+            { selectedLesson: 12.2, lessonStep: 74 },
+            { selectedLesson: 12.2, lessonStep: 84 },
+            { selectedLesson: 12.2, lessonStep: 103 },
+          ]}
+          autoHideConditions={[
+            { selectedLesson: 12, lessonStep: 3 },
+            { selectedLesson: 12.1, lessonStep: 22 },
+            { selectedLesson: 12.2, lessonStep: 50 },
+          ]}
+        />
+      )}
 
     </>
   )

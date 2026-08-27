@@ -611,6 +611,11 @@ const PouringMode = ({
             "main-normal-beaker"
           )
 
+        const isVolumetricFlask =
+          otherObjectName.includes(
+            "volumetric-flask"
+          )   
+
         const worldPosition =
           new THREE.Vector3()
 
@@ -622,6 +627,9 @@ const PouringMode = ({
           camera.worldToLocal(
             worldPosition.clone()
           )
+
+          
+
 
         if (isKettle) {
           localPosition.add(
@@ -1236,195 +1244,37 @@ const PouringMode = ({
   })
 
   return (
-    <>
-      {/*
-      {activeObject && pouringModeHand === hand && (
-        <PouringLiquid
-          model={activeObject}
-          hand={hand}
-          isPouring={isPouring}
-        />
-      )}
-      */}
+      <>
+        {selectedLesson !== 12 && hand === "right" && selectedRightHand?.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 &&  
+        <PourFromTestube isPouring={isPouring} hand="right" 
+        model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
 
-      {hand === "right" &&
-        selectedRightHand?.name ===
-          "main-testube-01" &&
-        !isPottasiumCarobnateInTestube01 && (
-          <PourFromTestube
-            isPouring={
-              isPouring
-            }
-            hand="right"
-            model={
-              testube01Ref.current
-            }
-            liquidColor={
-              rightBeakerFillData.color
-            }
-          />
-        )}
+        {hand === "right" && selectedRightHand?.name === "main-testube-04" && 
+        <PourFromTestube isPouring={isPouring} hand="right" model={testube04Ref.current} liquidColor={rightBeakerFillData.color} />}
 
-      {hand === "right" &&
-        selectedRightHand?.name ===
-          "main-testube-04" && (
-          <PourFromTestube
-            isPouring={
-              isPouring
-            }
-            hand="right"
-            model={
-              testube04Ref.current
-            }
-            liquidColor={
-              rightBeakerFillData.color
-            }
-          />
-        )}
+        {hand === "right" && selectedRightHand?.name === "main-testube-05" && 
+        <PourFromTestube isPouring={isPouring} hand="right" model={testube05Ref.current} liquidColor={rightBeakerFillData.color} />}
 
-      {hand === "right" &&
-        selectedRightHand?.name ===
-          "main-testube-05" && (
-          <PourFromTestube
-            isPouring={
-              isPouring
-            }
-            hand="right"
-            model={
-              testube05Ref.current
-            }
-            liquidColor={
-              rightBeakerFillData.color
-            }
-          />
-        )}
+        {hand === "right" && selectedRightHand?.name === "main-testube-06" && 
+        <PourFromTestube isPouring={isPouring} hand="right" model={testube06Ref.current} liquidColor={rightBeakerFillData.color} />}
 
-      {hand === "right" &&
-        selectedRightHand?.name ===
-          "main-testube-06" && (
-          <PourFromTestube
-            isPouring={
-              isPouring
-            }
-            hand="right"
-            model={
-              testube06Ref.current
-            }
-            liquidColor={
-              rightBeakerFillData.color
-            }
-          />
-        )}
+        {hand === "left" && selectedLeftHand?.name === "main-testube-01" && isPottasiumCarobnateInTestube01 &&
+         <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
 
-      {hand === "left" &&
-        selectedLeftHand?.name ===
-          "main-testube-01" &&
-        isPottasiumCarobnateInTestube01 && (
-          <PourPowderFromTestube
-            isPouring={
-              isPouring
-            }
-            model={
-              testube01Ref.current
-            }
-          />
-        )}
+        {hand === "right" && selectedRightHand?.name === "main-testube-01" && isPottasiumCarobnateInTestube01 && 
+        <PourPowderFromTestube isPouring={isPouring} model={testube01Ref.current} />}
 
-      {hand === "right" &&
-        selectedRightHand?.name ===
-          "main-testube-01" &&
-        isPottasiumCarobnateInTestube01 && (
-          <PourPowderFromTestube
-            isPouring={
-              isPouring
-            }
-            model={
-              testube01Ref.current
-            }
-          />
-        )}
+        {hand === "right" && !beakerFillFinished && selectedRightHand?.name === "kettle" && selectedLeftHand?.name === "main-normal-beaker" && <PourFromKettle color="#0073a0" isPouring={isPouring} />}
 
-      {hand === "right" &&
-        !beakerFillFinished &&
-        selectedRightHand?.name ===
-          "kettle" &&
-        selectedLeftHand?.name ===
-          "main-normal-beaker" && (
-          <PourFromKettle
-            color="#0073a0"
-            isPouring={
-              isPouring
-            }
-          />
-        )}
+        {hand === "right" && selectedRightHand?.name === "main-graduated-cylinder" && 
+        <PourFromGraduatedCylinder isPouring={isPouring} />}
 
-      {hand === "right" &&
-        selectedRightHand?.name ===
-          "main-graduated-cylinder" && (
-          <PourFromGraduatedCylinder
-            isPouring={
-              isPouring
-            }
-          />
-        )}
+        {[11, 11.1].includes(selectedLesson) && hand === "left" && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand?.name === "volumetric-flask" && 
+        <PourFromBeaker modelRef={normalBeakerRef} otherModelRef={volumetricRef} isPouring={isPouring} />}
 
-      {[
-        11,
-        11.1,
-      ].includes(
-        selectedLesson
-      ) &&
-        hand === "left" &&
-        selectedLeftHand?.name ===
-          "main-normal-beaker" &&
-        selectedRightHand?.name ===
-          "volumetric-flask" && (
-          <PourFromBeaker
-            modelRef={
-              normalBeakerRef
-            }
-            otherModelRef={
-              volumetricRef
-            }
-            isPouring={
-              isPouring
-            }
-          />
-        )}
-
-      {selectedLesson ==
-        12.1 &&
-        [
-          28,
-          34,
-          40,
-        ].includes(
-          lessonStep
-        ) &&
-        hand === "left" &&
-        selectedLeftHand?.name ===
-          "main-normal-beaker" &&
-        selectedRightHand?.name ===
-          "volumetric-flask" && (
-          <PourFromBeaker
-            modelRef={
-              normalBeakerRef
-            }
-            isPouring={
-              isPouring
-            }
-            otherModelRef={
-              volumetricRef
-            }
-            liquidAmount={
-              0.2
-            }
-            otherLiquidOpacity={
-              0.55
-            }
-          />
-        )}
-    </>
+        {selectedLesson === 12.1 && [28, 34, 40].includes(lessonStep) && hand === "left" && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand?.name === "volumetric-flask" &&
+         <PourFromBeaker pourAmount={0.1} modelRef={normalBeakerRef} isPouring={isPouring} otherModelRef={volumetricRef} liquidAmount={0.2} otherLiquidOpacity={0.35} otherLiquidColor={"#EAFBFF"} />}
+      </>
   )
 }
 

@@ -121,7 +121,8 @@ const UI = () => {
     ShowNormalBeakerArrow,setShowNormalBeakerArrow,
     showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow,
     showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow,
-    showVolumetricArrow,setShowVolumetricArrow
+    showVolumetricArrow,setShowVolumetricArrow,setShowVolumetricFlaskArrow,setShowFunnelArrow,
+    setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -129,7 +130,8 @@ const UI = () => {
     isSitting,
     clickedModel,
     isObjectInfo,
-    chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,setIsReactionTimerRunning,isPouring,
+    chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
+    setIsReactionTimerRunning,isPouring,
   } = useContext(InteractionContext)
 
 
@@ -142,13 +144,25 @@ const UI = () => {
   // ------------------------ Lesson 08 -------------
 
   useEffect(() => {
-    setShowNormalBeakerArrow((selectedLesson===8 && [3,8].includes(lessonStep)) || (selectedLesson===11 && [3].includes(lessonStep))
+    setShowNormalBeakerArrow(
+      (selectedLesson===8 && [3,8].includes(lessonStep)) ||
+      (selectedLesson===11 && [3].includes(lessonStep)) ||
+      ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep))      
     )
   }, [selectedLesson, lessonStep])
 
+  useEffect(()=>{
+    setShowVolumetricFlaskArrow(
+      ([12.1,12.2].includes(selectedLesson) && [26,55].includes(lessonStep))
+    )
+  },[selectedLesson,lessonStep])
+
 
   useEffect(()=>{
-    setShowBuretteArrow(lessonStep===18 && selectedLesson===8)
+    setShowBuretteArrow(
+      (lessonStep===18 && selectedLesson===8) ||
+      (lessonStep===52 && selectedLesson===12.2)
+    )
   },[selectedLesson, lessonStep])
 
 
@@ -161,11 +175,33 @@ const UI = () => {
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
-    setShowBalanceArrow(lessonStep===14 && selectedLesson === 8)
+    setShowBalanceArrow(
+      (lessonStep===14 && selectedLesson === 8) ||
+      ([4,6,14].includes(lessonStep) && selectedLesson ===12)
+
+    )
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
-    setShowVolumetricArrow((selectedLesson==11 && ([6].includes(lessonStep))))
+    setShowVolumetricArrow((([11,12.2].includes(selectedLesson)) && ([6,66].includes(lessonStep))))
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    setShowFunnelArrow(
+      (selectedLesson==12.2 && lessonStep==53)
+    )
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    setShowNaOHBBottleArrowRef(
+      ([12.2].includes(selectedLesson) && [63].includes(lessonStep))
+    )
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    setShowSulfamicArrow(
+      (selectedLesson==12 && lessonStep==8)
+    )
   },[selectedLesson,lessonStep])
 
   //-------------------------------------------------
@@ -226,7 +262,11 @@ const UI = () => {
   // },[lessonStep,showConicalArrow])
 
   useEffect(()=>{
-    setShowSpoonArrow((selectedLesson==1 && lessonStep===6) || (selectedLesson===8 && lessonStep ===9))
+    setShowSpoonArrow(
+      (selectedLesson==1 && lessonStep===6) ||
+      (selectedLesson===8 && lessonStep ===9) ||
+      ([12,12.1].includes(selectedLesson) && [22,7].includes(lessonStep))
+    )
   },[lessonStep,showSpoonArrow])
 
   useEffect(()=>{
@@ -237,7 +277,8 @@ useEffect(() => {
   setShowTestube01Arrow(
     (selectedLesson === 8 && lessonStep === 8) ||
     (selectedLesson === 7 && lessonStep === 3) ||
-    (selectedLesson === 8 && lessonStep === 32)
+    (selectedLesson === 8 && lessonStep === 32) ||
+    (selectedLesson ===12 && lessonStep===3)
   )
 }, [selectedLesson, lessonStep, hessGuidelineNumber])
 

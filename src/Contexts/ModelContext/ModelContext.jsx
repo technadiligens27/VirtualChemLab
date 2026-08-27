@@ -79,7 +79,12 @@ export const ModelProvider = ({ children }) => {
   const arrowThermometerRef = useRef(null);
   const arrowLidPolysterene = useRef(null);
   const arrowPotassiumHydrogenCarbonateRef = useRef(null)
-  const arrowKettleRef = useRef()
+  const arrowKettleRef = useRef(null)
+  const arrowVolumetricRef = useRef(null);
+  const arrowFunnelRef = useRef(null);
+  const arrowNaohBottleRef = useRef(null);
+  const arrowSulfamicRef = useRef(null)
+
   const saltContainerRef = useRef(null)
   const balancePositionRef = useRef(null)
   const trayPointRef = useRef(null)
@@ -129,7 +134,9 @@ export const ModelProvider = ({ children }) => {
         volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,
         volumetricBung,BuretteLiquidRef,phenopthalineBottleRef,
         sulfamicBottleRef,methylBottleRef,
-        naohBottleRef
+        naohBottleRef,arrowVolumetricRef,
+        arrowFunnelRef,arrowNaohBottleRef,
+        arrowSulfamicRef
       }}
     >
       {children}

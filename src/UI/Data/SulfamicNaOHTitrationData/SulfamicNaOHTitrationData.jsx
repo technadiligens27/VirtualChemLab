@@ -265,9 +265,9 @@ export const guidelineData = [
 
     image: "./rinseSulfamicBeaker.png",
 
-    onButtonContinue: () => {
-      setHessGuidelineNumber(false)
-    },
+    // onButtonContinue: () => {
+    //   setHessGuidelineNumber(false)
+    // },
   },
 
   {
@@ -324,9 +324,7 @@ export const guidelineData = [
       "Transfer the prepared sulfamic acid solution into the burette and set up the burette securely for the titration.",
 
     implementationSteps: [
-      "Return the beaker and volumetric flask to the table.",
-      "Pick up the burette with the left hand.",
-      "Pick up the funnel with the right hand.",
+      "Pick up the burette and Funnel.",
       "Pick up the volumetric flask containing sulfamic acid solution.",
       "Pour the sulfamic acid solution into the burette.",
       "Return the volumetric flask to the table.",

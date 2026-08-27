@@ -5,6 +5,7 @@ import {
 } from "react"
 
 import { useFrame } from "@react-three/fiber"
+
 import { MainGuidelineContext } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PourFromBeaker = ({
@@ -14,20 +15,32 @@ const PourFromBeaker = ({
 
   pourAmount = 10,
   liquidAmount = 0.8,
+
   pourSpeed = 0.5,
 
-  otherLiquidColor = "#EAFBFF",
+  // Controls only how fast
+  // the visible pour stream scales up
+  pourScaleSpeed = 5,
+
+  otherLiquidColor = "#030a0b",
   otherLiquidOpacity = 0.35,
 }) => {
   const {
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  const pourRef = useRef(null)
-  const liquidRef = useRef(null)
-  const otherLiquidRef = useRef(null)
+  const pourRef =
+    useRef(null)
+
+  const liquidRef =
+    useRef(null)
+
+  const otherLiquidRef =
+    useRef(null)
 
   const sourceStartScaleRef =
     useRef(0)
@@ -174,7 +187,9 @@ const PourFromBeaker = ({
     // RECEIVER LIQUID MATERIAL
     // =======================================================
 
-    if (otherLiquidRef.current) {
+    if (
+      otherLiquidRef.current
+    ) {
       const otherLiquid =
         otherLiquidRef.current
 
@@ -192,14 +207,17 @@ const PourFromBeaker = ({
           otherLiquidColor
         )
 
-        cloned.transparent = true
+        cloned.transparent =
+          true
 
         cloned.opacity =
           otherLiquidOpacity
 
-        cloned.depthWrite = false
+        cloned.depthWrite =
+          false
 
-        cloned.needsUpdate = true
+        cloned.needsUpdate =
+          true
 
         return cloned
       }
@@ -229,7 +247,9 @@ const PourFromBeaker = ({
 
     progressRef.current = 0
     isFinishedRef.current = false
-    hasSourceLiquidRef.current = false
+
+    hasSourceLiquidRef.current =
+      false
   }, [
     modelRef,
     otherModelRef,
@@ -297,7 +317,9 @@ const PourFromBeaker = ({
     pourRef.current.updateMatrixWorld(
       true
     )
-  }, [isPouring])
+  }, [
+    isPouring,
+  ])
 
   // =========================================================
   // POUR ANIMATION
@@ -339,7 +361,9 @@ const PourFromBeaker = ({
         false
 
       pourRef.current.scale.y = 0
-      pourRef.current.visible = false
+
+      pourRef.current.visible =
+        false
 
       hasSourceLiquidRef.current =
         false
@@ -375,8 +399,16 @@ const PourFromBeaker = ({
     pourRef.current.visible =
       true
 
+    const pourScaleProgress =
+      Math.min(
+        progress *
+          pourScaleSpeed,
+        1
+      )
+
     pourRef.current.scale.y =
-      pourAmount * progress
+      pourAmount *
+      pourScaleProgress
 
     // =======================================================
     // SOURCE LIQUID DECREASE
@@ -412,14 +444,17 @@ const PourFromBeaker = ({
             otherLiquidColor
           )
 
-          material.transparent = true
+          material.transparent =
+            true
 
           material.opacity =
             otherLiquidOpacity
 
-          material.depthWrite = false
+          material.depthWrite =
+            false
 
-          material.needsUpdate = true
+          material.needsUpdate =
+            true
         }
       )
     } else if (
@@ -446,8 +481,11 @@ const PourFromBeaker = ({
     // FINISH
     // =======================================================
 
-    if (progress >= 1) {
-      liquidRef.current.scale.y = 0
+    if (
+      progress >= 1
+    ) {
+      liquidRef.current.scale.y =
+        0
 
       liquidRef.current.visible =
         false
@@ -456,7 +494,8 @@ const PourFromBeaker = ({
         otherStartScaleRef.current +
         liquidAmount
 
-      pourRef.current.scale.y = 0
+      pourRef.current.scale.y =
+        0
 
       pourRef.current.visible =
         false
@@ -471,19 +510,33 @@ const PourFromBeaker = ({
         "Beaker pouring finished"
       )
 
-      if ( selectedLesson === 11 &&lessonStep === 21) {
+      if (
+        selectedLesson === 11 &&
+        lessonStep === 21
+      ) {
         setLessonStep(22)
       }
 
-      if (selectedLesson === 12.1 &&lessonStep === 28) {
+      if (
+        selectedLesson === 12.1 &&
+        lessonStep === 28
+      ) {
         setLessonStep(29)
       }
-      if (selectedLesson === 12.1 &&lessonStep === 34) {
+
+      if (
+        selectedLesson === 12.1 &&
+        lessonStep === 34
+      ) {
         setLessonStep(35)
       }
-      if (selectedLesson === 12.1 &&lessonStep === 40) {
+
+      if (
+        selectedLesson === 12.1 &&
+        lessonStep === 40
+      ) {
         setLessonStep(41)
-      }       
+      }
     }
 
     liquidRef.current.updateMatrixWorld(

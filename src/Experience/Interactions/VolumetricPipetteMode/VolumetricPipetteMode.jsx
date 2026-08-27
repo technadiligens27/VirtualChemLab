@@ -1,4 +1,9 @@
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
+
 import * as THREE from "three"
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
@@ -12,85 +17,269 @@ const VolumetricPipetteMode = ({
   modelScale = 0.8,
   pipetteScale = 0.5,
 }) => {
-  const { volumetricPipetteRef, volumetricBung } = useContext(ModelContext)
-  const {selectedLesson,lessonStep,setLessonStep}= useContext(MainGuidelineContext)
-  
-  const originalPipettePositionRef = useRef(null)
-  const originalPipetteRotationRef = useRef(null)
-  const originalPipetteScaleRef = useRef(null)
+  const {
+    volumetricPipetteRef,
+    volumetricBung,
+  } = useContext(
+    ModelContext
+  )
 
-  const originalModelPositionRef = useRef(null)
-  const originalModelRotationRef = useRef(null)
-  const originalModelScaleRef = useRef(null)
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  const originalBungVisibilityRef = useRef(false)
+  const originalPipettePositionRef =
+    useRef(null)
+
+  const originalPipetteRotationRef =
+    useRef(null)
+
+  const originalPipetteScaleRef =
+    useRef(null)
+
+  const originalModelPositionRef =
+    useRef(null)
+
+  const originalModelRotationRef =
+    useRef(null)
+
+  const originalModelScaleRef =
+    useRef(null)
+
+  const originalBungVisibilityRef =
+    useRef(false)
+
+  // =========================================================
+  // CAP CHILDREN
+  // =========================================================
+
+  const capRefs =
+    useRef([])
+
+  // =========================================================
+  // BUNG VISIBILITY
+  // =========================================================
 
   useEffect(() => {
-    if (!volumetricBung?.current) return
+    if (
+      !volumetricBung?.current
+    ) {
+      return
+    }
 
-    // Store whatever visibility it had BEFORE entering mode
+    // Store whatever visibility it had
+    // BEFORE entering mode
     originalBungVisibilityRef.current =
       volumetricBung.current.visible
 
-    // While in Volumetric Pipette Mode, bung is always hidden
-    volumetricBung.current.visible = false
+    // While in Volumetric Pipette Mode,
+    // bung is always hidden
+    volumetricBung.current.visible =
+      false
 
     return () => {
-      if (!volumetricBung?.current) return
+      if (
+        !volumetricBung?.current
+      ) {
+        return
+      }
 
       // Restore exactly what it was before
       volumetricBung.current.visible =
         originalBungVisibilityRef.current
     }
-  }, [volumetricBung])
+  }, [
+    volumetricBung,
+  ])
 
-  useEffect(()=>{
-    if(selectedLesson===11 && lessonStep===8){
-        setLessonStep(9)
-    }
-    if(selectedLesson===11 && lessonStep===13){
-      setLessonStep(14)
-    }
-    if(selectedLesson===11 && lessonStep===36){
-      setLessonStep(37)
-    }
-    if(selectedLesson===11 && lessonStep===41){
-      setLessonStep(42)
-    }  
-    if(selectedLesson===12.2 && lessonStep===68){
-      setLessonStep(69)
-    }
-    
-    if(selectedLesson===12.2 && lessonStep===73){
-      setLessonStep(74)
-    }   
-    
-    if(selectedLesson===12.2 && lessonStep===92){
-      setLessonStep(93)
-    }
-
-    if(selectedLesson===12.2 && lessonStep===97){
-      setLessonStep(98)
-    }
-
-  },[selectedLesson,lessonStep])
+  // =========================================================
+  // MODEL CAP VISIBILITY
+  // =========================================================
 
   useEffect(() => {
-    if (!modelRef?.current || !volumetricPipetteRef?.current) return
+    if (
+      !modelRef?.current
+    ) {
+      return
+    }
 
-    const pipette = volumetricPipetteRef.current
-    const model = modelRef.current
+    capRefs.current = []
 
-    originalPipettePositionRef.current = pipette.position.clone()
-    originalPipetteRotationRef.current = pipette.rotation.clone()
-    originalPipetteScaleRef.current = pipette.scale.clone()
+    modelRef.current.traverse(
+      (child) => {
+        const childName =
+          child.name
+            ?.toLowerCase() ||
+          ""
 
-    originalModelPositionRef.current = model.position.clone()
-    originalModelRotationRef.current = model.rotation.clone()
-    originalModelScaleRef.current = model.scale.clone()
+        if (
+          childName.includes(
+            "cap"
+          )
+        ) {
+          capRefs.current.push(
+            child
+          )
 
-    model.position.x = 0
-    model.position.y += modelYOffset
+          child.visible =
+            false
+        }
+      }
+    )
+
+    return () => {
+      capRefs.current.forEach(
+        (cap) => {
+          if (
+            cap
+          ) {
+            cap.visible =
+              true
+
+            cap.updateMatrixWorld(
+              true
+            )
+          }
+        }
+      )
+
+      capRefs.current = []
+    }
+  }, [
+    modelRef,
+  ])
+
+  // =========================================================
+  // LESSON STEP CHANGES
+  // =========================================================
+
+  useEffect(() => {
+    if (
+      selectedLesson === 11 &&
+      lessonStep === 8
+    ) {
+      setLessonStep(
+        9
+      )
+    }
+
+    if (
+      selectedLesson === 11 &&
+      lessonStep === 13
+    ) {
+      setLessonStep(
+        14
+      )
+    }
+
+    if (
+      selectedLesson === 11 &&
+      lessonStep === 36
+    ) {
+      setLessonStep(
+        37
+      )
+    }
+
+    if (
+      selectedLesson === 11 &&
+      lessonStep === 41
+    ) {
+      setLessonStep(
+        42
+      )
+    }
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 68
+    ) {
+      setLessonStep(
+        69
+      )
+    }
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 73
+    ) {
+      setLessonStep(
+        74
+      )
+    }
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 92
+    ) {
+      setLessonStep(
+        93
+      )
+    }
+
+    if (
+      selectedLesson === 12.2 &&
+      lessonStep === 97
+    ) {
+      setLessonStep(
+        98
+      )
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  // =========================================================
+  // POSITION MODELS
+  // =========================================================
+
+  useEffect(() => {
+    if (
+      !modelRef?.current ||
+      !volumetricPipetteRef?.current
+    ) {
+      return
+    }
+
+    const pipette =
+      volumetricPipetteRef.current
+
+    const model =
+      modelRef.current
+
+    originalPipettePositionRef.current =
+      pipette.position.clone()
+
+    originalPipetteRotationRef.current =
+      pipette.rotation.clone()
+
+    originalPipetteScaleRef.current =
+      pipette.scale.clone()
+
+    originalModelPositionRef.current =
+      model.position.clone()
+
+    originalModelRotationRef.current =
+      model.rotation.clone()
+
+    originalModelScaleRef.current =
+      model.scale.clone()
+
+    // =======================================================
+    // MODEL POSITION
+    // =======================================================
+
+    model.position.x =
+      0
+
+    model.position.y +=
+      modelYOffset
 
     model.scale.set(
       modelScale,
@@ -98,35 +287,77 @@ const VolumetricPipetteMode = ({
       modelScale
     )
 
+    // =======================================================
+    // PIPETTE SCALE
+    // =======================================================
+
     pipette.scale.set(
       pipetteScale,
       pipetteScale,
       pipetteScale
     )
 
-    let stir = null
+    // =======================================================
+    // FIND STIR POINT
+    // =======================================================
 
-    model.traverse((child) => {
-      if (child.name?.toLowerCase().includes("stir")) {
-        stir = child
+    let stir =
+      null
+
+    model.traverse(
+      (child) => {
+        if (
+          child.name
+            ?.toLowerCase()
+            .includes(
+              "stir"
+            )
+        ) {
+          stir =
+            child
+        }
       }
-    })
+    )
 
-    if (!stir) return
+    if (
+      !stir
+    ) {
+      return
+    }
 
-    const position = new THREE.Vector3()
+    // =======================================================
+    // GET STIR WORLD POSITION
+    // =======================================================
 
-    stir.getWorldPosition(position)
+    const position =
+      new THREE.Vector3()
 
-    pipette.parent.worldToLocal(position)
+    stir.getWorldPosition(
+      position
+    )
 
-    position.x += xOffset
-    position.y += yOffset
+    pipette.parent.worldToLocal(
+      position
+    )
 
-    pipette.position.copy(position)
+    position.x +=
+      xOffset
+
+    position.y +=
+      yOffset
+
+    pipette.position.copy(
+      position
+    )
+
+    // =======================================================
+    // CLEANUP
+    // =======================================================
 
     return () => {
-      if (volumetricPipetteRef.current) {
+      if (
+        volumetricPipetteRef.current
+      ) {
         volumetricPipetteRef.current.position.copy(
           originalPipettePositionRef.current
         )
@@ -138,9 +369,15 @@ const VolumetricPipetteMode = ({
         volumetricPipetteRef.current.scale.copy(
           originalPipetteScaleRef.current
         )
+
+        volumetricPipetteRef.current.updateMatrixWorld(
+          true
+        )
       }
 
-      if (modelRef.current) {
+      if (
+        modelRef.current
+      ) {
         modelRef.current.position.copy(
           originalModelPositionRef.current
         )
@@ -151,6 +388,10 @@ const VolumetricPipetteMode = ({
 
         modelRef.current.scale.copy(
           originalModelScaleRef.current
+        )
+
+        modelRef.current.updateMatrixWorld(
+          true
         )
       }
     }

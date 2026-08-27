@@ -10,7 +10,8 @@ const AllArrows=()=>{
         arrowRightGloveRef,arrowRedLitmusRef,conicalBeakerRef,arrowConicalFlaskRef,
         arrowSpoonRef,arrowSaltContainerRef,mainDropperRef,arrowDropperRef, arrowTestube01Ref,
         arrowPolystereneRef,arrowPottasiumCarbonateRef,arrowBalanceRef,arrowBuretteClampRef,
-        arrowBuirette,arrowThermometerRef,arrowVolumetricPipette
+        arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
+        ,arrowNaohBottleRef,arrowSulfamicRef
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -19,7 +20,9 @@ const AllArrows=()=>{
         showSaltContainerArrow,setShowSaltContainerArrow,showTestube01Arrow,
         showDropperArrow,setShowDropperArrow,isTutorialMode,showPolystereneArrow,
         setShowPottasiumCarbonateArrow,showPottasiumCarbonateArrow,showBalanceArrow,showBuretteArrow,
-        showThermometerArrow,setShowThermometerArrow,showVolumetricArrow
+        showThermometerArrow,setShowThermometerArrow,showVolumetricArrow,showVolumetricFlaskArrow,
+        showFunnelArrow, setShowFunnelArrow,showNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,
+        setShowNaOHBBottleArrowRef
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -49,6 +52,11 @@ const AllArrows=()=>{
         {showBuretteArrow && <ArrowGuides arrowRef={arrowBuirette} speed={2.5} height={0.5} showStatus={showBuretteArrow}/>}
         {showThermometerArrow && <ArrowGuides arrowRef={arrowThermometerRef} speed={2.5} height={0.5} showStatus={showThermometerArrow}/>}
         {showVolumetricArrow && <ArrowGuides arrowRef={arrowVolumetricPipette} speed={2.5} height={0.5} showStatus={showVolumetricArrow}/>}
+        {showVolumetricFlaskArrow && <ArrowGuides arrowRef={arrowVolumetricRef} speed={2.5} height={0.5} showStatus={showVolumetricFlaskArrow}/>}
+        {showFunnelArrow && <ArrowGuides arrowRef={arrowFunnelRef} speed={2.5} height={0.5} showStatus={showFunnelArrow}/>}
+        {showNaOHBBottleArrowRef && <ArrowGuides arrowRef={arrowNaohBottleRef} speed={2.5} height={0.5} showStatus={showNaOHBBottleArrowRef}/>}
+        {showSulfamicArrow && <ArrowGuides arrowRef={arrowSulfamicRef} speed={2.5} height={0.5} showStatus={showSulfamicArrow}/>}
+
         </>
     )
 }

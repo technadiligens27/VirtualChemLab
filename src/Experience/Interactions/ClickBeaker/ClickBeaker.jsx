@@ -3739,6 +3739,16 @@ const renderHeldObjectButtons = () => {
       multiplier={1.2}
     />
 
+    <ClickHitbox
+      modelRef={mainBuiretteRef}
+      multiplier={0.8}
+    />
+
+    <ClickHitbox
+      modelRef={volumetricRef}
+      multiplier={1.2}
+    />
+
 
 
   </>

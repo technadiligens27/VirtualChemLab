@@ -22,7 +22,8 @@ const ChemEnvironment = () => {
          thermometerLiquidRef,mainPolystereneLid,arrowLidPolysterene,potassiumHydrogenCarbonateRef,arrowPotassiumHydrogenCarbonateRef,
          kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
          volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef,phenopthalineBottleRef,
-         sulfamicBottleRef,methylBottleRef,naohBottleRef
+         sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
+         arrowSulfamicRef
   } = useContext(ModelContext);
 
 
@@ -203,6 +204,13 @@ const hideVerticalObjects=(root)=>{
     
     hidePourObjects(normalBeakerRef)
     hidePourObjects(conicalBeakerRef)
+    hidePourObjects(volumetricRef)
+    hidePourObjects(testube01Ref)
+    hidePourObjects(testube02Ref)
+    hidePourObjects(testube03Ref)
+    hidePourObjects(testube04Ref)
+    hidePourObjects(testube05Ref)
+    hidePourObjects(testube06Ref)
 
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
     graduatedBeakerRef.current = scene.getObjectByName('main-graduated-cylinder');
@@ -227,8 +235,8 @@ const hideVerticalObjects=(root)=>{
     kettleRef.current.visible = false
     volumetricRef.current = scene.getObjectByName('volumetric-flask');
     volumetricPipetteRef.current = scene.getObjectByName('volumetric-pipette');
-    volumetricBung.current = scene.getObjectByName('volumetric-bung')
-    volumetricBung.current.visible = false
+    volumetricBung.current = scene.getObjectByName('volumetric-bung');
+    volumetricBung.current.visible = false;
 
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
     methylBottleRef.current = scene.getObjectByName("methyl-dropper-bottle")
@@ -354,6 +362,19 @@ const hideVerticalObjects=(root)=>{
 
       arrowKettleRef.current = scene.getObjectByName('kettle-arrow');
       arrowKettleRef.current.visible = false
+
+      arrowVolumetricRef.current = scene.getObjectByName("volumetric-flask-arrow")
+      arrowVolumetricRef.current.visible = false
+
+      arrowFunnelRef.current = scene.getObjectByName("funnel-arrow")
+      arrowFunnelRef.current.visible = false;
+
+      arrowNaohBottleRef.current = scene.getObjectByName("naoh-bottle-arrow");
+      arrowNaohBottleRef.current.visible = false;
+
+      arrowSulfamicRef.current = scene.getObjectByName("sulfamic-bottle-arrow");
+      arrowSulfamicRef.current.visible = false;
+
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)

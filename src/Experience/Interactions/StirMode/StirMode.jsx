@@ -50,6 +50,13 @@ const StirMode = ({
   const scrollStopTimerRef =
     useRef(null)
 
+  // =========================================================
+  // ORIGINAL BEAKER STATE
+  // =========================================================
+
+  const originalBeakerParentRef =
+    useRef(null)
+
   const originalBeakerPositionRef =
     useRef(null)
 
@@ -121,6 +128,13 @@ const StirMode = ({
 
     foundStirPointRef.current =
       false
+
+    // -------------------------------------------------------
+    // SAVE ORIGINAL BEAKER PARENT
+    // -------------------------------------------------------
+
+    originalBeakerParentRef.current =
+      beaker.parent
 
     // -------------------------------------------------------
     // SAVE ORIGINAL POSITIONS
@@ -223,6 +237,9 @@ const StirMode = ({
       // -----------------------------------------------------
 
       if (wasFullLabReset) {
+        originalBeakerParentRef.current =
+          null
+
         originalBeakerPositionRef.current =
           null
 
@@ -239,8 +256,20 @@ const StirMode = ({
       // NORMAL EXIT
       // -----------------------------------------------------
 
+      /*
+       * Restore the beaker position ONLY if the beaker
+       * is still under the same parent it had when
+       * StirMode started.
+       *
+       * If Keep Back On Table already moved the beaker
+       * from PerspectiveCamera back to its table Group,
+       * do NOT overwrite the table position with the old
+       * camera-relative hand position.
+       */
       if (
-        originalBeakerPositionRef.current
+        originalBeakerPositionRef.current &&
+        beaker.parent ===
+          originalBeakerParentRef.current
       ) {
         beaker.position.copy(
           originalBeakerPositionRef.current
@@ -265,6 +294,9 @@ const StirMode = ({
 
       beaker.updateMatrixWorld(true)
       spoon.updateMatrixWorld(true)
+
+      originalBeakerParentRef.current =
+        null
 
       originalBeakerPositionRef.current =
         null

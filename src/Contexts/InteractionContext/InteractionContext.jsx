@@ -148,7 +148,8 @@ export const InteractionProvider = ({ children }) => {
 
   const [isPouringModeFunnelMode,setIsPouringModeFunnelMode] = useState(false);
 
-  const [showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration] = useState(false)
+  const [showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration] = useState(false);
+
 
   const resetInteractions = () => {
   // Empty both hands
@@ -352,7 +353,8 @@ export const InteractionProvider = ({ children }) => {
         isSulfamicInSpoon,setIsSulfamicInSpoon,
         isFillToMark,setIsFillToMark,
         isPouringModeFunnelMode,setIsPouringModeFunnelMode,
-        showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration
+        showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration,
+        
         
         
       }}
