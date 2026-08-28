@@ -64,7 +64,7 @@ const SafetyScreen = ({
                 />
               )}
 
-              <div className="safety-shield">
+              {/* <div className="safety-shield">
                 <span>✓</span>
               </div>
 
@@ -74,7 +74,7 @@ const SafetyScreen = ({
 
               <span className="safety-sparkle safety-sparkle-two">
                 ✦
-              </span>
+              </span> */}
             </div>
           </div>
 

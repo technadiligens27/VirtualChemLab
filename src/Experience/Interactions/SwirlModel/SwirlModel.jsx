@@ -19,6 +19,13 @@ const SwirlModel = ({
 
   useTargetSwirls = false,
   targetSwirls = 3,
+
+  // ==========================================
+  // LIQUID SWIRL
+  // ==========================================
+
+  liquidSwirlAmount = 0.08,
+  liquidSwirlSpeed = 1.4,
 }) => {
   const {
     selectedLesson,
@@ -59,6 +66,15 @@ const SwirlModel = ({
       z: 0,
     })
 
+  // ==========================================
+  // LIQUID REFS
+  // ==========================================
+
+  const liquidObjectsRef =
+    useRef([])
+
+  const originalLiquidRotationsRef =
+    useRef([])
 
   // ==========================================
   // STORE ORIGINAL ROTATION
@@ -77,6 +93,33 @@ const SwirlModel = ({
       y: model.rotation.y,
       z: model.rotation.z,
     }
+
+    // ========================================
+    // FIND LIQUID CHILDREN
+    // ========================================
+
+    liquidObjectsRef.current = []
+
+    originalLiquidRotationsRef.current = []
+
+    model.traverse((child) => {
+      const childName =
+        child.name?.toLowerCase() || ""
+
+      if (
+        childName.includes("liquid")
+      ) {
+        liquidObjectsRef.current.push(
+          child
+        )
+
+        originalLiquidRotationsRef.current.push({
+          x: child.rotation.x,
+          y: child.rotation.y,
+          z: child.rotation.z,
+        })
+      }
+    })
 
     swirlTimeRef.current = 0
 
@@ -100,7 +143,6 @@ const SwirlModel = ({
     useTargetSwirls,
     targetSwirls,
   ])
-
 
   // ==========================================
   // WHEEL
@@ -128,7 +170,6 @@ const SwirlModel = ({
         0
     }
 
-
     window.addEventListener(
       "wheel",
       handleWheel,
@@ -136,7 +177,6 @@ const SwirlModel = ({
         passive: true,
       }
     )
-
 
     return () => {
       window.removeEventListener(
@@ -149,7 +189,6 @@ const SwirlModel = ({
     useTargetSwirls,
   ])
 
-
   // ==========================================
   // ANIMATION
   // ==========================================
@@ -161,7 +200,6 @@ const SwirlModel = ({
 
     const model =
       modelRef.current
-
 
     // ========================================
     // SWIRLING
@@ -177,22 +215,56 @@ const SwirlModel = ({
       timeSinceLastScrollRef.current +=
         delta
 
-
       const angle =
         swirlTimeRef.current
-
 
       model.rotation.x =
         originalRotationRef.current.x +
         Math.sin(angle) *
           swirlAmount
 
-
       model.rotation.z =
         originalRotationRef.current.z +
         Math.cos(angle) *
           swirlAmount
 
+      // ======================================
+      // LIQUID SWIRLING
+      // ======================================
+
+      liquidObjectsRef.current.forEach(
+        (liquid, index) => {
+          const originalRotation =
+            originalLiquidRotationsRef.current[
+              index
+            ]
+
+          if (
+            !liquid ||
+            !originalRotation
+          ) {
+            return
+          }
+
+          const liquidAngle =
+            angle *
+            liquidSwirlSpeed
+
+          liquid.rotation.x =
+            originalRotation.x +
+            Math.sin(
+              liquidAngle
+            ) *
+              liquidSwirlAmount
+
+          liquid.rotation.z =
+            originalRotation.z +
+            Math.cos(
+              liquidAngle
+            ) *
+              liquidSwirlAmount
+        }
+      )
 
       // ======================================
       // TARGET SWIRL MODE
@@ -204,7 +276,6 @@ const SwirlModel = ({
             swirlTimeRef.current /
               (Math.PI * 2)
           )
-
 
         if (
           completedSwirls >
@@ -218,7 +289,6 @@ const SwirlModel = ({
             completedSwirlsRef.current
           )
         }
-
 
         // ====================================
         // TARGET REACHED
@@ -249,7 +319,6 @@ const SwirlModel = ({
         }
       }
 
-
       // ======================================
       // USER STOPPED SCROLLING
       // ======================================
@@ -262,13 +331,11 @@ const SwirlModel = ({
           false
       }
 
-
       return
     }
 
-
     // ========================================
-    // RETURN TO ORIGINAL ROTATION
+    // RETURN MODEL TO ORIGINAL ROTATION
     // ========================================
 
     const returnFactor =
@@ -277,14 +344,12 @@ const SwirlModel = ({
         1
       )
 
-
     model.rotation.x +=
       (
         originalRotationRef.current.x -
         model.rotation.x
       ) *
       returnFactor
-
 
     model.rotation.y +=
       (
@@ -293,7 +358,6 @@ const SwirlModel = ({
       ) *
       returnFactor
 
-
     model.rotation.z +=
       (
         originalRotationRef.current.z -
@@ -301,6 +365,46 @@ const SwirlModel = ({
       ) *
       returnFactor
 
+    // ========================================
+    // RETURN LIQUID TO ORIGINAL ROTATION
+    // ========================================
+
+    liquidObjectsRef.current.forEach(
+      (liquid, index) => {
+        const originalRotation =
+          originalLiquidRotationsRef.current[
+            index
+          ]
+
+        if (
+          !liquid ||
+          !originalRotation
+        ) {
+          return
+        }
+
+        liquid.rotation.x +=
+          (
+            originalRotation.x -
+            liquid.rotation.x
+          ) *
+          returnFactor
+
+        liquid.rotation.y +=
+          (
+            originalRotation.y -
+            liquid.rotation.y
+          ) *
+          returnFactor
+
+        liquid.rotation.z +=
+          (
+            originalRotation.z -
+            liquid.rotation.z
+          ) *
+          returnFactor
+      }
+    )
 
     // ========================================
     // CHECK DISTANCE FROM ORIGINAL ROTATION
@@ -324,7 +428,6 @@ const SwirlModel = ({
           originalRotationRef.current.z
       )
 
-
     // ========================================
     // FULLY RETURNED
     // ========================================
@@ -334,13 +437,38 @@ const SwirlModel = ({
       yDifference < 0.001 &&
       zDifference < 0.001
     ) {
-      // Snap exactly back.
+      // Snap model exactly back.
       model.rotation.set(
         originalRotationRef.current.x,
         originalRotationRef.current.y,
         originalRotationRef.current.z
       )
 
+      // ======================================
+      // SNAP LIQUID EXACTLY BACK
+      // ======================================
+
+      liquidObjectsRef.current.forEach(
+        (liquid, index) => {
+          const originalRotation =
+            originalLiquidRotationsRef.current[
+              index
+            ]
+
+          if (
+            !liquid ||
+            !originalRotation
+          ) {
+            return
+          }
+
+          liquid.rotation.set(
+            originalRotation.x,
+            originalRotation.y,
+            originalRotation.z
+          )
+        }
+      )
 
       // ======================================
       // TARGET WAS COMPLETED
@@ -357,24 +485,34 @@ const SwirlModel = ({
           "✅ Returned to original rotation"
         )
 
-
         // ====================================
         // LESSON STEP
         // ====================================
 
-        if (!lessonAdvancedRef.current &&selectedLesson === 12.1 &&lessonStep === 32) {
-          lessonAdvancedRef.current = true
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 12.1 &&
+          lessonStep === 32
+        ) {
+          lessonAdvancedRef.current =
+            true
+
           setLessonStep(33)
         }
 
-        if (!lessonAdvancedRef.current &&selectedLesson === 12.1 &&lessonStep === 38) {
-          lessonAdvancedRef.current = true
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 12.1 &&
+          lessonStep === 38
+        ) {
+          lessonAdvancedRef.current =
+            true
+
           setLessonStep(39)
         }
       }
     }
   })
-
 
   return null
 }

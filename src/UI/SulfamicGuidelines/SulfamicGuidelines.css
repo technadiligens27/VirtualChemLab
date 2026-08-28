@@ -1,577 +1,318 @@
 /* =========================================================
    MAIN OVERLAY
+   Fixed full-screen backdrop that centers the sliding panel.
    ========================================================= */
 
 .sulfamic-guidelines-overlay {
   position: fixed;
-
   inset: 0;
-
   z-index: 99999;
-
   width: 100%;
   height: 100%;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   pointer-events: none;
-
-  transition:
-    backdrop-filter 0.4s ease,
-    background-color 0.4s ease;
+  transition: backdrop-filter 0.4s ease, background-color 0.4s ease;
 }
-
-
-/* =========================================================
-   OVERLAY OPEN
-   ========================================================= */
 
 .sulfamic-guidelines-overlay.sulfamic-overlay-open {
-  background-color:
-    rgba(20, 15, 40, 0.25);
-
-  backdrop-filter:
-    blur(6px);
-
-  -webkit-backdrop-filter:
-    blur(6px);
+  background-color: rgba(20, 15, 40, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
-
-
-/* =========================================================
-   OVERLAY CLOSED
-   ========================================================= */
 
 .sulfamic-guidelines-overlay.sulfamic-overlay-closed {
-  background-color:
-    transparent;
-
-  backdrop-filter:
-    blur(0);
-
-  -webkit-backdrop-filter:
-    blur(0);
+  background-color: transparent;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
 }
 
-
 /* =========================================================
-   MAIN GUIDELINE BOX
+   PANEL
+   Height is content-driven (auto) between sensible bounds,
+   instead of a fixed 80vh that leaves empty space for short
+   content or clips long content.
    ========================================================= */
 
 .sulfamic-guideline {
+  position: relative;
   width: 70vw;
-  height: 80vh;
-
+  height: auto;
+  min-height: 40vh;
+  max-height: 85vh;
   padding: 18px;
   padding-top: 30px;
-
-  background-color:
-    #fcf8f3;
-
-  border:
-    10px solid #fdc843;
-
+  box-sizing: border-box;
+  background-color: #fcf8f3;
+  border: 10px solid #fdc843;
   border-radius: 16px;
-
-  box-sizing:
-    border-box;
-
-  position: relative;
-
   pointer-events: auto;
-
-  will-change:
-    transform;
+  will-change: transform;
 }
 
-
 /* =========================================================
-   INNER CONTENT
+   INNER CONTENT — the two-column row
+   min-height: 0 is required here: without it, flex children
+   ignore the parent's max-height and refuse to scroll.
    ========================================================= */
 
 .sulfamic-guideline-inner {
+  display: flex;
   width: 100%;
   height: 100%;
-
-  display: flex;
-
+  min-height: 0;
   overflow: hidden;
-
-  background-color:
-    white;
-
-  border-radius:
-    12px;
+  background-color: #fff;
+  border-radius: 12px;
 }
 
-
 /* =========================================================
-   LEFT SIDE
+   LEFT COLUMN
+   flex-basis (not a hard width) so it can take over the full
+   row when the right column collapses (see :has rule below).
+   Scrolls internally if steps/description overflow the
+   panel's max-height, rather than growing the whole panel.
    ========================================================= */
 
 .sulfamic-guideline-left {
-  width: 60%;
-  height: 100%;
-
-  padding-left: 20px;
-  padding-top: 35px;
-
-  box-sizing:
-    border-box;
-
   display: flex;
-
-  flex-direction:
-    column;
+  flex: 1 1 60%;
+  flex-direction: column;
+  min-height: 0;
+  padding: 35px 20px 20px 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
-
-
-/* =========================================================
-   TITLE
-   ========================================================= */
 
 .sulfamic-title-container h1 {
-  margin:
-    0 0 14px;
-
-  font-size:
-    32px;
-
-  color:
-    #351c7c;
-
-  width:
-    180%;
+  margin: 0 0 14px;
+  font-size: 32px;
+  line-height: 1.25;
+  color: #351c7c;
 }
-
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
 
 .sulfamic-description {
-  margin:
-    0 0 28px;
-
-  max-width:
-    600px;
-
-  font-size:
-    17px;
-
-  line-height:
-    1.6;
-
-  color:
-    #526170;
+  margin: 0 0 28px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #526170;
 }
 
-
 /* =========================================================
-   IMPLEMENTATION CONTAINER
+   IMPLEMENTATION STEPS
+   Hides itself entirely when implementationSteps is [] —
+   no empty purple box with a floating header.
    ========================================================= */
 
 .sulfamic-steps-container {
+  flex-shrink: 0;
   width: 100%;
-
-  padding:
-    22px;
-
-  background-color:
-    #f4effa;
-
-  border:
-    2px solid #cbbaee;
-
-  border-radius:
-    12px;
-
-  box-sizing:
-    border-box;
+  padding: 22px;
+  box-sizing: border-box;
+  background-color: #f4effa;
+  border: 2px solid #cbbaee;
+  border-radius: 12px;
 }
 
-
-/* =========================================================
-   IMPLEMENTATION HEADER
-   ========================================================= */
+.sulfamic-steps-container:has(.sulfamic-inner-steps:empty) {
+  display: none;
+}
 
 .sulfamic-steps-header {
   display: flex;
-
-  align-items:
-    center;
-
-  gap:
-    10px;
-
-  margin-bottom:
-    18px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
 }
-
 
 .sulfamic-steps-header h1 {
   margin: 0;
-
-  font-size:
-    21px;
-
-  color:
-    #351c7c;
+  font-size: 21px;
+  color: #351c7c;
 }
-
-
-/* =========================================================
-   STEPS
-   ========================================================= */
 
 .sulfamic-inner-steps {
   display: flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    10px;
+  flex-direction: column;
+  gap: 10px;
 }
-
 
 .sulfamic-step {
   display: flex;
-
-  align-items:
-    center;
-
-  gap:
-    12px;
+  align-items: center;
+  gap: 12px;
 }
-
 
 .sulfamic-step img {
-  width:
-    23px;
-
-  height:
-    23px;
-
-  object-fit:
-    contain;
-
-  flex-shrink:
-    0;
+  width: 23px;
+  height: 23px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
-
 
 .sulfamic-step p {
   margin: 0;
-
-  font-size:
-    17px;
-
-  line-height:
-    1.5;
-
-  color:
-    #425466;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #425466;
 }
-
 
 /* =========================================================
    CONTINUE BUTTON
+   margin-top: auto pins it to the bottom of the column when
+   content is short; flex-shrink: 0 keeps it full-size when
+   the steps list is long and the column is scrolling.
    ========================================================= */
 
 .sulfamic-continue-button {
-  width:
-    200px;
-
-  height:
-    50px;
-
-  margin-top:
-    20px;
-
-  border:
-    none;
-
-  border-radius:
-    20px;
-
-  background-color:
-    #351c7c;
-
-  color:
-    #dbe4ec;
-
-  font-size:
-    17px;
-
-  font-weight:
-    600;
-
-  cursor:
-    pointer;
-
-  transition:
-    transform 0.15s ease,
-    background-color 0.15s ease;
+  flex-shrink: 0;
+  width: 200px;
+  height: 50px;
+  margin-top: auto;
+  /* padding-top: 20px; */
+  border: none;
+  border-radius: 20px;
+  background-color: #351c7c;
+  color: #dbe4ec;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  margin-top: 20px;
 }
-
 
 .sulfamic-continue-button:hover {
-  background-color:
-    #432495;
+  background-color: #432495;
 }
-
 
 .sulfamic-continue-button:active {
-  transform:
-    scale(0.97);
+  transform: scale(0.97);
 }
 
-
 /* =========================================================
-   RIGHT SIDE
+   RIGHT COLUMN — image side
+   Collapses completely when `image` is falsy, since
+   .sulfamic-image-container then renders truly empty. The
+   left column's flex-basis lets it expand to fill the row.
    ========================================================= */
 
 .sulfamic-guideline-right {
-  width:
-    40%;
-
-  height:
-    100%;
-
-  padding:
-    25px;
-
-  box-sizing:
-    border-box;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
+  display: flex;
+  flex: 1 1 40%;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  box-sizing: border-box;
 }
 
-
-/* =========================================================
-   IMAGE CONTAINER
-   ========================================================= */
+.sulfamic-guideline-right:has(.sulfamic-image-container:empty) {
+  display: none;
+}
 
 .sulfamic-image-container {
-  width:
-    100%;
-
-  height:
-    100%;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
-
 
 .sulfamic-image-container img {
-  width:
-    90%;
-
-  max-height:
-    90%;
-
-  object-fit:
-    contain;
+  width: 90%;
+  max-height: 90%;
+  object-fit: contain;
 }
-
 
 /* =========================================================
    TOP "WHAT TO DO" LABEL
    ========================================================= */
 
 .sulfamic-guideline-header {
-  position:
-    absolute;
-
-  top:
-    -10px;
-
-  left:
-    35px;
-
-  height:
-    48px;
-
-  padding:
-    0 24px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  background-color:
-    #fdc843;
-
-  border-bottom-left-radius:
-    10px;
-
-  border-bottom-right-radius:
-    10px;
-
-  z-index:
-    2;
+  position: absolute;
+  top: -10px;
+  left: 35px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  background-color: #fdc843;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
-
 
 .sulfamic-guideline-header h1 {
   margin: 0;
-
-  color:
-    #351c7c;
-
-  font-size:
-    20px;
-
-  font-weight:
-    700;
+  font-size: 20px;
+  font-weight: 700;
+  color: #351c7c;
 }
 
-
 /* =========================================================
-   SIDE OPEN / CLOSE BUTTON
+   SIDE OPEN / CLOSE TOGGLE
    ========================================================= */
 
 .sulfamic-side-toggle {
-  position:
-    absolute;
-
-  right:
-    -60px;
-
-  top:
-    50%;
-
-  width:
-    60px;
-
-  height:
-    150px;
-
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 150px;
   padding: 0;
-
-  border:
-    none;
-
-  background-color:
-    #fdc843;
-
-  border-top-right-radius:
-    20px;
-
-  border-bottom-right-radius:
-    20px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  cursor:
-    pointer;
-
-  transform:
-    translateY(-50%);
+  border: none;
+  background-color: #fdc843;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  cursor: pointer;
 }
-
-
-/* =========================================================
-   SIDE ARROW
-   ========================================================= */
-
-.sulfamic-side-toggle img {
-  width:
-    28px;
-
-  height:
-    28px;
-
-  object-fit:
-    contain;
-
-  pointer-events:
-    none;
-
-  will-change:
-    transform;
-}
-
 
 .sulfamic-side-toggle:hover {
-  background-color:
-    #f2bb2e;
+  background-color: #f2bb2e;
 }
-
 
 .sulfamic-side-toggle:active {
-  background-color:
-    #e7ac16;
+  background-color: #e7ac16;
 }
 
+.sulfamic-side-toggle img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  pointer-events: none;
+  will-change: transform;
+}
 
 /* =========================================================
    RESPONSIVE
+   Below 900px the two columns stack, so the left column's
+   internal scroll is disabled — the panel itself scrolls as
+   one unit instead (avoids a scroll-inside-a-scroll).
    ========================================================= */
 
 @media (max-width: 900px) {
   .sulfamic-guideline {
-    width:
-      92vw;
-
-    height:
-      auto;
-
-    max-height:
-      90vh;
+    width: 92vw;
+    height: auto;
+    min-height: 0;
+    max-height: 90vh;
   }
 
   .sulfamic-guideline-inner {
-    flex-direction:
-      column;
-
-    overflow-y:
-      auto;
+    flex-direction: column;
+    overflow-y: auto;
   }
 
-  .sulfamic-guideline-left,
-  .sulfamic-guideline-right {
-    width:
-      100%;
+  .sulfamic-guideline-left {
+    overflow-y: visible;
   }
 
   .sulfamic-guideline-right {
-    min-height:
-      300px;
-  }
-
-  .sulfamic-title-container h1 {
-    width:
-      100%;
+    min-height: 220px;
   }
 }

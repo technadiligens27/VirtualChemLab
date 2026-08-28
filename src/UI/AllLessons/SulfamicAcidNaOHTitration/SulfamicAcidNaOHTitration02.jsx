@@ -400,7 +400,9 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Take Spatula into Right Hand"
+              <>
+              Take Spatula into <strong>Right Hand</strong>
+              </>
             }
           />
         )
@@ -412,7 +414,10 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Click Spatula and Select Stir Mode"
+              <>
+              Click Held Spatula and Select <strong>Stir Mode</strong>
+              </>
+              
             }
           />
         )
@@ -424,7 +429,10 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Scroll Down To Stir"
+              <>
+                Keep <strong>Scrolling Down</strong> to Stir the Mixture
+              </>
+              
             }
           />
         )
@@ -436,7 +444,9 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Click Spatula and Select UnStir Mode"
+              <>
+                Now click the Spatula and Select <strong>Exit Stir Mode</strong>
+              </>
             }
           />
         )
@@ -448,7 +458,10 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Keep Spatula In Table"
+              <>
+                Keep <strong>Spatula</strong> back on the Table
+              </>
+              
             }
           />
         )
@@ -483,7 +496,10 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Take Volumetric Flask to Right Hand"
+              <>
+              Take Volumetric Flask to <strong>Right Hand</strong>
+              </>
+              
             }
           />
         )
@@ -495,7 +511,10 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Press Shift + P to enter Pour Mode"
+              <>
+              Press <strong>Shift + P</strong> to enter Pour Mode
+              </>
+              
             }
           />
         )
@@ -507,23 +526,26 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Scroll Down to Pour"
+              <>
+                <strong>Scroll Down</strong> to Pour The Mixture
+              </>
+              
             }
           />
         )
       }
 
 
-      {
-        lessonStep === 29 &&
-        (
+      {lessonStep === 29 && (
           <DialogBox
             text={
-              "Press Shift + P to Exit Pour Mode"
+              <>
+                Press <strong>Shift + P</strong> to exit{" "}
+                <strong>Pouring Mode</strong>.
+              </>
             }
           />
-        )
-      }
+        )}
 
 
 
@@ -548,16 +570,16 @@ const SulfamicAcidNaOHTitration02 = () => {
       }
 
 
-      {
-        lessonStep === 30 &&
-        (
-          <DialogBox
-            text={
-              "Click Add Liquid in Normal Beaker"
-            }
-          />
-        )
-      }
+      {lessonStep === 30 && (
+        <DialogBox
+          text={
+            <>
+              Click the normal beaker, then select{" "}
+              <strong>Add Liquid</strong>.
+            </>
+          }
+        />
+      )}
 
 
       {
@@ -565,70 +587,70 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Water 30cm3"
+              <>
+              Fill the beaker with{" "}
+              <strong>30 cm³ of water (H₂O)</strong>
+            </>
             }
           />
         )
       }
 
 
-      {
-        lessonStep === 32 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Down to Swirl the Beaker to Rinse it"
-            }
-          />
-        )
-      }
+      {lessonStep === 32 && (
+        <DialogBox
+          text={
+            <>
+              Keep <strong>scrolling down</strong> to swirl the beaker{" "}
+              <strong>3 times</strong> and rinse it.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 33 && (
+        <DialogBox
+          text={
+            <>
+              Press <strong>Shift + P</strong> to enter{" "}
+              <strong>Pouring Mode</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 34 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll down</strong> to pour the washings into the volumetric flask.
+            </>
+          }
+        />
+      )}
 
 
-      {
-        lessonStep === 33 &&
-        (
-          <DialogBox
-            text={
-              "Press Shift + P to enter Pour Mode"
-            }
-          />
-        )
-      }
+      {lessonStep === 35 && (
+        <DialogBox
+          text={
+            <>
+              Press <strong>Shift + P</strong> to exit{" "}
+              <strong>Pouring Mode</strong>.
+            </>
+          }
+        />
+      )}
 
-
-      {
-        lessonStep === 34 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Down to Pour"
-            }
-          />
-        )
-      }
-
-
-      {
-        lessonStep === 35 &&
-        (
-          <DialogBox
-            text={
-              "Press Shift + P to Exit Pour Mode"
-            }
-          />
-        )
-      }
-
-      {
-        lessonStep === 36 &&
-        (
-          <DialogBox
-            text={
-              "Click Add Liquid in Normal Beaker"
-            }
-          />
-        )
-      }
+      {lessonStep === 36 && (
+        <DialogBox
+          text={
+            <>
+              Click the held beaker, then select{" "}
+              <strong>Add Liquid</strong>.
+            </>
+          }
+        />
+      )}
 
 
       {
@@ -636,7 +658,11 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Water 30cm3"
+              <>
+              Fill the beaker with{" "}
+              <strong>30 cm³ of water (H₂O)</strong>
+              </>
+
             }
           />
         )
@@ -648,47 +674,47 @@ const SulfamicAcidNaOHTitration02 = () => {
         (
           <DialogBox
             text={
-              "Scroll Down to Swirl the Beaker to Rinse it"
+              <>
+              Keep <strong>scrolling down</strong> to swirl the beaker{" "}
+              <strong>3 times</strong> and rinse it.
+            </>
             }
           />
         )
       }
 
 
-      {
-        lessonStep === 39 &&
-        (
-          <DialogBox
-            text={
-              "Press Shift + P to enter Pour Mode"
-            }
-          />
-        )
-      }
+      {lessonStep === 39 && (
+        <DialogBox
+          text={
+            <>
+              Press <strong>Shift + P</strong> to enter{" "}
+              <strong>Pouring Mode</strong>.
+            </>
+          }
+        />
+      )}
 
+      {lessonStep === 40 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll down</strong> to pour the washings into the volumetric flask.
+            </>
+          }
+        />
+      )}
 
-      {
-        lessonStep === 40 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Down to Pour"
-            }
-          />
-        )
-      }
-
-
-      {
-        lessonStep === 41 &&
-        (
-          <DialogBox
-            text={
-              "Press Shift + P to Exit Pour Mode"
-            }
-          />
-        )
-      }
+      {lessonStep === 41 && (
+        <DialogBox
+          text={
+            <>
+              Press <strong>Shift + P</strong> to exit{" "}
+              <strong>Pouring Mode</strong>.
+            </>
+          }
+        />
+      )}
 
 
 
@@ -713,17 +739,16 @@ const SulfamicAcidNaOHTitration02 = () => {
       }
 
 
-      {
-        lessonStep === 42 &&
-        (
-          <DialogBox
-            text={
-              "Click the Volumetric Flask and select Fill to Mark (250 cm³)"
-            }
-          />
-        )
-      }
-
+      {lessonStep === 42 && (
+        <DialogBox
+          text={
+            <>
+              Click the volumetric flask, then select{" "}
+              <strong>Add Water</strong>.
+            </>
+          }
+        />
+      )}
 
 
       {/* =====================================================
@@ -747,88 +772,82 @@ const SulfamicAcidNaOHTitration02 = () => {
       }
 
 
-      {
-        lessonStep === 43 &&
-        (
-          <DialogBox
-            text={
-              "Now click The Volumetric Flask and select Place Bung"
-            }
-          />
-        )
-      }
+      {lessonStep === 43 && (
+        <DialogBox
+          text={
+            <>
+              Click the volumetric flask, then select{" "}
+              <strong>Place Bung</strong>.
+            </>
+          }
+        />
+      )}
 
+      {lessonStep === 44 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll down</strong> to invert the volumetric flask.{" "}
+              <strong>0/3</strong>
+            </>
+          }
+        />
+      )}
 
-      {
-        lessonStep === 44 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Downwards 0/3"
-            }
-          />
-        )
-      }
+      {lessonStep === 45 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll up</strong> to return the flask upright.{" "}
+              <strong>0/3</strong>
+            </>
+          }
+        />
+      )}
 
+      {lessonStep === 46 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll down</strong> to invert the volumetric flask again.{" "}
+              <strong>1/3</strong>
+            </>
+          }
+        />
+      )}
 
-      {
-        lessonStep === 45 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Upwards 0/3"
-            }
-          />
-        )
-      }
+      {lessonStep === 47 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll up</strong> to return the flask upright.{" "}
+              <strong>1/3</strong>
+            </>
+          }
+        />
+      )}
 
+      {lessonStep === 48 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll down</strong> for the final inversion.{" "}
+              <strong>2/3</strong>
+            </>
+          }
+        />
+      )}
 
-      {
-        lessonStep === 46 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Downwards 1/3"
-            }
-          />
-        )
-      }
-
-
-      {
-        lessonStep === 47 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Upwards 1/3"
-            }
-          />
-        )
-      }
-
-
-      {
-        lessonStep === 48 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Downwards 2/3"
-            }
-          />
-        )
-      }
-
-
-      {
-        lessonStep === 49 &&
-        (
-          <DialogBox
-            text={
-              "Scroll Upwards 2/3"
-            }
-          />
-        )
-      }
+      {lessonStep === 49 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll up</strong> to return the flask upright and complete mixing.{" "}
+              <strong>3/3</strong>
+            </>
+          }
+        />
+      )}
 
 
 

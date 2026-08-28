@@ -23,7 +23,7 @@
 .safety-container {
   position: relative;
 
-  width: 88vw;
+  width: 80vw;
   height: 92vh;
 
   display: flex;
@@ -189,10 +189,10 @@
 
 .safety-goggles-image {
   position: absolute;
-  left: 8%;
-  bottom: 9%;
+  left: 4%;
+  top: 0%;
 
-  width: 62%;
+  width: 82%;
   height: auto;
 
   object-fit: contain;
@@ -209,7 +209,7 @@
   right: 7%;
   bottom: 10%;
 
-  width: 32%;
+  width: 52%;
   height: auto;
 
   object-fit: contain;

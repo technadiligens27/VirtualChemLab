@@ -183,15 +183,25 @@ const SulfamicAcidNaOHTitration03 = () => {
   return (
     <>
 
-      {lessonStep==50 && (
+      {lessonStep === 50 && (
         <DialogBox
-          text={"Keep Back Beaker In Table"}
+          text={
+            <>
+              Click the beaker, then select{" "}
+              <strong>Keep Back on Table</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==51 && (
+      {lessonStep === 51 && (
         <DialogBox
-          text={"Keep Volumetric Flask In Table"}
+          text={
+            <>
+              Click the volumetric flask, then select{" "}
+              <strong>Keep Back on Table</strong>.
+            </>
+          }
         />
       )}
 
@@ -206,65 +216,112 @@ const SulfamicAcidNaOHTitration03 = () => {
         )
       }
 
-      {lessonStep==52 && (
+     {lessonStep === 52 && (
+  <DialogBox
+    text={
+      <>
+        Click the burette, then select{" "}
+        <strong>Left Hand</strong>.
+      </>
+    }
+  />
+      )}
+
+      {lessonStep === 53 && (
         <DialogBox
-          text={"Pick Up Burette To Left Hand"}
+          text={
+            <>
+              Click the funnel, then select{" "}
+              <strong>Right Hand</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==53 && (
+      {lessonStep === 54 && (
         <DialogBox
-          text={"Take funnel to Right Hand"}
+          text={
+            <>
+              Click the funnel, then select{" "}
+              <strong>Funnel Mode</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==54 && (
+      {lessonStep === 55 && (
         <DialogBox
-          text={"Click Funnel and select Funnel Mode"}
+          text={
+            <>
+              Click the volumetric flask, then select{" "}
+              <strong>Right Hand</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==55 && (
+      {lessonStep === 56 && (
         <DialogBox
-          text={"Click Volumetric Flask and Select Right Hand"}
+          text={
+            <>
+              Press <strong>P</strong> to enter{" "}
+              <strong>Pouring Mode</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==56 && (
+      {lessonStep === 57 && (
         <DialogBox
-          text={"Press P for Pouring Mode"}
+          text={
+            <>
+              <strong>Scroll down</strong> to pour the sulfamic acid solution into the burette.
+            </>
+          }
         />
       )}
 
-      {lessonStep==57 && (
+      {lessonStep === 58 && (
         <DialogBox
-          text={"Scroll Down to Pour"}
+          text={
+            <>
+              Press <strong>P</strong> to exit{" "}
+              <strong>Pouring Mode</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==58 && (
+      {lessonStep === 59 && (
         <DialogBox
-          text={"Press P to Exit Pouring Mode"}
+          text={
+            <>
+              Click the volumetric flask, then select{" "}
+              <strong>Keep Back on Table</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==59 && (
+      {lessonStep === 60 && (
         <DialogBox
-          text={"Keep Vokumetric Flask In table"}
+          text={
+            <>
+              Click the burette, then select{" "}
+              <strong>Exit Funnel Mode</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==60 && (
+      {lessonStep === 61 && (
         <DialogBox
-          text={"Click Buirette and Select Exit Funnel Mode"}
-        />
-      )}
-
-
-
-      {lessonStep==61 && (
-        <DialogBox
-          text={"Clamp Burette"}
+          text={
+            <>
+              Click the burette, then select{" "}
+              <strong>Clamp Burette</strong>.
+            </>
+          }
         />
       )}
 
@@ -274,12 +331,16 @@ const SulfamicAcidNaOHTitration03 = () => {
 
 
 
-      {lessonStep==62 && (
-        <DialogBox
-          text={"Keep Funnel In Table"}
-        />
-      )}
-
+        {lessonStep === 62 && (
+          <DialogBox
+            text={
+              <>
+                Click the funnel, then select{" "}
+                <strong>Keep Back on Table</strong>.
+              </>
+            }
+          />
+        )}
       {
         lessonStep === 62 &&
         (
@@ -291,9 +352,14 @@ const SulfamicAcidNaOHTitration03 = () => {
         )
       }
 
-      {lessonStep==63 && (
+      {lessonStep === 63 && (
         <DialogBox
-          text={"Take NaOH Reagent Bottle into Right Hand"}
+          text={
+            <>
+              Click the NaOH reagent bottle, then select{" "}
+              <strong>Right Hand</strong>.
+            </>
+          }
         />
       )}
 
@@ -311,42 +377,69 @@ const SulfamicAcidNaOHTitration03 = () => {
       )}
       */}
 
-      {lessonStep==66 && (
-        <DialogBox
-          text={"Take Volumetric Pipette to Left Hand"}
-        />
-      )}
+    {lessonStep === 66 && (
+      <DialogBox
+        text={
+          <>
+            Click the volumetric pipette, then select{" "}
+            <strong>Left Hand</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==67 && (
-        <DialogBox
-          text={"Scroll Down to relase air"}
-        />
-      )}
+    {lessonStep === 67 && (
+      <DialogBox
+        text={
+          <>
+            <strong>Scroll down</strong> to release the air from the pipette filler.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==68 && (
-        <DialogBox
-          text={"Click Volumetric Pipette and select Pipette Mode"}
-        />
-      )}
+    {lessonStep === 68 && (
+      <DialogBox
+        text={
+          <>
+            Click the volumetric pipette, then select{" "}
+            <strong>Pipette Mode</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==69 && (
-        <DialogBox
-          text={"Scroll Up to to get the lqiuid"}
-        />
-      )}
+    {lessonStep === 69 && (
+      <DialogBox
+        text={
+          <>
+            <strong>Scroll up</strong> to draw the NaOH solution into the pipette.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==70 && (
-        <DialogBox
-          text={"Exit Pipette Mode"}
-        />
-      )}
+    {lessonStep === 70 && (
+      <DialogBox
+        text={
+          <>
+            Click the volumetric pipette, then select{" "}
+            <strong>Exit Pipette Mode</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==71 && (
-        <DialogBox
-          text={"Keep NaOH Reagent Bottle Back in Table"}
-        />
-      )}
-
+    {lessonStep === 71 && (
+      <DialogBox
+        text={
+          <>
+            Click the NaOH reagent bottle, then select{" "}
+            <strong>Keep Back on Table</strong>.
+          </>
+        }
+      />
+    )}
       {
         lessonStep === 72 &&
         (
@@ -358,36 +451,59 @@ const SulfamicAcidNaOHTitration03 = () => {
         )
       }
 
-      {lessonStep==72 && (
+      {lessonStep === 72 && (
         <DialogBox
-          text={"Take Conical Flask To Right Hand"}
+          text={
+            <>
+              Click the conical flask, then select{" "}
+              <strong>Right Hand</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==73 && (
+      {lessonStep === 73 && (
         <DialogBox
-          text={"Go TO Pippete Mode"}
+          text={
+            <>
+              Click the volumetric pipette, then select{" "}
+              <strong>Pipette Mode</strong>.
+            </>
+          }
         />
-      )}
+)}
 
-      {lessonStep==74 && (
-        <DialogBox
-          text={"Scroll Donw to Pour"}
-        />
-      )}
+{lessonStep === 74 && (
+  <DialogBox
+    text={
+      <>
+        <strong>Scroll down</strong> to release the NaOH solution into the conical flask.
+      </>
+    }
+  />
+)}
 
-      {lessonStep==75 && (
-        <DialogBox
-          text={"Exit Pipeete Mode"}
-        />
-      )}
+{lessonStep === 75 && (
+  <DialogBox
+    text={
+      <>
+        Click the volumetric pipette, then select{" "}
+        <strong>Exit Pipette Mode</strong>.
+      </>
+    }
+  />
+)}
 
-      {lessonStep==76 && (
-        <DialogBox
-          text={"Keep Volumetric Pipette Back On Table"}
-        />
-      )}
-
+{lessonStep === 76 && (
+  <DialogBox
+    text={
+      <>
+        Click the volumetric pipette, then select{" "}
+        <strong>Keep Back on Table</strong>.
+      </>
+    }
+  />
+)}
       {
         lessonStep === 77 &&
         (
@@ -399,33 +515,57 @@ const SulfamicAcidNaOHTitration03 = () => {
         )
       }
 
-      {lessonStep==77 && (
+      {lessonStep === 77 && (
         <DialogBox
-          text={"Take Methyl Orange Bottle to Left Hand"}
+          text={
+            <>
+              Click the methyl orange bottle, then select{" "}
+              <strong>Left Hand</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==78 && (
+      {lessonStep === 78 && (
         <DialogBox
-          text={"Click Dropper and select Pour into Testube"}
+          text={
+            <>
+              Click the dropper, then select{" "}
+              <strong>Pour into Test Tube</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==79 && (
+      {lessonStep === 79 && (
         <DialogBox
-          text={"Squeeze Bottle to Pour Liquid "}
+          text={
+            <>
+              <strong>Squeeze the bottle</strong> to add methyl orange.
+            </>
+          }
         />
       )}
 
-      {lessonStep==80 && (
+      {lessonStep === 80 && (
         <DialogBox
-          text={"Exit Pour Mode"}
+          text={
+            <>
+              Click the dropper, then select{" "}
+              <strong>Exit Pour Mode</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==81 && (
+      {lessonStep === 81 && (
         <DialogBox
-          text={"Keep Methyl Orange Bottle Back In Table "}
+          text={
+            <>
+              Click the methyl orange bottle, then select{" "}
+              <strong>Keep Back on Table</strong>.
+            </>
+          }
         />
       )}
 
@@ -443,27 +583,46 @@ const SulfamicAcidNaOHTitration03 = () => {
 
 
 
-      {lessonStep==82 && (
+      {lessonStep === 82 && (
         <DialogBox
-          text={"Place Clamp in Centre"}
+          text={
+            <>
+              Click the burette clamp, then select{" "}
+              <strong>Place Clamp in Centre</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==83 && (
+      {lessonStep === 83 && (
         <DialogBox
-          text={"Click Conical Flask and Select Place Near Beaker"}
+          text={
+            <>
+              Click the conical flask, then select{" "}
+              <strong>Place Near Burette</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==84 && (
+      {lessonStep === 84 && (
         <DialogBox
-          text={"Scroll Down To Pour"}
+          text={
+            <>
+              <strong>Scroll down</strong> to add the sulfamic acid solution.
+            </>
+          }
         />
       )}
 
-      {lessonStep==85 && (
+      {lessonStep === 85 && (
         <DialogBox
-          text={"Remove Conical Flask from Buirette"}
+          text={
+            <>
+              Click the conical flask, then select{" "}
+              <strong>Remove from Burette</strong>.
+            </>
+          }
         />
       )}
 
@@ -478,65 +637,113 @@ const SulfamicAcidNaOHTitration03 = () => {
         )
       }
 
-      {lessonStep==86 && (
-        <DialogBox
-          text={"Remove Clamp From Centre"}
-        />
-      )}
+    {lessonStep === 86 && (
+      <DialogBox
+        text={
+          <>
+            Click the burette clamp, then select{" "}
+            <strong>Remove Clamp from Centre</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==87 && (
-        <DialogBox
-          text={"Clean Conical Flask"}
-        />
-      )}
+    {lessonStep === 87 && (
+      <DialogBox
+        text={
+          <>
+            Click the conical flask, then select{" "}
+            <strong>Clean Conical Flask</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==88 && (
-        <DialogBox
-          text={"Keep Conical Back in Table"}
-        />
-      )}
+    {lessonStep === 88 && (
+      <DialogBox
+        text={
+          <>
+            Click the conical flask, then select{" "}
+            <strong>Keep Back on Table</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==89 && (
-        <DialogBox
-          text={"Take NaOH Reagent Bottle to Right Hand"}
-        />
-      )}
+    {lessonStep === 89 && (
+      <DialogBox
+        text={
+          <>
+            Click the NaOH reagent bottle, then select{" "}
+            <strong>Right Hand</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==90 && (
-        <DialogBox
-          text={"Take Volumetric Pipette to Left Hand"}
-        />
-      )}
+    {lessonStep === 90 && (
+      <DialogBox
+        text={
+          <>
+            Click the volumetric pipette, then select{" "}
+            <strong>Left Hand</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==91 && (
-        <DialogBox
-          text={"Scroll Down"}
-        />
-      )}
+    {lessonStep === 91 && (
+      <DialogBox
+        text={
+          <>
+            <strong>Scroll down</strong> to release the air from the pipette filler.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==92 && (
-        <DialogBox
-          text={"Go To Pipette Mode"}
-        />
-      )}
+    {lessonStep === 92 && (
+      <DialogBox
+        text={
+          <>
+            Click the volumetric pipette, then select{" "}
+            <strong>Pipette Mode</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==93 && (
-        <DialogBox
-          text={"Scroll Up to to get the lqiuid"}
-        />
-      )}
+    {lessonStep === 93 && (
+      <DialogBox
+        text={
+          <>
+            <strong>Scroll up</strong> to draw the NaOH solution into the pipette.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==94 && (
-        <DialogBox
-          text={"Exit Pipette Mode"}
-        />
-      )}
+    {lessonStep === 94 && (
+      <DialogBox
+        text={
+          <>
+            Click the volumetric pipette, then select{" "}
+            <strong>Exit Pipette Mode</strong>.
+          </>
+        }
+      />
+    )}
 
-      {lessonStep==95 && (
-        <DialogBox
-          text={"Keep NaOH Reagent In Table"}
-        />
-      )}
+    {lessonStep === 95 && (
+      <DialogBox
+        text={
+          <>
+            Click the NaOH reagent bottle, then select{" "}
+            <strong>Keep Back on Table</strong>.
+          </>
+        }
+      />
+    )}
 
 
       {
@@ -551,30 +758,48 @@ const SulfamicAcidNaOHTitration03 = () => {
       }
 
 
-      {lessonStep==96 && (
+      {lessonStep === 96 && (
         <DialogBox
-          text={"Take Conical Flask Into Right Hand"}
+          text={
+            <>
+              Click the conical flask, then select{" "}
+              <strong>Right Hand</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==97 && (
+      {lessonStep === 97 && (
         <DialogBox
-          text={"Go To Pipette Mode"}
+          text={
+            <>
+              Click the volumetric pipette, then select{" "}
+              <strong>Pipette Mode</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==98 && (
+      {lessonStep === 98 && (
         <DialogBox
-          text={"Scroll Down to Pour"}
+          text={
+            <>
+              <strong>Scroll down</strong> to release the NaOH solution into the conical flask.
+            </>
+          }
         />
       )}
 
-      {lessonStep==99 && (
+      {lessonStep === 99 && (
         <DialogBox
-          text={"Exit Pippete Mode"}
+          text={
+            <>
+              Click the volumetric pipette, then select{" "}
+              <strong>Exit Pipette Mode</strong>.
+            </>
+          }
         />
       )}
-
       {
         lessonStep === 100 &&
         (
@@ -586,33 +811,56 @@ const SulfamicAcidNaOHTitration03 = () => {
         )
       }
 
-      {lessonStep==100 && (
+      {lessonStep === 100 && (
         <DialogBox
-          text={"Keep Volumetric Pippete Back In Table"}
+          text={
+            <>
+              Click the volumetric pipette, then select{" "}
+              <strong>Keep Back on Table</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==101 && (
+      {lessonStep === 101 && (
         <DialogBox
-          text={"Place Clamp In Center"}
+          text={
+            <>
+              Click the burette clamp, then select{" "}
+              <strong>Place Clamp in Centre</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==102 && (
+      {lessonStep === 102 && (
         <DialogBox
-          text={"Place Beaker Near Burrtte"}
+          text={
+            <>
+              Click the conical flask, then select{" "}
+              <strong>Place Near Burette</strong>.
+            </>
+          }
         />
       )}
 
-      {lessonStep==103 && (
+      {lessonStep === 103 && (
         <DialogBox
-          text={"Scroll Down to Pour"}
+          text={
+            <>
+              <strong>Scroll down</strong> to add the sulfamic acid solution.
+            </>
+          }
         />
       )}
 
-      {lessonStep==104 && (
+      {lessonStep === 104 && (
         <DialogBox
-          text={"Lesson Flow"}
+          text={
+            <>
+              Titration complete — <strong>lesson finished!</strong>
+            </>
+          }
         />
       )}
 

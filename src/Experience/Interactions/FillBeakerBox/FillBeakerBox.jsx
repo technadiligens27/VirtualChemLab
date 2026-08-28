@@ -328,7 +328,7 @@ const FillBeakerBox = () => {
                 }`}
                 onClick={() => setSelectedAmount(amount)}
               >
-                {amount} ml
+                {amount} cm³
               </button>
             ))}    
             </div>

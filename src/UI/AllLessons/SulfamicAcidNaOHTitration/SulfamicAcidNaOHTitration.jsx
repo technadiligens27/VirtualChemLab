@@ -103,7 +103,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 3 && (
         <DialogBox
           text={
-            "Take TestTube to Left Hand"
+            <>
+              Click the test tube, then select{" "}
+              <strong>Left Hand</strong> to pick it up.
+            </>
           }
         />
       )}
@@ -111,22 +114,35 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 4 && (
         <DialogBox
           text={
-            "Place Balance In Centre"
+            <>
+              Click the digital balance and select{" "}
+              <strong>Place Balance</strong> to bring it to the centre
+            </>
           }
         />
       )}
 
-      {lessonStep === 5 && (
-        <DialogBox
-          text={"Weigh Testube"}
-        />
-      )}
+    {lessonStep === 5 && (
+      <DialogBox
+        text={
+          <>
+            Select the held test tube, then choose{" "}
+            <strong>Weigh Test Tube</strong>
+          </>
+        }
+      />
+    )}
 
-      {lessonStep === 6 && (
-        <DialogBox
-          text={"Remove Testube"}
-        />
-      )}
+    {lessonStep === 6 && (
+      <DialogBox
+        text={
+          <>
+            Click the weighed test tube and select{" "}
+            <strong>Remove Test Tube</strong>
+          </>
+        }
+      />
+    )}
 
       {/* =====================================================
           GUIDELINE 2
@@ -145,7 +161,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 7 && (
         <DialogBox
           text={
-            "Take Spatula to Right Hand"
+            <>
+              Click the spatula, then select{" "}
+              <strong>Right Hand</strong> to pick it up
+            </>
           }
         />
       )}
@@ -153,7 +172,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 8 && (
         <DialogBox
           text={
-            "Add sulfamic acid"
+            <>
+              Click the bottle, then select{" "}
+              <strong>Take Sulfamic Acid</strong>
+            </>
           }
         />
       )}
@@ -161,7 +183,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 9 && (
         <DialogBox
           text={
-            "Click Spoon and Select Pour into Testube"
+            <>
+              Click the held spoon, then select{" "}
+              <strong>Pour into Test Tube</strong>
+            </>
           }
         />
       )}
@@ -169,7 +194,9 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 10 && (
         <DialogBox
           text={
-            "Scroll Down to Pour Sulfamic Acid to Testube"
+            <>
+              <strong>Scroll down</strong> to pour the sulfamic acid into the test tube.
+            </>
           }
         />
       )}
@@ -177,21 +204,32 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 11 && (
         <DialogBox
           text={
-            "Click Spoon and Select Disable Pour Mode"
+            <>
+              Click the spatula, then select{" "}
+              <strong>Disable Pour Mode</strong>.
+            </>
           }
         />
       )}
 
       {lessonStep === 12 && (
-        <DialogBox
-          text={"Weigh Testube"}
-        />
-      )}
+          <DialogBox
+            text={
+              <>
+                Select the held test tube, then choose{" "}
+                <strong>Weigh Test Tube</strong>
+              </>
+            }
+          />
+        )}
 
       {lessonStep === 13 && (
         <DialogBox
           text={
-            "Keep Spatula Back In Table"
+            <>
+              Click the spatula, then select{" "}
+              <strong>Keep Back on Table</strong>.
+            </>
           }
         />
       )}
@@ -199,7 +237,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 14 && (
         <DialogBox
           text={
-            "Remove Testube from Digital Balance"
+            <>
+              Click the weighed test tube, then select{" "}
+              <strong>Remove Test Tube</strong>
+            </>
           }
         />
       )}
@@ -221,29 +262,42 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 15 && (
         <DialogBox
           text={
-            "Take Normal Beaker to Left Hand"
+            <>
+              Now take the beaker on to your{" "}
+              <strong>Left Hand</strong>
+            </>
           }
         />
       )}
-
       {lessonStep === 16 && (
         <DialogBox
           text={
-            "Click Beaker and Select Add Liquid"
+           <>
+            Click held Beaker and Select <strong>Add Liquid</strong> 
+
+           </> 
           }
         />
       )}
 
       {lessonStep === 17 && (
         <DialogBox
-          text={"Water - 100cm3"}
+          text={
+            <>
+              Fill the beaker with{" "}
+              <strong>100 cm³ of water (H₂O)</strong>
+            </>
+          }
         />
       )}
 
       {lessonStep === 18 && (
         <DialogBox
           text={
-            "Press P for Pouring Mode"
+            <>
+              Press <strong>P</strong> to enter{" "}
+              <strong>Pouring Mode</strong>
+            </>
           }
         />
       )}
@@ -251,23 +305,28 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 19 && (
         <DialogBox
           text={
-            "Scroll Down to Pour Sulfamic Acid to Beaker"
+            <>
+              <strong>Scroll down</strong> to pour the sulfamic acid into the beaker
+            </>
           }
         />
       )}
 
       {lessonStep === 20 && (
-        <DialogBox
-          text={
-            "Press P to Exit Pour Mode"
-          }
-        />
-      )}
+          <DialogBox
+            text={
+              <>
+                Press <strong>P</strong> to exit{" "}
+                <strong>Pouring Mode</strong>
+              </>
+            }
+          />
+        )}
 
       {lessonStep === 21 && (
         <DialogBox
           text={
-            "Keep Testube Back In Table"
+            "Keep the held Testube Back In Table "
           }
         />
       )}

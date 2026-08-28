@@ -10,10 +10,10 @@ export const safetyInstructionData = {
 
   illustration: {
     gogglesImage:
-      "./images/safety-goggles.png",
+      "./safety-goggles.png",
 
     flaskImage:
-      "./images/conical-flask.png",
+      "./gloves.png",
   },
 
   instructions: [

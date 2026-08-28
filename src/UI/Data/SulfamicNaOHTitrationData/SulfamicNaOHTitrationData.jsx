@@ -105,29 +105,27 @@ export const sulfamicAcidNaOHTitrationReactionData = [
     noticeTitle: "What You Should Notice",
 
     notices: [
-      "The prepared sulfamic acid standard solution is clear and colourless.",
-      "After methyl orange is added to the sodium hydroxide solution, the solution appears yellow.",
-      "As sulfamic acid is added, temporary orange regions may appear where the acid enters the flask.",
-      "At the endpoint, a permanent pale orange colour remains after swirling.",
+      "The sulfamic acid solution is clear and colourless.",
+      "With methyl orange, the sodium hydroxide solution appears yellow.",
+      "At the endpoint, a permanent pale orange colour remains.",
     ],
 
     informationTitle: "What Happens",
 
     information: [
-      "A known mass of sulfamic acid is dissolved and made up to a fixed volume to prepare a standard solution.",
-      "Sulfamic acid reacts with sodium hydroxide in a 1:1 mole ratio.",
-      "The measured volume of standard sulfamic acid required to neutralise 25.0 cm³ of sodium hydroxide can be used to calculate the sodium hydroxide concentration.",
+      "Sulfamic acid is used to prepare a standard solution.",
+      "It reacts with sodium hydroxide in a 1:1 mole ratio.",
+      "The titre is used to calculate the sodium hydroxide concentration.",
     ],
 
     importantTitle: "Important:",
 
     importantText:
-      "Near the endpoint, add the sulfamic acid dropwise and stop when the methyl orange changes from yellow to a permanent pale orange colour.",
+      "Near the endpoint, add sulfamic acid dropwise until a permanent pale orange colour remains.",
 
     buttonText: "Begin Lesson",
   },
 ]
-
 
 export const guidelineData = [
   {
@@ -194,7 +192,7 @@ export const guidelineData = [
       "Return the empty test tube to the table.",
     ],
 
-    image: "./beaker+Spoon.png",
+    image: "./beakerSpoon.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -263,7 +261,7 @@ export const guidelineData = [
       "Transfer the second set of washings into the volumetric flask.",
     ],
 
-    image: "./rinseSulfamicBeaker.png",
+    image: "./transferSulfamicToVolumetricFlask.png",
 
     // onButtonContinue: () => {
     //   setHessGuidelineNumber(false)
@@ -285,7 +283,7 @@ export const guidelineData = [
       "Make sure the final liquid level is at the calibration line.",
     ],
 
-    image: "./fillSulfamicToMark.png",
+    image: "./volumetricFlaskWithBung.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

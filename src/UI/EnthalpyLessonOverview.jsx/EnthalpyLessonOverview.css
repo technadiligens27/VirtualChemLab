@@ -551,7 +551,7 @@ font-family: "Baloo Thambi 2", sans-serif;
 
   color: #3f4964;
 
-  font-size: clamp(15px, 1.15vw, 19px);
+  font-size: clamp(15px, 1vw, 19px);
   line-height: 1.5;
 }
 

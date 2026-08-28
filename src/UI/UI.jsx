@@ -262,6 +262,12 @@ const UI = () => {
   // },[lessonStep,showConicalArrow])
 
   useEffect(()=>{
+    setShowArrowConicalArrow(
+      (selectedLesson===12.2 && lessonStep==72)
+    )
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
     setShowSpoonArrow(
       (selectedLesson==1 && lessonStep===6) ||
       (selectedLesson===8 && lessonStep ===9) ||

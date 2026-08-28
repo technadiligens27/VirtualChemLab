@@ -537,10 +537,13 @@ const ClickObject = () => {
     if(lessonStep===85 && selectedLesson===12.2){
       setLessonStep(86);      
     }
+
+    setSelectedObject(null)
   }
 
   const handleCleanBeaker = ()=>{
     setIsCleanBeaker(true);
+    setSelectedObject(null)
   }
 
   const moveObjectToLeftHand = () => {
@@ -1061,7 +1064,11 @@ const ClickObject = () => {
   const handleTableObjectClick = (clickedObject) => {
     const selectedItem = selectableObjects.find((item) => {
       if (!item.ref?.current) return false
-      return isClickedInsideObject(clickedObject, item.ref.current)
+
+      return isClickedInsideObject(
+        clickedObject,
+        item.ref.current
+      )
     })
 
     if (!selectedItem) {
@@ -1069,16 +1076,39 @@ const ClickObject = () => {
       return
     }
 
-     if (
-    selectedLesson === 10 &&
-    selectedItem.name === "mainMassBalance"
-  ) {
-    setSelectedObject(null)
-    return
-  }
+    const objectName = selectedItem.name
 
+    if ([12, 12.1, 12.2].includes(selectedLesson)) {
+      if (["kettle", "main-dropper"].includes(objectName)) {
+        setSelectedObject(null)
+        return
+      }
 
-    setClickedModel(selectedItem.name)
+      if ( lessonStep >= 3 && ["main-glove-left", "main-glove-right", "Goggles"].includes(objectName)) {
+        setSelectedObject(null)
+        return
+      }
+
+      if((lessonStep===55 || lessonStep===26 || lessonStep===51) && objectName==="mainMassBalance"){
+        setSelectedObject(null)
+        return
+      }
+
+      if(lessonStep===52 && objectName==="volumetric-pipette"){
+        setSelectedObject(null)
+        return
+      }
+    }
+
+    if (
+      selectedLesson === 10 &&
+      objectName === "mainMassBalance"
+    ) {
+      setSelectedObject(null)
+      return
+    }
+
+    setClickedModel(objectName)
 
     selectTableObject(selectedItem)
   }
@@ -2381,6 +2411,8 @@ const handlePlaceBalance = () => {
     if(selectedLesson ===12.2 && lessonStep===86){
       setLessonStep(87)
     }
+
+    setSelectedObject(null)
   }
 
   const handlePolystereneStirMode = ()=>{
@@ -2792,6 +2824,7 @@ const handlePlaceBalance = () => {
   const handleVolumetricPippeteMode = ()=>{
     console.log(isVolumetricPipetteMode)
     setIsVolumetricPipetteMode(true)
+    setSelectedObject(null)
   }
   const removeVolumetricPippeteMode = ()=>{
     if(selectedLesson===11 && lessonStep===10){
@@ -2825,6 +2858,7 @@ const handlePlaceBalance = () => {
       setLessonStep(100)
     }
     setIsVolumetricPipetteMode(false)
+    setSelectedObject(null)
   }
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
@@ -2879,6 +2913,8 @@ const handlePlaceBalance = () => {
      if(selectedLesson===12.2 && lessonStep==80){
           setLessonStep(81)
      }
+
+     setSelectedObject(null)
   }
   
   const renderPhenopthalineHeldButtons = ()=>{
@@ -3169,6 +3205,27 @@ const renderThermometerHeldButtons=()=>{
 }
 
 const renderBuretteHeldButtons = ()=>{
+
+    if (selectedObject.name === "main-buirette" && selectedLesson===12.2 && lessonStep===60) {
+      return (
+        <>
+          <button onClick={()=>{toggleFunnelMode();setLessonStep(61)}}>
+            Exit Funnel Mode
+          </button>
+        </>
+      )
+    }
+
+    if (selectedObject.name === "main-buirette" && selectedLesson===12.2 && lessonStep===61) {
+      return (
+        <>
+          <button onClick={handleClampBurette}>
+            {isBuiretteClamped ? "Unclamp" : "Clamp"}
+          </button>
+        </>
+      )
+    }
+
     if (selectedObject.name === "main-buirette") {
       return (
         <>
@@ -3194,6 +3251,7 @@ const renderBuretteHeldButtons = ()=>{
         </>
       )
     }
+
 
     
 }
@@ -3336,7 +3394,7 @@ const renderVolumetricHeldButtons = ()=>{
 
             {selectedLesson === 12.1 && lessonStep === 42 && (
               <button onClick={()=>{setLessonStep(43)}}>
-                Fill to Mark (250 cm³)
+                 Add Water
               </button>
             )}
           </>
@@ -3746,10 +3804,8 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={volumetricRef}
-      multiplier={1.2}
+      multiplier={2}
     />
-
-
 
   </>
 )

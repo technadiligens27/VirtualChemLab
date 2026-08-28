@@ -22,7 +22,7 @@ const PourPowderFromTestube = ({
   randomMovement = 0.5,
   leftMovement = 0.5,
 
-  powderFadeSpeed = 0.5,
+  powderFadeSpeed = 1,
 
   model,
 }) => {

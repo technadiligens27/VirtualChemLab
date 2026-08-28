@@ -39,16 +39,37 @@ const PouringModeInFunnelMode = ({
     MainGuidelineContext
   )
 
-  const {selectedLeftHand,selectedRightHand} = useContext(InteractionContext);
-  const {mainBuiretteRef,volumetricRef} = useContext(ModelContext)
+  const {
+    selectedLeftHand,
+    selectedRightHand,
+  } = useContext(
+    InteractionContext
+  )
+
+  const {
+    mainBuiretteRef,
+    volumetricRef,
+  } = useContext(
+    ModelContext
+  )
 
   const [
     isPouring,
     setIsPouring,
   ] = useState(false)
 
+  // =====================================================
+  // REFS
+  // =====================================================
+
   const mouthRef =
     useRef(null)
+
+  const bungRef =
+    useRef(null)
+
+  const bungWasVisibleRef =
+    useRef(false)
 
   const targetRotationRef =
     useRef(0)
@@ -112,7 +133,10 @@ const PouringModeInFunnelMode = ({
     const pouringModel =
       pouringModelRef.current
 
-    // Store original model transforms
+    // =====================================================
+    // STORE ORIGINAL MODEL TRANSFORMS
+    // =====================================================
+
     originalModelPositionRef.current =
       model.position.clone()
 
@@ -122,7 +146,10 @@ const PouringModeInFunnelMode = ({
     originalModelScaleRef.current =
       model.scale.clone()
 
-    // Store original pouring model transforms
+    // =====================================================
+    // STORE ORIGINAL POURING MODEL TRANSFORMS
+    // =====================================================
+
     originalPouringPositionRef.current =
       pouringModel.position.clone()
 
@@ -132,7 +159,44 @@ const PouringModeInFunnelMode = ({
     originalPouringScaleRef.current =
       pouringModel.scale.clone()
 
-    // Find mouth
+    // =====================================================
+    // FIND + HIDE BUNG
+    // =====================================================
+
+    bungRef.current = null
+
+    bungWasVisibleRef.current =
+      false
+
+    pouringModel.traverse(
+      (child) => {
+        const childName =
+          child.name?.toLowerCase() ||
+          ""
+
+        if (
+          childName.includes("bung")
+        ) {
+          bungRef.current =
+            child
+
+          // Store visibility when mounted
+          bungWasVisibleRef.current =
+            child.visible
+
+          // Only hide if it was visible
+          if (child.visible) {
+            child.visible =
+              false
+          }
+        }
+      }
+    )
+
+    // =====================================================
+    // FIND MOUTH
+    // =====================================================
+
     mouthRef.current = null
 
     model.position.x = 0
@@ -140,17 +204,22 @@ const PouringModeInFunnelMode = ({
     model.position.y +=
       modelYOffset
 
-    model.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() || ""
+    model.traverse(
+      (child) => {
+        const childName =
+          child.name?.toLowerCase() ||
+          ""
 
-      if (
-        childName.includes("mouth")
-      ) {
-        mouthRef.current =
-          child
+        if (
+          childName.includes(
+            "mouth"
+          )
+        ) {
+          mouthRef.current =
+            child
+        }
       }
-    })
+    )
 
     if (!mouthRef.current) {
       console.log(
@@ -160,7 +229,10 @@ const PouringModeInFunnelMode = ({
       return
     }
 
-    // Apply scales
+    // =====================================================
+    // APPLY SCALE
+    // =====================================================
+
     model.scale.setScalar(
       modelScale
     )
@@ -177,6 +249,29 @@ const PouringModeInFunnelMode = ({
     // =====================================================
 
     return () => {
+      // =====================================================
+      // RESTORE BUNG
+      // =====================================================
+
+      // Only make bung visible again if
+      // it was visible when this component mounted
+      if (
+        bungRef.current &&
+        bungWasVisibleRef.current
+      ) {
+        bungRef.current.visible =
+          true
+      }
+
+      bungRef.current = null
+
+      bungWasVisibleRef.current =
+        false
+
+      // =====================================================
+      // RESTORE MODEL
+      // =====================================================
+
       if (modelRef?.current) {
         if (
           originalModelPositionRef.current
@@ -206,6 +301,10 @@ const PouringModeInFunnelMode = ({
           true
         )
       }
+
+      // =====================================================
+      // RESTORE POURING MODEL
+      // =====================================================
 
       if (pouringModelRef?.current) {
         if (
@@ -254,8 +353,12 @@ const PouringModeInFunnelMode = ({
   // =====================================================
 
   useEffect(() => {
-    const handleWheel = (event) => {
-      if (!pouringModelRef?.current) {
+    const handleWheel = (
+      event
+    ) => {
+      if (
+        !pouringModelRef?.current
+      ) {
         return
       }
 
@@ -290,7 +393,8 @@ const PouringModeInFunnelMode = ({
 
       // Fully upright again
       if (
-        targetRotationRef.current <= 0
+        targetRotationRef.current <=
+        0
       ) {
         setIsPouring(false)
       }
@@ -321,13 +425,23 @@ const PouringModeInFunnelMode = ({
   // =====================================================
 
   useFrame((_, delta) => {
-    if (!mouthRef.current) return
-    if (!pouringModelRef?.current) return
+    if (!mouthRef.current) {
+      return
+    }
+
+    if (
+      !pouringModelRef?.current
+    ) {
+      return
+    }
 
     const pouringModel =
       pouringModelRef.current
 
-    // Get mouth world position
+    // =====================================================
+    // GET MOUTH WORLD POSITION
+    // =====================================================
+
     mouthRef.current.getWorldPosition(
       targetWorldPositionRef.current
     )
@@ -336,26 +450,38 @@ const PouringModeInFunnelMode = ({
       targetWorldPositionRef.current
     )
 
-    // Convert to pouring model parent's local position
+    // =====================================================
+    // CONVERT TO POURING MODEL PARENT LOCAL POSITION
+    // =====================================================
+
     if (pouringModel.parent) {
       pouringModel.parent.worldToLocal(
         targetLocalPositionRef.current
       )
     }
 
-    // Apply offsets
+    // =====================================================
+    // APPLY OFFSETS
+    // =====================================================
+
     targetLocalPositionRef.current.x +=
       pouringModelXOffset
 
     targetLocalPositionRef.current.y +=
       pouringModelYOffset
 
-    // Keep pouring object beside mouth
+    // =====================================================
+    // KEEP POURING MODEL BESIDE MOUTH
+    // =====================================================
+
     pouringModel.position.copy(
       targetLocalPositionRef.current
     )
 
-    // Smooth rotation
+    // =====================================================
+    // SMOOTH ROTATION
+    // =====================================================
+
     pouringModel.rotation.z =
       THREE.MathUtils.damp(
         pouringModel.rotation.z,
@@ -365,11 +491,26 @@ const PouringModeInFunnelMode = ({
       )
   })
 
+  // =====================================================
+  // RENDER
+  // =====================================================
+
   return (
     <>
-      {isPouring && selectedLeftHand?.name==="main-buirette" && selectedRightHand?.name ==="volumetric-flask" &&
-        <PourFromVolumetricFlask modelRef={volumetricRef} otherModelRef={mainBuiretteRef}/>
-      }
+      {isPouring &&
+        selectedLeftHand?.name ===
+          "main-buirette" &&
+        selectedRightHand?.name ===
+          "volumetric-flask" && (
+          <PourFromVolumetricFlask
+            modelRef={
+              volumetricRef
+            }
+            otherModelRef={
+              mainBuiretteRef
+            }
+          />
+        )}
     </>
   )
 }

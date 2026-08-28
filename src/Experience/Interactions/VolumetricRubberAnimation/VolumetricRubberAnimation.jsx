@@ -167,7 +167,7 @@ const VolumetricRubberAnimation = ({
 
       {selectedRightHand?.name==='main-Conical-Flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}/>}
 
-      {selectedRightHand?.name==='NaOH-bottle' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={naohBottleRef}/>}
+      {selectedRightHand?.name==='NaOH-bottle' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette decreaseAmount = {0.5} modelRef={modelRef} otherModelRef={naohBottleRef}/>}
 
 
       {selectedRightHand?.name==='volumetric-flask' && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
