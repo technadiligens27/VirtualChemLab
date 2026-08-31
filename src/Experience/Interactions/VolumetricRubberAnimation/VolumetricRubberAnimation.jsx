@@ -8,7 +8,6 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import FillVolumetricPipette from "../FillVolumetricPipette/FillVolumetricPipette";
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import PourVolumetricPipette from "../PourVolumetricPipette/PourVolumetricPipette";
-import FillConicalBeaker from "../FillConicalBeaker/FillConicalBeaker";
 
 const VolumetricRubberAnimation = ({
   modelRef,
@@ -163,11 +162,12 @@ const VolumetricRubberAnimation = ({
     <>
       {fillVolumetricPipette && isVolumetricPipetteMode && selectedRightHand?.name==="main-normal-beaker" && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
     
-      {selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
+      {selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
 
       {selectedRightHand?.name==='main-Conical-Flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}/>}
 
-      {selectedRightHand?.name==='NaOH-bottle' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette decreaseAmount = {0.5} modelRef={modelRef} otherModelRef={naohBottleRef}/>}
+      {selectedRightHand?.name==='NaOH-bottle' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette decreaseAmount = {0.7} modelRef={modelRef} otherModelRef={naohBottleRef}/>}
+      {/* {selectedLesson==12.2 && lessonStep==93  && selectedRightHand?.name==='NaOH-bottle' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette decreaseAmount = {0.2} modelRef={modelRef} otherModelRef={naohBottleRef}/>} */}
 
 
       {selectedRightHand?.name==='volumetric-flask' && pourFromVolumetricPipette && isVolumetricPipetteMode && <PourVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}

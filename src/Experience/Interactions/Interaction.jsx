@@ -172,11 +172,11 @@ const Interaction = () => {
         <VolumetricPipetteMode  yOffset={4} modelRef={volumetricRef} modelScale ={ 0.7} pipetteScale = {0.4} decreaseAmount={0.2}  modelYOffset={-1.5}/>
       }
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-Conical-Flask' &&
-        <VolumetricPipetteMode  yOffset={4} modelRef={conicalBeakerRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
+        <VolumetricPipetteMode  yOffset={3} modelRef={conicalBeakerRef} modelScale ={ 0.5} pipetteScale = {0.4}  modelYOffset={-1.5}/>
       }
 
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'NaOH-bottle' &&
-        <VolumetricPipetteMode  yOffset={4} modelRef={naohBottleRef} modelScale ={ 0.7} pipetteScale = {0.4}  modelYOffset={-1.5}/>
+        <VolumetricPipetteMode  yOffset={3} modelRef={naohBottleRef} modelScale ={ 0.5} pipetteScale = {0.4}  modelYOffset={-2}/>
       }
 
       {

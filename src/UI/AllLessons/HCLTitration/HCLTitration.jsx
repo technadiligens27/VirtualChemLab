@@ -357,7 +357,7 @@ const guidelineData = [
 ]
     return(
         <>
-
+{/* 
         <HCLTitrationLiveDataPanel
 
             normalBeakerAmount={
@@ -472,7 +472,7 @@ const guidelineData = [
             ]}
 
             autoHideDelay={3000}
-          />
+          /> */}
 
 
             {lessonStep === 1 && (

@@ -354,7 +354,7 @@ export const InteractionProvider = ({ children }) => {
         isFillToMark,setIsFillToMark,
         isPouringModeFunnelMode,setIsPouringModeFunnelMode,
         showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration,
-        
+            
         
         
       }}

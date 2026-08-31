@@ -23,7 +23,7 @@ const ChemEnvironment = () => {
          kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
          volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef,phenopthalineBottleRef,
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
-         arrowSulfamicRef
+         arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef
   } = useContext(ModelContext);
 
 
@@ -240,7 +240,8 @@ const hideVerticalObjects=(root)=>{
 
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
     methylBottleRef.current = scene.getObjectByName("methyl-dropper-bottle")
-    naohBottleRef.current = scene.getObjectByName('NaOH-bottle')
+    naohBottleRef.current = scene.getObjectByName('NaOH-bottle');
+    naohLiquidRef.current = scene.getObjectByName('NaOH-bottle-liquid')
 
     conicalBeakerLiquidRef.current=scene.getObjectByName('conical-liquid-25.');
 
@@ -292,6 +293,7 @@ const hideVerticalObjects=(root)=>{
   hideDropletObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
+ naohLiquidRef.current.visible = true
 
   }, [scene])
 
@@ -374,6 +376,9 @@ const hideVerticalObjects=(root)=>{
 
       arrowSulfamicRef.current = scene.getObjectByName("sulfamic-bottle-arrow");
       arrowSulfamicRef.current.visible = false;
+
+      arrowMethylBottleRef.current = scene.getObjectByName("methyl-dropper-arrow");
+      arrowMethylBottleRef.current.visible = false
 
   }, [scene])
 

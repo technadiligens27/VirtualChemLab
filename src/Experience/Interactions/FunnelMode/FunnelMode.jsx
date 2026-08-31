@@ -400,8 +400,8 @@ const FunnelMode = ({
           pouringModelRef={
             volumetricRef
           }
-          modelScale={0.6}
-          pouringModelScale={0.6}
+          modelScale={0.5}
+          pouringModelScale={0.5}
           pouringModelXOffset={1.2}
           pouringModelYOffset={1}
         />

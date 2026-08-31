@@ -968,7 +968,7 @@ const SulfamicTitrationLiveDataPanel = ({
             "
           >
 
-            <div className="sulfamic-live-data-section-title">
+            {/* <div className="sulfamic-live-data-section-title">
 
               <span className="sulfamic-live-data-dot" />
 
@@ -979,12 +979,12 @@ const SulfamicTitrationLiveDataPanel = ({
             </div>
 
 
-            <div className="sulfamic-live-data-divider" />
+            <div className="sulfamic-live-data-divider" /> */}
 
 
             {/* INITIAL READING */}
 
-            <div className="sulfamic-live-data-row">
+            {/* <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
 
@@ -1013,11 +1013,11 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* CURRENT READING */}
-
+{/* 
             <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
@@ -1047,12 +1047,12 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* SULFAMIC DELIVERED */}
 
-            <div className="sulfamic-live-data-row">
+            {/* <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
 
@@ -1085,11 +1085,11 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* ENDPOINT */}
-
+{/* 
             <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
@@ -1122,7 +1122,7 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
           </div>
 
@@ -1134,7 +1134,6 @@ const SulfamicTitrationLiveDataPanel = ({
           <div
             className="
               sulfamic-live-data-section
-              sulfamic-live-data-secondary-section
             "
           >
 
@@ -1153,7 +1152,7 @@ const SulfamicTitrationLiveDataPanel = ({
 
 
             {/* ROUGH TITRE */}
-
+{/* 
             <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
@@ -1183,7 +1182,7 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* TRIAL 1 */}
@@ -1305,7 +1304,7 @@ const SulfamicTitrationLiveDataPanel = ({
             "
           >
 
-            <div className="sulfamic-live-data-section-title">
+            {/* <div className="sulfamic-live-data-section-title">
 
               <span className="sulfamic-live-data-dot" />
 
@@ -1313,15 +1312,15 @@ const SulfamicTitrationLiveDataPanel = ({
                 Calculations
               </h2>
 
-            </div>
+            </div> */}
 
 
-            <div className="sulfamic-live-data-divider" />
+            {/* <div className="sulfamic-live-data-divider" /> */}
 
 
             {/* SULFAMIC CONCENTRATION */}
 
-            <div className="sulfamic-live-data-row">
+            {/* <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
 
@@ -1353,12 +1352,12 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* NaOH CONCENTRATION */}
 
-            <div className="sulfamic-live-data-row">
+            {/* <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
 
@@ -1390,7 +1389,7 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
           </div>
 

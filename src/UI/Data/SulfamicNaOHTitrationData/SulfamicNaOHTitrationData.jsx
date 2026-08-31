@@ -471,7 +471,7 @@ export const guidelineData = [
       "Return the volumetric pipette to the table.",
     ],
 
-    image: "./freshNaOHConicalFlask.png",
+    image: "./transferNaOHToConicalFlask.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

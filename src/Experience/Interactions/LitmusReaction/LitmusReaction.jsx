@@ -95,7 +95,7 @@ const LitmusReaction = ({ litmusRef, type }) => {
 
     const targetColor = new THREE.Color(
       type === "acid"
-        ? "#000000"
+        ? "#880d0d"
         : "#0000ff"
     )
 

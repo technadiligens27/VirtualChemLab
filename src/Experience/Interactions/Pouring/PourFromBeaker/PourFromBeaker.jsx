@@ -22,7 +22,7 @@ const PourFromBeaker = ({
   // the visible pour stream scales up
   pourScaleSpeed = 5,
 
-  otherLiquidColor = "#030a0b",
+  otherLiquidColor = "#f8fafc",
   otherLiquidOpacity = 0.35,
 }) => {
   const {
@@ -55,6 +55,9 @@ const PourFromBeaker = ({
     useRef(false)
 
   const hasSourceLiquidRef =
+    useRef(false)
+
+  const hasClonedReceiverMaterialRef =
     useRef(false)
 
   // =========================================================
@@ -184,77 +187,25 @@ const PourFromBeaker = ({
     }
 
     // =======================================================
-    // RECEIVER LIQUID MATERIAL
-    // =======================================================
-
-    if (
-      otherLiquidRef.current
-    ) {
-      const otherLiquid =
-        otherLiquidRef.current
-
-      const prepareOtherMaterial = (
-        material
-      ) => {
-        if (!material) {
-          return material
-        }
-
-        const cloned =
-          material.clone()
-
-        cloned.color?.set(
-          otherLiquidColor
-        )
-
-        cloned.transparent =
-          true
-
-        cloned.opacity =
-          otherLiquidOpacity
-
-        cloned.depthWrite =
-          false
-
-        cloned.needsUpdate =
-          true
-
-        return cloned
-      }
-
-      if (
-        Array.isArray(
-          otherLiquid.material
-        )
-      ) {
-        otherLiquid.material =
-          otherLiquid.material.map(
-            prepareOtherMaterial
-          )
-      } else if (
-        otherLiquid.material
-      ) {
-        otherLiquid.material =
-          prepareOtherMaterial(
-            otherLiquid.material
-          )
-      }
-    }
-
-    // =======================================================
-    // RESET
+    // IMPORTANT:
+    // DO NOT CHANGE RECEIVER LIQUID MATERIAL HERE.
+    //
+    // This keeps its original color until pouring begins.
     // =======================================================
 
     progressRef.current = 0
-    isFinishedRef.current = false
+
+    isFinishedRef.current =
+      false
 
     hasSourceLiquidRef.current =
+      false
+
+    hasClonedReceiverMaterialRef.current =
       false
   }, [
     modelRef,
     otherModelRef,
-    otherLiquidColor,
-    otherLiquidOpacity,
   ])
 
   // =========================================================
@@ -280,11 +231,17 @@ const PourFromBeaker = ({
       hasSourceLiquidRef.current =
         liquidRef.current.scale.y > 0
 
+      // =====================================================
+      // SOURCE EMPTY
+      // =====================================================
+
       if (
         !hasSourceLiquidRef.current
       ) {
         pourRef.current.scale.y = 0
-        pourRef.current.visible = false
+
+        pourRef.current.visible =
+          false
 
         console.log(
           "Cannot pour: source liquid is empty"
@@ -293,22 +250,64 @@ const PourFromBeaker = ({
         return
       }
 
+      // =====================================================
+      // CLONE RECEIVER MATERIAL
+      //
+      // This happens only when pouring begins.
+      // =====================================================
+
+      if (
+        !hasClonedReceiverMaterialRef.current
+      ) {
+        const otherLiquid =
+          otherLiquidRef.current
+
+        if (
+          Array.isArray(
+            otherLiquid.material
+          )
+        ) {
+          otherLiquid.material =
+            otherLiquid.material.map(
+              (material) =>
+                material.clone()
+            )
+        } else if (
+          otherLiquid.material
+        ) {
+          otherLiquid.material =
+            otherLiquid.material.clone()
+        }
+
+        hasClonedReceiverMaterialRef.current =
+          true
+      }
+
       progressRef.current = 0
-      isFinishedRef.current = false
+
+      isFinishedRef.current =
+        false
 
       pourRef.current.scale.y = 0
-      pourRef.current.visible = true
 
-      liquidRef.current.visible = true
+      pourRef.current.visible =
+        true
+
+      liquidRef.current.visible =
+        true
 
       otherLiquidRef.current.visible =
         true
     } else {
       pourRef.current.scale.y = 0
-      pourRef.current.visible = false
+
+      pourRef.current.visible =
+        false
 
       progressRef.current = 0
-      isFinishedRef.current = false
+
+      isFinishedRef.current =
+        false
 
       hasSourceLiquidRef.current =
         false
@@ -427,7 +426,9 @@ const PourFromBeaker = ({
       liquidAmount * progress
 
     // =======================================================
-    // KEEP RECEIVER COLOR / OPACITY
+    // RECEIVER COLOR / OPACITY
+    //
+    // This now runs ONLY while actual pouring is happening.
     // =======================================================
 
     const otherLiquid =

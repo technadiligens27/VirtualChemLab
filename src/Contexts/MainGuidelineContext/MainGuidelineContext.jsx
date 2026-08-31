@@ -50,7 +50,11 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [showNaOHBBottleArrowRef,setShowNaOHBBottleArrowRef] = useState(false)
 
-  const [showSulfamicArrow,setShowSulfamicArrow] = useState(false)
+  const [showSulfamicArrow,setShowSulfamicArrow] = useState(false);
+  const [showMethyArrow,setShowMethylArrow] = useState(false);
+
+  const [showBuretteClampArrow,setShowBuretteClampArrow] = useState(false)
+
 
   const resetLessonGuidelines = () => {
     labResetVersionRef.current += 1
@@ -185,7 +189,13 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowNaOHBBottleArrowRef,
 
         showSulfamicArrow,
-        setShowSulfamicArrow
+        setShowSulfamicArrow,
+
+        showMethyArrow,
+        setShowMethylArrow,
+
+        showBuretteClampArrow,
+        setShowBuretteClampArrow
 
 
       }}

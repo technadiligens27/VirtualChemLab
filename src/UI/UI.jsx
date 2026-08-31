@@ -31,6 +31,7 @@ import HCLTitrationLiveDataPanel from "./HCLTitrationLiveDataPanel/HCLTitrationL
 import SulfamicAcidNaOHTitration from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration"
 import SulfamicAcidNaOHTitration02 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration02"
 import SulfamicAcidNaOHTitration03 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration03"
+import TitreValueRecorded from "../Experience/Interactions/TitreValueRecorded/TitreValueRecorded"
 
 const mainContent = [
   {
@@ -122,7 +123,8 @@ const UI = () => {
     showPolystereneArrow,setShowPolystereneArrow,showPottasiumCarbonateArrow,setShowPottasiumCarbonateArrow,
     showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow,
     showVolumetricArrow,setShowVolumetricArrow,setShowVolumetricFlaskArrow,setShowFunnelArrow,
-    setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow
+    setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
+    showBuretteClampArrow,setShowBuretteClampArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -131,7 +133,7 @@ const UI = () => {
     clickedModel,
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
-    setIsReactionTimerRunning,isPouring,
+    setIsReactionTimerRunning,isPouring
   } = useContext(InteractionContext)
 
 
@@ -161,10 +163,16 @@ const UI = () => {
   useEffect(()=>{
     setShowBuretteArrow(
       (lessonStep===18 && selectedLesson===8) ||
-      (lessonStep===52 && selectedLesson===12.2)
+      (lessonStep===52 && selectedLesson===12.2) 
     )
   },[selectedLesson, lessonStep])
 
+
+  useEffect(()=>{
+    setShowBuretteClampArrow(
+      (lessonStep==82 && selectedLesson==12.2) 
+    )
+  },[selectedLesson, lessonStep])
 
   useEffect(()=>{
       setShowPolystereneArrow(selectedLesson===8 && lessonStep===4)
@@ -265,6 +273,10 @@ const UI = () => {
     setShowArrowConicalArrow(
       (selectedLesson===12.2 && lessonStep==72)
     )
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    setShowMethylArrow(selectedLesson===12.2 && lessonStep==77)
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
@@ -544,6 +556,8 @@ useEffect(() => {
           <SulfamicAcidNaOHTitration03/>
         )
        }
+
+       {/* <TitreValueRecorded/> */}
 
     </>
   )

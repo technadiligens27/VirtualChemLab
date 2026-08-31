@@ -1,0 +1,825 @@
+.sulfamic-result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px 85px 20px 20px;
+
+  box-sizing: border-box;
+
+  font-family: "Nunito", sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.sulfamic-result-overlay-open {
+  background-color:
+    rgba(31, 20, 50, 0.25);
+
+  backdrop-filter: blur(5px);
+
+  -webkit-backdrop-filter:
+    blur(5px);
+}
+
+.sulfamic-result-overlay-closed {
+  background-color: transparent;
+
+  backdrop-filter: blur(0);
+
+  -webkit-backdrop-filter:
+    blur(0);
+
+  pointer-events: none;
+  padding-left: 90px;
+}
+
+/* =========================================================
+   WRAPPER
+   ========================================================= */
+
+.sulfamic-result-wrapper {
+  position: relative;
+
+  width: 70vw;
+  height: 90vh;
+
+  padding: 8px;
+
+  border: 9px solid #ffc94d;
+
+  border-radius: 22px;
+
+  background-color: #fffaf3;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   INNER
+   ========================================================= */
+
+.sulfamic-result-inner {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    58% 42%;
+
+  gap: 25px;
+
+  padding:
+    78px 35px 30px;
+
+  border-radius: 15px;
+
+  background-color:
+    #ffffff;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   TOP LABEL
+   ========================================================= */
+
+.sulfamic-result-label {
+  position: absolute;
+
+  top: -9px;
+  left: 50%;
+
+  z-index: 2;
+
+  width: 340px;
+  height: 68px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius:
+    0 0 32px 32px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd35f,
+      #ffc447
+    );
+
+  transform:
+    translateX(-50%);
+}
+
+.sulfamic-result-label h1 {
+  margin: 0;
+
+  color: #2f2386;
+
+  font-size: 28px;
+
+  font-weight: 900;
+}
+
+/* =========================================================
+   LEFT
+   ========================================================= */
+
+.sulfamic-result-left {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.sulfamic-result-heading {
+  margin-bottom: 15px;
+}
+
+.sulfamic-result-heading h1 {
+  margin: 0;
+
+  color: #31247f;
+
+  font-size: 27px;
+
+  font-weight: 900;
+}
+
+.sulfamic-result-heading p {
+  margin: 4px 0 0;
+
+  color: #7a718d;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   TITRE CARD
+   ========================================================= */
+
+.sulfamic-result-titre-card {
+  padding: 18px 24px;
+
+  border: 2px solid #d4c2ff;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f1ecff,
+      #fbf9ff
+    );
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.sulfamic-result-card-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 14px;
+}
+
+.sulfamic-result-card-title h2 {
+  margin: 0;
+
+  color: #33237e;
+
+  font-size: 21px;
+
+  font-weight: 900;
+}
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.sulfamic-result-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9167ff,
+      #6f4ce8
+    );
+
+  color: #ffffff;
+
+  font-size: 23px;
+}
+
+/* =========================================================
+   TITRE ROW
+   ========================================================= */
+
+.sulfamic-result-titre-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 40px;
+
+  padding: 4px 5px;
+}
+
+.sulfamic-result-titre-row span {
+  color: #637084;
+
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+.sulfamic-result-titre-row strong {
+  color: #38248e;
+
+  font-size: 18px;
+
+  font-weight: 900;
+}
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.sulfamic-result-divider {
+  width: 100%;
+  height: 2px;
+
+  margin: 8px 0;
+
+  background-color:
+    #ddd1fa;
+}
+
+/* =========================================================
+   MEAN
+   ========================================================= */
+
+.sulfamic-result-mean-row {
+  margin-top: 4px;
+
+  padding: 10px 13px;
+
+  border-radius: 13px;
+
+  background-color:
+    rgba(
+      118,
+      84,
+      221,
+      0.09
+    );
+}
+
+.sulfamic-result-mean-row span {
+  color: #37228f;
+
+  font-weight: 900;
+}
+
+.sulfamic-result-mean-row strong {
+  font-size: 21px;
+}
+
+/* =========================================================
+   DATA CARD
+   ========================================================= */
+
+.sulfamic-result-data-card {
+  margin-top: 15px;
+
+  padding: 17px 22px;
+
+  border: 2px solid #ddd1fa;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fbfaff,
+      #f4f0ff
+    );
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   INFO ICON
+   ========================================================= */
+
+.sulfamic-result-info-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7654dd,
+      #5d3fc2
+    );
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  font-weight: 900;
+
+  font-family: serif;
+}
+
+/* =========================================================
+   DATA GRID
+   ========================================================= */
+
+.sulfamic-result-data-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 10px;
+}
+
+.sulfamic-result-data-item {
+  padding: 12px 15px;
+
+  border-radius: 13px;
+
+  background-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.75
+    );
+}
+
+.sulfamic-result-data-item p {
+  margin: 0 0 3px;
+
+  color: #788398;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.sulfamic-result-data-item strong {
+  color: #37228f;
+
+  font-size: 17px;
+
+  font-weight: 900;
+}
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.sulfamic-result-button {
+  width: 210px;
+
+  min-height: 52px;
+
+  margin-top: 18px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #432098,
+      #33207e
+    );
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 18px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sulfamic-result-button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 10px 20px
+    rgba(
+      57,
+      32,
+      137,
+      0.24
+    );
+}
+
+.sulfamic-result-button:active {
+  transform:
+    translateY(0);
+}
+
+/* =========================================================
+   RIGHT
+   ========================================================= */
+
+.sulfamic-result-right {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 14px;
+}
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.sulfamic-result-image {
+  width: 85%;
+
+  max-height: 220px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 13px 13px
+      rgba(
+        58,
+        54,
+        78,
+        0.14
+      )
+    );
+}
+
+/* =========================================================
+   FINAL RESULT
+   ========================================================= */
+
+.sulfamic-result-final-card {
+  width: 100%;
+
+  padding: 17px 15px;
+
+  border: 2px solid #8b65e6;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f2edff,
+      #ffffff
+    );
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.sulfamic-result-final-card p {
+  margin: 0 0 5px;
+
+  color: #62538a;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+.sulfamic-result-final-card h2 {
+  display: inline;
+
+  margin: 0;
+
+  color: #38248e;
+
+  font-size: 45px;
+
+  font-weight: 900;
+}
+
+.sulfamic-result-final-card span {
+  margin-left: 7px;
+
+  color: #5b448f;
+
+  font-size: 17px;
+
+  font-weight: 800;
+}
+
+/* =========================================================
+   CALCULATION
+   ========================================================= */
+
+.sulfamic-result-calculation {
+  width: 100%;
+
+  padding: 14px 17px;
+
+  border-radius: 18px;
+
+  background-color:
+    #f8f5ff;
+
+  box-sizing: border-box;
+}
+
+.sulfamic-result-calculation h3 {
+  margin: 0 0 8px;
+
+  color: #33237e;
+
+  font-size: 17px;
+
+  font-weight: 900;
+}
+
+.sulfamic-result-calculation-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 5px 0;
+}
+
+.sulfamic-result-calculation-row span {
+  color: #6c788a;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.sulfamic-result-calculation-row strong {
+  color: #37228f;
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+  text-align: right;
+}
+
+/* =========================================================
+   SIDE BUTTON
+   ========================================================= */
+
+.sulfamic-result-side-container {
+  position: absolute;
+
+  top: 50%;
+  right: -62px;
+
+  z-index: 5;
+
+  width: 62px;
+  height: 140px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  border-radius:
+    0 24px 24px 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd35f,
+      #ffc447
+    );
+
+  cursor: pointer;
+
+  transform:
+    translateY(-50%);
+}
+
+.sulfamic-result-side-container img {
+  width: 34px;
+  height: 34px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+.sulfamic-result-overlay-closed
+  .sulfamic-result-side-container {
+  pointer-events: auto;
+}
+
+/* =========================================================
+   SMALL HEIGHT
+   ========================================================= */
+
+@media (max-height: 780px) {
+  .sulfamic-result-inner {
+    padding-top: 68px;
+  }
+
+  .sulfamic-result-wrapper {
+    max-height:
+      calc(100vh - 25px);
+  }
+
+  .sulfamic-result-image {
+    max-height: 160px;
+  }
+
+  .sulfamic-result-titre-row {
+    min-height: 32px;
+  }
+
+  .sulfamic-result-data-item {
+    padding: 8px 12px;
+  }
+
+  .sulfamic-result-button {
+    min-height: 44px;
+
+    margin-top: 12px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .sulfamic-result-overlay {
+    padding-right: 72px;
+  }
+
+  .sulfamic-result-wrapper {
+    width: 95%;
+  }
+
+  .sulfamic-result-inner {
+    grid-template-columns:
+      60% 40%;
+
+    gap: 15px;
+
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .sulfamic-result-image {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .sulfamic-result-overlay {
+    padding:
+      12px 60px 12px 12px;
+  }
+
+  .sulfamic-result-wrapper {
+    width: 100%;
+
+    max-height:
+      calc(100vh - 24px);
+
+    border-width: 7px;
+  }
+
+  .sulfamic-result-inner {
+    display: flex;
+
+    flex-direction: column;
+
+    padding:
+      65px 15px 20px;
+
+    overflow-y: auto;
+  }
+
+  .sulfamic-result-label {
+    width: 260px;
+
+    height: 58px;
+  }
+
+  .sulfamic-result-label h1 {
+    font-size: 22px;
+  }
+
+  .sulfamic-result-heading h1 {
+    font-size: 22px;
+  }
+
+  .sulfamic-result-data-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .sulfamic-result-right {
+    margin-top: 10px;
+  }
+
+  .sulfamic-result-image {
+    max-height: 200px;
+  }
+
+  .sulfamic-result-side-container {
+    right: -50px;
+
+    width: 50px;
+
+    height: 110px;
+
+    border-radius:
+      0 18px 18px 0;
+  }
+
+  .sulfamic-result-side-container img {
+    width: 28px;
+    height: 28px;
+  }
+}

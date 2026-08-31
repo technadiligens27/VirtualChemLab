@@ -1,7 +1,12 @@
-import { useContext, useEffect, useRef } from "react"
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
+
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const HCLTitrationReaction = ({
@@ -35,62 +40,125 @@ const HCLTitrationReaction = ({
   const startScaleRef = useRef(0)
   const targetScaleRef = useRef(0)
 
-  const originalLiquidColorRef = useRef(null)
-  const originalLiquidOpacityRef = useRef(0.3)
+  const originalLiquidColorRef =
+    useRef(null)
 
-  const streamCloudColorRef = useRef(new THREE.Color(streamCloudColor))
-  const dropletCloudColorRef = useRef(new THREE.Color(dropletCloudColor))
-  const endpointColorRef = useRef(new THREE.Color(endpointColor))
+  const originalLiquidOpacityRef =
+    useRef(0.3)
 
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const streamCloudColorRef =
+    useRef(
+      new THREE.Color(
+        streamCloudColor
+      )
+    )
+
+  const dropletCloudColorRef =
+    useRef(
+      new THREE.Color(
+        dropletCloudColor
+      )
+    )
+
+  const endpointColorRef =
+    useRef(
+      new THREE.Color(
+        endpointColor
+      )
+    )
+
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(
+    MainGuidelineContext
+  )
 
   // ==========================================
   // FIND LIQUID
   // ==========================================
-
-
-
 
   useEffect(() => {
     if (!modelRef?.current) return
 
     let liquidObject = null
 
-    modelRef.current.traverse((child) => {
-      const childName = child.name?.toLowerCase() || ""
+    modelRef.current.traverse(
+      (child) => {
+        const childName =
+          child.name?.toLowerCase() ||
+          ""
 
-      if (child.isMesh && childName.includes("liquid")) liquidObject = child
-    })
+        if (
+          child.isMesh &&
+          childName.includes("liquid")
+        ) {
+          liquidObject = child
+        }
+      }
+    )
 
     if (!liquidObject) {
-      console.log("❌ Conical liquid not found")
+      console.log(
+        "❌ Conical liquid not found"
+      )
+
       return
     }
 
-    liquidRef.current = liquidObject
+    liquidRef.current =
+      liquidObject
 
-    startScaleRef.current = liquidObject.scale.y
-    targetScaleRef.current = startScaleRef.current + amount
+    startScaleRef.current =
+      liquidObject.scale.y
+
+    targetScaleRef.current =
+      startScaleRef.current +
+      amount
 
     if (liquidObject.material) {
-      liquidObject.material = liquidObject.material.clone()
-      liquidMaterialRef.current = liquidObject.material
+      liquidObject.material =
+        liquidObject.material.clone()
 
-      liquidMaterialRef.current.transparent = true
-      liquidMaterialRef.current.depthWrite = false
+      liquidMaterialRef.current =
+        liquidObject.material
 
-      originalLiquidColorRef.current = liquidMaterialRef.current.color.clone()
-      originalLiquidOpacityRef.current = liquidMaterialRef.current.opacity
+      liquidMaterialRef.current.transparent =
+        true
 
-      liquidMaterialRef.current.needsUpdate = true
+      liquidMaterialRef.current.depthWrite =
+        false
+
+      originalLiquidColorRef.current =
+        liquidMaterialRef.current.color.clone()
+
+      originalLiquidOpacityRef.current =
+        liquidMaterialRef.current.opacity
+
+      liquidMaterialRef.current.needsUpdate =
+        true
 
       liquidObject.renderOrder = 1
     }
 
-    console.log("✅ Conical liquid found")
-    console.log("Starting CONICAL scale:", startScaleRef.current)
-    console.log("Target CONICAL scale:", targetScaleRef.current)
-  }, [modelRef, amount])
+    console.log(
+      "✅ Conical liquid found"
+    )
+
+    console.log(
+      "Starting CONICAL scale:",
+      startScaleRef.current
+    )
+
+    console.log(
+      "Target CONICAL scale:",
+      targetScaleRef.current
+    )
+  }, [
+    modelRef,
+    amount,
+  ])
 
   // ==========================================
   // FIND CLOUD
@@ -101,53 +169,98 @@ const HCLTitrationReaction = ({
 
     let cloudObject = null
 
-    modelRef.current.traverse((child) => {
-      const childName = child.name?.toLowerCase() || ""
+    modelRef.current.traverse(
+      (child) => {
+        const childName =
+          child.name?.toLowerCase() ||
+          ""
 
-      if (child.isMesh && childName.includes("cloud")) cloudObject = child
-    })
+        if (
+          child.isMesh &&
+          childName.includes("cloud")
+        ) {
+          cloudObject = child
+        }
+      }
+    )
 
     if (!cloudObject) {
-      console.log("❌ Cloud not found")
+      console.log(
+        "❌ Cloud not found"
+      )
+
       return
     }
 
-    cloudRef.current = cloudObject
+    cloudRef.current =
+      cloudObject
 
     if (cloudObject.material) {
-      cloudObject.material = cloudObject.material.clone()
-      cloudMaterialRef.current = cloudObject.material
+      cloudObject.material =
+        cloudObject.material.clone()
 
-      cloudMaterialRef.current.transparent = true
-      cloudMaterialRef.current.opacity = 0
-      cloudMaterialRef.current.color.copy(streamCloudColorRef.current)
-      cloudMaterialRef.current.depthWrite = false
-      cloudMaterialRef.current.depthTest = true
-      cloudMaterialRef.current.needsUpdate = true
+      cloudMaterialRef.current =
+        cloudObject.material
+
+      cloudMaterialRef.current.transparent =
+        true
+
+      cloudMaterialRef.current.opacity =
+        0
+
+      cloudMaterialRef.current.color.copy(
+        streamCloudColorRef.current
+      )
+
+      cloudMaterialRef.current.depthWrite =
+        false
+
+      cloudMaterialRef.current.depthTest =
+        true
+
+      cloudMaterialRef.current.needsUpdate =
+        true
 
       cloudObject.renderOrder = 2
     }
 
     cloudObject.visible = false
 
-    console.log("✅ Cloud found:", cloudObject.name)
-  }, [modelRef])
+    console.log(
+      "✅ Cloud found:",
+      cloudObject.name
+    )
+  }, [
+    modelRef,
+  ])
 
   // ==========================================
   // UPDATE COLORS
   // ==========================================
 
   useEffect(() => {
-    streamCloudColorRef.current.set(streamCloudColor)
-  }, [streamCloudColor])
+    streamCloudColorRef.current.set(
+      streamCloudColor
+    )
+  }, [
+    streamCloudColor,
+  ])
 
   useEffect(() => {
-    dropletCloudColorRef.current.set(dropletCloudColor)
-  }, [dropletCloudColor])
+    dropletCloudColorRef.current.set(
+      dropletCloudColor
+    )
+  }, [
+    dropletCloudColor,
+  ])
 
   useEffect(() => {
-    endpointColorRef.current.set(endpointColor)
-  }, [endpointColor])
+    endpointColorRef.current.set(
+      endpointColor
+    )
+  }, [
+    endpointColor,
+  ])
 
   // ==========================================
   // ANIMATION
@@ -158,172 +271,272 @@ const HCLTitrationReaction = ({
     // LIQUID LEVEL
     // ========================================
 
-    const liquid = liquidRef.current
+    const liquid =
+      liquidRef.current
 
     if (liquid) {
-      const progress = progressRef?.current ?? 0
+      const progress =
+        progressRef?.current ?? 0
 
-      liquid.scale.y = THREE.MathUtils.lerp(
-        startScaleRef.current,
-        targetScaleRef.current,
-        progress
+      liquid.scale.y =
+        THREE.MathUtils.lerp(
+          startScaleRef.current,
+          targetScaleRef.current,
+          progress
+        )
+
+      liquid.updateMatrixWorld(
+        true
       )
-
-      liquid.updateMatrixWorld(true)
     }
 
     // ========================================
-    // TEMPORARY PINK CLOUD
+    // TEMPORARY CLOUD
     // ========================================
 
-    const cloud = cloudRef.current
-    const cloudMaterial = cloudMaterialRef.current
+    const cloud =
+      cloudRef.current
 
-    if (cloud && cloudMaterial) {
-      const pulse = 0.9 + Math.sin(state.clock.elapsedTime * 5) * 0.1
+    const cloudMaterial =
+      cloudMaterialRef.current
+
+    if (
+      cloud &&
+      cloudMaterial
+    ) {
+      const pulse =
+        0.9 +
+        Math.sin(
+          state.clock.elapsedTime *
+            5
+        ) *
+          0.1
 
       // ======================================
       // STREAM
       // ======================================
 
-      if (reactionPhase === "stream") {
-        cloud.visible = true
+      if (
+        reactionPhase ===
+        "stream"
+      ) {
+        cloud.visible =
+          true
 
-        const targetOpacity = streamCloudOpacity * pulse
+        const targetOpacity =
+          streamCloudOpacity *
+          pulse
 
-        cloudMaterial.opacity = THREE.MathUtils.damp(
-          cloudMaterial.opacity,
-          targetOpacity,
-          cloudShowSpeed,
-          delta
-        )
+        cloudMaterial.opacity =
+          THREE.MathUtils.damp(
+            cloudMaterial.opacity,
+            targetOpacity,
+            cloudShowSpeed,
+            delta
+          )
 
         cloudMaterial.color.lerp(
           streamCloudColorRef.current,
-          Math.min(4 * delta, 1)
+          Math.min(
+            4 * delta,
+            1
+          )
         )
       }
 
       // ======================================
-      // FINAL DROPLETS
+      // DROPLETS
       // ======================================
 
-      else if (reactionPhase === "droplets") {
-        cloud.visible = true
+      else if (
+        reactionPhase ===
+        "droplets"
+      ) {
+        cloud.visible =
+          true
 
-        const targetOpacity = dropletCloudOpacity * pulse
+        const targetOpacity =
+          dropletCloudOpacity *
+          pulse
 
-        cloudMaterial.opacity = THREE.MathUtils.damp(
-          cloudMaterial.opacity,
-          targetOpacity,
-          cloudShowSpeed,
-          delta
-        )
+        cloudMaterial.opacity =
+          THREE.MathUtils.damp(
+            cloudMaterial.opacity,
+            targetOpacity,
+            cloudShowSpeed,
+            delta
+          )
 
         cloudMaterial.color.lerp(
           dropletCloudColorRef.current,
-          Math.min(5 * delta, 1)
+          Math.min(
+            5 * delta,
+            1
+          )
         )
       }
 
       // ======================================
-      // ENDPOINT / IDLE
+      // IDLE / ENDPOINT
       // ======================================
 
       else {
-        cloudMaterial.opacity = THREE.MathUtils.damp(
-          cloudMaterial.opacity,
-          0,
-          cloudFadeSpeed,
-          delta
-        )
+        cloudMaterial.opacity =
+          THREE.MathUtils.damp(
+            cloudMaterial.opacity,
+            0,
+            cloudFadeSpeed,
+            delta
+          )
 
-        if (cloudMaterial.opacity < 0.01) {
-          cloudMaterial.opacity = 0
-          cloud.visible = false
+        if (
+          cloudMaterial.opacity <
+          0.01
+        ) {
+          cloudMaterial.opacity =
+            0
+
+          cloud.visible =
+            false
         }
       }
 
-      cloudMaterial.needsUpdate = true
-      cloud.updateMatrixWorld(true)
+      cloudMaterial.needsUpdate =
+        true
+
+      cloud.updateMatrixWorld(
+        true
+      )
     }
 
     // ========================================
-    // MAIN LIQUID COLOR
+    // MAIN LIQUID MATERIAL
     // ========================================
 
-    const liquidMaterial = liquidMaterialRef.current
+    const liquidMaterial =
+      liquidMaterialRef.current
 
     if (!liquidMaterial) return
 
     // ======================================
     // BEFORE ENDPOINT
-    // COLOURLESS
+    // RETURN TO ORIGINAL COLOR
+    //
+    // IMPORTANT:
+    // Do not reset after endpoint confirmed.
     // ======================================
 
-    if (reactionPhase !== "endpoint") {
-      if (originalLiquidColorRef.current) {
+    if (
+      reactionPhase !==
+        "endpoint" &&
+      !endpointConfirmed
+    ) {
+      if (
+        originalLiquidColorRef.current
+      ) {
         liquidMaterial.color.lerp(
           originalLiquidColorRef.current,
-          Math.min(3 * delta, 1)
+          Math.min(
+            3 * delta,
+            1
+          )
         )
       }
 
-      liquidMaterial.opacity = THREE.MathUtils.damp(
-        liquidMaterial.opacity,
-        originalLiquidOpacityRef.current,
-        3,
-        delta
-      )
+      liquidMaterial.opacity =
+        THREE.MathUtils.damp(
+          liquidMaterial.opacity,
+          originalLiquidOpacityRef.current,
+          3,
+          delta
+        )
     }
 
     // ======================================
-    // CORRECT ENDPOINT
-    // WHOLE LIQUID PALE PINK
+    // ENDPOINT
+    // CHANGE WHOLE LIQUID COLOR
     // ======================================
 
-    if (reactionPhase === "endpoint") {
+    if (
+      reactionPhase ===
+      "endpoint"
+    ) {
       liquidMaterial.color.lerp(
         endpointColorRef.current,
-        Math.min(endpointColorSpeed * delta, 1)
+        Math.min(
+          endpointColorSpeed *
+            delta,
+          1
+        )
       )
 
-      liquidMaterial.opacity = THREE.MathUtils.damp(
-        liquidMaterial.opacity,
-        endpointOpacity,
-        endpointColorSpeed,
-        delta
-      )
+      liquidMaterial.opacity =
+        THREE.MathUtils.damp(
+          liquidMaterial.opacity,
+          endpointOpacity,
+          endpointColorSpeed,
+          delta
+        )
     }
-
-    liquidMaterial.needsUpdate = true
 
     // ======================================
     // ENDPOINT CONFIRMED
+    // FORCE COLOR TO STAY
     // ======================================
 
-    if (endpointConfirmed) {
-      liquidMaterial.color.copy(endpointColorRef.current)
-      liquidMaterial.opacity = endpointOpacity
-      liquidMaterial.needsUpdate = true
-      
-      if(selectedLesson==11.1 && lessonStep==52){
+    if (
+      endpointConfirmed
+    ) {
+      liquidMaterial.color.copy(
+        endpointColorRef.current
+      )
+
+      liquidMaterial.opacity =
+        endpointOpacity
+    }
+
+    liquidMaterial.needsUpdate =
+      true
+
+    // ======================================
+    // LESSON STEP CHANGES
+    // ======================================
+
+    if (
+      endpointConfirmed
+    ) {
+      if (
+        selectedLesson ===
+          11.1 &&
+        lessonStep === 52
+      ) {
         setLessonStep(53)
       }
-      if(selectedLesson==11.1 && lessonStep==69){
+
+      if (
+        selectedLesson ===
+          11.1 &&
+        lessonStep === 69
+      ) {
         setLessonStep(70)
       }
 
-      if(selectedLesson==12.2 && lessonStep==84){
+      if (
+        selectedLesson ===
+          12.2 &&
+        lessonStep === 84
+      ) {
         setLessonStep(85)
       }
 
-      if(selectedLesson==12.2 && lessonStep==103){
+      if (
+        selectedLesson ===
+          12.2 &&
+        lessonStep === 103
+      ) {
         setLessonStep(104)
       }
     }
-
-
   })
 
   return null

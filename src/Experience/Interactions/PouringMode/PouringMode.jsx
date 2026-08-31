@@ -1270,10 +1270,14 @@ const PouringMode = ({
         <PourFromGraduatedCylinder isPouring={isPouring} />}
 
         {[11, 11.1].includes(selectedLesson) && hand === "left" && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand?.name === "volumetric-flask" && 
-        <PourFromBeaker modelRef={normalBeakerRef} otherModelRef={volumetricRef} isPouring={isPouring} />}
+        <PourFromBeaker modelRef={normalBeakerRef} otherModelRef={volumetricRef} isPouring={isPouring} otherLiquidColor={"#0073a0"}/>}
 
-        {selectedLesson === 12.1 && [28, 34, 40].includes(lessonStep) && hand === "left" && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand?.name === "volumetric-flask" &&
-         <PourFromBeaker pourAmount={0.1} modelRef={normalBeakerRef} isPouring={isPouring} otherModelRef={volumetricRef} liquidAmount={0.2} otherLiquidOpacity={0.35} otherLiquidColor={"#EAFBFF"} />}
+        {selectedLesson === 12.1 && [ 34, 40].includes(lessonStep) && hand === "left" && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand?.name === "volumetric-flask" &&
+         <PourFromBeaker pourAmount={0.1} modelRef={normalBeakerRef} isPouring={isPouring} otherModelRef={volumetricRef} liquidAmount={0.1} otherLiquidOpacity={0.35} otherLiquidColor={"#EAFBFF"} />}
+
+        {selectedLesson === 12.1 && [28].includes(lessonStep) && hand === "left" && selectedLeftHand?.name === "main-normal-beaker" && selectedRightHand?.name === "volumetric-flask" &&
+         <PourFromBeaker pourAmount={0.1} modelRef={normalBeakerRef} isPouring={isPouring} otherModelRef={volumetricRef} liquidAmount={0.4} otherLiquidOpacity={0.35} otherLiquidColor={"#EAFBFF"} />}
+
       </>
   )
 }

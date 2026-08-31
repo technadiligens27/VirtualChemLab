@@ -14,6 +14,7 @@ const TitreValueRecorded = ({
   initialReading = 0.0,
   finalReading = 24.8,
   onButtonContinue,
+  imageSrc,
 }) => {
   const titreRef = useRef(null)
   const arrowRef = useRef(null)
@@ -373,7 +374,7 @@ const TitreValueRecorded = ({
 
           <div className="titre-recorded-right">
             <img
-              src="./buretteTitre.png"
+              src={imageSrc}
               alt="Burette showing recorded titre"
             />
 

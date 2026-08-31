@@ -89,8 +89,7 @@ const ClickObject = () => {
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
     volumetricRef,volumetricBung,phenopthalineBottleRef,
-    sulfamicBottleRef,methylBottleRef,
-    naohBottleRef
+    sulfamicBottleRef,methylBottleRef,naohBottleRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -355,6 +354,7 @@ const ClickObject = () => {
 
     return false
   }
+  
 
   const copyTransform = (fromObject, toObject) => {
     if (!fromObject || !toObject) return
@@ -1089,7 +1089,7 @@ const ClickObject = () => {
         return
       }
 
-      if((lessonStep===55 || lessonStep===26 || lessonStep===51) && objectName==="mainMassBalance"){
+      if((lessonStep===55 || lessonStep===26 || lessonStep===51 || lessonStep===14 || lessonStep===6 || lessonStep >=50) && objectName==="mainMassBalance"){
         setSelectedObject(null)
         return
       }
@@ -1098,6 +1098,7 @@ const ClickObject = () => {
         setSelectedObject(null)
         return
       }
+
     }
 
     if (
@@ -2217,6 +2218,8 @@ const handlePlaceBalance = () => {
       })
     }     
 
+    setSelectedObject(null)
+
 
   }
 
@@ -2860,16 +2863,19 @@ const handlePlaceBalance = () => {
     setIsVolumetricPipetteMode(false)
     setSelectedObject(null)
   }
+
+  console.log("isVolumetricPippeteMode:",isVolumetricPipetteMode)
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
-      if (selectedObject.name === "volumetric-pipette" && [11,12.2].includes(selectedLesson) && ([8,13,36,41,68,73,92,97].includes(lessonStep))) {
+      if (selectedObject?.name === "volumetric-pipette" && [11,12.2].includes(selectedLesson) && ([8,13,36,41,68,73,92,97].includes(lessonStep))) {
         return (
           <button onClick={handleVolumetricPippeteMode}>
             Pipette Mode
           </button>
         )
       }
-      if(selectedObject.name === "volumetric-pipette" && isVolumetricPipetteMode){
+      if(selectedObject?.name === "volumetric-pipette" && isVolumetricPipetteMode){
+        console.log("Ypppppppppppp")
           return (
           <button onClick={removeVolumetricPippeteMode}>
             Exit Pipette Mode
@@ -2881,7 +2887,6 @@ const handlePlaceBalance = () => {
 
 
     if(!isTutorialMode){
-      console.log("Hello")
       if(selectedObject.name === "volumetric-pipette" && !isVolumetricPipetteMode){
           return (
           <button onClick={handleVolumetricPippeteMode}>
@@ -2916,13 +2921,20 @@ const handlePlaceBalance = () => {
 
      setSelectedObject(null)
   }
+
+  const handlePhenopthalinePourMode = ()=>{
+    if(isPhenopthalinePourMode){
+      setIsPhenopthalinePourMode(true);
+    }
+    setSelectedObject(null)
+  }
   
   const renderPhenopthalineHeldButtons = ()=>{
     if(selectedObject?.name === "phenopthaline-dropper-bottle"){
       return(
         <>
          {!isPhenopthalinePourMode && (
-            <button onClick={() => setIsPhenopthalinePourMode(true)}>
+            <button onClick={() =>handlePhenopthalinePourMode() }>
               Pour Mode
             </button>
           )}
@@ -3804,8 +3816,17 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={volumetricRef}
-      multiplier={2}
+      multiplier={(selectedLesson==12.1 && lessonStep===26) ? 5:1.5}
     />
+
+
+    {selectedLesson===12 && lessonStep ==4 &&
+        <ClickHitbox
+            modelRef={digitalBalanceRef}
+            multiplier={1.3}
+          />
+    }
+
 
   </>
 )
