@@ -8,27 +8,50 @@ import { gsap } from "gsap"
 
 import "./HessGuidelines.css"
 
-const HessGuidelines = ({ guidelineData }) => {
-  const guidelineRef = useRef(null)
-  const arrowRef = useRef(null)
-  const isGuidelineOpenRef = useRef(true)
+const HessGuidelines = ({
+  guidelineData,
+}) => {
+  const guidelineRef =
+    useRef(null)
 
-  const [isGuidelineOpen, setIsGuidelineOpen] =
-    useState(true)
+  const arrowRef =
+    useRef(null)
+
+  const isGuidelineOpenRef =
+    useRef(true)
+
+  const [
+    isGuidelineOpen,
+    setIsGuidelineOpen,
+  ] = useState(true)
+
+  // =========================================================
+  // INITIAL OPEN ANIMATION
+  // =========================================================
 
   useLayoutEffect(() => {
-    const guideline = guidelineRef.current
-    const arrow = arrowRef.current
+    const guideline =
+      guidelineRef.current
 
-    if (!guideline || !arrow) return
+    const arrow =
+      arrowRef.current
 
-    const getClosedPosition = () => {
-      return -(
-        window.innerWidth / 2 +
-        guideline.offsetWidth / 2
-      )
+    if (
+      !guideline ||
+      !arrow
+    ) {
+      return
     }
 
+    const getClosedPosition =
+      () => {
+        return -(
+          window.innerWidth / 2 +
+          guideline.offsetWidth / 2
+        )
+      }
+
+    // Start outside screen
     gsap.set(guideline, {
       x: getClosedPosition(),
     })
@@ -37,27 +60,44 @@ const HessGuidelines = ({ guidelineData }) => {
       rotation: 0,
     })
 
+    // Slide in
     gsap.to(guideline, {
       x: 0,
+
       duration: 0.8,
+
       delay: 0.2,
+
       ease: "power3.inOut",
     })
 
+    // Rotate arrow
     gsap.to(arrow, {
       rotation: 180,
+
       duration: 0.8,
+
       delay: 0.2,
+
       ease: "power3.inOut",
     })
 
-    const handleResize = () => {
-      if (isGuidelineOpenRef.current) return
+    // =======================================================
+    // HANDLE WINDOW RESIZE
+    // =======================================================
 
-      gsap.set(guideline, {
-        x: getClosedPosition(),
-      })
-    }
+    const handleResize =
+      () => {
+        if (
+          isGuidelineOpenRef.current
+        ) {
+          return
+        }
+
+        gsap.set(guideline, {
+          x: getClosedPosition(),
+        })
+      }
 
     window.addEventListener(
       "resize",
@@ -70,12 +110,23 @@ const HessGuidelines = ({ guidelineData }) => {
         handleResize
       )
 
-      gsap.killTweensOf(guideline)
-      gsap.killTweensOf(arrow)
+      gsap.killTweensOf(
+        guideline
+      )
+
+      gsap.killTweensOf(
+        arrow
+      )
     }
   }, [])
 
-  if (!guidelineData) return null
+  if (!guidelineData) {
+    return null
+  }
+
+  // =========================================================
+  // GUIDELINE DATA
+  // =========================================================
 
   const {
     title,
@@ -85,82 +136,156 @@ const HessGuidelines = ({ guidelineData }) => {
     onButtonContinue,
   } = guidelineData
 
-  const getClosedPosition = () => {
-    const guideline = guidelineRef.current
+  // =========================================================
+  // GET CLOSED POSITION
+  // =========================================================
 
-    if (!guideline) return 0
+  const getClosedPosition =
+    () => {
+      const guideline =
+        guidelineRef.current
 
-    return -(
-      window.innerWidth / 2 +
-      guideline.offsetWidth / 2
-    )
-  }
+      if (!guideline) {
+        return 0
+      }
+
+      return -(
+        window.innerWidth / 2 +
+        guideline.offsetWidth / 2
+      )
+    }
+
+  // =========================================================
+  // OPEN / CLOSE ANIMATION
+  // =========================================================
 
   const animateGuideline = (
     shouldOpen,
     onAnimationComplete
   ) => {
-    const guideline = guidelineRef.current
-    const arrow = arrowRef.current
+    const guideline =
+      guidelineRef.current
 
-    if (!guideline || !arrow) return
+    const arrow =
+      arrowRef.current
 
-    isGuidelineOpenRef.current = shouldOpen
-    setIsGuidelineOpen(shouldOpen)
+    if (
+      !guideline ||
+      !arrow
+    ) {
+      return
+    }
 
-    gsap.killTweensOf(guideline)
-    gsap.killTweensOf(arrow)
+    isGuidelineOpenRef.current =
+      shouldOpen
+
+    setIsGuidelineOpen(
+      shouldOpen
+    )
+
+    gsap.killTweensOf(
+      guideline
+    )
+
+    gsap.killTweensOf(
+      arrow
+    )
 
     gsap.to(guideline, {
       x: shouldOpen
         ? 0
         : getClosedPosition(),
+
       duration: 0.8,
+
       ease: "power3.inOut",
-      onComplete: onAnimationComplete,
+
+      onComplete:
+        onAnimationComplete,
     })
 
     gsap.to(arrow, {
-      rotation: shouldOpen ? 180 : 0,
+      rotation:
+        shouldOpen
+          ? 180
+          : 0,
+
       duration: 0.8,
+
       ease: "power3.inOut",
     })
   }
 
-  const handleGuidelineToggle = () => {
-    const nextOpenState =
-      !isGuidelineOpenRef.current
+  // =========================================================
+  // SIDE TOGGLE
+  // =========================================================
 
-    animateGuideline(nextOpenState)
-  }
+  const handleGuidelineToggle =
+    () => {
+      const nextOpenState =
+        !isGuidelineOpenRef.current
 
-  const handleContinue = () => {
-    animateGuideline(false, () => {
-      if (onButtonContinue) {
-        onButtonContinue()
-      }
-    })
-  }
+      animateGuideline(
+        nextOpenState
+      )
+    }
+
+  // =========================================================
+  // CONTINUE
+  // =========================================================
+
+  const handleContinue =
+    () => {
+      animateGuideline(
+        false,
+        () => {
+          if (
+            onButtonContinue
+          ) {
+            onButtonContinue()
+          }
+        }
+      )
+    }
+
+  // =========================================================
+  // RENDER
+  // =========================================================
 
   return (
     <div
-      className={`main-guidelines-2 ${
-        isGuidelineOpen
-          ? "guideline-overlay-open"
-          : "guideline-overlay-closed"
-      }`}
+      className={`
+        main-guidelines-2
+        ${
+          isGuidelineOpen
+            ? "guideline-overlay-open"
+            : "guideline-overlay-closed"
+        }
+      `}
     >
       <div
         className="hess-guideline"
         ref={guidelineRef}
       >
+        {/* ===============================================
+            TOP LABEL
+        =============================================== */}
+
         <div className="lesson-header-container">
-          <h1>What to do</h1>
+          <h1>
+            What to do
+          </h1>
         </div>
+
+        {/* ===============================================
+            SIDE TOGGLE
+        =============================================== */}
 
         <button
           className="lesson-side-container"
-          onClick={handleGuidelineToggle}
+          onClick={
+            handleGuidelineToggle
+          }
           aria-label={
             isGuidelineOpen
               ? "Close practical step"
@@ -174,54 +299,95 @@ const HessGuidelines = ({ guidelineData }) => {
           />
         </button>
 
+        {/* ===============================================
+            MAIN CONTENT
+        =============================================== */}
+
         <div className="hess-guideline-inner">
+          {/* =============================================
+              LEFT SIDE
+          ============================================= */}
+
           <div className="hess-left">
+            {/* TITLE */}
+
             <div className="hess-title-container">
-              <h1>{title}</h1>
+              <h1>
+                {title}
+              </h1>
             </div>
 
-            <p>{description}</p>
+            {/* DESCRIPTION */}
 
-            <div className="hess-steps">
-              <div className="hess-steps-title">
-                <h1>Implementation</h1>
+            <p className="hess-description">
+              {description}
+            </p>
+
+            {/* IMPLEMENTATION */}
+
+            {implementationSteps.length >
+              0 && (
+              <div className="hess-steps">
+                <div className="hess-steps-title">
+                  <h1>
+                    Implementation
+                  </h1>
+                </div>
+
+                <div className="hess-inner-steps">
+                  {implementationSteps.map(
+                    (
+                      step,
+                      index
+                    ) => (
+                      <div
+                        className="hess-lesson-step"
+                        key={index}
+                      >
+                        <img
+                          src="./blue-tick.png"
+                          alt=""
+                        />
+
+                        <p>
+                          {step}
+                        </p>
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
+            )}
 
-              <div className="hess-inner-steps">
-                {implementationSteps.map(
-                  (step, index) => (
-                    <div
-                      className="hess-lesson-step"
-                      key={index}
-                    >
-                      <img
-                        src="./blue-tick.png"
-                        alt=""
-                      />
-
-                      <p>{step}</p>
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
+            {/* CONTINUE BUTTON */}
 
             <button
               className="hess-button"
-              onClick={handleContinue}
+              onClick={
+                handleContinue
+              }
             >
               Continue
             </button>
           </div>
 
-          <div className="hess-right">
-            <div className="hess-right-inner">
-              <img
-                src={image}
-                alt={title}
-              />
+          {/* =============================================
+              RIGHT SIDE
+          ============================================= */}
+
+          {image && (
+            <div className="hess-right">
+              <div className="hess-right-inner">
+                <img
+                  src={image}
+                  alt={
+                    title ||
+                    "Practical guideline"
+                  }
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

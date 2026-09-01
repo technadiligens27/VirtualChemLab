@@ -9,6 +9,10 @@ import { gsap } from "gsap"
 import "./SulfamicAcidResult.css"
 
 const SulfamicAcidResult = ({
+  // ==========================================
+  // DATA
+  // ==========================================
+
   sulfamicAcidMass = 2.5,
 
   volumetricFlaskVolume = 250,
@@ -21,9 +25,79 @@ const SulfamicAcidResult = ({
   imageSrc = "./buretteTitre.png",
 
   onButtonContinue,
+
+  // ==========================================
+  // TEXT PROPS
+  // ==========================================
+
+  topLabelText =
+    "Titration Results",
+
+  mainTitleText =
+    "Sulfamic Acid – Sodium Hydroxide",
+
+  subtitleText =
+    "Final experimental results",
+
+  titreValuesTitleText =
+    "Titre Values",
+
+  roughTitreLabelText =
+    "Rough titre",
+
+  trialOneLabelText =
+    "Trial 1",
+
+  trialTwoLabelText =
+    "Trial 2",
+
+  meanTitreLabelText =
+    "Mean titre",
+
+  experimentalDataTitleText =
+    "Experimental Data",
+
+  sulfamicAcidLabelText =
+    "Sulfamic acid",
+
+  standardSolutionLabelText =
+    "Standard solution",
+
+  aliquotUsedLabelText =
+    "Aliquot used",
+
+  experimentalMeanTitreLabelText =
+    "Mean titre",
+
+  continueButtonText =
+    "Continue",
+
+  imageAltText =
+    "Burette showing titration result",
+
+  concentrationLabelText =
+    "Concentration of NaOH",
+
+  concentrationUnitText =
+    "mol dm⁻³",
+
+  calculationTitleText =
+    "Calculation",
+
+  molesSulfamicAcidLabelText =
+    "Moles of sulfamic acid",
+
+  sulfamicAcidConcentrationLabelText =
+    "Sulfamic acid concentration",
+
+  molesInAliquotLabelText =
+    "Moles in aliquot",
 }) => {
-  const resultRef = useRef(null)
-  const arrowRef = useRef(null)
+  const resultRef =
+    useRef(null)
+
+  const arrowRef =
+    useRef(null)
 
   const isResultOpenRef =
     useRef(true)
@@ -51,17 +125,26 @@ const SulfamicAcidResult = ({
 
   const sulfamicAcidConcentration =
     molesSulfamicAcid /
-    (Number(volumetricFlaskVolume) /
-      1000)
+    (
+      Number(
+        volumetricFlaskVolume
+      ) / 1000
+    )
 
   const molesInAliquot =
     sulfamicAcidConcentration *
-    (Number(aliquotVolume) / 1000)
+    (
+      Number(
+        aliquotVolume
+      ) / 1000
+    )
 
   // Sulfamic acid reacts 1 : 1 with NaOH
   const naohConcentration =
     molesInAliquot /
-    (meanTitre / 1000)
+    (
+      meanTitre / 1000
+    )
 
   // ==========================================
   // OPEN ANIMATION
@@ -74,7 +157,12 @@ const SulfamicAcidResult = ({
     const arrow =
       arrowRef.current
 
-    if (!result || !arrow) return
+    if (
+      !result ||
+      !arrow
+    ) {
+      return
+    }
 
     const getClosedPosition =
       () => {
@@ -84,6 +172,7 @@ const SulfamicAcidResult = ({
         )
       }
 
+    // Start outside screen
     gsap.set(result, {
       x: getClosedPosition(),
     })
@@ -92,31 +181,44 @@ const SulfamicAcidResult = ({
       rotation: 0,
     })
 
+    // Slide in
     gsap.to(result, {
       x: 0,
+
       duration: 0.8,
+
       delay: 0.2,
+
       ease: "power3.inOut",
     })
 
+    // Rotate arrow
     gsap.to(arrow, {
       rotation: 180,
+
       duration: 0.8,
+
       delay: 0.2,
+
       ease: "power3.inOut",
     })
 
-    const handleResize = () => {
-      if (
-        isResultOpenRef.current
-      ) {
-        return
-      }
+    // ========================================
+    // RESIZE
+    // ========================================
 
-      gsap.set(result, {
-        x: getClosedPosition(),
-      })
-    }
+    const handleResize =
+      () => {
+        if (
+          isResultOpenRef.current
+        ) {
+          return
+        }
+
+        gsap.set(result, {
+          x: getClosedPosition(),
+        })
+      }
 
     window.addEventListener(
       "resize",
@@ -129,8 +231,13 @@ const SulfamicAcidResult = ({
         handleResize
       )
 
-      gsap.killTweensOf(result)
-      gsap.killTweensOf(arrow)
+      gsap.killTweensOf(
+        result
+      )
+
+      gsap.killTweensOf(
+        arrow
+      )
     }
   }, [])
 
@@ -138,17 +245,20 @@ const SulfamicAcidResult = ({
   // CLOSED POSITION
   // ==========================================
 
-  const getClosedPosition = () => {
-    const result =
-      resultRef.current
+  const getClosedPosition =
+    () => {
+      const result =
+        resultRef.current
 
-    if (!result) return 0
+      if (!result) {
+        return 0
+      }
 
-    return -(
-      window.innerWidth / 2 +
-      result.offsetWidth / 2
-    )
-  }
+      return -(
+        window.innerWidth / 2 +
+        result.offsetWidth / 2
+      )
+    }
 
   // ==========================================
   // ANIMATE RESULT
@@ -164,7 +274,12 @@ const SulfamicAcidResult = ({
     const arrow =
       arrowRef.current
 
-    if (!result || !arrow) return
+    if (
+      !result ||
+      !arrow
+    ) {
+      return
+    }
 
     isResultOpenRef.current =
       shouldOpen
@@ -173,8 +288,13 @@ const SulfamicAcidResult = ({
       shouldOpen
     )
 
-    gsap.killTweensOf(result)
-    gsap.killTweensOf(arrow)
+    gsap.killTweensOf(
+      result
+    )
+
+    gsap.killTweensOf(
+      arrow
+    )
 
     gsap.to(result, {
       x: shouldOpen
@@ -190,9 +310,10 @@ const SulfamicAcidResult = ({
     })
 
     gsap.to(arrow, {
-      rotation: shouldOpen
-        ? 180
-        : 0,
+      rotation:
+        shouldOpen
+          ? 180
+          : 0,
 
       duration: 0.8,
 
@@ -218,18 +339,19 @@ const SulfamicAcidResult = ({
   // CONTINUE
   // ==========================================
 
-  const handleContinue = () => {
-    animateResult(
-      false,
-      () => {
-        if (
-          onButtonContinue
-        ) {
-          onButtonContinue()
+  const handleContinue =
+    () => {
+      animateResult(
+        false,
+        () => {
+          if (
+            onButtonContinue
+          ) {
+            onButtonContinue()
+          }
         }
-      }
-    )
-  }
+      )
+    }
 
   // ==========================================
   // JSX
@@ -253,7 +375,7 @@ const SulfamicAcidResult = ({
 
         <div className="sulfamic-result-label">
           <h1>
-            Titration Results
+            {topLabelText}
           </h1>
         </div>
 
@@ -284,22 +406,22 @@ const SulfamicAcidResult = ({
         ====================================== */}
 
         <div className="sulfamic-result-inner">
-
           {/* ====================================
               LEFT SIDE
           ==================================== */}
 
           <div className="sulfamic-result-left">
+            {/* ==================================
+                MAIN HEADING
+            ================================== */}
 
             <div className="sulfamic-result-heading">
               <h1>
-                Sulfamic Acid –
-                Sodium Hydroxide
+                {mainTitleText}
               </h1>
 
               <p>
-                Final experimental
-                results
+                {subtitleText}
               </p>
             </div>
 
@@ -308,20 +430,25 @@ const SulfamicAcidResult = ({
             ================================== */}
 
             <div className="sulfamic-result-titre-card">
-
               <div className="sulfamic-result-card-title">
                 <div className="sulfamic-result-icon">
                   ⚗
                 </div>
 
                 <h2>
-                  Titre Values
+                  {
+                    titreValuesTitleText
+                  }
                 </h2>
               </div>
 
+              {/* ROUGH TITRE */}
+
               <div className="sulfamic-result-titre-row">
                 <span>
-                  Rough titre
+                  {
+                    roughTitreLabelText
+                  }
                 </span>
 
                 <strong>
@@ -332,9 +459,13 @@ const SulfamicAcidResult = ({
                 </strong>
               </div>
 
+              {/* TRIAL 1 */}
+
               <div className="sulfamic-result-titre-row">
                 <span>
-                  Trial 1
+                  {
+                    trialOneLabelText
+                  }
                 </span>
 
                 <strong>
@@ -345,9 +476,13 @@ const SulfamicAcidResult = ({
                 </strong>
               </div>
 
+              {/* TRIAL 2 */}
+
               <div className="sulfamic-result-titre-row">
                 <span>
-                  Trial 2
+                  {
+                    trialTwoLabelText
+                  }
                 </span>
 
                 <strong>
@@ -360,9 +495,13 @@ const SulfamicAcidResult = ({
 
               <div className="sulfamic-result-divider" />
 
+              {/* MEAN */}
+
               <div className="sulfamic-result-titre-row sulfamic-result-mean-row">
                 <span>
-                  Mean titre
+                  {
+                    meanTitreLabelText
+                  }
                 </span>
 
                 <strong>
@@ -372,7 +511,6 @@ const SulfamicAcidResult = ({
                   cm³
                 </strong>
               </div>
-
             </div>
 
             {/* ==================================
@@ -380,22 +518,26 @@ const SulfamicAcidResult = ({
             ================================== */}
 
             <div className="sulfamic-result-data-card">
-
               <div className="sulfamic-result-card-title">
                 <div className="sulfamic-result-info-icon">
                   i
                 </div>
 
                 <h2>
-                  Experimental Data
+                  {
+                    experimentalDataTitleText
+                  }
                 </h2>
               </div>
 
               <div className="sulfamic-result-data-grid">
+                {/* SULFAMIC ACID */}
 
                 <div className="sulfamic-result-data-item">
                   <p>
-                    Sulfamic acid
+                    {
+                      sulfamicAcidLabelText
+                    }
                   </p>
 
                   <strong>
@@ -406,9 +548,13 @@ const SulfamicAcidResult = ({
                   </strong>
                 </div>
 
+                {/* STANDARD SOLUTION */}
+
                 <div className="sulfamic-result-data-item">
                   <p>
-                    Standard solution
+                    {
+                      standardSolutionLabelText
+                    }
                   </p>
 
                   <strong>
@@ -419,9 +565,13 @@ const SulfamicAcidResult = ({
                   </strong>
                 </div>
 
+                {/* ALIQUOT */}
+
                 <div className="sulfamic-result-data-item">
                   <p>
-                    Aliquot used
+                    {
+                      aliquotUsedLabelText
+                    }
                   </p>
 
                   <strong>
@@ -432,9 +582,13 @@ const SulfamicAcidResult = ({
                   </strong>
                 </div>
 
+                {/* MEAN TITRE */}
+
                 <div className="sulfamic-result-data-item">
                   <p>
-                    Mean titre
+                    {
+                      experimentalMeanTitreLabelText
+                    }
                   </p>
 
                   <strong>
@@ -444,10 +598,12 @@ const SulfamicAcidResult = ({
                     cm³
                   </strong>
                 </div>
-
               </div>
-
             </div>
+
+            {/* ==================================
+                CONTINUE
+            ================================== */}
 
             <button
               className="sulfamic-result-button"
@@ -455,9 +611,10 @@ const SulfamicAcidResult = ({
                 handleContinue
               }
             >
-              Continue
+              {
+                continueButtonText
+              }
             </button>
-
           </div>
 
           {/* ====================================
@@ -465,11 +622,14 @@ const SulfamicAcidResult = ({
           ==================================== */}
 
           <div className="sulfamic-result-right">
+            {/* IMAGE */}
 
             <img
               className="sulfamic-result-image"
               src={imageSrc}
-              alt="Burette showing titration result"
+              alt={
+                imageAltText
+              }
             />
 
             {/* ==================================
@@ -477,9 +637,10 @@ const SulfamicAcidResult = ({
             ================================== */}
 
             <div className="sulfamic-result-final-card">
-
               <p>
-                Concentration of NaOH
+                {
+                  concentrationLabelText
+                }
               </p>
 
               <h2>
@@ -489,9 +650,10 @@ const SulfamicAcidResult = ({
               </h2>
 
               <span>
-                mol dm⁻³
+                {
+                  concentrationUnitText
+                }
               </span>
-
             </div>
 
             {/* ==================================
@@ -499,15 +661,19 @@ const SulfamicAcidResult = ({
             ================================== */}
 
             <div className="sulfamic-result-calculation">
-
               <h3>
-                Calculation
+                {
+                  calculationTitleText
+                }
               </h3>
+
+              {/* MOLES OF SULFAMIC ACID */}
 
               <div className="sulfamic-result-calculation-row">
                 <span>
-                  Moles of sulfamic
-                  acid
+                  {
+                    molesSulfamicAcidLabelText
+                  }
                 </span>
 
                 <strong>
@@ -518,10 +684,13 @@ const SulfamicAcidResult = ({
                 </strong>
               </div>
 
+              {/* SULFAMIC ACID CONCENTRATION */}
+
               <div className="sulfamic-result-calculation-row">
                 <span>
-                  Sulfamic acid
-                  concentration
+                  {
+                    sulfamicAcidConcentrationLabelText
+                  }
                 </span>
 
                 <strong>
@@ -532,9 +701,13 @@ const SulfamicAcidResult = ({
                 </strong>
               </div>
 
+              {/* MOLES IN ALIQUOT */}
+
               <div className="sulfamic-result-calculation-row">
                 <span>
-                  Moles in aliquot
+                  {
+                    molesInAliquotLabelText
+                  }
                 </span>
 
                 <strong>
@@ -544,9 +717,7 @@ const SulfamicAcidResult = ({
                   mol
                 </strong>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>

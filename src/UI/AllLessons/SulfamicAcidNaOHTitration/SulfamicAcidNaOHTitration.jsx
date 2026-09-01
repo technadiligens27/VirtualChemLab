@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
@@ -42,8 +42,19 @@ const SulfamicAcidNaOHTitration = () => {
     digitalBalanceRef,
     kettleRef,
     chlorobutaneBottleRef,
-    mainDropperRef,
+    mainDropperRef,waterBottleRef,naohBottleRef
   } = useContext(ModelContext)
+
+  useEffect(()=>{
+    if(waterBottleRef.current){
+      waterBottleRef.current.visible=false
+    }
+
+    if(naohBottleRef.current){
+      naohBottleRef.current.visible = true
+    }
+    
+  },[waterBottleRef,naohBottleRef])
 
   return (
     <>

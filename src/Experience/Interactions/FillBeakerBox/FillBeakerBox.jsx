@@ -240,11 +240,11 @@ const FillBeakerBox = () => {
   },[lessonStep,selectedLesson])  
   
   
-  useEffect(()=>{
-    if(lessonStep===18 && selectedLesson ===11){
-      setLessonStep(19)
-    }
-  },[lessonStep,selectedLesson])   
+  // useEffect(()=>{
+  //   if(lessonStep===18 && selectedLesson ===11){
+  //     setLessonStep(19)
+  //   }
+  // },[lessonStep,selectedLesson])   
 
   
   useEffect(()=>{

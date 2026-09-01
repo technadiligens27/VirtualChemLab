@@ -13,11 +13,36 @@ const TitreValueRecorded = ({
   titreName = "Rough Titre",
   initialReading = 0.0,
   finalReading = 24.8,
+
   onButtonContinue,
   imageSrc,
+
+  // =====================================================
+  // TEXT
+  // =====================================================
+
+  topLabelText = "Titre Value Recorded",
+
+  mainHeadingText =
+    "Your recorded titre is:",
+
+  explanationText =
+    "The titre is the volume of sodium hydroxide delivered from the burette during the titration.",
+
+  calculationText =
+    "Initial burette reading - Final burette reading ",
+
+  continueButtonText =
+    "Continue",
+
+  imageAltText =
+    "Burette showing recorded titre",
 }) => {
-  const titreRef = useRef(null)
-  const arrowRef = useRef(null)
+  const titreRef =
+    useRef(null)
+
+  const arrowRef =
+    useRef(null)
 
   const isTitreOpenRef =
     useRef(true)
@@ -38,14 +63,20 @@ const TitreValueRecorded = ({
     const arrow =
       arrowRef.current
 
-    if (!titre || !arrow) return
-
-    const getClosedPosition = () => {
-      return -(
-        window.innerWidth / 2 +
-        titre.offsetWidth / 2
-      )
+    if (
+      !titre ||
+      !arrow
+    ) {
+      return
     }
+
+    const getClosedPosition =
+      () => {
+        return -(
+          window.innerWidth / 2 +
+          titre.offsetWidth / 2
+        )
+      }
 
     // Start outside screen
     gsap.set(titre, {
@@ -59,16 +90,22 @@ const TitreValueRecorded = ({
     // Slide in
     gsap.to(titre, {
       x: 0,
+
       duration: 0.8,
+
       delay: 0.2,
+
       ease: "power3.inOut",
     })
 
     // Rotate arrow
     gsap.to(arrow, {
       rotation: 180,
+
       duration: 0.8,
+
       delay: 0.2,
+
       ease: "power3.inOut",
     })
 
@@ -76,17 +113,18 @@ const TitreValueRecorded = ({
     // RESIZE
     // =====================================================
 
-    const handleResize = () => {
-      if (
-        isTitreOpenRef.current
-      ) {
-        return
-      }
+    const handleResize =
+      () => {
+        if (
+          isTitreOpenRef.current
+        ) {
+          return
+        }
 
-      gsap.set(titre, {
-        x: getClosedPosition(),
-      })
-    }
+        gsap.set(titre, {
+          x: getClosedPosition(),
+        })
+      }
 
     window.addEventListener(
       "resize",
@@ -99,8 +137,13 @@ const TitreValueRecorded = ({
         handleResize
       )
 
-      gsap.killTweensOf(titre)
-      gsap.killTweensOf(arrow)
+      gsap.killTweensOf(
+        titre
+      )
+
+      gsap.killTweensOf(
+        arrow
+      )
     }
   }, [])
 
@@ -108,17 +151,20 @@ const TitreValueRecorded = ({
   // CLOSED POSITION
   // =====================================================
 
-  const getClosedPosition = () => {
-    const titre =
-      titreRef.current
+  const getClosedPosition =
+    () => {
+      const titre =
+        titreRef.current
 
-    if (!titre) return 0
+      if (!titre) {
+        return 0
+      }
 
-    return -(
-      window.innerWidth / 2 +
-      titre.offsetWidth / 2
-    )
-  }
+      return -(
+        window.innerWidth / 2 +
+        titre.offsetWidth / 2
+      )
+    }
 
   // =====================================================
   // OPEN / CLOSE ANIMATION
@@ -134,7 +180,12 @@ const TitreValueRecorded = ({
     const arrow =
       arrowRef.current
 
-    if (!titre || !arrow) return
+    if (
+      !titre ||
+      !arrow
+    ) {
+      return
+    }
 
     isTitreOpenRef.current =
       shouldOpen
@@ -143,8 +194,13 @@ const TitreValueRecorded = ({
       shouldOpen
     )
 
-    gsap.killTweensOf(titre)
-    gsap.killTweensOf(arrow)
+    gsap.killTweensOf(
+      titre
+    )
+
+    gsap.killTweensOf(
+      arrow
+    )
 
     gsap.to(titre, {
       x: shouldOpen
@@ -160,9 +216,10 @@ const TitreValueRecorded = ({
     })
 
     gsap.to(arrow, {
-      rotation: shouldOpen
-        ? 180
-        : 0,
+      rotation:
+        shouldOpen
+          ? 180
+          : 0,
 
       duration: 0.8,
 
@@ -174,31 +231,33 @@ const TitreValueRecorded = ({
   // TOGGLE
   // =====================================================
 
-  const handleTitreToggle = () => {
-    const nextOpenState =
-      !isTitreOpenRef.current
+  const handleTitreToggle =
+    () => {
+      const nextOpenState =
+        !isTitreOpenRef.current
 
-    animateTitre(
-      nextOpenState
-    )
-  }
+      animateTitre(
+        nextOpenState
+      )
+    }
 
   // =====================================================
   // CONTINUE
   // =====================================================
 
-  const handleContinue = () => {
-    animateTitre(
-      false,
-      () => {
-        if (
-          onButtonContinue
-        ) {
-          onButtonContinue()
+  const handleContinue =
+    () => {
+      animateTitre(
+        false,
+        () => {
+          if (
+            onButtonContinue
+          ) {
+            onButtonContinue()
+          }
         }
-      }
-    )
-  }
+      )
+    }
 
   // =====================================================
   // RENDER
@@ -222,7 +281,7 @@ const TitreValueRecorded = ({
 
         <div className="titre-recorded-label">
           <h1>
-            Titre Value Recorded
+            {topLabelText}
           </h1>
         </div>
 
@@ -260,7 +319,7 @@ const TitreValueRecorded = ({
           <div className="titre-recorded-left">
             <div className="titre-recorded-heading">
               <h1>
-                Your recorded titre is:
+                {mainHeadingText}
               </h1>
             </div>
 
@@ -284,6 +343,7 @@ const TitreValueRecorded = ({
                   {Number(
                     titreValue
                   ).toFixed(2)}
+
                   <span>
                     {" "}
                     cm³
@@ -309,11 +369,7 @@ const TitreValueRecorded = ({
               </div>
 
               <p>
-                The titre is the
-                volume of sodium
-                hydroxide delivered
-                from the burette
-                during the titration.
+                {explanationText}
               </p>
 
               <div className="titre-recorded-divider" />
@@ -329,24 +385,27 @@ const TitreValueRecorded = ({
 
                 <div className="titre-recorded-calculation-text">
                   <p>
-                    Final burette
-                    reading − initial
-                    burette reading
+                    {calculationText}
                   </p>
 
                   <h3>
                     {Number(
                       finalReading
                     ).toFixed(2)}
+
                     {" − "}
+
                     {Number(
                       initialReading
                     ).toFixed(2)}
+
                     {" = "}
+
                     <strong>
                       {Number(
                         titreValue
                       ).toFixed(2)}
+
                       {" cm³"}
                     </strong>
                   </h3>
@@ -364,7 +423,7 @@ const TitreValueRecorded = ({
                 handleContinue
               }
             >
-              Continue
+              {continueButtonText}
             </button>
           </div>
 
@@ -375,7 +434,9 @@ const TitreValueRecorded = ({
           <div className="titre-recorded-right">
             <img
               src={imageSrc}
-              alt="Burette showing recorded titre"
+              alt={
+                imageAltText
+              }
             />
 
             <div className="titre-recorded-reading-label">
@@ -387,6 +448,7 @@ const TitreValueRecorded = ({
                 {Number(
                   titreValue
                 ).toFixed(2)}
+
                 {" cm³"}
               </h2>
             </div>

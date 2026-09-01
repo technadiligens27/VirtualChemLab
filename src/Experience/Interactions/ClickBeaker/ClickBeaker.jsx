@@ -89,7 +89,7 @@ const ClickObject = () => {
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
     volumetricRef,volumetricBung,phenopthalineBottleRef,
-    sulfamicBottleRef,methylBottleRef,naohBottleRef
+    sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -265,6 +265,10 @@ const ClickObject = () => {
       {
         name:"NaOH-bottle",
         ref:naohBottleRef
+      },
+      {
+        name:"water-bottle",
+        ref:waterBottleRef
       }
       ],
     [
@@ -296,7 +300,7 @@ const ClickObject = () => {
       volumetricPipetteRef,volumetricRef,
       volumetricPipetteRef,phenopthalineBottleRef,
       sulfamicBottleRef,methylBottleRef,
-      naohBottleRef
+      naohBottleRef,waterBottleRef
     ]
   )
 
@@ -790,7 +794,7 @@ const ClickObject = () => {
       setLessonStep(9)
     }
 
-    if(lessonStep===23 && selectedLesson ===11 && handData.name === "main-normal-beaker"){
+    if(lessonStep===23 && selectedLesson ===11 && handData.name === "water-bottle"){
       setLessonStep(23.5)
     }
 
@@ -1079,7 +1083,7 @@ const ClickObject = () => {
     const objectName = selectedItem.name
 
     if ([12, 12.1, 12.2].includes(selectedLesson)) {
-      if (["kettle", "main-dropper"].includes(objectName)) {
+      if (["kettle", "main-dropper","water-bottle"].includes(objectName)) {
         setSelectedObject(null)
         return
       }
@@ -1099,6 +1103,11 @@ const ClickObject = () => {
         return
       }
 
+    }
+
+    if([11,11.1].includes(selectedLesson) && objectName==="NaOH-bottle"){
+      setSelectedObject(null)
+      return
     }
 
     if (
@@ -2923,7 +2932,7 @@ const handlePlaceBalance = () => {
   }
 
   const handlePhenopthalinePourMode = ()=>{
-    if(isPhenopthalinePourMode){
+    if(!isPhenopthalinePourMode){
       setIsPhenopthalinePourMode(true);
     }
     setSelectedObject(null)
@@ -2934,7 +2943,7 @@ const handlePlaceBalance = () => {
       return(
         <>
          {!isPhenopthalinePourMode && (
-            <button onClick={() =>handlePhenopthalinePourMode() }>
+            <button onClick={handlePhenopthalinePourMode}>
               Pour Mode
             </button>
           )}
@@ -3237,6 +3246,34 @@ const renderBuretteHeldButtons = ()=>{
         </>
       )
     }
+
+    if([11,11.1].includes(selectedLesson) && (lessonStep === 33 || lessonStep === 66 )){
+      return(
+        <>
+          <button onClick={handleClampBurette}>
+            {isBuiretteClamped ? "Unclamp" : "Clamp"}
+          </button>        
+        </>
+      )
+    }
+
+    if(([11,11.1].includes(selectedLesson)) && (lessonStep === 64 || lessonStep ==55)){
+      return(
+        <>
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
+
+          <button onClick={openFillBeakerBox}>
+            Add Liquid
+          </button>       
+        </>
+      )
+    }    
 
     if (selectedObject.name === "main-buirette") {
       return (
@@ -3826,7 +3863,11 @@ const renderHeldObjectButtons = () => {
             multiplier={1.3}
           />
     }
-
+    
+    <ClickHitbox
+      modelRef={waterBottleRef}
+      multiplier={1.5}
+    />
 
   </>
 )

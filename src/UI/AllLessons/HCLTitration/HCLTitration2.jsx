@@ -9,6 +9,8 @@ import HessGuidelines from "../../HessGuidelines/HessGuidelines.jsx"
 import ResultsSheet from "../../ResultSheet/ResultSheet.jsx"
 import {hclTitrationResultsData} from '../../Data/HCLTitrationData/HCLTitrationData.jsx'
 import HCLTitrationLiveDataPanel from "../../HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel.jsx"
+import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecorded/TitreValueRecorded.jsx"
+import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx"
 
 const HCLTitration2 = () => {
   const {
@@ -212,9 +214,7 @@ const HCLTitration2 = () => {
     implementationSteps: [
       "Pick up the phenolphthalein dropper bottle.",
       "Position the dropper above the conical flask.",
-      "Enter Pour Mode.",
       "Add 2–3 drops of phenolphthalein.",
-      "Exit Pour Mode.",
       "Return the phenolphthalein bottle to the table.",
     ],
 
@@ -228,13 +228,12 @@ const HCLTitration2 = () => {
   {
     id: 9,
 
-    title: "Perform the Rough Titration",
+    title: "Perform the Titration",
 
     description:
       "Place the conical flask beneath the burette and gradually add sodium hydroxide. The rough titration provides an approximate volume needed to reach the endpoint.",
 
     implementationSteps: [
-      "Place the burette clamp in the centre.",
       "Position the conical flask beneath the burette.",
       "Open the burette and begin adding sodium hydroxide.",
       "Observe the colour of the solution while titrating.",
@@ -252,7 +251,7 @@ const HCLTitration2 = () => {
   {
     id: 10,
 
-    title: "Prepare for the Accurate Titration",
+    title: "Prepare for the Titration",
 
     description:
       "After completing the rough titration, clean the conical flask and prepare a fresh portion of hydrochloric acid for a more accurate titration.",
@@ -323,7 +322,7 @@ const HCLTitration2 = () => {
   {
     id: 13,
 
-    title: "Perform the Accurate Titration",
+    title: "Perform  Titration",
 
     description:
       "Carry out the titration carefully, adding sodium hydroxide gradually as the endpoint approaches. The correct endpoint is reached when a very pale pink colour remains in the flask.",
@@ -332,10 +331,8 @@ const HCLTitration2 = () => {
       "Place the conical flask beneath the burette.",
       "Begin adding sodium hydroxide.",
       "Observe the reaction mixture carefully.",
-      "Reduce the addition rate as the endpoint approaches.",
       "Continue until a permanent pale-pink colour appears.",
       "Stop adding sodium hydroxide immediately.",
-      "Remove the conical flask.",
     ],
 
     image: "./accurateTitration.png",
@@ -583,7 +580,7 @@ const HCLTitration2 = () => {
   // =========================================================
   return (
     <>
-
+{/* 
       <HCLTitrationLiveDataPanel
         normalBeakerAmount={null}
         volumetricFlaskAmount={
@@ -725,7 +722,7 @@ const HCLTitration2 = () => {
           },
         ]}
         autoHideDelay={3000}
-      />
+      /> */}
 
      {lessonStep >= 45 && lessonStep <= 49 && (
         <HessGuidelines guidelineData={guidelineData[7]} />
@@ -746,6 +743,16 @@ const HCLTitration2 = () => {
       {lessonStep === 52 && (<DialogBox text="Scroll donw to Pour"/>)}
       {lessonStep === 53 && (<DialogBox text="Remove Conical Flask"/>)}
 
+      {lessonStep === 53 && (<TitreValueRecorded
+       titreValue ={24.8}
+       imageSrc={'./buretteTitre03.png'}
+       initialReading = {5.2}
+       finalReading ={ 30.0}
+       explanationText="The titre is the volume of sodium hydroxide delivered from the burette during the titration."
+       />)
+       
+       
+       }
 
       {lessonStep >= 54 && lessonStep <= 57 && (
         <HessGuidelines guidelineData={guidelineData[9]} />
@@ -774,7 +781,7 @@ const HCLTitration2 = () => {
 
       {lessonStep === 63 && (<DialogBox text="Click Burette and get it to Left Hand"/>)}
       {lessonStep === 64 && (<DialogBox text="Click Add Liquid"/>)}
-      {lessonStep === 65 && (<DialogBox text="HCL 30cm3"/>)}
+      {lessonStep === 65 && (<DialogBox text="NaOH 30cm3"/>)}
       {lessonStep === 66 && (<DialogBox text="Clamp"/>)}
       {lessonStep === 67 && (<DialogBox text="Place In Centre"/>)}
       {lessonStep === 68 && (<DialogBox text="Place Conical Flask in Burette"/>)}
@@ -785,13 +792,47 @@ const HCLTitration2 = () => {
 
 
       {lessonStep === 69 && (<DialogBox text="scroll down"/>)}
+
+      {lessonStep === 70 && (<TitreValueRecorded
+        titreValue ={24.7}
+        imageSrc={'./buretteTitre04.png'}
+        initialReading = {5.3}
+        finalReading ={ 30.0}
+        explanationText="The titre is the volume of sodium hydroxide delivered from the burette during the titration."
+        />)
+       
+       }
+
       {lessonStep === 70 && (<DialogBox text="Remove Copnical Flaks"/>)}
       {lessonStep === 71 && (<DialogBox text="71"/>)}
 
 
       {lessonStep === 71 && (
-        <ResultsSheet data={hclTitrationResultsData}
-         />
+        <SulfamicAcidResult
+            sulfamicAcidMass={2.5}
+            volumetricFlaskVolume={250}
+            aliquotVolume={25}
+
+            // roughTitre={24.8}
+            trialOne={24.7}
+            trialTwo={24.75}
+
+            topLabelText="Titration Results"
+
+            mainTitleText="Hydrochloric Acid – Sodium Hydroxide"
+
+            subtitleText="Final experimental results"
+
+            sulfamicAcidLabelText="Hydrochloric acid"
+
+            concentrationLabelText="Concentration of HCl"
+
+            molesSulfamicAcidLabelText="Moles of HCl"
+
+            sulfamicAcidConcentrationLabelText="HCl concentration"
+
+            imageSrc="./buretteTitre.png"
+          />
       )}
 
 

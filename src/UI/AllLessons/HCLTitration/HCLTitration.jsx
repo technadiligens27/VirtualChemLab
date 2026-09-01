@@ -175,7 +175,6 @@ const guidelineData = [
       "Pick up the volumetric pipette.",
       "Position it in the diluted hydrochloric acid.",
       "Squeeze the pipette filler.",
-      "Enter Pipette Mode.",
       "Draw the diluted acid into the pipette.",
       "Transfer the measured acid into the conical flask.",
       "Return the pipette to the table.",
@@ -199,9 +198,7 @@ const guidelineData = [
     implementationSteps: [
       "Pick up the phenolphthalein dropper bottle.",
       "Position the dropper above the conical flask.",
-      "Enter Pour Mode.",
       "Add 2–3 drops of phenolphthalein.",
-      "Exit Pour Mode.",
       "Return the phenolphthalein bottle to the table.",
     ],
 
@@ -521,13 +518,13 @@ const guidelineData = [
             )}
 
 
-            {lessonStep === 17 && <DialogBox text={"Pick up the normal beaker with your left hand."}/>}
+            {lessonStep === 17 && <DialogBox text={"Pick up the Water Bottle with your left hand."}/>}
             {lessonStep === 18 && <DialogBox text={"Click Add Liquid for the normal beaker."}/>}
             {lessonStep === 19 && <DialogBox text={"Add 30 cm³ of distilled water to the beaker."}/>}
             {lessonStep === 20 && <DialogBox text={"Press Shift + P to enter Pour Mode."}/>}
             {lessonStep === 21 && <DialogBox text={"Scroll down to pour the distilled water into the volumetric flask."}/>}
             {lessonStep === 22 && <DialogBox text={"Press Shift + P to exit Pour Mode."}/>}
-            {lessonStep === 23 && <DialogBox text={"Place the normal beaker back on the table."}/>}
+            {lessonStep === 23 && <DialogBox text={"Place the water Bottle back on the table."}/>}
 
             {lessonStep >= 23.5 && lessonStep <= 29 && (
               <HessGuidelines guidelineData={guidelineData[4]} />

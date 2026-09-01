@@ -207,7 +207,7 @@ const HoldLeft = ({ modeldata }) => {
 
   useEffect(()=>{
     if(selectedLesson===11 && lessonStep ===17){
-      setLessonStep(18)
+      setLessonStep(20)
     }
   },[selectedLesson,lessonStep])  
 
@@ -380,6 +380,11 @@ const HoldLeft = ({ modeldata }) => {
       object.name === "volumetric-pipette"
     ) {
       object.scale.set(0.4, 0.4, 0.4)
+    }else if (
+      object.name === "water-bottle"
+    ) {
+      object.scale.set(0.8, 0.8, 0.8);
+      object.position.y -= 1
     }else if (
       object.name === "phenopthaline-dropper-bottle"
     ){

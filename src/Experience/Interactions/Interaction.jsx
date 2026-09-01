@@ -166,10 +166,10 @@ const Interaction = () => {
       {testubesInBeaker.tube6 && <PlaceTestubeInBeaker testubeRef={testube06Ref} hand="right" xPos={-1}   zPos={-1.5}scale={0.8} />}
 
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-normal-beaker' &&
-        <VolumetricPipetteMode modelRef={normalBeakerRef}/>
+        <VolumetricPipetteMode modelRef={normalBeakerRef} modelScale ={ 0.5} pipetteScale = {0.4}  modelYOffset={-1.5}/>
       }
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'volumetric-flask' &&
-        <VolumetricPipetteMode  yOffset={4} modelRef={volumetricRef} modelScale ={ 0.7} pipetteScale = {0.4} decreaseAmount={0.2}  modelYOffset={-1.5}/>
+        <VolumetricPipetteMode  yOffset={3.5} modelRef={volumetricRef} modelScale ={ 0.6} pipetteScale = {0.3} decreaseAmount={0.2}  modelYOffset={-1.3}/>
       }
       {isVolumetricPipetteMode && selectedLeftHand?.name === 'volumetric-pipette' && selectedRightHand?.name === 'main-Conical-Flask' &&
         <VolumetricPipetteMode  yOffset={3} modelRef={conicalBeakerRef} modelScale ={ 0.5} pipetteScale = {0.4}  modelYOffset={-1.5}/>

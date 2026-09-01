@@ -23,7 +23,7 @@ const ChemEnvironment = () => {
          kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
          volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef,phenopthalineBottleRef,
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
-         arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef
+         arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef
   } = useContext(ModelContext);
 
 
@@ -237,6 +237,7 @@ const hideVerticalObjects=(root)=>{
     volumetricPipetteRef.current = scene.getObjectByName('volumetric-pipette');
     volumetricBung.current = scene.getObjectByName('volumetric-bung');
     volumetricBung.current.visible = false;
+    
 
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
     methylBottleRef.current = scene.getObjectByName("methyl-dropper-bottle")
@@ -279,7 +280,11 @@ const hideVerticalObjects=(root)=>{
   mainThermometerRef.current = scene.getObjectByName('mainThermometer');
   thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid');
   mainPolystereneLid.current = scene.getObjectByName('polysterene-cup-lid');
-  phenopthalineBottleRef.current = scene.getObjectByName('phenopthaline-dropper-bottle')
+  phenopthalineBottleRef.current = scene.getObjectByName('phenopthaline-dropper-bottle');
+
+  waterBottleRef.current = scene.getObjectByName('water-bottle');
+  naohBottleRef.current.visible = false
+  
 
 
   hidePrecipitateObjects(scene)
@@ -380,6 +385,8 @@ const hideVerticalObjects=(root)=>{
       arrowMethylBottleRef.current = scene.getObjectByName("methyl-dropper-arrow");
       arrowMethylBottleRef.current.visible = false
 
+      arrowWaterBottleRef.current = scene.getObjectByName("water-bottle-arrow")
+      arrowWaterBottleRef.current.visible = false
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)

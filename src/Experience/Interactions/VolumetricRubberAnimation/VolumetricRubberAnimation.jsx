@@ -161,8 +161,10 @@ const VolumetricRubberAnimation = ({
   return (
     <>
       {fillVolumetricPipette && isVolumetricPipetteMode && selectedRightHand?.name==="main-normal-beaker" && <FillVolumetricPipette modelRef={modelRef} otherModelRef={normalBeakerRef}/>}
-    
-      {selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
+
+      {[11.1,11].includes(selectedLesson) && selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef} decreaseAmount={0.7}/>}
+
+      {[12,12.1,12.2].includes(selectedLesson) && selectedRightHand?.name==='volumetric-flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={volumetricRef}/>}
 
       {selectedRightHand?.name==='main-Conical-Flask' && fillVolumetricPipette && isVolumetricPipetteMode && <FillVolumetricPipette modelRef={modelRef} otherModelRef={conicalBeakerRef}/>}
 
