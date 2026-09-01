@@ -1,3 +1,7 @@
+/* ==========================================
+   PANEL
+========================================== */
+
 .hcl-live-data-panel {
   position: fixed;
 
@@ -13,12 +17,17 @@
 
   max-height: 96vh;
 
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 
-  border: 0.45rem solid #ffc84d;
-  border-radius: 1.7rem;
+  border:
+    0.45rem solid #ffc84d;
 
-  background-color: #fffdf9;
+  border-radius:
+    1.7rem;
+
+  background-color:
+    #fffdf9;
 
   box-shadow:
     0 1.4rem 3rem
@@ -30,7 +39,8 @@
     "Nunito",
     sans-serif;
 
-  overflow: visible;
+  overflow:
+    visible;
 }
 
 
@@ -41,16 +51,22 @@
 .hcl-live-data-inner {
   width: 100%;
 
-  max-height: calc(
-    96vh - 0.9rem
-  );
+  max-height:
+    calc(
+      96vh - 0.9rem
+    );
 
-  display: flex;
-  flex-direction: column;
+  display:
+    flex;
 
-  border-radius: 1.2rem;
+  flex-direction:
+    column;
 
-  overflow: hidden;
+  border-radius:
+    1.2rem;
+
+  overflow:
+    hidden;
 }
 
 
@@ -59,41 +75,63 @@
 ========================================== */
 
 .hcl-live-data-header {
-  position: relative;
+  position:
+    relative;
 
-  min-height: 5rem;
+  min-height:
+    5rem;
 
-  flex-shrink: 0;
+  flex-shrink:
+    0;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display:
+    flex;
 
-  background: linear-gradient(
-    135deg,
-    #ffd160,
-    #ffc247
-  );
+  flex-direction:
+    column;
 
-  text-align: center;
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd160,
+      #ffc247
+    );
+
+  text-align:
+    center;
 }
+
 
 .hcl-live-data-header h1 {
-  margin: 0;
+  margin:
+    0;
 
-  color: #352080;
+  padding:
+    0 1rem;
 
-  font-size: clamp(
-    1.15rem,
-    1.45vw,
-    1.55rem
-  );
+  color:
+    #352080;
 
-  font-weight: 900;
+  font-size:
+    clamp(
+      1.05rem,
+      1.35vw,
+      1.45rem
+    );
 
-  line-height: 1.1;
+  font-weight:
+    900;
+
+  line-height:
+    1.1;
 }
+
 
 .hcl-live-data-header p {
   margin:
@@ -101,15 +139,20 @@
     0
     0;
 
-  color: #5d469f;
+  color:
+    #5d469f;
 
-  font-size: 0.8rem;
+  font-size:
+    0.8rem;
 
-  font-weight: 800;
+  font-weight:
+    800;
 
-  text-transform: uppercase;
+  text-transform:
+    uppercase;
 
-  letter-spacing: 0.12rem;
+  letter-spacing:
+    0.12rem;
 }
 
 
@@ -118,19 +161,25 @@
 ========================================== */
 
 .hcl-live-data-content {
-  flex: 1;
+  flex:
+    1;
 
-  min-height: 0;
+  min-height:
+    0;
 
   padding:
     1.3rem
     1.4rem
     0.7rem;
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-y:
+    auto;
 
-  scrollbar-width: thin;
+  overflow-x:
+    hidden;
+
+  scrollbar-width:
+    thin;
 
   scrollbar-color:
     #b99be9
@@ -139,27 +188,36 @@
 
 
 /* ==========================================
-   CUSTOM SCROLLBAR
+   SCROLLBAR
 ========================================== */
 
 .hcl-live-data-content::-webkit-scrollbar {
-  width: 0.5rem;
+  width:
+    0.5rem;
 }
+
 
 .hcl-live-data-content::-webkit-scrollbar-track {
-  background: #f4effb;
+  background:
+    #f4effb;
 
-  border-radius: 1rem;
+  border-radius:
+    1rem;
 }
+
 
 .hcl-live-data-content::-webkit-scrollbar-thumb {
-  background: #b99be9;
+  background:
+    #b99be9;
 
-  border-radius: 1rem;
+  border-radius:
+    1rem;
 }
 
+
 .hcl-live-data-content::-webkit-scrollbar-thumb:hover {
-  background: #9874db;
+  background:
+    #9874db;
 }
 
 
@@ -168,16 +226,26 @@
 ========================================== */
 
 .hcl-live-data-section {
-  width: 100%;
+  width:
+    100%;
 }
 
+
 .hcl-live-data-secondary-section {
-  margin-top: 0.8rem;
+  margin-top:
+    0.8rem;
 
-  padding-top: 0.8rem;
+  padding-top:
+    0.8rem;
 
-  border-top: 1px solid
-    rgba(116, 85, 200, 0.22);
+  border-top:
+    1px solid
+    rgba(
+      116,
+      85,
+      200,
+      0.22
+    );
 }
 
 
@@ -186,48 +254,80 @@
 ========================================== */
 
 .hcl-live-data-section-title {
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 0.65rem;
+  gap:
+    0.65rem;
 }
+
 
 .hcl-live-data-section-title h2 {
-  margin: 0;
+  margin:
+    0;
 
-  color: #38227f;
+  color:
+    #38227f;
 
-  font-size: 0.98rem;
+  font-size:
+    0.98rem;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  text-transform: uppercase;
+  text-transform:
+    uppercase;
 
-  letter-spacing: 0.035rem;
+  letter-spacing:
+    0.035rem;
 }
 
+
 .hcl-live-data-dot {
-  width: 0.75rem;
-  height: 0.75rem;
+  width:
+    0.75rem;
 
-  flex-shrink: 0;
+  height:
+    0.75rem;
 
-  border: 0.2rem solid
-    rgba(131, 96, 221, 0.25);
+  flex-shrink:
+    0;
 
-  border-radius: 50%;
+  border:
+    0.2rem solid
+    rgba(
+      131,
+      96,
+      221,
+      0.25
+    );
 
-  background-color: #8b66df;
+  border-radius:
+    50%;
+
+  background-color:
+    #8b66df;
 
   box-shadow:
     0 0 0 0.25rem
-      rgba(139, 102, 223, 0.1);
+    rgba(
+      139,
+      102,
+      223,
+      0.1
+    );
 }
 
+
 .hcl-live-data-divider {
-  width: 100%;
-  height: 1px;
+  width:
+    100%;
+
+  height:
+    1px;
 
   margin:
     0.65rem
@@ -235,7 +335,12 @@
     0.15rem;
 
   background-color:
-    rgba(120, 91, 191, 0.22);
+    rgba(
+      120,
+      91,
+      191,
+      0.22
+    );
 }
 
 
@@ -244,30 +349,43 @@
 ========================================== */
 
 .hcl-live-data-row {
-  width: 100%;
+  width:
+    100%;
 
-  min-height: 3rem;
+  min-height:
+    3rem;
 
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     minmax(0, 1fr)
     auto;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 0.8rem;
+  gap:
+    0.8rem;
 
   padding:
     0.28rem
     0;
 
-  border-bottom: 1px dashed
-    rgba(100, 110, 137, 0.17);
+  border-bottom:
+    1px dashed
+    rgba(
+      100,
+      110,
+      137,
+      0.17
+    );
 }
 
+
 .hcl-live-data-row:last-child {
-  border-bottom: none;
+  border-bottom:
+    none;
 }
 
 
@@ -276,37 +394,51 @@
 ========================================== */
 
 .hcl-live-data-label {
-  min-width: 0;
+  min-width:
+    0;
 }
+
 
 .hcl-live-data-label p {
-  margin: 0;
+  margin:
+    0;
 
-  color: #526078;
+  color:
+    #526078;
 
-  font-size: clamp(
-    0.82rem,
-    0.85vw,
-    0.9rem
-  );
+  font-size:
+    clamp(
+      0.82rem,
+      0.85vw,
+      0.9rem
+    );
 
-  font-weight: 700;
+  font-weight:
+    700;
 
-  line-height: 1.25;
+  line-height:
+    1.25;
 }
 
+
 .hcl-live-data-label span {
-  display: block;
+  display:
+    block;
 
-  margin-top: 0.15rem;
+  margin-top:
+    0.15rem;
 
-  color: #8790a1;
+  color:
+    #8790a1;
 
-  font-size: 0.65rem;
+  font-size:
+    0.65rem;
 
-  font-weight: 600;
+  font-weight:
+    600;
 
-  line-height: 1.2;
+  line-height:
+    1.2;
 }
 
 
@@ -315,64 +447,103 @@
 ========================================== */
 
 .hcl-live-data-value {
-  min-width: 6.6rem;
+  min-width:
+    6.8rem;
 
   padding:
     0.52rem
     0.65rem;
 
-  border-radius: 0.7rem;
+  border-radius:
+    0.7rem;
 
-  background-color: #f7f4fb;
+  background-color:
+    #f7f4fb;
 
-  text-align: right;
+  text-align:
+    right;
 }
+
 
 .hcl-live-data-value p {
-  margin: 0;
+  margin:
+    0;
 
-  color: #38227f;
+  color:
+    #38227f;
 
-  font-size: 0.9rem;
+  font-size:
+    0.86rem;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  white-space: nowrap;
+  white-space:
+    nowrap;
 }
 
 
 /* ==========================================
-   LIVE VALUE
+   PENDING
 ========================================== */
+
+.hcl-live-data-value-pending p {
+  color:
+    #9aa2b1;
+}
+
+
+/* ==========================================
+   LIVE
+========================================== */
+
+.hcl-live-data-value-live {
+  background-color:
+    #fff4e8;
+}
+
 
 .hcl-live-data-value-live p {
-  color: #f05c18;
+  color:
+    #f05c18;
 }
 
 
 /* ==========================================
-   COMPLETE VALUE
+   COMPLETE
 ========================================== */
 
+.hcl-live-data-value-complete {
+  background-color:
+    #edf9f1;
+}
+
+
 .hcl-live-data-value-complete p {
-  color: #159447;
+  color:
+    #159447;
 }
 
 
 /* ==========================================
-   ENDPOINT STATUS
+   STATUS
 ========================================== */
 
 .hcl-live-data-value-status {
-  background-color: #fff4df;
+  background-color:
+    #fff4df;
 
-  text-align: center;
+  text-align:
+    center;
 }
 
-.hcl-live-data-value-status p {
-  color: #e27a16;
 
-  font-size: 0.76rem;
+.hcl-live-data-value-status p {
+  color:
+    #e27a16;
+
+  font-size:
+    0.76rem;
 }
 
 
@@ -381,7 +552,8 @@
 ========================================== */
 
 .hcl-live-data-footer {
-  flex-shrink: 0;
+  flex-shrink:
+    0;
 
   margin:
     0
@@ -392,54 +564,84 @@
     0.7rem
     0.9rem;
 
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 0.7rem;
+  gap:
+    0.7rem;
 
-  border: 1px solid
-    rgba(128, 91, 218, 0.32);
+  border:
+    1px solid
+    rgba(
+      128,
+      91,
+      218,
+      0.32
+    );
 
-  border-radius: 0.85rem;
+  border-radius:
+    0.85rem;
 
-  background-color: #f5f0ff;
+  background-color:
+    #f5f0ff;
 }
+
 
 .hcl-live-data-footer p {
-  margin: 0;
+  margin:
+    0;
 
-  color: #7658c8;
-
-  font-size: 0.72rem;
-
-  font-style: italic;
-
-  font-weight: 700;
-}
-
-.hcl-live-data-info-icon {
-  width: 1.55rem;
-  height: 1.55rem;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border: 0.13rem solid
+  color:
     #7658c8;
 
-  border-radius: 50%;
+  font-size:
+    0.72rem;
 
-  color: #7658c8;
+  font-style:
+    italic;
 
-  font-size: 0.85rem;
+  font-weight:
+    700;
+}
 
-  font-weight: 900;
+
+.hcl-live-data-info-icon {
+  width:
+    1.55rem;
+
+  height:
+    1.55rem;
+
+  flex-shrink:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border:
+    0.13rem solid
+    #7658c8;
+
+  border-radius:
+    50%;
+
+  color:
+    #7658c8;
+
+  font-size:
+    0.85rem;
+
+  font-weight:
+    900;
 }
 
 
@@ -448,24 +650,35 @@
 ========================================== */
 
 .hcl-live-data-toggle {
-  position: absolute;
+  position:
+    absolute;
 
-  top: 50%;
-  left: -15%;
+  top:
+    50%;
 
-  width: 3.3rem;
-  height: 6.7rem;
+  left:
+    -15%;
+
+  width:
+    3.3rem;
+
+  height:
+    6.7rem;
 
   transform:
     translateY(-50%);
 
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: center;
+  justify-content:
+    center;
 
-  border: none;
+  border:
+    none;
 
   border-radius:
     1.2rem
@@ -473,32 +686,42 @@
     0
     1.2rem;
 
-  background: linear-gradient(
-    135deg,
-    #ffd35e,
-    #ffbd3f
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #ffd35e,
+      #ffbd3f
+    );
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
   box-shadow:
     -0.5rem
     0.3rem
     1rem
-    rgba(50, 32, 92, 0.16);
+    rgba(
+      50,
+      32,
+      92,
+      0.16
+    );
 
   transition:
     filter 0.2s ease,
     transform 0.2s ease;
 }
 
+
 .hcl-live-data-toggle:hover {
-  filter: brightness(1.04);
+  filter:
+    brightness(1.04);
 
   transform:
     translateY(-50%)
     scale(1.03);
 }
+
 
 .hcl-live-data-toggle:active {
   transform:
@@ -506,16 +729,22 @@
     scale(0.97);
 }
 
+
 .hcl-live-data-toggle-arrow {
-  display: block;
+  display:
+    block;
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
-  font-size: 2rem;
+  font-size:
+    2rem;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  line-height: 1;
+  line-height:
+    1;
 }
 
 
@@ -526,11 +755,15 @@
 @media (
   max-width: 1100px
 ) {
-  .hcl-live-data-panel {
-    width: 22rem;
 
-    right: 1rem;
+  .hcl-live-data-panel {
+    width:
+      22rem;
+
+    right:
+      1rem;
   }
+
 
   .hcl-live-data-content {
     padding:
@@ -538,6 +771,7 @@
       1.15rem
       0.65rem;
   }
+
 
   .hcl-live-data-footer {
     margin:
@@ -555,8 +789,10 @@
 @media (
   max-height: 760px
 ) {
+
   .hcl-live-data-panel {
-    width: 21rem;
+    width:
+      21rem;
 
     transform:
       translateY(-50%)
@@ -566,7 +802,9 @@
       right center;
   }
 
+
   .hcl-live-data-inner {
-    max-height: 96vh;
+    max-height:
+      96vh;
   }
 }

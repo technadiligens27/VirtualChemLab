@@ -354,61 +354,61 @@ const guidelineData = [
 ]
     return(
         <>
-{/* 
-        <HCLTitrationLiveDataPanel
 
-            normalBeakerAmount={
-              lessonStep >= 6 && lessonStep < 10
-                ? 25
-                : lessonStep >= 10 && lessonStep < 19
-                ? 0
-                : lessonStep >= 20 && lessonStep < 22
-                ? 250
-                : lessonStep >= 22
-                ? 0
-                : null
-            }
+          <HCLTitrationLiveDataPanel
+            normalBeakerAmount={lessonStep >= 10 ? 0 : lessonStep >= 6 ? 25 : null}
 
-            volumetricFlaskAmount={
-              lessonStep >= 15 && lessonStep < 22
-                ? 25
-                : lessonStep >= 22 && lessonStep < 38
-                ? 250
-                : lessonStep >= 38
-                ? 30
-                : null
-            }
+            volumetricFlaskAmount={ lessonStep >=38 ? 225 : lessonStep >= 22 ? 250 : lessonStep >= 15 ? 25 :  null}
 
-
-            conicalFlaskAmount={
-              lessonStep >= 43
-                ? 25
-                : null
-            }
-
+            conicalFlaskAmount={ lessonStep >= 55 ? 0 : lessonStep >= 43 ? 25 : null}
 
             buretteNaOHAmount={
-              lessonStep >= 33
+              lessonStep >= 32
                 ? 30
                 : null
             }
 
+            initialBuretteReading={
+              lessonStep >= 52
+                ? 0
+                : null
+            }
 
-            initialBuretteReading={null}
+            currentBuretteReading={
+              lessonStep >= 52
+                ? 24.7
+                : null
+            }
 
-            currentBuretteReading={null}
+            naohDelivered={
+              lessonStep >= 52
+                ? 24.7
+                : null
+            }
 
-            naohDelivered={null}
+            endpointStatus={
+              lessonStep >= 53
+                ? "Reached"
+                : null
+            }
 
-            endpointStatus={null}
+            trialOne={
+              lessonStep >= 70
+                ? 24.7
+                : null
+            }
 
-            roughTitre={null}
+            trialTwo={
+              lessonStep >= 71
+                ? 24.6
+                : null
+            }
 
-            trialOne={null}
-
-            trialTwo={null}
-
-            meanTitre={null}
+            meanTitre={
+              lessonStep >= 71
+                ? 24.65
+                : null
+            }
 
             selectedLesson={
               selectedLesson
@@ -419,57 +419,33 @@ const guidelineData = [
             }
 
             autoShowConditions={[
-              // 25 cm³ HCl added to normal beaker
               {
                 selectedLesson: 11,
                 lessonStep: 6,
               },
-
-              // Pipette takes the HCl
-              {
-                selectedLesson: 11,
-                lessonStep: 10,
-              },
-
-              // HCl transferred into volumetric flask
               {
                 selectedLesson: 11,
                 lessonStep: 15,
               },
-
-              // 30 cm³ water added to normal beaker
-              {
-                selectedLesson: 11,
-                lessonStep: 20,
-              },
-
-              // Water transferred into volumetric flask
               {
                 selectedLesson: 11,
                 lessonStep: 22,
-              },
-
-              // Burette filled with 30 cm³ NaOH
-              {
-                selectedLesson: 11,
-                lessonStep: 33,
-              },
-
-              // 25 cm³ taken from volumetric flask
+              },  
               {
                 selectedLesson: 11,
                 lessonStep: 38,
-              },
-
-              // 25 cm³ transferred into conical flask
+              },  
               {
                 selectedLesson: 11,
                 lessonStep: 43,
-              },
+              },                                        
+  
             ]}
 
-            autoHideDelay={3000}
-          /> */}
+            showDuration={
+              3000
+            }
+          />
 
 
             {lessonStep === 1 && (
@@ -490,78 +466,443 @@ const guidelineData = [
             {lessonStep >2 && lessonStep <6 && <HessGuidelines guidelineData={guidelineData[0]}/>}
 
             {lessonStep === 3 && <DialogBox text={"Select the normal beaker and place it in your right hand."}/>}
-            {lessonStep === 4 && <DialogBox text={"Click Add Liquid."}/>}
-            {lessonStep === 5 && <DialogBox text={"Add 25 cm³ of hydrochloric acid to the beaker."}/>}
+
+            {lessonStep === 4 && <DialogBox text={
+              <>
+              Click held Beaker and select <strong>Add Liquid</strong> 
+              </>
+              }/>}
+
+             {lessonStep === 5 && (
+              <DialogBox
+                text={
+                  <>
+                    Add <strong>25 cm³</strong> of <strong>Hydrochloric Acid</strong> to the beaker.
+                  </>
+                }
+              />
+            )}
+
+
 
             {lessonStep >=6 && lessonStep <17 && <HessGuidelines guidelineData={guidelineData[1]}/>}
 
 
-            {lessonStep === 6 && <DialogBox text={"Select the volumetric pipette and place it in your left hand."}/>}
-            {lessonStep === 7 && <DialogBox text={"Scroll down to squeeze the pipette filler."}/>}
-            {lessonStep === 8 && <DialogBox text={"Select the volumetric pipette and enter Pipette Mode."}/>}
-            {lessonStep === 9 && <DialogBox text={"Scroll up to release the pipette filler and draw hydrochloric acid into the pipette."}/>}
-            {lessonStep === 10 && <DialogBox text={"Exit Pipette Mode."}/>}
-            {lessonStep === 11 && <DialogBox text={"Place the normal beaker back on the table."}/>}
+            {lessonStep === 6 && <DialogBox text={<>
+              Select the <strong>Volumetric Pipette</strong> and place it in your <strong>Left hand</strong>
+             </>}
+             />}
+            {lessonStep === 7 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll down</strong> to squeeze the <strong>pipette filler</strong>.
+                  </>
+                }
+              />
+            )}          
+            
+            
+          {lessonStep === 8 && (
+            <DialogBox
+              text={
+                <>
+                  Select the <strong>Volumetric Pipette</strong> and enter <strong>Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 9 && (
+            <DialogBox
+              text={
+                <>
+                  <strong>Scroll up</strong> to release the <strong>pipette filler</strong> and draw <strong>hydrochloric acid</strong> into the pipette.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 10 && (
+            <DialogBox
+              text={
+                <>
+                 Click the <strong>Volumetric Pipette</strong> And Select Exit <strong>Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 11 && (
+            <DialogBox
+              text={
+                <>
+                  Place the <strong>normal beaker</strong> back on the <strong>table</strong>.
+                </>
+              }
+            />
+          )}
 
             {lessonStep >= 12 && lessonStep <= 16 && (
               <HessGuidelines guidelineData={guidelineData[2]} />
             )}
 
-            {lessonStep === 12 && <DialogBox text={"Pick up the volumetric flask."}/>}
-            {lessonStep === 13 && <DialogBox text={"Enter Pipette Mode."}/>}
-            {lessonStep === 14 && <DialogBox text={"Scroll down to release the hydrochloric acid into the volumetric flask."}/>}
-            {lessonStep === 15 && <DialogBox text={"Exit Pipette Mode."}/>}
-            {lessonStep === 16 && <DialogBox text={"Return the volumetric pipette to your left hand."}/>}
+          {lessonStep === 12 && (
+            <DialogBox
+              text={
+                <>
+                  Pick up the <strong>Volumetric Flask</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 13 && (
+            <DialogBox
+              text={
+                <>
+                 Select held Volumetric Pipette and Enter <strong>Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 14 && (
+            <DialogBox
+              text={
+                <>
+                  <strong>Scroll down</strong> to release the <strong>hydrochloric acid</strong> into the <strong>volumetric flask</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 15 && (
+            <DialogBox
+              text={
+                <>
+                  Select Volumetric Pipette and select <strong>Exit Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 16 && (
+            <DialogBox
+              text={
+                <>
+                 Click <strong>Volumetric Pipette</strong> and select <strong> Keep Back On Table</strong>.
+                </>
+              }
+            />
+          )}
 
             {lessonStep >= 17 && lessonStep <= 23 && (
               <HessGuidelines guidelineData={guidelineData[3]} />
             )}
 
+            {lessonStep === 17 && (
+              <DialogBox
+                text={
+                  <>
+                    Pick up the <strong>Distilled Water Bottle</strong> with your <strong>Left hand</strong>.
+                  </>
+                }
+              />
+            )}
 
-            {lessonStep === 17 && <DialogBox text={"Pick up the Water Bottle with your left hand."}/>}
-            {lessonStep === 18 && <DialogBox text={"Click Add Liquid for the normal beaker."}/>}
-            {lessonStep === 19 && <DialogBox text={"Add 30 cm³ of distilled water to the beaker."}/>}
-            {lessonStep === 20 && <DialogBox text={"Press Shift + P to enter Pour Mode."}/>}
-            {lessonStep === 21 && <DialogBox text={"Scroll down to pour the distilled water into the volumetric flask."}/>}
-            {lessonStep === 22 && <DialogBox text={"Press Shift + P to exit Pour Mode."}/>}
-            {lessonStep === 23 && <DialogBox text={"Place the water Bottle back on the table."}/>}
+            {lessonStep === 18 && (
+              <DialogBox
+                text={
+                  <>
+                    Click <strong>Add Liquid</strong> for the <strong>normal beaker</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 19 && (
+              <DialogBox
+                text={
+                  <>
+                    Add <strong>30 cm³</strong> of <strong>distilled water</strong> to the beaker.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 20 && (
+              <DialogBox
+                text={
+                  <>
+                    Press <strong>Shift + P</strong> to enter <strong>Pour Mode</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 21 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll down</strong> to pour the <strong>distilled water</strong> into the <strong>volumetric flask</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 22 && (
+              <DialogBox
+                text={
+                  <>
+                    Press <strong>Shift + P</strong> to exit <strong>Pour Mode</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 23 && (
+              <DialogBox
+                text={
+                  <>
+                    Place the <strong>Distilled Water Bottle</strong> back on the <strong>table</strong>.
+                  </>
+                }
+              />
+            )}
 
             {lessonStep >= 23.5 && lessonStep <= 29 && (
               <HessGuidelines guidelineData={guidelineData[4]} />
             )}
 
-            {lessonStep === 23.5 && <DialogBox text={"Fit the bung securely into the volumetric flask."}/>}
-            {lessonStep === 24 && <DialogBox text={"Scroll down to invert the volumetric flask. Inversion 1 of 3."}/>}
-            {lessonStep === 25 && <DialogBox text={"Scroll up to return the volumetric flask upright. Inversion 1 of 3 complete."}/>}
-            {lessonStep === 26 && <DialogBox text={"Scroll down to invert the volumetric flask again. Inversion 2 of 3."}/>}
-            {lessonStep === 27 && <DialogBox text={"Scroll up to return the volumetric flask upright. Inversion 2 of 3 complete."}/>}
-            {lessonStep === 28 && <DialogBox text={"Scroll down to invert the volumetric flask one final time. Inversion 3 of 3."}/>}
-            {lessonStep === 29 && <DialogBox text={"Scroll up to return the volumetric flask upright. Mixing is complete."}/>}
+            {lessonStep === 23.5 && (
+              <DialogBox
+                text={
+                  <>
+                    Fit the <strong>bung</strong> securely into the <strong>volumetric flask</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 24 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll down</strong> to invert the <strong>volumetric flask</strong>. <strong>Inversion 1 of 3</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 25 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll up</strong> to return the <strong>volumetric flask</strong> upright. <strong>Inversion 1 of 3 complete</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 26 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll down</strong> to invert the <strong>volumetric flask</strong> again. <strong>Inversion 2 of 3</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 27 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll up</strong> to return the <strong>volumetric flask</strong> upright. <strong>Inversion 2 of 3 complete</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 28 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll down</strong> to invert the <strong>volumetric flask</strong> one final time. <strong>Inversion 3 of 3</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 29 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Scroll up</strong> to return the <strong>volumetric flask</strong> upright. <strong>Mixing is complete</strong>.
+                  </>
+                }
+              />
+            )}
 
             {lessonStep >= 30 && lessonStep <= 33 && (
               <HessGuidelines guidelineData={guidelineData[5]} />
             )}
 
-            {lessonStep === 30 && <DialogBox text={"Pick up the burette with your left hand."}/>}
-            {lessonStep === 31 && <DialogBox text={"Click Add Liquid."}/>}
-            {lessonStep === 32 && <DialogBox text={"Add 30 cm³ of sodium hydroxide solution to the burette."}/>}
-            {lessonStep === 33 && <DialogBox text={"Clamp the burette securely in an upright position."}/>}
+            {lessonStep === 30 && (
+              <DialogBox
+                text={
+                  <>
+                    Pick up the <strong>burette</strong> with your <strong>Left hand</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 31 && (
+              <DialogBox
+                text={
+                  <>
+                    Click Held <strong>Burette</strong> and Select <strong>Add Liquid</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 32 && (
+              <DialogBox
+                text={
+                  <>
+                    Add <strong>30 cm³</strong> of <strong>sodium hydroxide solution</strong> to the <strong>burette</strong>.
+                  </>
+                }
+              />
+            )}
+
+            {lessonStep === 33 && (
+              <DialogBox
+                text={
+                  <>
+                    <strong>Clamp</strong> the <strong>burette</strong> securely in an <strong>upright position</strong>.
+                  </>
+                }
+              />
+            )}
 
             {lessonStep >= 34 && lessonStep <= 44 && (
               <HessGuidelines guidelineData={guidelineData[6]} />
             )}
 
-            {lessonStep === 34 && <DialogBox text={"Pick up the volumetric pipette."}/>}
-            {lessonStep === 35 && <DialogBox text={"Scroll down to squeeze the pipette filler."}/>}
-            {lessonStep === 36 && <DialogBox text={"Enter Pipette Mode."}/>}
-            {lessonStep === 37 && <DialogBox text={"Scroll up to draw the diluted hydrochloric acid into the pipette."}/>}
-            {lessonStep === 38 && <DialogBox text={"Exit Pipette Mode."}/>}
-            {lessonStep === 39 && <DialogBox text={"Place the volumetric flask back on the table."}/>}
-            {lessonStep === 40 && <DialogBox text={"Pick up the conical flask with your right hand."}/>}
-            {lessonStep === 41 && <DialogBox text={"Enter Pipette Mode."}/>}
-            {lessonStep === 42 && <DialogBox text={"Scroll down to release the diluted hydrochloric acid into the conical flask."}/>}
-            {lessonStep === 43 && <DialogBox text={"Exit Pipette Mode."}/>}
-            {lessonStep === 44 && <DialogBox text={"Place the volumetric pipette back on the table."}/>}
+
+          {lessonStep === 34 && (
+            <DialogBox
+              text={
+                <>
+                  Pick up the <strong>Volumetric Pipette</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 35 && (
+            <DialogBox
+              text={
+                <>
+                  <strong>Scroll down</strong> to squeeze the <strong>pipette filler</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 36 && (
+            <DialogBox
+              text={
+                <>
+                 Click <strong>Volumetric Pipette</strong> and Select Enter <strong>Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 37 && (
+            <DialogBox
+              text={
+                <>
+                  <strong>Scroll up</strong> to draw the <strong>diluted hydrochloric acid</strong> into the <strong>pipette</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 38 && (
+            <DialogBox
+              text={
+                <>
+                  Click <strong>Volumetric Pipette</strong> and Select <strong>Exit Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 39 && (
+            <DialogBox
+              text={
+                <>
+                  Place the <strong>volumetric flask</strong> back on the <strong>table</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 40 && (
+            <DialogBox
+              text={
+                <>
+                  Pick up the <strong>conical flask</strong> with your <strong>Right hand</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 41 && (
+            <DialogBox
+              text={
+                <>
+                 Click <strong>Volumetric Pipette</strong> And Select Enter <strong>Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 42 && (
+            <DialogBox
+              text={
+                <>
+                  <strong>Scroll down</strong> to release the <strong>diluted hydrochloric acid</strong> into the <strong>conical flask</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 43 && (
+            <DialogBox
+              text={
+                <>
+                 Click <strong>Volumetric Pipette</strong> And Select <strong>Exit Pipette Mode</strong>.
+                </>
+              }
+            />
+          )}
+
+          {lessonStep === 44 && (
+            <DialogBox
+              text={
+                <>
+                  Place the <strong>Volumetric Pipette</strong> back on the <strong>table</strong>.
+                </>
+              }
+            />
+          )}
 
             
             {lessonStep===45 && <HCLTitration2/>}

@@ -10,55 +10,91 @@ import { gsap } from "gsap"
 import "./HCLTitrationLiveDataPanel.css"
 
 const HCLTitrationLiveDataPanel = ({
+  // =========================================================
+  // CURRENT VOLUMES
+  // =========================================================
+
   normalBeakerAmount = null,
+
   volumetricFlaskAmount = null,
+
   conicalFlaskAmount = null,
+
   buretteNaOHAmount = null,
 
+  // =========================================================
+  // TITRATION LIVE DATA
+  // =========================================================
+
   initialBuretteReading = null,
+
   currentBuretteReading = null,
+
   naohDelivered = null,
 
   endpointStatus = null,
 
+  // =========================================================
+  // RESULTS
+  // =========================================================
+
   roughTitre = null,
+
   trialOne = null,
+
   trialTwo = null,
+
   meanTitre = null,
 
+  // =========================================================
+  // AUTO SHOW CONTROL
+  // =========================================================
+
   selectedLesson,
+
   lessonStep,
 
-  autoHideConditions = [],
   autoShowConditions = [],
 
-  autoHideDelay = 3000,
+  showDuration = 3000,
 }) => {
-  // ==========================================
+
+  // =========================================================
   // REFS
-  // ==========================================
+  // =========================================================
 
-  const panelRef = useRef(null)
-  const arrowRef = useRef(null)
-
-  const isPanelOpenRef = useRef(false)
-
-  const autoHideTimeoutRef =
+  const panelRef =
     useRef(null)
+
+  const arrowRef =
+    useRef(null)
+
+  const isPanelOpenRef =
+    useRef(false)
+
+  const autoCloseTimeoutRef =
+    useRef(null)
+
+
+  // =========================================================
+  // STATE
+  // =========================================================
 
   const [
     isPanelOpen,
     setIsPanelOpen,
   ] = useState(false)
 
-  // ==========================================
-  // FORMAT VALUES
-  // ==========================================
+
+  // =========================================================
+  // FORMAT VOLUME
+  // =========================================================
 
   const formatVolume = (
     value,
     decimals = 1
   ) => {
+
     if (
       value === null ||
       value === undefined
@@ -82,9 +118,15 @@ const HCLTitrationLiveDataPanel = ({
     )} cm³`
   }
 
+
+  // =========================================================
+  // FORMAT STATUS
+  // =========================================================
+
   const formatStatus = (
     value
   ) => {
+
     if (
       value === null ||
       value === undefined ||
@@ -96,84 +138,110 @@ const HCLTitrationLiveDataPanel = ({
     return value
   }
 
-  // ==========================================
+
+  // =========================================================
   // CLOSED POSITION
-  // ==========================================
+  // =========================================================
 
-  const getClosedPosition = () => {
-    const panel =
-      panelRef.current
-
-    if (!panel) return 0
-
-    return (
-      panel.offsetWidth - 34
-    )
-  }
-
-  // ==========================================
-  // CLEAR AUTO HIDE TIMER
-  // ==========================================
-
-  const clearAutoHideTimer =
+  const getClosedPosition =
     () => {
+
+      const panel =
+        panelRef.current
+
+      if (!panel) {
+        return 0
+      }
+
+      return (
+        panel.offsetWidth -
+        34
+      )
+    }
+
+
+  // =========================================================
+  // CLEAR AUTO CLOSE
+  // =========================================================
+
+  const clearAutoClose =
+    () => {
+
       if (
-        autoHideTimeoutRef.current
+        autoCloseTimeoutRef.current
       ) {
+
         clearTimeout(
-          autoHideTimeoutRef.current
+          autoCloseTimeoutRef.current
         )
 
-        autoHideTimeoutRef.current =
+        autoCloseTimeoutRef.current =
           null
       }
     }
 
-  // ==========================================
+
+  // =========================================================
   // CLOSE PANEL
-  // ==========================================
+  // =========================================================
 
-  const closePanel = () => {
-    const panel =
-      panelRef.current
+  const closePanel =
+    () => {
 
-    const arrow =
-      arrowRef.current
+      const panel =
+        panelRef.current
 
-    if (
-      !panel ||
-      !arrow
-    ) {
-      return
+      const arrow =
+        arrowRef.current
+
+      if (
+        !panel ||
+        !arrow
+      ) {
+        return
+      }
+
+      clearAutoClose()
+
+      isPanelOpenRef.current =
+        false
+
+      setIsPanelOpen(
+        false
+      )
+
+      gsap.to(panel, {
+        x:
+          getClosedPosition(),
+
+        duration:
+          0.65,
+
+        ease:
+          "power3.inOut",
+      })
+
+      gsap.to(arrow, {
+        rotation:
+          180,
+
+        duration:
+          0.65,
+
+        ease:
+          "power3.inOut",
+      })
     }
 
-    clearAutoHideTimer()
 
-    isPanelOpenRef.current =
-      false
-
-    setIsPanelOpen(false)
-
-    gsap.to(panel, {
-      x: getClosedPosition(),
-      duration: 0.65,
-      ease: "power3.inOut",
-    })
-
-    gsap.to(arrow, {
-      rotation: 180,
-      duration: 0.65,
-      ease: "power3.inOut",
-    })
-  }
-
-  // ==========================================
+  // =========================================================
   // OPEN PANEL
-  // ==========================================
+  // =========================================================
 
   const openPanel = (
-    shouldAutoHide = true
+    autoClose = false
   ) => {
+
     const panel =
       panelRef.current
 
@@ -187,40 +255,65 @@ const HCLTitrationLiveDataPanel = ({
       return
     }
 
-    clearAutoHideTimer()
+    clearAutoClose()
 
     isPanelOpenRef.current =
       true
 
-    setIsPanelOpen(true)
+    setIsPanelOpen(
+      true
+    )
 
     gsap.to(panel, {
-      x: -60,
-      duration: 0.65,
-      ease: "power3.inOut",
+      x:
+        -60,
+
+      duration:
+        0.65,
+
+      ease:
+        "power3.inOut",
     })
 
     gsap.to(arrow, {
-      rotation: 0,
-      duration: 0.65,
-      ease: "power3.inOut",
+      rotation:
+        0,
+
+      duration:
+        0.65,
+
+      ease:
+        "power3.inOut",
     })
 
+
+    // =======================================================
+    // AUTO CLOSE AFTER SHOW DURATION
+    // =======================================================
+
     if (
-      shouldAutoHide
+      autoClose
     ) {
-      autoHideTimeoutRef.current =
-        setTimeout(() => {
-          closePanel()
-        }, autoHideDelay)
+
+      autoCloseTimeoutRef.current =
+        setTimeout(
+          () => {
+
+            closePanel()
+
+          },
+          showDuration
+        )
     }
   }
 
-  // ==========================================
+
+  // =========================================================
   // START CLOSED
-  // ==========================================
+  // =========================================================
 
   useLayoutEffect(() => {
+
     const panel =
       panelRef.current
 
@@ -235,55 +328,81 @@ const HCLTitrationLiveDataPanel = ({
     }
 
     gsap.set(panel, {
-      x: getClosedPosition(),
+      x:
+        getClosedPosition(),
     })
 
     gsap.set(arrow, {
-      rotation: 180,
+      rotation:
+        180,
     })
 
     isPanelOpenRef.current =
       false
 
-    setIsPanelOpen(false)
+    setIsPanelOpen(
+      false
+    )
+
+
+    // =======================================================
+    // RESIZE
+    // =======================================================
 
     const handleResize =
       () => {
+
         if (
-          !isPanelOpenRef.current
+          isPanelOpenRef.current
         ) {
+
           gsap.set(panel, {
-            x: getClosedPosition(),
+            x:
+              -60,
+          })
+
+        }
+
+        else {
+
+          gsap.set(panel, {
+            x:
+              getClosedPosition(),
           })
         }
       }
+
 
     window.addEventListener(
       "resize",
       handleResize
     )
 
+
     return () => {
+
       window.removeEventListener(
         "resize",
         handleResize
       )
+
+      gsap.killTweensOf(
+        panel
+      )
+
+      gsap.killTweensOf(
+        arrow
+      )
     }
+
   }, [])
 
-  // ==========================================
-  // AUTO HIDE / AUTO SHOW
-  // ==========================================
+
+  // =========================================================
+  // AUTO SHOW
+  // =========================================================
 
   useEffect(() => {
-    const shouldAutoHide =
-      autoHideConditions.some(
-        (condition) =>
-          condition.selectedLesson ===
-            selectedLesson &&
-          condition.lessonStep ===
-            lessonStep
-      )
 
     const shouldAutoShow =
       autoShowConditions.some(
@@ -294,87 +413,117 @@ const HCLTitrationLiveDataPanel = ({
             lessonStep
       )
 
-    if (
-      shouldAutoHide
-    ) {
-      closePanel()
-      return
-    }
 
     if (
       shouldAutoShow
     ) {
-      openPanel(true)
+
+      openPanel(
+        true
+      )
     }
+
   }, [
     selectedLesson,
     lessonStep,
-    autoHideConditions,
     autoShowConditions,
-    autoHideDelay,
+    showDuration,
   ])
 
-  // ==========================================
-  // CLEANUP TIMER
-  // ==========================================
+
+  // =========================================================
+  // CLEANUP
+  // =========================================================
 
   useEffect(() => {
+
     return () => {
-      clearAutoHideTimer()
+
+      clearAutoClose()
+
     }
+
   }, [])
 
-  // ==========================================
+
+  // =========================================================
   // MANUAL TOGGLE
-  // ==========================================
+  // =========================================================
 
   const handlePanelToggle =
     () => {
+
+      // If user manually interacts,
+      // cancel automatic close timer.
+      clearAutoClose()
+
+
       if (
         isPanelOpenRef.current
       ) {
+
         closePanel()
-      } else {
-        openPanel(false)
+
+      }
+
+      else {
+
+        openPanel(
+          false
+        )
       }
     }
+
+
+  // =========================================================
+  // JSX
+  // =========================================================
 
   return (
     <div
       ref={panelRef}
       className="hcl-live-data-panel"
     >
-      {/* ======================================
+
+      {/* =====================================================
           TOGGLE
-      ====================================== */}
+      ===================================================== */}
 
       <button
         type="button"
+
         className="hcl-live-data-toggle"
+
         onClick={
           handlePanelToggle
         }
+
         aria-label={
           isPanelOpen
-            ? "Close live data panel"
-            : "Open live data panel"
+            ? "Close HCl titration live data panel"
+            : "Open HCl titration live data panel"
         }
       >
+
         <span
           ref={arrowRef}
+
           className="hcl-live-data-toggle-arrow"
         >
           ❯
         </span>
+
       </button>
+
 
       <div className="hcl-live-data-inner">
 
-        {/* =====================================
+        {/* ===================================================
             HEADER
-        ===================================== */}
+        =================================================== */}
 
         <div className="hcl-live-data-header">
+
           <h1>
             HCl Titration
           </h1>
@@ -382,35 +531,43 @@ const HCLTitrationLiveDataPanel = ({
           <p>
             Live Data
           </p>
+
         </div>
 
-        {/* =====================================
+
+        {/* ===================================================
             CONTENT
-        ===================================== */}
+        =================================================== */}
 
         <div className="hcl-live-data-content">
 
-          {/* ===================================
+
+          {/* =================================================
               CURRENT VOLUMES
-          =================================== */}
+          ================================================= */}
 
           <div className="hcl-live-data-section">
 
             <div className="hcl-live-data-section-title">
+
               <span className="hcl-live-data-dot" />
 
               <h2>
                 Current Volumes
               </h2>
+
             </div>
+
 
             <div className="hcl-live-data-divider" />
 
+
             {/* NORMAL BEAKER */}
 
-            <div className="hcl-live-data-row">
+            {/* <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Normal beaker
                 </p>
@@ -418,7 +575,9 @@ const HCLTitrationLiveDataPanel = ({
                 <span>
                   HCl / distilled water
                 </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
@@ -428,21 +587,27 @@ const HCLTitrationLiveDataPanel = ({
                     : ""
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    normalBeakerAmount,
-                    1
-                  )}
+                  {
+                    formatVolume(
+                      normalBeakerAmount,
+                      1
+                    )
+                  }
                 </p>
+
               </div>
 
-            </div>
+            </div> */}
+
 
             {/* VOLUMETRIC FLASK */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Volumetric flask
                 </p>
@@ -450,39 +615,49 @@ const HCLTitrationLiveDataPanel = ({
                 <span>
                   Diluted HCl solution
                 </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
                   volumetricFlaskAmount ==
                   null
                     ? "hcl-live-data-value-pending"
-                    : ""
+                    : "hcl-live-data-value-live"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    volumetricFlaskAmount,
-                    1
-                  )}
+                  {
+                    formatVolume(
+                      volumetricFlaskAmount,
+                      1
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
+
 
             {/* CONICAL FLASK */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Conical flask
                 </p>
 
                 <span>
-                  HCl + indicator
+                  HCl + phenolphthalein
                 </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
@@ -492,29 +667,37 @@ const HCLTitrationLiveDataPanel = ({
                     : ""
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    conicalFlaskAmount,
-                    1
-                  )}
+                  {
+                    formatVolume(
+                      conicalFlaskAmount,
+                      1
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
 
+
             {/* BURETTE */}
 
-            <div className="hcl-live-data-row">
+            {/* <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
-                  Burette NaOH
+                  Burette
                 </p>
 
                 <span>
-                  Solution remaining
+                  Sodium hydroxide remaining
                 </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
@@ -524,21 +707,26 @@ const HCLTitrationLiveDataPanel = ({
                     : "hcl-live-data-value-live"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    buretteNaOHAmount,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      buretteNaOHAmount,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
-            </div>
+            </div> */}
 
           </div>
 
-          {/* ===================================
+
+          {/* =================================================
               TITRATION
-          =================================== */}
+          ================================================= */}
 
           <div
             className="
@@ -548,24 +736,35 @@ const HCLTitrationLiveDataPanel = ({
           >
 
             <div className="hcl-live-data-section-title">
+
               <span className="hcl-live-data-dot" />
 
               <h2>
                 Titration
               </h2>
+
             </div>
 
+
             <div className="hcl-live-data-divider" />
+
 
             {/* INITIAL BURETTE */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Initial burette reading
                 </p>
+
+                <span>
+                  Before titration
+                </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
@@ -575,25 +774,37 @@ const HCLTitrationLiveDataPanel = ({
                     : ""
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    initialBuretteReading,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      initialBuretteReading,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
+
 
             {/* CURRENT BURETTE */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Current burette reading
                 </p>
+
+                <span>
+                  During titration
+                </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
@@ -603,48 +814,67 @@ const HCLTitrationLiveDataPanel = ({
                     : "hcl-live-data-value-live"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    currentBuretteReading,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      currentBuretteReading,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
+
 
             {/* NAOH DELIVERED */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   NaOH delivered
                 </p>
+
+                <span>
+                  From burette
+                </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
-                  naohDelivered == null
+                  naohDelivered ==
+                  null
                     ? "hcl-live-data-value-pending"
                     : "hcl-live-data-value-live"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    naohDelivered,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      naohDelivered,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
+
 
             {/* ENDPOINT */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Endpoint
                 </p>
@@ -652,29 +882,37 @@ const HCLTitrationLiveDataPanel = ({
                 <span>
                   Phenolphthalein
                 </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
-                  endpointStatus == null
+                  endpointStatus ==
+                  null
                     ? "hcl-live-data-value-pending"
                     : "hcl-live-data-value-status"
                 }`}
               >
+
                 <p>
-                  {formatStatus(
-                    endpointStatus
-                  )}
+                  {
+                    formatStatus(
+                      endpointStatus
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
 
           </div>
 
-          {/* ===================================
+
+          {/* =================================================
               RESULTS
-          =================================== */}
+          ================================================= */}
 
           <div
             className="
@@ -684,130 +922,184 @@ const HCLTitrationLiveDataPanel = ({
           >
 
             <div className="hcl-live-data-section-title">
+
               <span className="hcl-live-data-dot" />
 
               <h2>
                 Results
               </h2>
+
             </div>
+
 
             <div className="hcl-live-data-divider" />
 
+
             {/* ROUGH TITRE */}
 
-            {/* <div className="hcl-live-data-row">
+            {/*
+            <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Rough titre
                 </p>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
-                  roughTitre == null
+                  roughTitre ==
+                  null
                     ? "hcl-live-data-value-pending"
-                    : ""
+                    : "hcl-live-data-value-complete"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    roughTitre,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      roughTitre,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
-            </div> */}
+            </div>
+            */}
+
 
             {/* TRIAL 1 */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Trial 1
                 </p>
+
+                <span>
+                  Accurate titre
+                </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
-                  trialOne == null
+                  trialOne ==
+                  null
                     ? "hcl-live-data-value-pending"
                     : "hcl-live-data-value-complete"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    trialOne,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      trialOne,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
+
 
             {/* TRIAL 2 */}
 
             <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Trial 2
                 </p>
+
+                <span>
+                  Accurate titre
+                </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
-                  trialTwo == null
+                  trialTwo ==
+                  null
                     ? "hcl-live-data-value-pending"
                     : "hcl-live-data-value-complete"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    trialTwo,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      trialTwo,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
             </div>
+
 
             {/* MEAN TITRE */}
 
-            <div className="hcl-live-data-row">
+            {/* <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
+
                 <p>
                   Mean titre
                 </p>
+
+                <span>
+                  Concordant titres
+                </span>
+
               </div>
+
 
               <div
                 className={`hcl-live-data-value ${
-                  meanTitre == null
+                  meanTitre ==
+                  null
                     ? "hcl-live-data-value-pending"
                     : "hcl-live-data-value-complete"
                 }`}
               >
+
                 <p>
-                  {formatVolume(
-                    meanTitre,
-                    2
-                  )}
+                  {
+                    formatVolume(
+                      meanTitre,
+                      2
+                    )
+                  }
                 </p>
+
               </div>
 
-            </div>
+            </div> */}
 
           </div>
 
         </div>
 
-        {/* =====================================
+
+        {/* ===================================================
             FOOTER
-        ===================================== */}
+        =================================================== */}
 
         <div className="hcl-live-data-footer">
 
@@ -816,12 +1108,13 @@ const HCLTitrationLiveDataPanel = ({
           </div>
 
           <p>
-            Values update automatically during the titration.
+            Values update automatically throughout the practical.
           </p>
 
         </div>
 
       </div>
+
     </div>
   )
 }

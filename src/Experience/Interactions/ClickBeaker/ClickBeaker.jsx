@@ -3257,7 +3257,7 @@ const renderBuretteHeldButtons = ()=>{
       )
     }
 
-    if(([11,11.1].includes(selectedLesson)) && (lessonStep === 64 || lessonStep ==55)){
+    if(([11,11.1].includes(selectedLesson)) && (lessonStep === 64 || lessonStep ==55 || lessonStep ==31)){
       return(
         <>
           <button

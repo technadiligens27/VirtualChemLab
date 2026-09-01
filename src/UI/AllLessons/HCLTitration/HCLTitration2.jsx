@@ -580,168 +580,204 @@ const HCLTitration2 = () => {
   // =========================================================
   return (
     <>
-{/* 
-      <HCLTitrationLiveDataPanel
-        normalBeakerAmount={null}
-        volumetricFlaskAmount={
-          lessonStep >= 45
-            ? 30
-            : null
-        }
-        conicalFlaskAmount={
-          lessonStep >= 45 && lessonStep < 54
-            ? 25
-            : lessonStep >= 54 && lessonStep < 57
-            ? 0
-            : lessonStep >= 57
-            ? 30
-            : null
-        }
-        buretteNaOHAmount={
-          lessonStep >= 45 && lessonStep < 52
-            ? 30
-            : lessonStep >= 53 && lessonStep < 65
-            ? 5.2
-            : lessonStep >= 65 && lessonStep < 69
-            ? 30
-            : lessonStep >= 70
-            ? 5.3
-            : null
-        }
-        initialBuretteReading={
-          lessonStep >= 50
-            ? 0
-            : null
-        }
-        currentBuretteReading={
-          lessonStep >= 53 && lessonStep < 65
-            ? 24.8
-            : lessonStep >= 70
-            ? 24.7
-            : lessonStep === 52 || lessonStep === 69
-            ? null
-            : lessonStep >= 50
-            ? 0
-            : null
-        }
-        naohDelivered={
-          lessonStep >= 53 && lessonStep < 65
-            ? 24.8
-            : lessonStep >= 70
-            ? 24.7
-            : null
-        }
-        endpointStatus={
-          lessonStep >= 45 && lessonStep < 48
-            ? "Not ready"
-            : lessonStep >= 48 && lessonStep < 52
-            ? "Ready"
-            : lessonStep === 52
-            ? "Approaching"
-            : lessonStep >= 53 && lessonStep < 54
-            ? "Reached"
-            : lessonStep >= 54 && lessonStep < 61
-            ? "Not ready"
-            : lessonStep >= 61 && lessonStep < 69
-            ? "Ready"
-            : lessonStep === 69
-            ? "Approaching"
-            : lessonStep >= 70
-            ? "Reached"
-            : null
-        }
-        roughTitre={
-          lessonStep >= 53
-            ? 24.8
-            : null
-        }
-        trialOne={
-          lessonStep >= 53
-            ? 24.7
-            : null
-        }
-        
-        trialTwo={ lessonStep >= 71   ? 24.75   : null }
+          <HCLTitrationLiveDataPanel
+            normalBeakerAmount={lessonStep >= 10 ? 0 : lessonStep >= 6 ? 25 : null}
 
-        meanTitre={
-          lessonStep >= 71
-            ? 24.73
-            : null
-        }
-        selectedLesson={selectedLesson}
-        lessonStep={lessonStep}
-        autoShowConditions={[
-          {
-            selectedLesson: 11.1,
-            lessonStep: 48,
-          },
+            volumetricFlaskAmount={ lessonStep >=38 ? 225 : lessonStep >= 22 ? 250 : lessonStep >= 15 ? 25 :  null}
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 52,
-          },
+            conicalFlaskAmount={lessonStep >=57 ?30 : lessonStep> 55 ? 0 : lessonStep >= 43 ? 25 : null}
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 53,
-          },
+            buretteNaOHAmount={
+              lessonStep >= 32
+                ? 30
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 55,
-          },
+            initialBuretteReading={
+              lessonStep >= 52
+                ? 30
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 57,
-          },
+            currentBuretteReading={
+              lessonStep >= 52
+                ? 24.7
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 61,
-          },
+            naohDelivered={
+              lessonStep >= 52
+                ? 24.7
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 65,
-          },
+            endpointStatus={
+              lessonStep >= 53
+                ? "Reached"
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 69,
-          },
+            trialOne={
+              lessonStep >= 53
+                ? 24.8
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 70,
-          },
+            trialTwo={
+              lessonStep >= 70
+                ? 24.7
+                : null
+            }
 
-          {
-            selectedLesson: 11.1,
-            lessonStep: 71,
-          },
-        ]}
-        autoHideDelay={3000}
-      /> */}
+            meanTitre={
+              lessonStep >= 71
+                ? 24.65
+                : null
+            }
+
+            selectedLesson={
+              selectedLesson
+            }
+
+            lessonStep={
+              lessonStep
+            }
+
+            autoShowConditions={[
+              {
+                selectedLesson: 11,
+                lessonStep: 6,
+              },
+              {
+                selectedLesson: 11,
+                lessonStep: 15,
+              },
+              {
+                selectedLesson: 11,
+                lessonStep: 22,
+              },  
+              {
+                selectedLesson: 11,
+                lessonStep: 38,
+              },  
+              {
+                selectedLesson: 11,
+                lessonStep: 43,
+              },                                        
+              {
+                selectedLesson: 11,
+                lessonStep: 53,
+              },   
+              {
+                selectedLesson: 11,
+                lessonStep: 55,
+              },               
+              
+            ]}
+
+            showDuration={
+              3000
+            }
+          />
 
      {lessonStep >= 45 && lessonStep <= 49 && (
         <HessGuidelines guidelineData={guidelineData[7]} />
       )}
 
-      {lessonStep === 45 && (<DialogBox text="Take Phenolphthalein Dropper Bottle to Left Hand"/>)}
-      {lessonStep === 46 && (<DialogBox text="Position the Phenolphthalein Dropper above the Conical Flask (Press Pour Mode)"/>)}
-      {lessonStep === 47 && (<DialogBox text="Squeeze the Dropper to add 2–3 drops of Phenolphthalein"/>)}
-      {lessonStep === 48 && (<DialogBox text="Click Phenolphthalein Dropper and Exit Pour Mode"/>)}
-      {lessonStep === 49 && (<DialogBox text="Keep Phenolphthalein Dropper back on Table"/>)}
+    {lessonStep === 45 && (
+      <DialogBox
+        text={
+          <>
+            Take the <strong>Phenolphthalein Dropper Bottle</strong> in your <strong>Left hand</strong>.
+          </>
+        }
+      />
+    )}
+
+    {lessonStep === 46 && (
+      <DialogBox
+        text={
+          <>
+            Position the <strong>Phenolphthalein Dropper</strong> above the <strong>Conical Flask</strong> and enter <strong>Pour Mode</strong>.
+          </>
+        }
+      />
+    )}
+
+    {lessonStep === 47 && (
+      <DialogBox
+        text={
+          <>
+            <strong>Squeeze the dropper</strong> to add <strong>2–3 drops</strong> of <strong>Phenolphthalein</strong>.
+          </>
+        }
+      />
+    )}
+
+    {lessonStep === 48 && (
+      <DialogBox
+        text={
+          <>
+            Click the <strong>Phenolphthalein Dropper</strong> and exit <strong>Pour Mode</strong>.
+          </>
+        }
+      />
+    )}
+
+    {lessonStep === 49 && (
+      <DialogBox
+        text={
+          <>
+            Place the <strong>Phenolphthalein Dropper</strong> back on the <strong>table</strong>.
+          </>
+        }
+      />
+    )}
 
       {lessonStep >= 50 && lessonStep <= 53 && (
         <HessGuidelines guidelineData={guidelineData[8]} />
       )}
 
-      {lessonStep === 50 && (<DialogBox text="Place Clamp In Centre"/>)}
-      {lessonStep === 51 && (<DialogBox text="Place Conical Flask Near Clamp"/>)}
-      {lessonStep === 52 && (<DialogBox text="Scroll donw to Pour"/>)}
-      {lessonStep === 53 && (<DialogBox text="Remove Conical Flask"/>)}
+
+      {lessonStep === 50 && (
+        <DialogBox
+          text={
+            <>
+              Place the <strong>clamp</strong> in the <strong>centre</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 51 && (
+        <DialogBox
+          text={
+            <>
+              Place the <strong>Conical Flask</strong> near the <strong>clamp</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 52 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Scroll down</strong> to <strong>pour</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 53 && (
+        <DialogBox
+          text={
+            <>
+              Remove the <strong>Conical Flask</strong>.
+            </>
+          }
+        />
+      )}
 
       {lessonStep === 53 && (<TitreValueRecorded
        titreValue ={24.8}
@@ -759,32 +795,165 @@ const HCLTitration2 = () => {
       )}
 
 
-      {lessonStep === 54 && (<DialogBox text="Click Conical Flask and click Clean Flask "/>)}
-      {lessonStep === 55 && (<DialogBox text="Click Add Liquid"/>)}
-      {lessonStep === 56 && (<DialogBox text="HCL 30cm3"/>)}
-      {lessonStep === 57 && (<DialogBox text="Remove Burette from centre"/>)}
+      {lessonStep === 54 && (
+        <DialogBox
+          text={
+            <>
+              Click the <strong>Conical Flask</strong> and select <strong>Clean Flask</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 55 && (
+        <DialogBox
+          text={
+            <>
+              Click <strong>Add Liquid</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 56 && (
+        <DialogBox
+          text={
+            <>
+              Add <strong>30 cm³</strong> of <strong>hydrochloric acid</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 57 && (
+        <DialogBox
+          text={
+            <>
+              Remove the <strong>burette</strong> from the <strong>centre</strong>.
+            </>
+          }
+        />
+      )}
 
       {lessonStep >= 58 && lessonStep <= 62 && (
         <HessGuidelines guidelineData={guidelineData[10]} />
       )}
 
-      {lessonStep === 58 && (<DialogBox text="Take Phenolphthalein Dropper Bottle to Left Hand"/>)}
-      {lessonStep === 59 && (<DialogBox text="Press Pour Mode"/>)}
-      {lessonStep === 60 && (<DialogBox text="Squeeze the Dropper to add 2–3 drops of Phenolphthalein"/>)}
-      {lessonStep === 61 && (<DialogBox text="Click Phenolphthalein Dropper and Exit Pour Mode"/>)}
-      {lessonStep === 62 && (<DialogBox text="Keep Phenolphthalein Dropper back on Table"/>)}
-    
+
+      {lessonStep === 58 && (
+        <DialogBox
+          text={
+            <>
+              Take the <strong>Phenolphthalein Dropper Bottle</strong> in your <strong>Left hand</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 59 && (
+        <DialogBox
+          text={
+            <>
+              Enter <strong>Pour Mode</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 60 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Squeeze the dropper</strong> to add <strong>2–3 drops</strong> of <strong>Phenolphthalein</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 61 && (
+        <DialogBox
+          text={
+            <>
+              Click the <strong>Phenolphthalein Dropper</strong> and exit <strong>Pour Mode</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 62 && (
+        <DialogBox
+          text={
+            <>
+              Place the <strong>Phenolphthalein Dropper</strong> back on the <strong>table</strong>.
+            </>
+          }
+        />
+      )}
+          
       {lessonStep >= 63 && lessonStep <= 67 && (
         <HessGuidelines guidelineData={guidelineData[11]} />
       )}
 
 
-      {lessonStep === 63 && (<DialogBox text="Click Burette and get it to Left Hand"/>)}
-      {lessonStep === 64 && (<DialogBox text="Click Add Liquid"/>)}
-      {lessonStep === 65 && (<DialogBox text="NaOH 30cm3"/>)}
-      {lessonStep === 66 && (<DialogBox text="Clamp"/>)}
-      {lessonStep === 67 && (<DialogBox text="Place In Centre"/>)}
-      {lessonStep === 68 && (<DialogBox text="Place Conical Flask in Burette"/>)}
+      {lessonStep === 63 && (
+        <DialogBox
+          text={
+            <>
+              Click the <strong>Burette</strong> and place it in your <strong>Left hand</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 64 && (
+        <DialogBox
+          text={
+            <>
+              Click <strong>Add Liquid</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 65 && (
+        <DialogBox
+          text={
+            <>
+              Add <strong>30 cm³</strong> of <strong>sodium hydroxide solution</strong> to the <strong>burette</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 66 && (
+        <DialogBox
+          text={
+            <>
+              <strong>Clamp the burette</strong> securely in an <strong>upright position</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 67 && (
+        <DialogBox
+          text={
+            <>
+              Place the <strong>burette clamp</strong> in the <strong>centre</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 68 && (
+        <DialogBox
+          text={
+            <>
+              Place the <strong>Conical Flask</strong> under the <strong>burette</strong>.
+            </>
+          }
+        />
+      )}
 
       {lessonStep >= 68 && lessonStep <= 70 && (
         <HessGuidelines guidelineData={guidelineData[12]} />
@@ -803,8 +972,25 @@ const HCLTitration2 = () => {
        
        }
 
-      {lessonStep === 70 && (<DialogBox text="Remove Copnical Flaks"/>)}
-      {lessonStep === 71 && (<DialogBox text="71"/>)}
+      {lessonStep === 70 && (
+        <DialogBox
+          text={
+            <>
+              Remove the <strong>Conical Flask</strong>.
+            </>
+          }
+        />
+      )}
+
+      {lessonStep === 71 && (
+        <DialogBox
+          text={
+            <>
+              <strong>71</strong>
+            </>
+          }
+        />
+      )}
 
 
       {lessonStep === 71 && (
@@ -812,25 +998,16 @@ const HCLTitration2 = () => {
             sulfamicAcidMass={2.5}
             volumetricFlaskVolume={250}
             aliquotVolume={25}
-
             // roughTitre={24.8}
             trialOne={24.7}
             trialTwo={24.75}
-
             topLabelText="Titration Results"
-
             mainTitleText="Hydrochloric Acid – Sodium Hydroxide"
-
             subtitleText="Final experimental results"
-
             sulfamicAcidLabelText="Hydrochloric acid"
-
             concentrationLabelText="Concentration of HCl"
-
             molesSulfamicAcidLabelText="Moles of HCl"
-
             sulfamicAcidConcentrationLabelText="HCl concentration"
-
             imageSrc="./buretteTitre.png"
           />
       )}
