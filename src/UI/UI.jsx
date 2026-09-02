@@ -147,7 +147,7 @@ const UI = () => {
 
   useEffect(() => {
     setShowNormalBeakerArrow(
-      (selectedLesson===8 && [3,8].includes(lessonStep)) ||
+      (selectedLesson===8 && [3,21].includes(lessonStep)) ||
       (selectedLesson===11 && [3].includes(lessonStep)) ||
       ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep))      
     )
@@ -184,7 +184,7 @@ const UI = () => {
 
   useEffect(()=>{
     setShowBalanceArrow(
-      (lessonStep===14 && selectedLesson === 8) ||
+      ([14,22].includes(lessonStep) && selectedLesson === 8) ||
       ([4,6,14].includes(lessonStep) && selectedLesson ===12)
 
     )

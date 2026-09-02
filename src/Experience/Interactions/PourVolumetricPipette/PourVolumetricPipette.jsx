@@ -20,7 +20,12 @@ const PourVolumetricPipette = ({
   otherLiquidColor = "#ffffff",
   otherLiquidOpacity = null,
 
+  // Controls liquid transfer speed
   scaleSpeed = 0.5,
+
+  // Controls only how fast
+  // the visible pour stream scales up
+  pourScaleSpeed = 2,
 }) => {
   const {
     selectedLesson,
@@ -68,6 +73,9 @@ const PourVolumetricPipette = ({
   // ==========================================
   // PROGRESS
   // ==========================================
+
+  const pourProgressRef =
+    useRef(0)
 
   const verticalProgressRef =
     useRef(0)
@@ -383,6 +391,9 @@ const PourVolumetricPipette = ({
     // RESET
     // ========================================
 
+    pourProgressRef.current =
+      0
+
     verticalProgressRef.current =
       0
 
@@ -397,6 +408,11 @@ const PourVolumetricPipette = ({
 
     console.log(
       "🧪 Volumetric pipette pouring started"
+    )
+
+    console.log(
+      "Pour start:",
+      pourStartScaleRef.current
     )
 
     console.log(
@@ -605,6 +621,41 @@ const PourVolumetricPipette = ({
       }
 
       // ======================================
+      // POUR STREAM SCALE
+      //
+      // Independent from liquid transfer speed.
+      // ======================================
+
+      if (
+        pourProgressRef.current < 1
+      ) {
+        pourProgressRef.current +=
+          pourScaleSpeed *
+          delta
+
+        const pourProgress =
+          Math.min(
+            pourProgressRef.current,
+            1
+          )
+
+        pourRef.current.visible =
+          true
+
+        pourRef.current.scale.y =
+          pourStartScaleRef.current +
+          (
+            amount -
+            pourStartScaleRef.current
+          ) *
+          pourProgress
+
+        pourRef.current.updateMatrixWorld(
+          true
+        )
+      }
+
+      // ======================================
       // STAGE 1
       //
       // VERTICAL EMPTIES FIRST
@@ -636,18 +687,6 @@ const PourVolumetricPipette = ({
           )
 
         // ====================================
-        // POUR STREAM
-        // ====================================
-
-        pourRef.current.scale.y =
-          pourStartScaleRef.current +
-          (
-            amount -
-            pourStartScaleRef.current
-          ) *
-          progress
-
-        // ====================================
         // RECEIVER FIRST HALF
         // ====================================
 
@@ -665,10 +704,6 @@ const PourVolumetricPipette = ({
         // ====================================
 
         verticalRef.current.updateMatrixWorld(
-          true
-        )
-
-        pourRef.current.updateMatrixWorld(
           true
         )
 
@@ -746,9 +781,6 @@ const PourVolumetricPipette = ({
 
       pourRef.current.visible =
         true
-
-      pourRef.current.scale.y =
-        amount
 
       // ======================================
       // RECEIVER SECOND HALF

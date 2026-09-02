@@ -2162,6 +2162,12 @@ const handlePlacePolysterene = () => {
   setSelectedObject(null)
 }
 
+useEffect(()=>{
+if(selectedLesson===8 && lessonStep===39){
+  setIsBalancePlaced(true)
+}
+},[selectedLesson,lessonStep,isBalancePlaced])
+
 const handlePlaceBalance = () => {
   setIsBalancePlaced(true)
   setSelectedObject(null)
@@ -2169,6 +2175,8 @@ const handlePlaceBalance = () => {
   if(lessonStep===38 && selectedLesson===8){
     setLessonStep(39)
   }
+
+  
 
 }
 
@@ -2277,6 +2285,10 @@ const handlePlaceBalance = () => {
     }
 
     setIsPlaceThermometer(false)
+
+    if(isPolystereneStirMode){
+      setIsPolystereneStirMode(false)
+    }
 
     setSelectedRightHand({
       hand: "right",
@@ -2426,6 +2438,12 @@ const handlePlaceBalance = () => {
 
     setSelectedObject(null)
   }
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep==32){
+      setIsPolystereneStirMode(true)
+    }
+  },[selectedLesson,lessonStep,isPolystereneStirMode])
 
   const handlePolystereneStirMode = ()=>{
     
@@ -3227,6 +3245,24 @@ const renderThermometerHeldButtons=()=>{
 
 const renderBuretteHeldButtons = ()=>{
 
+      if(([8].includes(selectedLesson)) && (lessonStep === 19) && selectedObject.name === "main-buirette"){
+      return(
+        <>
+          <button
+            onClick={() =>
+              keepBackOnTable(selectedObject.hand)
+            }
+          >
+            Keep Back On Table
+          </button>
+
+          <button onClick={openFillBeakerBox}>
+            Add Liquid
+          </button>       
+        </>
+      )
+    }    
+
     if (selectedObject.name === "main-buirette" && selectedLesson===12.2 && lessonStep===60) {
       return (
         <>
@@ -3237,7 +3273,7 @@ const renderBuretteHeldButtons = ()=>{
       )
     }
 
-    if (selectedObject.name === "main-buirette" && selectedLesson===12.2 && lessonStep===61) {
+    if (selectedObject.name === "main-buirette" && [12.2,8].includes(selectedLesson)  && [61,23].includes(lessonStep)) {
       return (
         <>
           <button onClick={handleClampBurette}>

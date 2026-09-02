@@ -223,7 +223,7 @@ const guidelineData = [
       "Open the burette and begin adding sodium hydroxide.",
       "Observe the colour of the solution while titrating.",
       "Continue until a pale-pink endpoint is reached.",
-      "Remove the conical flask from beneath the burette.",
+      ".1 from beneath the burette.",
     ],
 
     image: "./roughTitration.png",
@@ -419,10 +419,10 @@ const guidelineData = [
             }
 
             autoShowConditions={[
-              {
-                selectedLesson: 11,
-                lessonStep: 6,
-              },
+              // {
+              //   selectedLesson: 11,
+              //   lessonStep: 6,
+              // },
               {
                 selectedLesson: 11,
                 lessonStep: 15,

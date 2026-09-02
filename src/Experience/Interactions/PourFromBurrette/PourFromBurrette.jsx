@@ -12,57 +12,96 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import HCLTitrationReaction from "../../AllReactions/HCLTitrationReaction/HCLTitrationReaction"
 
-
 const PourFromBurette = ({
   scaleSpeed = 0.09,
-  minimumScaleY = 0,
+
+  // Pour model target Y scale
+  pourScaleY = 180,
+
+  // How quickly pour model reaches target scale
   smoothSpeed = 2,
 }) => {
   const {
     lessonStep,
     selectedLesson,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
   const {
     mainBuiretteRef,
     conicalBeakerRef,
-  } = useContext(ModelContext)
+  } = useContext(
+    ModelContext
+  )
 
-  const pourRef = useRef(null)
-  const liquidRef = useRef(null)
+  const pourRef =
+    useRef(null)
 
-  const isScrollingRef = useRef(false)
-  const isPourFinishedRef = useRef(false)
+  const liquidRef =
+    useRef(null)
+
+  const isScrollingRef =
+    useRef(false)
+
+  const isPourFinishedRef =
+    useRef(false)
 
   // ==========================================
   // REACTION STATE
   // ==========================================
 
-  const [isPouring, setIsPouring] =
-    useState(false)
+  const [
+    isPouring,
+    setIsPouring,
+  ] = useState(false)
 
-  const [isEndpoint, setIsEndpoint] =
-    useState(false)
+  const [
+    isEndpoint,
+    setIsEndpoint,
+  ] = useState(false)
 
   // ==========================================
   // START POURING ON SCROLL DOWN
   // ==========================================
 
   useEffect(() => {
-    const handleWheel = (event) => {
-      const liquid = liquidRef.current
+    const handleWheel = (
+      event
+    ) => {
+      const liquid =
+        liquidRef.current
 
-      if (event.deltaY <= 0) return
+      if (
+        event.deltaY <= 0
+      ) {
+        return
+      }
+
       if (!liquid) return
-      if (liquid.scale.y <= 0) return
-      if (isScrollingRef.current) return
-      if (isPourFinishedRef.current) return
 
-      isScrollingRef.current = true
+      if (
+        liquid.scale.y <= 0
+      ) {
+        return
+      }
 
-      // Tell reaction component that
-      // NaOH is entering the conical flask
+      if (
+        isScrollingRef.current
+      ) {
+        return
+      }
+
+      if (
+        isPourFinishedRef.current
+      ) {
+        return
+      }
+
+      isScrollingRef.current =
+        true
+
       setIsPouring(true)
 
       console.log(
@@ -73,7 +112,9 @@ const PourFromBurette = ({
     window.addEventListener(
       "wheel",
       handleWheel,
-      { passive: true }
+      {
+        passive: true,
+      }
     )
 
     return () => {
@@ -93,190 +134,246 @@ const PourFromBurette = ({
       mainBuiretteRef.current
 
     if (!burette) {
-      console.log("No Burette Found")
+      console.log(
+        "No Burette Found"
+      )
+
       return
     }
 
-    burette.traverse((child) => {
-      if (
-        child.isMesh &&
-        child.name
-          ?.toLowerCase()
-          .includes("pour")
-      ) {
-        pourRef.current = child
+    burette.traverse(
+      (child) => {
+        const childName =
+          child.name
+            ?.toLowerCase() ||
+          ""
 
-        child.scale.y =
-          minimumScaleY
+        // ======================================
+        // POUR MODEL
+        // ======================================
 
-        child.visible = false
+        if (
+          child.isMesh &&
+          childName.includes(
+            "pour"
+          )
+        ) {
+          pourRef.current =
+            child
+
+          child.scale.y =
+            0
+
+          child.visible =
+            false
+        }
+
+        // ======================================
+        // BURETTE LIQUID
+        // ======================================
+
+        if (
+          child.isMesh &&
+          childName.includes(
+            "liquid"
+          )
+        ) {
+          liquidRef.current =
+            child
+        }
       }
-
-      if (
-        child.isMesh &&
-        child.name
-          ?.toLowerCase()
-          .includes("liquid")
-      ) {
-        liquidRef.current = child
-      }
-    })
+    )
   }, [
     mainBuiretteRef,
-    minimumScaleY,
   ])
 
   // ==========================================
   // BURETTE POURING ANIMATION
   // ==========================================
 
-  useFrame((state, delta) => {
-    const pour = pourRef.current
-    const liquid = liquidRef.current
+  useFrame(
+    (_, delta) => {
+      const pour =
+        pourRef.current
 
-    if (!pour) return
-    if (!liquid) return
-    if (!isScrollingRef.current) return
+      const liquid =
+        liquidRef.current
 
-    // ========================================
-    // BURETTE EMPTY
-    // ========================================
-
-    if (liquid.scale.y <= 0) {
-      liquid.scale.y = 0
-
-      pour.visible = false
-
-      pour.scale.y =
-        minimumScaleY
-
-      isScrollingRef.current = false
-      isPourFinishedRef.current = true
-
-      // Stop reaction pouring state
-      setIsPouring(false)
-
-      return
-    }
-
-    // ========================================
-    // SHOW POUR STREAM
-    // ========================================
-
-    pour.visible = true
-
-    pour.scale.y =
-      THREE.MathUtils.damp(
-        pour.scale.y,
-        80,
-        smoothSpeed,
-        delta
-      )
-
-    // ========================================
-    // LOWER BURETTE LIQUID
-    // ========================================
-
-    liquid.scale.y = Math.max(
-      liquid.scale.y -
-        scaleSpeed * delta,
-      0
-    )
-
-    // ========================================
-    // POUR FINISHED
-    // ========================================
-
-    if (liquid.scale.y <= 0) {
-      liquid.scale.y = 0
-
-      pour.visible = false
-
-      pour.scale.y =
-        minimumScaleY
-
-      isScrollingRef.current = false
-      isPourFinishedRef.current = true
-
-      // NaOH is no longer flowing
-      setIsPouring(false)
-
-      console.log(
-        "Burette pouring finished"
-      )
-
-      // ======================================
-      // LESSON 8
-      // ======================================
+      if (!pour) return
+      if (!liquid) return
 
       if (
-        selectedLesson === 8 &&
-        lessonStep === 27
+        !isScrollingRef.current
       ) {
-        setLessonStep(28)
+        return
       }
 
-      // ======================================
-      // LESSON 9
-      // ======================================
+      // ========================================
+      // BURETTE EMPTY
+      // ========================================
 
       if (
-        selectedLesson === 9 &&
-        lessonStep === 24
+        liquid.scale.y <= 0
       ) {
-        setLessonStep(25)
+        liquid.scale.y =
+          0
+
+        pour.visible =
+          false
+
+        pour.scale.y =
+          0
+
+        isScrollingRef.current =
+          false
+
+        isPourFinishedRef.current =
+          true
+
+        setIsPouring(false)
+
+        return
       }
 
-      // ======================================
-      // HCL TITRATION
-      // ======================================
+      // ========================================
+      // SHOW POUR STREAM
+      // ========================================
+
+      pour.visible =
+        true
+
+      pour.scale.y =
+        THREE.MathUtils.damp(
+          pour.scale.y,
+          pourScaleY,
+          smoothSpeed,
+          delta
+        )
+
+      // ========================================
+      // LOWER BURETTE LIQUID
+      // ========================================
+
+      liquid.scale.y =
+        Math.max(
+          liquid.scale.y -
+            scaleSpeed *
+              delta,
+          0
+        )
+
+      // ========================================
+      // POUR FINISHED
+      // ========================================
 
       if (
-        selectedLesson === 11.1
+        liquid.scale.y <= 0
       ) {
-        // For now this marks the endpoint
-        // when your chosen burette amount
-        // has been delivered.
-        setIsEndpoint(true)
+        liquid.scale.y =
+          0
+
+        pour.visible =
+          false
+
+        pour.scale.y =
+          0
+
+        isScrollingRef.current =
+          false
+
+        isPourFinishedRef.current =
+          true
+
+        setIsPouring(false)
 
         console.log(
-          "✅ Rough titration endpoint reached"
+          "Burette pouring finished"
         )
+
+        // ======================================
+        // LESSON 8
+        // ======================================
+
+        if (
+          selectedLesson ===
+            8 &&
+          lessonStep === 27
+        ) {
+          setLessonStep(
+            28
+          )
+        }
+
+        // ======================================
+        // LESSON 9
+        // ======================================
+
+        if (
+          selectedLesson ===
+            9 &&
+          lessonStep === 24
+        ) {
+          setLessonStep(
+            25
+          )
+        }
+
+        // ======================================
+        // HCL TITRATION
+        // ======================================
+
+        if (
+          selectedLesson ===
+          11.1
+        ) {
+          setIsEndpoint(
+            true
+          )
+
+          console.log(
+            "✅ Rough titration endpoint reached"
+          )
+        }
       }
     }
-  })
+  )
 
   return (
     <>
-      {/* ======================================
-          HCL TITRATION REACTION
-          ====================================== */}
-
-      {selectedLesson === 11.1 && (
+      {selectedLesson ===
+        11.1 && (
         <HCLTitrationReaction
           conicalFlaskRef={
             conicalBeakerRef
           }
 
-          isPouring={isPouring}
+          isPouring={
+            isPouring
+          }
 
-          isEndpoint={isEndpoint}
+          isEndpoint={
+            isEndpoint
+          }
 
-          // Local pink patch while NaOH
-          // is continuously entering
           localPinkColor="#f4a6c1"
-          localPinkOpacity={1}
-          localPinkFadeSpeed={0.6}
+          localPinkOpacity={
+            1
+          }
+          localPinkFadeSpeed={
+            0.6
+          }
 
-          // Whole flask becomes faint pink
-          // once endpoint is reached
           endpointColor="#f7c1d6"
-          endpointOpacity={0.28}
+          endpointOpacity={
+            0.28
+          }
 
-          // Conical flask liquid rises
-          // while NaOH is entering
-          liquidRiseSpeed={0.03}
-          maxLiquidScaleY={0.5}
+          liquidRiseSpeed={
+            0.03
+          }
+          maxLiquidScaleY={
+            0.5
+          }
         />
       )}
     </>

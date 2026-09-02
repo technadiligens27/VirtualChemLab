@@ -444,7 +444,7 @@ const SulfamicAcidResult = ({
 
               {/* ROUGH TITRE */}
 
-              <div className="sulfamic-result-titre-row">
+              {/* <div className="sulfamic-result-titre-row">
                 <span>
                   {
                     roughTitreLabelText
@@ -457,7 +457,7 @@ const SulfamicAcidResult = ({
                   ).toFixed(2)}{" "}
                   cm³
                 </strong>
-              </div>
+              </div> */}
 
               {/* TRIAL 1 */}
 
@@ -621,104 +621,7 @@ const SulfamicAcidResult = ({
               RIGHT SIDE
           ==================================== */}
 
-          <div className="sulfamic-result-right">
-            {/* IMAGE */}
 
-            <img
-              className="sulfamic-result-image"
-              src={imageSrc}
-              alt={
-                imageAltText
-              }
-            />
-
-            {/* ==================================
-                FINAL RESULT
-            ================================== */}
-
-            <div className="sulfamic-result-final-card">
-              <p>
-                {
-                  concentrationLabelText
-                }
-              </p>
-
-              <h2>
-                {naohConcentration.toFixed(
-                  3
-                )}
-              </h2>
-
-              <span>
-                {
-                  concentrationUnitText
-                }
-              </span>
-            </div>
-
-            {/* ==================================
-                CALCULATION
-            ================================== */}
-
-            <div className="sulfamic-result-calculation">
-              <h3>
-                {
-                  calculationTitleText
-                }
-              </h3>
-
-              {/* MOLES OF SULFAMIC ACID */}
-
-              <div className="sulfamic-result-calculation-row">
-                <span>
-                  {
-                    molesSulfamicAcidLabelText
-                  }
-                </span>
-
-                <strong>
-                  {molesSulfamicAcid.toFixed(
-                    5
-                  )}{" "}
-                  mol
-                </strong>
-              </div>
-
-              {/* SULFAMIC ACID CONCENTRATION */}
-
-              <div className="sulfamic-result-calculation-row">
-                <span>
-                  {
-                    sulfamicAcidConcentrationLabelText
-                  }
-                </span>
-
-                <strong>
-                  {sulfamicAcidConcentration.toFixed(
-                    3
-                  )}{" "}
-                  mol dm⁻³
-                </strong>
-              </div>
-
-              {/* MOLES IN ALIQUOT */}
-
-              <div className="sulfamic-result-calculation-row">
-                <span>
-                  {
-                    molesInAliquotLabelText
-                  }
-                </span>
-
-                <strong>
-                  {molesInAliquot.toFixed(
-                    5
-                  )}{" "}
-                  mol
-                </strong>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

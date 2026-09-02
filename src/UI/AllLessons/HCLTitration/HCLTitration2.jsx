@@ -644,10 +644,7 @@ const HCLTitration2 = () => {
             }
 
             autoShowConditions={[
-              {
-                selectedLesson: 11,
-                lessonStep: 6,
-              },
+
               {
                 selectedLesson: 11,
                 lessonStep: 15,
@@ -665,13 +662,18 @@ const HCLTitration2 = () => {
                 lessonStep: 43,
               },                                        
               {
-                selectedLesson: 11,
+                selectedLesson: 11.1,
                 lessonStep: 53,
               },   
               {
-                selectedLesson: 11,
+                selectedLesson: 11.1,
                 lessonStep: 55,
-              },               
+              }, 
+              
+              {
+                selectedLesson: 11.1,
+                lessonStep: 70,
+              }, 
               
             ]}
 

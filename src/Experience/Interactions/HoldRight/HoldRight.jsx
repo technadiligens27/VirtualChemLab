@@ -225,9 +225,9 @@ const transformControlsRef = useRef()
 
   useEffect(()=>{
     if(selectedLesson===8 && lessonStep ===32){
-      setLessonStep(33)
+      setLessonStep(34)
     }
-  },[selectedLesson,lessonStep])
+  },[selectedLesson,lessonStep,])
 
 
   useEffect(()=>{

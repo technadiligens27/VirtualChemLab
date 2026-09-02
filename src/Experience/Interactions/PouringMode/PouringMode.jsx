@@ -801,7 +801,7 @@ const PouringMode = ({
               8 &&
             lessonStep === 36
           ) {
-            setLessonStep(37)
+            setLessonStep(39)
 
             setShowBubbles(
               false
@@ -1261,7 +1261,7 @@ const PouringMode = ({
 
   return (
       <>
-        {selectedLesson !== 12 && hand === "right" && selectedRightHand?.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 &&  
+        {selectedLesson !== 12 && selectedLesson !==8 && hand === "right" && selectedRightHand?.name === "main-testube-01" && !isPottasiumCarobnateInTestube01 &&  
         <PourFromTestube isPouring={isPouring} hand="right" 
         model={testube01Ref.current} liquidColor={rightBeakerFillData.color} />}
 

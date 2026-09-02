@@ -1,6 +1,9 @@
 import { useContext } from "react"
 import "./DialogBox.css"
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
+import {resetModel, saveModelStartState} from "../../../Experience/resetModels/resetModels.jsx"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext.jsx";
 
 const DialogBox = ({
   text,
@@ -8,7 +11,47 @@ const DialogBox = ({
   onbtn2Click
 }) => {
 
-  const {showEnthalyResultOne} = useContext(InteractionContext)
+  const {showEnthalyResultOne} = useContext(InteractionContext);
+  const {    normalBeakerRef,
+    conicalBeakerRef,
+    roundBeakerRef,
+    graduatedBeakerRef,
+    spoonRef,
+    saltRef,
+    redLitmusRef,
+    blueLitmusRef,
+    testube01Ref,
+    testube02Ref,
+    testube03Ref,
+    filterPaperRef,
+    filterFoldedPaperRef, 
+    funnelRef,
+    mainDropperRef,
+    digitalBalanceRef,
+    mainPolystereneRef,
+    mainBuiretteRef} = useContext(ModelContext)
+
+  const {selectedLesson,setSelectedLesson,setLessonStep} = useContext(MainGuidelineContext)
+
+  const labModels= [
+    normalBeakerRef,
+    conicalBeakerRef,
+    roundBeakerRef,
+    graduatedBeakerRef,
+    spoonRef,
+    saltRef,
+    redLitmusRef,
+    blueLitmusRef,
+    testube01Ref,
+    testube02Ref,
+    testube03Ref,
+    filterPaperRef,
+    filterFoldedPaperRef, 
+    funnelRef,
+    mainDropperRef,
+    digitalBalanceRef,
+    mainPolystereneRef,
+    mainBuiretteRef]
 
   return (
     <div className="dialog-box-container">
@@ -34,7 +77,19 @@ const DialogBox = ({
           )
         ) : (
           onbtn2Click && (
-            <button className="question-btn" onClick={onbtnClick}>
+            <button
+              className="question-btn"
+              onClick={() => {
+                labModels.forEach((modelRef) => {
+                  if (modelRef?.current) {
+                    resetModel(modelRef.current)
+                  }
+                })
+
+                setSelectedLesson(9)
+                setLessonStep(2)
+              }}
+            >
               Continue (Reaction 02)
             </button>
           )

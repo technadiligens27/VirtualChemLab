@@ -103,7 +103,7 @@ const EnthalpyHessLaw = () =>{
       "Click the normal beaker and select Remove Beaker.",
 
     step26_5:
-      "Click the normal beaker and select Cover Polysterene Cup.",   
+      "Click the normal beaker and select Cover Cup.",   
 
     step27:
       "Click the burette clamp and select Remove from Centre.",
