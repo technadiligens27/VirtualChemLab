@@ -6,6 +6,8 @@ import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGu
 import EnthalpyLessonOverview from "../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview"
 import DialogBox from "../AllDialogBox/DialogBox/DialogBox"
 import HessLiveDataPanel from "../HessLiveDataPanel/HessLiveDataPanel"
+import HessGuidelines from "../HessGuidelines/HessGuidelines"
+import HessStartingTemperature from "../HessStartingTemperature/HessStartingTemperature"
 
 import { enthalpyReactionData } from "../Data/enthalpyReactionData/enthalpyReactionData"
 
@@ -13,7 +15,7 @@ const EnthalpyHessReaction02 = () => {
   const {
     isFillBeakerBoxOpen,
     hessGuidelineNumber,
-    setHessGuidelineNumber,
+    setHessGuidelineNumber,showEnthalyResultTwo,setShowEnthalyResultTwo,
   } = useContext(InteractionContext)
 
   const {
@@ -23,8 +25,180 @@ const EnthalpyHessReaction02 = () => {
     setShowNormalBeakerArrow,
   } = useContext(MainGuidelineContext)
 
+  // =====================================================
+  // GUIDELINE DATA
+  // =====================================================
+
+  const guidelineData = [
+    {
+      id: 1,
+
+      title: "Prepare the Polystyrene Cup",
+
+      description:
+        "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
+
+      implementationSteps: [
+        "Pick up the normal beaker.",
+        "Pick up the polystyrene cup with the other hand.",
+        "Place the polystyrene cup inside the normal beaker.",
+        "Make sure the cup is positioned upright in the centre.",
+        "Keep the top of the polystyrene cup open for adding the reactants.",
+      ],
+
+      image: "./polystyreneCupInBeaker.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+      id: 2,
+
+      title: "Prepare the Potassium Hydrogencarbonate",
+
+      description:
+        "Transfer potassium hydrogencarbonate into a test tube so that its mass can be measured before it is added to the hydrochloric acid. The potassium hydrogencarbonate will react with the acid and produce the temperature change required for the Hess’s Law calculation.",
+
+      implementationSteps: [
+        "Pick up an empty test tube.",
+        "Pick up the spatula with the other hand.",
+        "Use the spatula to collect potassium hydrogencarbonate.",
+        "Carefully transfer the potassium hydrogencarbonate from the spatula into the test tube.",
+      ],
+
+      image: "./TestubePottasiumAdd.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+      id: 3,
+
+      title:
+        "Weigh Test Tube and Potassium Hydrogencarbonate",
+
+      description:
+        "Measure and record the combined mass of the test tube and potassium hydrogencarbonate. This measurement will later be used to determine the exact mass of potassium hydrogencarbonate added to the hydrochloric acid.",
+
+      implementationSteps: [
+        "Place the digital balance in the centre of the workspace.",
+        "Place the test tube on the centre of the balance.",
+        "Wait until the balance reading becomes stable.",
+        "Record the combined mass of the test tube and potassium hydrogencarbonate.",
+        "Return the test tube to the table after recording the mass.",
+      ],
+
+      image: "./weighTestube.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+      id: 4,
+
+      title: "Add HCl Acid to the Polystyrene Cup",
+
+      description:
+        "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. Deliver 30 cm³ of hydrochloric acid into the polystyrene cup.",
+
+      implementationSteps: [
+        "Add 30 cm³ hydrochloric acid to the burette and clamp it.",
+        "Position the normal beaker containing the polystyrene cup beneath the burette.",
+        "Open the burette tap gradually.",
+        "Close the burette tap when the HCl acid has been delivered into the cup.",
+      ],
+
+      image: "./BuretteHCLPour.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+      id: 5,
+
+      title: "Measure the Starting Temperature",
+
+      description:
+        "Place the thermometer in the hydrochloric acid and allow the reading to become stable before adding the potassium hydrogencarbonate. This gives the initial temperature for the reaction.",
+
+      implementationSteps: [
+        "Place the thermometer through the opening in the cover.",
+        "Make sure the thermometer bulb is immersed in the hydrochloric acid.",
+        "Do not allow the thermometer to touch the bottom or sides of the cup.",
+        "Wait until the temperature reading becomes stable.",
+        "Record the starting temperature of the hydrochloric acid.",
+      ],
+
+      image: "./beakerWithThermometer.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+      id: 6,
+
+      title:
+        "Add Potassium Hydrogencarbonate and Measure the Temperature Change",
+
+      description:
+        "Add the potassium hydrogencarbonate to the hydrochloric acid while stirring continuously. Observe the thermometer as the temperature falls and record the lowest stable temperature reached during the reaction.",
+
+      implementationSteps: [
+        "Add the potassium hydrogencarbonate gradually to the HCL acid.",
+        "Stir the mixture continuously while adding the potassium hydrogencarbonate.",
+        "Observe the thermometer as the temperature decreases.",
+        "Wait until the temperature reaches its lowest stable value.",
+        "Record the lowest temperature reached.",
+      ],
+
+      image:
+        "./addPotassiumHydrogencarbonateAndStir.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+
+    {
+      id: 7,
+
+      title: "Reweigh the Empty Test Tube",
+
+      description:
+        "Reweigh the test tube after transferring the potassium hydrogencarbonate. The difference between the initial and final test tube masses gives the actual mass of potassium hydrogencarbonate used in the reaction.",
+
+      implementationSteps: [
+        "Place the digital balance back in the centre of the workspace.",
+        "Place the emptied test tube on the balance.",
+        "Wait until the balance reading becomes stable.",
+        "Record the mass of the test tube after emptying.",
+        "Use the two mass readings to determine the mass of potassium hydrogencarbonate transferred.",
+      ],
+
+      image: "./weighEmptyTestube.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(false)
+      },
+    },
+  ]
+
   return (
     <>
+      {/* =====================================================
+          LESSON OVERVIEW
+         ===================================================== */}
+
       {lessonStep === 1 && (
         <EnthalpyLessonOverview
           reactionData={enthalpyReactionData[1]}
@@ -38,104 +212,143 @@ const EnthalpyHessReaction02 = () => {
           HESS LIVE DATA PANEL
          ===================================================== */}
 
-      {/* Nothing measured yet */}
-      {lessonStep >= 2 && lessonStep < 14 && (
         <HessLiveDataPanel
           reactionNumber={2}
 
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-        />
-      )}
+          volumeOfSolution={
+            lessonStep >= 25
+              ? 30
+              : null
+          }
 
-      {/* Test tube + KHCO3 has now been weighed */}
-      {lessonStep >= 14 && lessonStep < 19 && (
-        <HessLiveDataPanel
-          reactionNumber={2}
+          solutionDensity={
+            lessonStep >= 25
+              ? 1
+              : null
+          }
 
-          massWithPowder={25.67}
+          startingTemperature={
+            lessonStep >= 30
+              ? 22.0
+              : null
+          }
 
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-        />
-      )}
+          currentTemperature={
+            lessonStep >= 32
+              ? 18.5
+              : null
+          }
 
-      {/* 30 cm³ HCl has now been prepared */}
-      {lessonStep >= 19 && lessonStep < 30 && (
-        <HessLiveDataPanel
-          reactionNumber={2}
+          highestTemperature={lessonStep >= 33
+              ? 22.9
+              : null
+            }
 
-          volumeOfSolution={30}
-          solutionDensity={1}
+          massWithPowder={
+            lessonStep >= 14
+              ? 24.7
+              : null
+          }
 
-          massWithPowder={24.7}
-
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-        />
-      )}
-
-      {/* Thermometer placed - initial temperature known */}
-      {lessonStep >= 30 && lessonStep < 34 && (
-        <HessLiveDataPanel
-          reactionNumber={2}
-
-          volumeOfSolution={30}
-          solutionDensity={1}
-
-          startingTemperature={22}
-
-          massWithPowder={24.7}
+          massAfterEmptying={
+            lessonStep >= 36
+              ? 21.72
+              : null
+          }
 
           selectedLesson={selectedLesson}
           lessonStep={lessonStep}
+
+          autoDelay={3000}
+
+          autoShowConditions={[
+            {
+              selectedLesson:
+                selectedLesson,
+              lessonStep: 14,
+            },
+            {
+              selectedLesson:
+                selectedLesson,
+              lessonStep: 25,
+            },
+            {
+              selectedLesson:
+                selectedLesson,
+              lessonStep: 30,
+            },
+            {
+              selectedLesson:
+                selectedLesson,
+              lessonStep: 33,
+            },
+            {
+              selectedLesson:
+                selectedLesson,
+              lessonStep: 36,
+            },
+          ]}
         />
-      )}
 
-      {/* Reaction has occurred - temperature has fallen */}
-      {lessonStep >= 34 && lessonStep < 36 && (
-        <HessLiveDataPanel
-          reactionNumber={2}
+      {/* =====================================================
+          HESS GUIDELINES
+         ===================================================== */}
 
-          volumeOfSolution={30}
-          solutionDensity={1}
+      {/* Guideline 1 */}
+      {lessonStep >= 2 &&
+        lessonStep <= 5 && (
+          <HessGuidelines
+            guidelineData={guidelineData[0]}
+          />
+        )}
 
-          startingTemperature={22}
+      {/* Guideline 2 */}
+      {lessonStep >= 6 &&
+        lessonStep <= 11 && (
+          <HessGuidelines
+            guidelineData={guidelineData[1]}
+          />
+        )}
 
-          // Use whichever temperature prop
-          // your HessLiveDataPanel supports for Reaction 2.
-          //
-          // currentTemperature={...}
-          // lowestTemperature={...}
+      {/* Guideline 3 */}
+      {lessonStep >= 12 &&
+        lessonStep <= 15 && (
+          <HessGuidelines
+            guidelineData={guidelineData[2]}
+          />
+        )}
 
-          massWithPowder={24.7}
+      {/* Guideline 4 */}
+      {lessonStep >= 16 &&
+        lessonStep <= 25 && (
+          <HessGuidelines
+            guidelineData={guidelineData[3]}
+          />
+        )}
 
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-        />
-      )}
+      {/* Guideline 5 */}
+      {lessonStep >= 26 &&
+        lessonStep <= 29 && (
+          <HessGuidelines
+            guidelineData={guidelineData[4]}
+          />
+        )}
 
-      {/* Empty test tube has been reweighed */}
-      {lessonStep >= 36 && (
-        <HessLiveDataPanel
-          reactionNumber={2}
+      {/* Guideline 6 */}
+      {lessonStep >= 30 &&
+        lessonStep <= 33 && (
+          <HessGuidelines
+            guidelineData={guidelineData[5]}
+          />
+        )}
 
-          volumeOfSolution={30}
-          solutionDensity={1}
-
-          startingTemperature={22}
-
-          // lowestTemperature={...}
-
-          massWithPowder={24.7}
-
-          // Replace with Reaction 2 value
-          massAfterEmptying={21.7}
-
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-        />
-      )}
+      {/* Guideline 7 */}
+      {lessonStep >= 34 &&
+        lessonStep <= 36 && (
+          <HessGuidelines
+            guidelineData={guidelineData[6]}
+          />
+        )}
 
       {/* =====================================================
           LESSON STEPS
@@ -143,19 +356,25 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 2 && (
         <DialogBox
-          text={"Click Beaker and Select Left Hand Option"}
+          text={
+            "Click Beaker and Select Left Hand Option"
+          }
         />
       )}
 
       {lessonStep === 3 && (
         <DialogBox
-          text={"Click Polysterene Cup and Select Right Hand Option"}
+          text={
+            "Click Polysterene Cup and Select Right Hand Option"
+          }
         />
       )}
 
       {lessonStep === 4 && (
         <DialogBox
-          text={"Click Polysterene Cup and Select Place In Beaker"}
+          text={
+            "Click Polysterene Cup and Select Place In Beaker"
+          }
         />
       )}
 
@@ -167,13 +386,17 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 6 && (
         <DialogBox
-          text={"Select Testube and select Left Hand"}
+          text={
+            "Select Testube and select Left Hand"
+          }
         />
       )}
 
       {lessonStep === 7 && (
         <DialogBox
-          text={"Select Spatula and select Right Hand Option"}
+          text={
+            "Select Spatula and select Right Hand Option"
+          }
         />
       )}
 
@@ -187,7 +410,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 9 && (
         <DialogBox
-          text={"Click the Test tube and select Pour Into Testube"}
+          text={
+            "Click the Test tube and select Pour Into Testube"
+          }
         />
       )}
 
@@ -199,7 +424,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 11 && (
         <DialogBox
-          text={"Click the Spatula And Disable Pour Mode"}
+          text={
+            "Click the Spatula And Disable Pour Mode"
+          }
         />
       )}
 
@@ -245,7 +472,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 17 && (
         <DialogBox
-          text={"Click the burette and select Add Liquid."}
+          text={
+            "Click the burette and select Add Liquid."
+          }
         />
       )}
 
@@ -338,11 +567,15 @@ const EnthalpyHessReaction02 = () => {
       )}
 
       {lessonStep === 29 && (
-        <DialogBox
-          text={
-            "Click the Thermometer again and select Place Thermometer."
-          }
-        />
+        <>
+          <HessStartingTemperature />
+
+          <DialogBox
+            text={
+              "Click the Thermometer again and select Place Thermometer."
+            }
+          />
+        </>
       )}
 
       {lessonStep === 30 && (
@@ -355,7 +588,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 31 && (
         <DialogBox
-          text={"Press P to enter Pouring Mode."}
+          text={
+            "Press P to enter Pouring Mode."
+          }
         />
       )}
 
@@ -369,7 +604,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 33 && (
         <DialogBox
-          text={"Press P again to exit Pouring Mode."}
+          text={
+            "Press P again to exit Pouring Mode."
+          }
         />
       )}
 
@@ -389,9 +626,22 @@ const EnthalpyHessReaction02 = () => {
         />
       )}
 
-      {lessonStep === 36 && (
-        <DialogBox text={"36"} />
+      {lessonStep === 35.5 && (
+        <DialogBox
+          text={
+             "Click the normal beaker and select Remove Thermometer."
+          }
+        />
       )}
+
+      {lessonStep ===36 && 
+           <DialogBox text="Reaction 2 is complete. Review the recorded temperature and mass values."
+            onbtnClick={() => {
+            setShowEnthalyResultTwo(true)
+            }}
+       
+           />
+      } 
     </>
   )
 }

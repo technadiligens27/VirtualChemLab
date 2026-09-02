@@ -16,7 +16,7 @@ import { enthalpyReactionData } from "../../Data/enthalpyReactionData/enthalpyRe
 const EnthalpyHessLaw = () =>{
 
   const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber,
-    showEnthalyResultOne,setShowEnthalyResultOne} = useContext(InteractionContext)
+    showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
 
@@ -526,6 +526,11 @@ const EnthalpyHessLaw = () =>{
         {
           showEnthalyResultOne && <HessReactionOneResults/>
         }
+
+        {
+          showEnthalyResultTwo && <HessReactionOneResults/>
+        }
+
 
          
 

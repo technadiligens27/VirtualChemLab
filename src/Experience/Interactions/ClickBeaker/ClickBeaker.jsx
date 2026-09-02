@@ -1807,8 +1807,10 @@ const handleClampBurette = () => {
       }
 
       if (selectedLesson === 9 && lessonStep === 35) {
-        setLessonStep(36)
+        setLessonStep(35.5)
       }
+
+      
 
       if (lessonStep === 16) {
         setLessonStep(17)
@@ -2301,11 +2303,12 @@ const handlePlaceBalance = () => {
 
     setSelectedObject(null)
 
-    if (
-      selectedLesson === 8 &&
-      lessonStep === 40
-    ) {
+    if (selectedLesson === 8 &&lessonStep === 40) {
       setLessonStep(41)
+    }
+
+    if(selectedLesson===9 && lessonStep==35.5){
+      setLessonStep(36);
     }
   }
 
@@ -2317,6 +2320,8 @@ const handlePlaceBalance = () => {
     if(selectedLesson===8 && lessonStep==41){
       setLessonStep(42);
     }
+
+
 
   }
 
@@ -2440,7 +2445,7 @@ const handlePlaceBalance = () => {
   }
 
   useEffect(()=>{
-    if(selectedLesson===8 && lessonStep==32){
+    if([8,9].includes(selectedLesson) && ([32,30].includes(lessonStep))){
       setIsPolystereneStirMode(true)
     }
   },[selectedLesson,lessonStep,isPolystereneStirMode])
@@ -3090,6 +3095,14 @@ const handlePlaceBalance = () => {
 
         {
           lessonStep === 40 && selectedLesson ===8 && (
+            <button onClick={removeThermometer}>
+              Remove Thermometer
+            </button>
+          )
+        }
+
+          {
+          lessonStep === 35.5 && selectedLesson ===9 && (
             <button onClick={removeThermometer}>
               Remove Thermometer
             </button>

@@ -523,7 +523,7 @@ useEffect(() => {
           <HCLTitration/>
         )}     
 
-     {isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
+     {selectedLesson ==10 && isReactionTimerRunning && <ReactionTimer isRunning={isReactionTimerRunning}/>}
 
       <AllErrors />
 

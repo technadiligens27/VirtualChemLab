@@ -25,36 +25,54 @@ const HessLiveDataPanel = ({
   selectedLesson,
   lessonStep,
 
-  autoHideConditions = [],
   autoShowConditions = [],
+
+  // How long the panel stays open
+  // after an automatic show
+  autoDelay = 3000,
 }) => {
   const panelRef = useRef(null)
   const arrowRef = useRef(null)
 
-  const isPanelOpenRef = useRef(true)
+  const autoCloseTimeoutRef =
+    useRef(null)
+
+  const isPanelOpenRef =
+    useRef(true)
 
   const [
     isPanelOpen,
     setIsPanelOpen,
   ] = useState(true)
 
+  // ==========================================
+  // CALCULATED VALUES
+  // ==========================================
+
   const massOfSolution =
     volumeOfSolution != null &&
     solutionDensity != null
-      ? volumeOfSolution * solutionDensity
+      ? volumeOfSolution *
+        solutionDensity
       : null
 
   const temperatureChange =
     startingTemperature != null &&
     highestTemperature != null
-      ? highestTemperature - startingTemperature
+      ? highestTemperature -
+        startingTemperature
       : null
 
   const massOfPowderUsed =
     massWithPowder != null &&
     massAfterEmptying != null
-      ? massWithPowder - massAfterEmptying
+      ? massWithPowder -
+        massAfterEmptying
       : null
+
+  // ==========================================
+  // GET CLOSED POSITION
+  // ==========================================
 
   const getClosedPosition = () => {
     const panel = panelRef.current
@@ -63,6 +81,10 @@ const HessLiveDataPanel = ({
 
     return panel.offsetWidth - 34
   }
+
+  // ==========================================
+  // OPEN PANEL
+  // ==========================================
 
   const openPanel = () => {
     const panel = panelRef.current
@@ -86,6 +108,10 @@ const HessLiveDataPanel = ({
     })
   }
 
+  // ==========================================
+  // CLOSE PANEL
+  // ==========================================
+
   const closePanel = () => {
     const panel = panelRef.current
     const arrow = arrowRef.current
@@ -107,6 +133,10 @@ const HessLiveDataPanel = ({
       ease: "power3.inOut",
     })
   }
+
+  // ==========================================
+  // INITIAL PANEL ANIMATION
+  // ==========================================
 
   useLayoutEffect(() => {
     const panel = panelRef.current
@@ -140,7 +170,9 @@ const HessLiveDataPanel = ({
     setIsPanelOpen(true)
 
     const handleResize = () => {
-      if (!isPanelOpenRef.current) {
+      if (
+        !isPanelOpenRef.current
+      ) {
         gsap.set(panel, {
           x: getClosedPosition(),
         })
@@ -160,56 +192,106 @@ const HessLiveDataPanel = ({
     }
   }, [])
 
-  // AUTO HIDE / AUTO SHOW
-  useEffect(() => {
-    const shouldAutoHide =
-      autoHideConditions.some(
-        (condition) =>
-          condition.selectedLesson === selectedLesson &&
-          condition.lessonStep === lessonStep
-      )
+  // ==========================================
+  // AUTO SHOW
+  // ==========================================
 
+  useEffect(() => {
     const shouldAutoShow =
       autoShowConditions.some(
         (condition) =>
-          condition.selectedLesson === selectedLesson &&
-          condition.lessonStep === lessonStep
+          condition.selectedLesson ===
+            selectedLesson &&
+          condition.lessonStep ===
+            lessonStep
       )
 
-    if (shouldAutoHide) {
-      console.log(
-        "Auto hiding Hess panel:",
-        selectedLesson,
-        lessonStep
-      )
+    if (!shouldAutoShow) return
 
-      closePanel()
-      return
+    // Clear previous automatic timer
+    if (
+      autoCloseTimeoutRef.current
+    ) {
+      clearTimeout(
+        autoCloseTimeoutRef.current
+      )
     }
 
-    if (shouldAutoShow) {
-      console.log(
-        "Auto showing Hess panel:",
-        selectedLesson,
-        lessonStep
-      )
+    // Open panel automatically
+    openPanel()
 
-      openPanel()
+    // Close automatically after delay
+    autoCloseTimeoutRef.current =
+      setTimeout(() => {
+        closePanel()
+
+        autoCloseTimeoutRef.current =
+          null
+      }, autoDelay)
+
+    return () => {
+      if (
+        autoCloseTimeoutRef.current
+      ) {
+        clearTimeout(
+          autoCloseTimeoutRef.current
+        )
+
+        autoCloseTimeoutRef.current =
+          null
+      }
     }
   }, [
     selectedLesson,
     lessonStep,
-    autoHideConditions,
     autoShowConditions,
+    autoDelay,
   ])
 
+  // ==========================================
+  // CLEANUP
+  // ==========================================
+
+  useEffect(() => {
+    return () => {
+      if (
+        autoCloseTimeoutRef.current
+      ) {
+        clearTimeout(
+          autoCloseTimeoutRef.current
+        )
+      }
+    }
+  }, [])
+
+  // ==========================================
+  // MANUAL TOGGLE
+  // ==========================================
+
   const handlePanelToggle = () => {
-    if (isPanelOpenRef.current) {
+    if (
+      autoCloseTimeoutRef.current
+    ) {
+      clearTimeout(
+        autoCloseTimeoutRef.current
+      )
+
+      autoCloseTimeoutRef.current =
+        null
+    }
+
+    if (
+      isPanelOpenRef.current
+    ) {
       closePanel()
     } else {
       openPanel()
     }
   }
+
+  // ==========================================
+  // DISPLAY VALUE
+  // ==========================================
 
   const getDisplayValue = (
     value,
@@ -235,6 +317,10 @@ const HessLiveDataPanel = ({
       decimals
     )} ${unit}`
   }
+
+  // ==========================================
+  // CALCULATED VALUE
+  // ==========================================
 
   const getCalculatedValue = (
     value,
@@ -268,6 +354,10 @@ const HessLiveDataPanel = ({
     )} ${unit}`
   }
 
+  // ==========================================
+  // RENDER
+  // ==========================================
+
   return (
     <div
       ref={panelRef}
@@ -276,7 +366,9 @@ const HessLiveDataPanel = ({
       <button
         type="button"
         className="hess-live-data-toggle"
-        onClick={handlePanelToggle}
+        onClick={
+          handlePanelToggle
+        }
         aria-label={
           isPanelOpen
             ? "Close live data panel"
@@ -295,7 +387,8 @@ const HessLiveDataPanel = ({
 
         <div className="hess-live-data-header">
           <h1>
-            Reaction {reactionNumber}
+            Reaction{" "}
+            {reactionNumber}
           </h1>
 
           <p>
@@ -304,6 +397,10 @@ const HessLiveDataPanel = ({
         </div>
 
         <div className="hess-live-data-content">
+
+          {/* ======================================
+              SOLUTION
+          ====================================== */}
 
           <div className="hess-live-data-section">
 
@@ -317,16 +414,20 @@ const HessLiveDataPanel = ({
 
             <div className="hess-live-data-divider" />
 
+            {/* Volume */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
-                  Volume of HCl solution
+                  Volume of HCl
+                  solution
                 </p>
               </div>
 
               <div
                 className={`hess-live-data-value ${
-                  volumeOfSolution == null
+                  volumeOfSolution ==
+                  null
                     ? "hess-live-data-value-pending"
                     : ""
                 }`}
@@ -341,6 +442,8 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
+            {/* Mass */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
@@ -348,7 +451,8 @@ const HessLiveDataPanel = ({
                 </p>
 
                 <span>
-                  {solutionDensity == null
+                  {solutionDensity ==
+                  null
                     ? "Density yet to be provided"
                     : `Density assumed ${Number(
                         solutionDensity
@@ -360,7 +464,8 @@ const HessLiveDataPanel = ({
 
               <div
                 className={`hess-live-data-value ${
-                  massOfSolution == null
+                  massOfSolution ==
+                  null
                     ? "hess-live-data-value-pending"
                     : ""
                 }`}
@@ -375,16 +480,20 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
+            {/* Starting Temperature */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
-                  Starting temperature
+                  Starting
+                  temperature
                 </p>
               </div>
 
               <div
                 className={`hess-live-data-value ${
-                  startingTemperature == null
+                  startingTemperature ==
+                  null
                     ? "hess-live-data-value-pending"
                     : ""
                 }`}
@@ -399,16 +508,20 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
+            {/* Highest Temperature */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
-                  Highest temperature
+                  Highest
+                  temperature
                 </p>
               </div>
 
               <div
                 className={`hess-live-data-value ${
-                  highestTemperature == null
+                  highestTemperature ==
+                  null
                     ? "hess-live-data-value-pending"
                     : "hess-live-data-value-highest"
                 }`}
@@ -423,6 +536,8 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
+            {/* Temperature Change */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
@@ -432,7 +547,8 @@ const HessLiveDataPanel = ({
 
               <div
                 className={`hess-live-data-value ${
-                  temperatureChange == null
+                  temperatureChange ==
+                  null
                     ? "hess-live-data-value-pending"
                     : "hess-live-data-value-complete"
                 }`}
@@ -450,6 +566,10 @@ const HessLiveDataPanel = ({
 
           </div>
 
+          {/* ======================================
+              SOLID TRANSFERRED
+          ====================================== */}
+
           <div className="hess-live-data-section hess-live-data-solid-section">
 
             <div className="hess-live-data-section-title">
@@ -461,6 +581,8 @@ const HessLiveDataPanel = ({
             </div>
 
             <div className="hess-live-data-divider" />
+
+            {/* Test Tube + Powder */}
 
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
@@ -474,7 +596,8 @@ const HessLiveDataPanel = ({
 
               <div
                 className={`hess-live-data-value ${
-                  massWithPowder == null
+                  massWithPowder ==
+                  null
                     ? "hess-live-data-value-pending"
                     : ""
                 }`}
@@ -489,16 +612,20 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
+            {/* Test Tube After Emptying */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
-                  Test tube after emptying
+                  Test tube after
+                  emptying
                 </p>
               </div>
 
               <div
                 className={`hess-live-data-value ${
-                  massAfterEmptying == null
+                  massAfterEmptying ==
+                  null
                     ? "hess-live-data-value-pending"
                     : ""
                 }`}
@@ -513,19 +640,23 @@ const HessLiveDataPanel = ({
               </div>
             </div>
 
+            {/* Powder Used */}
+
             <div className="hess-live-data-row">
               <div className="hess-live-data-label">
                 <p>
                   Mass of K
                   <sub>2</sub>
                   CO
-                  <sub>3</sub> used
+                  <sub>3</sub>{" "}
+                  used
                 </p>
               </div>
 
               <div
                 className={`hess-live-data-value ${
-                  massOfPowderUsed == null
+                  massOfPowderUsed ==
+                  null
                     ? "hess-live-data-value-pending"
                     : "hess-live-data-value-complete"
                 }`}
@@ -544,13 +675,18 @@ const HessLiveDataPanel = ({
 
         </div>
 
+        {/* ======================================
+            FOOTER
+        ====================================== */}
+
         <div className="hess-live-data-footer">
           <div className="hess-live-data-info-icon">
             i
           </div>
 
           <p>
-            Values update automatically.
+            Values update
+            automatically.
           </p>
         </div>
 
