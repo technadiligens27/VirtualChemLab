@@ -1,8 +1,10 @@
 import { useContext, useEffect } from "react"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const WeighTestube = ({ testubeRef }) => {
   const { trayPointRef } = useContext(ModelContext)
+  const {setIsWeighTestube,isWeighTestube} = useContext(InteractionContext)
 
   console.log("rendered")
 

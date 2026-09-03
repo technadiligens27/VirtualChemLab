@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const CleanBeaker = ({
   modelRef,
@@ -10,6 +11,10 @@ const CleanBeaker = ({
     lessonStep,
     setLessonStep,
   } = useContext(MainGuidelineContext)
+
+  const {setIsPotassiumHydrogenCarbonateInSpoon,isPotassiumHydrogenCarbonateInSpoon} = useContext(InteractionContext)
+
+
 
   useEffect(() => {
     if (!modelRef?.current) return

@@ -13,7 +13,8 @@ const HessReactionOneResults = ({
   massAfterEmptying = 21.72,
   startingTemperature = 22.0,
   highestTemperature = 31.5,
-  onButtonContinue,
+    onButtonContinue,
+  onQuestions,
 }) => {
   const resultsRef = useRef(null)
   const arrowRef = useRef(null)
@@ -393,15 +394,31 @@ const HessReactionOneResults = ({
             </div>
           </div>
 
-          <button
-            type="button"
-            className="reaction1-results-button"
-            onClick={
-              handleContinue
-            }
-          >
-            Continue
-          </button>
+          <div className="reaction1-results-buttons">
+
+            <button
+              type="button"
+              className="reaction1-results-button reaction1-results-question-button"
+              onClick={() => {
+                if (onQuestions) {
+                  onQuestions()
+                }
+              }}
+            >
+              Questions
+            </button>
+
+            <button
+              type="button"
+              className="reaction1-results-button"
+              onClick={
+                handleContinue
+              }
+            >
+              Continue
+            </button>
+
+          </div>
         </div>
       </div>
     </div>

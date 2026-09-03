@@ -1,4 +1,7 @@
-import { useContext } from "react"
+import {
+  useContext,
+  useEffect,
+} from "react"
 
 import { InteractionContext } from "../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
@@ -10,12 +13,22 @@ import HessGuidelines from "../HessGuidelines/HessGuidelines"
 import HessStartingTemperature from "../HessStartingTemperature/HessStartingTemperature"
 
 import { enthalpyReactionData } from "../Data/enthalpyReactionData/enthalpyReactionData"
+import QuestionCard from "../QuestionCard/QuestionCard"
 
 const EnthalpyHessReaction02 = () => {
   const {
     isFillBeakerBoxOpen,
+
     hessGuidelineNumber,
-    setHessGuidelineNumber,showEnthalyResultTwo,setShowEnthalyResultTwo,
+    setHessGuidelineNumber,
+
+    showEnthalyResultTwo,
+    setShowEnthalyResultTwo,
+setIsPotassiumTransferred,
+    setSelectedRightHand,setIsWeighTestube,
+    setSelectedLeftHand,setIsPotassiumHydrogenCarbonateInSpoon,setIsBuiretteClamped,
+    setIsPottasiumCarobnateInTestube01,setIsPottasiumCarobnateInSpoon,setIsBalancePlaced,
+    setIsClampInCenter,setShowQuestionCardNo,showQuestionCardNo
   } = useContext(InteractionContext)
 
   const {
@@ -23,7 +36,26 @@ const EnthalpyHessReaction02 = () => {
     selectedLesson,
     setLessonStep,
     setShowNormalBeakerArrow,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
+
+  // =====================================================
+  // RESET HANDS WHEN COMPONENT STARTS
+  // =====================================================
+
+  useEffect(() => {
+    setSelectedRightHand(null)
+    setSelectedLeftHand(null);
+    setIsPotassiumHydrogenCarbonateInSpoon(false);
+    setIsWeighTestube(false);
+    setIsPotassiumTransferred(false);
+    setIsPottasiumCarobnateInTestube01(false);
+    setIsPottasiumCarobnateInSpoon(false);
+    setIsBalancePlaced(false);
+    setIsBuiretteClamped(false);
+    setIsClampInCenter(false)
+  }, [])
 
   // =====================================================
   // GUIDELINE DATA
@@ -33,7 +65,8 @@ const EnthalpyHessReaction02 = () => {
     {
       id: 1,
 
-      title: "Prepare the Polystyrene Cup",
+      title:
+        "Prepare the Polystyrene Cup",
 
       description:
         "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
@@ -46,7 +79,8 @@ const EnthalpyHessReaction02 = () => {
         "Keep the top of the polystyrene cup open for adding the reactants.",
       ],
 
-      image: "./polystyreneCupInBeaker.png",
+      image:
+        "./polystyreneCupInBeaker.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -56,7 +90,8 @@ const EnthalpyHessReaction02 = () => {
     {
       id: 2,
 
-      title: "Prepare the Potassium Hydrogencarbonate",
+      title:
+        "Prepare the Potassium Hydrogencarbonate",
 
       description:
         "Transfer potassium hydrogencarbonate into a test tube so that its mass can be measured before it is added to the hydrochloric acid. The potassium hydrogencarbonate will react with the acid and produce the temperature change required for the Hess’s Law calculation.",
@@ -68,7 +103,8 @@ const EnthalpyHessReaction02 = () => {
         "Carefully transfer the potassium hydrogencarbonate from the spatula into the test tube.",
       ],
 
-      image: "./TestubePottasiumAdd.png",
+      image:
+        "./TestubePottasiumAdd.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -92,7 +128,8 @@ const EnthalpyHessReaction02 = () => {
         "Return the test tube to the table after recording the mass.",
       ],
 
-      image: "./weighTestube.png",
+      image:
+        "./weighTestube.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -102,7 +139,8 @@ const EnthalpyHessReaction02 = () => {
     {
       id: 4,
 
-      title: "Add HCl Acid to the Polystyrene Cup",
+      title:
+        "Add HCl Acid to the Polystyrene Cup",
 
       description:
         "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. Deliver 30 cm³ of hydrochloric acid into the polystyrene cup.",
@@ -114,7 +152,8 @@ const EnthalpyHessReaction02 = () => {
         "Close the burette tap when the HCl acid has been delivered into the cup.",
       ],
 
-      image: "./BuretteHCLPour.png",
+      image:
+        "./BuretteHCLPour.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -124,7 +163,8 @@ const EnthalpyHessReaction02 = () => {
     {
       id: 5,
 
-      title: "Measure the Starting Temperature",
+      title:
+        "Measure the Starting Temperature",
 
       description:
         "Place the thermometer in the hydrochloric acid and allow the reading to become stable before adding the potassium hydrogencarbonate. This gives the initial temperature for the reaction.",
@@ -137,7 +177,8 @@ const EnthalpyHessReaction02 = () => {
         "Record the starting temperature of the hydrochloric acid.",
       ],
 
-      image: "./beakerWithThermometer.png",
+      image:
+        "./beakerWithThermometer.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -172,7 +213,8 @@ const EnthalpyHessReaction02 = () => {
     {
       id: 7,
 
-      title: "Reweigh the Empty Test Tube",
+      title:
+        "Reweigh the Empty Test Tube",
 
       description:
         "Reweigh the test tube after transferring the potassium hydrogencarbonate. The difference between the initial and final test tube masses gives the actual mass of potassium hydrogencarbonate used in the reaction.",
@@ -185,7 +227,8 @@ const EnthalpyHessReaction02 = () => {
         "Use the two mass readings to determine the mass of potassium hydrogencarbonate transferred.",
       ],
 
-      image: "./weighEmptyTestube.png",
+      image:
+        "./weighEmptyTestube.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -193,15 +236,21 @@ const EnthalpyHessReaction02 = () => {
     },
   ]
 
+  useEffect(()=>{ 
+    setLessonStep(1)
+  },[])
+
   return (
     <>
       {/* =====================================================
           LESSON OVERVIEW
-         ===================================================== */}
+      ===================================================== */}
 
       {lessonStep === 1 && (
         <EnthalpyLessonOverview
-          reactionData={enthalpyReactionData[1]}
+          reactionData={
+            enthalpyReactionData[1]
+          }
           onStartLesson={() => {
             setLessonStep(2)
           }}
@@ -210,149 +259,172 @@ const EnthalpyHessReaction02 = () => {
 
       {/* =====================================================
           HESS LIVE DATA PANEL
-         ===================================================== */}
+      ===================================================== */}
 
-        <HessLiveDataPanel
-          reactionNumber={2}
-
-          volumeOfSolution={
-            lessonStep >= 25
-              ? 30
-              : null
-          }
-
-          solutionDensity={
-            lessonStep >= 25
-              ? 1
-              : null
-          }
-
-          startingTemperature={
-            lessonStep >= 30
+      <HessLiveDataPanel
+        reactionNumber={2}
+        volumeOfSolution={
+          lessonStep >= 25
+            ? 30
+            : null
+        }
+        solutionDensity={
+          lessonStep >= 25
+            ? 1
+            : null
+        }
+        startingTemperature={
+          lessonStep >= 30
+            ? 22.0
+            : null
+        }
+        currentTemperature={
+          lessonStep >= 33
+            ? 18.5
+            : lessonStep >= 30
               ? 22.0
               : null
-          }
+        }
+        highestTemperature={
+          lessonStep >= 33
+            ? 18.5
+            : null
+        }
+        massWithPowder={
+          lessonStep >= 14
+            ? 24.7
+            : null
+        }
+        massAfterEmptying={
+          lessonStep >= 35.5
+            ? 21.72
+            : null
+        }
+        selectedLesson={
+          selectedLesson
+        }
+        lessonStep={
+          lessonStep
+        }
+        autoDelay={3000}
+        autoShowConditions={[
+          {
+            selectedLesson:
+              selectedLesson,
 
-          currentTemperature={
-            lessonStep >= 32
-              ? 18.5
-              : null
-          }
+            lessonStep: 14,
+          },
+          {
+            selectedLesson:
+              selectedLesson,
 
-          highestTemperature={lessonStep >= 33
-              ? 22.9
-              : null
-            }
+            lessonStep: 25,
+          },
+          {
+            selectedLesson:
+              selectedLesson,
 
-          massWithPowder={
-            lessonStep >= 14
-              ? 24.7
-              : null
-          }
+            lessonStep: 30,
+          },
+          {
+            selectedLesson:
+              selectedLesson,
 
-          massAfterEmptying={
-            lessonStep >= 36
-              ? 21.72
-              : null
-          }
+            lessonStep: 33,
+          },
+          {
+            selectedLesson:
+              selectedLesson,
 
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-
-          autoDelay={3000}
-
-          autoShowConditions={[
-            {
-              selectedLesson:
-                selectedLesson,
-              lessonStep: 14,
-            },
-            {
-              selectedLesson:
-                selectedLesson,
-              lessonStep: 25,
-            },
-            {
-              selectedLesson:
-                selectedLesson,
-              lessonStep: 30,
-            },
-            {
-              selectedLesson:
-                selectedLesson,
-              lessonStep: 33,
-            },
-            {
-              selectedLesson:
-                selectedLesson,
-              lessonStep: 36,
-            },
-          ]}
-        />
+            lessonStep: 35.5,
+          },
+        ]}
+      />
 
       {/* =====================================================
           HESS GUIDELINES
-         ===================================================== */}
+      ===================================================== */}
 
       {/* Guideline 1 */}
+
       {lessonStep >= 2 &&
         lessonStep <= 5 && (
           <HessGuidelines
-            guidelineData={guidelineData[0]}
+            guidelineData={
+              guidelineData[0]
+            }
           />
         )}
 
       {/* Guideline 2 */}
+
       {lessonStep >= 6 &&
         lessonStep <= 11 && (
           <HessGuidelines
-            guidelineData={guidelineData[1]}
+            guidelineData={
+              guidelineData[1]
+            }
           />
         )}
 
       {/* Guideline 3 */}
+
       {lessonStep >= 12 &&
         lessonStep <= 15 && (
           <HessGuidelines
-            guidelineData={guidelineData[2]}
+            guidelineData={
+              guidelineData[2]
+            }
           />
         )}
 
       {/* Guideline 4 */}
+
       {lessonStep >= 16 &&
         lessonStep <= 25 && (
           <HessGuidelines
-            guidelineData={guidelineData[3]}
+            guidelineData={
+              guidelineData[3]
+            }
           />
         )}
 
       {/* Guideline 5 */}
+
       {lessonStep >= 26 &&
         lessonStep <= 29 && (
           <HessGuidelines
-            guidelineData={guidelineData[4]}
+            guidelineData={
+              guidelineData[4]
+            }
           />
         )}
 
       {/* Guideline 6 */}
+
       {lessonStep >= 30 &&
         lessonStep <= 33 && (
           <HessGuidelines
-            guidelineData={guidelineData[5]}
+            guidelineData={
+              guidelineData[5]
+            }
           />
         )}
 
       {/* Guideline 7 */}
+
       {lessonStep >= 34 &&
         lessonStep <= 36 && (
           <HessGuidelines
-            guidelineData={guidelineData[6]}
+            guidelineData={
+              guidelineData[6]
+            }
           />
         )}
 
       {/* =====================================================
           LESSON STEPS
-         ===================================================== */}
+      ===================================================== */}
 
       {lessonStep === 2 && (
         <DialogBox
@@ -380,7 +452,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 5 && (
         <DialogBox
-          text={"Keep Beaker In Table"}
+          text={
+            "Keep Beaker In Table"
+          }
         />
       )}
 
@@ -418,7 +492,9 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 10 && (
         <DialogBox
-          text={"Scroll Down to Pour"}
+          text={
+            "Scroll Down to Pour"
+          }
         />
       )}
 
@@ -629,19 +705,66 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 35.5 && (
         <DialogBox
           text={
-             "Click the normal beaker and select Remove Thermometer."
+            "Click the normal beaker and select Remove Thermometer."
           }
         />
       )}
 
-      {lessonStep ===36 && 
-           <DialogBox text="Reaction 2 is complete. Review the recorded temperature and mass values."
-            onbtnClick={() => {
-            setShowEnthalyResultTwo(true)
-            }}
-       
-           />
-      } 
+      {lessonStep === 36 && (
+        <DialogBox
+          text={
+            "Reaction 2 is complete. Review the recorded temperature and mass values."
+          }
+          onbtnClick={() => {
+            setShowEnthalyResultTwo(
+              true
+            )
+          }}
+          onbtn2Click={()=>{
+            setShowQuestionCardNo(
+              9.1
+            )
+          }}
+
+        />
+      )}
+
+      {showQuestionCardNo === 9.1 && (
+  <QuestionCard
+    questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
+    questionNumber={1}
+    question="What happened to the temperature when potassium carbonate was added to hydrochloric acid?"
+    answers={[
+      {
+        id: "A",
+        text: "Increased",
+      },
+      {
+        id: "B",
+        text: "Decreased",
+      },
+      {
+        id: "C",
+        text: "Stayed constant",
+      },
+      {
+        id: "D",
+        text: "Increased then immediately became 0°C",
+      },
+    ]}
+    correctAnswer="A"
+    hintText="Choose the most appropriate answer."
+    correctMessage="Correct! The temperature increased."
+    incorrectMessage="Incorrect. The temperature increased during Reaction 1."
+    submitButtonText="Submit Answer"
+    continueButtonText="Continue"
+    onContinue={() => {
+      setShowQuestionCardNo(9.2)
+    }}
+  />
+)}
+
+
     </>
   )
 }

@@ -8,6 +8,8 @@ const AddPottasiumCarobnateToSpoon = () => {
   const { spoonRef } = useContext(ModelContext)
   const {lessonStep,selectedLesson,setLessonStep} = useContext(MainGuidelineContext)
 
+  console.log("AddPottasiumCarobnateToSpoon")
+
   const opacity = useRef(0)
   const pottasiumCarobnateMeshes = useRef([])
 

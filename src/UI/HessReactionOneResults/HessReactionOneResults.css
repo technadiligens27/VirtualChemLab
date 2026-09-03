@@ -352,6 +352,27 @@
    Continue Button
    ========================================================= */
 
+   .reaction1-results-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 1rem;
+
+  margin-top: 0rem;
+}
+.reaction1-results-question-button {
+  background: #ffffff;
+
+  color: #4c2c96;
+
+  border: 0.15rem solid #4c2c96;
+}
+
+.reaction1-results-question-button:hover {
+  background: #f5efff;
+}
+
 .reaction1-results-button {
   width: 200px;
   height: 50px;
@@ -372,6 +393,8 @@
   transition:
     background-color 0.2s ease,
     transform 0.2s ease;
+
+    border: 1px solid black;
 }
 
 .reaction1-results-button:hover {

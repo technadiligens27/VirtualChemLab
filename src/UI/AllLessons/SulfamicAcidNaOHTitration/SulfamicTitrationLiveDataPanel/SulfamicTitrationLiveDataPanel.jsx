@@ -462,30 +462,33 @@ const SulfamicTitrationLiveDataPanel = ({
 
 
   // =========================================================
+  // AUTO HIDE / AUTO SHOW CONDITIONS
+  // =========================================================
+
+  const shouldAutoHide =
+    autoHideConditions.some(
+      (condition) =>
+        condition.selectedLesson ===
+          selectedLesson &&
+        condition.lessonStep ===
+          lessonStep
+    )
+
+  const shouldAutoShow =
+    autoShowConditions.some(
+      (condition) =>
+        condition.selectedLesson ===
+          selectedLesson &&
+        condition.lessonStep ===
+          lessonStep
+    )
+
+
+  // =========================================================
   // AUTO HIDE / AUTO SHOW
   // =========================================================
 
   useEffect(() => {
-
-    const shouldAutoHide =
-      autoHideConditions.some(
-        (condition) =>
-          condition.selectedLesson ===
-            selectedLesson &&
-          condition.lessonStep ===
-            lessonStep
-      )
-
-
-    const shouldAutoShow =
-      autoShowConditions.some(
-        (condition) =>
-          condition.selectedLesson ===
-            selectedLesson &&
-          condition.lessonStep ===
-            lessonStep
-      )
-
 
     if (
       shouldAutoHide
@@ -507,8 +510,8 @@ const SulfamicTitrationLiveDataPanel = ({
   }, [
     selectedLesson,
     lessonStep,
-    autoHideConditions,
-    autoShowConditions,
+    shouldAutoHide,
+    shouldAutoShow,
     autoHideDelay,
   ])
 

@@ -53,7 +53,10 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showSulfamicArrow,setShowSulfamicArrow] = useState(false);
   const [showMethyArrow,setShowMethylArrow] = useState(false);
 
-  const [showBuretteClampArrow,setShowBuretteClampArrow] = useState(false)
+  const [showBuretteClampArrow,setShowBuretteClampArrow] = useState(false);
+
+  const [showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow] = useState(false)
+
 
 
   const resetLessonGuidelines = () => {
@@ -195,7 +198,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowMethylArrow,
 
         showBuretteClampArrow,
-        setShowBuretteClampArrow
+        setShowBuretteClampArrow,
+
+        showPotassiumHydrogenCarbonateArrow,
+        setShowPotassiumHydrogenCarbonateArrow
 
 
       }}

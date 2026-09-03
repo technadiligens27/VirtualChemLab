@@ -113,6 +113,12 @@
   color: white;
 }
 
+.result-dialog-btn-container{
+  display: flex;
+  flex-direction: row;
+  gap:10px
+}
+
 @media (max-width: 600px) {
   .dialog-box-container {
     width: calc(100% - 30px);

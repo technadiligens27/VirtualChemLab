@@ -11,7 +11,7 @@ const AllArrows=()=>{
         arrowSpoonRef,arrowSaltContainerRef,mainDropperRef,arrowDropperRef, arrowTestube01Ref,
         arrowPolystereneRef,arrowPottasiumCarbonateRef,arrowBalanceRef,arrowBuretteClampRef,
         arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
-        ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef
+        ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -22,7 +22,7 @@ const AllArrows=()=>{
         setShowPottasiumCarbonateArrow,showPottasiumCarbonateArrow,showBalanceArrow,showBuretteArrow,
         showThermometerArrow,setShowThermometerArrow,showVolumetricArrow,showVolumetricFlaskArrow,
         showFunnelArrow, setShowFunnelArrow,showNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,
-        setShowNaOHBBottleArrowRef,showMethyArrow,showBuretteClampArrow
+        setShowNaOHBBottleArrowRef,showMethyArrow,showBuretteClampArrow,showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -58,6 +58,7 @@ const AllArrows=()=>{
         {showSulfamicArrow && <ArrowGuides arrowRef={arrowSulfamicRef} speed={2.5} height={0.5} showStatus={showSulfamicArrow}/>}
         {showMethyArrow && <ArrowGuides arrowRef={arrowMethylBottleRef} speed={2.5} height={0.5} showStatus={showMethyArrow}/>}
         {showBuretteClampArrow && <ArrowGuides arrowRef={arrowBuretteClampRef} speed={2.5} height={0.5} showStatus={showBuretteClampArrow}/>}
+        {showPotassiumHydrogenCarbonateArrow && <ArrowGuides arrowRef={arrowPotassiumHydrogenCarbonateRef} speed={2.5} height={0.5} showStatus={showPotassiumHydrogenCarbonateArrow}/>}
 
         </>
     )

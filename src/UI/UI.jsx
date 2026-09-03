@@ -32,6 +32,7 @@ import SulfamicAcidNaOHTitration from "./AllLessons/SulfamicAcidNaOHTitration/Su
 import SulfamicAcidNaOHTitration02 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration02"
 import SulfamicAcidNaOHTitration03 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration03"
 import TitreValueRecorded from "../Experience/Interactions/TitreValueRecorded/TitreValueRecorded"
+import QuestionCard from "./QuestionCard/QuestionCard"
 
 const mainContent = [
   {
@@ -124,7 +125,7 @@ const UI = () => {
     showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow,
     showVolumetricArrow,setShowVolumetricArrow,setShowVolumetricFlaskArrow,setShowFunnelArrow,
     setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
-    showBuretteClampArrow,setShowBuretteClampArrow
+    showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -133,7 +134,7 @@ const UI = () => {
     clickedModel,
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
-    setIsReactionTimerRunning,isPouring
+    setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo
   } = useContext(InteractionContext)
 
 
@@ -149,7 +150,8 @@ const UI = () => {
     setShowNormalBeakerArrow(
       (selectedLesson===8 && [3,21].includes(lessonStep)) ||
       (selectedLesson===11 && [3].includes(lessonStep)) ||
-      ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep))      
+      ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep)) ||
+      (selectedLesson===9 && [2,19].includes(lessonStep))  
     )
   }, [selectedLesson, lessonStep])
 
@@ -163,19 +165,24 @@ const UI = () => {
   useEffect(()=>{
     setShowBuretteArrow(
       (lessonStep===18 && selectedLesson===8) ||
-      (lessonStep===52 && selectedLesson===12.2) 
+      (lessonStep===52 && selectedLesson===12.2) ||
+      (lessonStep ===16 && selectedLesson ===9)
     )
   },[selectedLesson, lessonStep])
 
 
   useEffect(()=>{
     setShowBuretteClampArrow(
-      (lessonStep==82 && selectedLesson==12.2) 
+      (lessonStep==82 && selectedLesson==12.2) ||
+      (lessonStep ===22 && selectedLesson ===9)
     )
   },[selectedLesson, lessonStep])
 
   useEffect(()=>{
-      setShowPolystereneArrow(selectedLesson===8 && lessonStep===4)
+      setShowPolystereneArrow(
+        (selectedLesson===8 && lessonStep===4) ||
+        (selectedLesson ==9 && lessonStep ===3) 
+      )
   },[selectedLesson,lessonStep,showPolystereneArrow])
 
   useEffect(()=>{
@@ -185,7 +192,8 @@ const UI = () => {
   useEffect(()=>{
     setShowBalanceArrow(
       ([14,22].includes(lessonStep) && selectedLesson === 8) ||
-      ([4,6,14].includes(lessonStep) && selectedLesson ===12)
+      ([4,6,14].includes(lessonStep) && selectedLesson ===12) ||
+      (selectedLesson===9 && [12,20].includes(lessonStep))
 
     )
   },[selectedLesson,lessonStep])
@@ -283,7 +291,8 @@ const UI = () => {
     setShowSpoonArrow(
       (selectedLesson==1 && lessonStep===6) ||
       (selectedLesson===8 && lessonStep ===9) ||
-      ([12,12.1].includes(selectedLesson) && [22,7].includes(lessonStep))
+      ([12,12.1].includes(selectedLesson) && [22,7].includes(lessonStep)) ||
+      (selectedLesson === 9 && lessonStep ===7)
     )
   },[lessonStep,showSpoonArrow])
 
@@ -296,12 +305,17 @@ useEffect(() => {
     (selectedLesson === 8 && lessonStep === 8) ||
     (selectedLesson === 7 && lessonStep === 3) ||
     (selectedLesson === 8 && lessonStep === 32) ||
-    (selectedLesson ===12 && lessonStep===3)
+    (selectedLesson ===12 && lessonStep===3) ||
+    (selectedLesson ===9 && lessonStep===6) ||
+    (selectedLesson === 9 && lessonStep === 30)
   )
 }, [selectedLesson, lessonStep, hessGuidelineNumber])
 
 useEffect(()=>{
-  setShowThermometerArrow(selectedLesson === 8 && lessonStep === 30)
+  setShowThermometerArrow(
+    (selectedLesson === 8 && lessonStep === 30) ||
+    (selectedLesson === 9 && lessonStep === 28)
+  )
 },[selectedLesson, lessonStep])
 
   useEffect(() => {
@@ -311,6 +325,12 @@ useEffect(()=>{
   useEffect(()=>{
     setshowGogglesArrow(safetyStep===1)
   },[safetyStep])
+
+  useEffect(()=>{
+    setShowPotassiumHydrogenCarbonateArrow(
+      (selectedLesson===9 && lessonStep ===8)
+    )
+  },[selectedLesson,lessonStep])
 
 
 useEffect(() => {
@@ -556,6 +576,7 @@ useEffect(() => {
           <SulfamicAcidNaOHTitration03/>
         )
        }
+
 
        {/* <TitreValueRecorded/> */}
 

@@ -151,6 +151,8 @@ export const InteractionProvider = ({ children }) => {
   const [showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration] = useState(false);
 
   const [showEnthalyResultTwo,setShowEnthalyResultTwo] = useState(false)
+  const [showQuestionCardNo,setShowQuestionCardNo] = useState(null)
+
 
 
   const resetInteractions = () => {
@@ -269,7 +271,8 @@ export const InteractionProvider = ({ children }) => {
   setIsSulfamicInSpoon(false);
   setIsFillToMark(false);
   setIsPouringModeFunnelMode(false);
-  setShowSulfamicAcidNaOHTitration(false)
+  setShowSulfamicAcidNaOHTitration(false);
+  setShowQuestionCardNo(null)
 }
 
   return (
@@ -356,8 +359,9 @@ export const InteractionProvider = ({ children }) => {
         isFillToMark,setIsFillToMark,
         isPouringModeFunnelMode,setIsPouringModeFunnelMode,
         showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration,
-        showEnthalyResultTwo,setShowEnthalyResultTwo
-            
+        showEnthalyResultTwo,setShowEnthalyResultTwo,
+        showQuestionCardNo,setShowQuestionCardNo
+           
         
         
       }}

@@ -51,7 +51,8 @@ const ClickObject = () => {
     isThermometerRisen,setIsThermometerRisen,setIsPolystereneCovered,isPolystereneCovered,
     fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,
     setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker,
-    isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark
+    isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark,
+    isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon
 
   } = useContext(InteractionContext)
 
@@ -2035,6 +2036,11 @@ const handlePlacePolysterene = () => {
   }
 
   const keepWeighedTestTubeOnTable = (hand) => {
+  
+    if(isWeighTestube){
+      setIsWeighTestube(false)
+    }
+    
   const handData = getHandData(hand)
 
   if (!handData?.ref?.current) {
@@ -2385,6 +2391,10 @@ const handlePlaceBalance = () => {
     }
   }
 
+  useEffect(()=>{
+    console.log("isWeighTestube:",isWeighTestube)
+  },[isWeighTestube])
+
   const coverPolystereneCup = ()=>{
     setIsPolystereneCovered(true)
   }
@@ -2445,9 +2455,14 @@ const handlePlaceBalance = () => {
   }
 
   useEffect(()=>{
-    if([8,9].includes(selectedLesson) && ([32,30].includes(lessonStep))){
+
+    if(selectedLesson ===8 && lessonStep===32){
       setIsPolystereneStirMode(true)
     }
+
+    if(selectedLesson ===9 && lessonStep===30){
+      setIsPolystereneStirMode(true)
+    }    
   },[selectedLesson,lessonStep,isPolystereneStirMode])
 
   const handlePolystereneStirMode = ()=>{
@@ -2708,7 +2723,16 @@ const handlePlaceBalance = () => {
       )
     }
   }
+  useEffect(()=>{
+    console.log("isPottasiumCarobnateInSpoon:",isPottasiumCarobnateInSpoon)
+    console.log("isPotassiumHydrogenCarbonateInSpoon:",isPotassiumHydrogenCarbonateInSpoon)
+    console.log("isSulfamicInSpoon:",isSulfamicInSpoon)
 
+  },[isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,isSulfamicInSpoon])
+
+      console.log("isPottasiumCarobnateInSpoon:",isPottasiumCarobnateInSpoon)
+    console.log("isPotassiumHydrogenCarbonateInSpoon:",isPotassiumHydrogenCarbonateInSpoon)
+    console.log("isSulfamicInSpoon:",isSulfamicInSpoon)
   const renderPottasiumCarbinateTableButtons = ()=>{
     if (selectedObject?.name === "pottasium-carbonate-container") {
       return (

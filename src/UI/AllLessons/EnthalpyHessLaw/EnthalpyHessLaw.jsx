@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
@@ -11,14 +11,19 @@ import HessStartingTemperature from "../../HessStartingTemperature/HessStartingT
 import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview";
 import HessLiveDataPanel from "../../HessLiveDataPanel/HessLiveDataPanel";
 import { enthalpyReactionData } from "../../Data/enthalpyReactionData/enthalpyReactionData"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
+import QuestionCard from "../../QuestionCard/QuestionCard";
 
 
 const EnthalpyHessLaw = () =>{
 
   const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber,
-    showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo} = useContext(InteractionContext)
+    showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo,
+  showQuestionCardNo,setShowQuestionCardNo} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
+
+  const {mainDropperRef} = useContext(ModelContext)
 
   const Enthalpy = [
   {
@@ -377,6 +382,12 @@ const EnthalpyHessLaw = () =>{
 },
   ]
 
+  useEffect(()=>{
+    if(mainDropperRef.current){
+      mainDropperRef.current.visible = false
+    }
+  },[mainDropperRef])
+
     return(
         <>
 
@@ -418,87 +429,80 @@ const EnthalpyHessLaw = () =>{
         />
         }
 
-        
+      <HessLiveDataPanel
+        reactionNumber={1}
 
+        volumeOfSolution={
+          lessonStep >= 21
+            ? 30
+            : null
+        }
 
+        solutionDensity={
+          lessonStep >= 21
+            ? 1
+            : null
+        }
 
-      {(lessonStep >= 1 && lessonStep < 17) && (
-        <HessLiveDataPanel
-          reactionNumber={1}
+        startingTemperature={
+          lessonStep >= 32
+            ? 22.0
+            : null
+        }
 
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
+        currentTemperature={
+          lessonStep >= 32
+            ? lessonStep >= 36
+              ? 31.5
+              : 22.0
+            : null
+        }
 
-          autoHideConditions={[
-            { selectedLesson: 8, lessonStep: 4 },
-          ]}
+        highestTemperature={
+          lessonStep >= 36
+            ? 31.5
+            : null
+        }
 
-          autoShowConditions={[
-            { selectedLesson: 8, lessonStep: 3 },
-          ]}
-        />
-      )}
+        massWithPowder={
+          lessonStep >= 17
+            ? 24.7
+            : null
+        }
 
-        {lessonStep >=17 && lessonStep<21 &&  <HessLiveDataPanel
-                  reactionNumber={1}
+        massAfterEmptying={
+          lessonStep >= 40
+            ? 21.72
+            : null
+        }
 
-                  // volumeOfSolution={30}
-                  // solutionDensity={1}
+        selectedLesson={selectedLesson}
+        lessonStep={lessonStep}
+        autoDelay={3000}
 
-                  // startingTemperature={22}
-                  // currentTemperature={31.2}
-                  // highestTemperature={31.5}
-          selectedLesson={selectedLesson}
-          lessonStep={lessonStep}
-                  massWithPowder={24.7}
-                autoHideConditions={[
-            { selectedLesson: 8, lessonStep: 18 },
-          ]}
-                  // massAfterEmptying={21.72}
-        />}
-
-        {lessonStep >=21 && lessonStep<32 &&  <HessLiveDataPanel
-                  reactionNumber={1}
-                  volumeOfSolution={30}
-                  solutionDensity={1}
-
-                  // startingTemperature={22}
-                  // currentTemperature={31.2}
-                  // highestTemperature={31.5}
-
-                  massWithPowder={24.7}
-                  // massAfterEmptying={21.72}
-                  selectedLesson={selectedLesson}
-                  lessonStep={lessonStep}
-                  autoHideConditions={[{ selectedLesson: 8, lessonStep: 20 },
-          ]}
-        />}
-
-        {lessonStep >=32 &&  <HessLiveDataPanel
-                  reactionNumber={1}
-                  volumeOfSolution={30}
-                  solutionDensity={1}
-
-                  startingTemperature={22}
-                  // currentTemperature={31.2}
-                  // highestTemperature={31.5}
-
-                  massWithPowder={24.7}
-                  // massAfterEmptying={21.72}
-        />}
-
-        {lessonStep >=40 &&  <HessLiveDataPanel
-                  reactionNumber={1}
-                  volumeOfSolution={30}
-                  solutionDensity={1}
-
-                  startingTemperature={22}
-                  // currentTemperature={31.2}
-                  highestTemperature={42.5}
-
-                  massWithPowder={24.7}
-                  massAfterEmptying={21.70}
-        />}                        
+        autoShowConditions={[
+          {
+            selectedLesson: selectedLesson,
+            lessonStep: 17,
+          },
+          {
+            selectedLesson: selectedLesson,
+            lessonStep: 21,
+          },
+          {
+            selectedLesson: selectedLesson,
+            lessonStep: 32,
+          },
+          {
+            selectedLesson: selectedLesson,
+            lessonStep: 36,
+          },
+          {
+            selectedLesson: selectedLesson,
+            lessonStep: 40,
+          },
+        ]}
+      />
 
 
         {(lessonStep >= 2 && lessonStep <= 7 ) && ( <HessGuidelines guidelineData={guidelineData[0]}/>)}
@@ -524,15 +528,116 @@ const EnthalpyHessLaw = () =>{
         }
 
         {
-          showEnthalyResultOne && <HessReactionOneResults/>
+          showEnthalyResultOne && <HessReactionOneResults   onQuestions={() => {
+           setShowQuestionCardNo(8.1);setShowEnthalyResultOne(false)
+          }}/>
         }
 
         {
           showEnthalyResultTwo && <HessReactionOneResults/>
         }
 
+        {showQuestionCardNo === 8.1 &&  <QuestionCard
+            questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
+            questionNumber={1}
+            question="What happened to the temperature when potassium carbonate was added to hydrochloric acid?"
+            answers={[
+              {
+                id: "A",
+                text: "Increased",
+              },
+              {
+                id: "B",
+                text: "Decreased",
+              },
+              {
+                id: "C",
+                text: "Stayed constant",
+              },
+              {
+                id: "D",
+                text: "Increased then immediately became 0°C",
+              },
+            ]}
 
-         
+            correctAnswer="A"
+            hintText="Choose the most appropriate answer."
+            correctMessage="Correct! The temperature increased."
+            incorrectMessage="Incorrect. The temperature increased during Reaction 1."
+            submitButtonText="Submit Answer"
+            continueButtonText="Continue"
+            onContinue={() => {setShowQuestionCardNo(8.2)}}
+    />}
+
+      {showQuestionCardNo === 8.2 && (
+        <QuestionCard
+          questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
+          questionNumber={2}
+          question="What does this temperature change indicate?"
+          answers={[
+            {
+              id: "A",
+              text: "The reaction is endothermic",
+            },
+            {
+              id: "B",
+              text: "The reaction is exothermic",
+            },
+            {
+              id: "C",
+              text: "No reaction occurred",
+            },
+            {
+              id: "D",
+              text: "The reaction is reversible",
+            },
+          ]}
+          correctAnswer="B"
+          hintText="Think about what an increase in temperature means."
+          correctMessage="Correct! The reaction is exothermic."
+          incorrectMessage="Incorrect. A temperature increase indicates an exothermic reaction."
+          submitButtonText="Submit Answer"
+          continueButtonText="Continue"
+          onContinue={() => {
+            setShowQuestionCardNo(8.3)
+          }}
+        />
+      )}
+
+      {showQuestionCardNo === 8.3 && (
+        <QuestionCard
+          questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
+          questionNumber={3}
+          question="Why is the test tube weighed again after the potassium carbonate has been transferred?"
+          answers={[
+            {
+              id: "A",
+              text: "To find the temperature change",
+            },
+            {
+              id: "B",
+              text: "To determine the actual mass of potassium carbonate used",
+            },
+            {
+              id: "C",
+              text: "To find the volume of HCl",
+            },
+            {
+              id: "D",
+              text: "To measure the mass of carbon dioxide",
+            },
+          ]}
+          correctAnswer="B"
+          hintText="Think about why two mass readings are taken before and after transferring the solid."
+          correctMessage="Correct! The two mass readings allow the actual mass of potassium carbonate used to be determined."
+          incorrectMessage="Incorrect. Reweighing the test tube allows the actual mass of potassium carbonate transferred to be calculated."
+          submitButtonText="Submit Answer"
+          continueButtonText="Continue"
+          onContinue={() => {
+            setShowQuestionCardNo(null)
+          }}
+        />
+      )}      
 
         {/* {lessonStep===2 && 
                 <LessonGuide 
@@ -729,7 +834,8 @@ const EnthalpyHessLaw = () =>{
       }
 
       {lessonStep ===44 && 
-           <DialogBox text={Enthalpy[0].step42} onbtnClick={() => {
+           <DialogBox text={Enthalpy[0].step42}
+            onbtnClick={() => {
             setShowEnthalyResultOne(true)
             }}
 

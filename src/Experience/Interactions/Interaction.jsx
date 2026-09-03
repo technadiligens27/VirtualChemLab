@@ -88,6 +88,8 @@ const Interaction = () => {
   },[isPlacePolysterene,isPolystereneStirMode,selectedLeftHand,selectedRightHand])
 
 
+
+
   return (
     <>
       <GogglesPut/>
