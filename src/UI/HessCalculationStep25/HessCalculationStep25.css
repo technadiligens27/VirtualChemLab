@@ -1,0 +1,866 @@
+/* ==========================================
+   OVERLAY
+========================================== */
+
+.hess25-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(38, 28, 60, 0.42);
+
+  backdrop-filter:
+    blur(4px);
+}
+
+
+/* ==========================================
+   PAGE
+========================================== */
+
+.hess25-page {
+  width: 70vw;
+  height: 90vh;
+
+  box-sizing: border-box;
+
+  padding:
+    1.2rem
+    1.5rem;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.8rem;
+
+  border:
+    0.28rem solid
+    #f3b72f;
+
+  border-radius:
+    1.4rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf8,
+      #ffffff
+    );
+
+  box-shadow:
+    0 1.5rem 3.5rem
+    rgba(34, 25, 61, 0.26);
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.hess25-header {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 4.6rem;
+}
+
+
+.hess25-step-badge {
+  position: relative;
+
+  z-index: 2;
+
+  flex-shrink: 0;
+
+  width: 4.8rem;
+  height: 4.8rem;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-right:
+    -1.1rem;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #4d3095,
+      #321c73
+    );
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 0.45rem 0.9rem
+    rgba(55, 35, 119, 0.25);
+}
+
+
+.hess25-step-badge span {
+  font-size: 0.75rem;
+
+  font-weight: 700;
+}
+
+
+.hess25-step-badge strong {
+  font-size: 2rem;
+
+  line-height: 1;
+}
+
+
+.hess25-header-title {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 3.1rem;
+
+  padding:
+    0.4rem
+    1rem;
+
+  border:
+    0.1rem solid
+    #e5ad31;
+
+  border-radius:
+    0.8rem;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffe294,
+      #ffd061
+    );
+}
+
+
+.hess25-header-title h1 {
+  margin: 0;
+
+  color:
+    #352477;
+
+  font-size:
+    1.35rem;
+
+  font-weight: 800;
+}
+
+
+/* ==========================================
+   MAIN
+========================================== */
+
+.hess25-main {
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+
+  gap: 1rem;
+}
+
+
+/* ==========================================
+   RECORDED VALUES
+========================================== */
+
+.hess25-recorded-card {
+  flex: 0.9;
+
+  min-width: 0;
+
+  padding:
+    1rem;
+
+  box-sizing: border-box;
+
+  border:
+    0.1rem solid
+    #d5c7e9;
+
+  border-radius:
+    0.9rem;
+
+  background:
+    #fdfbff;
+}
+
+
+.hess25-recorded-card h2 {
+  margin:
+    0 0
+    0.8rem;
+
+  text-align: center;
+
+  color:
+    #38257d;
+
+  font-size:
+    25px;
+}
+
+
+.hess25-recorded-list {
+  border:
+    0.08rem solid
+    #ddd4e9;
+
+  border-radius:
+    0.55rem;
+
+  overflow: hidden;
+
+  background:
+    #ffffff;
+}
+
+
+.hess25-recorded-row {
+  min-height: 2.5rem;
+
+  padding:
+    0.4rem
+    0.65rem;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  border-bottom:
+    0.08rem solid
+    #e8e1f0;
+
+  color:
+    #32303a;
+
+  font-size:
+    20px
+}
+
+
+.hess25-recorded-row:last-child {
+  border-bottom:
+    none;
+}
+
+
+.hess25-recorded-row strong {
+  flex-shrink: 0;
+
+  color:
+    #22202b;
+}
+
+
+.hess25-recorded-divider {
+  margin:
+    0.7rem 0;
+
+  border-top:
+    0.1rem dashed
+    #c9bddc;
+}
+
+
+/* ==========================================
+   CALCULATIONS
+========================================== */
+
+.hess25-calculations {
+  flex: 1.8;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.7rem;
+}
+
+
+/* ==========================================
+   TASK CARD
+========================================== */
+
+.hess25-task-card {
+  flex: 1;
+
+  min-height: 0;
+
+  padding:
+    0.75rem
+    1rem;
+
+  box-sizing: border-box;
+
+  border:
+    0.08rem solid
+    #eee8f4;
+
+  border-radius:
+    0.8rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fdfbff,
+      #faf7ff
+    );
+
+  transition:
+    opacity 0.2s ease;
+}
+
+
+.hess25-task-disabled {
+  opacity: 0.55;
+}
+
+
+/* ==========================================
+   TASK HEADING
+========================================== */
+
+.hess25-task-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.6rem;
+
+  margin-bottom:
+    0.55rem;
+}
+
+
+.hess25-task-number {
+  flex-shrink: 0;
+
+  width: 1.8rem;
+  height: 1.8rem;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    #58389e;
+
+  color:
+    #ffffff;
+
+  font-size:
+    15px;
+
+  font-weight: 800;
+}
+
+
+.hess25-task-heading h2 {
+  margin: 0;
+
+  color:
+    #35237c;
+
+  font-size:
+    30px;
+}
+
+
+/* ==========================================
+   FORMULA
+========================================== */
+
+.hess25-formula {
+  width: fit-content;
+
+  min-width: 13rem;
+
+  margin:
+    0.25rem auto
+    0.6rem;
+
+  padding:
+    0.55rem
+    1.1rem;
+
+  box-sizing: border-box;
+
+  border:
+    0.1rem solid
+    #e6b64a;
+
+  border-radius:
+    0.55rem;
+
+  background:
+    #fffaf0;
+
+  text-align: center;
+
+  color:
+    #312278;
+
+  font-size:
+    1.35rem;
+
+  font-style:
+    italic;
+}
+
+
+/* ==========================================
+   FRACTION
+========================================== */
+
+.hess25-fraction {
+  display: inline-flex;
+
+  flex-direction: column;
+
+  vertical-align: middle;
+
+  line-height: 1.05;
+
+  margin-left:
+    0.25rem;
+}
+
+
+.hess25-fraction span:first-child {
+  padding:
+    0 0.35rem
+    0.15rem;
+
+  border-bottom:
+    0.08rem solid
+    currentColor;
+}
+
+
+.hess25-fraction span:last-child {
+  padding-top:
+    0.15rem;
+}
+
+
+/* ==========================================
+   ANSWER ROW
+========================================== */
+
+.hess25-answer-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.6rem;
+}
+
+
+.hess25-answer-row label {
+  color:
+    #39247f;
+
+  font-size:
+    0.88rem;
+
+  font-weight:
+    600;
+}
+
+
+.hess25-answer-row input {
+  width: 8rem;
+
+  height: 2.3rem;
+
+  padding:
+    0 0.55rem;
+
+  box-sizing: border-box;
+
+  outline: none;
+
+  border:
+    0.1rem solid
+    #cfc2e2;
+
+  border-radius:
+    0.45rem;
+
+  background:
+    #ffffff;
+
+  color:
+    #282331;
+
+  font-size:
+    0.95rem;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.hess25-answer-row input:focus {
+  border-color:
+    #6746a7;
+
+  box-shadow:
+    0 0 0
+    0.15rem
+    rgba(103, 70, 167, 0.12);
+}
+
+
+.hess25-answer-row button {
+  min-width: 6rem;
+
+  height: 2.3rem;
+
+  padding:
+    0 0.8rem;
+
+  border:
+    none;
+
+  border-radius:
+    0.45rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      #533395,
+      #7048b1
+    );
+
+  color:
+    #ffffff;
+
+  font-size:
+    0.85rem;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+}
+
+
+.hess25-answer-row button:disabled,
+.hess25-answer-row input:disabled {
+  cursor:
+    not-allowed;
+
+  opacity:
+    0.6;
+}
+
+
+/* ==========================================
+   FEEDBACK
+========================================== */
+
+.hess25-feedback {
+  margin-top:
+    0.55rem;
+
+  padding:
+    0.5rem
+    0.7rem;
+
+  border-radius:
+    0.45rem;
+
+  font-size:
+    0.78rem;
+
+  line-height:
+    1.35;
+}
+
+
+.hess25-feedback-correct {
+  border:
+    0.08rem solid
+    #aad3a8;
+
+  background:
+    #f1fff0;
+
+  color:
+    #27682d;
+}
+
+
+.hess25-feedback-wrong {
+  border:
+    0.08rem solid
+    #efb0b0;
+
+  background:
+    #fff3f3;
+
+  color:
+    #9c3333;
+}
+
+
+/* ==========================================
+   DELTA H CARD
+========================================== */
+
+.hess25-delta-card {
+  flex-shrink: 0;
+
+  padding:
+    0.75rem
+    1rem;
+
+  box-sizing: border-box;
+
+  border:
+    0.08rem solid
+    #eee8f4;
+
+  border-radius:
+    0.8rem;
+
+  background:
+    #fcf9ff;
+}
+
+
+.hess25-delta-content {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+}
+
+
+.hess25-delta-formula {
+  flex-shrink: 0;
+
+  margin:
+    0;
+}
+
+
+.hess25-delta-answer {
+  flex: 1;
+}
+
+
+.hess25-delta-card .hess25-feedback {
+  flex: 1;
+
+  margin-top:
+    0;
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.hess25-navigation {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  min-height:
+    2.7rem;
+}
+
+
+.hess25-navigation-spacer {
+  flex: 1;
+}
+
+
+.hess25-back-button,
+.hess25-next-button {
+  min-width:
+    6rem;
+
+  height:
+    2.4rem;
+
+  border:
+    none;
+
+  border-radius:
+    0.45rem;
+
+  font-size:
+    0.85rem;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+}
+
+
+.hess25-back-button {
+  background:
+    #523397;
+
+  color:
+    #ffffff;
+}
+
+
+.hess25-next-button {
+  border:
+    0.08rem solid
+    #bca9dc;
+
+  background:
+    #f9f5ff;
+
+  color:
+    #40247f;
+}
+
+
+.hess25-next-button:disabled {
+  opacity:
+    0.45;
+
+  cursor:
+    not-allowed;
+}
+
+
+/* ==========================================
+   SHORT SCREEN SUPPORT
+========================================== */
+
+@media (max-height: 800px) {
+
+  .hess25-page {
+    height:
+      94vh;
+
+    padding:
+      0.8rem
+      1rem;
+
+    gap:
+      0.55rem;
+  }
+
+
+  .hess25-header {
+    min-height:
+      3.8rem;
+  }
+
+
+  .hess25-step-badge {
+    width:
+      4rem;
+
+    height:
+      4rem;
+  }
+
+
+  .hess25-step-badge strong {
+    font-size:
+      1.65rem;
+  }
+
+
+  .hess25-header-title {
+    min-height:
+      2.7rem;
+  }
+
+
+  .hess25-header-title h1 {
+    font-size:
+      1.1rem;
+  }
+
+
+  .hess25-recorded-row {
+    min-height:
+      2.15rem;
+
+    font-size:
+      0.78rem;
+  }
+
+
+  .hess25-task-card {
+    padding:
+      0.55rem
+      0.8rem;
+  }
+
+
+  .hess25-formula {
+    margin:
+      0.15rem auto
+      0.35rem;
+
+    padding:
+      0.35rem
+      0.8rem;
+
+    font-size:
+      1.1rem;
+  }
+
+
+  .hess25-feedback {
+    margin-top:
+      0.3rem;
+
+    padding:
+      0.35rem
+      0.55rem;
+  }
+}

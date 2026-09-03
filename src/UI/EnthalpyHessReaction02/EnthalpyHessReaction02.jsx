@@ -763,8 +763,74 @@ setIsPotassiumTransferred,
     }}
   />
 )}
-
-
+{showQuestionCardNo === 9.2 && (
+  <QuestionCard
+    questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
+    questionNumber={5}
+    question="The temperature decreases during Reaction 2. What does this mean?"
+    answers={[
+      {
+        id: "A",
+        text: "Heat is released",
+      },
+      {
+        id: "B",
+        text: "Heat is absorbed",
+      },
+      {
+        id: "C",
+        text: "No energy is transferred",
+      },
+      {
+        id: "D",
+        text: "The thermometer is incorrect",
+      },
+    ]}
+    correctAnswer="B"
+    hintText="Think about what a decrease in temperature means."
+    correctMessage="Correct! Heat is absorbed during Reaction 2."
+    incorrectMessage="Incorrect. A decrease in temperature means heat is absorbed from the surroundings."
+    submitButtonText="Submit Answer"
+    continueButtonText="Continue"
+    onContinue={() => {
+      setShowQuestionCardNo(9.3)
+    }}
+  />
+)}
+{showQuestionCardNo === 9.3 && (
+  <QuestionCard
+    questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
+    questionNumber={6}
+    question="What volume of hydrochloric acid is used for each reaction?"
+    answers={[
+      {
+        id: "A",
+        text: "10 cm³",
+      },
+      {
+        id: "B",
+        text: "20 cm³",
+      },
+      {
+        id: "C",
+        text: "25 cm³",
+      },
+      {
+        id: "D",
+        text: "30 cm³",
+      },
+    ]}
+    correctAnswer="D"
+    hintText="Recall the volume of hydrochloric acid measured into the polystyrene cup."
+    correctMessage="Correct! 30 cm³ of hydrochloric acid is used for each reaction."
+    incorrectMessage="Incorrect. The correct volume is 30 cm³."
+    submitButtonText="Submit Answer"
+    continueButtonText="Continue"
+    onContinue={() => {
+      setShowQuestionCardNo(null)
+    }}
+  />
+)}
     </>
   )
 }

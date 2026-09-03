@@ -33,6 +33,7 @@ import SulfamicAcidNaOHTitration02 from "./AllLessons/SulfamicAcidNaOHTitration/
 import SulfamicAcidNaOHTitration03 from "./AllLessons/SulfamicAcidNaOHTitration/SulfamicAcidNaOHTitration03"
 import TitreValueRecorded from "../Experience/Interactions/TitreValueRecorded/TitreValueRecorded"
 import QuestionCard from "./QuestionCard/QuestionCard"
+import HessCalculationStep25 from "./HessCalculationStep25/HessCalculationStep25"
 
 const mainContent = [
   {
@@ -577,7 +578,7 @@ useEffect(() => {
         )
        }
 
-
+       {<HessCalculationStep25/>}
        {/* <TitreValueRecorded/> */}
 
     </>
