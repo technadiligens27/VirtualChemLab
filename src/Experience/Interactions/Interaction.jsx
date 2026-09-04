@@ -42,6 +42,9 @@ import SwirlModel from "./SwirlModel/SwirlModel";
 import AddMoreLiquid from "./AddMoreLiquid/AddMoreLiquid";
 import ScaleLiquid from "./ScaleLiquid/ScaleLiquid";
 import FunnelMode from "./FunnelMode/FunnelMode";
+import ClampModel from "./ClampModel/ClampModel";
+import InvertCylinderModel from "./InvertCylinderModel/InvertCylinderModel";
+import PlaceModelCentre from "./PlaceModelCentre/PlaceModelCentre";
 
 const Interaction = () => {
   const {
@@ -51,13 +54,14 @@ const Interaction = () => {
      mainThermometerRef,setIsPolystereneStirMode,isPolystereneStirMode,showBubbles,isPolystereneCovered,setIsPolystereneCovered,
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
-,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode
+    ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
+    isInvertCylinder,isModelCentre,setIsModelCentre
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
-        naohBottleRef
+        naohBottleRef,boilingTube01Ref,
       
       } = useContext(ModelContext)
 
@@ -115,7 +119,9 @@ const Interaction = () => {
       {selectedLesson===12 && (lessonStep===13 || lessonStep===14)  && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={24.22}/>}
 
       {isBuiretteClamped &&  <ClampBurette/>}  
-      {isClampInCenter && <PlaceClampInCenter/>}
+      {selectedLesson !==13 && isClampInCenter && <PlaceClampInCenter/>}
+      {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-4.5}/>}
+
       {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
       {selectedRightHand?.name==='main-Conical-Flask' && isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.3} heightOffset ={-4} scaleOffset={0.45} beakerRef={conicalBeakerRef}/>}
 
@@ -220,7 +226,11 @@ const Interaction = () => {
         />
       }    
 
-       
+      {selectedLesson==13 && isClampTestube && <ClampModel modelRef={boilingTube01Ref} modelScale={0.8} hand={"left"}/>}
+
+      { isInvertCylinder && (<InvertCylinderModel/>)} 
+      
+      {isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
       
     </>
   );

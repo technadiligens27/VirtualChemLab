@@ -5,9 +5,11 @@ const DialogBox = ({
 
   button1Text = "Results",
   button2Text = "Continue",
+  button3Text = "End Lesson",
 
   onbtnClick,
   onbtn2Click,
+  onbtn3Click,
 }) => {
   return (
     <div className="dialog-box-container">
@@ -44,6 +46,15 @@ const DialogBox = ({
             onClick={onbtn2Click}
           >
             {button2Text}
+          </button>
+        )}
+
+        {onbtn3Click && (
+          <button
+            className="dialog-third-btn"
+            onClick={onbtn3Click}
+          >
+            {button3Text}
           </button>
         )}
 

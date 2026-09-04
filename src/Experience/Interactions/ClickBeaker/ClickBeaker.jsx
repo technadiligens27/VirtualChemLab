@@ -52,15 +52,14 @@ const ClickObject = () => {
     fillBeakerModel,setFillBeakerModel,isPipetteMode,setIsPipetteMode,setTestubesInBeaker,isVolumetricPipetteMode,
     setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker,
     isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark,
-    isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon
-
+    isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
+    isClampTestube,setIsClampTestube,setIsModelCentre
   } = useContext(InteractionContext)
 
   const {
     normalBeakerRef,
     conicalBeakerRef,
     roundBeakerRef,
-    graduatedBeakerRef,
 
     spoonRef,
     redLitmusRef,
@@ -90,13 +89,14 @@ const ClickObject = () => {
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
     volumetricRef,volumetricBung,phenopthalineBottleRef,
-    sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef
+    sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,
+    boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
     useContext(MainGuidelineContext)
 
- const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,
+ const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,
   isBeakerNearClamp,setIsBeakerNearClamp } = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
@@ -270,6 +270,14 @@ const ClickObject = () => {
       {
         name:"water-bottle",
         ref:waterBottleRef
+      },
+      {
+        name:"boiliing-tube-01",
+        ref:boilingTube01Ref
+      },
+      {
+        name:"main-graduated-cylinder-100",
+        ref:graduatedCylinder100Ref
       }
       ],
     [
@@ -301,7 +309,8 @@ const ClickObject = () => {
       volumetricPipetteRef,volumetricRef,
       volumetricPipetteRef,phenopthalineBottleRef,
       sulfamicBottleRef,methylBottleRef,
-      naohBottleRef,waterBottleRef
+      naohBottleRef,waterBottleRef,
+      boilingTube01Ref,graduatedCylinder100Ref
     ]
   )
 
@@ -426,6 +435,8 @@ const ClickObject = () => {
       foldedPaper.visible = false
     }
   }
+
+  console.log(selectedObject?.name)
 
   useEffect(() => {
     saveOriginalFilterTransforms()
@@ -730,6 +741,13 @@ const ClickObject = () => {
     const handData = getHandData(hand)
 
     //--------Selected Lesson 10--------------
+
+    if(selectedLesson===13){
+      if([7,8,].includes(lessonStep)){
+         setShowErrorMsgNo(1)
+         return 
+      }
+    }
 
     if(selectedLesson==10){
 
@@ -1111,6 +1129,11 @@ const ClickObject = () => {
       return
     }
 
+    if(selectedLesson===13 && objectName==="main-graduated-cylinder"){
+      setSelectedObject(null)
+      return
+    }
+
     if (
       selectedLesson === 10 &&
       objectName === "mainMassBalance"
@@ -1128,32 +1151,89 @@ const ClickObject = () => {
     const raycaster = new THREE.Raycaster()
     const mouse = new THREE.Vector2()
 
-    const handleClick = (event) => {
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+const handleClick = (event) => {
+  mouse.x =
+    (event.clientX / window.innerWidth) * 2 - 1
 
-      raycaster.setFromCamera(mouse, camera)
+  mouse.y =
+    -(event.clientY / window.innerHeight) * 2 + 1
 
-      const clickableObjects = selectableObjects
-        .map((item) => item.ref?.current)
-        .filter(Boolean)
+  raycaster.setFromCamera(mouse, camera)
 
-      const intersects = raycaster.intersectObjects(clickableObjects, true)
+  const clickableObjects = selectableObjects
+    .map((item) => item.ref?.current)
+    .filter(Boolean)
 
-      if (intersects.length === 0) {
-        setSelectedObject(null)
-        return
-      }
+  const intersects =
+    raycaster.intersectObjects(
+      clickableObjects,
+      true
+    )
 
-      const clickedObject = intersects[0].object
-      console.log(clickedObject)
+  if (intersects.length === 0) {
+    setSelectedObject(null)
+    return
+  }
 
-      const clickedHoldingObject = handleHoldingObjectClick(clickedObject)
 
-      if (clickedHoldingObject) return
+  
 
-      handleTableObjectClick(clickedObject)
+  // Find the first valid selectable object
+  // instead of blindly using intersects[0]
+  let validClickedObject = null
+
+  for (const hit of intersects) {
+    const matchedItem =
+      selectableObjects.find((item) => {
+        if (!item.ref?.current) {
+          return false
+        }
+
+        return isClickedInsideObject(
+          hit.object,
+          item.ref.current
+        )
+      })
+
+    if (!matchedItem) {
+      continue
     }
+
+    // Ignore water bottle during lessons 12 / 12.1 / 12.2
+    if (
+      [12, 12.1, 12.2].includes(
+        selectedLesson
+      ) &&
+      matchedItem.name ===
+        "water-bottle"
+    ) {
+      continue
+    }
+
+    validClickedObject =
+      hit.object
+
+    break
+  }
+
+  if (!validClickedObject) {
+    setSelectedObject(null)
+    return
+  }
+
+  const clickedHoldingObject =
+    handleHoldingObjectClick(
+      validClickedObject
+    )
+
+  if (clickedHoldingObject) {
+    return
+  }
+
+  handleTableObjectClick(
+    validClickedObject
+  )
+}
 
     gl.domElement.addEventListener("click", handleClick)
 
@@ -1170,6 +1250,21 @@ const ClickObject = () => {
 
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
+
+    if(selectedLesson==13){
+
+      if([3,4].includes(lessonStep)){
+        setShowErrorMsgNo(12)
+        return false     
+      }  
+
+      if(lessonStep==5 && selectedObject.name !=="main-normal-beaker"){
+        setShowErrorMsgNo(12)
+        return false 
+      }
+
+    }
+
 
       
     if(lessonStep===6 && selectedLesson===7){
@@ -1281,14 +1376,23 @@ const ClickObject = () => {
 
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
-    
-    // if(selectedLesson===8 && lessonStep===8){{
-    //   if (objectName !== "main-testube-01") {
-    //     setShowErrorMsgNo(1)
-    //     return false
-    //   }
-    // }
 
+    //--------Selected Lesson 13---------/////
+    if(selectedLesson===13){
+      if(lessonStep===8 && objectName !== "main-graduated-cylinder-100"){
+        setShowErrorMsgNo(1)
+         return false
+      }
+      if(lessonStep ===3 && objectName !== "boiliing-tube-01"){
+        setShowErrorMsgNo(1)
+         return false
+      }
+
+      if([5,6].includes(lessonStep) ){
+        setShowErrorMsgNo(1)
+         return false
+      }
+     }
     if(selectedLesson ===8){
       if(lessonStep===8){
         if (objectName !== "main-testube-01") {
@@ -1328,6 +1432,8 @@ const ClickObject = () => {
         setShowErrorMsgNo(1)
         return false
       }
+
+
 
       if(lessonStep===3){
         if(objectName !== "main-normal-beaker"){
@@ -1665,7 +1771,8 @@ const toggleFunnelMode = () => {
       (selectedLesson===11.1 && ([55,56,64].includes(lessonStep))) ||
       (selectedLesson ===12 && ([16].includes(lessonStep))) ||
       (selectedLesson ==12.1) && ([30,36].includes(lessonStep)) ||
-      (selectedLesson ==12.2) && ([64].includes(lessonStep))
+      (selectedLesson ==12.2) && ([64].includes(lessonStep)) ||
+      (selectedLesson ===13) && ([6,9,10].includes(lessonStep)) 
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -1903,7 +2010,8 @@ const renderHandSelectionButtons = () => {
   if (
     isTutorialMode &&
     selectedLesson !== 9 && selectedLesson !==10 && selectedLesson !==8 && selectedLesson !==11 &&
-     selectedLesson !==11.1 && selectedLesson !== 12 && selectedLesson !== 12.1 && selectedLesson !== 12.2
+     selectedLesson !==11.1 && selectedLesson !== 12 && selectedLesson !== 12.1 && selectedLesson !== 12.2 &&
+     selectedLesson !==13
   ) {
     return <p>Can't pick now</p>
   }
@@ -2662,6 +2770,17 @@ const handlePlaceBalance = () => {
 
 
   const renderClampTableButtons=()=>{
+
+    if(selectedLesson===13 && lessonStep==13){
+      return(
+        <>
+          <button onClick={handlePlaceBuretteInCentre}>
+            Place In Centre
+          </button>
+        </>
+      )
+    }
+
     if ( selectedObject?.name === "mainBuretteClamp" && isBuiretteClamped) {
       return (
         <>
@@ -2723,16 +2842,13 @@ const handlePlaceBalance = () => {
       )
     }
   }
-  useEffect(()=>{
-    console.log("isPottasiumCarobnateInSpoon:",isPottasiumCarobnateInSpoon)
-    console.log("isPotassiumHydrogenCarbonateInSpoon:",isPotassiumHydrogenCarbonateInSpoon)
-    console.log("isSulfamicInSpoon:",isSulfamicInSpoon)
+  // useEffect(()=>{
+  //   console.log("isPottasiumCarobnateInSpoon:",isPottasiumCarobnateInSpoon)
+  //   console.log("isPotassiumHydrogenCarbonateInSpoon:",isPotassiumHydrogenCarbonateInSpoon)
+  //   console.log("isSulfamicInSpoon:",isSulfamicInSpoon)
 
-  },[isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,isSulfamicInSpoon])
+  // },[isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,isSulfamicInSpoon])
 
-      console.log("isPottasiumCarobnateInSpoon:",isPottasiumCarobnateInSpoon)
-    console.log("isPotassiumHydrogenCarbonateInSpoon:",isPotassiumHydrogenCarbonateInSpoon)
-    console.log("isSulfamicInSpoon:",isSulfamicInSpoon)
   const renderPottasiumCarbinateTableButtons = ()=>{
     if (selectedObject?.name === "pottasium-carbonate-container") {
       return (
@@ -3010,6 +3126,7 @@ const handlePlaceBalance = () => {
     }
   }
 
+
   const renderNormalBeakerTableButtons = ()=>{
     if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && (lessonStep==107 || lessonStep===115)) {
       return (
@@ -3064,14 +3181,53 @@ const handlePlaceBalance = () => {
               Clean Flask
             </button>
           )
-        }
+        }Meas
       }
     }
 
     return null
   }
 
+  const handleInvertCylinder=()=>{
+    setIsInvertCylinder(true)
+  }
+
+  const renderMeasuringCylinderHeldButtons =()=>{
+
+
+
+    if(selectedLesson===13 && selectedObject?.name==="main-graduated-cylinder-100"){
+      if(lessonStep==11){
+        return(
+          <>
+           <button onClick={handleInvertCylinder}>
+             Invert Into Water Bath
+           </button>
+          
+          </>
+        )
+      }
+    }
+  }
+
+  const handleModelPlaceCentre = ()=>{
+    setIsModelCentre(true)
+    setSelectedObject(null)
+  }
+
   const renderNormalBeakerHeldButtons=()=>{
+  
+
+      if(selectedLesson===13 && lessonStep==12 && selectedObject.name === "main-normal-beaker"){
+        return(
+          <>
+            <button onClick={handleModelPlaceCentre}>
+              Place Beaker In Centre
+            </button>
+          
+          </>
+        )
+      }
       //----------------Tutorial Mode-------------////
       if ( (selectedLesson === 8 || selectedLesson === 9) && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
         return (
@@ -3378,8 +3534,42 @@ const renderBuretteHeldButtons = ()=>{
     
 }
 
+const handleClampTestube = ()=>{
+  setIsClampTestube(true)
+}
+
+const handleUnclampTestube = ()=>{
+  setIsClampTestube(false)
+}
+
+
+const renderBoilingTubeHeldButtons = ()=>{
+    if(selectedLesson==13 && selectedObject.name === "boiliing-tube-01"){
+      if(isClampTestube){
+         return(
+        <button onClick={handleUnclampTestube}>
+          UnClamped
+        </button>
+        )       
+      }      
+      if(lessonStep==4 && !isClampTestube){
+        return(
+        <button onClick={handleClampTestube}>
+          Clamp
+        </button>
+        )
+
+      }
+
+
+    }
+}
 
 const renderTestubeHeldButtons = ()=>{
+
+
+
+
     if ( isWeighTestube && isTestTube(selectedObject.name)) {
       return (
         <>
@@ -3399,6 +3589,7 @@ const renderTestubeHeldButtons = ()=>{
         </>
       )
     }
+
 
     if(selectedLesson==10 && (lessonStep==11 ||lessonStep==13 || lessonStep===16 ) && isTestTube(selectedObject.name)){
       return (
@@ -3745,6 +3936,12 @@ const renderHeldSpoonButtons = () => {
 
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
+
+  const measuringCylinderHeldButtons  = renderMeasuringCylinderHeldButtons()
+  if(measuringCylinderHeldButtons) return measuringCylinderHeldButtons
+
+  const boilingTubeHeldbuttons = renderBoilingTubeHeldButtons()
+  if(boilingTubeHeldbuttons) return boilingTubeHeldbuttons
 
   const methylButtons = renderHeldMethylButtons()
   if(methylButtons) return methylButtons

@@ -34,6 +34,7 @@ import SulfamicAcidNaOHTitration03 from "./AllLessons/SulfamicAcidNaOHTitration/
 import TitreValueRecorded from "../Experience/Interactions/TitreValueRecorded/TitreValueRecorded"
 import QuestionCard from "./QuestionCard/QuestionCard"
 import HessCalculationStep25 from "./HessCalculationStep25/HessCalculationStep25"
+import MolarVolumeLesson from "./AllLessons/MolarVolumeLesson/MolarVolumeLesson"
 
 const mainContent = [
   {
@@ -126,7 +127,8 @@ const UI = () => {
     showBalanceArrow,setShowBalanceArrow,showBuretteArrow,setShowBuretteArrow,setShowThermometerArrow,
     showVolumetricArrow,setShowVolumetricArrow,setShowVolumetricFlaskArrow,setShowFunnelArrow,
     setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
-    showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow
+    showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow,
+    setShowBoilingTube01Ref,setShowMeasuringCylinderArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -147,12 +149,25 @@ const UI = () => {
 
   // ------------------------ Lesson 08 -------------
 
+  useEffect(()=>{
+    setShowMeasuringCylinderArrow(
+      (selectedLesson===13 && lessonStep===8)
+    )
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    setShowBoilingTube01Ref(
+      (selectedLesson===13 && lessonStep==3)
+    )
+  },[selectedLesson,lessonStep])
+
   useEffect(() => {
     setShowNormalBeakerArrow(
       (selectedLesson===8 && [3,21].includes(lessonStep)) ||
       (selectedLesson===11 && [3].includes(lessonStep)) ||
       ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep)) ||
-      (selectedLesson===9 && [2,19].includes(lessonStep))  
+      (selectedLesson===9 && [2,19].includes(lessonStep)) ||
+      (selectedLesson===13 && [5].includes(lessonStep))
     )
   }, [selectedLesson, lessonStep])
 
@@ -578,7 +593,14 @@ useEffect(() => {
         )
        }
 
-       {<HessCalculationStep25/>}
+       {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson===13&& (
+          <MolarVolumeLesson/>
+        )
+       }
+
+       {/* {<HessCalculationStep25/>} */}
        {/* <TitreValueRecorded/> */}
 
     </>

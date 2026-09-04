@@ -3,8 +3,13 @@ import {
   useEffect,
 } from "react"
 
-import { InteractionContext } from "../../Contexts/InteractionContext/InteractionContext"
-import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import {
+  InteractionContext,
+} from "../../Contexts/InteractionContext/InteractionContext"
+
+import {
+  MainGuidelineContext,
+} from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 import EnthalpyLessonOverview from "../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview"
 import DialogBox from "../AllDialogBox/DialogBox/DialogBox"
@@ -12,8 +17,21 @@ import HessLiveDataPanel from "../HessLiveDataPanel/HessLiveDataPanel"
 import HessGuidelines from "../HessGuidelines/HessGuidelines"
 import HessStartingTemperature from "../HessStartingTemperature/HessStartingTemperature"
 
-import { enthalpyReactionData } from "../Data/enthalpyReactionData/enthalpyReactionData"
+import {
+  enthalpyReactionData,
+} from "../Data/enthalpyReactionData/enthalpyReactionData"
+
 import QuestionCard from "../QuestionCard/QuestionCard"
+
+import {
+  useResetLesson,
+} from "../../UI/ResetLessonButton/ResetLessonButton.jsx"
+
+import {
+  ModelContext,
+} from "../../Contexts/ModelContext/ModelContext.jsx"
+import HessReactionOneResults from "../HessReactionOneResults/HessReactionOneResults.jsx"
+
 
 const EnthalpyHessReaction02 = () => {
   const {
@@ -24,12 +42,43 @@ const EnthalpyHessReaction02 = () => {
 
     showEnthalyResultTwo,
     setShowEnthalyResultTwo,
-setIsPotassiumTransferred,
-    setSelectedRightHand,setIsWeighTestube,
-    setSelectedLeftHand,setIsPotassiumHydrogenCarbonateInSpoon,setIsBuiretteClamped,
-    setIsPottasiumCarobnateInTestube01,setIsPottasiumCarobnateInSpoon,setIsBalancePlaced,
-    setIsClampInCenter,setShowQuestionCardNo,showQuestionCardNo
-  } = useContext(InteractionContext)
+
+    setIsPotassiumTransferred,
+
+    selectedRightHand,
+    selectedLeftHand,
+
+    setSelectedRightHand,
+    setSelectedLeftHand,
+
+    setIsWeighTestube,
+
+    setIsPotassiumHydrogenCarbonateInSpoon,
+
+    setIsBuiretteClamped,
+
+    setIsPottasiumCarobnateInTestube01,
+
+    setIsPottasiumCarobnateInSpoon,
+
+    setIsBalancePlaced,
+
+    setIsClampInCenter,
+
+    setShowQuestionCardNo,
+    showQuestionCardNo,
+  } = useContext(
+    InteractionContext
+  )
+
+
+  const {
+    buretteOriginalStateRef,
+    mainBuiretteRef,
+  } = useContext(
+    ModelContext
+  )
+
 
   const {
     lessonStep,
@@ -40,26 +89,153 @@ setIsPotassiumTransferred,
     MainGuidelineContext
   )
 
+
   // =====================================================
-  // RESET HANDS WHEN COMPONENT STARTS
+  // CLEAR OLD REACTION STATES
   // =====================================================
 
   useEffect(() => {
     setSelectedRightHand(null)
-    setSelectedLeftHand(null);
-    setIsPotassiumHydrogenCarbonateInSpoon(false);
-    setIsWeighTestube(false);
-    setIsPotassiumTransferred(false);
-    setIsPottasiumCarobnateInTestube01(false);
-    setIsPottasiumCarobnateInSpoon(false);
-    setIsBalancePlaced(false);
-    setIsBuiretteClamped(false);
-    setIsClampInCenter(false)
+
+    setSelectedLeftHand(null)
+
+    setIsPotassiumHydrogenCarbonateInSpoon(
+      false
+    )
+
+    setIsWeighTestube(
+      false
+    )
+
+    setIsPotassiumTransferred(
+      false
+    )
+
+    setIsPottasiumCarobnateInTestube01(
+      false
+    )
+
+    setIsPottasiumCarobnateInSpoon(
+      false
+    )
+
+    setIsBalancePlaced(
+      false
+    )
+
+    setIsBuiretteClamped(
+      false
+    )
+
+    setIsClampInCenter(
+      false
+    )
   }, [])
+
+
+  // =====================================================
+  // RESTORE BURETTE AFTER HANDS ARE CLEARED
+  // =====================================================
+
+  useEffect(() => {
+    if (
+      selectedLeftHand ||
+      selectedRightHand
+    ) {
+      return
+    }
+
+    const burette =
+      mainBuiretteRef.current
+
+    const original =
+      buretteOriginalStateRef.current
+
+    if (
+      !burette ||
+      !original
+    ) {
+      return
+    }
+
+    const frameId =
+      requestAnimationFrame(
+        () => {
+          // ==========================================
+          // RESTORE ORIGINAL PARENT
+          // ==========================================
+
+          if (
+            original.parent &&
+            burette.parent !==
+              original.parent
+          ) {
+            original.parent.add(
+              burette
+            )
+          }
+
+
+          // ==========================================
+          // RESTORE ORIGINAL POSITION
+          // ==========================================
+
+          burette.position.copy(
+            original.position
+          )
+
+
+          // ==========================================
+          // RESTORE ORIGINAL ROTATION
+          // ==========================================
+
+          burette.quaternion.copy(
+            original.quaternion
+          )
+
+
+          // ==========================================
+          // RESTORE ORIGINAL SCALE
+          // ==========================================
+
+          burette.scale.copy(
+            original.scale
+          )
+
+
+          burette.updateMatrix()
+
+          burette.updateMatrixWorld(
+            true
+          )
+
+
+          console.log(
+            "Burette restored to original position:",
+            burette.position
+          )
+        }
+      )
+
+
+    return () => {
+      cancelAnimationFrame(
+        frameId
+      )
+    }
+  }, [
+    selectedLeftHand,
+    selectedRightHand,
+  ])
+
 
   // =====================================================
   // GUIDELINE DATA
   // =====================================================
+
+  const resetLesson =
+    useResetLesson()
+
 
   const guidelineData = [
     {
@@ -83,7 +259,9 @@ setIsPotassiumTransferred,
         "./polystyreneCupInBeaker.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
 
@@ -107,7 +285,9 @@ setIsPotassiumTransferred,
         "./TestubePottasiumAdd.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
 
@@ -132,7 +312,9 @@ setIsPotassiumTransferred,
         "./weighTestube.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
 
@@ -156,7 +338,9 @@ setIsPotassiumTransferred,
         "./BuretteHCLPour.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
 
@@ -181,7 +365,9 @@ setIsPotassiumTransferred,
         "./beakerWithThermometer.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
 
@@ -206,7 +392,9 @@ setIsPotassiumTransferred,
         "./addPotassiumHydrogencarbonateAndStir.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
 
@@ -231,17 +419,28 @@ setIsPotassiumTransferred,
         "./weighEmptyTestube.png",
 
       onButtonContinue: () => {
-        setHessGuidelineNumber(false)
+        setHessGuidelineNumber(
+          false
+        )
       },
     },
   ]
 
-  useEffect(()=>{ 
-    setLessonStep(1)
-  },[])
+
+  // =====================================================
+  // START REACTION 2
+  // =====================================================
+
+  useEffect(() => {
+    setLessonStep(
+      1
+    )
+  }, [])
+
 
   return (
     <>
+
       {/* =====================================================
           LESSON OVERVIEW
       ===================================================== */}
@@ -252,10 +451,13 @@ setIsPotassiumTransferred,
             enthalpyReactionData[1]
           }
           onStartLesson={() => {
-            setLessonStep(2)
+            setLessonStep(
+              2
+            )
           }}
         />
       )}
+
 
       {/* =====================================================
           HESS LIVE DATA PANEL
@@ -263,21 +465,25 @@ setIsPotassiumTransferred,
 
       <HessLiveDataPanel
         reactionNumber={2}
+
         volumeOfSolution={
           lessonStep >= 25
             ? 30
             : null
         }
+
         solutionDensity={
           lessonStep >= 25
             ? 1
             : null
         }
+
         startingTemperature={
           lessonStep >= 30
             ? 22.0
             : null
         }
+
         currentTemperature={
           lessonStep >= 33
             ? 18.5
@@ -285,28 +491,35 @@ setIsPotassiumTransferred,
               ? 22.0
               : null
         }
+
         highestTemperature={
           lessonStep >= 33
             ? 18.5
             : null
         }
+
         massWithPowder={
           lessonStep >= 14
             ? 24.7
             : null
         }
+
         massAfterEmptying={
           lessonStep >= 35.5
             ? 21.72
             : null
         }
+
         selectedLesson={
           selectedLesson
         }
+
         lessonStep={
           lessonStep
         }
+
         autoDelay={3000}
+
         autoShowConditions={[
           {
             selectedLesson:
@@ -314,24 +527,28 @@ setIsPotassiumTransferred,
 
             lessonStep: 14,
           },
+
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep: 25,
           },
+
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep: 30,
           },
+
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep: 33,
           },
+
           {
             selectedLesson:
               selectedLesson,
@@ -341,11 +558,10 @@ setIsPotassiumTransferred,
         ]}
       />
 
+
       {/* =====================================================
           HESS GUIDELINES
       ===================================================== */}
-
-      {/* Guideline 1 */}
 
       {lessonStep >= 2 &&
         lessonStep <= 5 && (
@@ -356,7 +572,6 @@ setIsPotassiumTransferred,
           />
         )}
 
-      {/* Guideline 2 */}
 
       {lessonStep >= 6 &&
         lessonStep <= 11 && (
@@ -367,7 +582,6 @@ setIsPotassiumTransferred,
           />
         )}
 
-      {/* Guideline 3 */}
 
       {lessonStep >= 12 &&
         lessonStep <= 15 && (
@@ -378,7 +592,6 @@ setIsPotassiumTransferred,
           />
         )}
 
-      {/* Guideline 4 */}
 
       {lessonStep >= 16 &&
         lessonStep <= 25 && (
@@ -389,7 +602,6 @@ setIsPotassiumTransferred,
           />
         )}
 
-      {/* Guideline 5 */}
 
       {lessonStep >= 26 &&
         lessonStep <= 29 && (
@@ -400,7 +612,6 @@ setIsPotassiumTransferred,
           />
         )}
 
-      {/* Guideline 6 */}
 
       {lessonStep >= 30 &&
         lessonStep <= 33 && (
@@ -411,7 +622,6 @@ setIsPotassiumTransferred,
           />
         )}
 
-      {/* Guideline 7 */}
 
       {lessonStep >= 34 &&
         lessonStep <= 36 && (
@@ -421,6 +631,7 @@ setIsPotassiumTransferred,
             }
           />
         )}
+
 
       {/* =====================================================
           LESSON STEPS
@@ -434,6 +645,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 3 && (
         <DialogBox
           text={
@@ -441,6 +653,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 4 && (
         <DialogBox
@@ -450,6 +663,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 5 && (
         <DialogBox
           text={
@@ -457,6 +671,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 6 && (
         <DialogBox
@@ -466,6 +681,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 7 && (
         <DialogBox
           text={
@@ -473,6 +689,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 8 && (
         <DialogBox
@@ -482,6 +699,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 9 && (
         <DialogBox
           text={
@@ -489,6 +707,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 10 && (
         <DialogBox
@@ -498,6 +717,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 11 && (
         <DialogBox
           text={
@@ -505,6 +725,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 12 && (
         <DialogBox
@@ -514,6 +735,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 13 && (
         <DialogBox
           text={
@@ -521,6 +743,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 14 && (
         <DialogBox
@@ -530,6 +753,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 15 && (
         <DialogBox
           text={
@@ -537,6 +761,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 16 && (
         <DialogBox
@@ -546,6 +771,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 17 && (
         <DialogBox
           text={
@@ -553,6 +779,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 18 && (
         <DialogBox
@@ -562,6 +789,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 19 && (
         <DialogBox
           text={
@@ -569,6 +797,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 20 && (
         <DialogBox
@@ -578,6 +807,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 21 && (
         <DialogBox
           text={
@@ -585,6 +815,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 22 && (
         <DialogBox
@@ -594,6 +825,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 23 && (
         <DialogBox
           text={
@@ -601,6 +833,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 24 && (
         <DialogBox
@@ -610,6 +843,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 25 && (
         <DialogBox
           text={
@@ -617,6 +851,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 26 && (
         <DialogBox
@@ -626,6 +861,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 27 && (
         <DialogBox
           text={
@@ -634,6 +870,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 28 && (
         <DialogBox
           text={
@@ -641,6 +878,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 29 && (
         <>
@@ -654,6 +892,7 @@ setIsPotassiumTransferred,
         </>
       )}
 
+
       {lessonStep === 30 && (
         <DialogBox
           text={
@@ -661,6 +900,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 31 && (
         <DialogBox
@@ -670,6 +910,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 32 && (
         <DialogBox
           text={
@@ -677,6 +918,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 33 && (
         <DialogBox
@@ -686,6 +928,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 34 && (
         <DialogBox
           text={
@@ -693,6 +936,7 @@ setIsPotassiumTransferred,
           }
         />
       )}
+
 
       {lessonStep === 35 && (
         <DialogBox
@@ -702,6 +946,7 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 35.5 && (
         <DialogBox
           text={
@@ -710,127 +955,181 @@ setIsPotassiumTransferred,
         />
       )}
 
+
       {lessonStep === 36 && (
         <DialogBox
           text={
             "Reaction 2 is complete. Review the recorded temperature and mass values."
           }
+
+          button2Text="End Lesson"
+
           onbtnClick={() => {
             setShowEnthalyResultTwo(
               true
             )
           }}
-          onbtn2Click={()=>{
-            setShowQuestionCardNo(
-              9.1
-            )
+
+          onbtn2Click={() => {
+            resetLesson()
           }}
 
+          
+        />
+      )}
+        {
+          showEnthalyResultTwo && <HessReactionOneResults  onQuestions={() => {
+           setShowQuestionCardNo(9.1);setShowEnthalyResultTwo(false)
+          }}/>
+        }
+
+      {/* =====================================================
+          QUESTIONS
+      ===================================================== */}
+
+      {showQuestionCardNo === 9.1 && (
+        <QuestionCard
+          questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
+
+          questionNumber={1}
+
+          question="What happened to the temperature when potassium carbonate was added to hydrochloric acid?"
+
+          answers={[
+            {
+              id: "A",
+              text: "Increased",
+            },
+            {
+              id: "B",
+              text: "Decreased",
+            },
+            {
+              id: "C",
+              text: "Stayed constant",
+            },
+            {
+              id: "D",
+              text: "Increased then immediately became 0°C",
+            },
+          ]}
+
+          correctAnswer="A"
+
+          hintText="Choose the most appropriate answer."
+
+          correctMessage="Correct! The temperature increased."
+
+          incorrectMessage="Incorrect. The temperature increased during Reaction 1."
+
+          submitButtonText="Submit Answer"
+
+          continueButtonText="Continue"
+
+          onContinue={() => {
+            setShowQuestionCardNo(
+              9.2
+            )
+          }}
         />
       )}
 
-      {showQuestionCardNo === 9.1 && (
-  <QuestionCard
-    questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
-    questionNumber={1}
-    question="What happened to the temperature when potassium carbonate was added to hydrochloric acid?"
-    answers={[
-      {
-        id: "A",
-        text: "Increased",
-      },
-      {
-        id: "B",
-        text: "Decreased",
-      },
-      {
-        id: "C",
-        text: "Stayed constant",
-      },
-      {
-        id: "D",
-        text: "Increased then immediately became 0°C",
-      },
-    ]}
-    correctAnswer="A"
-    hintText="Choose the most appropriate answer."
-    correctMessage="Correct! The temperature increased."
-    incorrectMessage="Incorrect. The temperature increased during Reaction 1."
-    submitButtonText="Submit Answer"
-    continueButtonText="Continue"
-    onContinue={() => {
-      setShowQuestionCardNo(9.2)
-    }}
-  />
-)}
-{showQuestionCardNo === 9.2 && (
-  <QuestionCard
-    questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
-    questionNumber={5}
-    question="The temperature decreases during Reaction 2. What does this mean?"
-    answers={[
-      {
-        id: "A",
-        text: "Heat is released",
-      },
-      {
-        id: "B",
-        text: "Heat is absorbed",
-      },
-      {
-        id: "C",
-        text: "No energy is transferred",
-      },
-      {
-        id: "D",
-        text: "The thermometer is incorrect",
-      },
-    ]}
-    correctAnswer="B"
-    hintText="Think about what a decrease in temperature means."
-    correctMessage="Correct! Heat is absorbed during Reaction 2."
-    incorrectMessage="Incorrect. A decrease in temperature means heat is absorbed from the surroundings."
-    submitButtonText="Submit Answer"
-    continueButtonText="Continue"
-    onContinue={() => {
-      setShowQuestionCardNo(9.3)
-    }}
-  />
-)}
-{showQuestionCardNo === 9.3 && (
-  <QuestionCard
-    questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
-    questionNumber={6}
-    question="What volume of hydrochloric acid is used for each reaction?"
-    answers={[
-      {
-        id: "A",
-        text: "10 cm³",
-      },
-      {
-        id: "B",
-        text: "20 cm³",
-      },
-      {
-        id: "C",
-        text: "25 cm³",
-      },
-      {
-        id: "D",
-        text: "30 cm³",
-      },
-    ]}
-    correctAnswer="D"
-    hintText="Recall the volume of hydrochloric acid measured into the polystyrene cup."
-    correctMessage="Correct! 30 cm³ of hydrochloric acid is used for each reaction."
-    incorrectMessage="Incorrect. The correct volume is 30 cm³."
-    submitButtonText="Submit Answer"
-    continueButtonText="Continue"
-    onContinue={() => {
-      setShowQuestionCardNo(null)
-    }}
-  />
-)}
+
+      {showQuestionCardNo === 9.2 && (
+        <QuestionCard
+          questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
+
+          questionNumber={5}
+
+          question="The temperature decreases during Reaction 2. What does this mean?"
+
+          answers={[
+            {
+              id: "A",
+              text: "Heat is released",
+            },
+            {
+              id: "B",
+              text: "Heat is absorbed",
+            },
+            {
+              id: "C",
+              text: "No energy is transferred",
+            },
+            {
+              id: "D",
+              text: "The thermometer is incorrect",
+            },
+          ]}
+
+          correctAnswer="B"
+
+          hintText="Think about what a decrease in temperature means."
+
+          correctMessage="Correct! Heat is absorbed during Reaction 2."
+
+          incorrectMessage="Incorrect. A decrease in temperature means heat is absorbed from the surroundings."
+
+          submitButtonText="Submit Answer"
+
+          continueButtonText="Continue"
+
+          onContinue={() => {
+            setShowQuestionCardNo(
+              9.3
+            )
+          }}
+        />
+      )}
+
+
+      {showQuestionCardNo === 9.3 && (
+        <QuestionCard
+          questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
+
+          questionNumber={6}
+
+          question="What volume of hydrochloric acid is used for each reaction?"
+
+          answers={[
+            {
+              id: "A",
+              text: "10 cm³",
+            },
+            {
+              id: "B",
+              text: "20 cm³",
+            },
+            {
+              id: "C",
+              text: "25 cm³",
+            },
+            {
+              id: "D",
+              text: "30 cm³",
+            },
+          ]}
+
+          correctAnswer="D"
+
+          hintText="Recall the volume of hydrochloric acid measured into the polystyrene cup."
+
+          correctMessage="Correct! 30 cm³ of hydrochloric acid is used for each reaction."
+
+          incorrectMessage="Incorrect. The correct volume is 30 cm³."
+
+          submitButtonText="Submit Answer"
+
+          continueButtonText="Continue"
+
+          onContinue={() => {
+            setShowQuestionCardNo(
+              null
+            )
+          }}
+        />
+      )}
+
     </>
   )
 }

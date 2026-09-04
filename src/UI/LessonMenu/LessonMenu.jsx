@@ -91,14 +91,14 @@ const LessonMenu = () => {
       divider: "purple",
     },
 
-    {
-      id: 9,
-      name: "Enthalpy Change Reaction 2",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 8,
-      divider: "purple",
-    },
+    // {
+    //   id: 9,
+    //   name: "Enthalpy Change Reaction 2",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+    //   number: 8,
+    //   divider: "purple",
+    // },
 
     // {
     //   id: 10,
@@ -142,14 +142,23 @@ const LessonMenu = () => {
     //   divider: "purple",
     // },
 
-    // {
-    //   id: 12.2,
-    //   name: "Sulfamic Acid–NaOH Titration",
-    //   imgPath: "./AlkaliTest.png",
-    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-    //   number: 12.2,
-    //   divider: "purple",
-    // },
+    {
+      id: 12.2,
+      name: "Sulfamic Acid–NaOH Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 12.2,
+      divider: "purple",
+    },
+
+{
+  id: 13,
+  name: "Molar Volume of a Gas",
+  imgPath: "./AlkaliTest.png",
+  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+  number: 13,
+  divider: "purple",
+},
   ]
 
   const lessonsPerPage = 3

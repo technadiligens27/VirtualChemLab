@@ -404,6 +404,8 @@ const FillUpBeaker = ({
         amountRef.current = 1
       }else if(selectedLesson === 12 && selectedAmount === 100){
         amountRef.current = 0.4
+      }else if(selectedLesson === 13 && selectedAmount === 100){
+        amountRef.current = 0.5
       } else {
         amountRef.current =
         selectedAmount /100
@@ -456,18 +458,42 @@ const FillUpBeaker = ({
     // GRADUATED CYLINDER
     // ========================================
 
-    else if (
-      lowerBeakerName.includes(
-        "graduated-cylinder"
-      )
-    ) {
-      amountRef.current =
-        selectedAmount * 1.1
+ // ========================================
+// 100 cm³ GRADUATED CYLINDER
+// ========================================
 
-      speedRef.current = 20
-    }
+else if (
+  lowerBeakerName.includes(
+    "main-graduated-cylinder-100"
+  )
+) {
+  if (
+    selectedLesson === 13 &&
+    selectedAmount === 100
+  ) {
+    amountRef.current = 0.92
+    speedRef.current = 1
+  } else {
+    amountRef.current =
+      0.6
 
-    // ========================================
+    speedRef.current = 1
+  }
+}
+
+// ========================================
+// NORMAL GRADUATED CYLINDER
+// ========================================
+
+else if (
+  lowerBeakerName === "main-graduated-cylinder" 
+) {
+  amountRef.current =
+    selectedAmount * 1.1
+
+  speedRef.current = 20
+}
+          // ========================================
     // BURETTE
     // ========================================
 
@@ -742,6 +768,12 @@ const FillUpBeaker = ({
       setLessonStep(66)
     }  
 
+    if(selectedLesson==13 && lessonStep ===7){
+      setLessonStep(8)
+    }
+    if(selectedLesson==13 && lessonStep ===10){
+      setLessonStep(11)
+    }
   }
 )
 

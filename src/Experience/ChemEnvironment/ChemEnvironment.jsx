@@ -23,7 +23,8 @@ const ChemEnvironment = () => {
          kettleRef,arrowKettleRef,pipetteRef,iodobutaneBottleRef,bromobutaneBottleRef,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,
          volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef,phenopthalineBottleRef,
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
-         arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef
+         arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
+         boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref
   } = useContext(ModelContext);
 
 
@@ -237,6 +238,8 @@ const hideVerticalObjects=(root)=>{
     volumetricPipetteRef.current = scene.getObjectByName('volumetric-pipette');
     volumetricBung.current = scene.getObjectByName('volumetric-bung');
     volumetricBung.current.visible = false;
+    boilingTube01Ref.current = scene.getObjectByName("boiliing-tube-01");
+    graduatedCylinder100Ref.current = scene.getObjectByName("main-graduated-cylinder-100")
     
 
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
@@ -275,7 +278,33 @@ const hideVerticalObjects=(root)=>{
   digitalBalanceRef.current = scene.getObjectByName('mainMassBalance');
   balancePositionRef.current = scene.getObjectByName('balance-position')
   trayPointRef.current = scene.getObjectByName('tray-point-empty');
+
   mainBuiretteRef.current = scene.getObjectByName('main-buirette');
+
+if (
+  mainBuiretteRef.current &&
+  !buretteOriginalStateRef.current
+) {
+  buretteOriginalStateRef.current = {
+    position:
+      mainBuiretteRef.current.position.clone(),
+
+    rotation:
+      mainBuiretteRef.current.rotation.clone(),
+
+    quaternion:
+      mainBuiretteRef.current.quaternion.clone(),
+
+    scale:
+      mainBuiretteRef.current.scale.clone(),
+
+    parent:
+      mainBuiretteRef.current.parent,
+  }
+}
+
+
+
   buretteClampRef.current = scene.getObjectByName('mainBuretteClamp');
   mainThermometerRef.current = scene.getObjectByName('mainThermometer');
   thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid');
@@ -386,7 +415,13 @@ const hideVerticalObjects=(root)=>{
       arrowMethylBottleRef.current.visible = false
 
       arrowWaterBottleRef.current = scene.getObjectByName("water-bottle-arrow")
-      arrowWaterBottleRef.current.visible = false
+      arrowWaterBottleRef.current.visible = false;
+
+      arrowBoilingTube01Ref.current = scene.getObjectByName("boiling-tube-arrow")
+      arrowBoilingTube01Ref.current.visible = false
+
+      arrowMeasuringCylnder.current = scene.getObjectByName("main-graduated-cylinder-arrow")
+      arrowMeasuringCylnder.current.visible = false 
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)
@@ -414,7 +449,9 @@ useEffect(() => {
     digitalBalanceRef,
     mainBuiretteRef,
     thermometerLiquidRef,
-    mainPolystereneLid
+    mainPolystereneLid,
+    mainThermometerRef,
+    graduatedCylinder100Ref
   ]
 
   labModels.forEach((modelRef) => {
@@ -429,7 +466,6 @@ useEffect(() => {
 
   return (
     <>
-
       <primitive
         object={scene}
         scale={0.5}

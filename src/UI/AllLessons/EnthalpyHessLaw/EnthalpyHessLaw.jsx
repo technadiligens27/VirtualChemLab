@@ -13,7 +13,7 @@ import HessLiveDataPanel from "../../HessLiveDataPanel/HessLiveDataPanel";
 import { enthalpyReactionData } from "../../Data/enthalpyReactionData/enthalpyReactionData"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import QuestionCard from "../../QuestionCard/QuestionCard";
-
+import {resetModel} from "../../../Experience/resetModels/resetModels"
 
 const EnthalpyHessLaw = () =>{
 
@@ -21,9 +21,39 @@ const EnthalpyHessLaw = () =>{
     showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo,
   showQuestionCardNo,setShowQuestionCardNo} = useContext(InteractionContext)
     
-  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
+  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSelectedLesson} = useContext(MainGuidelineContext);
 
-  const {mainDropperRef} = useContext(ModelContext)
+const {
+  normalBeakerRef,
+  conicalBeakerRef,
+  roundBeakerRef,
+  graduatedBeakerRef,
+
+  spoonRef,
+  saltRef,
+
+  redLitmusRef,
+  blueLitmusRef,
+
+  testube01Ref,
+  testube02Ref,
+  testube03Ref,
+
+  filterPaperRef,
+  filterFoldedPaperRef,
+
+  funnelRef,
+
+  mainDropperRef,
+
+  digitalBalanceRef,
+
+  mainPolystereneRef,
+
+  mainBuiretteRef,
+
+  mainThermometerRef,
+} = useContext(ModelContext)
 
   const Enthalpy = [
   {
@@ -162,84 +192,45 @@ const EnthalpyHessLaw = () =>{
       "43",  
   },
 ]
+   const labModels = [
+      normalBeakerRef,
 
-  const lessonDetailsData = [
-  {
-    id: 5,
+      conicalBeakerRef,
 
-    headerTitle: "Lesson Overview",
+      roundBeakerRef,
 
-    lessonTitle: "Enthalpy Change Using Hess’s Law",
+      graduatedBeakerRef,
 
-    description:
-      "In this lesson, You will conduct two reactions and measure their temperature changes. The first reaction should produce a temperature rise, while the second should produce a temperature fall.",
+      spoonRef,
 
-    lessonImages: [
-      {
-        id: 1,
-        imgPath: "./BeakerCopperSulphate.png",
-        label: "Copper Sulfate",
-        alt: "Beaker containing blue copper sulfate solution",
-      },
-      {
-        id: 2,
-        imgPath: "./ConicalSodiumGydroxide.png",
-        label: "Sodium Hydroxide",
-        alt: "Conical flask containing sodium hydroxide solution",
-      },
-      {
-        id: 3,
-        imgPath: "./LightBluePrexipitate.png",
-        label: "Light Blue Precipitate",
-        alt: "Light blue copper hydroxide precipitate inside a beaker",
-      },
-    ],
+      saltRef,
 
-    hint: {
-      imgPath: "./light-bulb.png",
-      alt: "Light bulb",
-      text:
-        "The light blue solid forms because copper hydroxide is insoluble in water.",
-    },
+      redLitmusRef,
 
-    objectives: {
-      title: "Objectives",
-      imgPath: "./objective.png",
-      alt: "Objectives icon",
-      items: [
-        "Understand how a precipitate forms",
-        "Observe the reaction between two solutions",
-        "Identify the light blue copper hydroxide precipitate"
-      ],
-    },
+      blueLitmusRef,
 
-    materials: {
-      title: "Materials",
-      imgPath: "./CopperSulfateLesson.png",
-      alt: "Copper sulfate precipitation materials",
-      items: [
-        "Normal beaker",
-        "Conical flask",
-        "Copper sulfate solution (CuSO₄)",
-        "Sodium hydroxide solution (NaOH)",
-      ],
-    },
+      testube01Ref,
 
-    procedure: {
-      title: "Procedure",
-      imgPath: "./procedure.png",
-      alt: "Procedure icon",
-      items: [
-        "Add 50 mL of copper sulfate to beaker",
-        "Add 50 mL of sodium hydroxide to the conical flask",
-        "Pour the sodium hydroxide into the copper sulfate",
-        "Observe the light blue precipitate forming",
-      ],
-    },
+      testube02Ref,
 
-    continueButtonText: "Continue",
-  },
-]
+      testube03Ref,
+
+      filterPaperRef,
+
+      filterFoldedPaperRef,
+
+      funnelRef,
+
+      mainDropperRef,
+
+      digitalBalanceRef,
+
+      mainPolystereneRef,
+
+      mainBuiretteRef,
+      mainThermometerRef
+    ]
+ 
 
 //-----------------------
 
@@ -387,6 +378,8 @@ const EnthalpyHessLaw = () =>{
       mainDropperRef.current.visible = false
     }
   },[mainDropperRef])
+
+
 
     return(
         <>
@@ -839,9 +832,18 @@ const EnthalpyHessLaw = () =>{
             setShowEnthalyResultOne(true)
             }}
 
-            onbtn2Click={() => {
-            setLessonStep(45)
-            }}            
+            
+             onbtn2Click={() => {
+                    labModels.forEach((modelRef) => {
+                      if (modelRef?.current) {
+                        resetModel(modelRef.current)
+                      }
+                    })
+
+                    setSelectedLesson(9)
+                    setLessonStep(1)
+                  }}
+                        
            />
       }     
 
@@ -849,7 +851,7 @@ const EnthalpyHessLaw = () =>{
          lessonStep===45 && <EnthalpyLessonOverview onStartLesson={() => {
               setLessonStep(2)
          }}/>
-        } 
+      } 
 
         </>
     )

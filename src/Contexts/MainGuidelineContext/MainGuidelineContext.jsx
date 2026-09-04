@@ -55,7 +55,11 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [showBuretteClampArrow,setShowBuretteClampArrow] = useState(false);
 
-  const [showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow] = useState(false)
+  const [showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow] = useState(false);
+  const [showBoilingTube01Ref,setShowBoilingTube01Ref] = useState(false);
+
+  const [showMeasuringCylinderArrow,setShowMeasuringCylinderArrow] = useState(false)
+
 
 
 
@@ -201,7 +205,13 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowBuretteClampArrow,
 
         showPotassiumHydrogenCarbonateArrow,
-        setShowPotassiumHydrogenCarbonateArrow
+        setShowPotassiumHydrogenCarbonateArrow,
+
+        showBoilingTube01Ref,
+        setShowBoilingTube01Ref,
+
+        showMeasuringCylinderArrow,
+        setShowMeasuringCylinderArrow
 
 
       }}

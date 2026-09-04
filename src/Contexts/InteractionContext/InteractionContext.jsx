@@ -153,6 +153,11 @@ export const InteractionProvider = ({ children }) => {
   const [showEnthalyResultTwo,setShowEnthalyResultTwo] = useState(false)
   const [showQuestionCardNo,setShowQuestionCardNo] = useState(null)
 
+  const [isClampTestube,setIsClampTestube] = useState(false);
+
+  const [isInvertCylinder,setIsInvertCylinder] = useState(false);
+  const [isModelCentre,setIsModelCentre] = useState(false)
+
 
 
   const resetInteractions = () => {
@@ -272,7 +277,10 @@ export const InteractionProvider = ({ children }) => {
   setIsFillToMark(false);
   setIsPouringModeFunnelMode(false);
   setShowSulfamicAcidNaOHTitration(false);
-  setShowQuestionCardNo(null)
+  setShowQuestionCardNo(null);
+  setIsClampTestube(false);
+  setIsInvertCylinder(false);
+  setIsModelCentre(false)
 }
 
   return (
@@ -360,8 +368,10 @@ export const InteractionProvider = ({ children }) => {
         isPouringModeFunnelMode,setIsPouringModeFunnelMode,
         showSulfamicAcidNaOHTitration,setShowSulfamicAcidNaOHTitration,
         showEnthalyResultTwo,setShowEnthalyResultTwo,
-        showQuestionCardNo,setShowQuestionCardNo
-           
+        showQuestionCardNo,setShowQuestionCardNo,
+        isClampTestube,setIsClampTestube,
+        isInvertCylinder,setIsInvertCylinder,
+        isModelCentre,setIsModelCentre    
         
         
       }}

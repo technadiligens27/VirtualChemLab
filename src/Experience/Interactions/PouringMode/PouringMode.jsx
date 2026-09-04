@@ -661,7 +661,7 @@ const PouringMode = ({
         localPosition.add(
           new THREE.Vector3(
             -2.2, // X offset of water bottle
-            -2,  // Y offset of water bottle
+            -0,  // Y offset of water bottle
             -0.5
           )
         )

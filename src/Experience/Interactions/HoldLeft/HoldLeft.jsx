@@ -57,6 +57,18 @@ const HoldLeft = ({ modeldata }) => {
   // },[lessonStep])
 
   useEffect(()=>{
+    if(lessonStep===8 && selectedLesson===13){
+      setLessonStep(9)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===3 && selectedLesson===13){
+      setLessonStep(4)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
     if(lessonStep===3 && selectedLesson===8){
       setLessonStep(4)
     }
@@ -367,6 +379,10 @@ const HoldLeft = ({ modeldata }) => {
       object.scale.set(1.3, 1.3, 1.3)
       object.rotation.x = Math.PI / 3
       object.rotation.z = 2
+    }else if (object.name === "main-graduated-cylinder-100") {
+      object.scale.set(0.8, 1.2, 0.8)
+      object.rotation.y = Math.PI / 3
+      // object.rotation.z = -2
     } else if (
       object.name === "main-normal-beaker"
     ) {

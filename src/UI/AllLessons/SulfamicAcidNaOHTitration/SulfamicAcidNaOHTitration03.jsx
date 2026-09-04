@@ -7,16 +7,20 @@ import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx"
 import {guidelineData} from "../../Data/SulfamicNaOHTitrationData/SulfamicNaOHTitrationData.jsx"
 import SulfamicTitrationLiveDataPanel from "./SulfamicTitrationLiveDataPanel/SulfamicTitrationLiveDataPanel.jsx"
 import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecorded/TitreValueRecorded.jsx"
-import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx"
+import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
+import useResetLesson from "../../ResetLessonButton/ResetLessonButton.jsx"
+import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
 
 
 const SulfamicAcidNaOHTitration03 = () => {
+
+  const resetLesson = useResetLesson();
 
   const {
     setSelectedRightHand,
     setSelectedLeftHand,
     selectedLeftHand,
-    selectedRightHand
+    selectedRightHand,setShowQuestionCardNo,showQuestionCardNo
   } = useContext(InteractionContext)
 
   const {
@@ -879,10 +883,153 @@ const SulfamicAcidNaOHTitration03 = () => {
               Titration complete — <strong>lesson finished!</strong>
             </>
           }
+           button1Text="Questions"
+
+                  button2Text="End Lesson"
+
+                  onbtnClick={() => {
+                    setShowQuestionCardNo(12.1)
+                  }}
+
+                  onbtn2Click={() => {
+                    resetLesson()
+                  }}
         />
       )}
 
+      {showQuestionCardNo === 12.1 && (
+  <QuestionCard
+    questionSetTitle="Question Set — Sulfamic Acid Standard Solution"
 
+    questionNumber={1}
+
+    question="Why is the empty test tube weighed before adding sulfamic acid?"
+
+    answers={[
+      {
+        id: "A",
+        text: "To determine the mass of sulfamic acid by difference",
+      },
+      {
+        id: "B",
+        text: "To measure the volume of sulfamic acid",
+      },
+      {
+        id: "C",
+        text: "To find the concentration of sodium hydroxide",
+      },
+      {
+        id: "D",
+        text: "To calibrate the balance",
+      },
+    ]}
+
+    correctAnswer="A"
+
+    hintText="Think about why the test tube is weighed both before and after the sulfamic acid is added."
+
+    correctMessage="Correct! The empty test tube mass allows the mass of sulfamic acid to be determined by difference."
+
+    incorrectMessage="Incorrect. The empty test tube is weighed so the mass of sulfamic acid can be determined by difference."
+
+    submitButtonText="Submit Answer"
+
+    continueButtonText="Continue"
+
+    onContinue={() => {
+      setShowQuestionCardNo(12.2)
+    }}
+  />
+)}
+{showQuestionCardNo === 12.2 && (
+  <QuestionCard
+    questionSetTitle="Question Set — Sulfamic Acid Standard Solution"
+
+    questionNumber={2}
+
+    question="Approximately how much sulfamic acid should be added to the test tube?"
+
+    answers={[
+      {
+        id: "A",
+        text: "0.5 g",
+      },
+      {
+        id: "B",
+        text: "1.0 g",
+      },
+      {
+        id: "C",
+        text: "2.5 g",
+      },
+      {
+        id: "D",
+        text: "5.0 g",
+      },
+    ]}
+
+    correctAnswer="C"
+
+    hintText="Think about the target mass of sulfamic acid used to prepare the standard solution."
+
+    correctMessage="Correct! Approximately 2.5 g of sulfamic acid should be added to the test tube."
+
+    incorrectMessage="Incorrect. Approximately 2.5 g of sulfamic acid should be added to the test tube."
+
+    submitButtonText="Submit Answer"
+
+    continueButtonText="Continue"
+
+    onContinue={() => {
+      setShowQuestionCardNo(12.3)
+    }}
+  />
+)}
+
+{showQuestionCardNo === 12.3 && (
+  <QuestionCard
+    questionSetTitle="Question Set — Sulfamic Acid Standard Solution"
+
+    questionNumber={3}
+
+    question="Why are the washings from the beaker transferred into the volumetric flask?"
+
+    answers={[
+      {
+        id: "A",
+        text: "To cool the solution",
+      },
+      {
+        id: "B",
+        text: "To ensure all the sulfamic acid is transferred",
+      },
+      {
+        id: "C",
+        text: "To change the indicator colour",
+      },
+      {
+        id: "D",
+        text: "To increase the reaction rate",
+      },
+    ]}
+
+    correctAnswer="B"
+
+    hintText="Think about why the beaker is rinsed after transferring the sulfamic acid solution."
+
+    correctMessage="Correct! The washings are transferred to ensure all the sulfamic acid is transferred into the volumetric flask."
+
+    incorrectMessage="Incorrect. The washings are transferred so that all the sulfamic acid is transferred into the volumetric flask."
+
+    submitButtonText="Submit Answer"
+
+    continueButtonText="Continue"
+
+    onContinue={() => {
+      setShowQuestionCardNo(12.4)
+    }}
+  />
+)}
       {[12, 12.1, 12.2].includes(selectedLesson) && (
         <SulfamicTitrationLiveDataPanel
           emptyTestTubeMass={lessonStep >=6 ? 21.72 : null}

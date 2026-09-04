@@ -67,15 +67,20 @@ const FillBeakerBox = () => {
 
   const getAmounts = () => {
 
-    if(selectedLesson ===11 || selectedLesson===12){
+    if(selectedLesson ===11 || selectedLesson===12 || selectedLesson===13){
       if (fillBeakerModel === "main-normal-beaker") {
         return [10, 25, 50, 100, 250]
       }   
     }
-
+    if (fillBeakerModel === "main-graduated-cylinder-100") {
+      return [10,30,50,80,100]
+    } 
     if (fillBeakerModel === "main-graduated-cylinder" || "main-testube-04" || "main-testube-05") {
       return [5, 10, 20,  25, 30, 50]
-    } 
+    }
+    
+
+
 
     return [50, 100, 200, 250]
   }
@@ -108,6 +113,16 @@ const FillBeakerBox = () => {
       return true
     }
 
+    if(selectedLesson===13){
+      if(lessonStep===7){
+        if(!checkFill("Water (H2O)",100)) return
+      }
+
+      if(lessonStep===11){
+        if(!checkFill("Water (H2O)",100)) return
+      }      
+    }
+
     if(selectedLesson===10){
       if(lessonStep===20.5 || lessonStep===28 || lessonStep===35){
         if(!checkFill("Ethanol (C2H5OH)",5)) return
@@ -116,6 +131,8 @@ const FillBeakerBox = () => {
       if(lessonStep===91 || lessonStep===98 || lessonStep===94){
         if(!checkFill('Silver Nitrate (AgNO3)',5)) return
       }
+
+      
     }
 
     const fillData = {
@@ -135,13 +152,18 @@ const FillBeakerBox = () => {
   }
 
 
+  useEffect(()=>{
+    if(lessonStep===6 && selectedLesson ===13){
+      setLessonStep(7)
+    }
+  },[lessonStep,selectedLesson]) 
 
-  // useEffect(()=>{
-  //   if(selectedLesson===2 && lessonStep ===4 ){
-  //     console.log('lessonStep:',lessonStep)
-  //     setLessonStep(5)
-  //   }
-  // },[selectedLesson,lessonStep])
+   useEffect(()=>{
+    if(selectedLesson ===13 && lessonStep ===9){
+      setLessonStep(10)
+    }
+  },[selectedLesson,lessonStep])
+ 
 
   useEffect(()=>{
     if(selectedLesson ===9 && lessonStep ===17){

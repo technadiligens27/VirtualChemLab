@@ -11,7 +11,8 @@ const AllArrows=()=>{
         arrowSpoonRef,arrowSaltContainerRef,mainDropperRef,arrowDropperRef, arrowTestube01Ref,
         arrowPolystereneRef,arrowPottasiumCarbonateRef,arrowBalanceRef,arrowBuretteClampRef,
         arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
-        ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef
+        ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef,
+        arrowBoilingTube01Ref,arrowMeasuringCylnder
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -22,7 +23,9 @@ const AllArrows=()=>{
         setShowPottasiumCarbonateArrow,showPottasiumCarbonateArrow,showBalanceArrow,showBuretteArrow,
         showThermometerArrow,setShowThermometerArrow,showVolumetricArrow,showVolumetricFlaskArrow,
         showFunnelArrow, setShowFunnelArrow,showNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,
-        setShowNaOHBBottleArrowRef,showMethyArrow,showBuretteClampArrow,showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow
+        setShowNaOHBBottleArrowRef,showMethyArrow,showBuretteClampArrow,showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow,
+        showBoilingTube01Ref,showMeasuringCylinderArrow,
+        setShowMeasuringCylinderArrow
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -59,6 +62,8 @@ const AllArrows=()=>{
         {showMethyArrow && <ArrowGuides arrowRef={arrowMethylBottleRef} speed={2.5} height={0.5} showStatus={showMethyArrow}/>}
         {showBuretteClampArrow && <ArrowGuides arrowRef={arrowBuretteClampRef} speed={2.5} height={0.5} showStatus={showBuretteClampArrow}/>}
         {showPotassiumHydrogenCarbonateArrow && <ArrowGuides arrowRef={arrowPotassiumHydrogenCarbonateRef} speed={2.5} height={0.5} showStatus={showPotassiumHydrogenCarbonateArrow}/>}
+        {showBoilingTube01Ref && <ArrowGuides arrowRef={arrowBoilingTube01Ref} speed={2.5} height={0.5} showStatus={showBoilingTube01Ref}/>}
+        {showMeasuringCylinderArrow && <ArrowGuides arrowRef={arrowMeasuringCylnder} speed={2.5} height={0.5} showStatus={showMeasuringCylinderArrow}/>}
 
         </>
     )

@@ -11,12 +11,13 @@ import {hclTitrationResultsData} from '../../Data/HCLTitrationData/HCLTitrationD
 import HCLTitrationLiveDataPanel from "../../HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel.jsx"
 import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecorded/TitreValueRecorded.jsx"
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx"
+import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
 
 const HCLTitration2 = () => {
   const {
     setIsVolumetricPipetteFilled,
     setIsBuiretteClamped,
-    setSelectedRightHand,
+    setSelectedRightHand,showQuestionCardNo,setShowQuestionCardNo
   } = useContext(InteractionContext)
 
   const {
@@ -986,12 +987,23 @@ const HCLTitration2 = () => {
 
       {lessonStep === 71 && (
         <DialogBox
-          text={
-            <>
-              <strong>71</strong>
-            </>
-          }
-        />
+                  text={
+                    "Reaction  is complete. Review the Results."
+                  }
+                  button1Text="Questions"
+
+                  button2Text="End Lesson"
+
+                  onbtnClick={() => {
+                    setShowQuestionCardNo(11.1)
+                  }}
+
+                  onbtn2Click={() => {
+                    resetLesson()
+                  }}
+
+                  
+                />
       )}
 
 
@@ -1014,7 +1026,140 @@ const HCLTitration2 = () => {
           />
       )}
 
+        {showQuestionCardNo === 11.1 && (
+          <QuestionCard
+            questionSetTitle="Question Set 2 — Titration Setup"
 
+            questionNumber={1}
+
+            question="Which solution is placed in the burette during this titration?"
+
+            answers={[
+              {
+                id: "A",
+                text: "Hydrochloric acid",
+              },
+              {
+                id: "B",
+                text: "Sodium hydroxide",
+              },
+              {
+                id: "C",
+                text: "Phenolphthalein",
+              },
+              {
+                id: "D",
+                text: "Distilled water",
+              },
+            ]}
+
+            correctAnswer="B"
+
+            hintText="Think about which standardised solution is delivered from the burette during the titration."
+
+            correctMessage="Correct! The standardised sodium hydroxide solution is placed in the burette."
+
+            incorrectMessage="Incorrect. The standardised sodium hydroxide solution is placed in the burette."
+
+            submitButtonText="Submit Answer"
+
+            continueButtonText="Continue"
+
+            onContinue={() => {
+              setShowQuestionCardNo(11.2)
+            }}
+          />
+        )}
+
+        {showQuestionCardNo === 11.2 && (
+  <QuestionCard
+    questionSetTitle="Question Set 2 — Titration Setup"
+
+    questionNumber={2}
+
+    question="Which indicator is used in this titration?"
+
+    answers={[
+      {
+        id: "A",
+        text: "Methyl orange",
+      },
+      {
+        id: "B",
+        text: "Litmus",
+      },
+      {
+        id: "C",
+        text: "Phenolphthalein",
+      },
+      {
+        id: "D",
+        text: "Universal indicator",
+      },
+    ]}
+
+    correctAnswer="C"
+
+    hintText="Think about the indicator added to the solution in the conical flask."
+
+    correctMessage="Correct! Phenolphthalein is the indicator used in this titration."
+
+    incorrectMessage="Incorrect. Phenolphthalein is the indicator used in this titration."
+
+    submitButtonText="Submit Answer"
+
+    continueButtonText="Continue"
+
+    onContinue={() => {
+      setShowQuestionCardNo(11.3)
+    }}
+  />
+)}
+
+{showQuestionCardNo === 11.3 && (
+  <QuestionCard
+    questionSetTitle="Question Set — Titration Endpoint"
+
+    questionNumber={3}
+
+    question="What colour is the solution before the endpoint is reached?"
+
+    answers={[
+      {
+        id: "A",
+        text: "Pink",
+      },
+      {
+        id: "B",
+        text: "Blue",
+      },
+      {
+        id: "C",
+        text: "Colourless",
+      },
+      {
+        id: "D",
+        text: "Yellow",
+      },
+    ]}
+
+    correctAnswer="C"
+
+    hintText="Think about the colour of phenolphthalein before the endpoint is reached."
+
+    correctMessage="Correct! The solution is colourless before the endpoint is reached."
+
+    incorrectMessage="Incorrect. Before the endpoint is reached, the solution is colourless."
+
+    submitButtonText="Submit Answer"
+
+    continueButtonText="Continue"
+
+    onContinue={() => {
+      setShowQuestionCardNo(11.4)
+    }}
+  />
+)}
     </>
   )
 }
