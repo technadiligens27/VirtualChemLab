@@ -1,12 +1,20 @@
 import {
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
 } from "react"
+
 import * as THREE from "three"
 
-import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import {
+  ModelContext,
+} from "../../../Contexts/ModelContext/ModelContext"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
 
 const PlaceDigitalBalance = () => {
   const {
@@ -18,9 +26,17 @@ const PlaceDigitalBalance = () => {
     lessonStep,
     selectedLesson,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  const originalPositionRef = useRef(null)
+  const originalPositionRef =
+    useRef(null)
+
+
+  // =====================================================
+  // LESSON STEP UPDATES
+  // =====================================================
 
   useEffect(() => {
     if (
@@ -35,6 +51,7 @@ const PlaceDigitalBalance = () => {
     setLessonStep,
   ])
 
+
   useEffect(() => {
     if (
       selectedLesson === 9 &&
@@ -48,7 +65,7 @@ const PlaceDigitalBalance = () => {
     setLessonStep,
   ])
 
-  
+
   useEffect(() => {
     if (
       selectedLesson === 9 &&
@@ -62,60 +79,114 @@ const PlaceDigitalBalance = () => {
     setLessonStep,
   ])
 
-  useEffect(()=>{
-    if(selectedLesson===12 && lessonStep===4){
-          setLessonStep(5)
-    }
-  },[selectedLesson,lessonStep])
 
   useEffect(() => {
+    if (
+      selectedLesson === 12 &&
+      lessonStep === 4
+    ) {
+      setLessonStep(5)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+
+  // =====================================================
+  // PLACE DIGITAL BALANCE
+  // =====================================================
+
+  useLayoutEffect(() => {
     const balancePosition =
       balancePositionRef?.current
 
     const digitalBalance =
       digitalBalanceRef?.current
 
-    if (!balancePosition || !digitalBalance) return
+    if (
+      !balancePosition ||
+      !digitalBalance
+    ) {
+      return
+    }
 
-    // Save original position
-    originalPositionRef.current =
+
+    // =============================================
+    // SAVE ORIGINAL POSITION BEFORE MOVING
+    // =============================================
+
+    const originalPosition =
       digitalBalance.position.clone()
 
-    const balanceWorldPosition =
+    originalPositionRef.current =
+      originalPosition
+
+
+    // =============================================
+    // GET TARGET WORLD POSITION
+    // =============================================
+
+    const targetWorldPosition =
       new THREE.Vector3()
 
     balancePosition.getWorldPosition(
-      balanceWorldPosition
+      targetWorldPosition
     )
 
-    const balanceParent = digitalBalance.parent
 
-    if (balanceParent) {
-      balanceParent.worldToLocal(
-        balanceWorldPosition
+    // =============================================
+    // CONVERT TO DIGITAL BALANCE PARENT SPACE
+    // =============================================
+
+    const parent =
+      digitalBalance.parent
+
+    if (parent) {
+      parent.worldToLocal(
+        targetWorldPosition
       )
     }
 
+
+    // =============================================
+    // MOVE DIGITAL BALANCE
+    // =============================================
+
     digitalBalance.position.copy(
-      balanceWorldPosition
+      targetWorldPosition
     )
 
     digitalBalance.updateMatrixWorld(true)
 
-    // Runs when component unmounts
-    return () => {
-      if (originalPositionRef.current) {
-        digitalBalance.position.copy(
-          originalPositionRef.current
-        )
 
-        digitalBalance.updateMatrixWorld(true)
+    // =============================================
+    // UNMOUNT → RESTORE ORIGINAL POSITION
+    // =============================================
+
+    return () => {
+      const balance =
+        digitalBalanceRef?.current
+
+      if (
+        !balance ||
+        !originalPositionRef.current
+      ) {
+        return
       }
+
+      balance.position.copy(
+        originalPositionRef.current
+      )
+
+      balance.updateMatrixWorld(true)
     }
   }, [
     balancePositionRef,
     digitalBalanceRef,
   ])
+
 
   return null
 }

@@ -30,6 +30,8 @@ export const ModelProvider = ({ children }) => {
   const pottasiumCarbonateContainerRef = useRef(null)
   const digitalBalanceRef = useRef(null);
   const testube01CapRef = useRef(null);
+  const testube03CapRef = useRef(null)
+  
   const mainBuiretteRef = useRef(null);
   const buretteClampRef = useRef(null);
   const mainThermometerRef = useRef(null);
@@ -157,7 +159,7 @@ export const ModelProvider = ({ children }) => {
         arrowBoilingTube01Ref,arrowMeasuringCylnder,
         graduatedCylinder100Ref,deliveryTubeBungRef,
         arrowMeasuringCylnder50,arrowTestube03Ref,
-        arrowBromobutanRef
+        arrowBromobutanRef,testube03CapRef
       }}
     >
       {children}

@@ -489,12 +489,14 @@ else if (
   lowerBeakerName === "main-graduated-cylinder" 
 ) {
   if(selectedLesson===13 && selectedAmount===30){
-    amountRef.current=0.25
-  }
+    amountRef.current = 0.6
+  }else{
   amountRef.current =
     selectedAmount * 1.1
 
   speedRef.current = 20
+  }
+
 }
           // ========================================
     // BURETTE

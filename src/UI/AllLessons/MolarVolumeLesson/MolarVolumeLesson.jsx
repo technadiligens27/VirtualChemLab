@@ -11,6 +11,7 @@ import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstru
 import HessGuidelines from "../../HessGuidelines/HessGuidelines";
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
+import MolarVolumeLiveDataPanel from "../../../Experience/Interactions/MolarVolumeLiveDataPanel/MolarVolumeLiveDataPanel";
 
 const MolarVolumeLesson = ()=>{
 
@@ -203,15 +204,174 @@ const MolarVolumeLesson = ()=>{
       
       {lessonStep===24 && (<DialogBox text={
         <>
-        24
+        Click <strong>Weighed Test Tube</strong> and Select <strong>Remove Test Tube</strong>
         </>}/>
       )}
 
       {lessonStep===25 && (<DialogBox text={
         <>
-        25
+        Select the <strong>Clamp</strong> and Click <strong>Disconnect Delivery Tube</strong>
         </>}/>
-      )}                        
+      )}            
+      {lessonStep===26 && (<DialogBox text={
+        <>
+        Select held <strong>Test Tube</strong> Containing Calcium Carbonate and click <strong>Pour Mode</strong>
+        </>}/>
+      )}
+
+      {lessonStep===27 && (<DialogBox text={
+        <>
+        27        
+        </>}/>
+      )}
+
+      <MolarVolumeLiveDataPanel
+        trialNumber={1}
+        totalTrials={7}
+
+        ethanoicAcidVolume={
+          lessonStep >= 9
+            ? 30
+            : null
+        }
+
+        massBeforeTransfer={
+          lessonStep >= 16
+            ? 21.77
+            : null
+        }
+
+        massAfterTransfer={
+          lessonStep >= 30
+            ? 21.72
+            : null
+        }
+
+        calciumCarbonateMass={
+          lessonStep >= 30
+            ? 0.05
+            : null
+        }
+
+        currentCO2Volume={
+          lessonStep >= 23
+            ? 12
+            : null
+        }
+
+        finalCO2Volume={
+          lessonStep >= 27
+            ? 12
+            : null
+        }
+
+        reactionStatus={
+          lessonStep >= 26
+            ? "Complete"
+            : lessonStep >= 23
+              ? "Reacting"
+              : null
+        }
+
+        trialResults={[
+          {
+            mass:
+              lessonStep >= 30
+                ? 0.05
+                : null,
+
+            co2Volume:
+              lessonStep >= 27
+                ? 12
+                : null,
+          },
+          {
+            mass: null,
+            co2Volume: null,
+          },
+          {
+            mass: null,
+            co2Volume: null,
+          },
+
+          {
+            mass: null,
+            co2Volume: null,
+          },
+
+          {
+            mass: null,
+            co2Volume: null,
+          },
+
+          {
+            mass: null,
+            co2Volume: null,
+          },
+
+          {
+            mass: null,
+            co2Volume: null,
+          },
+        ]}
+
+        selectedLesson={
+          selectedLesson
+        }
+
+        lessonStep={
+          lessonStep
+        }
+
+        autoHideDelay={
+          3000
+        }
+
+        autoShowConditions={[
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep:
+              9,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep:
+              16,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep:
+              23,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep:
+              27,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep:
+              30,
+          },
+        ]}
+      />
+
+
+
        </>
     )
 }

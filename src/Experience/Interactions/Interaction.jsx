@@ -46,6 +46,7 @@ import ClampModel from "./ClampModel/ClampModel";
 import InvertCylinderModel from "./InvertCylinderModel/InvertCylinderModel";
 import PlaceModelCentre from "./PlaceModelCentre/PlaceModelCentre";
 import ConnectDeliveryTube from "./ConnectDeliveryTube/ConnectDeliveryTube";
+import PourModeDeliveryTube from "./PourModeDeliveryTube/PourModeDeliveryTube";
 
 const Interaction = () => {
   const {
@@ -56,7 +57,8 @@ const Interaction = () => {
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
-    isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected
+    isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -238,6 +240,8 @@ const Interaction = () => {
       {isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
+
+      {isPourModeDeliveryTube && (<PourModeDeliveryTube modelRef={testube03Ref} otherModelRef={boilingTube01Ref}/>)}
       
     </>
   );

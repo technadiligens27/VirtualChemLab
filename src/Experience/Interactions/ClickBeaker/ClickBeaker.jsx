@@ -53,7 +53,8 @@ const ClickObject = () => {
     setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker,
     isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark,
     isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
-    isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected
+    isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube
   } = useContext(InteractionContext)
 
   const {
@@ -1140,10 +1141,15 @@ const ClickObject = () => {
       setSelectedObject(null)
       return
     }    
-    if(selectedLesson===13 && [13,14].includes(lessonStep) && objectName==="main-normal-beaker"){
+    if(selectedLesson===13 && [13,14,23,24,25,26].includes(lessonStep) && objectName==="main-normal-beaker"){
       setSelectedObject(null)
       return
     }
+
+    if(selectedLesson===13 && [23.24].includes(lessonStep) && ["mainBuretteClamp", "boiliing-tube-01"].includes(objectName)){
+      setSelectedObject(null)
+      return
+    }    
 
     // if(selectedLesson===13 && objectName==="main-graduated-cylinder"){
     //   setSelectedObject(null)
@@ -2298,6 +2304,13 @@ const handlePlacePolysterene = () => {
     setLessonStep(7)
   }
 
+  if (
+    selectedLesson === 13 &&
+    lessonStep === 24
+  ) {
+    setLessonStep(25)
+  }  
+
   console.log(
     "Test tube removed from balance →",
     previousHandData.hand
@@ -2315,6 +2328,11 @@ useEffect(()=>{
 if(selectedLesson===8 && lessonStep===39){
   setIsBalancePlaced(true)
 }
+
+if(selectedLesson===13 && lessonStep ===25){
+  setIsBalancePlaced(true)  
+  reappearDeliverySetup()
+}
 },[selectedLesson,lessonStep,isBalancePlaced])
 
 const disappearDeliverySetup =()=>{
@@ -2330,6 +2348,21 @@ const disappearDeliverySetup =()=>{
     boilingTube01Ref.current.visible = false
   }
 }
+
+const reappearDeliverySetup =()=>{
+  if(normalBeakerRef.current){
+    normalBeakerRef.current.visible = true
+  }
+
+  if(buretteClampRef.current){
+    buretteClampRef.current.visible = true
+  }
+
+  if(boilingTube01Ref.current){
+    boilingTube01Ref.current.visible = true
+  }
+}
+
 
 const handlePlaceBalance = () => {
   setIsBalancePlaced(true)
@@ -2823,6 +2856,10 @@ const handlePlaceBalance = () => {
   }
   const handleDisconnectDeliveryTube = ()=>{
     setIsDeliveryTubeConnected(false)
+    if(selectedLesson===13 && lessonStep===25){
+      setLessonStep(26)
+    }
+    setSelectedObject(null)
   }
   const renderClampTableButtons=()=>{
 
@@ -3660,7 +3697,24 @@ const renderBoilingTubeHeldButtons = ()=>{
     }
 }
 
+const handlePourModeDeliveryTube = ()=>{
+  setIsPourModeDeliveryTube(true)
+  setSelectedObject(null)
+}
+
 const renderTestubeHeldButtons = ()=>{
+
+
+    if ( isTestTube(selectedObject.name) && selectedLesson===13 && lessonStep ===26) {
+      return (
+        <>
+          <button onClick={handlePourModeDeliveryTube}>
+            Pour Mode
+          </button>
+        </>
+      )
+    }
+
 
     if ( isTestTube(selectedObject.name) && selectedLesson===13 && lessonStep ===23) {
       return (

@@ -25,7 +25,7 @@ const ChemEnvironment = () => {
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
-         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef
+         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef
   } = useContext(ModelContext);
 
 
@@ -231,8 +231,13 @@ const hideVerticalObjects=(root)=>{
     mainDropperRef.current.visible = false
     mainPolystereneRef.current = scene.getObjectByName('mainPolystyrene');
     mainPolysterene2Ref.current = scene.getObjectByName('mainPolysterene2')
+
     testube01CapRef.current = scene.getObjectByName('testube-cap')
     testube01CapRef.current.visible = false
+
+    testube03CapRef.current = scene.getObjectByName('testube-cap-03')
+    testube03CapRef.current.visible = false
+
     kettleRef.current = scene.getObjectByName('kettle')
     kettleRef.current.visible = false
     volumetricRef.current = scene.getObjectByName('volumetric-flask');
