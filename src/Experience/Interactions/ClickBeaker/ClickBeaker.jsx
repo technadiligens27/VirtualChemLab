@@ -53,7 +53,7 @@ const ClickObject = () => {
     setIsVolumetricPipetteMode,isPhenopthalinePourMode,setIsPhenopthalinePourMode,isCleanBeaker,setIsCleanBeaker,
     isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark,
     isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
-    isClampTestube,setIsClampTestube,setIsModelCentre
+    isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected
   } = useContext(InteractionContext)
 
   const {
@@ -743,7 +743,7 @@ const ClickObject = () => {
     //--------Selected Lesson 10--------------
 
     if(selectedLesson===13){
-      if([7,8,].includes(lessonStep)){
+      if(![3.7,21].includes(lessonStep)){
          setShowErrorMsgNo(1)
          return 
       }
@@ -773,6 +773,13 @@ const ClickObject = () => {
 
     if (!handData?.ref?.current) return
 
+    if (handData.name === "main-spoon" && selectedLesson === 13 && lessonStep === 21) {
+      setLessonStep(22)
+    }
+
+    if (handData.name === "main-graduated-cylinder" && selectedLesson === 13 && lessonStep === 3.7) {
+      setLessonStep(4)
+    }
     if (handData.name === "methyl-dropper-bottle" &&selectedLesson === 12.2 && lessonStep === 81) {
       setLessonStep(82)
     }
@@ -1129,10 +1136,19 @@ const ClickObject = () => {
       return
     }
 
-    if(selectedLesson===13 && objectName==="main-graduated-cylinder"){
+    if(selectedLesson===13 && objectName==="kettle"){
+      setSelectedObject(null)
+      return
+    }    
+    if(selectedLesson===13 && [13,14].includes(lessonStep) && objectName==="main-normal-beaker"){
       setSelectedObject(null)
       return
     }
+
+    // if(selectedLesson===13 && objectName==="main-graduated-cylinder"){
+    //   setSelectedObject(null)
+    //   return
+    // }
 
     if (
       selectedLesson === 10 &&
@@ -1253,12 +1269,19 @@ const handleClick = (event) => {
 
     if(selectedLesson==13){
 
-      if([3,4].includes(lessonStep)){
+      if([3,4,15].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false     
       }  
-
+      if(lessonStep==3.1 && selectedObject.name !=="main-graduated-cylinder"){
+        setShowErrorMsgNo(12)
+        return false 
+      }
       if(lessonStep==5 && selectedObject.name !=="main-normal-beaker"){
+        setShowErrorMsgNo(12)
+        return false 
+      }
+      if(lessonStep==16 && selectedObject.name !=="main-spoon"){
         setShowErrorMsgNo(12)
         return false 
       }
@@ -1380,6 +1403,10 @@ const handleClick = (event) => {
     //--------Selected Lesson 13---------/////
     if(selectedLesson===13){
       if(lessonStep===8 && objectName !== "main-graduated-cylinder-100"){
+        setShowErrorMsgNo(1)
+         return false
+      }
+      if(lessonStep===15 && objectName !== "main-testube-03"){
         setShowErrorMsgNo(1)
          return false
       }
@@ -1772,7 +1799,7 @@ const toggleFunnelMode = () => {
       (selectedLesson ===12 && ([16].includes(lessonStep))) ||
       (selectedLesson ==12.1) && ([30,36].includes(lessonStep)) ||
       (selectedLesson ==12.2) && ([64].includes(lessonStep)) ||
-      (selectedLesson ===13) && ([6,9,10].includes(lessonStep)) 
+      (selectedLesson ===13) && ([3.2,6,9,10].includes(lessonStep)) 
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -1812,6 +1839,10 @@ const toggleFunnelMode = () => {
           if(selectedLesson===12 && lessonStep===11){
             setLessonStep(12)
           }
+
+          if(selectedLesson===13 && lessonStep===20){
+            setLessonStep(21)
+          }          
         }
 
         return !previousValue
@@ -1887,8 +1918,8 @@ const handleClampBurette = () => {
   const handleWeighTestTube = () => {
     if (
       isBalancePlaced &&
-      [8, 9, 12].includes(selectedLesson) &&
-      [16, 17, 39, 13, 35, 5,12].includes(lessonStep) &&
+      [8, 9, 12,13].includes(selectedLesson) &&
+      [16, 17, 39, 13, 35, 5,12,23].includes(lessonStep) &&
       isTestTube(selectedObject?.name)
     ) {
       weighedTestTubeHandDataRef.current =
@@ -1918,7 +1949,9 @@ const handleClampBurette = () => {
         setLessonStep(35.5)
       }
 
-      
+      if (selectedLesson === 13 && lessonStep === 23) {
+        setLessonStep(24)
+      }
 
       if (lessonStep === 16) {
         setLessonStep(17)
@@ -2284,6 +2317,20 @@ if(selectedLesson===8 && lessonStep===39){
 }
 },[selectedLesson,lessonStep,isBalancePlaced])
 
+const disappearDeliverySetup =()=>{
+  if(normalBeakerRef.current){
+    normalBeakerRef.current.visible = false
+  }
+
+  if(buretteClampRef.current){
+    buretteClampRef.current.visible = false
+  }
+
+  if(boilingTube01Ref.current){
+    boilingTube01Ref.current.visible = false
+  }
+}
+
 const handlePlaceBalance = () => {
   setIsBalancePlaced(true)
   setSelectedObject(null)
@@ -2292,6 +2339,10 @@ const handlePlaceBalance = () => {
     setLessonStep(39)
   }
 
+  if(selectedLesson===13 && lessonStep===22){
+    disappearDeliverySetup()
+    setLessonStep(23)
+  }
   
 
 }
@@ -2767,11 +2818,42 @@ const handlePlaceBalance = () => {
     setSelectedObject(null)
   }
 
-
-
+  const handleConnectDeliveryTube = ()=>{
+    setIsDeliveryTubeConnected(true)
+  }
+  const handleDisconnectDeliveryTube = ()=>{
+    setIsDeliveryTubeConnected(false)
+  }
   const renderClampTableButtons=()=>{
 
-    if(selectedLesson===13 && lessonStep==13){
+    if(isDeliveryTubeConnected && selectedObject?.name ==="mainBuretteClamp"){
+      return(
+        <>
+          <button onClick={handleDisconnectDeliveryTube}>
+            Disconnect Delivery Tube
+          </button>
+
+          <button onClick={handlePlaceBuretteInCentre}>
+            Place In Centre
+          </button>
+          
+        </>
+
+        
+      )
+    }
+
+    if(selectedLesson===13 && lessonStep===14 && selectedObject?.name ==="mainBuretteClamp"){
+      return(
+        <>
+          <button onClick={handleConnectDeliveryTube}>
+            Connect Delivery Tube
+          </button>
+        </>
+      )
+    }
+
+    if(selectedLesson===13 && lessonStep==13 && selectedObject?.name ==="mainBuretteClamp"){
       return(
         <>
           <button onClick={handlePlaceBuretteInCentre}>
@@ -2824,6 +2906,15 @@ const handlePlaceBalance = () => {
   }
 
   const renderSulfamicTableButtons = ()=>{
+
+    if(selectedObject?.name === "sulfamic-bottle" && selectedLesson===13){
+      return(
+        <button onClick={addSulfamicAcidToSpoon}>
+          Take Calcium Carbonate
+        </button>
+      )
+    }
+
     if(selectedObject?.name === "sulfamic-bottle"){
       return(
         <button onClick={addSulfamicAcidToSpoon}>
@@ -3128,6 +3219,8 @@ const handlePlaceBalance = () => {
 
 
   const renderNormalBeakerTableButtons = ()=>{
+
+
     if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && (lessonStep==107 || lessonStep===115)) {
       return (
         <button onClick={()=>{handleRemoveTubes()}}>
@@ -3536,10 +3629,12 @@ const renderBuretteHeldButtons = ()=>{
 
 const handleClampTestube = ()=>{
   setIsClampTestube(true)
+  setSelectedObject(null)
 }
 
 const handleUnclampTestube = ()=>{
   setIsClampTestube(false)
+  setSelectedObject(null)
 }
 
 
@@ -3567,7 +3662,15 @@ const renderBoilingTubeHeldButtons = ()=>{
 
 const renderTestubeHeldButtons = ()=>{
 
-
+    if ( isTestTube(selectedObject.name) && selectedLesson===13 && lessonStep ===23) {
+      return (
+        <>
+          <button onClick={()=>{handleWeighTestTube()}}>
+            Weigh Test Tube
+          </button>
+        </>
+      )
+    }
 
 
     if ( isWeighTestube && isTestTube(selectedObject.name)) {

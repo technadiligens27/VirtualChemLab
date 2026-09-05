@@ -12,7 +12,7 @@ const AllArrows=()=>{
         arrowPolystereneRef,arrowPottasiumCarbonateRef,arrowBalanceRef,arrowBuretteClampRef,
         arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
         ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef,
-        arrowBoilingTube01Ref,arrowMeasuringCylnder
+        arrowBoilingTube01Ref,arrowMeasuringCylnder,arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -24,8 +24,9 @@ const AllArrows=()=>{
         showThermometerArrow,setShowThermometerArrow,showVolumetricArrow,showVolumetricFlaskArrow,
         showFunnelArrow, setShowFunnelArrow,showNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,
         setShowNaOHBBottleArrowRef,showMethyArrow,showBuretteClampArrow,showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow,
-        showBoilingTube01Ref,showMeasuringCylinderArrow,
-        setShowMeasuringCylinderArrow
+        showBoilingTube01Ref,showMeasuringCylinderArrow,showMeasuringCylinder50Arrow,
+        setShowMeasuringCylinder50Arrow,showTestube03Arrow,setShowTestube03Arrow,
+        setShowMeasuringCylinderArrow,showBromobutaneArrow,setshowBromobutaneArrow
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -64,6 +65,9 @@ const AllArrows=()=>{
         {showPotassiumHydrogenCarbonateArrow && <ArrowGuides arrowRef={arrowPotassiumHydrogenCarbonateRef} speed={2.5} height={0.5} showStatus={showPotassiumHydrogenCarbonateArrow}/>}
         {showBoilingTube01Ref && <ArrowGuides arrowRef={arrowBoilingTube01Ref} speed={2.5} height={0.5} showStatus={showBoilingTube01Ref}/>}
         {showMeasuringCylinderArrow && <ArrowGuides arrowRef={arrowMeasuringCylnder} speed={2.5} height={0.5} showStatus={showMeasuringCylinderArrow}/>}
+        {showMeasuringCylinder50Arrow && <ArrowGuides arrowRef={arrowMeasuringCylnder50} speed={2.5} height={0.5} showStatus={showMeasuringCylinder50Arrow}/>}
+        {showTestube03Arrow && <ArrowGuides arrowRef={arrowTestube03Ref} speed={2.5} height={0.5} showStatus={showTestube03Arrow}/>}
+        {showBromobutaneArrow && <ArrowGuides arrowRef={arrowBromobutanRef} speed={2.5} height={0.5} showStatus={showBromobutaneArrow}/>}
 
         </>
     )

@@ -213,11 +213,24 @@ const transformControlsRef = useRef()
 
 
   useEffect(()=>{
-    if(selectedLesson ===13 && lessonStep ===5){
-      setLessonStep(6)
+    if(selectedLesson ===13 && lessonStep ===3.1){
+      setLessonStep(3.2)
     }
   },[lessonStep,selectedLesson])  
 
+  useEffect(()=>{
+    if(selectedLesson ===13 && lessonStep ===5){
+      setLessonStep(6)
+    }
+  },[lessonStep,selectedLesson])
+  
+  useEffect(()=>{
+    if(selectedLesson ===13 && lessonStep ===16){
+      setLessonStep(17)
+    }
+  },[lessonStep,selectedLesson])  
+    
+  
   useEffect(()=>{
     if(selectedLesson ===8 && lessonStep ===5){
       setLessonStep(6)
@@ -517,6 +530,19 @@ const transformControlsRef = useRef()
           />
         )
       }
+
+
+      { isPourIntoTestube && 
+        selectedLeftHand?.name === "main-testube-03" && (
+          <PourIntoTestubeFromSpoon
+            testubeRef={selectedLeftHand.ref}
+            spoonRef={spoonRef}
+            hand="right"
+            heightOffset={0.6}
+            xOffset={0.6}
+          />
+        )
+      }      
 
       {
         selectedRightHand.name==='pipette' && <PipetteRubberAnimation/>

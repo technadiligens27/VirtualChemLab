@@ -51,6 +51,7 @@ export const ModelProvider = ({ children }) => {
   const waterBottleRef = useRef(null);
   const boilingTube01Ref = useRef(null);
   const graduatedCylinder100Ref = useRef(null)
+  const deliveryTubeBungRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -76,6 +77,7 @@ export const ModelProvider = ({ children }) => {
   const arrowDropperRef = useRef(null)
   const arrowTestube01Ref = useRef(null)
   const arrowTestube02Ref = useRef(null)
+  const arrowTestube03Ref = useRef(null)
   const arrowPolystereneRef = useRef(null)
   const arrowPottasiumCarbonateRef = useRef(null);
   const arrowBalanceRef = useRef(null);
@@ -92,7 +94,9 @@ export const ModelProvider = ({ children }) => {
   const arrowMethylBottleRef = useRef(null);
   const arrowWaterBottleRef = useRef(null);
   const arrowBoilingTube01Ref = useRef(null);
-  const arrowMeasuringCylnder = useRef(null)
+  const arrowMeasuringCylnder = useRef(null);
+  const arrowMeasuringCylnder50 = useRef(null);
+  const arrowBromobutanRef = useRef(null)
 
   const saltContainerRef = useRef(null)
   const balancePositionRef = useRef(null)
@@ -151,7 +155,9 @@ export const ModelProvider = ({ children }) => {
         naohLiquidRef,waterBottleRef,arrowWaterBottleRef,
         buretteOriginalStateRef,boilingTube01Ref,
         arrowBoilingTube01Ref,arrowMeasuringCylnder,
-        graduatedCylinder100Ref
+        graduatedCylinder100Ref,deliveryTubeBungRef,
+        arrowMeasuringCylnder50,arrowTestube03Ref,
+        arrowBromobutanRef
       }}
     >
       {children}

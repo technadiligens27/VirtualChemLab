@@ -52,7 +52,9 @@ const PourIntoTestubeFromSpoon = ({
 
   const powderRevealFinishedRef =
     useRef(false)
-    
+ 
+  
+
  useEffect(() => { 
   if (selectedLesson === 12 && lessonStep === 9){
     setLessonStep(10)
@@ -64,6 +66,13 @@ useEffect(() => {
     setLessonStep(12)
   } 
    }, [lessonStep, selectedLesson, setLessonStep])
+
+
+useEffect(() => { 
+  if (selectedLesson === 13 && lessonStep === 18){
+    setLessonStep(19)
+  } 
+   }, [lessonStep, selectedLesson, setLessonStep])   
 
     useEffect(() => {
     if (
@@ -170,8 +179,8 @@ testTube.traverse((child) => {
   // Only handle actual powder meshes here.
   if (
     child.isMesh &&
-    childName.startsWith(
-      "testube01-powder"
+    childName.includes(
+      "powder"
     ) &&
     child.material
   ) {
@@ -555,6 +564,23 @@ testTube.traverse((child) => {
     isPotassiumTransferred,
     setLessonStep,
   ])  
+
+
+    useEffect(() => {
+    if (
+      isPotassiumTransferred &&
+      selectedLesson === 13 &&
+      lessonStep === 19
+    ) {
+      setLessonStep(20)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    isPotassiumTransferred,
+    setLessonStep,
+  ])
+
   useFrame((_, delta) => {
     const potassiumPieces =
       potassiumPiecesRef.current

@@ -59,6 +59,10 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showBoilingTube01Ref,setShowBoilingTube01Ref] = useState(false);
 
   const [showMeasuringCylinderArrow,setShowMeasuringCylinderArrow] = useState(false)
+  const [showMeasuringCylinder50Arrow,setShowMeasuringCylinder50Arrow] = useState(false)
+
+  const [showTestube03Arrow,setShowTestube03Arrow] = useState(false)
+  const [showBromobutaneArrow,setshowBromobutaneArrow] = useState(false)
 
 
 
@@ -94,7 +98,8 @@ export const MainGuidelineProvider = ({ children }) => {
     setShowLessonMenu(true)
     setIsTutorialMode(true);
     setShowTestube01Arrow(false);
-    setShowDropperArrow(false)
+    setShowDropperArrow(false);
+    setshowBromobutaneArrow(false)
     // Restart interaction components
     
   }
@@ -165,6 +170,9 @@ export const MainGuidelineProvider = ({ children }) => {
         showTestube01Arrow,
         setShowTestube01Arrow,
 
+        showTestube03Arrow,
+        setShowTestube03Arrow,
+
         showDropperArrow,
         setShowDropperArrow,
 
@@ -211,7 +219,13 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowBoilingTube01Ref,
 
         showMeasuringCylinderArrow,
-        setShowMeasuringCylinderArrow
+        setShowMeasuringCylinderArrow,
+
+        showMeasuringCylinder50Arrow,
+        setShowMeasuringCylinder50Arrow,
+
+        showBromobutaneArrow,
+        setshowBromobutaneArrow
 
 
       }}

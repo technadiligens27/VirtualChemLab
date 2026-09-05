@@ -128,7 +128,8 @@ const UI = () => {
     showVolumetricArrow,setShowVolumetricArrow,setShowVolumetricFlaskArrow,setShowFunnelArrow,
     setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
     showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow,
-    setShowBoilingTube01Ref,setShowMeasuringCylinderArrow
+    setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
+    setShowTestube03Arrow,setshowBromobutaneArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -148,6 +149,12 @@ const UI = () => {
 
 
   // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    setShowMeasuringCylinder50Arrow(
+      (selectedLesson===13 && lessonStep==3.1)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowMeasuringCylinderArrow(
@@ -190,7 +197,8 @@ const UI = () => {
   useEffect(()=>{
     setShowBuretteClampArrow(
       (lessonStep==82 && selectedLesson==12.2) ||
-      (lessonStep ===22 && selectedLesson ===9)
+      (lessonStep ===22 && selectedLesson ===9) ||
+      (lessonStep===13 && selectedLesson ===13)
     )
   },[selectedLesson, lessonStep])
 
@@ -209,7 +217,8 @@ const UI = () => {
     setShowBalanceArrow(
       ([14,22].includes(lessonStep) && selectedLesson === 8) ||
       ([4,6,14].includes(lessonStep) && selectedLesson ===12) ||
-      (selectedLesson===9 && [12,20].includes(lessonStep))
+      (selectedLesson===9 && [12,20].includes(lessonStep)) ||
+      (selectedLesson===13 && [22].includes(lessonStep))
 
     )
   },[selectedLesson,lessonStep])
@@ -232,10 +241,22 @@ const UI = () => {
 
   useEffect(()=>{
     setShowSulfamicArrow(
-      (selectedLesson==12 && lessonStep==8)
+      (selectedLesson==12 && lessonStep==8)||
+      (selectedLesson==13 && lessonStep==17)
     )
   },[selectedLesson,lessonStep])
 
+  useEffect(()=>{
+    setShowTestube03Arrow(
+      (selectedLesson==13 && lessonStep==15)
+    )
+  },[selectedLesson,lessonStep])
+
+  // useEffect(()=>{
+  //   setshowBromobutaneArrow(
+  //     (selectedLesson ===13 && lessonStep==17)
+  //   )
+  // },[selectedLesson,lessonStep])
   //-------------------------------------------------
 
 
@@ -308,7 +329,8 @@ const UI = () => {
       (selectedLesson==1 && lessonStep===6) ||
       (selectedLesson===8 && lessonStep ===9) ||
       ([12,12.1].includes(selectedLesson) && [22,7].includes(lessonStep)) ||
-      (selectedLesson === 9 && lessonStep ===7)
+      (selectedLesson === 9 && lessonStep ===7) ||
+      (selectedLesson===13 && lessonStep===16)
     )
   },[lessonStep,showSpoonArrow])
 

@@ -24,7 +24,8 @@ const ChemEnvironment = () => {
          volumetricRef,volumetricPipetteRef,arrowVolumetricPipette,volumetricBung,BuretteLiquidRef,phenopthalineBottleRef,
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
-         boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref
+         boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
+         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef
   } = useContext(ModelContext);
 
 
@@ -240,7 +241,7 @@ const hideVerticalObjects=(root)=>{
     volumetricBung.current.visible = false;
     boilingTube01Ref.current = scene.getObjectByName("boiliing-tube-01");
     graduatedCylinder100Ref.current = scene.getObjectByName("main-graduated-cylinder-100")
-    
+    deliveryTubeBungRef.current = scene.getObjectByName("delivery-tube-bung")
 
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
     methylBottleRef.current = scene.getObjectByName("methyl-dropper-bottle")
@@ -422,6 +423,15 @@ if (
 
       arrowMeasuringCylnder.current = scene.getObjectByName("main-graduated-cylinder-arrow")
       arrowMeasuringCylnder.current.visible = false 
+
+      arrowMeasuringCylnder50.current = scene.getObjectByName("main-graduated-cylinder-50-arrow")
+      arrowMeasuringCylnder50.current.visible = false
+
+      arrowTestube03Ref.current = scene.getObjectByName("testube-arrow-03")
+      arrowTestube03Ref.current.visible = false;
+
+      arrowBromobutanRef.current = scene.getObjectByName("bromobutane-bottle-arrow")
+      arrowBromobutanRef.current.visible = false;
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)

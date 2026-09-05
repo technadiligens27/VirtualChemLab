@@ -51,8 +51,7 @@ const FillBeakerBox = () => {
     }else{
       return [
         { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-        { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
-        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
+        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./EthanoicAcid.png" },        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
         { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
         { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
         { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
@@ -120,7 +119,11 @@ const FillBeakerBox = () => {
 
       if(lessonStep===11){
         if(!checkFill("Water (H2O)",100)) return
-      }      
+      }
+      if(lessonStep===3.3){
+        if(!checkFill("Ethanoic Acid (CH3COOH)",30)) return
+      }         
+      
     }
 
     if(selectedLesson===10){
@@ -151,6 +154,11 @@ const FillBeakerBox = () => {
     setIsFillUpBeaker(true)
   }
 
+  useEffect(()=>{
+    if(lessonStep===3.2 && selectedLesson ===13){
+      setLessonStep(3.3)
+    }
+  },[lessonStep,selectedLesson]) 
 
   useEffect(()=>{
     if(lessonStep===6 && selectedLesson ===13){

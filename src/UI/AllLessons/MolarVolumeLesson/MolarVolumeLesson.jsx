@@ -18,11 +18,6 @@ const MolarVolumeLesson = ()=>{
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
     const {graduatedBeakerRef} = useContext(ModelContext)
 
-    useEffect(()=>{
-      if(graduatedBeakerRef.current){
-        graduatedBeakerRef.current.visible = false
-      }
-    },[graduatedBeakerRef])
 
  return(
        <>
@@ -62,6 +57,41 @@ const MolarVolumeLesson = ()=>{
         
         </>}/>
       )}
+      {lessonStep===3.1 && (<DialogBox text={<>
+         Click The <strong>Held Boiling Tube</strong> and Select <strong>Add Liquid</strong>
+        
+        </>}/>
+      )}
+
+      {lessonStep===3.2 && (<DialogBox text={<>
+         Click The <strong>Held Measuring Cylinder</strong> and Select <strong>Add Liquid</strong>
+        
+        </>}/>
+      )}
+
+      {lessonStep===3.3 && (<DialogBox text={<>
+         Fill With <strong>Ethanoic (30 cm³)</strong> 
+        </>}/>
+      )}   
+
+      {lessonStep===3.4 && (<DialogBox text={<>
+         Press <strong>P to enter Pouring Mode </strong>
+        </>}/>
+      )}      
+      {lessonStep===3.5 && (<DialogBox text={<>
+        <strong>Scroll Down</strong> to Pour from Measuring Cylinder
+        </>}/>
+      )}    
+      {lessonStep===3.6 && (<DialogBox text={<>
+         Press <strong> P to exit Pouring Mode </strong>
+        </>}/>
+      )}
+
+      {lessonStep===3.7 && (<DialogBox text={<>
+          Keep <strong>Measuring Cylinder</strong> Back In Table
+        </>}/>
+      )}  
+
 
       {lessonStep===4 && (<DialogBox text={<>
           Click Held <strong>Boiling Tube</strong> and select <strong>Clamp</strong>
@@ -112,10 +142,76 @@ const MolarVolumeLesson = ()=>{
       )}  
 
       {lessonStep===13 && (<DialogBox text={<>
-        13       
+        Click The <strong>Clamp </strong> and Select <strong>Place In Center</strong>     
+        </>}/>
+      )}
+
+      {lessonStep===14 && (<DialogBox text={<>
+        Now Click <strong>Clamp</strong> and Select <strong>Connect Delivery Tube</strong>    
         </>}/>
       )}  
 
+      {lessonStep===15 && (<DialogBox text={<>
+          Pick Up <strong>Test Tube</strong> to <strong>Left Hand</strong>
+        </>}/>
+      )} 
+
+      {lessonStep===16 && (<DialogBox text={<>
+         Now Pick Up <strong>Spatula</strong> to <strong>Right Hand</strong>
+        </>}/>
+      )} 
+
+      {lessonStep===17 && (<DialogBox text={<>
+         Select <strong>Calcium Carbonate </strong>Container and take<strong>Calcium Carbonate</strong>
+        </>}/>
+      )}
+
+      {lessonStep===18 && (<DialogBox text={<>
+         Now Click Held <strong>Spatula</strong> and select <strong>Pour Into Testube</strong>
+        </>}/>
+      )}
+
+      {lessonStep===19 && (<DialogBox text={
+        <>
+        <strong>Scroll Down</strong> to Pour <strong>Calcium Carbonate</strong> to Test Tube
+        </>}/>
+      )}
+
+      {lessonStep===20 && (<DialogBox text={
+        <>
+         Now Click Held <strong>Spatula</strong> and select <strong>Disable Pour Mode</strong>
+        </>}/>
+      )}   
+
+      {lessonStep===21 && (<DialogBox text={
+        <>
+         Keep Spatula <strong>Back on the table</strong>
+        </>}/>
+      )}
+
+      {lessonStep===22 && (<DialogBox text={
+        <>
+        Select <strong>Digital Balance</strong>  and Select <strong>Place Balance</strong> to get the Balance to the Center
+        </>}/>
+      )}
+
+      {lessonStep===23 && (<DialogBox text={
+        <>
+         Now Select <strong>Held Test Tube</strong> and Select <strong>Weigh Test Tube</strong> 
+        </>}/>
+      )}  
+      
+      {lessonStep===24 && (<DialogBox text={
+        <>
+        24
+        </>}/>
+      )}
+
+      {lessonStep===25 && (<DialogBox text={
+        <>
+        25
+        </>}/>
+      )}                        
        </>
     )
 }

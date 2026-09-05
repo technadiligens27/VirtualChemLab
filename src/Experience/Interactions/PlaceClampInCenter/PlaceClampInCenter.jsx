@@ -44,8 +44,8 @@ const PlaceClampInCenter = ({
   // =============================================
 
   useEffect(()=>{
-    if(selectedLesson===13 && lessonStep==12){
-      setLessonStep(13)
+    if(selectedLesson===13 && lessonStep==13){
+      setLessonStep(14)
     }
   })
 

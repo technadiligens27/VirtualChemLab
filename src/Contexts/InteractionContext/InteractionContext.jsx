@@ -158,6 +158,9 @@ export const InteractionProvider = ({ children }) => {
   const [isInvertCylinder,setIsInvertCylinder] = useState(false);
   const [isModelCentre,setIsModelCentre] = useState(false)
 
+  const [isDeliveryTubeConnected,setIsDeliveryTubeConnected] = useState(false);
+  
+
 
 
   const resetInteractions = () => {
@@ -371,7 +374,8 @@ export const InteractionProvider = ({ children }) => {
         showQuestionCardNo,setShowQuestionCardNo,
         isClampTestube,setIsClampTestube,
         isInvertCylinder,setIsInvertCylinder,
-        isModelCentre,setIsModelCentre    
+        isModelCentre,setIsModelCentre,
+        isDeliveryTubeConnected,setIsDeliveryTubeConnected
         
         
       }}

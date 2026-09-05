@@ -19,9 +19,9 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 const PlaceModelCentre = ({
   modelRef,
 
-  modelXOffset = 3,
+  modelXOffset = 2,
   modelYOffset = 2.5,
-  modelZOffset = 0,
+  modelZOffset = 2,
 
   modelXScale = 1.3,
   modelYScale = 1,

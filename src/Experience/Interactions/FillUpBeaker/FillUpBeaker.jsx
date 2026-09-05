@@ -472,7 +472,7 @@ else if (
     selectedAmount === 100
   ) {
     amountRef.current = 0.92
-    speedRef.current = 1
+    speedRef.current = 0.4
   } else {
     amountRef.current =
       0.6
@@ -488,6 +488,9 @@ else if (
 else if (
   lowerBeakerName === "main-graduated-cylinder" 
 ) {
+  if(selectedLesson===13 && selectedAmount===30){
+    amountRef.current=0.25
+  }
   amountRef.current =
     selectedAmount * 1.1
 
@@ -774,6 +777,10 @@ else if (
     if(selectedLesson==13 && lessonStep ===10){
       setLessonStep(11)
     }
+
+     if(selectedLesson==13 && lessonStep ===3.3){
+      setLessonStep(3.4)
+    }   
   }
 )
 

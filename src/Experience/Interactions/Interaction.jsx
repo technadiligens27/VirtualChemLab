@@ -45,6 +45,7 @@ import FunnelMode from "./FunnelMode/FunnelMode";
 import ClampModel from "./ClampModel/ClampModel";
 import InvertCylinderModel from "./InvertCylinderModel/InvertCylinderModel";
 import PlaceModelCentre from "./PlaceModelCentre/PlaceModelCentre";
+import ConnectDeliveryTube from "./ConnectDeliveryTube/ConnectDeliveryTube";
 
 const Interaction = () => {
   const {
@@ -55,7 +56,7 @@ const Interaction = () => {
      isPotassiumHydrogenCarbonateInSpoon,isPipetteMode,fillPippette,pipetteDroplet,setFillPipette,TestubeInBeaker,setTestubeInBeaker,
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
-    isInvertCylinder,isModelCentre,setIsModelCentre
+    isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -109,6 +110,8 @@ const Interaction = () => {
 
       {isBalancePlaced && <PlaceDigitalBalance/>}
       {isWeighTestube && ([8,9,12].includes(selectedLesson)) &&<WeighTestube testubeRef={testube01Ref}/>}
+      {isWeighTestube && ([13].includes(selectedLesson)) &&<WeighTestube testubeRef={testube03Ref}/>}
+
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
       {selectedLesson===8  &&  <BalanceReading  balanceRef={digitalBalanceRef} isWeighTestube={isWeighTestube} finalMass={24.7}/>}
@@ -117,6 +120,8 @@ const Interaction = () => {
 
       {selectedLesson===12 && lessonStep===6 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
       {selectedLesson===12 && (lessonStep===13 || lessonStep===14)  && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={24.22}/>}
+
+      {selectedLesson===13 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.77}/>}
 
       {isBuiretteClamped &&  <ClampBurette/>}  
       {selectedLesson !==13 && isClampInCenter && <PlaceClampInCenter/>}
@@ -231,6 +236,8 @@ const Interaction = () => {
       { isInvertCylinder && (<InvertCylinderModel/>)} 
       
       {isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
+
+      {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
       
     </>
   );

@@ -103,6 +103,10 @@ const FillLiquidBeaker = ({
       if (selectedLesson === 10 && lessonStep === 6) {
         setLessonStep(7)
       }
+
+      if (selectedLesson === 13 && lessonStep === 3.5) {
+        setLessonStep(3.6)
+      }      
     }
   })
 
