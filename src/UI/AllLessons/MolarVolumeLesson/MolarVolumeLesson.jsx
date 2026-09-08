@@ -12,6 +12,8 @@ import HessGuidelines from "../../HessGuidelines/HessGuidelines";
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import MolarVolumeLiveDataPanel from "../../../Experience/Interactions/MolarVolumeLiveDataPanel/MolarVolumeLiveDataPanel";
+import MolarVolumeReduced from "../../../Experience/Interactions/MolarVolumeReduced/MolarVolumeReduced";
+import MolarVolumeCalciumCarbonateUsed from "../../../Experience/Interactions/MolarVolumeCalciumCarbonateUsed/MolarVolumeCalciumCarbonateUsed";
 
 const MolarVolumeLesson = ()=>{
 
@@ -51,7 +53,7 @@ const MolarVolumeLesson = ()=>{
         />
       )}
 
-      {lessonStep===3 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[0]}/>)}
+      {lessonStep>=3 && lessonStep<4 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[0]}/>)}
 
       {lessonStep===3 && (<DialogBox text={<>
           Pick Up <strong>Boiling Tube</strong> to <strong>Left Hand</strong>
@@ -59,7 +61,7 @@ const MolarVolumeLesson = ()=>{
         </>}/>
       )}
       {lessonStep===3.1 && (<DialogBox text={<>
-         Click The <strong>Held Boiling Tube</strong> and Select <strong>Add Liquid</strong>
+         Click The <strong>Measuring Cylinder</strong> and Select <strong>Right Hand</strong>
         
         </>}/>
       )}
@@ -92,6 +94,18 @@ const MolarVolumeLesson = ()=>{
           Keep <strong>Measuring Cylinder</strong> Back In Table
         </>}/>
       )}  
+
+
+
+
+
+      {lessonStep>=4 && lessonStep<15 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[1]}/>)}
+
+
+
+
+
+
 
 
       {lessonStep===4 && (<DialogBox text={<>
@@ -152,10 +166,29 @@ const MolarVolumeLesson = ()=>{
         </>}/>
       )}  
 
+
+
+
+
+
+
+
+      {lessonStep >= 15 && lessonStep < 23 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[2]}/>)}
+
+
+
+
+
+
+
+
+
       {lessonStep===15 && (<DialogBox text={<>
           Pick Up <strong>Test Tube</strong> to <strong>Left Hand</strong>
         </>}/>
       )} 
+
+
 
       {lessonStep===16 && (<DialogBox text={<>
          Now Pick Up <strong>Spatula</strong> to <strong>Right Hand</strong>
@@ -196,6 +229,18 @@ const MolarVolumeLesson = ()=>{
         </>}/>
       )}
 
+
+
+
+
+
+      {lessonStep >= 23 && lessonStep < 25 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[3]}/>)}
+
+
+
+
+
+
       {lessonStep===23 && (<DialogBox text={
         <>
          Now Select <strong>Held Test Tube</strong> and Select <strong>Weigh Test Tube</strong> 
@@ -207,6 +252,21 @@ const MolarVolumeLesson = ()=>{
         Click <strong>Weighed Test Tube</strong> and Select <strong>Remove Test Tube</strong>
         </>}/>
       )}
+
+
+
+
+
+
+
+      {lessonStep >= 25 && lessonStep < 32 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[4]}/>)}
+
+
+
+
+
+
+
 
       {lessonStep===25 && (<DialogBox text={
         <>
@@ -221,54 +281,87 @@ const MolarVolumeLesson = ()=>{
 
       {lessonStep===27 && (<DialogBox text={
         <>
-        27        
+        <strong>Scroll Down</strong> to <strong>Pour Calcium Carbonate</strong> to Boiling Tube   
         </>}/>
       )}
+      {lessonStep===28 && (<DialogBox text={
+        <>
+        Observe the Reaction   
+        </>}/>
+      )}
+
+      {lessonStep==29 && <MolarVolumeReduced/>}
+
+      {lessonStep===29 && (<DialogBox text={
+        <>
+        Click the Testube We poured From and Select <strong>Disable Pour Mode</strong>
+        </>}/>
+      )}
+
+      {lessonStep===30 && (<DialogBox text={
+        <>
+         Now Select <strong>Held Test Tube</strong> and Select <strong>Weigh Test Tube</strong> 
+        </>}/>
+      )}
+      {lessonStep===31 && (<DialogBox text={
+        <>
+        Select <strong>Weighed Testube</strong> and select <strong>Remove Testube</strong>
+        </>}/>
+      )}
+
+      {lessonStep===32 && <MolarVolumeCalciumCarbonateUsed/>}
+
+
 
       <MolarVolumeLiveDataPanel
         trialNumber={1}
         totalTrials={7}
 
         ethanoicAcidVolume={
-          lessonStep >= 9
+          lessonStep >= 3.6
             ? 30
             : null
         }
 
+        // Test tube + CaCO3 mass before transfer
         massBeforeTransfer={
-          lessonStep >= 16
+          lessonStep >= 24
             ? 21.77
             : null
         }
 
+        // Test tube mass after CaCO3 has been transferred
         massAfterTransfer={
-          lessonStep >= 30
+          lessonStep >= 31
             ? 21.72
             : null
         }
 
+        // Difference between the two masses
         calciumCarbonateMass={
-          lessonStep >= 30
+          lessonStep >= 31
             ? 0.05
             : null
         }
 
+        // Gas begins being collected once reaction starts
         currentCO2Volume={
-          lessonStep >= 23
+          lessonStep >= 28
             ? 12
             : null
         }
 
+        // Final reading only after reaction finishes
         finalCO2Volume={
-          lessonStep >= 27
+          lessonStep >= 29
             ? 12
             : null
         }
 
         reactionStatus={
-          lessonStep >= 26
+          lessonStep >= 29
             ? "Complete"
-            : lessonStep >= 23
+            : lessonStep >= 28
               ? "Reacting"
               : null
         }
@@ -276,19 +369,21 @@ const MolarVolumeLesson = ()=>{
         trialResults={[
           {
             mass:
-              lessonStep >= 30
+              lessonStep >= 31
                 ? 0.05
                 : null,
 
             co2Volume:
-              lessonStep >= 27
+              lessonStep >= 29
                 ? 12
                 : null,
           },
+
           {
             mass: null,
             co2Volume: null,
           },
+
           {
             mass: null,
             co2Volume: null,
@@ -328,44 +423,49 @@ const MolarVolumeLesson = ()=>{
         }
 
         autoShowConditions={[
+          // Acid volume recorded
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep:
-              9,
+              3.6,
           },
 
+          // Initial mass recorded
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep:
-              16,
+              24,
           },
 
+          // Reaction starts
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep:
-              23,
+              28,
           },
 
+          // Final CO2 reading
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep:
-              27,
+              29,
           },
 
+          // Final test-tube mass / CaCO3 mass
           {
             selectedLesson:
               selectedLesson,
 
             lessonStep:
-              30,
+              31,
           },
         ]}
       />

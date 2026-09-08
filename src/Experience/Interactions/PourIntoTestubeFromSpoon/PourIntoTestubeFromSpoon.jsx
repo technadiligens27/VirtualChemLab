@@ -177,13 +177,12 @@ testTube.traverse((child) => {
   }
 
   // Only handle actual powder meshes here.
-  if (
-    child.isMesh &&
-    childName.includes(
-      "powder"
-    ) &&
-    child.material
-  ) {
+if (
+  child.isMesh &&
+  childName.includes("powder") &&
+  !childName.includes("pour") &&
+  child.material
+)  {
     const originalMaterials =
       Array.isArray(child.material)
         ? child.material

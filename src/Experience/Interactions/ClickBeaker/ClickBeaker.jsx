@@ -1146,11 +1146,14 @@ const ClickObject = () => {
       return
     }
 
-    if(selectedLesson===13 && [23.24].includes(lessonStep) && ["mainBuretteClamp", "boiliing-tube-01"].includes(objectName)){
+    if(selectedLesson===13 && [23,24,17].includes(lessonStep) && ["mainBuretteClamp", "boiliing-tube-01"].includes(objectName)){
       setSelectedObject(null)
       return
     }    
-
+    if(selectedLesson===13 && [24].includes(lessonStep) && ["mainMassBalance"].includes(objectName)){
+      setSelectedObject(null)
+      return
+    }    
     // if(selectedLesson===13 && objectName==="main-graduated-cylinder"){
     //   setSelectedObject(null)
     //   return
@@ -1925,7 +1928,7 @@ const handleClampBurette = () => {
     if (
       isBalancePlaced &&
       [8, 9, 12,13].includes(selectedLesson) &&
-      [16, 17, 39, 13, 35, 5,12,23].includes(lessonStep) &&
+      [16, 17, 39, 13, 35, 5,12,23,30].includes(lessonStep) &&
       isTestTube(selectedObject?.name)
     ) {
       weighedTestTubeHandDataRef.current =
@@ -1958,7 +1961,9 @@ const handleClampBurette = () => {
       if (selectedLesson === 13 && lessonStep === 23) {
         setLessonStep(24)
       }
-
+      if (selectedLesson === 13 && lessonStep === 30) {
+        setLessonStep(31)
+      }
       if (lessonStep === 16) {
         setLessonStep(17)
       }
@@ -2296,7 +2301,12 @@ const handlePlacePolysterene = () => {
       previousHandData
     )
   }
-
+  if (
+    selectedLesson === 13 &&
+    lessonStep === 31
+  ) {
+    setLessonStep(32)
+  }
   if (
     selectedLesson === 12 &&
     lessonStep === 6
@@ -2330,8 +2340,12 @@ if(selectedLesson===8 && lessonStep===39){
 }
 
 if(selectedLesson===13 && lessonStep ===25){
-  setIsBalancePlaced(true)  
+  setIsBalancePlaced(false)  
   reappearDeliverySetup()
+}
+
+if(selectedLesson===13 && lessonStep ===28){
+  handleConnectDeliveryTube()
 }
 },[selectedLesson,lessonStep,isBalancePlaced])
 
@@ -2375,10 +2389,16 @@ const handlePlaceBalance = () => {
   if(selectedLesson===13 && lessonStep===22){
     disappearDeliverySetup()
     setLessonStep(23)
-  }
-  
+  }  
 
 }
+
+useEffect(()=>{
+  if(selectedLesson===13 && lessonStep ===30){
+    disappearDeliverySetup()
+    setIsBalancePlaced(true)
+  }
+},[selectedLesson,lessonStep])
 
   const handleRemoveBalance=()=>{
       setIsBalancePlaced(false);
@@ -2930,6 +2950,7 @@ const handlePlaceBalance = () => {
 
   const addSulfamicAcidToSpoon = ()=>{
     setIsSulfamicInSpoon(true)
+    setSelectedObject(null)
   }
 
   const renderSaltContainerTableButtons=()=>{
@@ -3701,8 +3722,33 @@ const handlePourModeDeliveryTube = ()=>{
   setIsPourModeDeliveryTube(true)
   setSelectedObject(null)
 }
+const removePourModeDeliveryTube = ()=>{
+  if(selectedLesson===13 && lessonStep===29){
+    setLessonStep(30)
+  }
+  setIsPourModeDeliveryTube(false)
+  setSelectedObject(null)
+}
+
+const setModelRotationNormal = (modelRef) => {
+  const model = modelRef?.current
+
+  if (!model) return
+
+  model.rotation.set(0,0,0)
+}
 
 const renderTestubeHeldButtons = ()=>{
+
+  if(isTestTube(selectedObject.name) && selectedLesson===13 && lessonStep ===29){
+    return(
+      <>
+       <button onClick={() => {removePourModeDeliveryTube()}}>
+          Disable Pour Mode
+       </button>
+      </>
+    )
+  }
 
 
     if ( isTestTube(selectedObject.name) && selectedLesson===13 && lessonStep ===26) {
@@ -3716,7 +3762,7 @@ const renderTestubeHeldButtons = ()=>{
     }
 
 
-    if ( isTestTube(selectedObject.name) && selectedLesson===13 && lessonStep ===23) {
+    if ( isTestTube(selectedObject.name) && selectedLesson===13 && [23,30].includes(lessonStep)) {
       return (
         <>
           <button onClick={()=>{handleWeighTestTube()}}>
@@ -4290,7 +4336,12 @@ const renderHeldObjectButtons = () => {
             multiplier={1.3}
           />
     }
-    
+    {selectedLesson===13 && lessonStep ==22 &&
+        <ClickHitbox
+            modelRef={digitalBalanceRef}
+            multiplier={1.3}
+          />
+    }    
     <ClickHitbox
       modelRef={waterBottleRef}
       multiplier={1.5}

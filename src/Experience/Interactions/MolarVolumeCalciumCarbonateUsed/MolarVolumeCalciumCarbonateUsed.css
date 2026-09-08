@@ -1,0 +1,1348 @@
+/* ==========================================
+   OVERLAY
+========================================== */
+
+.molar-caco3-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    20px 85px
+    20px 20px;
+
+  box-sizing: border-box;
+
+  font-family:
+    "Nunito",
+    sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+
+.molar-caco3-overlay-open {
+  background-color:
+    rgba(
+      31,
+      20,
+      50,
+      0.25
+    );
+
+  backdrop-filter: blur(5px);
+
+  -webkit-backdrop-filter:
+    blur(5px);
+}
+
+
+.molar-caco3-overlay-closed {
+  background-color:
+    transparent;
+
+  backdrop-filter:
+    blur(0);
+
+  -webkit-backdrop-filter:
+    blur(0);
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================
+   WRAPPER
+========================================== */
+
+.molar-caco3-wrapper {
+  position: relative;
+
+  width: 65vw;
+
+  padding: 8px;
+
+  border:
+    9px solid
+    #ffc94d;
+
+  border-radius:
+    22px;
+
+  background-color:
+    #fffaf3;
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   INNER
+========================================== */
+
+.molar-caco3-inner {
+  width: 100%;
+  height: 90vh;
+
+  display: flex;
+  flex-direction: row;
+
+  padding:
+    65px 30px
+    25px;
+
+  border-radius:
+    15px;
+
+  background-color:
+    #ffffff;
+
+  box-sizing:
+    border-box;
+
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================
+   TITLE LABEL
+========================================== */
+
+.molar-caco3-label {
+  position: absolute;
+
+  top: -9px;
+  left: 50%;
+
+  z-index: 2;
+
+  width: 390px;
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius:
+    0 0
+    32px 32px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd35f,
+      #ffc447
+    );
+
+  transform:
+    translateX(-50%);
+}
+
+
+.molar-caco3-label h1 {
+  margin: 0;
+
+  color:
+    #2f2386;
+
+  font-size:
+    27px;
+
+  font-weight:
+    900;
+
+  text-align:
+    center;
+}
+
+
+/* ==========================================
+   LEFT
+========================================== */
+
+.molar-caco3-left {
+  width: 55%;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding:
+    10px 20px;
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   HEADING
+========================================== */
+
+.molar-caco3-heading h1 {
+  margin:
+    0 0 18px;
+
+  color:
+    #31247f;
+
+  font-size:
+    25px;
+
+  font-weight:
+    900;
+}
+
+
+/* ==========================================
+   MAIN READING CARD
+========================================== */
+
+.molar-caco3-reading {
+  width: 100%;
+
+  min-height: 100px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  padding:
+    17px 28px;
+
+  border:
+    2px solid
+    #d4c2ff;
+
+  border-radius:
+    24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f1ecff,
+      #fbf9ff
+    );
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   MASS ICON
+========================================== */
+
+.molar-caco3-icon {
+  width: 76px;
+  height: 76px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9167ff,
+      #6f4ce8
+    );
+}
+
+
+.molar-caco3-icon span {
+  color:
+    #ffffff;
+
+  font-size:
+    39px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
+}
+
+
+/* ==========================================
+   SMALL LABEL
+========================================== */
+
+.molar-caco3-small-label {
+  margin:
+    0 0 5px;
+
+  color:
+    #715bb0;
+
+  font-size:
+    15px;
+
+  font-weight:
+    800;
+}
+
+
+/* ==========================================
+   MAIN MASS VALUE
+========================================== */
+
+.molar-caco3-reading h2 {
+  margin: 0;
+
+  color:
+    #37228f;
+
+  font-size:
+    40px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
+}
+
+
+.molar-caco3-reading h2 span {
+  font-size:
+    0.45em;
+}
+
+
+/* ==========================================
+   EXPLANATION CARD
+========================================== */
+
+.molar-caco3-explanation {
+  margin-top:
+    18px;
+
+  padding:
+    18px 24px;
+
+  border:
+    2px solid
+    #ddd1fa;
+
+  border-radius:
+    20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fbfaff,
+      #f4f0ff
+    );
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   EXPLANATION TITLE
+========================================== */
+
+.molar-caco3-explanation-title {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+.molar-caco3-info-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7654dd,
+      #5d3fc2
+    );
+
+  color:
+    #ffffff;
+
+  font-size:
+    23px;
+
+  font-weight:
+    900;
+
+  font-family:
+    serif;
+}
+
+
+.molar-caco3-explanation-title h2 {
+  margin: 0;
+
+  color:
+    #33237e;
+
+  font-size:
+    22px;
+
+  font-weight:
+    900;
+}
+
+
+/* ==========================================
+   EXPLANATION TEXT
+========================================== */
+
+.molar-caco3-explanation > p {
+  margin:
+    14px 0
+    15px 54px;
+
+  max-width:
+    540px;
+
+  color:
+    #5d6d80;
+
+  font-size:
+    16px;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.molar-caco3-divider {
+  width:
+    calc(
+      100% - 54px
+    );
+
+  height: 2px;
+
+  margin-left:
+    54px;
+
+  background-color:
+    #dfd5f5;
+}
+
+
+/* ==========================================
+   CALCULATION
+========================================== */
+
+.molar-caco3-calculation {
+  margin-top:
+    16px;
+
+  margin-left:
+    54px;
+
+  padding:
+    14px 16px;
+
+  border-radius:
+    14px;
+
+  background-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.72
+    );
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   CALCULATION ROW
+========================================== */
+
+.molar-caco3-calculation-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding:
+    7px 0;
+
+  color:
+    #5d6d80;
+
+  font-size:
+    16px;
+
+  font-weight:
+    700;
+}
+
+
+.molar-caco3-calculation-row span {
+  min-width:
+    0;
+}
+
+
+.molar-caco3-calculation-row strong {
+  flex-shrink:
+    0;
+
+  color:
+    #37228f;
+
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+}
+
+
+/* ==========================================
+   MINUS
+========================================== */
+
+.molar-caco3-minus {
+  margin: 0;
+
+  padding-right:
+    3px;
+
+  color:
+    #7655db;
+
+  font-size:
+    27px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================
+   RESULT
+========================================== */
+
+.molar-caco3-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top:
+    6px;
+
+  padding-top:
+    12px;
+
+  border-top:
+    2px solid
+    #d9cdf5;
+
+  color:
+    #33237e;
+
+  font-size:
+    17px;
+
+  font-weight:
+    900;
+}
+
+
+.molar-caco3-result span {
+  min-width:
+    0;
+}
+
+
+.molar-caco3-result strong {
+  flex-shrink:
+    0;
+
+  color:
+    #37228f;
+
+  font-size:
+    23px;
+
+  font-weight:
+    900;
+}
+
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.molar-caco3-button {
+  width:
+    210px;
+
+  min-height:
+    52px;
+
+  margin-top:
+    18px;
+
+  border:
+    none;
+
+  border-radius:
+    20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #432098,
+      #33207e
+    );
+
+  color:
+    #ffffff;
+
+  font-family:
+    inherit;
+
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+
+  cursor:
+    pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.molar-caco3-button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 10px 20px
+    rgba(
+      57,
+      32,
+      137,
+      0.24
+    );
+}
+
+
+.molar-caco3-button:active {
+  transform:
+    translateY(0);
+}
+
+
+/* ==========================================
+   RIGHT
+========================================== */
+
+.molar-caco3-right {
+  position: relative;
+
+  width: 45%;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   RIGHT IMAGE
+========================================== */
+
+.molar-caco3-right > img {
+  width: 80%;
+  height: 80%;
+
+  object-fit:
+    contain;
+
+  filter:
+    drop-shadow(
+      0 14px
+      14px
+      rgba(
+        58,
+        54,
+        78,
+        0.14
+      )
+    );
+}
+
+
+/* ==========================================
+   RIGHT LABEL
+========================================== */
+
+.molar-caco3-reading-label {
+  position: absolute;
+
+  top: 42%;
+  right: 0;
+
+  min-width:
+    175px;
+
+  padding:
+    12px 16px;
+
+  border:
+    2px solid
+    #8b65e6;
+
+  border-radius:
+    14px;
+
+  background-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.96
+    );
+
+  text-align:
+    center;
+
+  box-sizing:
+    border-box;
+}
+
+
+/* ==========================================
+   CONNECTING LINE
+========================================== */
+
+.molar-caco3-reading-label::before {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+  right: 100%;
+
+  width:
+    52px;
+
+  height:
+    2px;
+
+  background-color:
+    #8b65e6;
+
+  transform:
+    translateY(-50%);
+}
+
+
+/* ==========================================
+   CONNECTING DOT
+========================================== */
+
+.molar-caco3-reading-label::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+
+  right:
+    calc(
+      100% + 47px
+    );
+
+  width:
+    10px;
+
+  height:
+    10px;
+
+  border-radius:
+    50%;
+
+  background-color:
+    #8b65e6;
+
+  transform:
+    translateY(-50%);
+}
+
+
+/* ==========================================
+   RIGHT LABEL TEXT
+========================================== */
+
+.molar-caco3-reading-label p {
+  margin:
+    0 0 4px;
+
+  color:
+    #5b448f;
+
+  font-size:
+    14px;
+
+  font-weight:
+    700;
+}
+
+
+.molar-caco3-reading-label h2 {
+  margin: 0;
+
+  color:
+    #37228f;
+
+  font-size:
+    21px;
+
+  font-weight:
+    900;
+}
+
+
+.molar-caco3-reading-label strong {
+  display:
+    block;
+
+  margin-top:
+    5px;
+
+  color:
+    #37228f;
+
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+}
+
+
+/* ==========================================
+   SIDE TOGGLE BUTTON
+========================================== */
+
+.molar-caco3-side-container {
+  position: absolute;
+
+  top: 50%;
+  right: -62px;
+
+  z-index: 5;
+
+  width: 62px;
+  height: 140px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    none;
+
+  border-radius:
+    0 24px
+    24px 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd35f,
+      #ffc447
+    );
+
+  cursor:
+    pointer;
+
+  transform:
+    translateY(-50%);
+}
+
+
+/* ==========================================
+   SIDE ARROW
+========================================== */
+
+.molar-caco3-side-container img {
+  width:
+    34px;
+
+  height:
+    34px;
+
+  object-fit:
+    contain;
+
+  pointer-events:
+    none;
+}
+
+
+.molar-caco3-overlay-closed
+.molar-caco3-side-container {
+  pointer-events:
+    auto;
+}
+
+
+/* ==========================================
+   SHORT HEIGHT
+========================================== */
+
+@media (
+  max-height: 760px
+) {
+
+  .molar-caco3-overlay {
+    padding-top:
+      12px;
+
+    padding-bottom:
+      12px;
+  }
+
+
+  .molar-caco3-wrapper {
+    height:
+      calc(
+        100vh - 24px
+      );
+  }
+
+
+  .molar-caco3-inner {
+    padding-top:
+      58px;
+  }
+
+
+  .molar-caco3-label {
+    height:
+      60px;
+  }
+
+
+  .molar-caco3-label h1 {
+    font-size:
+      24px;
+  }
+
+
+  .molar-caco3-heading h1 {
+    margin-bottom:
+      12px;
+
+    font-size:
+      22px;
+  }
+
+
+  .molar-caco3-reading {
+    min-height:
+      95px;
+
+    padding:
+      12px 22px;
+  }
+
+
+  .molar-caco3-icon {
+    width:
+      62px;
+
+    height:
+      62px;
+  }
+
+
+  .molar-caco3-icon span {
+    font-size:
+      32px;
+  }
+
+
+  .molar-caco3-reading h2 {
+    font-size:
+      58px;
+  }
+
+
+  .molar-caco3-explanation {
+    margin-top:
+      12px;
+
+    padding:
+      13px 20px;
+  }
+
+
+  .molar-caco3-explanation-title h2 {
+    font-size:
+      19px;
+  }
+
+
+  .molar-caco3-explanation > p {
+    margin-top:
+      9px;
+
+    margin-bottom:
+      9px;
+
+    font-size:
+      14px;
+  }
+
+
+  .molar-caco3-calculation {
+    margin-top:
+      10px;
+
+    padding:
+      10px 14px;
+  }
+
+
+  .molar-caco3-calculation-row {
+    padding:
+      4px 0;
+
+    font-size:
+      14px;
+  }
+
+
+  .molar-caco3-calculation-row strong {
+    font-size:
+      16px;
+  }
+
+
+  .molar-caco3-result {
+    padding-top:
+      8px;
+
+    font-size:
+      15px;
+  }
+
+
+  .molar-caco3-result strong {
+    font-size:
+      19px;
+  }
+
+
+  .molar-caco3-button {
+    min-height:
+      45px;
+
+    margin-top:
+      12px;
+  }
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (
+  max-width: 1050px
+) {
+
+  .molar-caco3-overlay {
+    padding-right:
+      72px;
+  }
+
+
+  .molar-caco3-wrapper {
+    width:
+      100%;
+  }
+
+
+  .molar-caco3-inner {
+    display:
+      flex;
+
+    flex-direction:
+      row;
+
+    padding-right:
+      18px;
+
+    padding-left:
+      18px;
+  }
+
+
+  .molar-caco3-left {
+    width:
+      58%;
+
+    padding-right:
+      10px;
+
+    padding-left:
+      10px;
+  }
+
+
+  .molar-caco3-right {
+    width:
+      42%;
+  }
+
+
+  .molar-caco3-reading {
+    gap:
+      20px;
+
+    padding-right:
+      20px;
+
+    padding-left:
+      20px;
+  }
+
+
+  .molar-caco3-reading-label {
+    display:
+      none;
+  }
+
+
+  .molar-caco3-right > img {
+    width:
+      100%;
+
+    height:
+      88%;
+  }
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (
+  max-width: 760px
+) {
+
+  .molar-caco3-overlay {
+    padding:
+      12px
+      60px
+      12px
+      12px;
+  }
+
+
+  .molar-caco3-wrapper {
+    height:
+      calc(
+        100vh - 24px
+      );
+
+    border-width:
+      7px;
+  }
+
+
+  .molar-caco3-inner {
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    padding:
+      58px
+      15px
+      18px;
+
+    overflow-y:
+      auto;
+  }
+
+
+  .molar-caco3-left {
+    width:
+      100%;
+
+    padding:
+      5px;
+  }
+
+
+  .molar-caco3-right {
+    width:
+      100%;
+
+    min-height:
+      260px;
+
+    margin-top:
+      12px;
+  }
+
+
+  .molar-caco3-label {
+    width:
+      290px;
+
+    height:
+      58px;
+  }
+
+
+  .molar-caco3-label h1 {
+    font-size:
+      20px;
+  }
+
+
+  .molar-caco3-heading h1 {
+    font-size:
+      21px;
+  }
+
+
+  .molar-caco3-reading {
+    min-height:
+      90px;
+  }
+
+
+  .molar-caco3-reading h2 {
+    font-size:
+      52px;
+  }
+
+
+  .molar-caco3-explanation > p {
+    margin-left:
+      0;
+  }
+
+
+  .molar-caco3-divider {
+    width:
+      100%;
+
+    margin-left:
+      0;
+  }
+
+
+  .molar-caco3-calculation {
+    margin-left:
+      0;
+  }
+
+
+  .molar-caco3-right > img {
+    width:
+      80%;
+
+    height:
+      260px;
+  }
+
+
+  .molar-caco3-side-container {
+    right:
+      -50px;
+
+    width:
+      50px;
+
+    height:
+      110px;
+
+    border-radius:
+      0 18px
+      18px 0;
+  }
+
+
+  .molar-caco3-side-container img {
+    width:
+      28px;
+
+    height:
+      28px;
+  }
+}

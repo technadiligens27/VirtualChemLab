@@ -28,6 +28,7 @@ const ChemEnvironment = () => {
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef
   } = useContext(ModelContext);
 
+  const {deliveryAnimationActions,setDeliveryAnimationActions} = useContext(InteractionContext)
 
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
   const { actions, names } = useAnimations(animations, scene)
@@ -43,6 +44,23 @@ const ChemEnvironment = () => {
     }
   })
 }
+
+const hideBubblesObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase() || ""
+
+    if (childName.includes("bubble")) {
+      child.visible = false
+
+      child.traverse((labelChild) => {
+        labelChild.visible = false
+      })
+    }
+  })
+}
+
 
 const hideLabelObjects = (root) => {
   if (!root) return
@@ -175,6 +193,16 @@ const hideVerticalObjects=(root)=>{
   }
 
   const action = actions[names[0]]
+
+  const actionDeliveryGas01 = actions[names[2]]
+  const actionDeliveryGas02 = actions[names[3]]
+  const actionDeliveryGas03 = actions[names[4]]
+
+  setDeliveryAnimationActions({
+    deliveryGas01 :actionDeliveryGas01 ,
+    deliveryGas02 :actionDeliveryGas02 ,
+    deliveryGas03 :actionDeliveryGas03
+  })
 
   if (!action) return
 
@@ -330,7 +358,8 @@ if (
   hideBungObjects(scene)
   hideCloudObjects(scene)
   hideVerticalObjects(scene);
-  hideDropletObjects(scene)
+  hideDropletObjects(scene);
+  hideBubblesObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
  naohLiquidRef.current.visible = true

@@ -47,6 +47,8 @@ import InvertCylinderModel from "./InvertCylinderModel/InvertCylinderModel";
 import PlaceModelCentre from "./PlaceModelCentre/PlaceModelCentre";
 import ConnectDeliveryTube from "./ConnectDeliveryTube/ConnectDeliveryTube";
 import PourModeDeliveryTube from "./PourModeDeliveryTube/PourModeDeliveryTube";
+import CalciumCarbonateMolarReaction from "../AllReactions/CalciumCarbonateMolarReaction/CalciumCarbonateMolarReaction";
+import DeliveryTubeGasRise from "./DeliveryTubeGasRise/DeliveryTubeGasRise";
 
 const Interaction = () => {
   const {
@@ -58,7 +60,7 @@ const Interaction = () => {
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -123,11 +125,12 @@ const Interaction = () => {
       {selectedLesson===12 && lessonStep===6 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
       {selectedLesson===12 && (lessonStep===13 || lessonStep===14)  && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={24.22}/>}
 
-      {selectedLesson===13 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.77}/>}
+      {selectedLesson===13 && lessonStep==24 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.77}/>}
+      {selectedLesson===13 && lessonStep==31 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
 
       {isBuiretteClamped &&  <ClampBurette/>}  
       {selectedLesson !==13 && isClampInCenter && <PlaceClampInCenter/>}
-      {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-4.5}/>}
+      {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-5}/>}
 
       {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
       {selectedRightHand?.name==='main-Conical-Flask' && isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.3} heightOffset ={-4} scaleOffset={0.45} beakerRef={conicalBeakerRef}/>}
@@ -242,7 +245,11 @@ const Interaction = () => {
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
       {isPourModeDeliveryTube && (<PourModeDeliveryTube modelRef={testube03Ref} otherModelRef={boilingTube01Ref}/>)}
-      
+      {/* {selectedLeftHand?.name==="boiliing-tube-01" && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)} */}
+
+      {selectedLesson===13 && lessonStep==28 && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)}
+      {/* {selectedLesson===13 && lessonStep==29 && (<DeliveryTubeGasRise/>)} */}
+
     </>
   );
 };

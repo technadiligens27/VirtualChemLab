@@ -51,7 +51,8 @@ const FillBeakerBox = () => {
     }else{
       return [
         { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./EthanoicAcid.png" },        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
+        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./EthanoicAcid.png" }, 
+               { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
         { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
         { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
         { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },

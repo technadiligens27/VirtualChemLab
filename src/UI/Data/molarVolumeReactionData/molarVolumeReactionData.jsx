@@ -113,33 +113,8 @@ export const molarVolumeReactionData = [
 ]
 
 export const molarVolumeGuidelineData = [
-  {
+    {
     id: 1,
-
-    title: "Set Up the Gas Collection Apparatus",
-
-    description:
-      "Set up the boiling tube, delivery tube, water bath and inverted measuring cylinder so that carbon dioxide can be collected and measured.",
-
-    implementationSteps: [
-      "Position the boiling tube beside the stand.",
-      "Clamp the boiling tube securely in an upright position.",
-      "Place the water bath on the bench and add water to the water bath",
-      "Fill the 100 cm³ measuring cylinder with water.",
-      "Invert the measuring cylinder into the water bath.",
-      "Keep the opening of the measuring cylinder below the water surface.",
-      "Position the end of the delivery tube underneath the inverted measuring cylinder.",
-    ],
-
-    image: "./molarVolumeSetup.png",
-
-    onButtonContinue: () => {
-      setHessGuidelineNumber(false)
-    },
-  },
-
-  {
-    id: 2,
 
     title: "Measure the Ethanoic Acid",
 
@@ -161,6 +136,32 @@ export const molarVolumeGuidelineData = [
       setHessGuidelineNumber(false)
     },
   },
+  {
+    id: 2,
+
+    title: "Set Up the Gas Collection Apparatus",
+
+    description:
+      "Set up the boiling tube, delivery tube, water bath and inverted measuring cylinder so that carbon dioxide can be collected and measured.",
+
+    implementationSteps: [
+      "Position the boiling tube beside the stand.",
+      "Clamp the boiling tube upright.",
+      "Place and fill the water bath.",
+      "Fill the 100 cm³ measuring cylinder with water.",
+      "Invert the cylinder into the water bath.",
+      "Keep the cylinder opening underwater.",
+      "Place the delivery tube under the cylinder.",
+    ],
+
+    image: "./molarVolumeSetup.png",
+
+    onButtonContinue: () => {
+      setHessGuidelineNumber(false)
+    },
+  },
+
+
 
   {
     id: 3,

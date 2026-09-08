@@ -14,7 +14,7 @@ const ClampModel = ({
 
   modelScale = 1,
 
-  modelXOffset = 0,
+  modelXOffset = 0.5,
   modelYOffset = 0,
   hand
 }) => {

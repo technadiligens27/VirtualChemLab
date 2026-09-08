@@ -563,7 +563,7 @@ const PouringMode = ({
         ) {
           localPosition.add(
             new THREE.Vector3(
-              1.7,  // ✅ X OFFSET
+              2,  // ✅ X OFFSET
               -1.3, // ✅ Y OFFSET
               -0.5  // ✅ Z OFFSET
             )
@@ -1441,6 +1441,8 @@ const PouringMode = ({
             otherModelRef={boilingTube01Ref}
             otherModelAmount={0.6}
             speed={0.2}
+            otherModelColor={"#f8fafc"}     
+            otherModelOpacity={0.25}       
           />
         )}
 

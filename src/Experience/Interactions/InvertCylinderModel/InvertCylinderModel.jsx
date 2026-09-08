@@ -19,7 +19,7 @@ const InvertCylinderModel = ({
   cylinderYScale = 1,
   cylinderScale = 0.8,
 
-  liquidYOffset = 0.6,
+  liquidYOffset = 0,
 
   beakerScale = 0.7,
   beakerXScale = 0.86,

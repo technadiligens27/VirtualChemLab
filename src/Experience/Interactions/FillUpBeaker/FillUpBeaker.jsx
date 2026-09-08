@@ -120,6 +120,18 @@ const FillUpBeaker = ({
         "c2h5oh"
       )
 
+    const isEthanoicAcid =
+        liquidName.includes(
+          "ethanoic acid"
+        ) ||
+        liquidName.includes(
+          "ch3cooh"
+        ) ||
+        liquidName.includes(
+          "acetic acid"
+        )
+        
+
     const isHCL =
       liquidName.includes("hydrochloric acid") ||
       liquidName.includes("hcl")  
@@ -226,7 +238,7 @@ const FillUpBeaker = ({
       // ETHANOL
       // ======================================
 
-      if (isEthanol) {
+      if (isEthanol || isEthanoicAcid) {
         clonedMaterial.color?.set(
           "#f5fbff"
         )
@@ -489,7 +501,8 @@ else if (
   lowerBeakerName === "main-graduated-cylinder" 
 ) {
   if(selectedLesson===13 && selectedAmount===30){
-    amountRef.current = 0.6
+    amountRef.current = 0.61
+    speedRef.current = 0.45
   }else{
   amountRef.current =
     selectedAmount * 1.1

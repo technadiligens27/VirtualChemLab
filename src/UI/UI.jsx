@@ -35,6 +35,7 @@ import TitreValueRecorded from "../Experience/Interactions/TitreValueRecorded/Ti
 import QuestionCard from "./QuestionCard/QuestionCard"
 import HessCalculationStep25 from "./HessCalculationStep25/HessCalculationStep25"
 import MolarVolumeLesson from "./AllLessons/MolarVolumeLesson/MolarVolumeLesson"
+import MolarVolumeReduced from "../Experience/Interactions/MolarVolumeReduced/MolarVolumeReduced"
 
 const mainContent = [
   {

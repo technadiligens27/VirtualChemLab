@@ -159,10 +159,16 @@ export const InteractionProvider = ({ children }) => {
   const [isModelCentre,setIsModelCentre] = useState(false)
 
   const [isDeliveryTubeConnected,setIsDeliveryTubeConnected] = useState(false);
-  const [isPourModeDeliveryTube,setIsPourModeDeliveryTube] = useState(false)
+  const [isPourModeDeliveryTube,setIsPourModeDeliveryTube] = useState(false);
+
+  const [isMolarVolumeReaction,setIsMolarVolumeReaction] = useState(false);
+
+  const [deliveryAnimationActions, setDeliveryAnimationActions] = useState({
+    deliveryGas01: null,
+    deliveryGas02: null,
+    deliveryGas03:null
+  })
   
-
-
 
   const resetInteractions = () => {
   // Empty both hands
@@ -285,7 +291,8 @@ export const InteractionProvider = ({ children }) => {
   setIsClampTestube(false);
   setIsInvertCylinder(false);
   setIsModelCentre(false);
-  setIsPourModeDeliveryTube(false)
+  setIsPourModeDeliveryTube(false);
+  setIsMolarVolumeReaction(false)
 }
 
   return (
@@ -378,9 +385,9 @@ export const InteractionProvider = ({ children }) => {
         isInvertCylinder,setIsInvertCylinder,
         isModelCentre,setIsModelCentre,
         isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-        isPourModeDeliveryTube,setIsPourModeDeliveryTube
-        
-        
+        isPourModeDeliveryTube,setIsPourModeDeliveryTube,
+        isMolarVolumeReaction,setIsMolarVolumeReaction,
+        deliveryAnimationActions,setDeliveryAnimationActions                      
       }}
     >
       {children}
