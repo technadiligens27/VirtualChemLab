@@ -171,16 +171,41 @@ const ChlorinationLesson = ()=>{
       {lessonStep===16 && (<DialogBox text={<>
          Now Select <strong>Held Conical Flask</strong> and Select <strong>Place Bung</strong>
 
-  </>}/>
-      )}
-
-
+      </>}/>
+          )}
 
 
       {lessonStep===17 && (<DialogBox text={<>
-         17
+         Now <strong>Scroll Down</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong> again
         </>}/>
-      )}        
+      )}
+
+
+      {lessonStep >=17 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[4]}/>)}
+
+
+
+      {lessonStep===18 && (<DialogBox text={<>
+         Now Select <strong>Conical Flask</strong> and Select <strong>Remove Bung</strong>
+        </>}/>
+      )}  
+      {lessonStep===19 && (<DialogBox text={<>
+         Pressure Will be Released From <strong>Conical Flask</strong> 
+        </>}/>
+      )} 
+
+      {lessonStep===20 && (<DialogBox text={<>
+        Place <strong>Bung</strong> to <strong>Conical Flask</strong> again
+    </>}/>
+      )} 
+      {lessonStep===21 && (<DialogBox text={<>
+       21
+      </>}/>
+      )} 
+      {lessonStep >=21 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[5]}/>)}
+
+
+
        </>
     )
 }

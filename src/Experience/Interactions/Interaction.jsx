@@ -49,6 +49,7 @@ import ConnectDeliveryTube from "./ConnectDeliveryTube/ConnectDeliveryTube";
 import PourModeDeliveryTube from "./PourModeDeliveryTube/PourModeDeliveryTube";
 import CalciumCarbonateMolarReaction from "../AllReactions/CalciumCarbonateMolarReaction/CalciumCarbonateMolarReaction";
 import DeliveryTubeGasRise from "./DeliveryTubeGasRise/DeliveryTubeGasRise";
+import ConicalGasCloud from "./ConicalGasCoud/ConicalGasCoud";
 
 const Interaction = () => {
   const {
@@ -226,6 +227,7 @@ const Interaction = () => {
       {selectedLesson ===12.1 && (lessonStep ===32 || lessonStep===38) && <SwirlModel modelRef={normalBeakerRef} useTargetSwirls={true}/> }
 
       {selectedLesson ===14 && lessonStep ===15 && <SwirlModel modelRef={conicalBeakerRef} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14 && lessonStep ===17 && <SwirlModel modelRef={conicalBeakerRef} useTargetSwirls={true} targetSwirls={3}/> }
 
       
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
@@ -253,6 +255,8 @@ const Interaction = () => {
 
       {selectedLesson===13 && lessonStep==28 && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)}
       {/* {selectedLesson===13 && lessonStep==29 && (<DeliveryTubeGasRise/>)} */}
+
+      {selectedLesson===14 && lessonStep==19 && <ConicalGasCloud/>}
 
     </>
   );

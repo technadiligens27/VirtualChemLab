@@ -3374,7 +3374,7 @@ useEffect(()=>{
           )
         }
 
-        if(selectedLesson===14 && lessonStep===16){
+        if(selectedLesson===14 && [16,20].includes(lessonStep)){
           return(
             <>
               <button onClick={placeConicalBung}>
@@ -3384,6 +3384,18 @@ useEffect(()=>{
             </>
           )
         }
+
+        if(selectedLesson===14 && lessonStep===18){
+          return(
+            <>
+              <button onClick={removeConicalBung}>
+                Remove Bung
+              </button>
+            
+            </>
+          )
+        }
+
       }
     }
 
@@ -3945,9 +3957,18 @@ const placeConicalBung = ()=>{
   if(selectedLesson===14 && lessonStep===16){
     setLessonStep(17)
   }
+  if(selectedLesson===14 && lessonStep===20){
+    setLessonStep(21)
+  }  
   conicalBungRef.current.visible=true
 }
 
+const removeConicalBung=()=>{
+  if(selectedLesson===14 && lessonStep===18){
+    setLessonStep(19)
+  }
+  conicalBungRef.current.visible=false
+}
 
 
 const renderVolumetricHeldButtons = ()=>{

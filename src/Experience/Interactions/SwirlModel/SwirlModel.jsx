@@ -510,7 +510,16 @@ const SwirlModel = ({
 
           setLessonStep(39)
         }
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14 &&
+          lessonStep === 17
+        ) {
+          lessonAdvancedRef.current =
+            true
 
+          setLessonStep(18)
+        }
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14 &&
