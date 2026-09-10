@@ -10,17 +10,17 @@ const MolarReactionCylinder = ({
   // ==========================================
   liquidOffsetY = 0.5,
   liquidScaleDecrease = 0.12,
-  startDelay = 2000,
+  startDelay = 3000,
   decreaseSpeed = 0.5,
 
   // ==========================================
   // GAS BUBBLES
   // ==========================================
   bubbleRiseHeight = 3.5,
-  bubbleRiseSpeed = 0.5,
+  bubbleRiseSpeed = 0.3,
   bubbleRandomness = 1500,
   bubbleLoop = false,
-  bubbleLoopDelay = 0,
+  bubbleLoopDelay =4000,
 }) => {
   useEffect(() => {
     const model =

@@ -1,115 +1,107 @@
 export const molarVolumeReactionData = [
-  {
-    id: 1,
+{
+  id: 1,
 
-    topTitle: "Molar Volume of a Gas",
+  topTitle: "Molar Volume of a Gas",
 
-    label: "Calcium Carbonate with Ethanoic Acid",
+  label: "Calcium Carbonate with Ethanoic Acid",
 
-    title: (
-      <>
-        Calcium Carbonate with
-        <br />
-        Ethanoic Acid
-      </>
-    ),
+  title: (
+    <>
+      Calcium Carbonate with
+      <br />
+      Ethanoic Acid
+    </>
+  ),
 
-    reactionType: "Gas-Producing Reaction",
+  reactionType: "Gas-Producing Reaction",
 
-    reactionIcon: "🫧",
+  reactionIcon: "🫧",
 
-    equation: [
-      {
-        id: "reactant-1",
-        content: (
-          <>
-            CaCO<sub>3</sub>(s)
-          </>
-        ),
-      },
+  equation: [
+    {
+      id: "reactant-1",
+      content: (
+        <>
+          CaCO<sub>3</sub>(s)
+        </>
+      ),
+    },
+    {
+      id: "plus-1",
+      content: "+",
+    },
+    {
+      id: "reactant-2",
+      content: (
+        <>
+          2CH<sub>3</sub>COOH(aq)
+        </>
+      ),
+    },
+    {
+      id: "arrow",
+      content: "→",
+      className: "reaction-one-arrow",
+    },
+    {
+      id: "product-1",
+      content: (
+        <>
+          Ca(CH<sub>3</sub>COO)<sub>2</sub>(aq)
+        </>
+      ),
+    },
+    {
+      id: "plus-2",
+      content: "+",
+    },
+    {
+      id: "product-2",
+      content: (
+        <>
+          H<sub>2</sub>O(l)
+        </>
+      ),
+    },
+    {
+      id: "plus-3",
+      content: "+",
+    },
+    {
+      id: "product-3",
+      content: (
+        <>
+          CO<sub>2</sub>(g)
+        </>
+      ),
+    },
+  ],
 
-      {
-        id: "plus-1",
-        content: "+",
-      },
+  noticeTitle: "What You Should Notice",
 
-      {
-        id: "reactant-2",
-        content: (
-          <>
-            2CH<sub>3</sub>COOH(aq)
-          </>
-        ),
-      },
+  notices: [
+    "Carbon dioxide bubbles are produced.",
+    "The calcium carbonate gradually reacts.",
+    "The gas collects in the inverted measuring cylinder.",
+    "The water level falls as the gas volume increases.",
+  ],
 
-      {
-        id: "arrow",
-        content: "→",
-        className: "reaction-one-arrow",
-      },
+  informationTitle: "What Happens",
 
-      {
-        id: "product-1",
-        content: (
-          <>
-            Ca(CH<sub>3</sub>COO)<sub>2</sub>(aq)
-          </>
-        ),
-      },
+  information: [
+    "Calcium carbonate reacts with ethanoic acid to form calcium ethanoate, water and carbon dioxide.",
+    "Carbon dioxide travels through the delivery tube and collects over water.",
+    "The measured gas volume is used to determine its molar volume.",
+  ],
 
-      {
-        id: "plus-2",
-        content: "+",
-      },
+  importantTitle: "Important:",
 
-      {
-        id: "product-2",
-        content: (
-          <>
-            H<sub>2</sub>O(l)
-          </>
-        ),
-      },
+  importantText:
+    "Replace the bung quickly to prevent carbon dioxide from escaping.",
 
-      {
-        id: "plus-3",
-        content: "+",
-      },
-
-      {
-        id: "product-3",
-        content: (
-          <>
-            CO<sub>2</sub>(g)
-          </>
-        ),
-      },
-    ],
-
-    noticeTitle: "What You Should Notice",
-
-    notices: [
-      "Bubbles of carbon dioxide gas are produced.",
-      "The calcium carbonate gradually reacts with the ethanoic acid.",
-      "Carbon dioxide collects in the inverted measuring cylinder.",
-      "The water level inside the measuring cylinder decreases as the gas volume increases.",
-    ],
-
-    informationTitle: "What Happens",
-
-    information: [
-      "Calcium carbonate reacts with ethanoic acid to produce calcium ethanoate, water and carbon dioxide.",
-      "The carbon dioxide travels through the delivery tube and is collected over water in the inverted measuring cylinder.",
-      "The volume of carbon dioxide produced is measured and used to determine the molar volume of the gas.",
-    ],
-
-    importantTitle: "Important:",
-
-    importantText:
-      "Quickly replace the bung after adding the calcium carbonate so that carbon dioxide is not lost before it can be collected.",
-
-    buttonText: "Start Experiment",
-  },
+  buttonText: "Start Experiment",
+},
 ]
 
 export const molarVolumeGuidelineData = [
@@ -178,7 +170,7 @@ export const molarVolumeGuidelineData = [
       "Return the calcium carbonate container to the table.",
     ],
 
-    image: "./prepareCalciumCarbonate.png",
+    image: "./TestubePottasiumAdd.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -201,7 +193,7 @@ export const molarVolumeGuidelineData = [
       "Remove the test tube from the balance.",
     ],
 
-    image: "./weighCalciumCarbonate.png",
+    image: "./weighTestube.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

@@ -222,7 +222,11 @@ const Interaction = () => {
           />
         )}
 
+
       {selectedLesson ===12.1 && (lessonStep ===32 || lessonStep===38) && <SwirlModel modelRef={normalBeakerRef} useTargetSwirls={true}/> }
+
+      {selectedLesson ===14 && lessonStep ===15 && <SwirlModel modelRef={conicalBeakerRef} useTargetSwirls={true} targetSwirls={3}/> }
+
       
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
 

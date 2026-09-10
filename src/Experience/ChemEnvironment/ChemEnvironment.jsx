@@ -25,10 +25,10 @@ const ChemEnvironment = () => {
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
-         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef
+         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef
   } = useContext(ModelContext);
 
-  const {deliveryAnimationActions,setDeliveryAnimationActions} = useContext(InteractionContext)
+  const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
 
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
   const { actions, names } = useAnimations(animations, scene)
@@ -192,11 +192,21 @@ const hideVerticalObjects=(root)=>{
     return
   }
 
-  const action = actions[names[0]]
+  const action = actions[names[3]]
 
-  const actionDeliveryGas01 = actions[names[2]]
-  const actionDeliveryGas02 = actions[names[3]]
-  const actionDeliveryGas03 = actions[names[4]]
+  const actionDeliveryGas01 = actions[names[5]]
+  const actionDeliveryGas02 = actions[names[6]]
+  const actionDeliveryGas03 = actions[names[7]]
+
+  const actionConicalGas01 = actions[names[0]]
+  const actionConicalGas02 = actions[names[1]]
+  const actionConicalGas03 = actions[names[2]]
+
+  setConcialGasAnimationAction({
+    conicalGas01: actionConicalGas01,
+    conicalGas02: actionConicalGas02,
+    conicalGas03:actionConicalGas03
+  })
 
   setDeliveryAnimationActions({
     deliveryGas01 :actionDeliveryGas01 ,
@@ -344,6 +354,7 @@ if (
   thermometerLiquidRef.current = scene.getObjectByName('Thermometer-liquid');
   mainPolystereneLid.current = scene.getObjectByName('polysterene-cup-lid');
   phenopthalineBottleRef.current = scene.getObjectByName('phenopthaline-dropper-bottle');
+  conicalBungRef.current = scene.getObjectByName('conical-bung');
 
   waterBottleRef.current = scene.getObjectByName('water-bottle');
   naohBottleRef.current.visible = false

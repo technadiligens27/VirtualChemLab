@@ -36,6 +36,8 @@ import QuestionCard from "./QuestionCard/QuestionCard"
 import HessCalculationStep25 from "./HessCalculationStep25/HessCalculationStep25"
 import MolarVolumeLesson from "./AllLessons/MolarVolumeLesson/MolarVolumeLesson"
 import MolarVolumeReduced from "../Experience/Interactions/MolarVolumeReduced/MolarVolumeReduced"
+import MolarVolumeResults from "./MolarVolumeResults/MolarVolumeResults"
+import ChlorinationLesson from "./AllLessons/ChlorinationLesson/ChlorinationLesson"
 
 const mainContent = [
   {
@@ -153,7 +155,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowMeasuringCylinder50Arrow(
-      (selectedLesson===13 && lessonStep==3.1)
+      (selectedLesson===13 && lessonStep==3.1) ||
+      (selectedLesson===14 && lessonStep==3)
     )
   },[selectedLesson,lessonStep])
 
@@ -317,7 +320,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowArrowConicalArrow(
-      (selectedLesson===12.2 && lessonStep==72)
+      (selectedLesson===12.2 && lessonStep==72) ||
+      (selectedLesson ===14 && lessonStep===6)
     )
   },[selectedLesson,lessonStep])
 
@@ -622,7 +626,13 @@ useEffect(() => {
           <MolarVolumeLesson/>
         )
        }
-
+       {safetyStep === 4 &&
+        isLessonStart &&
+        selectedLesson===14 && (
+          <ChlorinationLesson/>
+        )
+       }
+        {/* {<MolarVolumeResults/>} */}
        {/* {<HessCalculationStep25/>} */}
        {/* <TitreValueRecorded/> */}
 

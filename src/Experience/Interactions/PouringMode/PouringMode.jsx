@@ -62,7 +62,8 @@ const PouringMode = ({
     normalBeakerRef,
     volumetricRef,
     waterBottleRef,
-    boilingTube01Ref
+    boilingTube01Ref,
+    conicalBeakerRef
   } = useContext(ModelContext)
 
   const {
@@ -530,63 +531,53 @@ const PouringMode = ({
             worldPosition.clone()
           )
 
-        if (isKettle) {
-          localPosition.add(
-            new THREE.Vector3(
-              1.5,
-              0.3,
-              -0.8
-            )
-          )
-        } else if (
-          isConicalFlask
-        ) {
-          localPosition.add(
-            new THREE.Vector3(
-              2,
-              -0.3,
-              -0.5
-            )
-          )
-
-        // =====================================================
-        // ✅ CHANGED
-        // RIGHT HAND = GRADUATED CYLINDER
-        // LEFT HAND  = BOILING TUBE
-        //
-        // CHANGE THESE 3 VALUES TO CONTROL ITS POSITION.
-        // =====================================================
-
-        } else if (
-          isGraduatedCylinder &&
-          isBoilingTube
-        ) {
-          localPosition.add(
-            new THREE.Vector3(
-              2,  // ✅ X OFFSET
-              -1.3, // ✅ Y OFFSET
-              -0.5  // ✅ Z OFFSET
-            )
-          )
-
-        // =====================================================
-        // END OF NEW SPECIAL POSITION
-        // =====================================================
-
-        } else if (
-          isGraduatedCylinder
-        ) {
-          // Existing graduated cylinder position
-          // for every other receiving object.
-
-          localPosition.add(
-            new THREE.Vector3(
-              3,
-              -0.5,
-              -0.5
-            )
-          )
-        } else if (
+ if (isKettle) {
+  localPosition.add(
+    new THREE.Vector3(
+      1.5,
+      0.3,
+      -0.8
+    )
+  )
+} else if (
+  isGraduatedCylinder &&
+  isBoilingTube
+) {
+  localPosition.add(
+    new THREE.Vector3(
+      2,
+      -1.3,
+      -0.5
+    )
+  )
+} else if (
+  isGraduatedCylinder &&
+  isConicalFlask
+) {
+  localPosition.add(
+    new THREE.Vector3(
+      1.5,    // X offset
+      -1.3, // Y offset
+      -0.5  // Z offset
+    )
+  )
+} else if (isConicalFlask) {
+  localPosition.add(
+    new THREE.Vector3(
+      2,
+      -0.3,
+      -0.5
+    )
+  )
+} else if (isGraduatedCylinder) {
+  localPosition.add(
+    new THREE.Vector3(
+      3,
+      -0.5,
+      -0.5
+    )
+  )
+}else if (
           isTestube04 ||
           isTestube05 ||
           isTestube06
@@ -840,6 +831,12 @@ const PouringMode = ({
             null
           )
 
+          if(selectedLesson===14 && lessonStep===9){
+            setLessonStep(10)
+          }
+          if(selectedLesson===14 && lessonStep===14){
+            setLessonStep(15)
+          }
           // Lesson 8
           if (
             selectedLesson ===
@@ -1023,6 +1020,22 @@ const PouringMode = ({
         setPouringModeHand(
           requestedHand
         )
+
+        if (
+          selectedLesson ===
+            14 &&
+          lessonStep === 7
+        ) {
+          setLessonStep(8)
+        }
+
+        if (
+          selectedLesson ===
+            14 &&
+          lessonStep === 12
+        ) {
+          setLessonStep(13)
+        }        
 
         // Lesson 8
         if (
@@ -1446,6 +1459,31 @@ const PouringMode = ({
           />
         )}
 
+      {selectedLesson ==14 && lessonStep===8 && hand === "right" &&
+        selectedRightHand?.name ===
+          "main-graduated-cylinder" && (
+          <PourFromGraduatedCylinder
+            isPouring={isPouring}
+            otherModelRef={conicalBeakerRef}
+            otherModelAmount={0.15}
+            speed={0.2}
+            otherModelColor={"#f8fafc"}     
+            otherModelOpacity={0.25}       
+          />
+        )}
+
+      {selectedLesson ==14 &&  lessonStep===13 && hand === "right" &&
+        selectedRightHand?.name ===
+          "main-graduated-cylinder" && (
+          <PourFromGraduatedCylinder
+            isPouring={isPouring}
+            otherModelRef={conicalBeakerRef}
+            otherModelAmount={0.45}
+            speed={0.2}
+            otherModelColor={"#f8fafc"}     
+            otherModelOpacity={0.25}       
+          />
+        )}
 
       {[11, 11.1].includes(
         selectedLesson

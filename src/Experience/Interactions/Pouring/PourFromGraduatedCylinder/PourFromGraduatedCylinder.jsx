@@ -564,6 +564,28 @@ const PourFromGraduatedCylinder = ({
 
           if (
             selectedLesson ===
+              14 &&
+            lessonStep ===
+              13
+          ) {
+            setLessonStep(
+              14
+            )
+          }
+          
+
+          if (
+            selectedLesson ===
+              14 &&
+            lessonStep ===
+              8
+          ) {
+            setLessonStep(
+              9
+            )
+          }
+          if (
+            selectedLesson ===
               10 &&
             lessonStep ===
               23

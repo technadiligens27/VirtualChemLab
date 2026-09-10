@@ -503,7 +503,16 @@ else if (
   if(selectedLesson===13 && selectedAmount===30){
     amountRef.current = 0.61
     speedRef.current = 0.45
-  }else{
+  }
+  else if(selectedLesson===14 && selectedAmount===35){
+    amountRef.current = 0.7
+    speedRef.current = 0.47
+  }  
+  else if(selectedLesson===14 && selectedAmount===10){
+    amountRef.current = 0.2
+    speedRef.current = 0.25
+  }
+  else{
   amountRef.current =
     selectedAmount * 1.1
 
@@ -547,6 +556,7 @@ else if (
     fillData?.name,
     fillData?.color,
     fillData?.amount,
+    selectedLesson
   ])
 
   // ==========================================
@@ -796,6 +806,14 @@ else if (
      if(selectedLesson==13 && lessonStep ===3.3){
       setLessonStep(3.4)
     }   
+
+    if ( selectedLesson === 14 && lessonStep === 5 ) {
+      setLessonStep(6)
+    }  
+    
+    if ( selectedLesson === 14 && lessonStep === 11 ) {
+      setLessonStep(12)
+    }     
   }
 )
 

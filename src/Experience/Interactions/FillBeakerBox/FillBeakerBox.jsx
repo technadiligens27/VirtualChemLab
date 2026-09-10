@@ -57,8 +57,8 @@ const FillBeakerBox = () => {
         { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
         { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
         { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
-        { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
-        { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
+        // { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
+        { name: "2-Methylpropan-2-ol", color: "#F2F7FA", imgPath: "./2-Methylpropan-2-ol.png" },
       ]
     }
   }
@@ -76,7 +76,7 @@ const FillBeakerBox = () => {
       return [10,30,50,80,100]
     } 
     if (fillBeakerModel === "main-graduated-cylinder" || "main-testube-04" || "main-testube-05") {
-      return [5, 10, 20,  25, 30, 50]
+      return [5, 10, 20,30,35, 50]
     }
     
 
@@ -154,6 +154,18 @@ const FillBeakerBox = () => {
     setIsFillBeakerBoxOpen(false)
     setIsFillUpBeaker(true)
   }
+
+  useEffect(()=>{
+    if(lessonStep===4 && selectedLesson ===14){
+      setLessonStep(5)
+    }
+    if(lessonStep===10 && selectedLesson ===14){
+      setLessonStep(11)
+    }
+  },[lessonStep,selectedLesson])
+
+  
+
 
   useEffect(()=>{
     if(lessonStep===3.2 && selectedLesson ===13){

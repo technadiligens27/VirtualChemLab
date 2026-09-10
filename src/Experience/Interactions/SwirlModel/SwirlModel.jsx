@@ -510,6 +510,18 @@ const SwirlModel = ({
 
           setLessonStep(39)
         }
+
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14 &&
+          lessonStep === 15
+        ) {
+          lessonAdvancedRef.current =
+            true
+
+          setLessonStep(16)
+        }
+
       }
     }
   })

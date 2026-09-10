@@ -54,6 +54,7 @@ export const ModelProvider = ({ children }) => {
   const boilingTube01Ref = useRef(null);
   const graduatedCylinder100Ref = useRef(null)
   const deliveryTubeBungRef = useRef(null)
+  const conicalBungRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -159,7 +160,7 @@ export const ModelProvider = ({ children }) => {
         arrowBoilingTube01Ref,arrowMeasuringCylnder,
         graduatedCylinder100Ref,deliveryTubeBungRef,
         arrowMeasuringCylnder50,arrowTestube03Ref,
-        arrowBromobutanRef,testube03CapRef
+        arrowBromobutanRef,testube03CapRef,conicalBungRef
       }}
     >
       {children}

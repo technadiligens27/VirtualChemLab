@@ -14,13 +14,18 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import MolarVolumeLiveDataPanel from "../../../Experience/Interactions/MolarVolumeLiveDataPanel/MolarVolumeLiveDataPanel";
 import MolarVolumeReduced from "../../../Experience/Interactions/MolarVolumeReduced/MolarVolumeReduced";
 import MolarVolumeCalciumCarbonateUsed from "../../../Experience/Interactions/MolarVolumeCalciumCarbonateUsed/MolarVolumeCalciumCarbonateUsed";
+import MolarVolumeResults from "../../MolarVolumeResults/MolarVolumeResults";
+import QuestionCard from "../../QuestionCard/QuestionCard";
+import {useResetLesson} from "../../ResetLessonButton/ResetLessonButton.jsx"
+
 
 const MolarVolumeLesson = ()=>{
 
-    const {isFillBeakerBoxOpen} = useContext(InteractionContext)
+    const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
     const {graduatedBeakerRef} = useContext(ModelContext)
 
+    const resetLesson = useResetLesson()
 
  return(
        <>
@@ -73,7 +78,7 @@ const MolarVolumeLesson = ()=>{
       )}
 
       {lessonStep===3.3 && (<DialogBox text={<>
-         Fill With <strong>Ethanoic (30 cm³)</strong> 
+         
         </>}/>
       )}   
 
@@ -196,7 +201,7 @@ const MolarVolumeLesson = ()=>{
       )} 
 
       {lessonStep===17 && (<DialogBox text={<>
-         Select <strong>Calcium Carbonate </strong>Container and take<strong>Calcium Carbonate</strong>
+         Select <strong>Calcium Carbonate </strong>Container and take <strong>Calcium Carbonate</strong>
         </>}/>
       )}
 
@@ -309,10 +314,255 @@ const MolarVolumeLesson = ()=>{
         </>}/>
       )}
 
-      {lessonStep===32 && <MolarVolumeCalciumCarbonateUsed/>}
+      {lessonStep===32 && <MolarVolumeCalciumCarbonateUsed onButtonContinue={()=>setLessonStep(33)}/>}
 
 
+      {lessonStep===33 && <MolarVolumeResults/>}
 
+      {lessonStep==33 && <DialogBox
+      text={"Core Practical One Finished!"}
+          button1Text = "Questions"
+          button2Text="End Lesson"
+          onbtnClick=
+          {() => {
+             setShowQuestionCardNo(13.1)
+          }}
+
+          onbtn2Click={resetLesson}
+      />}
+
+      {
+      showQuestionCardNo ==13.1 && (<QuestionCard
+      questionSetTitle="Question Set — Molar Volume of a Gas"
+
+      questionNumber={1}
+
+      question="Why is the carbon dioxide collected in an inverted measuring cylinder?"
+
+      answers={[
+        {
+          id: "A",
+          text: "To measure the volume of gas produced",
+        },
+        {
+          id: "B",
+          text: "To increase the reaction temperature",
+        },
+        {
+          id: "C",
+          text: "To dissolve the calcium carbonate",
+        },
+        {
+          id: "D",
+          text: "To measure the mass of the gas",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about how the collected carbon dioxide can be measured."
+
+      correctMessage="Correct! The inverted measuring cylinder allows the volume of carbon dioxide produced to be measured."
+
+      incorrectMessage="Incorrect. The carbon dioxide is collected in an inverted measuring cylinder so its volume can be measured."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(13.2)
+      }}
+    />
+    )      
+      }
+
+      {
+        showQuestionCardNo ===13.2 && (<QuestionCard
+  questionSetTitle="Question Set — Molar Volume of a Gas"
+
+  questionNumber={2}
+
+  question="Why is the bung replaced quickly after adding the calcium carbonate?"
+
+  answers={[
+    {
+      id: "A",
+      text: "To prevent carbon dioxide from escaping",
+    },
+    {
+      id: "B",
+      text: "To stop the reaction",
+    },
+    {
+      id: "C",
+      text: "To cool the boiling tube",
+    },
+    {
+      id: "D",
+      text: "To increase the mass of calcium carbonate",
+    },
+  ]}
+
+  correctAnswer="A"
+
+  hintText="Think about what could happen to the gas before the apparatus is sealed."
+
+  correctMessage="Correct! Replacing the bung quickly prevents carbon dioxide from escaping."
+
+  incorrectMessage="Incorrect. The bung is replaced quickly to prevent carbon dioxide from escaping before it can be collected."
+
+  submitButtonText="Submit Answer"
+
+  continueButtonText="Continue"
+
+  onContinue={() => {
+    setShowQuestionCardNo(13.3)
+  }}
+/>)
+      }
+
+
+{
+  showQuestionCardNo === 13.3 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Molar Volume of a Gas"
+
+      questionNumber={3}
+
+      question="Why is the test tube containing calcium carbonate weighed before and after the reaction?"
+
+      answers={[
+        {
+          id: "A",
+          text: "To determine the mass of calcium carbonate used by difference",
+        },
+        {
+          id: "B",
+          text: "To measure the volume of ethanoic acid",
+        },
+        {
+          id: "C",
+          text: "To find the concentration of ethanoic acid",
+        },
+        {
+          id: "D",
+          text: "To measure the volume of carbon dioxide",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about the difference between the test-tube masses before and after transferring the calcium carbonate."
+
+      correctMessage="Correct! The difference between the two masses gives the mass of calcium carbonate used."
+
+      incorrectMessage="Incorrect. The test tube is weighed before and after the transfer to determine the mass of calcium carbonate used by difference."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(13.4)
+      }}
+    />
+  )
+}
+
+
+{
+  showQuestionCardNo === 13.4 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Molar Volume of a Gas"
+
+      questionNumber={4}
+
+      question="What happens to the volume of carbon dioxide collected as more calcium carbonate is used?"
+
+      answers={[
+        {
+          id: "A",
+          text: "It generally increases",
+        },
+        {
+          id: "B",
+          text: "It always decreases",
+        },
+        {
+          id: "C",
+          text: "It remains zero",
+        },
+        {
+          id: "D",
+          text: "It becomes negative",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about how using more calcium carbonate affects the amount of carbon dioxide produced."
+
+      correctMessage="Correct! Using more calcium carbonate generally produces a greater volume of carbon dioxide."
+
+      incorrectMessage="Incorrect. As more calcium carbonate is used, the volume of carbon dioxide collected generally increases."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(13.5)
+      }}
+    />
+  )
+}
+{
+  showQuestionCardNo === 13.5 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Molar Volume of a Gas"
+
+      questionNumber={5}
+
+      question="What is the mole ratio of calcium carbonate to carbon dioxide in this reaction?"
+
+      answers={[
+        {
+          id: "A",
+          text: "1 : 1",
+        },
+        {
+          id: "B",
+          text: "1 : 2",
+        },
+        {
+          id: "C",
+          text: "2 : 1",
+        },
+        {
+          id: "D",
+          text: "2 : 3",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Look at the coefficients of calcium carbonate and carbon dioxide in the balanced equation."
+
+      correctMessage="Correct! One mole of calcium carbonate produces one mole of carbon dioxide, giving a 1 : 1 ratio."
+
+      incorrectMessage="Incorrect. The balanced equation shows that calcium carbonate and carbon dioxide have a 1 : 1 mole ratio."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(null)
+      }}
+    />
+  )
+}
       <MolarVolumeLiveDataPanel
         trialNumber={1}
         totalTrials={7}

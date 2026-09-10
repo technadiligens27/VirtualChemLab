@@ -169,7 +169,11 @@ export const InteractionProvider = ({ children }) => {
     deliveryGas03:null
   })
   
-
+  const [concialGasAnimationActions, setConcialGasAnimationAction] = useState({
+    conicalGas01: null,
+    conicalGas02: null,
+    conicalGas03:null
+  })
   const resetInteractions = () => {
   // Empty both hands
   setSelectedLeftHand(false)
@@ -292,7 +296,8 @@ export const InteractionProvider = ({ children }) => {
   setIsInvertCylinder(false);
   setIsModelCentre(false);
   setIsPourModeDeliveryTube(false);
-  setIsMolarVolumeReaction(false)
+  setIsMolarVolumeReaction(false);
+  setConcialGasAnimationAction(false)
 }
 
   return (
@@ -387,7 +392,8 @@ export const InteractionProvider = ({ children }) => {
         isDeliveryTubeConnected,setIsDeliveryTubeConnected,
         isPourModeDeliveryTube,setIsPourModeDeliveryTube,
         isMolarVolumeReaction,setIsMolarVolumeReaction,
-        deliveryAnimationActions,setDeliveryAnimationActions                      
+        deliveryAnimationActions,setDeliveryAnimationActions,
+        concialGasAnimationActions, setConcialGasAnimationAction                      
       }}
     >
       {children}
