@@ -1,4 +1,9 @@
+import { useContext } from "react"
 import "./DialogBox.css"
+
+import {
+  InteractionContext,
+} from "../../../Contexts/InteractionContext/InteractionContext"
 
 const DialogBox = ({
   text,
@@ -11,11 +16,19 @@ const DialogBox = ({
   onbtn2Click,
   onbtn3Click,
 }) => {
+  const {
+    isFillBeakerBoxOpen,
+  } = useContext(InteractionContext)
+
   return (
-    <div className="dialog-box-container">
-
+    <div
+      className={`dialog-box-container ${
+        isFillBeakerBoxOpen
+          ? "dialog-z-index"
+          : ""
+      }`}
+    >
       <div className="dialog-box-inner">
-
         <div className="dialog-icon-container">
           <img
             src="./info.png"
@@ -26,11 +39,9 @@ const DialogBox = ({
         <p className="dialog-box-text">
           {text}
         </p>
-
       </div>
 
       <div className="result-dialog-btn-container">
-
         {onbtnClick && (
           <button
             className="result-btn"
@@ -57,9 +68,7 @@ const DialogBox = ({
             {button3Text}
           </button>
         )}
-
       </div>
-
     </div>
   )
 }

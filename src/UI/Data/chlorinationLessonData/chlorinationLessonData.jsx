@@ -1,8 +1,6 @@
 export const chlorinationGuidelineData = [
- 
   {
     id: 2,
-
     title: "Measure 2-Methylpropan-2-ol",
 
     description:
@@ -27,7 +25,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 3,
-
     title: "Measure Concentrated Hydrochloric Acid",
 
     description:
@@ -52,7 +49,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 4,
-
     title: "Gently Swirl the Flask",
 
     description:
@@ -74,7 +70,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 5,
-
     title: "Fit the Bung",
 
     description:
@@ -82,7 +77,7 @@ export const chlorinationGuidelineData = [
 
     implementationSteps: [
       "Pick up the bung.",
-      "Fit the bung into the conical flask.",
+      "Fit the bung securely into the conical flask.",
       "Pick up the sealed conical flask.",
       "Gently swirl its contents.",
     ],
@@ -96,7 +91,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 6,
-
     title: "Release the Pressure",
 
     description:
@@ -118,17 +112,17 @@ export const chlorinationGuidelineData = [
 
   {
     id: 7,
-
     title: "Continue Mixing the Reaction",
 
     description:
       "Continue swirling the mixture for approximately 20 minutes while periodically removing the bung to release pressure.",
 
     implementationSteps: [
-      "Replace the bung.",
+      "Replace the bung securely.",
       "Gently swirl the conical flask.",
       "Remove the bung periodically.",
       "Allow the accumulated pressure to escape.",
+      "Replace the bung before swirling again.",
       "Repeat the swirling and pressure-release process.",
       "Continue until the reaction timer finishes.",
       "Allow the mixture to form two liquid layers.",
@@ -143,20 +137,18 @@ export const chlorinationGuidelineData = [
 
   {
     id: 8,
-
-    title: "Add Anhydrous Calcium Chloride",
+    title: "Add Anhydrous Calcium Chloride and Replace Bung" ,
 
     description:
-      "Add approximately 6 g of powdered anhydrous calcium chloride to help remove unreacted alcohol from the organic product.",
+      "Add approximately 6 g of powdered anhydrous calcium chloride, replace the bung and swirl the flask to help remove unreacted alcohol from the organic product.",
 
     implementationSteps: [
-      "Remove the bung from the conical flask.",
-      "Pick up the calcium chloride container.",
-      "Pick up the spatula.",
-      "Add approximately 6 g of calcium chloride.",
-      "Return the spatula and container to the table.",
-      "Replace the bung.",
-      "Swirl until the calcium chloride dissolves.",
+      "Remove the bung.",
+      "Add approximately 6 g of calcium chloride using the spatula.",
+      "Return the equipment to the table.",
+      "Replace the bung securely.",
+      "Gently swirl until the calcium chloride dissolves.",
+      "Return the flask to the table.",
     ],
 
     image: "./addCalciumChloride.png",
@@ -168,7 +160,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 9,
-
     title: "Transfer the Reaction Mixture",
 
     description:
@@ -193,7 +184,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 10,
-
     title: "Allow the Layers to Settle",
 
     description:
@@ -216,7 +206,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 11,
-
     title: "Remove the Lower Aqueous Layer",
 
     description:
@@ -240,7 +229,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 12,
-
     title: "Add Sodium Hydrogencarbonate Solution",
 
     description:
@@ -263,7 +251,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 13,
-
     title: "Release Carbon Dioxide Pressure",
 
     description:
@@ -288,7 +275,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 14,
-
     title: "Remove the Washed Aqueous Layer",
 
     description:
@@ -313,7 +299,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 15,
-
     title: "Repeat the Wash",
 
     description:
@@ -325,6 +310,7 @@ export const chlorinationGuidelineData = [
       "Replace the bung.",
       "Gently shake the separating funnel.",
       "Remove the bung frequently to release pressure.",
+      "Replace the bung before shaking again.",
       "Continue until the bubbling becomes less intense.",
     ],
 
@@ -337,7 +323,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 16,
-
     title: "Discard the Second Aqueous Layer",
 
     description:
@@ -362,7 +347,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 17,
-
     title: "Transfer the Organic Product",
 
     description:
@@ -384,7 +368,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 18,
-
     title: "Dry the Organic Product",
 
     description:
@@ -395,7 +378,8 @@ export const chlorinationGuidelineData = [
       "Pick up the spatula.",
       "Add one full spatula of anhydrous sodium sulfate.",
       "Return the spatula and container to the table.",
-      "Insert the bung into the conical flask.",
+      "Pick up the bung.",
+      "Fit the bung securely into the conical flask.",
       "Gently swirl the contents.",
       "Leave the mixture to stand.",
       "Swirl occasionally until the liquid becomes clear.",
@@ -410,7 +394,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 19,
-
     title: "Decant the Dried Liquid",
 
     description:
@@ -433,7 +416,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 20,
-
     title: "Assemble the Distillation Apparatus",
 
     description:
@@ -457,7 +439,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 21,
-
     title: "Heat the Mixture",
 
     description:
@@ -480,7 +461,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 22,
-
     title: "Collect the Correct Fraction",
 
     description:
@@ -503,7 +483,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 23,
-
     title: "Store the Purified Product",
 
     description:
@@ -526,7 +505,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 24,
-
     title: "Prepare the Product Sample",
 
     description:
@@ -548,7 +526,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 25,
-
     title: "Add Ethanol and Sodium Hydroxide",
 
     description:
@@ -571,7 +548,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 26,
-
     title: "Warm the Product Sample",
 
     description:
@@ -594,7 +570,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 27,
-
     title: "Acidify the Mixture",
 
     description:
@@ -616,7 +591,6 @@ export const chlorinationGuidelineData = [
 
   {
     id: 28,
-
     title: "Test for Chloride Ions",
 
     description:

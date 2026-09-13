@@ -313,7 +313,11 @@ const transformControlsRef = useRef()
     }
   },[lessonStep,isMainGuideline])  
 
-  
+  useEffect(()=>{
+    if(lessonStep===26 && selectedLesson===14.1 ){
+      setLessonStep(27)
+    }
+  },[lessonStep,selectedLesson])  
   useEffect(()=>{
     if(lessonStep===19 && selectedLesson===9 ){
       setLessonStep(20)
@@ -534,6 +538,18 @@ const transformControlsRef = useRef()
           />
         )
       }
+
+      { isPourIntoTestube && 
+        selectedLeftHand?.name === "main-Conical-Flask-02" && (
+          <PourIntoTestubeFromSpoon
+            testubeRef={selectedLeftHand.ref}
+            spoonRef={spoonRef}
+            hand="right"
+            heightOffset={0.6}
+            xOffset={0.6}
+          />
+        )
+      }      
 
 
       { isPourIntoTestube && 

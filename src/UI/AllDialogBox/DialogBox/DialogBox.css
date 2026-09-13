@@ -30,6 +30,11 @@
   transform: translateX(-50%);
 }
 
+.dialog-z-index{
+    z-index: 999;
+
+}
+
 .dialog-box-inner {
   display: flex;
   align-items: center;

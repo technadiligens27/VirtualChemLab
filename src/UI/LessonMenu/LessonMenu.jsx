@@ -168,6 +168,15 @@ const LessonMenu = () => {
   number: 14,
   divider: "purple",
 },
+
+{
+  id: 14.1,
+  name: "Chlorination of 2-methylpropan-2-ol",
+  imgPath: "./AlkaliTest.png",
+  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+  number: 14.1,
+  divider: "purple",
+},
   ]
 
   const lessonsPerPage = 3

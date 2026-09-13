@@ -38,6 +38,7 @@ import MolarVolumeLesson from "./AllLessons/MolarVolumeLesson/MolarVolumeLesson"
 import MolarVolumeReduced from "../Experience/Interactions/MolarVolumeReduced/MolarVolumeReduced"
 import MolarVolumeResults from "./MolarVolumeResults/MolarVolumeResults"
 import ChlorinationLesson from "./AllLessons/ChlorinationLesson/ChlorinationLesson"
+import ChlorinationLesson02 from "./AllLessons/ChlorinationLesson/ChlorinationLesson02"
 
 const mainContent = [
   {
@@ -132,7 +133,7 @@ const UI = () => {
     setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
     showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow,
     setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
-    setShowTestube03Arrow,setshowBromobutaneArrow
+    setShowTestube03Arrow,setShowSeparatingFunnel
     
   } = useContext(MainGuidelineContext)
 
@@ -152,6 +153,12 @@ const UI = () => {
 
 
   // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    setShowSeparatingFunnel(
+      (selectedLesson==14.1 && lessonStep ==34)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowMeasuringCylinder50Arrow(
@@ -214,7 +221,9 @@ const UI = () => {
   },[selectedLesson,lessonStep,showPolystereneArrow])
 
   useEffect(()=>{
-    setShowPottasiumCarbonateArrow(selectedLesson===8 && lessonStep === 10)
+    setShowPottasiumCarbonateArrow(
+      (selectedLesson===8 && lessonStep === 10) 
+    )
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
@@ -335,7 +344,8 @@ const UI = () => {
       (selectedLesson===8 && lessonStep ===9) ||
       ([12,12.1].includes(selectedLesson) && [22,7].includes(lessonStep)) ||
       (selectedLesson === 9 && lessonStep ===7) ||
-      (selectedLesson===13 && lessonStep===16)
+      (selectedLesson===13 && lessonStep===16) ||
+      (selectedLesson ===14.1 && lessonStep ===26)
     )
   },[lessonStep,showSpoonArrow])
 
@@ -371,7 +381,8 @@ useEffect(()=>{
 
   useEffect(()=>{
     setShowPotassiumHydrogenCarbonateArrow(
-      (selectedLesson===9 && lessonStep ===8)
+      (selectedLesson===9 && lessonStep ===8)||
+      (selectedLesson ===14.1 && lessonStep ===27)
     )
   },[selectedLesson,lessonStep])
 
@@ -631,6 +642,10 @@ useEffect(() => {
         selectedLesson===14 && (
           <ChlorinationLesson/>
         )
+       }
+
+       {
+        selectedLesson==14.1 && (<ChlorinationLesson02/>)
        }
         {/* {<MolarVolumeResults/>} */}
        {/* {<HessCalculationStep25/>} */}

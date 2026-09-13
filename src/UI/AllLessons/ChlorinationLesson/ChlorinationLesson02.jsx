@@ -1,0 +1,225 @@
+import { useContext, useEffect } from "react"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import LessonGuide from "../../LessonGuide/LessonGuide";
+import DialogBox from "../../AllDialogBox/DialogBox/DialogBox";
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import LessonDetails from "../../LessonDetails/LessonDetails";
+import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview";
+import { molarVolumeReactionData,molarVolumeGuidelineData} from "../../Data/molarVolumeReactionData/molarVolumeReactionData";
+import SafetyScreen from "../../SafetyScreen/SafetyScreen";
+import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction";
+import HessGuidelines from "../../HessGuidelines/HessGuidelines";
+import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
+import MolarVolumeLiveDataPanel from "../../../Experience/Interactions/MolarVolumeLiveDataPanel/MolarVolumeLiveDataPanel";
+import MolarVolumeReduced from "../../../Experience/Interactions/MolarVolumeReduced/MolarVolumeReduced";
+import MolarVolumeCalciumCarbonateUsed from "../../../Experience/Interactions/MolarVolumeCalciumCarbonateUsed/MolarVolumeCalciumCarbonateUsed";
+import MolarVolumeResults from "../../MolarVolumeResults/MolarVolumeResults";
+import QuestionCard from "../../QuestionCard/QuestionCard";
+import {useResetLesson} from "../../ResetLessonButton/ResetLessonButton.jsx";
+import {chlorinationGuidelineData} from "../../Data/chlorinationLessonData/chlorinationLessonData.jsx"
+import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
+
+
+const ChlorinationLesson02 = ()=>{
+
+    const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
+    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSafetyStep} = useContext(MainGuidelineContext);
+    const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,gogglesRef,seperatingFunnelRef,pipetteRef,
+        gloverightRef,gloveleftRef} = useContext(ModelContext)
+
+    const resetLesson = useResetLesson()
+    
+    const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,safetyStep,
+    } = useContext(InteractionContext)
+
+
+    useEffect(()=>{
+      if(conicalBeakerRef02.current){
+        conicalBeakerRef02.current.visible=true
+      }
+
+     if(conicalBeakerRef.current){
+        conicalBeakerRef.current.visible=false
+      }     
+      
+     if(seperatingFunnelRef.current){
+      seperatingFunnelRef.current.visible = true
+     }
+     
+     if(pipetteRef.current){
+      pipetteRef.current.visible = false
+     }
+
+     
+     gogglesRef.current.visible = false 
+     gloverightRef.current.visible = false 
+     gloveleftRef.current.visible = false 
+
+    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef])    
+
+        useEffect(() => {
+        setSafetyStep(4)
+        setLessonStep(26)
+        if (
+            selectedLesson !== 14.1 ||
+            !conicalBeakerRef02?.current
+        ) {
+            return
+        }
+
+        const conicalBeaker02 =
+            conicalBeakerRef02.current
+
+        conicalBeaker02.visible = true
+
+        if (conicalBeakerRef?.current) {
+            conicalBeakerRef.current.visible = false
+        }
+
+        // Initialize every liquid child.
+        conicalBeaker02.traverse((child) => {
+            if (!child.isMesh) return
+
+            const name =
+                child.name?.toLowerCase() || ""
+
+            const isUpperLiquid =
+                name.includes("liquid") &&
+                name.includes("upper")
+
+            const isBottomLiquid =
+                name.includes("liquid") &&
+                name.includes("bottom")
+
+            if (!isUpperLiquid && !isBottomLiquid) {
+                return
+            }
+
+            child.visible = true
+            child.scale.y = 1
+
+            const updateMaterial = (material) => {
+                if (!material) return material
+
+                const clonedMaterial =
+                material.clone()
+
+                clonedMaterial.color.set(
+                isUpperLiquid
+                    ? "#F4D35E"
+                    : "#DCEFF7"
+                )
+
+                clonedMaterial.transparent = true
+                clonedMaterial.opacity = 0.35
+                clonedMaterial.depthWrite = false
+                clonedMaterial.needsUpdate = true
+
+                return clonedMaterial
+            }
+
+            if (Array.isArray(child.material)) {
+                child.material =
+                child.material.map(updateMaterial)
+            } else {
+                child.material =
+                updateMaterial(child.material)
+            }
+            })
+
+        conicalBeaker02.updateMatrixWorld(true)
+
+        if (
+            selectedLeftHand?.name !==
+            "main-Conical-Flask-02"
+        ) {
+            setSelectedLeftHand({
+            hand: "left",
+
+            name: "main-Conical-Flask-02",
+
+            ref: conicalBeakerRef02,
+
+            originalParent:
+                conicalBeaker02.parent,
+
+            originalPosition:
+                conicalBeaker02.position.clone(),
+
+            originalRotation:
+                conicalBeaker02.rotation.clone(),
+
+            originalScale:
+                conicalBeaker02.scale.clone(),
+            })
+        }
+
+        setSelectedRightHand(null)
+        }, [
+        selectedLesson,
+        selectedLeftHand?.name,
+        conicalBeakerRef02,
+        conicalBeakerRef,
+        setSafetyStep,
+        setSelectedLeftHand,
+        setSelectedRightHand,
+        ])
+ return(
+       <>
+       {lessonStep >=26 && lessonStep <33 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[6]}/>)}
+
+
+      {lessonStep===26 && (<DialogBox text={<>
+        Pick Up the <strong>Spatula</strong> to <strong>Right Hand</strong>
+        </>}/>
+      )}
+      {lessonStep===27 && (<DialogBox text={<>
+        Select the <strong>Calcium Chloride</strong> container and Click <strong>Take Calcium Chloride </strong>
+        </>}/>
+      )} 
+
+      {lessonStep===28 && (<DialogBox text={<>
+        Now Click <strong>Held Saptula</strong> and select <strong>Pour into Test Tube</strong> to pour
+        </>}/>
+      )}
+
+      {lessonStep===29 && (<DialogBox text={<>
+        <strong>Scroll Down</strong> to Pour <strong>Calcium Chloride</strong>
+        </>}/>
+      )} 
+
+      {lessonStep===30 && (<DialogBox text={<>
+         Click the <strong>Saptula</strong> and select <strong>Disable Pour Mode</strong>
+        </>}
+        />
+      )}
+
+      {lessonStep===31 && (<DialogBox text={<>
+        Now Click <strong>Held Conical Flask</strong> and select <strong>Add New Bung</strong> 
+
+        </>}
+        />
+      )} 
+      {lessonStep===32 && (<DialogBox text={<>
+        Now By <strong>Scrolling Down</strong> Gently <strong>Swirl</strong> the Conical Flask
+
+        </>}
+        />
+      )}
+
+      {lessonStep===33 && (<DialogBox text={<>
+            Keep the <strong>Spatula</strong> Back in Table
+        </>}
+        />
+      )}      
+        {lessonStep===34 && (<DialogBox text={<>
+            34
+        </>}
+        />
+      )} 
+       </>
+    )
+}
+
+export default ChlorinationLesson02

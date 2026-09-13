@@ -19,15 +19,36 @@ import QuestionCard from "../../QuestionCard/QuestionCard";
 import {useResetLesson} from "../../ResetLessonButton/ResetLessonButton.jsx";
 import {chlorinationGuidelineData} from "../../Data/chlorinationLessonData/chlorinationLessonData.jsx"
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
+import ChlorinationLesson02 from "./ChlorinationLesson02.jsx";
 
 
 const ChlorinationLesson = ()=>{
 
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
-    const {graduatedBeakerRef} = useContext(ModelContext)
+    const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,
+      pipetteRef
+    } = useContext(ModelContext)
 
     const resetLesson = useResetLesson()
+
+    useEffect(()=>{
+      if(conicalBeakerRef02.current){
+        conicalBeakerRef02.current.visible=true
+      }
+
+     if(conicalBeakerRef.current){
+        conicalBeakerRef.current.visible=false
+      }     
+      
+     if(seperatingFunnelRef.current){
+      seperatingFunnelRef.current.visible = true
+     }
+     
+     if(pipetteRef.current){
+      pipetteRef.current.visible = false
+     }
+    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef])
 
  return(
        <>
@@ -198,14 +219,40 @@ const ChlorinationLesson = ()=>{
         Place <strong>Bung</strong> to <strong>Conical Flask</strong> again
     </>}/>
       )} 
-      {lessonStep===21 && (<DialogBox text={<>
-       21
-      </>}/>
-      )} 
+
+
       {lessonStep >=21 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[5]}/>)}
 
 
 
+      {lessonStep===21 && (<DialogBox text={<>
+         Now <strong>Scroll Down</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong> again
+      </>}/>
+      )}
+
+      {lessonStep===22 && (<DialogBox text={<>
+         <strong>Remove Bung</strong> from <strong>Conical Flask</strong>
+      </>}/>
+      )}
+      {lessonStep===23 && (<DialogBox text={<>
+         Pressure Will be Released From <strong>Conical Flask</strong> 
+        </>}/>
+      )} 
+
+
+
+
+
+      {lessonStep===24 && (<DialogBox text={<>
+         Now Lets Keep the <strong>Measuring Cylinder</strong> Back in the Table
+        </>}/>
+      )} 
+
+      {lessonStep >=25 && lessonStep <28 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[6]}/>)}
+
+      {lessonStep >=25 && (<ChlorinationLesson02/>)}
+
+     
        </>
     )
 }

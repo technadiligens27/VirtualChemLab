@@ -50,6 +50,7 @@ import PourModeDeliveryTube from "./PourModeDeliveryTube/PourModeDeliveryTube";
 import CalciumCarbonateMolarReaction from "../AllReactions/CalciumCarbonateMolarReaction/CalciumCarbonateMolarReaction";
 import DeliveryTubeGasRise from "./DeliveryTubeGasRise/DeliveryTubeGasRise";
 import ConicalGasCloud from "./ConicalGasCoud/ConicalGasCoud";
+import ChlorinationLiquidColorChange from "./ChlorinationLiquidColorChange/ChlorinationLiquidColorChange";
 
 const Interaction = () => {
   const {
@@ -67,7 +68,7 @@ const Interaction = () => {
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
-        naohBottleRef,boilingTube01Ref,
+        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef
       
       } = useContext(ModelContext)
 
@@ -226,13 +227,15 @@ const Interaction = () => {
 
       {selectedLesson ===12.1 && (lessonStep ===32 || lessonStep===38) && <SwirlModel modelRef={normalBeakerRef} useTargetSwirls={true}/> }
 
-      {selectedLesson ===14 && lessonStep ===15 && <SwirlModel modelRef={conicalBeakerRef} useTargetSwirls={true} targetSwirls={3}/> }
-      {selectedLesson ===14 && lessonStep ===17 && <SwirlModel modelRef={conicalBeakerRef} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14 && lessonStep ===15 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14 && lessonStep ===17 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14 && lessonStep ===21 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14.1 && lessonStep == 32 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
 
       
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
 
-      {isFunnelMode && <FunnelMode 
+      {selectedLeftHand?.name==="main-buirette"&& isFunnelMode && <FunnelMode 
         modelRef={mainBuiretteRef} 
         funnelRef={funnelRef} 
         modelScale ={0.6}
@@ -241,7 +244,15 @@ const Interaction = () => {
         hand={'left'}
         />
       }    
-
+      {selectedRightHand?.name==="separating-funnel" && isFunnelMode && <FunnelMode 
+        modelRef={seperatingFunnelRef} 
+        funnelRef={funnelRef} 
+        modelScale ={0.6}
+        modelYOffset={-1}
+        funnelYOffset={0.5}
+        hand={'left'}
+        />
+      }   
       {selectedLesson==13 && isClampTestube && <ClampModel modelRef={boilingTube01Ref} modelScale={0.8} hand={"left"}/>}
 
       { isInvertCylinder && (<InvertCylinderModel/>)} 
@@ -256,7 +267,10 @@ const Interaction = () => {
       {selectedLesson===13 && lessonStep==28 && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)}
       {/* {selectedLesson===13 && lessonStep==29 && (<DeliveryTubeGasRise/>)} */}
 
-      {selectedLesson===14 && lessonStep==19 && <ConicalGasCloud/>}
+      {selectedLesson===14 && [19,23].includes(lessonStep) && <ConicalGasCloud/>}
+      {selectedLesson==14 && lessonStep >=24 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)}
+
+
 
     </>
   );

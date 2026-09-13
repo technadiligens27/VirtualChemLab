@@ -25,7 +25,8 @@ const ChemEnvironment = () => {
          sulfamicBottleRef,methylBottleRef,naohBottleRef,arrowVolumetricRef,arrowFunnelRef,arrowNaohBottleRef,
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
-         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef
+         arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
+         seperatingFunnelRef,arrowSeparatingFunnelRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
@@ -40,6 +41,16 @@ const ChemEnvironment = () => {
 
   objectRef.current.traverse((child) => {
     if (child.name?.toLowerCase().includes("pour")) {
+      child.visible = false
+    }
+  })
+}
+
+  const hideConicalGasObjects = (objectRef) => {
+  if (!objectRef.current) return
+
+  objectRef.current.traverse((child) => {
+    if (child.name?.toLowerCase().includes("gas")) {
       child.visible = false
     }
   })
@@ -90,6 +101,7 @@ const hideLabelObjects = (root) => {
     }
   })
 }
+
 
  const hideBungObjects = (root) => {
   if (!root) return
@@ -250,7 +262,8 @@ const hideVerticalObjects=(root)=>{
     hidePourObjects(testube03Ref)
     hidePourObjects(testube04Ref)
     hidePourObjects(testube05Ref)
-    hidePourObjects(testube06Ref)
+    hidePourObjects(testube06Ref);
+    hideConicalGasObjects(conicalBeakerRef)
 
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
     graduatedBeakerRef.current = scene.getObjectByName('main-graduated-cylinder');
@@ -267,6 +280,9 @@ const hideVerticalObjects=(root)=>{
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
+
+    seperatingFunnelRef.current = scene.getObjectByName("separating-funnel");
+    seperatingFunnelRef.current.visible = false
     mainPolystereneRef.current = scene.getObjectByName('mainPolystyrene');
     mainPolysterene2Ref.current = scene.getObjectByName('mainPolysterene2')
 
@@ -284,8 +300,9 @@ const hideVerticalObjects=(root)=>{
     volumetricBung.current.visible = false;
     boilingTube01Ref.current = scene.getObjectByName("boiliing-tube-01");
     graduatedCylinder100Ref.current = scene.getObjectByName("main-graduated-cylinder-100")
-    deliveryTubeBungRef.current = scene.getObjectByName("delivery-tube-bung")
-
+    deliveryTubeBungRef.current = scene.getObjectByName("delivery-tube-bung");
+    conicalBeakerRef02.current = scene.getObjectByName("main-Conical-Flask-02");
+     conicalBeakerRef02.current.visible = false
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
     methylBottleRef.current = scene.getObjectByName("methyl-dropper-bottle")
     naohBottleRef.current = scene.getObjectByName('NaOH-bottle');
@@ -477,6 +494,9 @@ if (
 
       arrowBromobutanRef.current = scene.getObjectByName("bromobutane-bottle-arrow")
       arrowBromobutanRef.current.visible = false;
+
+      arrowSeparatingFunnelRef.current = scene.getObjectByName("saperating-funnel-arrow");
+      arrowSeparatingFunnelRef.current.visible = false;
   }, [scene])
 
   const hasSavedModelsRef = useRef(false)

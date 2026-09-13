@@ -20,7 +20,7 @@ const ConicalGasCloud = ({
   startOpacity = 0.1,
 }) => {
   const {
-    conicalBeakerRef,
+    conicalBeakerRef02,
   } = useContext(ModelContext)
 
   const {
@@ -30,7 +30,7 @@ const ConicalGasCloud = ({
   } = useContext(MainGuidelineContext)
 
   useEffect(() => {
-    if (!conicalBeakerRef?.current) {
+    if (!conicalBeakerRef02?.current) {
       return
     }
 
@@ -41,7 +41,7 @@ const ConicalGasCloud = ({
 
     let gasObject = null
 
-    conicalBeakerRef.current.traverse((child) => {
+    conicalBeakerRef02.current.traverse((child) => {
       if (gasObject) return
 
       const childName =
@@ -212,6 +212,16 @@ const ConicalGasCloud = ({
           hasFinished = true
           setLessonStep(20)
         }
+
+        if (
+          !hasFinished &&
+          selectedLesson === 14 &&
+          lessonStep === 23
+        ) {
+          hasFinished = true
+          setLessonStep(24)
+        }
+
       }
 
       frameId =
@@ -258,7 +268,7 @@ const ConicalGasCloud = ({
       )
     }
   }, [
-    conicalBeakerRef,
+    conicalBeakerRef02,
     selectedLesson,
     lessonStep,
     setLessonStep,

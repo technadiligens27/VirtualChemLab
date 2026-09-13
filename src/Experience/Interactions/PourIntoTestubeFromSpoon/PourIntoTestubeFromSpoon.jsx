@@ -53,13 +53,17 @@ const PourIntoTestubeFromSpoon = ({
   const powderRevealFinishedRef =
     useRef(false)
  
-  
+ useEffect(() => { 
+  if (selectedLesson === 14.1 && lessonStep === 28){
+    setLessonStep(29)
+  } 
+  }, [lessonStep, selectedLesson, setLessonStep])  
 
  useEffect(() => { 
   if (selectedLesson === 12 && lessonStep === 9){
     setLessonStep(10)
   } 
-   }, [lessonStep, selectedLesson, setLessonStep])
+  }, [lessonStep, selectedLesson, setLessonStep])
 
 useEffect(() => { 
   if (selectedLesson === 8 && lessonStep === 11){
@@ -525,6 +529,21 @@ if (
       lessonStep === 12
     ) {
       setLessonStep(13)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    isPotassiumTransferred,
+    setLessonStep,
+  ])
+
+    useEffect(() => {
+    if (
+      isPotassiumTransferred &&
+      selectedLesson === 14.1 &&
+      lessonStep === 29
+    ) {
+      setLessonStep(30)
     }
   }, [
     lessonStep,

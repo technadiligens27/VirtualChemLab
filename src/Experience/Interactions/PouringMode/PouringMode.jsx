@@ -63,7 +63,8 @@ const PouringMode = ({
     volumetricRef,
     waterBottleRef,
     boilingTube01Ref,
-    conicalBeakerRef
+    conicalBeakerRef,
+    conicalBeakerRef02
   } = useContext(ModelContext)
 
   const {
@@ -1438,7 +1439,7 @@ const PouringMode = ({
           />
         )}
 
-      {selectedLesson !==13 && hand === "right" &&
+      {selectedLesson !==13 && selectedLesson !==14&& hand === "right" &&
         selectedRightHand?.name ===
           "main-graduated-cylinder" && (
           <PourFromGraduatedCylinder
@@ -1464,8 +1465,8 @@ const PouringMode = ({
           "main-graduated-cylinder" && (
           <PourFromGraduatedCylinder
             isPouring={isPouring}
-            otherModelRef={conicalBeakerRef}
-            otherModelAmount={0.15}
+            otherModelRef={conicalBeakerRef02}
+            otherModelAmount={0.3}
             speed={0.2}
             otherModelColor={"#f8fafc"}     
             otherModelOpacity={0.25}       
@@ -1477,8 +1478,8 @@ const PouringMode = ({
           "main-graduated-cylinder" && (
           <PourFromGraduatedCylinder
             isPouring={isPouring}
-            otherModelRef={conicalBeakerRef}
-            otherModelAmount={0.45}
+            otherModelRef={conicalBeakerRef02}
+            otherModelAmount={0.6}
             speed={0.2}
             otherModelColor={"#f8fafc"}     
             otherModelOpacity={0.25}       

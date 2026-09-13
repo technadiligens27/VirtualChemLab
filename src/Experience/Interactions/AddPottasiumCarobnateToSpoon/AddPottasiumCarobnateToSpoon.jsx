@@ -14,6 +14,12 @@ const AddPottasiumCarobnateToSpoon = () => {
   const pottasiumCarobnateMeshes = useRef([])
 
   useEffect(()=>{
+    if(selectedLesson==14.1 && lessonStep==27){
+        setLessonStep(28)
+    }
+  },[lessonStep,selectedLesson])    
+
+  useEffect(()=>{
     if(selectedLesson==13 && lessonStep==17){
         setLessonStep(18)
     }

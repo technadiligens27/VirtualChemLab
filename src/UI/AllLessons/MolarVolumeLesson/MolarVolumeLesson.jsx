@@ -78,6 +78,7 @@ const MolarVolumeLesson = ()=>{
       )}
 
       {lessonStep===3.3 && (<DialogBox text={<>
+         Fill With <strong>Ethanoic Acid (30 cm³)</strong> 
          
         </>}/>
       )}   

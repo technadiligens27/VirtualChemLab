@@ -5,6 +5,7 @@ import {
 } from "react"
 
 import { useFrame } from "@react-three/fiber"
+import * as THREE from "three"
 
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
@@ -76,6 +77,11 @@ const SwirlModel = ({
   const originalLiquidRotationsRef =
     useRef([])
 
+  // Shared pivot for the two visible liquid layers in
+  // conical flask 02. This prevents a gap while swirling.
+  const layeredLiquidGroupRef =
+    useRef(null)
+
   // ==========================================
   // STORE ORIGINAL ROTATION
   // ==========================================
@@ -121,6 +127,67 @@ const SwirlModel = ({
       }
     })
 
+    const upperLiquid =
+      liquidObjectsRef.current.find(
+        (liquid) =>
+          liquid.name.toLowerCase() ===
+          "conical-flask-02-liquid-upper"
+      )
+
+    const bottomLiquid =
+      liquidObjectsRef.current.find(
+        (liquid) =>
+          liquid.name.toLowerCase() ===
+          "conical-flask-02-liquid-bottom"
+      )
+
+    let originalLayerData = null
+
+    if (upperLiquid && bottomLiquid) {
+      const layeredLiquids = [
+        upperLiquid,
+        bottomLiquid,
+      ]
+
+      originalLayerData =
+        layeredLiquids.map((liquid) => ({
+          liquid,
+          parent: liquid.parent,
+          position: liquid.position.clone(),
+          quaternion: liquid.quaternion.clone(),
+          scale: liquid.scale.clone(),
+        }))
+
+      model.updateWorldMatrix(true, true)
+
+      const bounds = new THREE.Box3()
+
+      layeredLiquids.forEach((liquid) => {
+        bounds.expandByObject(liquid)
+      })
+
+      const sharedCentre =
+        bounds.getCenter(new THREE.Vector3())
+
+      model.worldToLocal(sharedCentre)
+
+      const liquidGroup = new THREE.Group()
+
+      liquidGroup.name =
+        "conical-flask-02-layered-liquid-group"
+      liquidGroup.position.copy(sharedCentre)
+      model.add(liquidGroup)
+
+      // Keep the two meshes locked together while retaining
+      // their current world positions and separate materials.
+      layeredLiquids.forEach((liquid) => {
+        liquidGroup.attach(liquid)
+      })
+
+      layeredLiquidGroupRef.current =
+        liquidGroup
+    }
+
     swirlTimeRef.current = 0
 
     completedSwirlsRef.current = 0
@@ -138,6 +205,34 @@ const SwirlModel = ({
 
     timeSinceLastScrollRef.current =
       0
+
+    return () => {
+      const liquidGroup =
+        layeredLiquidGroupRef.current
+
+      if (liquidGroup && originalLayerData) {
+        originalLayerData.forEach(
+          ({
+            liquid,
+            parent,
+            position,
+            quaternion,
+            scale,
+          }) => {
+            if (!parent) return
+
+            parent.add(liquid)
+            liquid.position.copy(position)
+            liquid.quaternion.copy(quaternion)
+            liquid.scale.copy(scale)
+          }
+        )
+
+        liquidGroup.removeFromParent()
+      }
+
+      layeredLiquidGroupRef.current = null
+    }
   }, [
     modelRef,
     useTargetSwirls,
@@ -232,8 +327,23 @@ const SwirlModel = ({
       // LIQUID SWIRLING
       // ======================================
 
-      liquidObjectsRef.current.forEach(
-        (liquid, index) => {
+      const layeredLiquidGroup =
+        layeredLiquidGroupRef.current
+
+      if (layeredLiquidGroup) {
+        const liquidAngle =
+          angle * liquidSwirlSpeed
+
+        layeredLiquidGroup.rotation.x =
+          Math.sin(liquidAngle) *
+          liquidSwirlAmount
+
+        layeredLiquidGroup.rotation.z =
+          Math.cos(liquidAngle) *
+          liquidSwirlAmount
+      } else {
+        liquidObjectsRef.current.forEach(
+          (liquid, index) => {
           const originalRotation =
             originalLiquidRotationsRef.current[
               index
@@ -263,8 +373,9 @@ const SwirlModel = ({
               liquidAngle
             ) *
               liquidSwirlAmount
-        }
-      )
+          }
+        )
+      }
 
       // ======================================
       // TARGET SWIRL MODE
@@ -369,8 +480,24 @@ const SwirlModel = ({
     // RETURN LIQUID TO ORIGINAL ROTATION
     // ========================================
 
-    liquidObjectsRef.current.forEach(
-      (liquid, index) => {
+    const layeredLiquidGroup =
+      layeredLiquidGroupRef.current
+
+    if (layeredLiquidGroup) {
+      layeredLiquidGroup.rotation.x +=
+        -layeredLiquidGroup.rotation.x *
+        returnFactor
+
+      layeredLiquidGroup.rotation.y +=
+        -layeredLiquidGroup.rotation.y *
+        returnFactor
+
+      layeredLiquidGroup.rotation.z +=
+        -layeredLiquidGroup.rotation.z *
+        returnFactor
+    } else {
+      liquidObjectsRef.current.forEach(
+        (liquid, index) => {
         const originalRotation =
           originalLiquidRotationsRef.current[
             index
@@ -403,8 +530,9 @@ const SwirlModel = ({
             liquid.rotation.z
           ) *
           returnFactor
-      }
-    )
+        }
+      )
+    }
 
     // ========================================
     // CHECK DISTANCE FROM ORIGINAL ROTATION
@@ -448,8 +576,15 @@ const SwirlModel = ({
       // SNAP LIQUID EXACTLY BACK
       // ======================================
 
-      liquidObjectsRef.current.forEach(
-        (liquid, index) => {
+      if (layeredLiquidGroup) {
+        layeredLiquidGroup.rotation.set(
+          0,
+          0,
+          0
+        )
+      } else {
+        liquidObjectsRef.current.forEach(
+          (liquid, index) => {
           const originalRotation =
             originalLiquidRotationsRef.current[
               index
@@ -467,8 +602,9 @@ const SwirlModel = ({
             originalRotation.y,
             originalRotation.z
           )
-        }
-      )
+          }
+        )
+      }
 
       // ======================================
       // TARGET WAS COMPLETED
@@ -488,7 +624,16 @@ const SwirlModel = ({
         // ====================================
         // LESSON STEP
         // ====================================
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14 &&
+          lessonStep === 21
+        ) {
+          lessonAdvancedRef.current =
+            true
 
+          setLessonStep(22)
+        }
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 12.1 &&
@@ -530,7 +675,16 @@ const SwirlModel = ({
 
           setLessonStep(16)
         }
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14.1 &&
+          lessonStep === 32
+        ) {
+          lessonAdvancedRef.current =
+            true
 
+          setLessonStep(33)
+        }
       }
     }
   })
