@@ -174,6 +174,9 @@ export const InteractionProvider = ({ children }) => {
     conicalGas02: null,
     conicalGas03:null
   })
+
+  const [isAddFunnelToMode,setIsAddFunnelToMode] = useState(false)
+
   const resetInteractions = () => {
   // Empty both hands
   setSelectedLeftHand(false)
@@ -393,7 +396,8 @@ export const InteractionProvider = ({ children }) => {
         isPourModeDeliveryTube,setIsPourModeDeliveryTube,
         isMolarVolumeReaction,setIsMolarVolumeReaction,
         deliveryAnimationActions,setDeliveryAnimationActions,
-        concialGasAnimationActions, setConcialGasAnimationAction                      
+        concialGasAnimationActions, setConcialGasAnimationAction,
+        isAddFunnelToMode,setIsAddFunnelToMode                   
       }}
     >
       {children}

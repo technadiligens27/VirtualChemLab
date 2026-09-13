@@ -18,6 +18,7 @@ import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import PourFromModel from "../Pouring/PourFromModel/PourFromModel"
 
 const PourModeDeliveryTube = ({
   modelRef,
@@ -40,18 +41,50 @@ const PourModeDeliveryTube = ({
   } = useThree()
 
   const {
-    testube03Ref,
+    testube03Ref,conicalBeakerRef02,seperatingFunnelRef
   } = useContext(
     ModelContext
   )
 
   const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {conicalBungRef} = useContext(ModelContext)
 
   useEffect(()=>{
     if(selectedLesson===13 && lessonStep===26){
       setLessonStep(27)
     }
   },[selectedLesson,lessonStep])
+
+
+  useEffect(()=>{
+    if(selectedLesson===14.1 && lessonStep===37){
+      setLessonStep(38)
+    }
+  },[selectedLesson,lessonStep])  
+
+  useEffect(() => {
+    const model = modelRef?.current
+    const conicalBung = conicalBungRef?.current
+
+    if (!model || !conicalBung) return
+
+    const modelName =
+      model.name?.toLowerCase() || ""
+
+    if (
+      modelName.includes(
+        "main-conical-flask-02"
+      )
+    ) {
+      conicalBung.visible = false
+      conicalBung.updateMatrixWorld(true)
+    }
+  }, [
+    modelRef,
+    conicalBungRef,
+    selectedLesson,
+    lessonStep,
+  ])
 
   // =====================================================
   // ROTATION
@@ -458,14 +491,22 @@ const PourModeDeliveryTube = ({
 
   return (
     <>
-      <PourPowderFromTestube
+      {selectedLesson==13 && <PourPowderFromTestube
         isPouring={
           isPouring
         }
         model={
           testube03Ref?.current
         }
-      />
+      />}
+
+      {selectedLesson==14.1 && <PourFromModel
+       modelRef={conicalBeakerRef02}
+       otherModelRef={seperatingFunnelRef}
+       isPouring={isPouring}
+        
+
+      />}
     </>
   )
 }

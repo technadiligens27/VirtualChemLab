@@ -5,95 +5,135 @@ import {
   useRef,
 } from "react"
 
-import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import {
+  ModelContext,
+} from "../../../Contexts/ModelContext/ModelContext"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  InteractionContext,
+} from "../../../Contexts/InteractionContext/InteractionContext"
 
 const ClampModel = ({
   modelRef,
 
   modelScale = 1,
+  clampScale = 1,
 
   modelXOffset = 0.5,
   modelYOffset = 0,
-  hand
+
+  clampYOffset = 0,
+
+  hand,
 }) => {
-  const {buretteClampRef} = useContext(ModelContext);
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
-  const {setSelectedRightHand,setSelectedLeftHand} = useContext(InteractionContext)
+  const {
+    buretteClampRef,
+  } = useContext(ModelContext)
 
-    useEffect(()=>{
-        if(selectedLesson==13 && lessonStep==4){
-            setLessonStep(5)
-        }
-    },[selectedLesson,lessonStep])
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-    useEffect(()=>{
-        if(hand=="left"){
-            setSelectedLeftHand(null)
-        }
+  const {
+    setSelectedRightHand,
+    setSelectedLeftHand,
+  } = useContext(InteractionContext)
 
-        if(hand=="right"){
-            setSelectedRightHand(null)
-        }
-    },[])
+  const originalModelTransformRef = useRef(null)
+  const originalClampTransformRef = useRef(null)
 
-  const originalTransformRef =
-    useRef(null)
+
+   useEffect(() => {
+    if (
+      selectedLesson === 14.1 &&
+      lessonStep === 36
+    ) {
+      setLessonStep(37)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
+    if (
+      selectedLesson === 13 &&
+      lessonStep === 4
+    ) {
+      setLessonStep(5)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
+    if (hand === "left") {
+      setSelectedLeftHand(null)
+    }
+
+    if (hand === "right") {
+      setSelectedRightHand(null)
+    }
+  }, [
+    hand,
+    setSelectedLeftHand,
+    setSelectedRightHand,
+  ])
 
   useLayoutEffect(() => {
-    const model =
-      modelRef?.current
-
-    const clamp =
-      buretteClampRef?.current
+    const model = modelRef?.current
+    const clamp = buretteClampRef?.current
 
     if (!model || !clamp) {
       return
     }
 
-    // =============================================
-    // FIND CLAMP POSITION
-    // =============================================
-
     const clampPosition =
-      clamp.getObjectByName(
-        "clamp-position"
-      )
+      clamp.getObjectByName("clamp-position")
 
     if (!clampPosition) {
-      console.log(
-        "❌ clamp-position not found"
-      )
-
+      console.log("❌ clamp-position not found")
       return
     }
 
-    // =============================================
-    // SAVE ORIGINAL TRANSFORM
-    // =============================================
-
-    originalTransformRef.current = {
-      parent:
-        model.parent,
-
-      position:
-        model.position.clone(),
-
-      rotation:
-        model.rotation.clone(),
-
-      scale:
-        model.scale.clone(),
+    // Save the model's original transform.
+    originalModelTransformRef.current = {
+      parent: model.parent,
+      position: model.position.clone(),
+      rotation: model.rotation.clone(),
+      scale: model.scale.clone(),
     }
 
-    // =============================================
-    // MOVE MODEL TO CLAMP
-    // =============================================
+    // Save the clamp's original transform.
+    originalClampTransformRef.current = {
+      position: clamp.position.clone(),
+      scale: clamp.scale.clone(),
+    }
 
-    clampPosition.attach(
-      model
+    // Scale and vertically reposition the clamp.
+    clamp.scale.set(
+      clampScale,
+      clampScale,
+      clampScale
     )
+
+    clamp.position.y =
+      originalClampTransformRef.current.position.y +
+      clampYOffset
+
+    clamp.updateMatrixWorld(true)
+
+    // Attach the model to clamp-position.
+    clampPosition.attach(model)
 
     model.position.set(
       modelXOffset,
@@ -101,11 +141,7 @@ const ClampModel = ({
       0
     )
 
-    model.rotation.set(
-      0,
-      0,
-      0
-    )
+    model.rotation.set(0, 0, 0)
 
     model.scale.set(
       modelScale,
@@ -113,63 +149,55 @@ const ClampModel = ({
       modelScale
     )
 
-    model.updateMatrixWorld(
-      true
-    )
-
-    console.log(
-      "✅ Model moved to clamp-position"
-    )
-
-    // =============================================
-    // CLEANUP / UNMOUNT
-    // =============================================
+    model.updateMatrixWorld(true)
 
     return () => {
-      const original =
-        originalTransformRef.current
+      const originalModel =
+        originalModelTransformRef.current
 
-      if (
-        !model ||
-        !original
-      ) {
-        return
-      }
+      const originalClamp =
+        originalClampTransformRef.current
 
-      if (
-        original.parent
-      ) {
-        original.parent.add(
-          model
+      // Restore the attached model.
+      if (originalModel?.parent) {
+        originalModel.parent.add(model)
+
+        model.position.copy(
+          originalModel.position
         )
+
+        model.rotation.copy(
+          originalModel.rotation
+        )
+
+        model.scale.copy(
+          originalModel.scale
+        )
+
+        model.updateMatrixWorld(true)
       }
 
-      model.position.copy(
-        original.position
-      )
+      // Restore the clamp.
+      if (originalClamp) {
+        clamp.position.copy(
+          originalClamp.position
+        )
 
-      model.rotation.copy(
-        original.rotation
-      )
+        clamp.scale.copy(
+          originalClamp.scale
+        )
 
-      model.scale.copy(
-        original.scale
-      )
-
-      model.updateMatrixWorld(
-        true
-      )
-
-      console.log(
-        "✅ Model returned to original position"
-      )
+        clamp.updateMatrixWorld(true)
+      }
     }
   }, [
     modelRef,
     buretteClampRef,
     modelScale,
+    clampScale,
     modelXOffset,
     modelYOffset,
+    clampYOffset,
   ])
 
   return null

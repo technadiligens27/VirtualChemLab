@@ -314,6 +314,12 @@ const transformControlsRef = useRef()
   },[lessonStep,isMainGuideline])  
 
   useEffect(()=>{
+    if(lessonStep===34 && selectedLesson===14.1 ){
+      setLessonStep(35)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
     if(lessonStep===26 && selectedLesson===14.1 ){
       setLessonStep(27)
     }

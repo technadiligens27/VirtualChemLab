@@ -25,7 +25,7 @@ const ChlorinationLesson02 = ()=>{
 
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSafetyStep} = useContext(MainGuidelineContext);
-    const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,gogglesRef,seperatingFunnelRef,pipetteRef,
+    const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,gogglesRef,seperatingFunnelRef,pipetteRef,potassiumHydrogenCarbonateRef,
         gloverightRef,gloveleftRef} = useContext(ModelContext)
 
     const resetLesson = useResetLesson()
@@ -165,6 +165,17 @@ const ChlorinationLesson02 = ()=>{
         setSelectedLeftHand,
         setSelectedRightHand,
         ])
+
+
+        useEffect(()=>{
+            if(potassiumHydrogenCarbonateRef.current){
+                if(selectedLesson==14.1 && lessonStep==36){
+                    potassiumHydrogenCarbonateRef.current.visible=false
+                }
+            }
+        },[potassiumHydrogenCarbonateRef,selectedLesson,lessonStep])
+
+
  return(
        <>
        {lessonStep >=26 && lessonStep <33 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[6]}/>)}
@@ -213,9 +224,49 @@ const ChlorinationLesson02 = ()=>{
         </>}
         />
       )}      
+
+
+       {lessonStep >=33 && lessonStep <38 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[7]}/>)}
+
+
         {lessonStep===34 && (<DialogBox text={<>
-            34
+        Pick Up the <strong>Separating Funnel</strong> to <strong>Right Hand</strong>
         </>}
+        />
+      )} 
+
+    {lessonStep===35 && (<DialogBox text={<>
+      Now Click <strong>Separating Funnel</strong> and select <strong>Add Funnel</strong> 
+
+        </>}
+        />
+      )} 
+    {lessonStep===36 && (<DialogBox text={<>
+      Now Click <strong>Separating Funnel</strong> and select <strong>Clamp</strong> 
+
+        </>}
+        />
+      )} 
+    {lessonStep===37 && (<DialogBox text={<>
+      Select <strong>Conical Flask</strong> and Choose <strong>Pour Mode</strong> 
+
+    </>}
+        />
+      )}
+
+
+    {lessonStep===38 && (<DialogBox text={<>
+      <strong>Scroll Down</strong> to Pour the Mixture into the Separating Funnel
+
+    </>}
+        />
+      )} 
+
+    {lessonStep===39 && (<DialogBox text={<>
+      Now Select <strong>Conical Flask</strong> and Choose <strong>Exit Pour Mode</strong> 
+
+
+    </>}
         />
       )} 
        </>

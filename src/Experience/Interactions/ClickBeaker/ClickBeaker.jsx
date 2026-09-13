@@ -54,7 +54,7 @@ const ClickObject = () => {
     isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark,
     isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode
   } = useContext(InteractionContext)
 
   const {
@@ -2472,6 +2472,8 @@ useEffect(()=>{
     disappearDeliverySetup()
     setIsBalancePlaced(true)
   }
+
+
 },[selectedLesson,lessonStep])
 
   const handleRemoveBalance=()=>{
@@ -2718,6 +2720,13 @@ useEffect(()=>{
   useEffect(()=>{
     console.log('lessonStep:',lessonStep)
   },[lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson==14.1 && lessonStep==33){
+      setIsClampInCenter(true)
+    }
+    
+  },[selectedLesson,lessonStep])
 
   const handleRemoveClampFromCenter = ()=>{
     setIsClampInCenter(false)
@@ -3074,12 +3083,7 @@ useEffect(()=>{
       )
     }
   }
-  // useEffect(()=>{
-  //   console.log("isPottasiumCarobnateInSpoon:",isPottasiumCarobnateInSpoon)
-  //   console.log("isPotassiumHydrogenCarbonateInSpoon:",isPotassiumHydrogenCarbonateInSpoon)
-  //   console.log("isSulfamicInSpoon:",isSulfamicInSpoon)
 
-  // },[isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,isSulfamicInSpoon])
 
   const renderPottasiumCarbinateTableButtons = ()=>{
     if (selectedObject?.name === "pottasium-carbonate-container") {
@@ -3388,6 +3392,17 @@ useEffect(()=>{
 ) {
       if (isTutorialMode) {
 
+        if(selectedLesson==14.1 && [37,39].includes(lessonStep)){
+          return(
+            <>
+              <button onClick={isPourModeDeliveryTube ? removePourModeDeliveryTube : handlePourModeDeliveryTube}>
+                 {isPourModeDeliveryTube ? "Exit Pour Mode" :"Pour Mode"} 
+              </button>
+            
+            </>
+          )
+        }
+
         if (
           [14.1].includes(selectedLesson) &&
           [31].includes(lessonStep) 
@@ -3663,9 +3678,6 @@ useEffect(()=>{
 
   }
 
-  useEffect(()=>{
-    console.log('isThermometerRisen:',isThermometerRisen)
-  },[isThermometerRisen])
 
 const renderThermometerHeldButtons=()=>{
     
@@ -3849,6 +3861,10 @@ const removePourModeDeliveryTube = ()=>{
   if(selectedLesson===13 && lessonStep===29){
     setLessonStep(30)
   }
+  if(selectedLesson===14.1 && lessonStep===38){
+    setLessonStep(39)
+  }
+
   setIsPourModeDeliveryTube(false)
   setSelectedObject(null)
 }
@@ -4214,17 +4230,32 @@ const renderFunnelHeldButtons=()=>{
     )
   }
 }
-  const AddFunnelMode = ()=>{
-    setIsFunnelMode(true)
-    setSelectedObject(null)
+const handleAddFunnelMode = () => {
+  if(isAddFunnelToMode){
+    setIsAddFunnelToMode(false)
+  }else{
+  setIsAddFunnelToMode(true)
   }
+  
+  setSelectedObject(null)
+}
 const renderSepratingFunnelHeldButtons = ()=>{
+
+  if(selectedLesson==14.1 && lessonStep==36){
+    return(
+      <>
+        <button onClick={handleClampTestube}>
+          Clamp
+        </button>
+      </>
+    )
+  }
 
   if(selectedObject?.name =="separating-funnel")
   return(
     <>
-    <button onClick={AddFunnelMode}>
-      Add Funnel
+    <button onClick={handleAddFunnelMode}>
+      {isAddFunnelToMode ? "Remove Funnel" : "Add Funnel"}
     </button>
     
     </>

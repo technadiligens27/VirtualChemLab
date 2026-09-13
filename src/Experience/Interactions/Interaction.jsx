@@ -51,6 +51,7 @@ import CalciumCarbonateMolarReaction from "../AllReactions/CalciumCarbonateMolar
 import DeliveryTubeGasRise from "./DeliveryTubeGasRise/DeliveryTubeGasRise";
 import ConicalGasCloud from "./ConicalGasCoud/ConicalGasCoud";
 import ChlorinationLiquidColorChange from "./ChlorinationLiquidColorChange/ChlorinationLiquidColorChange";
+import AddFunnelToModel from "./AddFunnelToModel/AddFunnelToModel";
 
 const Interaction = () => {
   const {
@@ -62,7 +63,7 @@ const Interaction = () => {
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -130,8 +131,10 @@ const Interaction = () => {
       {selectedLesson===13 && lessonStep==24 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.77}/>}
       {selectedLesson===13 && lessonStep==31 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
 
-      {isBuiretteClamped &&  <ClampBurette/>}  
-      {selectedLesson !==13 && isClampInCenter && <PlaceClampInCenter/>}
+      {isBuiretteClamped &&  <ClampBurette/>}
+      
+      {selectedLesson ==14.1 && isClampInCenter && <PlaceClampInCenter clampYOffset={6} clampXOffset = {-4.1}/>}
+      {selectedLesson !==13 && selectedLesson !==14 && isClampInCenter && <PlaceClampInCenter/>}
       {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-5}/>}
 
       {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
@@ -244,16 +247,9 @@ const Interaction = () => {
         hand={'left'}
         />
       }    
-      {selectedRightHand?.name==="separating-funnel" && isFunnelMode && <FunnelMode 
-        modelRef={seperatingFunnelRef} 
-        funnelRef={funnelRef} 
-        modelScale ={0.6}
-        modelYOffset={-1}
-        funnelYOffset={0.5}
-        hand={'left'}
-        />
-      }   
+ 
       {selectedLesson==13 && isClampTestube && <ClampModel modelRef={boilingTube01Ref} modelScale={0.8} hand={"left"}/>}
+      {selectedLesson==14.1 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} hand={"right"}/>}
 
       { isInvertCylinder && (<InvertCylinderModel/>)} 
       
@@ -261,7 +257,19 @@ const Interaction = () => {
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
-      {isPourModeDeliveryTube && (<PourModeDeliveryTube modelRef={testube03Ref} otherModelRef={boilingTube01Ref}/>)}
+      {selectedLesson==13 && isPourModeDeliveryTube && (<PourModeDeliveryTube modelRef={testube03Ref} otherModelRef={boilingTube01Ref}/>)}
+      {selectedLesson==14.1 && isPourModeDeliveryTube && (<PourModeDeliveryTube 
+      modelScale={0.35} 
+      modelRef={conicalBeakerRef02} 
+      otherModelRef={seperatingFunnelRef}
+      modelXOffset={0.8}
+      modelYOffset={0.35}
+      />
+    
+    )
+      
+      }
+
       {/* {selectedLeftHand?.name==="boiliing-tube-01" && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)} */}
 
       {selectedLesson===13 && lessonStep==28 && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)}
@@ -270,7 +278,7 @@ const Interaction = () => {
       {selectedLesson===14 && [19,23].includes(lessonStep) && <ConicalGasCloud/>}
       {selectedLesson==14 && lessonStep >=24 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)}
 
-
+      {selectedLesson==14.1 && isAddFunnelToMode && (<AddFunnelToModel modelRef={seperatingFunnelRef}/>)  }
 
     </>
   );
