@@ -20,6 +20,10 @@ const AddFunnelToModel = ({
     if(selectedLesson==14.1 && lessonStep==35){
       setLessonStep(36)
     }
+
+    if(selectedLesson==14.1 && lessonStep==47.1){
+      setLessonStep(48)
+    }
   },[selectedLesson,lessonStep])
 
   useEffect(() => {

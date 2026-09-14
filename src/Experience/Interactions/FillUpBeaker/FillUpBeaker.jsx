@@ -119,7 +119,10 @@ const FillUpBeaker = ({
       liquidName.includes(
         "c2h5oh"
       )
-
+   const isSodiumHydrogencarbonate =
+      liquidName.includes(
+        "sodium hydrogencarbonate solution"
+      ) 
     const isEthanoicAcid =
         liquidName.includes(
           "ethanoic acid"
@@ -238,7 +241,7 @@ const FillUpBeaker = ({
       // ETHANOL
       // ======================================
 
-      if (isEthanol || isEthanoicAcid) {
+      if (isEthanol || isEthanoicAcid || isSodiumHydrogencarbonate) {
         clonedMaterial.color?.set(
           "#f5fbff"
         )
@@ -247,7 +250,7 @@ const FillUpBeaker = ({
           true
 
         clonedMaterial.opacity =
-          0.58
+          0.38
 
         clonedMaterial.depthWrite =
           false
@@ -510,6 +513,10 @@ else if (
   }  
   else if(selectedLesson===14 && selectedAmount===10){
     amountRef.current = 0.2
+    speedRef.current = 0.25
+  }
+  else if(selectedLesson===14.1 && selectedAmount===20){
+    amountRef.current = 0.4
     speedRef.current = 0.25
   }
   else{
@@ -813,7 +820,10 @@ else if (
     
     if ( selectedLesson === 14 && lessonStep === 11 ) {
       setLessonStep(12)
-    }     
+    }
+     if ( selectedLesson === 14.1 && lessonStep === 46 ) {
+      setLessonStep(47)
+    }        
   }
 )
 

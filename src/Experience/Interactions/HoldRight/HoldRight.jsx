@@ -24,6 +24,7 @@ import PipetteRubberAnimation from "../PipetteRubberAnimation/PipetteRubberAnima
 import VolumetricPipetteMode from "../VolumetricPipetteMode/VolumetricPipetteMode"
 import VolumetricRubberAnimation from "../VolumetricRubberAnimation/VolumetricRubberAnimation"
 import InvertModel from "../InvertModel/InvertModel"
+import ReleaseGasBubbles from "../../ReleaseGasBubbles/ReleaseGasBubbles"
 const HoldRight = ({ modeldata }) => {
   const {
     isFillUpBeaker,
@@ -51,7 +52,7 @@ const HoldRight = ({ modeldata }) => {
     filterFoldedPaperRef,
     filterPaperRef,
     funnelRef,
-    spoonRef,volumetricRef
+    spoonRef,volumetricRef,seperatingFunnelRef
   } = useContext(ModelContext)
 
   const {lessonStep,isMainGuideline,setLessonStep,selectedLesson,isTutorialMode,
@@ -211,6 +212,12 @@ const transformControlsRef = useRef()
  
   const isLitmus = (name) => name?.toLowerCase().includes("litmus");
 
+
+  useEffect(()=>{
+    if(selectedLesson ===14.1 && lessonStep ===44){
+      setLessonStep(45)
+    }
+  },[lessonStep,selectedLesson])  
 
   useEffect(()=>{
     if(selectedLesson ===13 && lessonStep ===3.1){
@@ -584,6 +591,8 @@ const transformControlsRef = useRef()
       {
        selectedLesson===12.1 && ([44,45,46,47,48,49].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask'  && <InvertModel modelRef={volumetricRef}/>
       }
+
+      {selectedLesson==14.1 && lessonStep ==54 && <ReleaseGasBubbles loopTimes={3} modelRef={seperatingFunnelRef}/>}
   </>
   )
 }

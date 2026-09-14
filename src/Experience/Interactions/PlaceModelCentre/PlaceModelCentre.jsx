@@ -14,7 +14,10 @@ import {
 import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+
+import {
+  InteractionContext,
+} from "../../../Contexts/InteractionContext/InteractionContext"
 
 const PlaceModelCentre = ({
   modelRef,
@@ -31,7 +34,10 @@ const PlaceModelCentre = ({
     balancePositionRef,
   } = useContext(ModelContext)
 
-  const {setSelectedRightHand,setSelectedLeftHand} = useContext(InteractionContext)
+  const {
+    setSelectedRightHand,
+    setSelectedLeftHand,
+  } = useContext(InteractionContext)
 
   const {
     selectedLesson,
@@ -44,8 +50,81 @@ const PlaceModelCentre = ({
   const originalTransformRef =
     useRef(null)
 
+  const liquidStatesRef =
+    useRef([])
+
+  const animationFrameRef =
+    useRef(null)
+
   // =============================================
-  // LESSON STEP
+  // CHECK EFFECTIVE VISIBILITY
+  // =============================================
+
+  const getEffectiveVisibility = (
+    object
+  ) => {
+    let currentObject = object
+
+    while (currentObject) {
+      if (
+        currentObject.visible === false
+      ) {
+        return false
+      }
+
+      currentObject =
+        currentObject.parent
+    }
+
+    return true
+  }
+
+  // =============================================
+  // RESTORE SAVED LIQUID VISIBILITY
+  // =============================================
+
+  const applyLiquidVisibility = () => {
+    liquidStatesRef.current.forEach(
+      ({
+        object,
+        wasEffectivelyVisible,
+      }) => {
+        if (!object) {
+          return
+        }
+
+        /*
+         * If the liquid was hidden through one
+         * of its previous parents, keep the
+         * liquid hidden after reparenting.
+         */
+        object.visible =
+          wasEffectivelyVisible
+
+        object.updateMatrixWorld(true)
+      }
+    )
+  }
+
+  // =============================================
+  // LESSON STEP 14.1
+  // =============================================
+
+  useEffect(() => {
+    if (
+      selectedLesson === 14.1 &&
+      lessonStep === 42
+    ) {
+      setLessonStep(43)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  // =============================================
+  // LESSON STEP 13
   // =============================================
 
   useEffect(() => {
@@ -54,16 +133,44 @@ const PlaceModelCentre = ({
       lessonStep === 12
     ) {
       setLessonStep(13)
+
       setSelectedRightHand(null)
       setSelectedLeftHand(null)
+
+      /*
+       * The hand components may run cleanup
+       * after their state becomes null and
+       * restore the liquid visibility.
+       *
+       * Apply the saved visibility again on
+       * the next frame.
+       */
+      animationFrameRef.current =
+        requestAnimationFrame(() => {
+          applyLiquidVisibility()
+        })
+    }
+
+    return () => {
+      if (
+        animationFrameRef.current !==
+        null
+      ) {
+        cancelAnimationFrame(
+          animationFrameRef.current
+        )
+
+        animationFrameRef.current =
+          null
+      }
     }
   }, [
     selectedLesson,
     lessonStep,
     setLessonStep,
+    setSelectedRightHand,
+    setSelectedLeftHand,
   ])
-
-
 
   // =============================================
   // PLACE MODEL AT BALANCE POSITION
@@ -84,12 +191,11 @@ const PlaceModelCentre = ({
     }
 
     // =============================================
-    // SAVE ORIGINAL MODEL STATE
+    // SAVE ORIGINAL MODEL TRANSFORM
     // =============================================
 
     originalTransformRef.current = {
-      parent:
-        model.parent,
+      parent: model.parent,
 
       position:
         model.position.clone(),
@@ -102,7 +208,43 @@ const PlaceModelCentre = ({
     }
 
     // =============================================
-    // GET BALANCE POSITION IN WORLD SPACE
+    // SAVE LIQUID VISIBILITY
+    // =============================================
+
+    const liquidStates = []
+
+    model.traverse((child) => {
+      const childName =
+        child.name?.toLowerCase() ||
+        ""
+
+      if (
+        !childName.includes("liquid")
+      ) {
+        return
+      }
+
+      liquidStates.push({
+        object: child,
+
+        // Save the child's actual value.
+        originalVisible:
+          child.visible,
+
+        /*
+         * Save whether it was really visible
+         * before changing its parent.
+         */
+        wasEffectivelyVisible:
+          getEffectiveVisibility(child),
+      })
+    })
+
+    liquidStatesRef.current =
+      liquidStates
+
+    // =============================================
+    // GET TARGET WORLD POSITION
     // =============================================
 
     const targetWorldPosition =
@@ -118,16 +260,18 @@ const PlaceModelCentre = ({
       balancePosition.parent
 
     // =============================================
-    // MOVE MODEL FROM CAMERA TO TARGET PARENT
+    // MOVE MODEL TO TARGET PARENT
     // =============================================
 
-    if (
-      targetParent
-    ) {
-      targetParent.attach(
-        model
-      )
+    if (targetParent) {
+      targetParent.attach(model)
     }
+
+    /*
+     * Reparenting can expose liquids that were
+     * hidden by an invisible previous parent.
+     */
+    applyLiquidVisibility()
 
     // =============================================
     // CONVERT TARGET POSITION TO LOCAL POSITION
@@ -136,9 +280,7 @@ const PlaceModelCentre = ({
     let targetLocalPosition =
       targetWorldPosition.clone()
 
-    if (
-      targetParent
-    ) {
+    if (targetParent) {
       targetLocalPosition =
         targetParent.worldToLocal(
           targetWorldPosition.clone()
@@ -161,7 +303,7 @@ const PlaceModelCentre = ({
     )
 
     // =============================================
-    // SCALE MODEL X / Y / Z
+    // SCALE MODEL
     // =============================================
 
     model.scale.set(
@@ -170,9 +312,17 @@ const PlaceModelCentre = ({
       modelZScale
     )
 
-    model.updateMatrixWorld(
-      true
-    )
+    model.updateMatrixWorld(true)
+
+    /*
+     * Apply it once more on the next frame in
+     * case another component's cleanup restores
+     * the liquid visibility.
+     */
+    animationFrameRef.current =
+      requestAnimationFrame(() => {
+        applyLiquidVisibility()
+      })
 
     console.log(
       "✅ Model placed at balance position"
@@ -183,6 +333,18 @@ const PlaceModelCentre = ({
     // =============================================
 
     return () => {
+      if (
+        animationFrameRef.current !==
+        null
+      ) {
+        cancelAnimationFrame(
+          animationFrameRef.current
+        )
+
+        animationFrameRef.current =
+          null
+      }
+
       const original =
         originalTransformRef.current
 
@@ -197,44 +359,48 @@ const PlaceModelCentre = ({
       // RETURN MODEL TO ORIGINAL PARENT
       // ===========================================
 
-      if (
-        original.parent
-      ) {
-        original.parent.add(
-          model
-        )
+      if (original.parent) {
+        original.parent.add(model)
       }
 
       // ===========================================
-      // RESTORE ORIGINAL POSITION
+      // RESTORE ORIGINAL TRANSFORM
       // ===========================================
 
       model.position.copy(
         original.position
       )
 
-      // ===========================================
-      // RESTORE ORIGINAL ROTATION
-      // ===========================================
-
       model.quaternion.copy(
         original.quaternion
       )
-
-      // ===========================================
-      // RESTORE ORIGINAL SCALE
-      // ===========================================
 
       model.scale.copy(
         original.scale
       )
 
-      model.updateMatrixWorld(
-        true
+      // ===========================================
+      // RESTORE ORIGINAL LIQUID VISIBILITY
+      // ===========================================
+
+      liquidStatesRef.current.forEach(
+        ({
+          object,
+          originalVisible,
+        }) => {
+          if (object) {
+            object.visible =
+              originalVisible
+          }
+        }
       )
 
+      model.updateMatrixWorld(true)
+
+      liquidStatesRef.current = []
+
       console.log(
-        "✅ Model returned to original camera position"
+        "✅ Model returned to original position"
       )
     }
   }, [

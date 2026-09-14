@@ -41,7 +41,7 @@ const PourModeDeliveryTube = ({
   } = useThree()
 
   const {
-    testube03Ref,conicalBeakerRef02,seperatingFunnelRef
+    testube03Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef
   } = useContext(
     ModelContext
   )
@@ -60,6 +60,11 @@ const PourModeDeliveryTube = ({
     if(selectedLesson===14.1 && lessonStep===37){
       setLessonStep(38)
     }
+    if(selectedLesson===14.1 && lessonStep===48){
+      setLessonStep(49)
+    }
+
+
   },[selectedLesson,lessonStep])  
 
   useEffect(() => {
@@ -500,13 +505,29 @@ const PourModeDeliveryTube = ({
         }
       />}
 
-      {selectedLesson==14.1 && <PourFromModel
+      {selectedLesson==14.1 && lessonStep==38 && <PourFromModel
        modelRef={conicalBeakerRef02}
        otherModelRef={seperatingFunnelRef}
        isPouring={isPouring}
         
 
       />}
+
+      {selectedLesson==14.1 && lessonStep==38 && <PourFromModel
+       modelRef={conicalBeakerRef02}
+       otherModelRef={seperatingFunnelRef}
+       isPouring={isPouring}
+        
+
+      />}
+      {
+        selectedLesson ===14.1 && lessonStep ===49 && <PourFromModel
+        modelRef={graduatedBeakerRef}
+        otherModelRef={seperatingFunnelRef}
+        isPouring={isPouring}
+        />
+      }
+
     </>
   )
 }

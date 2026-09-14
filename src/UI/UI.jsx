@@ -163,7 +163,8 @@ const UI = () => {
   useEffect(()=>{
     setShowMeasuringCylinder50Arrow(
       (selectedLesson===13 && lessonStep==3.1) ||
-      (selectedLesson===14 && lessonStep==3)
+      (selectedLesson===14 && lessonStep==3) ||
+      (selectedLesson===14.1 && lessonStep==44)
     )
   },[selectedLesson,lessonStep])
 

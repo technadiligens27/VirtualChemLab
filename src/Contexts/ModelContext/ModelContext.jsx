@@ -56,7 +56,8 @@ export const ModelProvider = ({ children }) => {
   const graduatedCylinder100Ref = useRef(null)
   const deliveryTubeBungRef = useRef(null)
   const conicalBungRef = useRef(null);
-  const seperatingFunnelRef = useRef(null)
+  const seperatingFunnelRef = useRef(null);
+  const separatingFunnelBungRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -164,7 +165,8 @@ export const ModelProvider = ({ children }) => {
         graduatedCylinder100Ref,deliveryTubeBungRef,
         arrowMeasuringCylnder50,arrowTestube03Ref,
         arrowBromobutanRef,testube03CapRef,conicalBungRef,
-        conicalBeakerRef02,seperatingFunnelRef,arrowSeparatingFunnelRef
+        conicalBeakerRef02,seperatingFunnelRef,arrowSeparatingFunnelRef,
+        separatingFunnelBungRef
       }}
     >
       {children}

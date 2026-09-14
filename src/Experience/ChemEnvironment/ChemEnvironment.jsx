@@ -26,7 +26,7 @@ const ChemEnvironment = () => {
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
-         seperatingFunnelRef,arrowSeparatingFunnelRef
+         seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
@@ -372,6 +372,9 @@ if (
   mainPolystereneLid.current = scene.getObjectByName('polysterene-cup-lid');
   phenopthalineBottleRef.current = scene.getObjectByName('phenopthaline-dropper-bottle');
   conicalBungRef.current = scene.getObjectByName('conical-bung');
+  
+  separatingFunnelBungRef.current = scene.getObjectByName("separating-funnel-bung")
+  separatingFunnelBungRef.current.visible = false
 
   waterBottleRef.current = scene.getObjectByName('water-bottle');
   naohBottleRef.current.visible = false

@@ -3,23 +3,34 @@ import {
   useRef,
 } from "react"
 
-import { useFrame } from "@react-three/fiber"
+import {
+  useFrame,
+} from "@react-three/fiber"
 
 const ReleaseGasBubbles = ({
   modelRef,
+
   riseDistance = 3,
+
   minimumSpeed = 0.15,
   maximumSpeed = 0.3,
-  releaseDelay = 1.5,
-  sidewaysMovement = 0.04,
-}) => {
-  const bubblesRef = useRef([])
-  const elapsedTimeRef = useRef(0)
 
-  console.log('Bubbles')
+  releaseDelay = 1.5,
+
+  sidewaysMovement = 0.04,
+
+  // Leave undefined for infinite looping.
+  loopTimes,
+}) => {
+  const bubblesRef =
+    useRef([])
+
+  const elapsedTimeRef =
+    useRef(0)
 
   useEffect(() => {
-    const model = modelRef?.current
+    const model =
+      modelRef?.current
 
     if (!model) {
       console.log(
@@ -32,7 +43,9 @@ const ReleaseGasBubbles = ({
     const bubbles = []
 
     model.traverse((child) => {
-      if (!child.isMesh) return
+      if (!child.isMesh) {
+        return
+      }
 
       const name =
         child.name?.toLowerCase() || ""
@@ -49,13 +62,16 @@ const ReleaseGasBubbles = ({
             child.position.clone(),
 
           delay:
-            Math.random() * releaseDelay,
+            Math.random() *
+            releaseDelay,
 
           speed:
             minimumSpeed +
             Math.random() *
-              (maximumSpeed -
-                minimumSpeed),
+              (
+                maximumSpeed -
+                minimumSpeed
+              ),
 
           movementOffset:
             Math.random() *
@@ -63,18 +79,28 @@ const ReleaseGasBubbles = ({
             2,
 
           movementSpeed:
-            1 + Math.random() * 2,
+            1 +
+            Math.random() *
+              2,
+
+          completedLoops: 0,
+
+          finished: false,
         })
       }
     })
 
-    bubblesRef.current = bubbles
-    elapsedTimeRef.current = 0
+    bubblesRef.current =
+      bubbles
+
+    elapsedTimeRef.current =
+      0
 
     return () => {
       bubblesRef.current.forEach(
         (bubble) => {
-          bubble.object.visible = false
+          bubble.object.visible =
+            false
 
           bubble.object.position.copy(
             bubble.originalPosition
@@ -89,13 +115,19 @@ const ReleaseGasBubbles = ({
     minimumSpeed,
     maximumSpeed,
     releaseDelay,
+    loopTimes,
   ])
 
   useFrame((_, delta) => {
-    elapsedTimeRef.current += delta
+    elapsedTimeRef.current +=
+      delta
 
     bubblesRef.current.forEach(
       (bubble) => {
+        if (bubble.finished) {
+          return
+        }
+
         if (
           elapsedTimeRef.current <
           bubble.delay
@@ -106,10 +138,12 @@ const ReleaseGasBubbles = ({
         const bubbleObject =
           bubble.object
 
-        bubbleObject.visible = true
+        bubbleObject.visible =
+          true
 
         bubbleObject.position.y +=
-          bubble.speed * delta
+          bubble.speed *
+          delta
 
         bubbleObject.position.x +=
           Math.sin(
@@ -134,14 +168,31 @@ const ReleaseGasBubbles = ({
           bubble.originalPosition.y
 
         if (
-          distanceRisen >= riseDistance
+          distanceRisen >=
+          riseDistance
         ) {
-          bubbleObject.visible = false
+          bubbleObject.visible =
+            false
 
           bubbleObject.position.copy(
             bubble.originalPosition
           )
 
+          bubble.completedLoops += 1
+
+          // Only stop when loopTimes was provided.
+          if (
+            loopTimes !== undefined &&
+            bubble.completedLoops >=
+              loopTimes
+          ) {
+            bubble.finished =
+              true
+
+            return
+          }
+
+          // Continue looping.
           bubble.delay =
             elapsedTimeRef.current +
             Math.random() *
@@ -150,8 +201,10 @@ const ReleaseGasBubbles = ({
           bubble.speed =
             minimumSpeed +
             Math.random() *
-              (maximumSpeed -
-                minimumSpeed)
+              (
+                maximumSpeed -
+                minimumSpeed
+              )
         }
       }
     )

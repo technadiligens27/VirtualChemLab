@@ -269,6 +269,126 @@ const ChlorinationLesson02 = ()=>{
     </>}
         />
       )} 
+
+
+    {lessonStep >=39 && lessonStep <43 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[8]}/>)}
+
+
+    {lessonStep===40 && (<DialogBox text={<>
+      Click the <strong>Separating Funnel</strong> and select <strong>Add Bung</strong> 
+
+
+    </>}
+        />
+      )} 
+
+    {lessonStep===41 && (<DialogBox text={<>
+      Wait for the <strong>Layers</strong> to <strong>Separate</strong>
+
+    </>}
+        />
+      )}      
+
+    {lessonStep >=42 && lessonStep <47 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[9]}/>)}
+
+
+    {lessonStep===42 && (<DialogBox text={<>
+      Place the <strong>Beaker</strong> Near the <strong>Clamp</strong> to act as a <strong>Waste Beaker</strong>
+
+    </>}
+        />
+      )}
+
+
+    {lessonStep===43 && (<DialogBox text={<>
+      <strong>Scroll Down</strong> to Pour From the <strong>Separating Funnel</strong> to the <strong>Waste Beaker</strong>
+
+    </>}
+        />
+      )}
+
+
+    {lessonStep >=44 && lessonStep <50 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[10]}/>)}
+
+
+
+    {lessonStep===44 && (<DialogBox text={<>
+        Pick Up the <strong>Measuring Cylinder</strong> to <strong>Right Hand</strong>
+    </>}
+        />
+      )}
+
+    {lessonStep===45 && (<DialogBox text={<>
+        Select<strong> Held Measuring Cylinder</strong> and Click <strong>Add Liquid</strong>
+    </>}
+        />
+      )}
+
+
+    {lessonStep===46 && (<DialogBox text={<>
+        Fill with <strong>Sodium Hydrogencarbonate (20 cm³)</strong>
+    </>}
+        />
+      )}
+
+    {lessonStep===47 && (<DialogBox text={<>
+        Click the <strong>Separating Funnel</strong> and select <strong>Remove Bung</strong>
+    </>}
+        />
+      )}
+    {lessonStep===47.1 && (<DialogBox text={<>
+        Click the <strong>Separating Funnel</strong> and select <strong>Add Funnel</strong>
+    </>}
+        />
+      )}
+
+    {lessonStep===48 && (<DialogBox text={<>
+       Now Select<strong> Held Measuring Cylinder</strong> and Click <strong>Pour Mode</strong>
+
+    </>}
+        />
+      )}
+    {lessonStep===49 && (<DialogBox text={<>
+      <strong>Scroll Down</strong> to Pour <strong>Sodium Hydrogencarbonate</strong> to the <strong>Separating Funnel</strong>
+    </>}
+        />
+      )}
+
+    {lessonStep===50 && (<DialogBox text={<>
+      Keep <strong>Measuring Cylinder</strong> back in the Table
+    </>}
+        />
+      )}
+    {lessonStep===51 && (<DialogBox text={<>
+      Now Click the <strong>Clamp</strong> and select <strong>Unclamp</strong>
+    </>}
+        />
+      )}
+
+    {lessonStep===52 && (<DialogBox text={<>
+     Click the Held <strong>Separating Funnel</strong>  and select <strong>Remove Funnel and Add Bung</strong> 
+    </>}
+        />
+      )}
+    {lessonStep===53 && (<DialogBox text={<>
+     <strong>Scroll Down</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong>
+    </>}
+        />
+      )}
+
+    {lessonStep===54 && (<DialogBox text={<>
+          Click the <strong>Separating Funnel</strong>  and select <strong>Remove  Bung</strong> 
+
+    </>}
+        />
+      )}
+    {lessonStep===55 && (<DialogBox text={<>
+          55
+
+    </>}
+        />
+      )}
+
        </>
     )
 }

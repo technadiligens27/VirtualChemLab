@@ -92,7 +92,7 @@ const ClickObject = () => {
     volumetricRef,volumetricBung,phenopthalineBottleRef,
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,
-    conicalBeakerRef02,seperatingFunnelRef
+    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -752,8 +752,8 @@ const ClickObject = () => {
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
-    if(selectedLesson===14){
-      if(![14,24].includes(lessonStep)){
+    if([14,14.1].includes(lessonStep)){
+      if(![14,24,50].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }
@@ -796,7 +796,9 @@ const ClickObject = () => {
       setLessonStep(22)
     }
 
-
+    if (handData.name === "main-graduated-cylinder" && selectedLesson === 14.1 && lessonStep === 50) {
+      setLessonStep(51)
+    }
     if (handData.name === "main-graduated-cylinder" && selectedLesson === 14 && lessonStep === 24) {
       setLessonStep(25)
     }
@@ -1316,7 +1318,7 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([14,14.1].includes(selectedLesson)){
-      if(![3,26,34].includes(lessonStep)){
+      if(![3,26,34,44].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false 
       }
@@ -1874,7 +1876,9 @@ const toggleFunnelMode = () => {
       (selectedLesson ==12.1) && ([30,36].includes(lessonStep)) ||
       (selectedLesson ==12.2) && ([64].includes(lessonStep)) ||
       (selectedLesson ===13) && ([3.2,6,9,10].includes(lessonStep)) ||
-      (selectedLesson===14) && ([4,10].includes(lessonStep))
+      (selectedLesson===14) && ([4,10].includes(lessonStep)) ||
+      (selectedLesson===14.1) && ([45].includes(lessonStep))
+
 
     if (!isAllowedStep) {
       setShowErrorMsgNo(4)
@@ -2423,6 +2427,15 @@ if(selectedLesson===13 && lessonStep ===28){
 }
 },[selectedLesson,lessonStep,isBalancePlaced])
 
+
+
+useEffect(()=>{
+  if(selectedLesson==14.1 && lessonStep==51){
+    setIsModelCentre(false)
+  }
+},[selectedLesson,lessonStep])
+
+
 const disappearDeliverySetup =()=>{
   if(normalBeakerRef.current){
     normalBeakerRef.current.visible = false
@@ -2967,6 +2980,44 @@ useEffect(()=>{
   }
   const renderClampTableButtons=()=>{
 
+  if(selectedLesson==14.1 && lessonStep==51){
+      return(
+        <>
+          <button onClick={handleUnclampTestube}>
+            Unclamp
+          </button>
+        </>
+      )
+    } 
+
+   if(selectedLesson==14.1 && lessonStep==47.1){
+    return(
+      <>
+        <button onClick={handleAddFunnelMode}>
+          Add Funnel
+        </button>
+      </>
+    )
+  }    
+    if(selectedLesson==14.1 && lessonStep==47){
+    return(
+      <>
+        <button onClick={removeSeparatingFunnelBung}>
+          Remove Bung
+        </button>
+      </>
+    )
+  }
+    if(selectedLesson==14.1 && lessonStep==40){
+    return(
+      <>
+        <button onClick={handleSeparatingFunnelBung}>
+          Add Bung
+        </button>
+      </>
+    )
+  }
+
     if(isDeliveryTubeConnected && selectedObject?.name ==="mainBuretteClamp"){
       return(
         <>
@@ -3365,6 +3416,14 @@ useEffect(()=>{
 
   const renderNormalBeakerTableButtons = ()=>{
 
+    if(selectedObject?.name === "main-normal-beaker" && selectedLesson===14.1 && lessonStep==42){
+      return (
+        <button onClick={handleModelPlaceCentre}>
+          Place Near Clamp
+        </button>
+      )
+    }
+
 
     if (selectedObject?.name === "main-normal-beaker" && selectedLesson===10 && (lessonStep==107 || lessonStep===115)) {
       return (
@@ -3483,7 +3542,18 @@ useEffect(()=>{
 
   const renderMeasuringCylinderHeldButtons =()=>{
 
-
+    if(selectedObject?.name==="main-graduated-cylinder"){
+      if(selectedLesson===14.1 && lessonStep==48){
+         return(
+          <>
+           <button onClick={handlePourModeDeliveryTube} >
+             Pour Mode
+           </button>
+          
+          </>
+        )       
+      }
+    }
 
     if(selectedLesson===13 && selectedObject?.name==="main-graduated-cylinder-100"){
       if(lessonStep==11){
@@ -3828,6 +3898,10 @@ const handleClampTestube = ()=>{
 const handleUnclampTestube = ()=>{
   setIsClampTestube(false)
   setSelectedObject(null)
+
+  if(selectedLesson==14.1 && lessonStep===51){
+    setLessonStep(52)
+  }
 }
 
 
@@ -3864,7 +3938,9 @@ const removePourModeDeliveryTube = ()=>{
   if(selectedLesson===14.1 && lessonStep===38){
     setLessonStep(39)
   }
-
+  if(selectedLesson===14.1 && lessonStep===39){
+    setLessonStep(40)
+  }
   setIsPourModeDeliveryTube(false)
   setSelectedObject(null)
 }
@@ -4239,9 +4315,72 @@ const handleAddFunnelMode = () => {
   
   setSelectedObject(null)
 }
+
+const handleSeparatingFunnelBung = ()=>{
+  separatingFunnelBungRef.current.visible = true
+  setIsAddFunnelToMode(false)
+
+  if(selectedLesson==14.1 && lessonStep===40){
+    setLessonStep(41)
+  }
+
+  setSelectedObject(null)
+}
+const removeSeparatingFunnelBung = ()=>{
+  separatingFunnelBungRef.current.visible = false
+
+  if(selectedLesson==14.1 && lessonStep===47){
+    setLessonStep(47.1)
+  }
+  if(selectedLesson==14.1 && lessonStep===54){
+    setLessonStep(55)
+  }
+  setSelectedObject(null)
+}
+
+
+const removeFunnelAndAddBung = ()=>{
+  setIsAddFunnelToMode(false)
+  separatingFunnelBungRef.current.visible = true
+  setSelectedObject(null)
+
+  if(selectedLesson==14.1 && lessonStep==52){
+    setLessonStep(53)
+  }
+}
+
 const renderSepratingFunnelHeldButtons = ()=>{
 
-  if(selectedLesson==14.1 && lessonStep==36){
+ if(selectedLesson==14.1 && lessonStep==54 && selectedObject?.name =="separating-funnel"){
+    return(
+      <>
+        <button onClick={removeSeparatingFunnelBung}>
+          Remove Bung
+        </button>
+      </>
+    )
+  }   
+
+ if(selectedLesson==14.1 && lessonStep==52 && selectedObject?.name =="separating-funnel"){
+    return(
+      <>
+        <button onClick={removeFunnelAndAddBung}>
+          Remove Funnel and Add Bung
+        </button>
+      </>
+    )
+  } 
+
+if(selectedLesson==14.1 && lessonStep==36 && selectedObject?.name =="separating-funnel"){
+    return(
+      <>
+        <button onClick={handleClampTestube}>
+          Clamp
+        </button>
+      </>
+    )
+  }
+  if(selectedLesson==14.1 && lessonStep==36 && selectedObject?.name =="separating-funnel"){
     return(
       <>
         <button onClick={handleClampTestube}>

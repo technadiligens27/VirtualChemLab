@@ -52,6 +52,8 @@ import DeliveryTubeGasRise from "./DeliveryTubeGasRise/DeliveryTubeGasRise";
 import ConicalGasCloud from "./ConicalGasCoud/ConicalGasCoud";
 import ChlorinationLiquidColorChange from "./ChlorinationLiquidColorChange/ChlorinationLiquidColorChange";
 import AddFunnelToModel from "./AddFunnelToModel/AddFunnelToModel";
+import ChlorinationSeparatingFunnelColorChange from "./ChlorinationSeparatingFunnelColorChange/ChlorinationSeparatingFunnelColorChange";
+import PourFromModel from "./Pouring/PourFromModel/PourFromModel";
 
 const Interaction = () => {
   const {
@@ -69,7 +71,7 @@ const Interaction = () => {
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
-        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef
+        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef
       
       } = useContext(ModelContext)
 
@@ -234,6 +236,7 @@ const Interaction = () => {
       {selectedLesson ===14 && lessonStep ===17 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14 && lessonStep ===21 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14.1 && lessonStep == 32 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14.1 && lessonStep == 53 && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={3}/> }
 
       
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
@@ -253,12 +256,13 @@ const Interaction = () => {
 
       { isInvertCylinder && (<InvertCylinderModel/>)} 
       
-      {isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
+      {selectedLesson==13 && isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
+      {selectedLesson==14.1 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.2} modelRef={normalBeakerRef}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
       {selectedLesson==13 && isPourModeDeliveryTube && (<PourModeDeliveryTube modelRef={testube03Ref} otherModelRef={boilingTube01Ref}/>)}
-      {selectedLesson==14.1 && isPourModeDeliveryTube && (<PourModeDeliveryTube 
+      {selectedLesson==14.1 && [37,38,39].includes(lessonStep) && isPourModeDeliveryTube && (<PourModeDeliveryTube 
       modelScale={0.35} 
       modelRef={conicalBeakerRef02} 
       otherModelRef={seperatingFunnelRef}
@@ -269,6 +273,12 @@ const Interaction = () => {
     )
       
       }
+      {selectedLesson==14.1 && [48,49].includes(lessonStep) && isPourModeDeliveryTube && (<PourModeDeliveryTube 
+      modelRef={graduatedBeakerRef} 
+      otherModelRef={seperatingFunnelRef}
+      modelYOffset={-0.5}
+      modelXOffset={1}
+      />)}
 
       {/* {selectedLeftHand?.name==="boiliing-tube-01" && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)} */}
 
@@ -279,6 +289,32 @@ const Interaction = () => {
       {selectedLesson==14 && lessonStep >=24 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)}
 
       {selectedLesson==14.1 && isAddFunnelToMode && (<AddFunnelToModel modelRef={seperatingFunnelRef}/>)  }
+
+      {selectedLesson==14.1 && lessonStep ==41 && (<ChlorinationSeparatingFunnelColorChange 
+      modelRef={seperatingFunnelRef}/>)}
+
+      {selectedLesson==14.1 && lessonStep ==49 && (<ChlorinationSeparatingFunnelColorChange 
+      modelRef={seperatingFunnelRef}
+      upperLiquidColor = {"#F4D35E"}
+      bottomLiquidColor = {"#DCEFF7"}
+      
+      />)}
+
+      {selectedLesson==14.1 && lessonStep ==53 && (<ChlorinationSeparatingFunnelColorChange 
+      modelRef={seperatingFunnelRef}
+      upperLiquidColor = {"#DDE6A6"}
+      bottomLiquidColor = {"#DDE6A6"}
+      
+      />)}
+      {selectedLesson==14.1 && lessonStep ==54 && (<ChlorinationSeparatingFunnelColorChange 
+      modelRef={seperatingFunnelRef}
+      upperLiquidColor = {"#DDE6A6"}
+      bottomLiquidColor = {"#DDE6A6"}
+      
+      />)}
+
+      
+
 
     </>
   );

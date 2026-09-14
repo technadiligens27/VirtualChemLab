@@ -148,7 +148,6 @@ export const chlorinationGuidelineData = [
       "Return the equipment to the table.",
       "Replace the bung securely.",
       "Gently swirl until the calcium chloride dissolves.",
-      "Return the flask to the table.",
     ],
 
     image: "./addCalciumChloride.png",
