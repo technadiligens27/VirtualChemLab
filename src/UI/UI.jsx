@@ -39,6 +39,8 @@ import MolarVolumeReduced from "../Experience/Interactions/MolarVolumeReduced/Mo
 import MolarVolumeResults from "./MolarVolumeResults/MolarVolumeResults"
 import ChlorinationLesson from "./AllLessons/ChlorinationLesson/ChlorinationLesson"
 import ChlorinationLesson02 from "./AllLessons/ChlorinationLesson/ChlorinationLesson02"
+import ChlorinationLesson03 from "./AllLessons/ChlorinationLesson/ChlorinationLesson03"
+import ChlorinationLesson04 from "./AllLessons/ChlorinationLesson/ChlorinationLesson04"
 
 const mainContent = [
   {
@@ -164,7 +166,7 @@ const UI = () => {
     setShowMeasuringCylinder50Arrow(
       (selectedLesson===13 && lessonStep==3.1) ||
       (selectedLesson===14 && lessonStep==3) ||
-      (selectedLesson===14.1 && lessonStep==44)
+      (selectedLesson===14.1 && [44,62].includes(lessonStep))
     )
   },[selectedLesson,lessonStep])
 
@@ -186,7 +188,8 @@ const UI = () => {
       (selectedLesson===11 && [3].includes(lessonStep)) ||
       ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep)) ||
       (selectedLesson===9 && [2,19].includes(lessonStep)) ||
-      (selectedLesson===13 && [5].includes(lessonStep))
+      (selectedLesson===13 && [5].includes(lessonStep)) ||
+      (selectedLesson==14.1 && [60].includes(lessonStep))
     )
   }, [selectedLesson, lessonStep])
 
@@ -346,7 +349,8 @@ const UI = () => {
       ([12,12.1].includes(selectedLesson) && [22,7].includes(lessonStep)) ||
       (selectedLesson === 9 && lessonStep ===7) ||
       (selectedLesson===13 && lessonStep===16) ||
-      (selectedLesson ===14.1 && lessonStep ===26)
+      (selectedLesson ===14.1 && lessonStep ===26) ||
+      (selectedLesson == 14.3 && lessonStep == 85)
     )
   },[lessonStep,showSpoonArrow])
 
@@ -648,6 +652,14 @@ useEffect(() => {
        {
         selectedLesson==14.1 && (<ChlorinationLesson02/>)
        }
+
+      {
+        selectedLesson==14.2 && (<ChlorinationLesson03/>)
+       }
+      {
+        selectedLesson==14.3 && (<ChlorinationLesson04/>)
+       }
+
         {/* {<MolarVolumeResults/>} */}
        {/* {<HessCalculationStep25/>} */}
        {/* <TitreValueRecorded/> */}

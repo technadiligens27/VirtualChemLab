@@ -602,6 +602,18 @@ const PourFromModel = ({
           setLessonStep(50)
         }
 
+        if (selectedLesson===14.1 && lessonStep===61) {
+          setLessonStep(62)
+        }
+        if (selectedLesson===14.2 && lessonStep===67) {
+          setLessonStep(68)
+        }
+        if (selectedLesson===14.2 && lessonStep===81) {
+          setLessonStep(82)
+        }
+        if (selectedLesson===14.2 && lessonStep===84) {
+          setLessonStep(85)
+        }
       }
     }
 

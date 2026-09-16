@@ -212,7 +212,11 @@ const transformControlsRef = useRef()
  
   const isLitmus = (name) => name?.toLowerCase().includes("litmus");
 
-
+  useEffect(()=>{
+    if(selectedLesson ===14.1 && lessonStep ===62){
+      setLessonStep(63)
+    }
+  },[lessonStep,selectedLesson])  
   useEffect(()=>{
     if(selectedLesson ===14.1 && lessonStep ===44){
       setLessonStep(45)
@@ -467,7 +471,14 @@ const transformControlsRef = useRef()
     if(selectedLesson===12.2 && lessonStep===96){
       setLessonStep(97)
     }
-  },[selectedLesson,lessonStep])      
+  },[selectedLesson,lessonStep])    
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep===85){
+      setLessonStep(86)
+    }
+  },[selectedLesson,lessonStep])     
+
   return (
     <>
       {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
@@ -592,7 +603,42 @@ const transformControlsRef = useRef()
        selectedLesson===12.1 && ([44,45,46,47,48,49].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask'  && <InvertModel modelRef={volumetricRef}/>
       }
 
-      {selectedLesson==14.1 && lessonStep ==54 && <ReleaseGasBubbles loopTimes={3} modelRef={seperatingFunnelRef}/>}
+      {selectedLesson==14.1 && lessonStep ==53.1 && <ReleaseGasBubbles 
+      sidewaysMovement={0.1} 
+      loopTimes={2}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+       
+       />}
+
+      {selectedLesson==14.1 && lessonStep ==56.1 && <ReleaseGasBubbles 
+      loopTimes={2}
+       bubblePercentage={70}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+      sidewaysMovement={0.1}
+      />}
+      {selectedLesson==14.2 && lessonStep ==73 && <ReleaseGasBubbles 
+      loopTimes={2}
+       bubblePercentage={60}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+      sidewaysMovement={0.1}
+      />}
+
+      {selectedLesson==14.2 && lessonStep ==77 && <ReleaseGasBubbles 
+      loopTimes={2}
+       bubblePercentage={40}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+      sidewaysMovement={0.1}
+      />}
+
+
   </>
   )
 }

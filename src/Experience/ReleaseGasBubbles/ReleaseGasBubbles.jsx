@@ -1,4 +1,5 @@
 import {
+  useContext,
   useEffect,
   useRef,
 } from "react"
@@ -6,6 +7,9 @@ import {
 import {
   useFrame,
 } from "@react-three/fiber"
+import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+
 
 const ReleaseGasBubbles = ({
   modelRef,
@@ -19,18 +23,25 @@ const ReleaseGasBubbles = ({
 
   sidewaysMovement = 0.04,
 
+  // 100 = all bubbles, 50 = half.
+  bubblePercentage = 100,
+
+  // Must be provided for the animation to finish.
   // Leave undefined for infinite looping.
   loopTimes,
 }) => {
-  const bubblesRef =
-    useRef([])
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-  const elapsedTimeRef =
-    useRef(0)
+  const bubblesRef = useRef([])
+  const elapsedTimeRef = useRef(0)
+  const lessonAdvancedRef = useRef(false)
 
   useEffect(() => {
-    const model =
-      modelRef?.current
+    const model = modelRef?.current
 
     if (!model) {
       console.log(
@@ -40,7 +51,7 @@ const ReleaseGasBubbles = ({
       return
     }
 
-    const bubbles = []
+    const availableBubbles = []
 
     model.traverse((child) => {
       if (!child.isMesh) {
@@ -55,11 +66,51 @@ const ReleaseGasBubbles = ({
       ) {
         child.visible = false
 
-        bubbles.push({
+        availableBubbles.push({
           object: child,
 
           originalPosition:
             child.position.clone(),
+        })
+      }
+    })
+
+    const safePercentage =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          bubblePercentage
+        )
+      )
+
+    const bubbleCount =
+      Math.round(
+        availableBubbles.length *
+        (safePercentage / 100)
+      )
+
+    const shuffledBubbles = [
+      ...availableBubbles,
+    ].sort(
+      () => Math.random() - 0.5
+    )
+
+    const selectedBubbles =
+      shuffledBubbles.slice(
+        0,
+        bubbleCount
+      )
+
+    bubblesRef.current =
+      selectedBubbles.map(
+        ({
+          object,
+          originalPosition,
+        }) => ({
+          object,
+
+          originalPosition,
 
           delay:
             Math.random() *
@@ -87,40 +138,40 @@ const ReleaseGasBubbles = ({
 
           finished: false,
         })
-      }
-    })
+      )
 
-    bubblesRef.current =
-      bubbles
-
-    elapsedTimeRef.current =
-      0
+    elapsedTimeRef.current = 0
+    lessonAdvancedRef.current = false
 
     return () => {
-      bubblesRef.current.forEach(
-        (bubble) => {
-          bubble.object.visible =
-            false
+      availableBubbles.forEach(
+        ({
+          object,
+          originalPosition,
+        }) => {
+          object.visible = false
 
-          bubble.object.position.copy(
-            bubble.originalPosition
+          object.position.copy(
+            originalPosition
           )
         }
       )
 
       bubblesRef.current = []
+      elapsedTimeRef.current = 0
+      lessonAdvancedRef.current = false
     }
   }, [
     modelRef,
     minimumSpeed,
     maximumSpeed,
     releaseDelay,
+    bubblePercentage,
     loopTimes,
   ])
 
   useFrame((_, delta) => {
-    elapsedTimeRef.current +=
-      delta
+    elapsedTimeRef.current += delta
 
     bubblesRef.current.forEach(
       (bubble) => {
@@ -138,12 +189,10 @@ const ReleaseGasBubbles = ({
         const bubbleObject =
           bubble.object
 
-        bubbleObject.visible =
-          true
+        bubbleObject.visible = true
 
         bubbleObject.position.y +=
-          bubble.speed *
-          delta
+          bubble.speed * delta
 
         bubbleObject.position.x +=
           Math.sin(
@@ -171,8 +220,7 @@ const ReleaseGasBubbles = ({
           distanceRisen >=
           riseDistance
         ) {
-          bubbleObject.visible =
-            false
+          bubbleObject.visible = false
 
           bubbleObject.position.copy(
             bubble.originalPosition
@@ -180,19 +228,15 @@ const ReleaseGasBubbles = ({
 
           bubble.completedLoops += 1
 
-          // Only stop when loopTimes was provided.
           if (
             loopTimes !== undefined &&
             bubble.completedLoops >=
               loopTimes
           ) {
-            bubble.finished =
-              true
-
+            bubble.finished = true
             return
           }
 
-          // Continue looping.
           bubble.delay =
             elapsedTimeRef.current +
             Math.random() *
@@ -208,6 +252,55 @@ const ReleaseGasBubbles = ({
         }
       }
     )
+
+    const hasBubbles =
+      bubblesRef.current.length > 0
+
+    const allBubblesFinished =
+      hasBubbles &&
+      loopTimes !== undefined &&
+      bubblesRef.current.every(
+        (bubble) => bubble.finished
+      )
+
+    if (
+      allBubblesFinished &&
+      !lessonAdvancedRef.current &&
+      selectedLesson === 14.1 &&
+      lessonStep === 53.1
+    ) {
+      lessonAdvancedRef.current = true
+      setLessonStep(54)
+    }
+
+    if (
+      allBubblesFinished &&
+      !lessonAdvancedRef.current &&
+      selectedLesson === 14.1 &&
+      lessonStep === 56.1
+    ) {
+      lessonAdvancedRef.current = true
+      setLessonStep(57)
+    }
+    if (
+      allBubblesFinished &&
+      !lessonAdvancedRef.current &&
+      selectedLesson === 14.2 &&
+      lessonStep === 73
+    ) {
+      lessonAdvancedRef.current = true
+      setLessonStep(74)
+    }
+
+    if (
+      allBubblesFinished &&
+      !lessonAdvancedRef.current &&
+      selectedLesson === 14.2 &&
+      lessonStep === 77
+    ) {
+      lessonAdvancedRef.current = true
+      setLessonStep(78)
+    }
   })
 
   return null

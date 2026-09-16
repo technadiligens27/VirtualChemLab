@@ -26,19 +26,16 @@ const ClampModel = ({
   modelRef,
 
   modelScale = 1,
-  clampScale = 1,
 
   modelXOffset = 0.5,
   modelYOffset = 0,
-
-  clampYOffset = 0,
 
   hand,
 }) => {
   const {
     buretteClampRef,
     seperatingFunnelRef,
-    normalBeakerRef,
+    normalBeakerRef,conicalBeakerRef02
   } = useContext(ModelContext)
 
   const {
@@ -56,17 +53,15 @@ const ClampModel = ({
     InteractionContext
   )
 
-  const [isPouring, setIsPouring] =
-    useState(false)
+  const [
+    isPouring,
+    setIsPouring,
+  ] = useState(false)
 
   const originalModelTransformRef =
     useRef(null)
 
-  const originalClampTransformRef =
-    useRef(null)
-
-  // Keep the latest lesson values available
-  // inside the useLayoutEffect cleanup.
+  // Latest lesson values for cleanup.
   const selectedLessonRef =
     useRef(selectedLesson)
 
@@ -95,6 +90,22 @@ const ClampModel = ({
     ) {
       setLessonStep(37)
     }
+
+    if (
+      selectedLesson === 14.1 &&
+      lessonStep === 59
+    ) {
+      setLessonStep(60)
+    }
+
+    if (
+      selectedLesson === 14.2 &&
+      lessonStep === 80
+    ) {
+      setLessonStep(81)
+    }
+
+
   }, [
     selectedLesson,
     lessonStep,
@@ -144,33 +155,30 @@ const ClampModel = ({
     setIsPouring(false)
 
     if (
-      selectedLesson !== 14.1 ||
-      lessonStep !== 43
+      ![14.1,14.2].includes(selectedLesson) ||
+      ![43, 61,81,84].includes(lessonStep)
     ) {
       return
     }
 
     const handleWheel = (event) => {
       if (event.deltaY > 0) {
-        // Scroll down — start pouring.
         setIsPouring(true)
       } else if (event.deltaY < 0) {
-        // Scroll up — stop pouring.
         setIsPouring(false)
       }
     }
 
-    // Prevent the same scroll used for clamping
-    // from immediately starting the pouring.
-    const listenerDelay = setTimeout(() => {
-      window.addEventListener(
-        "wheel",
-        handleWheel,
-        {
-          passive: true,
-        }
-      )
-    }, 200)
+    const listenerDelay =
+      setTimeout(() => {
+        window.addEventListener(
+          "wheel",
+          handleWheel,
+          {
+            passive: true,
+          }
+        )
+      }, 200)
 
     return () => {
       clearTimeout(listenerDelay)
@@ -188,11 +196,13 @@ const ClampModel = ({
   ])
 
   // =============================================
-  // CLAMP MODEL
+  // ATTACH MODEL TO CLAMP
   // =============================================
 
   useLayoutEffect(() => {
-    const model = modelRef?.current
+    const model =
+      modelRef?.current
+
     const clamp =
       buretteClampRef?.current
 
@@ -213,35 +223,29 @@ const ClampModel = ({
       return
     }
 
-    // Save the model's original transform.
+    // Save only the model transform.
     originalModelTransformRef.current = {
       parent: model.parent,
-      position: model.position.clone(),
-      rotation: model.rotation.clone(),
-      scale: model.scale.clone(),
+
+      position:
+        model.position.clone(),
+
+      rotation:
+        model.rotation.clone(),
+
+      scale:
+        model.scale.clone(),
     }
 
-    // Save the clamp's original transform.
-    originalClampTransformRef.current = {
-      position: clamp.position.clone(),
-      scale: clamp.scale.clone(),
-    }
-
-    // Scale and vertically reposition
-    // the clamp.
-    clamp.scale.set(
-      clampScale,
-      clampScale,
-      clampScale
-    )
-
-    clamp.position.y =
-      originalClampTransformRef.current
-        .position.y + clampYOffset
+    /*
+     * Do not change the clamp position or scale.
+     * PlaceClampInCenter owns the clamp transform.
+     */
 
     clamp.updateMatrixWorld(true)
+    clampPosition.updateMatrixWorld(true)
 
-    // Attach the model to clamp-position.
+    // Attach the model to the clamp.
     clampPosition.attach(model)
 
     model.position.set(
@@ -260,19 +264,17 @@ const ClampModel = ({
 
     model.updateMatrixWorld(true)
 
-    // =============================================
+    // ===========================================
     // UNCLAMP CLEANUP
-    // =============================================
+    // ===========================================
 
     return () => {
       const originalModel =
         originalModelTransformRef.current
 
-      const originalClamp =
-        originalClampTransformRef.current
-
-      // Restore the attached model.
-      if (originalModel?.parent) {
+      if (
+        originalModel?.parent
+      ) {
         originalModel.parent.add(model)
 
         model.position.copy(
@@ -290,37 +292,24 @@ const ClampModel = ({
         model.updateMatrixWorld(true)
       }
 
-      // Restore the clamp.
-      if (originalClamp) {
-        clamp.position.copy(
-          originalClamp.position
-        )
+      /*
+       * Do not restore the clamp position or
+       * scale here. PlaceClampInCenter controls it.
+       */
 
-        clamp.scale.copy(
-          originalClamp.scale
-        )
-
-        clamp.updateMatrixWorld(true)
-      }
-
-      // When the separating funnel is unclamped
-      // during lesson 14.1 step 51, place it
-      // into the right hand.
-      const shouldMoveToRightHand =
-        selectedLessonRef.current === 14.1 &&
-        lessonStepRef.current === 51 &&
-        model ===
-          seperatingFunnelRef?.current &&
-        originalModel?.parent
+      const shouldMoveToRightHand = [14.1,14.2].includes(selectedLessonRef.current) && [51,70].includes(lessonStepRef.current) &&
+        model === seperatingFunnelRef?.current &&  originalModel?.parent
 
       if (shouldMoveToRightHand) {
         requestAnimationFrame(() => {
           setSelectedRightHand({
             hand: "right",
 
-            name: "separating-funnel",
+            name:
+              "separating-funnel",
 
-            ref: seperatingFunnelRef,
+            ref:
+              seperatingFunnelRef,
 
             originalParent:
               originalModel.parent,
@@ -335,19 +324,21 @@ const ClampModel = ({
               originalModel.scale.clone(),
           })
 
-          setLessonStep(52)
         })
       }
+
+      originalModelTransformRef.current =
+        null
     }
   }, [
     modelRef,
     buretteClampRef,
     seperatingFunnelRef,
+
     modelScale,
-    clampScale,
     modelXOffset,
     modelYOffset,
-    clampYOffset,
+
     setSelectedRightHand,
     setLessonStep,
   ])
@@ -370,7 +361,55 @@ const ClampModel = ({
         )}
 
       {selectedLesson === 14.1 &&
-        lessonStep === 44 && (
+        lessonStep === 61 && (
+          <PourFromModel
+            isPouring={isPouring}
+            otherLiquidEndScale={0.5}
+            otherModelRef={
+              normalBeakerRef
+            }
+            modelRef={
+              seperatingFunnelRef
+            }
+            modelLiquidEndScale={0.7}
+          />
+        )}
+
+
+      {selectedLesson === 14.2 &&
+        lessonStep === 81 && (
+          <PourFromModel
+            isPouring={isPouring}
+            otherLiquidEndScale={0.5}
+            otherModelRef={
+              normalBeakerRef
+            }
+            modelRef={
+              seperatingFunnelRef
+            }
+            modelLiquidEndScale={0.7}
+          />
+        )}
+
+      {selectedLesson === 14.2 &&
+        lessonStep === 84 && (
+          <PourFromModel
+            isPouring={isPouring}
+            otherLiquidEndScale={0.3}
+            otherModelRef={
+              conicalBeakerRef02
+            }
+            modelRef={
+              seperatingFunnelRef
+            }
+            modelLiquidEndScale={0}
+          />
+        )}
+
+      {selectedLesson === 14.1 &&
+        [44, 62].includes(
+          lessonStep
+        ) && (
           <ChlorinationSeparatingFunnelColorChange
             modelRef={
               seperatingFunnelRef
@@ -381,6 +420,24 @@ const ClampModel = ({
             liquidOpacity={0.35}
           />
         )}
+
+      {selectedLesson === 14.2 &&
+        [68,69].includes(
+          lessonStep
+        ) && (
+          <ChlorinationSeparatingFunnelColorChange
+            modelRef={
+              seperatingFunnelRef
+            }
+            upperLiquidColor="#F4D35E"
+            bottomLiquidColor="#DCEFF7"
+            colorChangeDelay={0}
+            liquidOpacity={0.35}
+          />
+        )}
+
+
+
     </>
   )
 }

@@ -63,7 +63,12 @@ const PourModeDeliveryTube = ({
     if(selectedLesson===14.1 && lessonStep===48){
       setLessonStep(49)
     }
-
+    if(selectedLesson===14.1 && lessonStep===65){
+      setLessonStep(66)
+    }
+    if(selectedLesson===14.2 && lessonStep===66){
+      setLessonStep(67)
+    }
 
   },[selectedLesson,lessonStep])  
 
@@ -525,8 +530,19 @@ const PourModeDeliveryTube = ({
         modelRef={graduatedBeakerRef}
         otherModelRef={seperatingFunnelRef}
         isPouring={isPouring}
+        pourScale={20}
         />
       }
+
+      {
+        selectedLesson ===14.2 && lessonStep ===67 && <PourFromModel
+        modelRef={graduatedBeakerRef}
+        otherModelRef={seperatingFunnelRef}
+        isPouring={isPouring}
+        pourScale={20}
+        />
+      }
+
 
     </>
   )

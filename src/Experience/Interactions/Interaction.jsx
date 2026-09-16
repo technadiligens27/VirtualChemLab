@@ -135,8 +135,26 @@ const Interaction = () => {
 
       {isBuiretteClamped &&  <ClampBurette/>}
       
-      {selectedLesson ==14.1 && isClampInCenter && <PlaceClampInCenter clampYOffset={6} clampXOffset = {-4.1}/>}
-      {selectedLesson !==13 && selectedLesson !==14 && isClampInCenter && <PlaceClampInCenter/>}
+      {selectedLesson ==14.1 && isClampInCenter && <PlaceClampInCenter clampYOffset={6}         clampXScale = {0.8}
+        clampYScale = {0.8}
+        clampZScale = {0.8}/>}
+      {selectedLesson ==14.2 && isClampInCenter && <PlaceClampInCenter 
+      
+        clampYOffset={6.5} 
+        clampXScale = {0.8}
+        clampYScale = {0.8}
+        clampZScale = {0.8}
+        clampScale={0.8}  />}
+
+      {selectedLesson ==14.3 && isClampInCenter && <PlaceClampInCenter 
+      
+        clampYOffset={6.5} 
+        clampXScale = {0.8}
+        clampYScale = {0.8}
+        clampZScale = {0.8}
+        clampScale={0.8}  />}        
+
+      {selectedLesson !==13 && selectedLesson !==14.1 && selectedLesson !==14.2 && isClampInCenter && <PlaceClampInCenter/>}
       {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-5}/>}
 
       {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
@@ -236,7 +254,8 @@ const Interaction = () => {
       {selectedLesson ===14 && lessonStep ===17 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14 && lessonStep ===21 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14.1 && lessonStep == 32 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
-      {selectedLesson ===14.1 && lessonStep == 53 && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14.1 && [53,56].includes(lessonStep) && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={3}/> }
+      {selectedLesson ===14.2 && [72,76].includes(lessonStep) && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={5}/> }
 
       
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
@@ -253,11 +272,16 @@ const Interaction = () => {
  
       {selectedLesson==13 && isClampTestube && <ClampModel modelRef={boilingTube01Ref} modelScale={0.8} hand={"left"}/>}
       {selectedLesson==14.1 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} hand={"right"}/>}
+      {selectedLesson==14.2 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />}
+      {selectedLesson==14.3 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />}
 
       { isInvertCylinder && (<InvertCylinderModel/>)} 
       
       {selectedLesson==13 && isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
       {selectedLesson==14.1 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.2} modelRef={normalBeakerRef}/>)}
+      {selectedLesson==14.2 && lessonStep<83 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.6} modelRef={normalBeakerRef}/>)}
+      {selectedLesson==14.2 && lessonStep>=83 && lessonStep<85 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
+      {selectedLesson==14.3 && lessonStep>=85 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
@@ -273,7 +297,7 @@ const Interaction = () => {
     )
       
       }
-      {selectedLesson==14.1 && [48,49].includes(lessonStep) && isPourModeDeliveryTube && (<PourModeDeliveryTube 
+      {[14.1,14.2].includes(selectedLesson) && [48,49,66,67,68].includes(lessonStep) && isPourModeDeliveryTube && (<PourModeDeliveryTube 
       modelRef={graduatedBeakerRef} 
       otherModelRef={seperatingFunnelRef}
       modelYOffset={-0.5}
@@ -289,6 +313,7 @@ const Interaction = () => {
       {selectedLesson==14 && lessonStep >=24 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)}
 
       {selectedLesson==14.1 && isAddFunnelToMode && (<AddFunnelToModel modelRef={seperatingFunnelRef}/>)  }
+      {selectedLesson==14.2 && isAddFunnelToMode && (<AddFunnelToModel modelRef={seperatingFunnelRef}/>)  }
 
       {selectedLesson==14.1 && lessonStep ==41 && (<ChlorinationSeparatingFunnelColorChange 
       modelRef={seperatingFunnelRef}/>)}
@@ -306,14 +331,26 @@ const Interaction = () => {
       bottomLiquidColor = {"#DDE6A6"}
       
       />)}
-      {selectedLesson==14.1 && lessonStep ==54 && (<ChlorinationSeparatingFunnelColorChange 
+      {selectedLesson==14.1 && lessonStep >=58 && (<ChlorinationSeparatingFunnelColorChange 
+      modelRef={seperatingFunnelRef}
+      upperLiquidColor = {"#F2C230"}
+      bottomLiquidColor = {"#8FD3F4"}
+      
+      />)}
+      {selectedLesson==14.2 && lessonStep >=73 && (<ChlorinationSeparatingFunnelColorChange 
+      modelRef={seperatingFunnelRef}
+      upperLiquidColor = {"#F4D35E"}
+      bottomLiquidColor = {"#DCEFF7"}
+      liquidOpacity = {0.35}
+      
+      />)}
+      {selectedLesson==14.2 && lessonStep >=82 && (<ChlorinationSeparatingFunnelColorChange 
       modelRef={seperatingFunnelRef}
       upperLiquidColor = {"#DDE6A6"}
       bottomLiquidColor = {"#DDE6A6"}
+      liquidOpacity = {0.35}
       
-      />)}
-
-      
+      />)}      
 
 
     </>

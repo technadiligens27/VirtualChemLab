@@ -121,7 +121,7 @@ const FillUpBeaker = ({
       )
    const isSodiumHydrogencarbonate =
       liquidName.includes(
-        "sodium hydrogencarbonate solution"
+        "sodium hydrogencarbonate"
       ) 
     const isEthanoicAcid =
         liquidName.includes(
@@ -823,7 +823,11 @@ else if (
     }
      if ( selectedLesson === 14.1 && lessonStep === 46 ) {
       setLessonStep(47)
-    }        
+    }
+   if ( selectedLesson === 14.1 && lessonStep === 64 ) {
+      setLessonStep(65)
+    }   
+    
   }
 )
 

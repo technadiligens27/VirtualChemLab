@@ -13,6 +13,7 @@ import * as THREE from "three"
 import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import ChlorinationSeparatingFunnelColorChange from "../ChlorinationSeparatingFunnelColorChange/ChlorinationSeparatingFunnelColorChange"
 
 const SwirlModel = ({
   modelRef,
@@ -845,13 +846,58 @@ const SwirlModel = ({
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(54)
+          setLessonStep(53.1)
+        }
+
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14.1 &&
+          lessonStep === 56
+        ) {
+          lessonAdvancedRef.current =
+            true
+
+          setLessonStep(56.1)
+        }
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14.2 &&
+          lessonStep === 72
+        ) {
+          lessonAdvancedRef.current =
+            true
+
+          setLessonStep(73)
+        }
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14.2 &&
+          lessonStep === 76
+        ) {
+          lessonAdvancedRef.current =
+            true
+
+          setLessonStep(77)
         }
       }
     }
   })
 
-  return null
+  return (
+    <>
+      {selectedLesson==14.2 && [72,76].includes(lessonStep) &&
+        <ChlorinationSeparatingFunnelColorChange
+          upperLiquidColor = {"#DDE6A6"}
+          bottomLiquidColor ={"#DDE6A6"}
+          colorChangeDelay ={0}
+          colorChangeDuration = {0.5}
+        
+        />
+      
+      }
+    
+    </>
+  )
 }
 
 export default SwirlModel

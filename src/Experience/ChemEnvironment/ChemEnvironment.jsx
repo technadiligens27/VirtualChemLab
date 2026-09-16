@@ -26,7 +26,7 @@ const ChemEnvironment = () => {
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
-         seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef
+         seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
@@ -342,28 +342,36 @@ const hideVerticalObjects=(root)=>{
 
   mainBuiretteRef.current = scene.getObjectByName('main-buirette');
 
-if (
-  mainBuiretteRef.current &&
-  !buretteOriginalStateRef.current
-) {
+if (mainBuiretteRef.current && !buretteOriginalStateRef.current) {
   buretteOriginalStateRef.current = {
-    position:
-      mainBuiretteRef.current.position.clone(),
-
-    rotation:
-      mainBuiretteRef.current.rotation.clone(),
-
-    quaternion:
-      mainBuiretteRef.current.quaternion.clone(),
-
-    scale:
-      mainBuiretteRef.current.scale.clone(),
-
-    parent:
-      mainBuiretteRef.current.parent,
+    position: mainBuiretteRef.current.position.clone(),
+    rotation: mainBuiretteRef.current.rotation.clone(),
+    quaternion: mainBuiretteRef.current.quaternion.clone(),
+    scale: mainBuiretteRef.current.scale.clone(),
+    parent: mainBuiretteRef.current.parent,
   }
 }
 
+
+if (graduatedBeakerRef.current && !graduatedBeaker50OriginalStateRef.current) {
+    graduatedBeaker50OriginalStateRef.current = {
+    position: graduatedBeakerRef.current.position.clone(),
+    rotation:graduatedBeakerRef.current.rotation.clone(),
+    quaternion: graduatedBeakerRef.current.quaternion.clone(),
+    scale: graduatedBeakerRef.current.scale.clone(),
+    parent: graduatedBeakerRef.current.parent,
+  }
+}
+
+if (conicalBeakerRef02.current && ! conicalFlask02OriginalStateRef.current) {
+    conicalFlask02OriginalStateRef.current = {
+    position: conicalBeakerRef02.current.position.clone(),
+    rotation:conicalBeakerRef02.current.rotation.clone(),
+    quaternion: conicalBeakerRef02.current.quaternion.clone(),
+    scale: conicalBeakerRef02.current.scale.clone(),
+    parent: conicalBeakerRef02.current.parent,
+  }
+}
 
 
   buretteClampRef.current = scene.getObjectByName('mainBuretteClamp');

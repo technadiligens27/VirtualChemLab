@@ -110,6 +110,8 @@ export const ModelProvider = ({ children }) => {
   const trayPointRef = useRef(null)
 
   const buretteOriginalStateRef = useRef(null)
+  const conicalFlask02OriginalStateRef = useRef(null)
+  const graduatedBeaker50OriginalStateRef = useRef(null)
 
   const [dropperAnimationAction,setDropperAnimationAction] = useState(null)
  
@@ -166,7 +168,8 @@ export const ModelProvider = ({ children }) => {
         arrowMeasuringCylnder50,arrowTestube03Ref,
         arrowBromobutanRef,testube03CapRef,conicalBungRef,
         conicalBeakerRef02,seperatingFunnelRef,arrowSeparatingFunnelRef,
-        separatingFunnelBungRef
+        separatingFunnelBungRef, conicalFlask02OriginalStateRef,
+        graduatedBeaker50OriginalStateRef
       }}
     >
       {children}
