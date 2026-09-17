@@ -54,6 +54,9 @@ import ChlorinationLiquidColorChange from "./ChlorinationLiquidColorChange/Chlor
 import AddFunnelToModel from "./AddFunnelToModel/AddFunnelToModel";
 import ChlorinationSeparatingFunnelColorChange from "./ChlorinationSeparatingFunnelColorChange/ChlorinationSeparatingFunnelColorChange";
 import PourFromModel from "./Pouring/PourFromModel/PourFromModel";
+import ShowPowderBottomOfModel from "./ShowPowderBottomOfModel/ShowPowderBottomOfModel";
+import ControlLiquidOpacityofModel from "./ControlLiquidOpacityofModel/ControlLiquidOpacityofModel";
+import PouringMode02 from "./PouringMode02/PouringMode02";
 
 const Interaction = () => {
   const {
@@ -65,13 +68,13 @@ const Interaction = () => {
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
-        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef
+        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef
       
       } = useContext(ModelContext)
 
@@ -135,7 +138,8 @@ const Interaction = () => {
 
       {isBuiretteClamped &&  <ClampBurette/>}
       
-      {selectedLesson ==14.1 && isClampInCenter && <PlaceClampInCenter clampYOffset={6}         clampXScale = {0.8}
+      {selectedLesson ==14.1 && isClampInCenter && <PlaceClampInCenter clampYOffset={6} 
+        clampXScale = {0.8}
         clampYScale = {0.8}
         clampZScale = {0.8}/>}
       {selectedLesson ==14.2 && isClampInCenter && <PlaceClampInCenter 
@@ -256,6 +260,7 @@ const Interaction = () => {
       {selectedLesson ===14.1 && lessonStep == 32 && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14.1 && [53,56].includes(lessonStep) && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14.2 && [72,76].includes(lessonStep) && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={5}/> }
+      {selectedLesson ===14.3 && [92].includes(lessonStep) && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={5}/> }
 
       
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
@@ -350,8 +355,28 @@ const Interaction = () => {
       bottomLiquidColor = {"#DDE6A6"}
       liquidOpacity = {0.35}
       
-      />)}      
+      />)}   
 
+      {
+        selectedLesson==14.3 && isPotassiumTransferred && <ShowPowderBottomOfModel modelRef={conicalBeakerRef02}/>
+      }   
+      {
+        selectedLesson==14.3 && lessonStep==93 && <ControlLiquidOpacityofModel modelRef={conicalBeakerRef02} endOpacity = {0.2} endColor="#F4D35E"/>
+      }
+      {
+        selectedLesson==14.3 && lessonStep==96 && <PouringMode02 
+        pourModelRef={conicalBeakerRef02}
+         receiveModelRef={roundBeakerRef}
+         pourModelXOffset = {-1.7}
+         pourModelYOffset = {-0.5}
+         pourModelScale={0.7}
+         receiveModelScale={0.9}
+         hand={"right"}
+         pourModelYRotation = {Math.PI}
+
+         
+         />
+      }
 
     </>
   );

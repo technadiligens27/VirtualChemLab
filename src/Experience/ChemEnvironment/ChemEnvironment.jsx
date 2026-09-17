@@ -266,6 +266,8 @@ const hideVerticalObjects=(root)=>{
     hideConicalGasObjects(conicalBeakerRef)
 
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
+    roundBeakerRef.current.visible = false
+
     graduatedBeakerRef.current = scene.getObjectByName('main-graduated-cylinder');
     spoonRef.current = scene.getObjectByName('main-spoon');
     saltRef.current = scene.getObjectByName('main-salt')

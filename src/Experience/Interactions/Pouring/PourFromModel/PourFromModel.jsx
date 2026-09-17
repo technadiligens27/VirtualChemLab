@@ -13,8 +13,6 @@ import * as THREE from "three"
 import {
   MainGuidelineContext,
 } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import ChlorinationSeparatingFunnelColorChange from "../../ChlorinationSeparatingFunnelColorChange/ChlorinationSeparatingFunnelColorChange"
-import { ModelContext } from "../../../../Contexts/ModelContext/ModelContext"
 
 const PourFromModel = ({
   modelRef,
@@ -22,41 +20,39 @@ const PourFromModel = ({
 
   isPouring = false,
 
-  // Maximum Y-scale of the pouring stream.
   pourScale = 1,
-
-  // Pour-stream animation speed.
   speed = 5,
 
-  // Final scale of the source liquid.
   modelLiquidEndScale = 0,
-
-  // Final scale of the receiving liquid.
   otherLiquidEndScale = 1,
 
-  // Final receiving-liquid opacity.
   otherLiquidOpacity = 0.35,
-
-  // Final receiving-liquid colour.
   otherLiquidColor = "#DCEFF7",
 
-  // 0.25 means approximately four seconds.
   liquidSpeed = 0.25,
 }) => {
   const {
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  const {seperatingFunnelRef} = useContext(ModelContext)
+  const pourMeshesRef =
+    useRef([])
 
-  const pourMeshesRef = useRef([])
-  const sourceLiquidsRef = useRef([])
-  const receivingLiquidsRef = useRef([])
+  const sourceLiquidsRef =
+    useRef([])
 
-  const progressRef = useRef(0)
-  const finishedRef = useRef(false)
+  const receivingLiquidsRef =
+    useRef([])
+
+  const progressRef =
+    useRef(0)
+
+  const finishedRef =
+    useRef(false)
 
   const isSourceSeparatingFunnelRef =
     useRef(false)
@@ -64,37 +60,97 @@ const PourFromModel = ({
   const isReceivingSeparatingFunnelRef =
     useRef(false)
 
+  const isSourceConicalFlask02Ref =
+    useRef(false)
+
+  // Special receiving-model case.
+  const isReceivingRoundBottomFlaskRef =
+    useRef(false)
+
   // ============================================
-  // CHECK WHETHER A MODEL IS A
-  // SEPARATING FUNNEL
+  // NAME HELPERS
+  // ============================================
+
+  const normalizeName = (name) =>
+    (
+      name?.toLowerCase() || ""
+    ).replace(/[-_\s]/g, "")
+
+  const modelContainsName = (
+    model,
+    expectedName
+  ) => {
+    const normalizedExpectedName =
+      normalizeName(expectedName)
+
+    if (
+      normalizeName(model?.name) ===
+      normalizedExpectedName
+    ) {
+      return true
+    }
+
+    let found = false
+
+    model?.traverse((child) => {
+      if (
+        normalizeName(child.name) ===
+        normalizedExpectedName
+      ) {
+        found = true
+      }
+    })
+
+    return found
+  }
+
+  // ============================================
+  // MODEL CHECKS
   // ============================================
 
   const checkIsSeparatingFunnel = (
     model
   ) => {
-    let isSeparatingFunnel = false
+    let found = false
 
     model?.traverse((child) => {
-      const normalizedName =
-        (
-          child.name?.toLowerCase() ||
-          ""
-        ).replace(/[-_\s]/g, "")
+      const name =
+        normalizeName(child.name)
 
       if (
-        normalizedName.includes(
+        name.includes(
           "separatingfunnel"
         ) ||
-        normalizedName.includes(
+        name.includes(
           "sepratingfunnel"
         )
       ) {
-        isSeparatingFunnel = true
+        found = true
       }
     })
 
-    return isSeparatingFunnel
+    return found
   }
+
+  const checkIsConicalFlask02 = (
+    model
+  ) =>
+    modelContainsName(
+      model,
+      "main-Conical-Flask-02"
+    )
+
+  const checkIsRoundBottomFlask = (
+    model
+  ) =>
+    modelContainsName(
+      model,
+      "main-Round-bottom-flask"
+    )
+
+  // ============================================
+  // INITIALIZE
+  // ============================================
 
   useEffect(() => {
     const sourceModel =
@@ -105,7 +161,7 @@ const PourFromModel = ({
 
     if (!sourceModel) {
       console.error(
-        "[PourFromModel] modelRef.current is missing."
+        "[PourFromModel] Source model is missing."
       )
 
       return
@@ -113,7 +169,7 @@ const PourFromModel = ({
 
     if (!receivingModel) {
       console.error(
-        "[PourFromModel] otherModelRef.current is missing."
+        "[PourFromModel] Receiving model is missing."
       )
 
       return
@@ -135,9 +191,9 @@ const PourFromModel = ({
     const preparedReceivingMeshes =
       new Set()
 
-    // ============================================
+    // ==========================================
     // IDENTIFY SOURCE AND RECEIVING MODELS
-    // ============================================
+    // ==========================================
 
     isSourceSeparatingFunnelRef.current =
       checkIsSeparatingFunnel(
@@ -149,29 +205,45 @@ const PourFromModel = ({
         receivingModel
       )
 
+    isSourceConicalFlask02Ref.current =
+      checkIsConicalFlask02(
+        sourceModel
+      )
+
+    isReceivingRoundBottomFlaskRef.current =
+      checkIsRoundBottomFlask(
+        receivingModel
+      )
+
     console.log(
-      "[PourFromModel] Source separating funnel:",
-      isSourceSeparatingFunnelRef.current
+      "[PourFromModel] Source:",
+      sourceModel.name
     )
 
     console.log(
-      "[PourFromModel] Receiving separating funnel:",
-      isReceivingSeparatingFunnelRef.current
+      "[PourFromModel] Receiver:",
+      receivingModel.name
     )
 
-    // ============================================
-    // FIND SOURCE POUR STREAMS AND LIQUIDS
-    // ============================================
+    console.log(
+      "[PourFromModel] Receiver is round-bottom flask:",
+      isReceivingRoundBottomFlaskRef.current
+    )
+
+    // ==========================================
+    // FIND SOURCE STREAMS AND LIQUIDS
+    // ==========================================
 
     sourceModel.traverse((child) => {
       const name =
         child.name?.toLowerCase() ||
         ""
 
-      // Find pouring-stream children.
-      if (name.includes("pour")) {
-        child.visible = true
+      const normalizedName =
+        normalizeName(child.name)
 
+      // Find pour streams.
+      if (name.includes("pour")) {
         child.traverse(
           (innerChild) => {
             if (!innerChild.isMesh) {
@@ -191,7 +263,8 @@ const PourFromModel = ({
             )
 
             pourMeshes.push({
-              object: innerChild,
+              object:
+                innerChild,
 
               originalScale:
                 innerChild.scale.clone(),
@@ -206,50 +279,74 @@ const PourFromModel = ({
         )
       }
 
-      // Find source-liquid children.
-      if (
-        name.includes("liquid") &&
-        !name.includes("pour") &&
-        !foundSourceLiquids.has(
-          child
+      const isConicalUpper =
+        normalizedName.includes(
+          "conicalflask02liquidupper"
         )
+
+      const isConicalBottom =
+        normalizedName.includes(
+          "conicalflask02liquidbottom"
+        )
+
+      const isConicalLiquid =
+        isConicalUpper ||
+        isConicalBottom
+
+      const isNormalLiquid =
+        name.includes("liquid") &&
+        !name.includes("pour")
+
+      const shouldIncludeLiquid =
+        isSourceConicalFlask02Ref.current
+          ? isConicalLiquid
+          : isNormalLiquid
+
+      if (
+        !shouldIncludeLiquid ||
+        foundSourceLiquids.has(child)
       ) {
-        foundSourceLiquids.add(child)
-
-        sourceLiquids.push({
-          object: child,
-
-          originalScale:
-            child.scale.clone(),
-
-          originalVisible:
-            child.visible,
-
-          startScaleX:
-            child.scale.x,
-
-          startScaleY:
-            child.scale.y,
-
-          startScaleZ:
-            child.scale.z,
-        })
+        return
       }
+
+      foundSourceLiquids.add(child)
+
+      sourceLiquids.push({
+        object:
+          child,
+
+        originalScale:
+          child.scale.clone(),
+
+        originalVisible:
+          child.visible,
+
+        startScaleX:
+          child.scale.x,
+
+        startScaleY:
+          child.scale.y,
+
+        startScaleZ:
+          child.scale.z,
+
+        isConicalLiquid,
+      })
     })
 
-    // ============================================
-    // FIND RECEIVING MODEL LIQUIDS
-    // ============================================
+    // ==========================================
+    // FIND RECEIVING LIQUIDS
+    // ==========================================
 
     receivingModel.traverse(
       (child) => {
-        const childName =
+        const name =
           child.name?.toLowerCase() ||
           ""
 
         if (
-          !childName.includes("liquid") ||
-          childName.includes("pour") ||
+          !name.includes("liquid") ||
+          name.includes("pour") ||
           foundReceivingLiquids.has(
             child
           )
@@ -291,8 +388,6 @@ const PourFromModel = ({
                 ? originalMaterial
                 : [originalMaterial]
 
-            // Clone the materials so other
-            // GLTF instances are unaffected.
             const clonedMaterials =
               originalMaterials.map(
                 (material) => {
@@ -321,7 +416,8 @@ const PourFromModel = ({
                 : clonedMaterials[0]
 
             liquidMeshes.push({
-              object: liquidChild,
+              object:
+                liquidChild,
 
               originalVisible:
                 liquidChild.visible,
@@ -352,7 +448,8 @@ const PourFromModel = ({
         )
 
         receivingLiquids.push({
-          object: child,
+          object:
+            child,
 
           originalScale:
             child.scale.clone(),
@@ -386,30 +483,22 @@ const PourFromModel = ({
     progressRef.current = 0
     finishedRef.current = false
 
-    // ============================================
+    // ==========================================
     // INITIAL POUR-STREAM STATE
-    // ============================================
+    // ==========================================
 
     pourMeshes.forEach(
       ({ object }) => {
         object.visible = false
         object.frustumCulled = false
 
-        object.scale.set(1, 0, 1)
+        object.scale.y = 0
 
         object.updateMatrixWorld(true)
       }
     )
 
-    if (pourMeshes.length === 0) {
-      console.error(
-        "[PourFromModel] No pour mesh found."
-      )
-    }
-
-    if (
-      sourceLiquids.length === 0
-    ) {
+    if (sourceLiquids.length === 0) {
       console.error(
         "[PourFromModel] No source liquid found."
       )
@@ -423,18 +512,15 @@ const PourFromModel = ({
       )
     }
 
-    // ============================================
+    // ==========================================
     // CLEANUP
-    // ============================================
+    // ==========================================
 
     return () => {
       const transferOccurred =
         progressRef.current > 0
 
-      const sourceIsSeparatingFunnel =
-        isSourceSeparatingFunnelRef.current
-
-      // Restore pouring streams.
+      // Restore pour streams.
       pourMeshes.forEach((item) => {
         item.object.scale.copy(
           item.originalScale
@@ -451,12 +537,11 @@ const PourFromModel = ({
         )
       })
 
-      // Preserve the final source-liquid
-      // scale after a transfer.
+      // Preserve source final state.
       sourceLiquids.forEach((item) => {
         if (transferOccurred) {
           if (
-            sourceIsSeparatingFunnel
+            isSourceSeparatingFunnelRef.current
           ) {
             item.object.scale.set(
               modelLiquidEndScale,
@@ -485,8 +570,8 @@ const PourFromModel = ({
         )
       })
 
-      // Preserve or restore receiving
-      // liquids.
+      // Preserve receiving final state,
+      // or restore if no transfer occurred.
       receivingLiquids.forEach(
         (item) => {
           if (transferOccurred) {
@@ -499,21 +584,6 @@ const PourFromModel = ({
 
                 meshItem.object.frustumCulled =
                   false
-
-                let currentParent =
-                  meshItem.object.parent
-
-                while (
-                  currentParent &&
-                  currentParent !==
-                    receivingModel
-                ) {
-                  currentParent.visible =
-                    true
-
-                  currentParent =
-                    currentParent.parent
-                }
               }
             )
           } else {
@@ -562,6 +632,12 @@ const PourFromModel = ({
 
       isReceivingSeparatingFunnelRef.current =
         false
+
+      isSourceConicalFlask02Ref.current =
+        false
+
+      isReceivingRoundBottomFlaskRef.current =
+        false
     }
   }, [
     modelRef,
@@ -569,20 +645,25 @@ const PourFromModel = ({
     modelLiquidEndScale,
   ])
 
+  // ============================================
+  // ANIMATION
+  // ============================================
+
   useFrame((_, delta) => {
     const transferIsActive =
       Boolean(isPouring) &&
       !finishedRef.current
 
-    // ============================================
-    // UPDATE TRANSFER PROGRESS
-    // ============================================
+    // ==========================================
+    // UPDATE PROGRESS
+    // ==========================================
 
     if (transferIsActive) {
       progressRef.current =
         Math.min(
           progressRef.current +
             liquidSpeed * delta,
+
           1
         )
 
@@ -592,27 +673,60 @@ const PourFromModel = ({
         progressRef.current = 1
         finishedRef.current = true
 
-        if (selectedLesson===14.1 && lessonStep===38) {
+        if (
+          selectedLesson === 14.1 &&
+          lessonStep === 38
+        ) {
           setLessonStep(39)
         }
-        if (selectedLesson===14.1 && lessonStep===43) {
+
+        if (
+          selectedLesson === 14.1 &&
+          lessonStep === 43
+        ) {
           setLessonStep(44)
         }
-        if (selectedLesson===14.1 && lessonStep===49) {
+
+        if (
+          selectedLesson === 14.1 &&
+          lessonStep === 49
+        ) {
           setLessonStep(50)
         }
 
-        if (selectedLesson===14.1 && lessonStep===61) {
+        if (
+          selectedLesson === 14.1 &&
+          lessonStep === 61
+        ) {
           setLessonStep(62)
         }
-        if (selectedLesson===14.2 && lessonStep===67) {
+
+        if (
+          selectedLesson === 14.2 &&
+          lessonStep === 67
+        ) {
           setLessonStep(68)
         }
-        if (selectedLesson===14.2 && lessonStep===81) {
+
+        if (
+          selectedLesson === 14.2 &&
+          lessonStep === 81
+        ) {
           setLessonStep(82)
         }
-        if (selectedLesson===14.2 && lessonStep===84) {
+
+        if (
+          selectedLesson === 14.2 &&
+          lessonStep === 84
+        ) {
           setLessonStep(85)
+        }
+
+        if (
+          selectedLesson === 14.3 &&
+          lessonStep === 96
+        ) {
+          setLessonStep(97)
         }
       }
     }
@@ -638,9 +752,9 @@ const PourFromModel = ({
         otherLiquidColor
       )
 
-    // ============================================
-    // REDUCE SOURCE MODEL LIQUIDS
-    // ============================================
+    // ==========================================
+    // DECREASE SOURCE LIQUIDS
+    // ==========================================
 
     sourceLiquidsRef.current.forEach(
       ({
@@ -648,12 +762,23 @@ const PourFromModel = ({
         startScaleX,
         startScaleY,
         startScaleZ,
+        isConicalLiquid,
       }) => {
         if (
+          isSourceConicalFlask02Ref.current &&
+          isConicalLiquid
+        ) {
+          // Both Conical Flask 02 liquids
+          // decrease on Y.
+          object.scale.y =
+            THREE.MathUtils.lerp(
+              startScaleY,
+              finalSourceScale,
+              progress
+            )
+        } else if (
           isSourceSeparatingFunnelRef.current
         ) {
-          // The source is a separating
-          // funnel: reduce X, Y and Z.
           object.scale.x =
             THREE.MathUtils.lerp(
               startScaleX,
@@ -674,23 +799,29 @@ const PourFromModel = ({
               finalSourceScale,
               progress
             )
-
-          object.visible =
-            object.scale.x > 0.001 ||
-            object.scale.y > 0.001 ||
-            object.scale.z > 0.001
         } else {
-          // Other source models:
-          // reduce only the Y-axis.
           object.scale.y =
             THREE.MathUtils.lerp(
               startScaleY,
               finalSourceScale,
               progress
             )
+        }
 
+        if (
+          isSourceSeparatingFunnelRef.current
+        ) {
           object.visible =
-            object.scale.y > 0.001
+            Math.abs(object.scale.x) >
+              0.001 ||
+            Math.abs(object.scale.y) >
+              0.001 ||
+            Math.abs(object.scale.z) >
+              0.001
+        } else {
+          object.visible =
+            Math.abs(object.scale.y) >
+            0.001
         }
 
         if (!object.visible) {
@@ -707,9 +838,9 @@ const PourFromModel = ({
       }
     )
 
-    // ============================================
-    // INCREASE RECEIVING MODEL LIQUIDS
-    // ============================================
+    // ==========================================
+    // INCREASE RECEIVING LIQUIDS
+    // ==========================================
 
     receivingLiquidsRef.current.forEach(
       ({
@@ -719,11 +850,17 @@ const PourFromModel = ({
         startScaleZ,
         liquidMeshes,
       }) => {
-        if (
-          isReceivingSeparatingFunnelRef.current
-        ) {
-          // The receiver is a separating
-          // funnel: increase X, Y and Z.
+        /*
+         * Scale on all axes when receiving:
+         *
+         * 1. Separating funnel
+         * 2. main-Round-bottom-flask
+         */
+        const scaleAllAxes =
+          isReceivingSeparatingFunnelRef.current ||
+          isReceivingRoundBottomFlaskRef.current
+
+        if (scaleAllAxes) {
           object.scale.x =
             THREE.MathUtils.lerp(
               startScaleX,
@@ -745,8 +882,6 @@ const PourFromModel = ({
               progress
             )
         } else {
-          // Other receiving models:
-          // increase only the Y-axis.
           object.scale.y =
             THREE.MathUtils.lerp(
               startScaleY,
@@ -755,16 +890,18 @@ const PourFromModel = ({
             )
         }
 
-        if (
-          isReceivingSeparatingFunnelRef.current
-        ) {
+        if (scaleAllAxes) {
           object.visible =
-            object.scale.x > 0.001 ||
-            object.scale.y > 0.001 ||
-            object.scale.z > 0.001
+            Math.abs(object.scale.x) >
+              0.001 ||
+            Math.abs(object.scale.y) >
+              0.001 ||
+            Math.abs(object.scale.z) >
+              0.001
         } else {
           object.visible =
-            object.scale.y > 0.001
+            Math.abs(object.scale.y) >
+            0.001
         }
 
         liquidMeshes.forEach(
@@ -798,9 +935,7 @@ const PourFromModel = ({
 
             clonedMaterials.forEach(
               (material, index) => {
-                if (!material) {
-                  return
-                }
+                if (!material) return
 
                 material.transparent =
                   true
@@ -836,13 +971,14 @@ const PourFromModel = ({
           }
         )
 
+        object.updateMatrix()
         object.updateMatrixWorld(true)
       }
     )
 
-    // ============================================
+    // ==========================================
     // POUR STREAM
-    // ============================================
+    // ==========================================
 
     const showPourStream =
       Boolean(isPouring) &&
@@ -855,20 +991,25 @@ const PourFromModel = ({
           object.frustumCulled = false
 
           if (object.parent) {
-            object.parent.visible = true
+            object.parent.visible =
+              true
           }
 
-          object.scale.y = Math.min(
-            object.scale.y +
-              speed * delta,
-            pourScale
-          )
+          object.scale.y =
+            Math.min(
+              object.scale.y +
+                speed * delta,
+
+              pourScale
+            )
         } else {
-          object.scale.y = Math.max(
-            object.scale.y -
-              speed * delta,
-            0
-          )
+          object.scale.y =
+            Math.max(
+              object.scale.y -
+                speed * delta,
+
+              0
+            )
 
           if (
             object.scale.y <= 0
@@ -883,11 +1024,7 @@ const PourFromModel = ({
     )
   })
 
-  return (
-    <>
-
-    </>
-  )
+  return null
 }
 
 export default PourFromModel

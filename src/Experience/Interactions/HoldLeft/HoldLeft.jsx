@@ -471,7 +471,7 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         !isLitmusMode &&
         !isFunnelMode &&
         selectedLeftHand &&
-        selectedRightHand && (
+        selectedRightHand && ![14.3].includes(selectedLesson) && (
           <PouringMode hand="left" />
       )}
 

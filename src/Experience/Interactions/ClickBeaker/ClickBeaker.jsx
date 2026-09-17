@@ -752,8 +752,8 @@ const ClickObject = () => {
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
-    if([14,14.1,14.2].includes(lessonStep)){
-      if(![14,24,50,69].includes(lessonStep)){
+    if([14,14.1,14.2,14.3].includes(lessonStep)){
+      if(![14,24,50,69,93].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }
@@ -791,6 +791,10 @@ const ClickObject = () => {
     }
 
     if (!handData?.ref?.current) return
+
+    if (handData.name === "main-spoon" && selectedLesson === 14.3 && lessonStep === 93) {
+      setLessonStep(94)
+    }
 
     if (handData.name === "main-spoon" && selectedLesson === 13 && lessonStep === 21) {
       setLessonStep(22)
@@ -1327,7 +1331,7 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([14,14.1,14.3].includes(selectedLesson)){
-      if(![3,26,34,44,62,85].includes(lessonStep)){
+      if(![3,26,34,44,62,85,94].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false 
       }
@@ -1927,6 +1931,9 @@ const toggleFunnelMode = () => {
    const togglePourIntoTestTube = () => {
       setIsPourIntoTestube((previousValue) => {
         if (previousValue) {
+          if(selectedLesson===14.3 && lessonStep ===90 ){
+            setLessonStep(91)
+          }
         if(selectedLesson===14.1 && lessonStep ===30 ){
             setLessonStep(31)
           }
@@ -3170,6 +3177,15 @@ useEffect(()=>{
 
 
   const renderPottasiumCarbinateTableButtons = ()=>{
+
+    if(selectedObject?.name === "pottasium-carbonate-container"  && selectedLesson==14.3 && lessonStep==87){
+       return (
+        <button onClick={addPottasiumCarbinateToSpoon}>
+          Take Anhydrous sodium sulfate
+        </button>
+      )     
+    }
+
     if (selectedObject?.name === "pottasium-carbonate-container") {
       return (
         <button onClick={addPottasiumCarbinateToSpoon}>
@@ -3555,7 +3571,7 @@ useEffect(()=>{
           )
         }
 
-        if(selectedLesson===14 && [16,20].includes(lessonStep)){
+        if([14,14.3].includes(selectedLesson) && [16,20,91].includes(lessonStep)){
           return(
             <>
               <button onClick={placeConicalBung}>
@@ -4186,10 +4202,20 @@ const placeConicalBung = ()=>{
   }
   if(selectedLesson===14 && lessonStep===20){
     setLessonStep(21)
-  }  
+  }
+  if(selectedLesson===14.3 && lessonStep===91){
+    setLessonStep(92)
+  }    
+  
   setSelectedObject(null)
   conicalBungRef.current.visible=true
 }
+
+useEffect(()=>{
+  if(selectedLesson==14.3 && lessonStep==87){
+    setIsClampTestube(false)
+  }
+},[selectedLesson,lessonStep])
 
 const removeConicalBung=()=>{
   if(selectedLesson===14 && lessonStep===18){
@@ -4767,7 +4793,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={buretteClampRef}
-      multiplier={(selectedLesson==14.3 && lessonStep==86) ? 0 : 1.1}    
+      multiplier={(selectedLesson==14.3 && [86,94].includes(lessonStep)) ? 0 : 1.1}    
     />
 
     <ClickHitbox

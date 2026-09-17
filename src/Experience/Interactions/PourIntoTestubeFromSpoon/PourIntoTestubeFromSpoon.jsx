@@ -3,11 +3,20 @@ import {
   useEffect,
   useRef,
 } from "react"
-import { useFrame } from "@react-three/fiber"
+
+import {
+  useFrame,
+} from "@react-three/fiber"
+
 import * as THREE from "three"
 
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  InteractionContext,
+} from "../../../Contexts/InteractionContext/InteractionContext"
 
 const PourIntoTestubeFromSpoon = ({
   testubeRef,
@@ -15,25 +24,55 @@ const PourIntoTestubeFromSpoon = ({
   hand,
   heightOffset = 0.3,
   xOffset = 0.2,
+
+  // Final powder opacity from 0 to 1.
+  powderEndOpacity = 1,
 }) => {
   const {
     lessonStep,
     selectedLesson,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
   const {
     isPotassiumTransferred,
     setIsPotassiumTransferred,
     setIsPottasiumCarobnateInTestube01,
-  } = useContext(InteractionContext)
+  } = useContext(
+    InteractionContext
+  )
 
-  const spoonRotationXRef = useRef(0)
-  const minimumRotationXRef = useRef(0)
-  const maximumRotationXRef = useRef(0)
+  // Disable the test-tube powder logic
+  // only for lesson 14.3.
+const isPowderLogicBlocked =
+  selectedLesson === 14 ||
+  selectedLesson === 14.1 ||
+  selectedLesson === 14.2 ||
+  selectedLesson === 14.3
 
-  const originalSpoonPositionRef = useRef(null)
-  const originalSpoonRotationRef = useRef(null)
+  const finalPowderOpacity =
+    THREE.MathUtils.clamp(
+      powderEndOpacity,
+      0,
+      1
+    )
+
+  const spoonRotationXRef =
+    useRef(0)
+
+  const minimumRotationXRef =
+    useRef(0)
+
+  const maximumRotationXRef =
+    useRef(0)
+
+  const originalSpoonPositionRef =
+    useRef(null)
+
+  const originalSpoonRotationRef =
+    useRef(null)
 
   const originalTestTubePositionRef =
     useRef(null)
@@ -41,8 +80,11 @@ const PourIntoTestubeFromSpoon = ({
   const originalTestTubeRotationRef =
     useRef(null)
 
-  const potassiumPiecesRef = useRef([])
-  const powderMaterialsRef = useRef([])
+  const potassiumPiecesRef =
+    useRef([])
+
+  const powderMaterialsRef =
+    useRef([])
 
   const isPotassiumFallingRef =
     useRef(false)
@@ -52,33 +94,73 @@ const PourIntoTestubeFromSpoon = ({
 
   const powderRevealFinishedRef =
     useRef(false)
- 
- useEffect(() => { 
-  if (selectedLesson === 14.1 && lessonStep === 28){
-    setLessonStep(29)
-  } 
-  }, [lessonStep, selectedLesson, setLessonStep])  
 
- useEffect(() => { 
-  if (selectedLesson === 12 && lessonStep === 9){
-    setLessonStep(10)
-  } 
-  }, [lessonStep, selectedLesson, setLessonStep])
+  useEffect(() => {
+    if (
+      selectedLesson === 14.3 &&
+      lessonStep === 88
+    ) {
+      setLessonStep(89)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
 
-useEffect(() => { 
-  if (selectedLesson === 8 && lessonStep === 11){
-    setLessonStep(12)
-  } 
-   }, [lessonStep, selectedLesson, setLessonStep])
+  useEffect(() => {
+    if (
+      selectedLesson === 14.1 &&
+      lessonStep === 28
+    ) {
+      setLessonStep(29)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
 
+  useEffect(() => {
+    if (
+      selectedLesson === 12 &&
+      lessonStep === 9
+    ) {
+      setLessonStep(10)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
 
-useEffect(() => { 
-  if (selectedLesson === 13 && lessonStep === 18){
-    setLessonStep(19)
-  } 
-   }, [lessonStep, selectedLesson, setLessonStep])   
+  useEffect(() => {
+    if (
+      selectedLesson === 8 &&
+      lessonStep === 11
+    ) {
+      setLessonStep(12)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
 
-    useEffect(() => {
+  useEffect(() => {
+    if (
+      selectedLesson === 13 &&
+      lessonStep === 18
+    ) {
+      setLessonStep(19)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
     if (
       selectedLesson === 9 &&
       lessonStep === 9
@@ -100,12 +182,14 @@ useEffect(() => {
 
     if (!testTube || !spoon) return
 
-    const spoonParent = spoon.parent
+    const spoonParent =
+      spoon.parent
 
     if (!spoonParent) {
       console.log(
         "Spoon parent not found"
       )
+
       return
     }
 
@@ -162,70 +246,80 @@ useEffect(() => {
     potassiumPiecesRef.current =
       potassiumPieces
 
-testTube.traverse((child) => {
-  const childName =
-    child.name?.toLowerCase() || ""
+    testTube.traverse((child) => {
+      const childName =
+        child.name?.toLowerCase() || ""
 
-  // Mouth can be an Object3D or Empty,
-  // so do not require child.isMesh here.
-  if (
-    !mouth &&
-    childName.includes("mouth")
-  ) {
-    mouth = child
+      // Mouth may be an Object3D or Empty.
+      if (
+        !mouth &&
+        childName.includes("mouth")
+      ) {
+        mouth = child
 
-    console.log(
-      "Test tube mouth found:",
-      child.name
-    )
-  }
+        console.log(
+          "Test tube mouth found:",
+          child.name
+        )
+      }
 
-  // Only handle actual powder meshes here.
-if (
-  child.isMesh &&
-  childName.includes("powder") &&
-  !childName.includes("pour") &&
-  child.material
-)  {
-    const originalMaterials =
-      Array.isArray(child.material)
-        ? child.material
-        : [child.material]
+      const isPowderMesh =
+        child.isMesh &&
+        childName.includes("powder") &&
+        !childName.includes("pour") &&
+        child.material
 
-    const clonedMaterials =
-      originalMaterials.map(
-        (originalMaterial) => {
-          const clonedMaterial =
-            originalMaterial.clone()
+      if (!isPowderMesh) return
 
-          clonedMaterial.transparent = true
-          clonedMaterial.depthWrite = false
+      // Keep all test-tube powder hidden
+      // when lesson 14.3 is selected.
+      if (isPowderLogicBlocked) {
+        child.visible = false
+        return
+      }
 
-          clonedMaterial.opacity =
-            isPotassiumTransferred
-              ? 1
-              : 0
+      const originalMaterials =
+        Array.isArray(child.material)
+          ? child.material
+          : [child.material]
 
-          clonedMaterial.needsUpdate = true
+      const clonedMaterials =
+        originalMaterials.map(
+          (originalMaterial) => {
+            const clonedMaterial =
+              originalMaterial.clone()
 
-          powderMaterials.push({
-            object: child,
-            material: clonedMaterial,
-          })
+            clonedMaterial.transparent =
+              true
 
-          return clonedMaterial
-        }
-      )
+            clonedMaterial.depthWrite =
+              false
 
-    child.material =
-      Array.isArray(child.material)
-        ? clonedMaterials
-        : clonedMaterials[0]
+            clonedMaterial.opacity =
+              isPotassiumTransferred
+                ? finalPowderOpacity
+                : 0
 
-    child.visible =
-      isPotassiumTransferred
-  }
-})
+            clonedMaterial.needsUpdate =
+              true
+
+            powderMaterials.push({
+              object: child,
+              material: clonedMaterial,
+            })
+
+            return clonedMaterial
+          }
+        )
+
+      child.material =
+        Array.isArray(child.material)
+          ? clonedMaterials
+          : clonedMaterials[0]
+
+      child.visible =
+        isPotassiumTransferred
+    })
 
     powderMaterialsRef.current =
       powderMaterials
@@ -244,6 +338,7 @@ if (
       console.log(
         "Test tube mouth not found"
       )
+
       return
     }
 
@@ -266,20 +361,30 @@ if (
         }
       )
 
-      powderMaterialsRef.current.forEach(
-        ({ object, material }) => {
-          object.visible = true
-          material.opacity = 1
-          material.needsUpdate = true
-        }
-      )
+      if (!isPowderLogicBlocked) {
+        powderMaterialsRef.current.forEach(
+          ({ object, material }) => {
+            object.visible = true
 
-      targetPowderOpacityRef.current = 1
+            material.opacity =
+              finalPowderOpacity
 
-      // The transfer animation has already
-      // completed, so stop controlling opacity.
-      powderRevealFinishedRef.current =
-        true
+            material.needsUpdate = true
+          }
+        )
+
+        targetPowderOpacityRef.current =
+          finalPowderOpacity
+
+        powderRevealFinishedRef.current =
+          true
+      } else {
+        targetPowderOpacityRef.current =
+          0
+
+        powderRevealFinishedRef.current =
+          true
+      }
     } else {
       targetPowderOpacityRef.current = 0
 
@@ -377,9 +482,6 @@ if (
         )
       }
 
-      // Do not continuously restore opacity here.
-      // The next component must be able to fade
-      // the test-tube powder independently.
       if (!isPotassiumTransferred) {
         potassiumPiecesRef.current.forEach(
           (piece) => {
@@ -410,6 +512,29 @@ if (
         )
       }
 
+      // Make sure lesson 14.3 powder
+      // remains hidden during cleanup.
+      if (
+        isPowderLogicBlocked &&
+        currentTestTube
+      ) {
+        currentTestTube.traverse(
+          (child) => {
+            const childName =
+              child.name?.toLowerCase() ||
+              ""
+
+            if (
+              child.isMesh &&
+              childName.includes("powder") &&
+              !childName.includes("pour")
+            ) {
+              child.visible = false
+            }
+          }
+        )
+      }
+
       potassiumPiecesRef.current = []
       powderMaterialsRef.current = []
 
@@ -427,6 +552,8 @@ if (
     hand,
     heightOffset,
     xOffset,
+    finalPowderOpacity,
+    isPowderLogicBlocked,
     isPotassiumTransferred,
   ])
 
@@ -446,6 +573,7 @@ if (
           Math.min(
             spoonRotationXRef.current +
               rotationSpeed,
+
             maximumRotationXRef.current
           )
       } else {
@@ -453,6 +581,7 @@ if (
           Math.max(
             spoonRotationXRef.current -
               rotationSpeed,
+
             minimumRotationXRef.current
           )
       }
@@ -481,13 +610,17 @@ if (
         targetPowderOpacityRef.current =
           0
 
-        powderMaterialsRef.current.forEach(
-          ({ object, material }) => {
-            object.visible = true
-            material.opacity = 0
-            material.needsUpdate = true
-          }
-        )
+        // Do not reveal test-tube powder
+        // during lesson 14.3.
+        if (!isPowderLogicBlocked) {
+          powderMaterialsRef.current.forEach(
+            ({ object, material }) => {
+              object.visible = true
+              material.opacity = 0
+              material.needsUpdate = true
+            }
+          )
+        }
 
         potassiumPiecesRef.current.forEach(
           (piece) => {
@@ -520,6 +653,7 @@ if (
   }, [
     spoonRef,
     isPotassiumTransferred,
+    isPowderLogicBlocked,
   ])
 
   useEffect(() => {
@@ -537,7 +671,7 @@ if (
     setLessonStep,
   ])
 
-    useEffect(() => {
+  useEffect(() => {
     if (
       isPotassiumTransferred &&
       selectedLesson === 14.1 &&
@@ -552,7 +686,7 @@ if (
     setLessonStep,
   ])
 
-    useEffect(() => {
+  useEffect(() => {
     if (
       isPotassiumTransferred &&
       selectedLesson === 9 &&
@@ -567,8 +701,7 @@ if (
     setLessonStep,
   ])
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (
       isPotassiumTransferred &&
       selectedLesson === 12 &&
@@ -581,16 +714,30 @@ if (
     selectedLesson,
     isPotassiumTransferred,
     setLessonStep,
-  ])  
+  ])
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (
       isPotassiumTransferred &&
       selectedLesson === 13 &&
       lessonStep === 19
     ) {
       setLessonStep(20)
+    }
+  }, [
+    lessonStep,
+    selectedLesson,
+    isPotassiumTransferred,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
+    if (
+      isPotassiumTransferred &&
+      selectedLesson === 14.3 &&
+      lessonStep === 89
+    ) {
+      setLessonStep(90)
     }
   }, [
     lessonStep,
@@ -623,7 +770,9 @@ if (
           if (
             piece.elapsed <
             piece.delay
-          ) return
+          ) {
+            return
+          }
 
           const object =
             piece.object
@@ -679,11 +828,13 @@ if (
       )
 
       if (
-        potassiumPieces.length > 0
+        potassiumPieces.length > 0 &&
+        !isPowderLogicBlocked
       ) {
         targetPowderOpacityRef.current =
-          finishedCount /
-          potassiumPieces.length
+          (finishedCount /
+            potassiumPieces.length) *
+          finalPowderOpacity
       }
 
       if (
@@ -695,11 +846,11 @@ if (
           false
 
         targetPowderOpacityRef.current =
-          1
+          isPowderLogicBlocked
+            ? 0
+            : finalPowderOpacity
 
-        setIsPotassiumTransferred(
-          true
-        )
+        setIsPotassiumTransferred(true)
 
         setIsPottasiumCarobnateInTestube01(
           true
@@ -713,11 +864,17 @@ if (
       }
     }
 
-    // Stop touching the test-tube powder
-    // after its reveal reaches full opacity.
+    // Completely block powder visibility
+    // and opacity logic for lesson 14.3.
+    if (isPowderLogicBlocked) {
+      return
+    }
+
     if (
       powderRevealFinishedRef.current
-    ) return
+    ) {
+      return
+    }
 
     let allPowderVisible =
       powderMaterialsRef.current.length >
@@ -740,7 +897,12 @@ if (
             delta
           )
 
-        if (material.opacity < 0.99) {
+        if (
+          Math.abs(
+            material.opacity -
+              finalPowderOpacity
+          ) > 0.01
+        ) {
           allPowderVisible = false
         }
 
@@ -751,19 +913,20 @@ if (
     if (
       isPotassiumTransferred &&
       targetPowderOpacityRef.current ===
-        1 &&
+        finalPowderOpacity &&
       allPowderVisible
     ) {
       powderMaterialsRef.current.forEach(
         ({ object, material }) => {
           object.visible = true
-          material.opacity = 1
+
+          material.opacity =
+            finalPowderOpacity
+
           material.needsUpdate = true
         }
       )
 
-      // Critical: from this point onward,
-      // this component no longer changes opacity.
       powderRevealFinishedRef.current =
         true
 

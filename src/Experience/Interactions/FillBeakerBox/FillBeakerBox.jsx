@@ -48,7 +48,22 @@ const FillBeakerBox = () => {
         // { name: "Protein Sample", color: "#F5F1D8", imgPath: "./Protein.png" },
         { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./SilverNitrate.png" },
       ]
-    }else{
+    }
+    if([14,14.1,14.2,14.3].includes(selectedLesson)){
+      return [
+        { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
+        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./EthanoicAcid.png" }, 
+        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.png' },
+          { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
+        { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
+        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
+        // { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
+        { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
+        { name: "Sodium Hydrogencarbonate", color: "#EAF7FF", imgPath: "./SodiumHydrogencarbonateSolution.png" },
+      ]
+    }
+    
+    else{
       return [
         { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
         { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./EthanoicAcid.png" }, 

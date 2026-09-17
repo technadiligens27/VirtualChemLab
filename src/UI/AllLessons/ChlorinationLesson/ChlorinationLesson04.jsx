@@ -32,7 +32,7 @@ const ChlorinationLesson04 = () => {
     pipetteRef,
 
     gogglesRef,
-    gloverightRef,graduatedBeaker50OriginalStateRef,
+    gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
     gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef
   } = useContext(ModelContext)
 
@@ -73,6 +73,14 @@ const ChlorinationLesson04 = () => {
         gloveleftRef.current.visible = false
     }
 
+    if(volumetricRef.current){
+      volumetricRef.current.visible = false;
+     }
+
+     if(roundBeakerRef.current){
+      roundBeakerRef.current.visible = true
+     }
+
   },[selectedLesson])
 
   useEffect(()=>{
@@ -90,35 +98,47 @@ useEffect(() => {
 
   if (!model) return
 
-  model.traverse((child) => {
-    const childName =
-      child.name?.toLowerCase() || ""
+model.traverse((child) => {
+  const childName =
+    child.name?.toLowerCase() || ""
 
-    if (
-      !child.isMesh ||
-      !childName.includes("liquid")
-    ) {
-      return
+  if (
+    !child.isMesh ||
+    !childName.includes("liquid")
+  ) {
+    return
+  }
+
+  child.visible = true
+  child.scale.y = 1
+
+  const materials = Array.isArray(child.material)
+    ? child.material
+    : [child.material]
+
+  materials.forEach((material) => {
+    if (!material) return
+
+    // Clone it so both meshes can be updated safely.
+    const clonedMaterial = material.clone()
+
+    clonedMaterial.color.set("#F4D35E")
+    clonedMaterial.transparent = true
+    clonedMaterial.opacity = 0.35
+    clonedMaterial.depthWrite = false
+    clonedMaterial.needsUpdate = true
+
+    if (Array.isArray(child.material)) {
+      const materialIndex =
+        child.material.indexOf(material)
+
+      child.material[materialIndex] =
+        clonedMaterial
+    } else {
+      child.material = clonedMaterial
     }
-
-    child.visible = true
-    child.scale.y = 0.3
-
-    const materials = Array.isArray(
-      child.material
-    )
-      ? child.material
-      : [child.material]
-
-    materials.forEach((material) => {
-      if (!material) return
-
-      material.color.set("#ffffff")
-      material.transparent = true
-      material.opacity = 0.35
-      material.needsUpdate = true
-    })
   })
+})
 }, [conicalBeakerRef02])
 
   useEffect(()=>{
@@ -148,10 +168,84 @@ useEffect(() => {
         />}  
         {lessonStep ==87 && <DialogBox text={
           <>
-            87
+          Click the <strong>Anhydrous Sodium Sulfate Container</strong> and select <strong>Take Anhydrous Sodium Sulfate.</strong> 
           </>
           } 
         />}  
+        {lessonStep ==88 && <DialogBox text={
+          <>
+          Click the <strong>Held Spatula</strong> and select <strong>Pour Into Test Tube</strong> 
+          </>
+          } 
+        />} 
+
+        {lessonStep ==89 && <DialogBox text={
+          <>
+          <strong>Scroll Down</strong> to <strong>Pour</strong>
+          </>
+          } 
+        />}          
+        {lessonStep ==90 && <DialogBox text={
+          <>
+          Click the <strong>Held Spatula</strong> and select <strong>Disable Pour Mode</strong> 
+
+          </>
+          } 
+        />}
+
+        {lessonStep ==91 && <DialogBox text={
+          <>
+        Select <strong>Conical Flask</strong> and <strong>Add Bung</strong> 
+
+          </>
+          } 
+        />}         
+        {lessonStep ==92 && <DialogBox text={
+          <>
+        <strong>Scroll Down</strong> to <strong>Swirl</strong>
+
+          </>
+          } 
+        />}
+
+        {lessonStep ==93 && <DialogBox text={
+          <>
+          Keep <strong>Spatula</strong> back in <strong>Table</strong>
+
+          </>
+          } 
+        />}         
+        {lessonStep ==94 && <DialogBox text={
+          <>
+             Pick Up <strong>Round Bottomed Flask </strong> to <strong>Right Hand</strong>
+
+          </>
+          } 
+        />}
+
+        {lessonStep ==95 && <DialogBox text={
+          <>
+            Press <strong>P</strong> to Enter <strong>Pour Mode</strong>
+
+          </>
+          } 
+        />}        
+        {lessonStep ==96 && <DialogBox text={
+          <>
+            Press <strong>P</strong> to Enter <strong>Pour Mode</strong>
+
+          </>
+          } 
+        />}
+
+        {lessonStep ==97 && <DialogBox text={
+          <>
+            97
+
+          </>
+          } 
+        />}  
+
 
         </>
   )

@@ -13,6 +13,7 @@ import * as THREE from "three"
 import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
 import ChlorinationSeparatingFunnelColorChange from "../ChlorinationSeparatingFunnelColorChange/ChlorinationSeparatingFunnelColorChange"
 
 const SwirlModel = ({
@@ -27,10 +28,7 @@ const SwirlModel = ({
   useTargetSwirls = false,
   targetSwirls = 3,
 
-  // ==========================================
-  // LIQUID SWIRL
-  // ==========================================
-
+  // Extra movement applied to all children.
   liquidSwirlAmount = 0.03,
   liquidSwirlSpeed = 1.4,
 }) => {
@@ -57,11 +55,9 @@ const SwirlModel = ({
   const hasFinishedRef =
     useRef(false)
 
-  // Target reached and now returning home.
   const isReturningAfterFinishRef =
     useRef(false)
 
-  // Ensure the lesson advances only once.
   const lessonAdvancedRef =
     useRef(false)
 
@@ -72,36 +68,16 @@ const SwirlModel = ({
       z: 0,
     })
 
-  // ==========================================
-  // LIQUID REFS
-  // ==========================================
-
-  const liquidObjectsRef =
-    useRef([])
-
-  const originalLiquidRotationsRef =
-    useRef([])
-
-  // Shared pivot used for:
-  //
-  // 1. Conical flask 02 liquid layers
-  // 2. Separating-funnel liquid layers
-  //
-  // This keeps both layers locked together.
-  const layeredLiquidGroupRef =
+  // Shared group containing every direct
+  // child of the model.
+  const allChildrenGroupRef =
     useRef(null)
 
-  // ==========================================
-  // STORE ORIGINAL ROTATION
-  // ==========================================
-
   useEffect(() => {
-    if (!modelRef?.current) {
-      return
-    }
-
     const model =
-      modelRef.current
+      modelRef?.current
+
+    if (!model) return
 
     originalRotationRef.current = {
       x: model.rotation.x,
@@ -109,193 +85,88 @@ const SwirlModel = ({
       z: model.rotation.z,
     }
 
-    // ========================================
-    // FIND LIQUID CHILDREN
-    // ========================================
-
-    liquidObjectsRef.current = []
-
-    originalLiquidRotationsRef.current = []
-
-    model.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() || ""
-
-      if (
-        childName.includes("liquid")
-      ) {
-        liquidObjectsRef.current.push(
-          child
-        )
-
-        originalLiquidRotationsRef.current.push({
-          x: child.rotation.x,
-          y: child.rotation.y,
-          z: child.rotation.z,
-        })
-      }
-    })
-
-    // ========================================
-    // FIND A TWO-LAYER LIQUID PAIR
-    // ========================================
-
-    const liquidLayerNamePairs = [
-      {
-        groupName:
-          "conical-flask-02-layered-liquid-group",
-
-        upperName:
-          "conical-flask-02-liquid-upper",
-
-        bottomName:
-          "conical-flask-02-liquid-bottom",
-      },
-      {
-        groupName:
-          "separating-funnel-layered-liquid-group",
-
-        upperName:
-          "separating-funnel-liquid-upper",
-
-        bottomName:
-          "separating-funnel-liquid-bottom",
-      },
+    // Store every direct child.
+    // Nested children remain attached to
+    // their direct parents.
+    const originalChildren = [
+      ...model.children,
     ]
 
-    let selectedLayerPair = null
+    const originalChildrenData =
+      originalChildren.map(
+        (child) => ({
+          child,
 
-    for (
-      const layerNames
-      of liquidLayerNamePairs
-    ) {
-      const upperLiquid =
-        liquidObjectsRef.current.find(
-          (liquid) =>
-            liquid.name?.toLowerCase() ===
-            layerNames.upperName
+          position:
+            child.position.clone(),
+
+          quaternion:
+            child.quaternion.clone(),
+
+          scale:
+            child.scale.clone(),
+        })
+      )
+
+    model.updateWorldMatrix(
+      true,
+      true
+    )
+
+    // Find the centre of all children.
+    const bounds =
+      new THREE.Box3()
+
+    originalChildren.forEach(
+      (child) => {
+        bounds.expandByObject(
+          child
         )
-
-      const bottomLiquid =
-        liquidObjectsRef.current.find(
-          (liquid) =>
-            liquid.name?.toLowerCase() ===
-            layerNames.bottomName
-        )
-
-      if (
-        upperLiquid &&
-        bottomLiquid
-      ) {
-        selectedLayerPair = {
-          ...layerNames,
-          upperLiquid,
-          bottomLiquid,
-        }
-
-        break
       }
-    }
+    )
 
-    let originalLayerData = null
-
-    // ========================================
-    // CREATE SHARED LIQUID PIVOT
-    // ========================================
-
-    if (selectedLayerPair) {
-      const {
-        upperLiquid,
-        bottomLiquid,
-        groupName,
-      } = selectedLayerPair
-
-      const layeredLiquids = [
-        upperLiquid,
-        bottomLiquid,
-      ]
-
-      // Store each liquid's original parent and
-      // local transform for cleanup.
-      originalLayerData =
-        layeredLiquids.map(
-          (liquid) => ({
-            liquid,
-
-            parent:
-              liquid.parent,
-
-            position:
-              liquid.position.clone(),
-
-            quaternion:
-              liquid.quaternion.clone(),
-
-            scale:
-              liquid.scale.clone(),
-          })
-        )
-
-      model.updateWorldMatrix(
-        true,
-        true
-      )
-
-      // Find the centre of both liquid meshes.
-      const bounds =
-        new THREE.Box3()
-
-      layeredLiquids.forEach(
-        (liquid) => {
-          bounds.expandByObject(
-            liquid
+    const sharedCentre =
+      bounds.isEmpty()
+        ? new THREE.Vector3()
+        : bounds.getCenter(
+            new THREE.Vector3()
           )
-        }
-      )
 
-      const sharedCentre =
-        bounds.getCenter(
-          new THREE.Vector3()
+    // Convert the world-space centre
+    // into the model's local space.
+    model.worldToLocal(
+      sharedCentre
+    )
+
+    const allChildrenGroup =
+      new THREE.Group()
+
+    allChildrenGroup.name =
+      "all-children-swirl-group"
+
+    allChildrenGroup.position.copy(
+      sharedCentre
+    )
+
+    model.add(
+      allChildrenGroup
+    )
+
+    // Attach every direct child to the
+    // same pivot while preserving its
+    // world transform.
+    originalChildren.forEach(
+      (child) => {
+        allChildrenGroup.attach(
+          child
         )
+      }
+    )
 
-      // Convert world-space centre into
-      // model-local space.
-      model.worldToLocal(
-        sharedCentre
-      )
+    allChildrenGroupRef.current =
+      allChildrenGroup
 
-      const liquidGroup =
-        new THREE.Group()
-
-      liquidGroup.name =
-        groupName
-
-      liquidGroup.position.copy(
-        sharedCentre
-      )
-
-      model.add(
-        liquidGroup
-      )
-
-      // Attach preserves each mesh's world transform.
-      // Both liquid layers will now rotate together.
-      layeredLiquids.forEach(
-        (liquid) => {
-          liquidGroup.attach(
-            liquid
-          )
-        }
-      )
-
-      layeredLiquidGroupRef.current =
-        liquidGroup
-    }
-
-    // ========================================
-    // RESET ANIMATION STATE
-    // ========================================
-
+    // Reset animation state.
     swirlTimeRef.current = 0
 
     completedSwirlsRef.current = 0
@@ -314,54 +185,40 @@ const SwirlModel = ({
     timeSinceLastScrollRef.current =
       0
 
-    // ========================================
-    // CLEANUP
-    // ========================================
-
     return () => {
-      const liquidGroup =
-        layeredLiquidGroupRef.current
+      const currentGroup =
+        allChildrenGroupRef.current
 
-      if (
-        liquidGroup &&
-        originalLayerData
-      ) {
-        originalLayerData.forEach(
+      if (currentGroup) {
+        originalChildrenData.forEach(
           ({
-            liquid,
-            parent,
+            child,
             position,
             quaternion,
             scale,
           }) => {
-            if (!parent) {
-              return
-            }
+            // Restore the child directly
+            // under the original model.
+            model.add(child)
 
-            // Restore the original parent.
-            parent.add(
-              liquid
-            )
-
-            // Restore the original local transform.
-            liquid.position.copy(
+            child.position.copy(
               position
             )
 
-            liquid.quaternion.copy(
+            child.quaternion.copy(
               quaternion
             )
 
-            liquid.scale.copy(
+            child.scale.copy(
               scale
             )
           }
         )
 
-        liquidGroup.removeFromParent()
+        currentGroup.removeFromParent()
       }
 
-      layeredLiquidGroupRef.current =
+      allChildrenGroupRef.current =
         null
     }
   }, [
@@ -370,17 +227,13 @@ const SwirlModel = ({
     targetSwirls,
   ])
 
-  // ==========================================
-  // WHEEL
-  // ==========================================
-
   useEffect(() => {
     const handleWheel = () => {
       if (!modelRef?.current) {
         return
       }
 
-      // Prevent additional swirling after
+      // Do not start swirling again after
       // the target has been completed.
       if (
         useTargetSwirls &&
@@ -415,21 +268,18 @@ const SwirlModel = ({
     useTargetSwirls,
   ])
 
-  // ==========================================
-  // ANIMATION
-  // ==========================================
-
   useFrame((_, delta) => {
-    if (!modelRef?.current) {
-      return
-    }
-
     const model =
-      modelRef.current
+      modelRef?.current
 
-    // ========================================
+    if (!model) return
+
+    const allChildrenGroup =
+      allChildrenGroupRef.current
+
+    // =====================================
     // SWIRLING
-    // ========================================
+    // =====================================
 
     if (
       isSwirlingRef.current &&
@@ -444,6 +294,8 @@ const SwirlModel = ({
       const angle =
         swirlTimeRef.current
 
+      // Swirl the main model.
+      // All children follow this rotation.
       model.rotation.x =
         originalRotationRef.current.x +
         Math.sin(angle) *
@@ -454,71 +306,27 @@ const SwirlModel = ({
         Math.cos(angle) *
           swirlAmount
 
-      // ======================================
-      // LIQUID SWIRLING
-      // ======================================
-
-      const layeredLiquidGroup =
-        layeredLiquidGroupRef.current
-
-      if (layeredLiquidGroup) {
-        const liquidAngle =
+      // Apply the additional swirl to the
+      // shared group. All children move
+      // together, including both liquids,
+      // powder and glass meshes.
+      if (allChildrenGroup) {
+        const childAngle =
           angle *
           liquidSwirlSpeed
 
-        // Both layers rotate through one pivot.
-        layeredLiquidGroup.rotation.x =
-          Math.sin(
-            liquidAngle
-          ) *
+        allChildrenGroup.rotation.x =
+          Math.sin(childAngle) *
           liquidSwirlAmount
 
-        layeredLiquidGroup.rotation.z =
-          Math.cos(
-            liquidAngle
-          ) *
+        allChildrenGroup.rotation.z =
+          Math.cos(childAngle) *
           liquidSwirlAmount
-      } else {
-        // Standard handling for models that
-        // do not contain a two-layer liquid.
-        liquidObjectsRef.current.forEach(
-          (liquid, index) => {
-            const originalRotation =
-              originalLiquidRotationsRef.current[
-                index
-              ]
-
-            if (
-              !liquid ||
-              !originalRotation
-            ) {
-              return
-            }
-
-            const liquidAngle =
-              angle *
-              liquidSwirlSpeed
-
-            liquid.rotation.x =
-              originalRotation.x +
-              Math.sin(
-                liquidAngle
-              ) *
-                liquidSwirlAmount
-
-            liquid.rotation.z =
-              originalRotation.z +
-              Math.cos(
-                liquidAngle
-              ) *
-                liquidSwirlAmount
-          }
-        )
       }
 
-      // ======================================
+      // ===================================
       // TARGET SWIRL MODE
-      // ======================================
+      // ===================================
 
       if (useTargetSwirls) {
         const completedSwirls =
@@ -539,10 +347,6 @@ const SwirlModel = ({
             completedSwirlsRef.current
           )
         }
-
-        // ====================================
-        // TARGET REACHED
-        // ====================================
 
         if (
           completedSwirlsRef.current >=
@@ -569,10 +373,7 @@ const SwirlModel = ({
         }
       }
 
-      // ======================================
-      // USER STOPPED SCROLLING
-      // ======================================
-
+      // Stop when the user stops scrolling.
       if (
         timeSinceLastScrollRef.current >=
         stopDelay
@@ -584,9 +385,9 @@ const SwirlModel = ({
       return
     }
 
-    // ========================================
-    // RETURN MODEL TO ORIGINAL ROTATION
-    // ========================================
+    // =====================================
+    // RETURN MODEL
+    // =====================================
 
     const returnFactor =
       Math.min(
@@ -615,76 +416,32 @@ const SwirlModel = ({
       ) *
       returnFactor
 
-    // ========================================
-    // RETURN LIQUID TO ORIGINAL ROTATION
-    // ========================================
+    // =====================================
+    // RETURN ALL CHILDREN
+    // =====================================
 
-    const layeredLiquidGroup =
-      layeredLiquidGroupRef.current
-
-    if (layeredLiquidGroup) {
-      layeredLiquidGroup.rotation.x +=
+    if (allChildrenGroup) {
+      allChildrenGroup.rotation.x +=
         (
           0 -
-          layeredLiquidGroup.rotation.x
+          allChildrenGroup.rotation.x
         ) *
         returnFactor
 
-      layeredLiquidGroup.rotation.y +=
+      allChildrenGroup.rotation.y +=
         (
           0 -
-          layeredLiquidGroup.rotation.y
+          allChildrenGroup.rotation.y
         ) *
         returnFactor
 
-      layeredLiquidGroup.rotation.z +=
+      allChildrenGroup.rotation.z +=
         (
           0 -
-          layeredLiquidGroup.rotation.z
+          allChildrenGroup.rotation.z
         ) *
         returnFactor
-    } else {
-      liquidObjectsRef.current.forEach(
-        (liquid, index) => {
-          const originalRotation =
-            originalLiquidRotationsRef.current[
-              index
-            ]
-
-          if (
-            !liquid ||
-            !originalRotation
-          ) {
-            return
-          }
-
-          liquid.rotation.x +=
-            (
-              originalRotation.x -
-              liquid.rotation.x
-            ) *
-            returnFactor
-
-          liquid.rotation.y +=
-            (
-              originalRotation.y -
-              liquid.rotation.y
-            ) *
-            returnFactor
-
-          liquid.rotation.z +=
-            (
-              originalRotation.z -
-              liquid.rotation.z
-            ) *
-            returnFactor
-        }
-      )
     }
-
-    // ========================================
-    // CHECK DISTANCE FROM ORIGINAL ROTATION
-    // ========================================
 
     const xDifference =
       Math.abs(
@@ -704,9 +461,9 @@ const SwirlModel = ({
           originalRotationRef.current.z
       )
 
-    // ========================================
+    // =====================================
     // FULLY RETURNED
-    // ========================================
+    // =====================================
 
     if (
       xDifference < 0.001 &&
@@ -719,43 +476,15 @@ const SwirlModel = ({
         originalRotationRef.current.z
       )
 
-      // ======================================
-      // SNAP LIQUID EXACTLY BACK
-      // ======================================
-
-      if (layeredLiquidGroup) {
-        layeredLiquidGroup.rotation.set(
+      // Return all children exactly to
+      // their original shared rotation.
+      if (allChildrenGroup) {
+        allChildrenGroup.rotation.set(
           0,
           0,
           0
         )
-      } else {
-        liquidObjectsRef.current.forEach(
-          (liquid, index) => {
-            const originalRotation =
-              originalLiquidRotationsRef.current[
-                index
-              ]
-
-            if (
-              !liquid ||
-              !originalRotation
-            ) {
-              return
-            }
-
-            liquid.rotation.set(
-              originalRotation.x,
-              originalRotation.y,
-              originalRotation.z
-            )
-          }
-        )
       }
-
-      // ======================================
-      // TARGET WAS COMPLETED
-      // ======================================
 
       if (
         useTargetSwirls &&
@@ -768,10 +497,7 @@ const SwirlModel = ({
           "✅ Returned to original rotation"
         )
 
-        // ====================================
-        // LESSON STEPS
-        // ====================================
-
+        // Lesson 14 — Step 21.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14 &&
@@ -783,6 +509,7 @@ const SwirlModel = ({
           setLessonStep(22)
         }
 
+        // Lesson 12.1 — Step 32.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 12.1 &&
@@ -794,6 +521,7 @@ const SwirlModel = ({
           setLessonStep(33)
         }
 
+        // Lesson 12.1 — Step 38.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 12.1 &&
@@ -805,6 +533,7 @@ const SwirlModel = ({
           setLessonStep(39)
         }
 
+        // Lesson 14 — Step 17.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14 &&
@@ -816,6 +545,7 @@ const SwirlModel = ({
           setLessonStep(18)
         }
 
+        // Lesson 14 — Step 15.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14 &&
@@ -827,6 +557,7 @@ const SwirlModel = ({
           setLessonStep(16)
         }
 
+        // Lesson 14.1 — Step 32.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14.1 &&
@@ -838,6 +569,7 @@ const SwirlModel = ({
           setLessonStep(33)
         }
 
+        // Lesson 14.1 — Step 53.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14.1 &&
@@ -849,6 +581,7 @@ const SwirlModel = ({
           setLessonStep(53.1)
         }
 
+        // Lesson 14.1 — Step 56.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14.1 &&
@@ -859,6 +592,8 @@ const SwirlModel = ({
 
           setLessonStep(56.1)
         }
+
+        // Lesson 14.2 — Step 72.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14.2 &&
@@ -869,6 +604,8 @@ const SwirlModel = ({
 
           setLessonStep(73)
         }
+
+        // Lesson 14.2 — Step 76.
         if (
           !lessonAdvancedRef.current &&
           selectedLesson === 14.2 &&
@@ -879,23 +616,33 @@ const SwirlModel = ({
 
           setLessonStep(77)
         }
+
+        if (
+          !lessonAdvancedRef.current &&
+          selectedLesson === 14.3 &&
+          lessonStep === 92
+        ) {
+          lessonAdvancedRef.current =
+            true
+
+          setLessonStep(93)
+        }
+
       }
     }
   })
 
   return (
     <>
-      {selectedLesson==14.2 && [72,76].includes(lessonStep) &&
-        <ChlorinationSeparatingFunnelColorChange
-          upperLiquidColor = {"#DDE6A6"}
-          bottomLiquidColor ={"#DDE6A6"}
-          colorChangeDelay ={0}
-          colorChangeDuration = {0.5}
-        
-        />
-      
-      }
-    
+      {selectedLesson === 14.2 &&
+        [72, 76].includes(lessonStep) && (
+          <ChlorinationSeparatingFunnelColorChange
+            upperLiquidColor="#DDE6A6"
+            bottomLiquidColor="#DDE6A6"
+            colorChangeDelay={0}
+            colorChangeDuration={0.5}
+          />
+        )}
     </>
   )
 }

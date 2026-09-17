@@ -226,7 +226,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowPottasiumCarbonateArrow(
-      (selectedLesson===8 && lessonStep === 10) 
+      (selectedLesson===8 && lessonStep === 10) ||
+      (selectedLesson ==14.3 && lessonStep===87)
     )
   },[selectedLesson,lessonStep])
 
@@ -259,7 +260,7 @@ const UI = () => {
   useEffect(()=>{
     setShowSulfamicArrow(
       (selectedLesson==12 && lessonStep==8)||
-      (selectedLesson==13 && lessonStep==17)
+      (selectedLesson==13 && lessonStep==17) 
     )
   },[selectedLesson,lessonStep])
 

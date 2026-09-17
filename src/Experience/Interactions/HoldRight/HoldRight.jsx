@@ -325,6 +325,12 @@ const transformControlsRef = useRef()
   },[lessonStep,isMainGuideline])  
 
   useEffect(()=>{
+    if(lessonStep===94 && selectedLesson===14.3 ){
+      setLessonStep(95)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
     if(lessonStep===34 && selectedLesson===14.1 ){
       setLessonStep(35)
     }
@@ -477,7 +483,30 @@ const transformControlsRef = useRef()
     if(selectedLesson===14.3 && lessonStep===85){
       setLessonStep(86)
     }
-  },[selectedLesson,lessonStep])     
+  },[selectedLesson,lessonStep])   
+  
+  
+  useEffect(() => {
+  const handleKeyDown = (event) => {
+    if (event.code === "KeyP") {
+      if(selectedLesson==14.3 && lessonStep==95){
+        setLessonStep(96)
+      }
+    }
+  }
+
+  window.addEventListener(
+    "keydown",
+    handleKeyDown
+  )
+
+  return () => {
+    window.removeEventListener(
+      "keydown",
+      handleKeyDown
+    )
+  }
+},[selectedLesson,lessonStep])
 
   return (
     <>
@@ -491,7 +520,7 @@ const transformControlsRef = useRef()
       {!isStirMode &&
         selectedLeftHand &&
         selectedRightHand && 
-        !isFunnelMode &&  
+        !isFunnelMode &&  ![14.3].includes(selectedLesson) &&
         
         (
           <PouringMode hand="right" />

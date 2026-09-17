@@ -13,6 +13,13 @@ const AddPottasiumCarobnateToSpoon = () => {
   const opacity = useRef(0)
   const pottasiumCarobnateMeshes = useRef([])
 
+ 
+  useEffect(()=>{
+    if(selectedLesson==14.3 && lessonStep==87){
+        setLessonStep(88)
+    }
+  },[lessonStep,selectedLesson])      
+
   useEffect(()=>{
     if(selectedLesson==14.1 && lessonStep==27){
         setLessonStep(28)

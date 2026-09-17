@@ -121,6 +121,8 @@ const PouringMode = ({
   // SCALE VOLUMETRIC FLASK IF IT IS IN RIGHT HAND
   // =====================================================
 
+
+
   useEffect(() => {
     if (!isFunnelMode) return
 
@@ -639,7 +641,35 @@ const PouringMode = ({
         const otherObjectName =
           otherObject?.name?.toLowerCase() ||
           ""
+        const selectedLeftName =
+          selectedLeftHand?.name?.toLowerCase() || ""
 
+        const selectedRightName =
+          selectedRightHand?.name?.toLowerCase() || ""
+
+        const isVolumetricToRoundBottom =
+          selectedLeftName.includes(
+            "volumetric-flask"
+          ) &&
+          selectedRightName.includes(
+            "round-bottom-flask"
+          )
+
+        if (isVolumetricToRoundBottom) {
+          // Left-hand volumetric flask scale.
+          targetObject.scale.set(
+            0.4,
+            0.4,
+            0.4
+          )
+
+          // Right-hand round-bottom flask scale.
+          otherObject?.scale.set(
+            0.3,
+            0.3,
+            0.3
+          )
+        }
         const isKettle =
           targetObjectName.includes(
             "kettle"
