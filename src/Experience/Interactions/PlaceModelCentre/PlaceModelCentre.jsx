@@ -143,6 +143,14 @@ const PlaceModelCentre = ({
       setSelectedLeftHand(null)
     }
 
+    if (
+      selectedLesson === 14.3 &&
+      lessonStep === 98
+    ) {
+      setLessonStep(99)
+      setSelectedLeftHand(null)
+    }    
+
   }, [
     selectedLesson,
     lessonStep,
@@ -382,6 +390,8 @@ const PlaceModelCentre = ({
     // ===========================================
 
     return () => {
+      
+
       if (
         animationFrameRef.current !==
         null

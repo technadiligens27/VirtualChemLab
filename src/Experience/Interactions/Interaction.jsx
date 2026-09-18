@@ -57,6 +57,8 @@ import PourFromModel from "./Pouring/PourFromModel/PourFromModel";
 import ShowPowderBottomOfModel from "./ShowPowderBottomOfModel/ShowPowderBottomOfModel";
 import ControlLiquidOpacityofModel from "./ControlLiquidOpacityofModel/ControlLiquidOpacityofModel";
 import PouringMode02 from "./PouringMode02/PouringMode02";
+import KeepBackOnTable from "./KeepBackOnTable/KeepBackOnTable";
+import PlaceModelinMantle from "./PlaceModelinMantle/PlaceModelinMantle";
 
 const Interaction = () => {
   const {
@@ -68,14 +70,14 @@ const Interaction = () => {
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
-        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef
-      
+        naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
+        tableConicalPos,heatingMantleRef      
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -285,8 +287,9 @@ const Interaction = () => {
       {selectedLesson==13 && isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
       {selectedLesson==14.1 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.2} modelRef={normalBeakerRef}/>)}
       {selectedLesson==14.2 && lessonStep<83 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.6} modelRef={normalBeakerRef}/>)}
-      {selectedLesson==14.2 && lessonStep>=83 && lessonStep<85 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
-      {selectedLesson==14.3 && lessonStep>=85 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
+      {[14.2,14.3].includes(selectedLesson) && lessonStep>=83 && lessonStep<98 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
+      {/* {selectedLesson==14.3 && lessonStep>=85 && lessonStep<98 &&  isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)} */}
+      {selectedLesson==14.3 && lessonStep>=98 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
@@ -376,6 +379,12 @@ const Interaction = () => {
 
          
          />
+      }
+
+      {
+        selectedLesson==14.3 && isPlaceInMantle && (
+          <PlaceModelinMantle modelRef={roundBeakerRef}/>
+        )
       }
 
     </>

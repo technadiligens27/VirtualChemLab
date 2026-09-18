@@ -135,7 +135,7 @@ const UI = () => {
     setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
     showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow,
     setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
-    setShowTestube03Arrow,setShowSeparatingFunnel
+    setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -155,6 +155,12 @@ const UI = () => {
 
 
   // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    setShowHeatingMantleArrow(
+      (selectedLesson==14.3 && lessonStep==98)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowSeparatingFunnel(
@@ -195,7 +201,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowVolumetricFlaskArrow(
-      ([12.1,12.2].includes(selectedLesson) && [26,55].includes(lessonStep))
+      ([12.1,12.2].includes(selectedLesson) && [26,55].includes(lessonStep)) ||
+      ([14.3].includes(selectedLesson) && [94].includes(lessonStep))
     )
   },[selectedLesson,lessonStep])
 
@@ -242,7 +249,8 @@ const UI = () => {
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
-    setShowVolumetricArrow((([11,12.2].includes(selectedLesson)) && ([6,66].includes(lessonStep))))
+    setShowVolumetricArrow(
+      (([11,12.2].includes(selectedLesson)) && ([6,66].includes(lessonStep))))
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{

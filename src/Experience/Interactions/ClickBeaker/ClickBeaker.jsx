@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react"
-import { useThree } from "@react-three/fiber"
+import { advance, useThree } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
 import './ClickBeaker.css'
@@ -54,7 +54,8 @@ const ClickObject = () => {
     isSulfamicInSpoon,setIsSulfamicInSpoon,isFillToMark,setIsFillToMark,
     isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode,
+    setIsPlaceInMantle
   } = useContext(InteractionContext)
 
   const {
@@ -92,7 +93,7 @@ const ClickObject = () => {
     volumetricRef,volumetricBung,phenopthalineBottleRef,
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,
-    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef
+    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -288,6 +289,10 @@ const ClickObject = () => {
       {
         name:"separating-funnel",
         ref:seperatingFunnelRef
+      },
+      {
+        name:"heating-mantle",
+        ref:heatingMantleRef
       }
       ],
     [
@@ -322,7 +327,7 @@ const ClickObject = () => {
       sulfamicBottleRef,methylBottleRef,
       naohBottleRef,waterBottleRef,
       boilingTube01Ref,graduatedCylinder100Ref,
-      conicalBeakerRef02
+      conicalBeakerRef02,heatingMantleRef
     ]
   )
 
@@ -752,8 +757,8 @@ const ClickObject = () => {
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
-    if([14,14.1,14.2,14.3].includes(lessonStep)){
-      if(![14,24,50,69,93].includes(lessonStep)){
+    if([14,14.1,14.2,14.3].includes(selectedLesson)){
+      if(![14,24,50,69,93,97].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }
@@ -1022,8 +1027,9 @@ const ClickObject = () => {
 
  if (handData.name === "main-Conical-Flask" && selectedLesson===14 && lessonStep ===10) {
       setLessonStep(11)
-    }     
-    
+    }
+
+
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
       if (lessonStep === 17 && selectedLesson === 8) {
@@ -3227,6 +3233,9 @@ useEffect(()=>{
 
   const renderTableObjectButtons = () => {
 
+    const heatingMantleTableButtons =  renderHeatingMantleTableButtons()
+    if(heatingMantleTableButtons) return heatingMantleTableButtons
+
     const SulfamicTableButtons=  renderSulfamicTableButtons()
     if(SulfamicTableButtons) return SulfamicTableButtons
 
@@ -3505,6 +3514,13 @@ useEffect(()=>{
     // }
   }
 
+  const advanceNextStep = ()=>{
+    if(selectedLesson==14.3 && lessonStep==97){
+      setLessonStep(98)
+      setIsModelCentre(false)
+    }
+  }
+
   const renderConicalHeldButtons = () => {
     if (
   [
@@ -3513,6 +3529,19 @@ useEffect(()=>{
   ].includes(selectedObject?.name)
 ) {
       if (isTutorialMode) {
+
+        if([14.3].includes(selectedLesson) && [97].includes(lessonStep)){
+          return(
+            <>
+              <button onClick={advanceNextStep}>
+                Keep Back On Table
+              </button>
+              <button>
+                Add Liquid
+              </button>
+            </>
+          )
+        }
 
         if(selectedLesson==14.1 && [37,39].includes(lessonStep)){
           return(
@@ -3645,10 +3674,20 @@ useEffect(()=>{
     }
   }
 
+  // useEffect(()=>{
+  //   if(selectedLesson==14.3 && lessonStep==98){
+  //     setIsModelCentre(false)
+  //   }
+  // },[selectedLesson,lessonStep])
+
+
   const handleModelPlaceCentre = ()=>{
     setIsModelCentre(true)
     setSelectedObject(null)
   }
+
+
+
 
   const renderNormalBeakerHeldButtons=()=>{
   
@@ -3755,8 +3794,6 @@ useEffect(()=>{
     )
   }
 
-
-
   //-----------------Free Roam--------------////
   if(selectedObject.name === "main-normal-beaker" && !isTutorialMode){
     return(
@@ -3824,7 +3861,44 @@ useEffect(()=>{
 
   }
 
+  const handlePlaceInMantle = ()=>{
+    setIsPlaceInMantle(true)
+    setSelectedObject(null)
+  }
 
+  const renderRoundBottomHeldButtons = ()=>{
+    if(selectedObject?.name === "main-Round-bottom-flask"){
+      if(selectedLesson==14.3 && lessonStep===99){
+        return(
+          <>
+            <button onClick={handlePlaceInMantle}>
+              Place In Mantle
+            </button>
+            <button>
+              Keep Back On Table
+            </button>
+          
+          </>
+        )
+      }
+    }
+  }
+
+  const renderHeatingMantleTableButtons = ()=>{
+    if(selectedObject.name === "heating-mantle"){
+
+      if(selectedLesson==14.3 && lessonStep ==98){
+        return(
+          <>
+            <button onClick={handleModelPlaceCentre}>
+              Place Near Clamp
+            </button>
+          </>
+        )
+      }
+
+    }
+  }
 const renderThermometerHeldButtons=()=>{
     
   if(selectedObject.name === "mainThermometer"){
@@ -4623,6 +4697,9 @@ const renderHeldSpoonButtons = () => {
 
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
+
+  const roundBottomHeldButtons = renderRoundBottomHeldButtons()
+  if(roundBottomHeldButtons) return roundBottomHeldButtons
 
   const sepratingFunnelButtons = renderSepratingFunnelHeldButtons()
   if(sepratingFunnelButtons) return sepratingFunnelButtons

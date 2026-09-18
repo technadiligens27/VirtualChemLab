@@ -26,7 +26,7 @@ const ChlorinationLesson = ()=>{
 
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
-    const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,volumetricRef,
+    const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,volumetricRef,heatingMantleRef,
       pipetteRef,roundBeakerRef
     } = useContext(ModelContext)
 
@@ -56,7 +56,11 @@ const ChlorinationLesson = ()=>{
      if(roundBeakerRef.current){
       roundBeakerRef.current.visible = true
      }
-    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef,roundBeakerRef,volumetricRef])
+
+     if(heatingMantleRef.current){
+      heatingMantleRef.current.visible = true
+     }
+    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef,roundBeakerRef,volumetricRef,heatingMantleRef])
 
  return(
        <>

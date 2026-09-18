@@ -27,7 +27,7 @@ const ChlorinationLesson02 = ()=>{
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSafetyStep} = useContext(MainGuidelineContext);
     const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,gogglesRef,seperatingFunnelRef,pipetteRef,potassiumHydrogenCarbonateRef,
-        gloverightRef,gloveleftRef} = useContext(ModelContext)
+        gloverightRef,gloveleftRef,heatingMantleRef} = useContext(ModelContext)
 
     const resetLesson = useResetLesson()
     
@@ -52,12 +52,14 @@ const ChlorinationLesson02 = ()=>{
       pipetteRef.current.visible = false
      }
 
-     
+     if(heatingMantleRef.current){
+      heatingMantleRef.current.visible = true
+     }
      gogglesRef.current.visible = false 
      gloverightRef.current.visible = false 
      gloveleftRef.current.visible = false 
 
-    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef])    
+    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef,heatingMantleRef])    
 
         useEffect(() => {
         setSafetyStep(4)

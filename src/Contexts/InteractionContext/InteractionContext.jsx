@@ -175,7 +175,8 @@ export const InteractionProvider = ({ children }) => {
     conicalGas03:null
   })
 
-  const [isAddFunnelToMode,setIsAddFunnelToMode] = useState(false)
+  const [isAddFunnelToMode,setIsAddFunnelToMode] = useState(false);
+  const [isPlaceInMantle,setIsPlaceInMantle] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -300,7 +301,8 @@ export const InteractionProvider = ({ children }) => {
   setIsModelCentre(false);
   setIsPourModeDeliveryTube(false);
   setIsMolarVolumeReaction(false);
-  setConcialGasAnimationAction(false)
+  setConcialGasAnimationAction(false);
+  setIsPlaceInMantle(false)
 }
 
   return (
@@ -397,7 +399,8 @@ export const InteractionProvider = ({ children }) => {
         isMolarVolumeReaction,setIsMolarVolumeReaction,
         deliveryAnimationActions,setDeliveryAnimationActions,
         concialGasAnimationActions, setConcialGasAnimationAction,
-        isAddFunnelToMode,setIsAddFunnelToMode                   
+        isAddFunnelToMode,setIsAddFunnelToMode,
+        isPlaceInMantle,setIsPlaceInMantle                 
       }}
     >
       {children}

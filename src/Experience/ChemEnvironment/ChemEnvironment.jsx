@@ -26,7 +26,8 @@ const ChemEnvironment = () => {
          arrowSulfamicRef,arrowMethylBottleRef,naohLiquidRef,waterBottleRef,arrowWaterBottleRef,buretteOriginalStateRef,
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
-         seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef
+         seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
+         heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
@@ -253,7 +254,10 @@ const hideVerticalObjects=(root)=>{
 
     normalBeakerRef.current = scene.getObjectByName('main-normal-beaker');
     conicalBeakerRef.current = scene.getObjectByName('main-Conical-Flask');
-    
+    heatingMantleRef.current = scene.getObjectByName("heating-mantle")
+    heatingMantleRef.current.visible = false
+    heatingMantleBeakerPosRef.current =scene.getObjectByName("heating-mantle-beaker-pos");
+
     hidePourObjects(normalBeakerRef)
     hidePourObjects(conicalBeakerRef)
     hidePourObjects(volumetricRef)
@@ -510,7 +514,16 @@ if (conicalBeakerRef02.current && ! conicalFlask02OriginalStateRef.current) {
 
       arrowSeparatingFunnelRef.current = scene.getObjectByName("saperating-funnel-arrow");
       arrowSeparatingFunnelRef.current.visible = false;
+
+      arrowHeatingMantleRef.current = scene.getObjectByName("arrow-heating-mantle");
+      arrowHeatingMantleRef.current.visible = false;
+
   }, [scene])
+
+
+  useEffect(()=>{
+    tableConicalPos.current = scene.getObjectByName("conical-table-pos")
+  },[scene])
 
   const hasSavedModelsRef = useRef(false)
 

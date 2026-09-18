@@ -561,6 +561,7 @@ const PouringMode02 = ({
             }
             modelLiquidEndScale={0.1}
             otherLiquidEndScale={1}
+            otherLiquidColor = {"#F4D35E"}
           />
         )}
     </>

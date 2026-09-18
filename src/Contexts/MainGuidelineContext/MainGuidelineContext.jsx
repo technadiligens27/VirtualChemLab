@@ -64,7 +64,9 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showTestube03Arrow,setShowTestube03Arrow] = useState(false)
   const [showBromobutaneArrow,setshowBromobutaneArrow] = useState(false);
 
-  const [showSeparatingFunnelArrow,setShowSeparatingFunnel] = useState(false)
+  const [showSeparatingFunnelArrow,setShowSeparatingFunnel] = useState(false);
+
+  const [showHeatingMantleArrow,setShowHeatingMantleArrow] = useState(false)
 
 
 
@@ -230,7 +232,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setshowBromobutaneArrow,
 
         showSeparatingFunnelArrow,
-        setShowSeparatingFunnel
+        setShowSeparatingFunnel,
+
+        showHeatingMantleArrow,
+        setShowHeatingMantleArrow
 
 
       }}

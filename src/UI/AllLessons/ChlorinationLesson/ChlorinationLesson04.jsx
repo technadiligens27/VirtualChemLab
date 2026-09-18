@@ -33,7 +33,7 @@ const ChlorinationLesson04 = () => {
 
     gogglesRef,
     gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
-    gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef
+    gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef
   } = useContext(ModelContext)
 
   useEffect(()=>{
@@ -81,6 +81,17 @@ const ChlorinationLesson04 = () => {
       roundBeakerRef.current.visible = true
      }
 
+     if(heatingMantleRef.current){
+      heatingMantleRef.current.visible = true
+     }
+
+     if(volumetricPipetteRef.current){
+      volumetricPipetteRef.current.visible = false
+     }
+
+     if(mainBuiretteRef.current){
+      mainBuiretteRef.current.visible = false
+     }
   },[selectedLesson])
 
   useEffect(()=>{
@@ -240,11 +251,26 @@ model.traverse((child) => {
 
         {lessonStep ==97 && <DialogBox text={
           <>
-            97
+            Keep the <strong>Conical Flask</strong> back on the <strong>Table</strong>
 
           </>
           } 
         />}  
+
+        {lessonStep ==98 && <DialogBox text={
+          <>
+            Click the <strong>Heating Mantle</strong> and Select <strong>Place Near Clamp</strong>
+
+          </>
+          } 
+        />}
+        {lessonStep ==99 && <DialogBox text={
+          <>
+           Now Click <strong>Held Round Bottom Flask</strong> and select <strong>Place In Mantle</strong>
+
+          </>
+          } 
+        />} 
 
 
         </>
