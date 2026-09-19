@@ -27,7 +27,8 @@ const ChemEnvironment = () => {
          boilingTube01Ref,arrowBoilingTube01Ref,arrowMeasuringCylnder,graduatedCylinder100Ref,deliveryTubeBungRef,
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
-         heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef
+         heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
+         arrowCondensorRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
@@ -257,6 +258,8 @@ const hideVerticalObjects=(root)=>{
     heatingMantleRef.current = scene.getObjectByName("heating-mantle")
     heatingMantleRef.current.visible = false
     heatingMantleBeakerPosRef.current =scene.getObjectByName("heating-mantle-beaker-pos");
+    clampHandleRef.current = scene.getObjectByName("clamp-handle");
+    condensorRef.current = scene.getObjectByName("condensor");
 
     hidePourObjects(normalBeakerRef)
     hidePourObjects(conicalBeakerRef)
@@ -286,6 +289,8 @@ const hideVerticalObjects=(root)=>{
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
+
+    distillationHeadRef.current = scene.getObjectByName("distillation-head");
 
     seperatingFunnelRef.current = scene.getObjectByName("separating-funnel");
     seperatingFunnelRef.current.visible = false
@@ -517,6 +522,9 @@ if (conicalBeakerRef02.current && ! conicalFlask02OriginalStateRef.current) {
 
       arrowHeatingMantleRef.current = scene.getObjectByName("arrow-heating-mantle");
       arrowHeatingMantleRef.current.visible = false;
+
+      arrowCondensorRef.current = scene.getObjectByName("condensor-arrow");
+      arrowCondensorRef.current.visible = false;
 
   }, [scene])
 

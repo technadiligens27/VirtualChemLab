@@ -66,7 +66,8 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [showSeparatingFunnelArrow,setShowSeparatingFunnel] = useState(false);
 
-  const [showHeatingMantleArrow,setShowHeatingMantleArrow] = useState(false)
+  const [showHeatingMantleArrow,setShowHeatingMantleArrow] = useState(false);
+  const [showCondensorArrow,setShowCondensorArrow] = useState(false)
 
 
 
@@ -235,7 +236,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowSeparatingFunnel,
 
         showHeatingMantleArrow,
-        setShowHeatingMantleArrow
+        setShowHeatingMantleArrow,
+
+        showCondensorArrow,
+        setShowCondensorArrow
 
 
       }}

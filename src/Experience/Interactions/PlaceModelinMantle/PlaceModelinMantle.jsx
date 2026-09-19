@@ -18,9 +18,9 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 const PlaceModelinMantle = ({
   modelRef,
 
-  modelScale = 1,
+  modelScale = 0.6,
 
-  modelYOffset = 0,
+  modelYOffset = 1,
   modelXOffset = 0,
 }) => {
   const {heatingMantleBeakerPosRef} = useContext(ModelContext);

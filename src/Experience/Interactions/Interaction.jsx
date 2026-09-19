@@ -59,6 +59,10 @@ import ControlLiquidOpacityofModel from "./ControlLiquidOpacityofModel/ControlLi
 import PouringMode02 from "./PouringMode02/PouringMode02";
 import KeepBackOnTable from "./KeepBackOnTable/KeepBackOnTable";
 import PlaceModelinMantle from "./PlaceModelinMantle/PlaceModelinMantle";
+import AdjustClampHandle from "./AdjustClampHandle/AdjustClampHandle";
+import PlaceDistillationHead from "./PlaceDistillationHead/PlaceDistillationHead";
+import InsertThermometer from "./InsertThermometer/InsertThermometer";
+import InsertCondensor from "./InsertCondensor/InsertCondensor";
 
 const Interaction = () => {
   const {
@@ -70,7 +74,8 @@ const Interaction = () => {
      testubesInBeaker,isVolumetricPipetteMode,setIsVolumetricPipetteMode,setPourFromVolumetricPipette,isPhenopthalinePourMode
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
-    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle
+    isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
+    isAddDistillationHead,isInsertThermometer,isInsertCondensor
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -152,13 +157,22 @@ const Interaction = () => {
         clampZScale = {0.8}
         clampScale={0.8}  />}
 
-      {selectedLesson ==14.3 && isClampInCenter && <PlaceClampInCenter 
+      {selectedLesson ==14.3  && isClampInCenter && <PlaceClampInCenter 
       
         clampYOffset={6.5} 
         clampXScale = {0.8}
         clampYScale = {0.8}
         clampZScale = {0.8}
-        clampScale={0.8}  />}        
+        clampScale={0.8}  />} 
+
+      {/* {selectedLesson ==14.3 && lessonStep>=100 && isClampInCenter && <PlaceClampInCenter 
+      
+        clampYOffset={6.5} 
+        clampZOffset={3.5}
+        clampXScale = {0.9}
+        clampYScale = {0.8}
+        clampZScale = {0.8}
+        clampScale={0.8}  />}            */}
 
       {selectedLesson !==13 && selectedLesson !==14.1 && selectedLesson !==14.2 && isClampInCenter && <PlaceClampInCenter/>}
       {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-5}/>}
@@ -289,7 +303,7 @@ const Interaction = () => {
       {selectedLesson==14.2 && lessonStep<83 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.6} modelRef={normalBeakerRef}/>)}
       {[14.2,14.3].includes(selectedLesson) && lessonStep>=83 && lessonStep<98 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
       {/* {selectedLesson==14.3 && lessonStep>=85 && lessonStep<98 &&  isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)} */}
-      {selectedLesson==14.3 && lessonStep>=98 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
+      {selectedLesson==14.3 && lessonStep>=98 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-0.1} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
@@ -385,6 +399,23 @@ const Interaction = () => {
         selectedLesson==14.3 && isPlaceInMantle && (
           <PlaceModelinMantle modelRef={roundBeakerRef}/>
         )
+      }
+
+      {
+        selectedLesson ==14.3 && lessonStep==100 && (
+          <AdjustClampHandle yOffset={-2}/>
+        )
+      }
+      {
+        isAddDistillationHead && (
+          <PlaceDistillationHead modelRef={roundBeakerRef}/>
+        )
+      }
+      {
+        isInsertThermometer && <InsertThermometer modelRef={roundBeakerRef}/>
+      }
+      {
+        isInsertCondensor && <InsertCondensor modelRef={roundBeakerRef}/>
       }
 
     </>

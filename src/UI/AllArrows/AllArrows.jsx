@@ -13,7 +13,7 @@ const AllArrows=()=>{
         arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
         ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef,
         arrowBoilingTube01Ref,arrowMeasuringCylnder,arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,
-        arrowSeparatingFunnelRef,arrowHeatingMantleRef
+        arrowSeparatingFunnelRef,arrowHeatingMantleRef,arrowCondensorRef
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -28,6 +28,7 @@ const AllArrows=()=>{
         showBoilingTube01Ref,showMeasuringCylinderArrow,showMeasuringCylinder50Arrow,
         setShowMeasuringCylinder50Arrow,showTestube03Arrow,setShowTestube03Arrow,showHeatingMantleArrow,
         setShowMeasuringCylinderArrow,showBromobutaneArrow,setshowBromobutaneArrow,showSeparatingFunnelArrow,setShowSeparatingFunnel
+        ,showCondensorArrow
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -71,6 +72,7 @@ const AllArrows=()=>{
         {showBromobutaneArrow && <ArrowGuides arrowRef={arrowBromobutanRef} speed={2.5} height={0.5} showStatus={showBromobutaneArrow}/>}
         {showSeparatingFunnelArrow && <ArrowGuides arrowRef={arrowSeparatingFunnelRef} speed={2.5} height={0.5} showStatus={showSeparatingFunnelArrow}/>}
         {showHeatingMantleArrow && <ArrowGuides arrowRef={arrowHeatingMantleRef} speed={2.5} height={0.5} showStatus={showHeatingMantleArrow}/>}
+        {showCondensorArrow && <ArrowGuides arrowRef={arrowCondensorRef} speed={2.5} height={0.5} showStatus={showCondensorArrow}/>}
 
         </>
     )

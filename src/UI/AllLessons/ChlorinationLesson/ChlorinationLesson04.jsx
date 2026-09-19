@@ -33,7 +33,8 @@ const ChlorinationLesson04 = () => {
 
     gogglesRef,
     gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
-    gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef
+    gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,
+    digitalBalanceRef
   } = useContext(ModelContext)
 
   useEffect(()=>{
@@ -91,6 +92,10 @@ const ChlorinationLesson04 = () => {
 
      if(mainBuiretteRef.current){
       mainBuiretteRef.current.visible = false
+     }
+
+     if(digitalBalanceRef.current){
+      digitalBalanceRef.current.visible = false
      }
   },[selectedLesson])
 
@@ -271,8 +276,41 @@ model.traverse((child) => {
           </>
           } 
         />} 
+        {lessonStep ==100 && <DialogBox text={
+          <>
+           <strong>Scroll Down </strong>to <strong>Adjust Clamp Handle</strong> to fit the Beaker
 
+          </>
+          } 
+        />}
 
+        {lessonStep ==101 && <DialogBox text={
+          <>
+           Click the <strong>Round Bottom Beaker</strong> and Select <strong> Add Distillation Head</strong>
+
+          </>
+          } 
+        />}         
+
+        {lessonStep ==102 && <DialogBox text={
+          <>
+           Click the <strong>Thermometer</strong> and Select <strong>Insert Thermometer</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep ==103 && <DialogBox text={
+          <>
+           Click the <strong>Condensor</strong> and Select <strong>Insert Condensor</strong>
+          </>
+          } 
+        />}         
+        {lessonStep ==104 && <DialogBox text={
+          <>
+           104
+          </>
+          } 
+        />}  
         </>
   )
 }

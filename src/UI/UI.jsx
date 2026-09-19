@@ -135,7 +135,8 @@ const UI = () => {
     setShowNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,showMethyArrow,setShowMethylArrow,
     showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow,
     setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
-    setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow
+    setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow,showCondensorArrow,
+        setShowCondensorArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -144,17 +145,17 @@ const UI = () => {
     clickedModel,
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
-    setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo
+    setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo,
+    
   } = useContext(InteractionContext)
 
+  // ------------------------ Lesson 08 -------------
 
   useEffect(()=>{
-    console.log("isReactionTimerRunning:",isReactionTimerRunning)
-    console.log("isPouring:",isPouring)
-  },[isReactionTimerRunning])
-
-
-  // ------------------------ Lesson 08 -------------
+    setShowCondensorArrow(
+      (selectedLesson==14.3 && lessonStep ==103)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowHeatingMantleArrow(
@@ -381,7 +382,8 @@ useEffect(() => {
 useEffect(()=>{
   setShowThermometerArrow(
     (selectedLesson === 8 && lessonStep === 30) ||
-    (selectedLesson === 9 && lessonStep === 28)
+    (selectedLesson === 9 && lessonStep === 28) ||
+    (selectedLesson ==14.3 && lessonStep == 102)
   )
 },[selectedLesson, lessonStep])
 

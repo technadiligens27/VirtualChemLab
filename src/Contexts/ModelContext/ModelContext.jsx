@@ -60,6 +60,9 @@ export const ModelProvider = ({ children }) => {
   const separatingFunnelBungRef = useRef(null)
   const heatingMantleRef = useRef(null)
   const heatingMantleBeakerPosRef = useRef(null)
+  const clampHandleRef = useRef(null);
+  const distillationHeadRef = useRef(null);
+  const condensorRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -106,7 +109,8 @@ export const ModelProvider = ({ children }) => {
   const arrowMeasuringCylnder50 = useRef(null);
   const arrowBromobutanRef = useRef(null);
   const arrowSeparatingFunnelRef = useRef(null);
-  const arrowHeatingMantleRef = useRef(null)
+  const arrowHeatingMantleRef = useRef(null);
+  const arrowCondensorRef = useRef(null)
 
 
   const tableConicalPos = useRef(null)
@@ -178,7 +182,8 @@ export const ModelProvider = ({ children }) => {
         conicalBeakerRef02,seperatingFunnelRef,arrowSeparatingFunnelRef,
         separatingFunnelBungRef, conicalFlask02OriginalStateRef,
         graduatedBeaker50OriginalStateRef,heatingMantleRef,tableConicalPos,
-        arrowHeatingMantleRef,heatingMantleBeakerPosRef
+        arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,
+        distillationHeadRef,condensorRef,arrowCondensorRef
       }}
     >
       {children}

@@ -176,7 +176,12 @@ export const InteractionProvider = ({ children }) => {
   })
 
   const [isAddFunnelToMode,setIsAddFunnelToMode] = useState(false);
-  const [isPlaceInMantle,setIsPlaceInMantle] = useState(false)
+  const [isPlaceInMantle,setIsPlaceInMantle] = useState(false);
+
+  const [isAddDistillationHead,setIsAddDistillationHead] = useState(false);
+  const [isInsertThermometer,setIsInsertThermometer] = useState(false);
+  const [isInsertCondensor,setIsInsertCondensor] = useState(false)
+
 
   const resetInteractions = () => {
   // Empty both hands
@@ -302,7 +307,10 @@ export const InteractionProvider = ({ children }) => {
   setIsPourModeDeliveryTube(false);
   setIsMolarVolumeReaction(false);
   setConcialGasAnimationAction(false);
-  setIsPlaceInMantle(false)
+  setIsPlaceInMantle(false);
+  setIsAddDistillationHead(false);
+  setIsInsertThermometer(false);
+  setIsInsertCondensor(false)
 }
 
   return (
@@ -400,7 +408,10 @@ export const InteractionProvider = ({ children }) => {
         deliveryAnimationActions,setDeliveryAnimationActions,
         concialGasAnimationActions, setConcialGasAnimationAction,
         isAddFunnelToMode,setIsAddFunnelToMode,
-        isPlaceInMantle,setIsPlaceInMantle                 
+        isPlaceInMantle,setIsPlaceInMantle,
+        isAddDistillationHead,setIsAddDistillationHead,
+        isInsertThermometer,setIsInsertThermometer,
+        isInsertCondensor,setIsInsertCondensor         
       }}
     >
       {children}

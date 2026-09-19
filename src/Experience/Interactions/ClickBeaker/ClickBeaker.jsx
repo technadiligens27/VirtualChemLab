@@ -55,7 +55,7 @@ const ClickObject = () => {
     isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode,
-    setIsPlaceInMantle
+    setIsPlaceInMantle,setIsAddDistillationHead
   } = useContext(InteractionContext)
 
   const {
@@ -93,14 +93,14 @@ const ClickObject = () => {
     volumetricRef,volumetricBung,phenopthalineBottleRef,
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,
-    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef
+    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
     useContext(MainGuidelineContext)
 
- const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,
-  isBeakerNearClamp,setIsBeakerNearClamp } = useContext(InteractionContext)  
+ const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,setIsInsertThermometer,
+  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor} = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
 
@@ -293,6 +293,10 @@ const ClickObject = () => {
       {
         name:"heating-mantle",
         ref:heatingMantleRef
+      },
+      {
+        name:"condensor",
+        ref:condensorRef
       }
       ],
     [
@@ -325,7 +329,7 @@ const ClickObject = () => {
       volumetricPipetteRef,volumetricRef,
       volumetricPipetteRef,phenopthalineBottleRef,
       sulfamicBottleRef,methylBottleRef,
-      naohBottleRef,waterBottleRef,
+      naohBottleRef,waterBottleRef,condensorRef,
       boilingTube01Ref,graduatedCylinder100Ref,
       conicalBeakerRef02,heatingMantleRef
     ]
@@ -1154,6 +1158,10 @@ const ClickObject = () => {
     const objectName = selectedItem.name
 
     if([14.3].includes(selectedLesson) && [85,86].includes(lessonStep) && objectName==="mainBuretteClamp"){
+      setSelectedObject(null)
+      return
+    }
+    if([14,14.1,14.2,14.3].includes(selectedLesson) && objectName==="mainMassBalance"){
       setSelectedObject(null)
       return
     }
@@ -3233,6 +3241,15 @@ useEffect(()=>{
 
   const renderTableObjectButtons = () => {
 
+    const condensorTableButtons  = renderCondensorTableButtons();
+    if(condensorTableButtons) return condensorTableButtons
+
+    const thermometerTableButtons = renderThermometerTableButtons();
+    if(thermometerTableButtons) return thermometerTableButtons
+
+    const roundBottomTableButtons = renderRoundBottomTableButtons();
+    if(roundBottomTableButtons) return roundBottomTableButtons
+
     const heatingMantleTableButtons =  renderHeatingMantleTableButtons()
     if(heatingMantleTableButtons) return heatingMantleTableButtons
 
@@ -3474,6 +3491,59 @@ useEffect(()=>{
     setIsModelCentre(false)
     if(selectedLesson ==14.2 && lessonStep==82){
       setLessonStep(83)
+    }
+  }
+
+  const renderRoundBottomTableButtons = () =>{
+    if(selectedObject?.name == "main-Round-bottom-flask"){
+      if(selectedLesson==14.3 && lessonStep==101){
+        return(
+          <>
+            <button>
+              Add Distillation Head
+            </button>
+          
+          </>
+        )
+      }
+    }
+  }
+
+  const handleInsertThermometer = () =>{
+    setIsInsertThermometer(true)
+    setSelectedObject(null)
+  }
+
+  const renderThermometerTableButtons = () =>{
+    if(selectedObject?.name === "mainThermometer"){
+      if(selectedLesson==14.3 && lessonStep==102){
+        return(
+          <>
+            <button onClick={handleInsertThermometer}>
+              Insert Thermometer
+            </button>
+          </>
+        )
+      }
+    }
+  }
+
+  const handleInsertCondensor = () =>{
+    setIsInsertCondensor(true)
+    setSelectedObject(null)
+  }
+
+  const renderCondensorTableButtons = () =>{
+    if(selectedObject?.name === "condensor"){
+      if(selectedLesson==14.3 && lessonStep==103){
+        return(
+          <>
+            <button onClick={handleInsertCondensor}>
+              Insert Condensor
+            </button>
+          </>
+        )
+      }
     }
   }
 
@@ -3866,6 +3936,10 @@ useEffect(()=>{
     setSelectedObject(null)
   }
 
+  const handleDistillationHead = ()=>{
+    setIsAddDistillationHead(true)
+  }
+
   const renderRoundBottomHeldButtons = ()=>{
     if(selectedObject?.name === "main-Round-bottom-flask"){
       if(selectedLesson==14.3 && lessonStep===99){
@@ -3881,6 +3955,19 @@ useEffect(()=>{
           </>
         )
       }
+
+      if(selectedLesson==14.3 && lessonStep===101){
+        return(
+          <>
+            <button onClick={handleDistillationHead}>
+              Add Distillation Head
+            </button>
+
+          
+          </>
+        )
+      }
+
     }
   }
 
