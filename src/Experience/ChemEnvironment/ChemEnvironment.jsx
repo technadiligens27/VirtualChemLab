@@ -28,7 +28,7 @@ const ChemEnvironment = () => {
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
-         arrowCondensorRef
+         arrowCondensorRef,waterOutTubeRef,waterInTubeRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
@@ -302,6 +302,12 @@ const hideVerticalObjects=(root)=>{
 
     testube03CapRef.current = scene.getObjectByName('testube-cap-03')
     testube03CapRef.current.visible = false
+
+    waterOutTubeRef.current = scene.getObjectByName("water-out-tube")
+    waterOutTubeRef.current.visible = false
+
+    waterInTubeRef.current = scene.getObjectByName("water-in-tube")
+    waterInTubeRef.current.visible = false
 
     kettleRef.current = scene.getObjectByName('kettle')
     kettleRef.current.visible = false

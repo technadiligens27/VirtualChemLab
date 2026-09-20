@@ -31,7 +31,9 @@ export const ModelProvider = ({ children }) => {
   const pottasiumCarbonateContainerRef = useRef(null)
   const digitalBalanceRef = useRef(null);
   const testube01CapRef = useRef(null);
-  const testube03CapRef = useRef(null)
+  const testube03CapRef = useRef(null);
+  const waterOutTubeRef = useRef(null);
+  const waterInTubeRef = useRef(null);
   
   const mainBuiretteRef = useRef(null);
   const buretteClampRef = useRef(null);
@@ -183,7 +185,8 @@ export const ModelProvider = ({ children }) => {
         separatingFunnelBungRef, conicalFlask02OriginalStateRef,
         graduatedBeaker50OriginalStateRef,heatingMantleRef,tableConicalPos,
         arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,
-        distillationHeadRef,condensorRef,arrowCondensorRef
+        distillationHeadRef,condensorRef,arrowCondensorRef,waterOutTubeRef,
+        waterInTubeRef
       }}
     >
       {children}

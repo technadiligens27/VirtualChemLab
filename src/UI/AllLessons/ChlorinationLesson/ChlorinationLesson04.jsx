@@ -307,7 +307,19 @@ model.traverse((child) => {
         />}         
         {lessonStep ==104 && <DialogBox text={
           <>
-           104
+           Click the <strong>Condensor</strong> and Select <strong>Connect Water Out Tube</strong>
+          </>
+          } 
+        />}
+        {lessonStep ==105 && <DialogBox text={
+          <>
+           Click the <strong>Condensor</strong> and Select <strong>Connect Water In Tube</strong>
+          </>
+          } 
+        />}         
+        {lessonStep ==106 && <DialogBox text={
+          <>
+           106
           </>
           } 
         />}  

@@ -93,7 +93,7 @@ const ClickObject = () => {
     volumetricRef,volumetricBung,phenopthalineBottleRef,
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,
-    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef
+    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
@@ -3533,6 +3533,20 @@ useEffect(()=>{
     setSelectedObject(null)
   }
 
+  const handleConnectWaterOutTube = () =>{
+    waterOutTubeRef.current.visible = true
+    if(selectedLesson ==14.3 && lessonStep==104){
+      setLessonStep(105)
+    }
+    setSelectedObject(null)
+  }
+  const handleConnectWaterInTube = () =>{
+    waterInTubeRef.current.visible = true
+    if(selectedLesson ==14.3 && lessonStep==105){
+      setLessonStep(106)
+    }
+    setSelectedObject(null)
+  }
   const renderCondensorTableButtons = () =>{
     if(selectedObject?.name === "condensor"){
       if(selectedLesson==14.3 && lessonStep==103){
@@ -3544,6 +3558,25 @@ useEffect(()=>{
           </>
         )
       }
+      if(selectedLesson==14.3 && lessonStep==104){
+        return(
+          <>
+            <button onClick={handleConnectWaterOutTube}>
+              Connect Water Out Tube
+            </button>
+          </>
+        )
+      }
+      if(selectedLesson==14.3 && lessonStep==105){
+        return(
+          <>
+            <button onClick={handleConnectWaterInTube}>
+              Connect Water Out Tube
+            </button>
+          </>
+        )
+      }
+
     }
   }
 
