@@ -37,6 +37,8 @@ const FillLiquidBeaker = ({
   const liquidRef = useRef(null)
   const isFinishedRef = useRef(false)
 
+  console.log("FIll Conical Beaker")
+
   useEffect(() => {
     if (!modelRef?.current) return
 

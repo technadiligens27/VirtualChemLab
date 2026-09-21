@@ -66,6 +66,7 @@ import InsertCondensor from "./InsertCondensor/InsertCondensor";
 import FillCondensor from "./FillCondensor/FillCondensor";
 import HeatingMantleSurfaceColourChange from "./HeatingMantleSurfaceColourChange/HeatingMantleSurfaceColourChange";
 import DistillationGasAnimation from "./DistillationGasAnimation/DistillationGasAnimation";
+import PourDropletsFromModel from "./PourDropletsFromModel/PourDropletsFromModel";
 
 const Interaction = () => {
   const {
@@ -85,7 +86,7 @@ const Interaction = () => {
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
         naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
-        tableConicalPos,heatingMantleRef      
+        tableConicalPos,heatingMantleRef,condensorRef
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -329,7 +330,7 @@ useEffect(() => {
       {/* {selectedLesson==14.3 && lessonStep>=85 && lessonStep<98 &&  isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)} */}
       {selectedLesson==14.3 && lessonStep>=98 && lessonStep<106.1 &&isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-0.1} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
       {selectedLesson==14.3 && lessonStep>=106.1 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
-      {selectedLesson==14.3 && lessonStep>=107 && isModelCentre && (<PlaceModelCentre modelZScale={1}  modelYScale={1} modelXScale={1} modelXOffset={7} modelZOffset={2.5}  modelRef={conicalBeakerRef02}/>)}
+      {selectedLesson==14.3 && lessonStep>=107 && isModelCentre && (<PlaceModelCentre modelZScale={1}  modelYScale={1} modelXScale={1} modelXOffset={6} modelZOffset={2.5}  modelRef={conicalBeakerRef02}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
@@ -470,7 +471,14 @@ useEffect(() => {
       }
       {
         selectedLesson==14.3 && lessonStep==109 && <DistillationGasAnimation/>
+      }
+      {
+        selectedLesson==14.3 && lessonStep==109 && <PourDropletsFromModel modelRef={condensorRef} loopTimes={5}/>
       }      
+      {selectedLesson==14.3 && lessonStep==109 && (
+        <FillConicalBeaker modelRef={conicalBeakerRef02}  amount={1}  color="#ffffff"/>
+      )}      
+
     </>
   );
 };

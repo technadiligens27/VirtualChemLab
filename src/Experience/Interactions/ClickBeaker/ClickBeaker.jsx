@@ -2531,6 +2531,12 @@ useEffect(()=>{
 
 },[selectedLesson,lessonStep])
 
+useEffect(()=>{
+  if(selectedLesson==14.3 && lessonStep==108){
+    setIsCleanBeaker(false)
+  }
+},[selectedLesson,lessonStep])
+
   const handleRemoveBalance=()=>{
       setIsBalancePlaced(false);
       setSelectedObject(null)
@@ -3413,7 +3419,6 @@ useEffect(()=>{
     setSelectedObject(null)
   }
 
-  console.log("isVolumetricPippeteMode:",isVolumetricPipetteMode)
   const renderVolumetricPippeteHeldButtons=()=>{
     if(isTutorialMode){
       if (selectedObject?.name === "volumetric-pipette" && [11,12.2].includes(selectedLesson) && ([8,13,36,41,68,73,92,97].includes(lessonStep))) {

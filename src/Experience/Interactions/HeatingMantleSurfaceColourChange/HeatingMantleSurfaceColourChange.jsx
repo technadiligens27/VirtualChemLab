@@ -77,7 +77,7 @@ const HeatingMantleSurfaceColourChange = ({
 
       const shouldChangeColour =
         modelName.includes("surface") ||
-        modelName.includes("cylinder")
+        modelName.includes("light")
 
       if (!shouldChangeColour) return
 

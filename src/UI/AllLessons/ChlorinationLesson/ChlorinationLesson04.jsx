@@ -362,7 +362,16 @@ model.traverse((child) => {
 
           </>
           } 
-        />}         
+        />}
+
+        {lessonStep ==110 && <DialogBox text={
+          <>
+           110 
+
+          </>
+          } 
+        />}           
+
         </>
   )
 }
