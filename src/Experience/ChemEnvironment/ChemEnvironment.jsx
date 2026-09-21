@@ -28,10 +28,10 @@ const ChemEnvironment = () => {
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
-         arrowCondensorRef,waterOutTubeRef,waterInTubeRef
+         arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef
   } = useContext(ModelContext);
 
-  const {setConcialGasAnimationAction,setDeliveryAnimationActions} = useContext(InteractionContext)
+  const {setConcialGasAnimationAction,setDeliveryAnimationActions,distillationGasAnimationActions,setDistillationGasAnimationActions} = useContext(InteractionContext)
 
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
   const { actions, names } = useAnimations(animations, scene)
@@ -212,14 +212,14 @@ const hideVerticalObjects=(root)=>{
   const actionDeliveryGas02 = actions[names[6]]
   const actionDeliveryGas03 = actions[names[7]]
 
-  const actionConicalGas01 = actions[names[0]]
-  const actionConicalGas02 = actions[names[1]]
-  const actionConicalGas03 = actions[names[2]]
+  const actionDistillationGas01 = actions[names[0]]
+  const actionDistillationGas02 = actions[names[1]]
+  const actionDistillationGas03 = actions[names[2]]
 
-  setConcialGasAnimationAction({
-    conicalGas01: actionConicalGas01,
-    conicalGas02: actionConicalGas02,
-    conicalGas03:actionConicalGas03
+  setDistillationGasAnimationActions({
+    distillationGas01: actionDistillationGas01,
+    distillationGas02: actionDistillationGas02,
+    distillationGas03:actionDistillationGas03
   })
 
   setDeliveryAnimationActions({
@@ -308,6 +308,8 @@ const hideVerticalObjects=(root)=>{
 
     waterInTubeRef.current = scene.getObjectByName("water-in-tube")
     waterInTubeRef.current.visible = false
+
+    heatingMantleSurfaceRef.current = scene.getObjectByName("mantle-heat-surface")
 
     kettleRef.current = scene.getObjectByName('kettle')
     kettleRef.current.visible = false

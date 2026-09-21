@@ -24,7 +24,7 @@ const InsertThermometer = ({
   thermometerScale = 0.7,
 
   thermometerXOffset = -0.2,
-  thermometerYOffset = 0,
+  thermometerYOffset = 1,
   thermometerZOffset = 0,
 
   thermometerXRotation = 0,

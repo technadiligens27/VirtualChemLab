@@ -319,10 +319,50 @@ model.traverse((child) => {
         />}         
         {lessonStep ==106 && <DialogBox text={
           <>
-           106
+           Now Click the <strong>Clamp</strong> and Select <strong>Place Setup In Center</strong>, so we can get a better view
           </>
           } 
-        />}  
+        />}
+        {lessonStep ==106.1 && <DialogBox text={
+          <>
+           Pick Up the <strong>Conical Flask</strong> to <strong>Clean Beaker</strong>
+          </>
+          } 
+        />}
+        {lessonStep ==106.2 && <DialogBox text={
+          <>
+           Click the <strong>Held Conical Flask</strong> and Select <strong>Clean And Dry </strong>
+          </>
+          } 
+        />}
+
+        {lessonStep ==106.3 && <DialogBox text={
+          <>
+          Now Click the <strong>Conical Flask</strong> and Select <strong>Place Near Condensor</strong>
+          </>
+          } 
+        />}
+        {lessonStep ==107 && <DialogBox text={
+          <>
+           Press <strong>P</strong> to turn the <strong>Water Tap On</strong>
+          </>
+          } 
+        />}         
+        {lessonStep ==108 && <DialogBox text={
+          <>
+            Click the <strong>Mantle</strong> and Select <strong>Turn On</strong>
+
+          </>
+          } 
+        />} 
+
+        {lessonStep ==109 && <DialogBox text={
+          <>
+           Observe The Reaction 
+
+          </>
+          } 
+        />}         
         </>
   )
 }

@@ -64,7 +64,8 @@ export const ModelProvider = ({ children }) => {
   const heatingMantleBeakerPosRef = useRef(null)
   const clampHandleRef = useRef(null);
   const distillationHeadRef = useRef(null);
-  const condensorRef = useRef(null)
+  const condensorRef = useRef(null);
+  const heatingMantleSurfaceRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -186,7 +187,7 @@ export const ModelProvider = ({ children }) => {
         graduatedBeaker50OriginalStateRef,heatingMantleRef,tableConicalPos,
         arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,
         distillationHeadRef,condensorRef,arrowCondensorRef,waterOutTubeRef,
-        waterInTubeRef
+        waterInTubeRef,heatingMantleSurfaceRef
       }}
     >
       {children}

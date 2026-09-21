@@ -4,12 +4,23 @@ import {
   useRef,
 } from "react"
 
-import { useFrame } from "@react-three/fiber"
+import {
+  useFrame,
+} from "@react-three/fiber"
+
 import * as THREE from "three"
 
-import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import {
+  ModelContext,
+} from "../../../Contexts/ModelContext/ModelContext"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  InteractionContext,
+} from "../../../Contexts/InteractionContext/InteractionContext"
 
 const FillThermometer = ({
   amount,
@@ -17,34 +28,42 @@ const FillThermometer = ({
   highestAmount = 4.5,
   finalAmount = 4,
   fillSpeed = 3,
+  startDelay = 0,
 }) => {
-  const { mainThermometerRef } = useContext(ModelContext)
-  const {selectedLesson,lessonStep} = useContext(MainGuidelineContext)
-  const {setIsThermometerRisen,isThermometerRisen} = useContext(InteractionContext)
+  const {
+    mainThermometerRef,
+  } = useContext(ModelContext)
+
+  const {
+    selectedLesson,
+    lessonStep,
+  } = useContext(MainGuidelineContext)
+
+  const {
+    setIsThermometerRisen,
+  } = useContext(InteractionContext)
 
   const liquidRef = useRef(null)
   const originalScaleRef = useRef(null)
-  const targetScaleYRef = useRef(0)
 
+  const targetScaleYRef = useRef(0)
+  const normalAmountRef = useRef(0)
+
+  const delayTimerRef = useRef(0)
   const reactionTimerRef = useRef(0)
   const reactionStartedRef = useRef(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsThermometerRisen(true)
-    console.log('isThermometerRisen:',isThermometerRisen)
-  },[isThermometerRisen])
-
-  
+  }, [
+    setIsThermometerRisen,
+  ])
 
   useEffect(() => {
-    const thermometer = mainThermometerRef?.current
+    const thermometer =
+      mainThermometerRef?.current
 
-    if (!thermometer) {
-      console.log("Main thermometer was not found")
-      return
-    }
-
-    let liquidFound = false
+    if (!thermometer) return
 
     thermometer.traverse((child) => {
       const name =
@@ -54,13 +73,6 @@ const FillThermometer = ({
         child.isMesh &&
         name.includes("liquid")
       ) {
-        liquidFound = true
-
-        console.log(
-          "Thermometer liquid found:",
-          child.name
-        )
-
         liquidRef.current = child
 
         originalScaleRef.current =
@@ -72,39 +84,30 @@ const FillThermometer = ({
         child.updateMatrixWorld(true)
       }
     })
-
-    if (!liquidFound) {
-      console.log(
-        "Thermometer liquid mesh was not found"
-      )
-    }
-  }, [mainThermometerRef])
+  }, [
+    mainThermometerRef,
+  ])
 
   useEffect(() => {
     const isReactionTemperatureStep =
       selectedLesson === 8 &&
       lessonStep === 11
 
-    if (isReactionTemperatureStep) {
-      reactionTimerRef.current = 0
-      reactionStartedRef.current = true
-
-      targetScaleYRef.current =
-        startingAmount
-
-      return
-    }
-
+    delayTimerRef.current = 0
     reactionTimerRef.current = 0
-    reactionStartedRef.current = false
 
-    targetScaleYRef.current =
+    // Keep the liquid empty while waiting.
+    targetScaleYRef.current = 0
+
+    normalAmountRef.current =
       Math.max(amount || 0, 0)
+
+    reactionStartedRef.current =
+      isReactionTemperatureStep
   }, [
     amount,
     selectedLesson,
     lessonStep,
-    startingAmount,
   ])
 
   useFrame((_, delta) => {
@@ -114,59 +117,66 @@ const FillThermometer = ({
 
     if (!liquid || !originalScale) return
 
-    const isReactionTemperatureStep =
-      selectedLesson === 8 &&
-      lessonStep === 11 &&
-      reactionStartedRef.current
+    delayTimerRef.current += delta
 
-    if (isReactionTemperatureStep) {
-      reactionTimerRef.current += delta
+    const hasDelayFinished =
+      delayTimerRef.current >= startDelay
 
-      const elapsed =
-        reactionTimerRef.current
+    if (!hasDelayFinished) {
+      targetScaleYRef.current = 0
+    } else {
+      const isReactionTemperatureStep =
+        selectedLesson === 8 &&
+        lessonStep === 11 &&
+        reactionStartedRef.current
 
-      // Start at the initial temperature
-      if (elapsed < 1) {
+      if (isReactionTemperatureStep) {
+        reactionTimerRef.current += delta
+
+        const elapsed =
+          reactionTimerRef.current
+
+        if (elapsed < 1) {
+          targetScaleYRef.current =
+            startingAmount
+        }
+
+        if (elapsed >= 1 && elapsed < 6) {
+          const progress =
+            (elapsed - 1) / 5
+
+          targetScaleYRef.current =
+            THREE.MathUtils.lerp(
+              startingAmount,
+              highestAmount,
+              progress
+            )
+        }
+
+        if (elapsed >= 6 && elapsed < 7) {
+          targetScaleYRef.current =
+            highestAmount
+        }
+
+        if (elapsed >= 7 && elapsed < 13) {
+          const progress =
+            (elapsed - 7) / 6
+
+          targetScaleYRef.current =
+            THREE.MathUtils.lerp(
+              highestAmount,
+              finalAmount,
+              progress
+            )
+        }
+
+        if (elapsed >= 13) {
+          targetScaleYRef.current =
+            finalAmount
+        }
+      } else {
         targetScaleYRef.current =
-          startingAmount
-      }
-
-      // Rise gradually to the highest temperature
-      if (elapsed >= 1 && elapsed < 6) {
-        const progress =
-          (elapsed - 1) / 5
-
-        targetScaleYRef.current =
-          THREE.MathUtils.lerp(
-            startingAmount,
-            highestAmount,
-            progress
-          )
-      }
-
-      // Stay briefly at the highest temperature
-      if (elapsed >= 6 && elapsed < 7) {
-        targetScaleYRef.current =
-          highestAmount
-      }
-
-      // Slowly fall to the final temperature
-      if (elapsed >= 7 && elapsed < 13) {
-        const progress =
-          (elapsed - 7) / 6
-
-        targetScaleYRef.current =
-          THREE.MathUtils.lerp(
-            highestAmount,
-            finalAmount,
-            progress
-          )
-      }
-
-      // Remain at the final temperature
-      if (elapsed >= 13) {
-        targetScaleYRef.current =
-          finalAmount
+          normalAmountRef.current
       }
     }
 
@@ -183,8 +193,7 @@ const FillThermometer = ({
 
     if (
       Math.abs(
-        liquid.scale.y -
-          targetScaleY
+        liquid.scale.y - targetScaleY
       ) < 0.01
     ) {
       liquid.scale.y =

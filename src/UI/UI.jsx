@@ -344,7 +344,8 @@ const UI = () => {
   useEffect(()=>{
     setShowArrowConicalArrow(
       (selectedLesson===12.2 && lessonStep==72) ||
-      (selectedLesson ===14 && lessonStep===6)
+      (selectedLesson ===14 && lessonStep===6) ||
+      (selectedLesson ==14.3 && lessonStep==106.1)
     )
   },[selectedLesson,lessonStep])
 

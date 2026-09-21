@@ -174,13 +174,21 @@ export const InteractionProvider = ({ children }) => {
     conicalGas02: null,
     conicalGas03:null
   })
-
+  const [distillationGasAnimationActions, setDistillationGasAnimationActions] = useState({
+    distillationGas01: null,
+    distillationGas02: null,
+    distillationGas03:null
+  })
   const [isAddFunnelToMode,setIsAddFunnelToMode] = useState(false);
   const [isPlaceInMantle,setIsPlaceInMantle] = useState(false);
 
   const [isAddDistillationHead,setIsAddDistillationHead] = useState(false);
   const [isInsertThermometer,setIsInsertThermometer] = useState(false);
-  const [isInsertCondensor,setIsInsertCondensor] = useState(false)
+  const [isInsertCondensor,setIsInsertCondensor] = useState(false);
+
+  const [isFillCondensor,setIsFillCondensor] = useState(false);
+
+  const [isMantleTurnedOn,setIsMantleTurnedOn] = useState(false);
 
 
   const resetInteractions = () => {
@@ -310,7 +318,9 @@ export const InteractionProvider = ({ children }) => {
   setIsPlaceInMantle(false);
   setIsAddDistillationHead(false);
   setIsInsertThermometer(false);
-  setIsInsertCondensor(false)
+  setIsInsertCondensor(false);
+  setIsFillCondensor(false);
+  setIsMantleTurnedOn(false)
 }
 
   return (
@@ -411,7 +421,8 @@ export const InteractionProvider = ({ children }) => {
         isPlaceInMantle,setIsPlaceInMantle,
         isAddDistillationHead,setIsAddDistillationHead,
         isInsertThermometer,setIsInsertThermometer,
-        isInsertCondensor,setIsInsertCondensor         
+        isInsertCondensor,setIsInsertCondensor,isFillCondensor,setIsFillCondensor,
+        isMantleTurnedOn,setIsMantleTurnedOn,distillationGasAnimationActions,setDistillationGasAnimationActions
       }}
     >
       {children}

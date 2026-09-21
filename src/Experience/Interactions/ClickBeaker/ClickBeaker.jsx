@@ -100,7 +100,7 @@ const ClickObject = () => {
     useContext(MainGuidelineContext)
 
  const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,setIsInsertThermometer,
-  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor} = useContext(InteractionContext)  
+  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor,setIsMantleTurnedOn} = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
 
@@ -1495,12 +1495,12 @@ const clickableObjects = selectableObjects
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
-    if([14.3].includes(selectedLesson) && ![86].includes(lessonStep)){{
+    if([14.3].includes(selectedLesson) && ![86,106.1].includes(lessonStep)){{
       setShowErrorMsgNo(1)
       return false
     }}
 
-    if([14.3].includes(selectedLesson) && lessonStep ==86 && objectName !== "main-Conical-Flask-02"){
+    if([14.3].includes(selectedLesson) &&  [86,106.1].includes(lessonStep) && objectName !== "main-Conical-Flask-02"){
       setShowErrorMsgNo(1)
          return false
     }
@@ -3020,7 +3020,22 @@ useEffect(()=>{
     }
     setSelectedObject(null)
   }
+
+  
+
+
   const renderClampTableButtons=()=>{
+
+  if(selectedLesson==14.3 && [106].includes(lessonStep) && selectedObject?.name ==="mainBuretteClamp"){
+    return(
+      <>
+        <button onClick={advanceNextStep}>
+          Place In Center
+        </button>
+      </>
+    )
+  }  
+
 
   if(selectedLesson==14.2 && [65].includes(lessonStep) && selectedObject?.name ==="mainBuretteClamp"){
     return(
@@ -3571,7 +3586,7 @@ useEffect(()=>{
         return(
           <>
             <button onClick={handleConnectWaterInTube}>
-              Connect Water Out Tube
+              Connect Water In Tube
             </button>
           </>
         )
@@ -3622,8 +3637,18 @@ useEffect(()=>{
       setLessonStep(98)
       setIsModelCentre(false)
     }
+
+    if(selectedLesson==14.3 && lessonStep == 106){
+      setLessonStep(106.1)
+    }
+    if(selectedLesson==14.3 && lessonStep == 106.3){
+      setLessonStep(107)
+    }
+
+    setSelectedObject(null)
   }
 
+  
   const renderConicalHeldButtons = () => {
     if (
   [
@@ -3632,6 +3657,24 @@ useEffect(()=>{
   ].includes(selectedObject?.name)
 ) {
       if (isTutorialMode) {
+        if(selectedLesson==14.3 && lessonStep==106.3){
+          return(
+            <>
+              <button onClick={advanceNextStep}>
+                Place Near Condensor
+              </button>              
+            </>
+          )
+        }
+        if(selectedLesson==14.3 && lessonStep==106.2){
+          return(
+            <>
+              <button onClick={handleCleanBeaker}>
+                Clean Beaker
+              </button>              
+            </>
+          )
+        }
 
         if([14.3].includes(selectedLesson) && [97].includes(lessonStep)){
           return(
@@ -3970,7 +4013,8 @@ useEffect(()=>{
   }
 
   const handleDistillationHead = ()=>{
-    setIsAddDistillationHead(true)
+    setIsAddDistillationHead(true);
+    setSelectedObject(null)
   }
 
   const renderRoundBottomHeldButtons = ()=>{
@@ -4004,9 +4048,22 @@ useEffect(()=>{
     }
   }
 
+  const handleHeatingMantleTurnOn = ()=>{
+   setIsMantleTurnedOn(true)
+   setSelectedObject(null)
+  }
+
   const renderHeatingMantleTableButtons = ()=>{
     if(selectedObject.name === "heating-mantle"){
-
+      if(selectedLesson==14.3 && lessonStep ==108){
+        return(
+          <>
+            <button onClick={handleHeatingMantleTurnOn}>
+              Turn on
+            </button>
+          </>
+        )
+      }
       if(selectedLesson==14.3 && lessonStep ==98){
         return(
           <>

@@ -1,6 +1,11 @@
-import { useContext, useEffect } from "react"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import {
+  useContext,
+  useEffect,
+} from "react"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const CleanBeaker = ({
   modelRef,
@@ -12,28 +17,32 @@ const CleanBeaker = ({
     setLessonStep,
   } = useContext(MainGuidelineContext)
 
-  const {setIsPotassiumHydrogenCarbonateInSpoon,isPotassiumHydrogenCarbonateInSpoon} = useContext(InteractionContext)
-
-
-
   useEffect(() => {
-    if (!modelRef?.current) return
+    const model =
+      modelRef?.current
 
-    modelRef.current.traverse((child) => {
+    if (!model) return
+
+    model.traverse((child) => {
+      // Do NOT hide the main model itself.
+      if (child === model) return
+
       const childName =
         child.name?.toLowerCase() || ""
 
+      // Hide every child of the model.
+      child.visible = false
+
+      // Liquid children are also emptied.
       if (childName.includes("liquid")) {
-        // child.scale.set(0, 0, 0)
-        child.visible = false
-
-        child.updateMatrixWorld(true)
-
-        console.log(
-          "✅ Liquid cleaned:",
-          child.name
+        child.scale.set(
+          child.scale.x,
+          0,
+          child.scale.z
         )
       }
+
+      child.updateMatrixWorld(true)
     })
 
     if (
@@ -48,6 +57,13 @@ const CleanBeaker = ({
       lessonStep === 87
     ) {
       setLessonStep(88)
+    }
+
+    if (
+      selectedLesson === 14.3 &&
+      lessonStep === 106.2
+    ) {
+      setLessonStep(106.3)
     }
 
     onDone?.()

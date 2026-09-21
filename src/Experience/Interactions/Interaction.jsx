@@ -63,6 +63,9 @@ import AdjustClampHandle from "./AdjustClampHandle/AdjustClampHandle";
 import PlaceDistillationHead from "./PlaceDistillationHead/PlaceDistillationHead";
 import InsertThermometer from "./InsertThermometer/InsertThermometer";
 import InsertCondensor from "./InsertCondensor/InsertCondensor";
+import FillCondensor from "./FillCondensor/FillCondensor";
+import HeatingMantleSurfaceColourChange from "./HeatingMantleSurfaceColourChange/HeatingMantleSurfaceColourChange";
+import DistillationGasAnimation from "./DistillationGasAnimation/DistillationGasAnimation";
 
 const Interaction = () => {
   const {
@@ -75,7 +78,7 @@ const Interaction = () => {
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
-    isAddDistillationHead,isInsertThermometer,isInsertCondensor
+    isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -111,7 +114,17 @@ const Interaction = () => {
 
   },[isPlacePolysterene,isPolystereneStirMode,selectedLeftHand,selectedRightHand])
 
-
+useEffect(() => {
+  const handleKeyDown = (event) => {
+    if ( event.key.toLowerCase() === "p" && selectedLesson === 14.3 && lessonStep === 107) {
+      setIsFillCondensor(true)
+    }
+  }
+  window.addEventListener("keydown",handleKeyDown)
+  return () => {
+    window.removeEventListener("keydown",handleKeyDown)
+  }
+}, [selectedLesson,lessonStep])
 
 
   return (
@@ -157,13 +170,24 @@ const Interaction = () => {
         clampZScale = {0.8}
         clampScale={0.8}  />}
 
-      {selectedLesson ==14.3  && isClampInCenter && <PlaceClampInCenter 
+      {selectedLesson ==14.3  && lessonStep < 106.1   && isClampInCenter && <PlaceClampInCenter 
       
         clampYOffset={6.5} 
         clampXScale = {0.8}
         clampYScale = {0.8}
         clampZScale = {0.8}
         clampScale={0.8}  />} 
+
+      {selectedLesson ==14.3  && lessonStep >= 106.1  && isClampInCenter && <PlaceClampInCenter 
+      
+        clampYOffset={6.5} 
+        clampXOffset={-7}
+        clampZOffset={4}
+        clampXScale = {0.8}
+        clampYScale = {0.8}
+        clampZScale = {0.8}
+        clampScale={0.8}  />} 
+
 
       {/* {selectedLesson ==14.3 && lessonStep>=100 && isClampInCenter && <PlaceClampInCenter 
       
@@ -303,7 +327,9 @@ const Interaction = () => {
       {selectedLesson==14.2 && lessonStep<83 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.6} modelRef={normalBeakerRef}/>)}
       {[14.2,14.3].includes(selectedLesson) && lessonStep>=83 && lessonStep<98 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
       {/* {selectedLesson==14.3 && lessonStep>=85 && lessonStep<98 &&  isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)} */}
-      {selectedLesson==14.3 && lessonStep>=98 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-0.1} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
+      {selectedLesson==14.3 && lessonStep>=98 && lessonStep<106.1 &&isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-0.1} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
+      {selectedLesson==14.3 && lessonStep>=106.1 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
+      {selectedLesson==14.3 && lessonStep>=107 && isModelCentre && (<PlaceModelCentre modelZScale={1}  modelYScale={1} modelXScale={1} modelXOffset={7} modelZOffset={2.5}  modelRef={conicalBeakerRef02}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
@@ -375,7 +401,7 @@ const Interaction = () => {
       />)}   
 
       {
-        selectedLesson==14.3 && isPotassiumTransferred && <ShowPowderBottomOfModel modelRef={conicalBeakerRef02}/>
+        selectedLesson==14.3 && isPotassiumTransferred && lessonStep<106.3 && <ShowPowderBottomOfModel modelRef={conicalBeakerRef02}/>
       }   
       {
         selectedLesson==14.3 && lessonStep==93 && <ControlLiquidOpacityofModel modelRef={conicalBeakerRef02} endOpacity = {0.2} endColor="#F4D35E"/>
@@ -396,11 +422,15 @@ const Interaction = () => {
       }
 
       {
-        selectedLesson==14.3 && isPlaceInMantle && (
+        selectedLesson==14.3 && lessonStep<106.1 && isPlaceInMantle && (
           <PlaceModelinMantle modelRef={roundBeakerRef}/>
         )
       }
-
+      {
+        selectedLesson==14.3 && lessonStep>=106.1 && isPlaceInMantle && (
+          <PlaceModelinMantle modelRef={roundBeakerRef} modelXOffset={0}/>
+        )
+      }
       {
         selectedLesson ==14.3 && lessonStep==100 && (
           <AdjustClampHandle yOffset={-2}/>
@@ -412,12 +442,35 @@ const Interaction = () => {
         )
       }
       {
-        isInsertThermometer && <InsertThermometer modelRef={roundBeakerRef}/>
+       selectedLesson==14.3 && lessonStep<106.1 && isInsertThermometer && <InsertThermometer modelRef={roundBeakerRef}/>
       }
       {
-        isInsertCondensor && <InsertCondensor modelRef={roundBeakerRef}/>
+       selectedLesson==14.3 && lessonStep>=106.1 && isInsertThermometer && <InsertThermometer modelRef={roundBeakerRef}/>
       }
 
+
+      {
+        isInsertCondensor && lessonStep<106.1 && <InsertCondensor modelRef={roundBeakerRef}/>
+      }
+
+      {
+        isInsertCondensor && lessonStep>=106.1 && <InsertCondensor modelRef={roundBeakerRef} condensorXOffset={3.3} />
+      }
+      {
+        isFillCondensor && <FillCondensor amount={1}/>
+      }
+      {
+        isCleanBeaker && selectedLesson==14.3 && <CleanBeaker modelRef={conicalBeakerRef02}/>
+      }
+      {
+        isMantleTurnedOn && selectedLesson==14.3 && <HeatingMantleSurfaceColourChange/>
+      }
+      {
+        selectedLesson==14.3 && lessonStep==109 && <FillThermometer amount={0.75} startDelay={1}/>
+      }
+      {
+        selectedLesson==14.3 && lessonStep==109 && <DistillationGasAnimation/>
+      }      
     </>
   );
 };
