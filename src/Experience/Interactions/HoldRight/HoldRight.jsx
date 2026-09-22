@@ -322,7 +322,13 @@ const transformControlsRef = useRef()
     if(lessonStep===7 && selectedLesson===9 ){
       setLessonStep(8)
     }
-  },[lessonStep,isMainGuideline])  
+  },[lessonStep,isMainGuideline]) 
+
+  useEffect(()=>{
+    if(lessonStep===110 && selectedLesson===14.3 ){
+      setLessonStep(111)
+    }
+  },[lessonStep,selectedLesson])  
 
   useEffect(()=>{
     if(lessonStep===94 && selectedLesson===14.3 ){
@@ -485,12 +491,21 @@ const transformControlsRef = useRef()
     }
   },[selectedLesson,lessonStep])   
   
-  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==115){
+      setLessonStep(116)
+    }
+  },[selectedLesson,lessonStep])  
+
   useEffect(() => {
   const handleKeyDown = (event) => {
     if (event.code === "KeyP") {
       if(selectedLesson==14.3 && lessonStep==95){
         setLessonStep(96)
+      }
+
+      if(selectedLesson ==14.3 && lessonStep==111){
+        setLessonStep(112)
       }
     }
   }
@@ -506,7 +521,7 @@ const transformControlsRef = useRef()
       handleKeyDown
     )
   }
-},[selectedLesson,lessonStep])
+},[selectedLesson,lessonStep,setLessonStep])
 
   return (
     <>

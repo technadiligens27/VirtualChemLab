@@ -2,6 +2,7 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useRef,
 } from "react"
 
 import {
@@ -13,7 +14,10 @@ import * as THREE from "three"
 import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const InsertCondensor = ({
   modelRef,
@@ -26,27 +30,74 @@ const InsertCondensor = ({
 
   condensorXRotation = 0,
   condensorYRotation = 0,
-  condensorZRotation = Math.PI/2.2,
+  condensorZRotation = Math.PI / 2.2,
 }) => {
   const {
     condensorRef,
   } = useContext(ModelContext)
 
-  const {scene} = useThree()
+  const {
+    scene,
+  } = useThree()
 
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext)
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-  useEffect(()=>{
-    if(selectedLesson==14.3 && lessonStep ==103){
-        setLessonStep(104)
+  const originalStateRef = useRef(null)
+
+  useEffect(() => {
+    if (
+      selectedLesson === 14.3 &&
+      lessonStep === 103
+    ) {
+      setLessonStep(104)
     }
-  },[selectedLesson,lessonStep])
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
 
   useLayoutEffect(() => {
-    const model = modelRef?.current
-    const condensor = condensorRef?.current
+    const model =
+      modelRef?.current
 
-    if (!model || !condensor) return
+    const condensor =
+      condensorRef?.current
+
+    if (
+      !model ||
+      !condensor
+    ) {
+      return
+    }
+
+    // =============================================
+    // STORE ORIGINAL CONDENSOR STATE
+    // =============================================
+
+    if (!originalStateRef.current) {
+      originalStateRef.current = {
+        parent:
+          condensor.parent,
+
+        position:
+          condensor.position.clone(),
+
+        rotation:
+          condensor.rotation.clone(),
+
+        scale:
+          condensor.scale.clone(),
+      }
+    }
+
+    // =============================================
+    // FIND MOUTH
+    // =============================================
 
     let mouth = null
 
@@ -54,15 +105,21 @@ const InsertCondensor = ({
       if (mouth) return
 
       const childName =
-        child.name?.toLowerCase() || ""
+        child.name
+          ?.toLowerCase() || ""
 
-      // Finds a child such as "Open Mouth".
-      if (childName.includes("mouth")) {
+      if (
+        childName.includes("mouth")
+      ) {
         mouth = child
       }
     })
 
     if (!mouth) return
+
+    // =============================================
+    // GET MOUTH WORLD POSITION
+    // =============================================
 
     const mouthWorldPosition =
       new THREE.Vector3()
@@ -71,13 +128,20 @@ const InsertCondensor = ({
       mouthWorldPosition
     )
 
-    // Place the condenser in the main scene.
+    // =============================================
+    // MOVE CONDENSOR TO MAIN SCENE
+    // =============================================
+
     scene.attach(condensor)
 
     const condensorPosition =
       scene.worldToLocal(
         mouthWorldPosition.clone()
       )
+
+    // =============================================
+    // POSITION
+    // =============================================
 
     condensor.position.set(
       condensorPosition.x +
@@ -90,15 +154,70 @@ const InsertCondensor = ({
         condensorZOffset
     )
 
+    // =============================================
+    // SCALE
+    // =============================================
+
     condensor.scale.setScalar(
       condensorScale
     )
+
+    // =============================================
+    // ROTATION
+    // =============================================
 
     condensor.rotation.set(
       condensorXRotation,
       condensorYRotation,
       condensorZRotation
     )
+
+    // =============================================
+    // CLEANUP
+    // Restore original state when unmounted
+    // =============================================
+
+    return () => {
+      const condensor =
+        condensorRef?.current
+
+      const original =
+        originalStateRef.current
+
+      if (
+        !condensor ||
+        !original
+      ) {
+        return
+      }
+
+      // Restore original parent
+      if (original.parent) {
+        original.parent.attach(
+          condensor
+        )
+      }
+
+      // Restore original position
+      condensor.position.copy(
+        original.position
+      )
+
+      // Restore original rotation
+      condensor.rotation.copy(
+        original.rotation
+      )
+
+      // Restore original scale
+      condensor.scale.copy(
+        original.scale
+      )
+
+      condensor.updateMatrix()
+      condensor.updateMatrixWorld(true)
+
+      originalStateRef.current = null
+    }
   }, [
     modelRef,
     condensorRef,

@@ -762,7 +762,7 @@ const ClickObject = () => {
     const handData = getHandData(hand)
 
     if([14,14.1,14.2,14.3].includes(selectedLesson)){
-      if(![14,24,50,69,93,97].includes(lessonStep)){
+      if(![14,24,50,69,93,97,113].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }
@@ -1029,10 +1029,12 @@ const ClickObject = () => {
       setLessonStep(89)
     } 
 
- if (handData.name === "main-Conical-Flask" && selectedLesson===14 && lessonStep ===10) {
+     if (handData.name === "main-Conical-Flask" && selectedLesson===14 && lessonStep ===10) {
       setLessonStep(11)
     }
-
+     if (handData.name === "main-Conical-Flask-02" && selectedLesson===14.3 && lessonStep ===113) {
+      setLessonStep(114)
+    }
 
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
@@ -1345,7 +1347,7 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([14,14.1,14.3].includes(selectedLesson)){
-      if(![3,26,34,44,62,85,94].includes(lessonStep)){
+      if(![3,26,34,44,62,85,94,110,115].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false 
       }
@@ -1357,7 +1359,16 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(12)
         return false         
       }       
-      
+      if([110].includes(lessonStep) && selectedObject.name !=="main-testube-01"){
+        setShowErrorMsgNo(12)
+        return false         
+      } 
+     
+      if([115].includes(lessonStep) && selectedObject.name !=="main-dropper"){
+        setShowErrorMsgNo(12)
+        return false         
+      } 
+
     }
 
 
@@ -1984,9 +1995,31 @@ const toggleFunnelMode = () => {
       setSelectedObject(null)
     }
 
-    useEffect(()=>{
-      console.log("isBuiretteClamped:",isBuiretteClamped)
-    },[isBuiretteClamped])
+
+
+    useEffect(() => {
+        if (
+          selectedLesson === 14.3 &&
+          lessonStep === 114
+        ) {
+          if (!selectedRightHand) return
+          if (selectedLeftHand) return
+
+          setSelectedLeftHand({
+            ...selectedRightHand,
+            hand: "left",
+          })
+
+          setSelectedRightHand(null)
+        }
+      }, [
+        selectedLesson,
+        lessonStep,
+        selectedRightHand,
+        selectedLeftHand,
+        setSelectedLeftHand,
+        setSelectedRightHand,
+      ])
 
 
 const handleClampBurette = () => {
@@ -2261,10 +2294,11 @@ const handlePlacePolysterene = () => {
 }
 
   const placeDropper = () => {
-    if (
-      isTutorialMode &&
-      selectedLesson === 7 &&
-      (lessonStep === 13 || lessonStep === 8)
+    if (isTutorialMode &&
+      ((selectedLesson === 7 && ([8,13].includes(lessonStep))) ||
+      (selectedLesson==14.3 && [117].includes(lessonStep))
+    
+    )
     ) {
       setIsDropperPlaced(true)
 
@@ -3032,6 +3066,16 @@ useEffect(()=>{
 
   const renderClampTableButtons=()=>{
 
+  if(selectedLesson==14.3 && [114].includes(lessonStep) && selectedObject?.name ==="mainBuretteClamp"){
+    return(
+      <>
+        <button onClick={advanceNextStep}>
+          Disable Apparatus
+        </button>
+      </>
+    )
+  }   
+
   if(selectedLesson==14.3 && [106].includes(lessonStep) && selectedObject?.name ==="mainBuretteClamp"){
     return(
       <>
@@ -3554,19 +3598,38 @@ useEffect(()=>{
   }
 
   const handleConnectWaterOutTube = () =>{
-    waterOutTubeRef.current.visible = true
+    
     if(selectedLesson ==14.3 && lessonStep==104){
       setLessonStep(105)
+      waterOutTubeRef.current.visible = true
     }
+
     setSelectedObject(null)
   }
+
+  useEffect(()=>{    
+    if(selectedLesson == 14.3 && lessonStep === 114){
+      waterInTubeRef.current.visible = false
+    }
+    
+    if(selectedLesson==14.3 && lessonStep==114){
+      waterOutTubeRef.current.visible = false
+    }
+  },[selectedLesson,lessonStep])
+
   const handleConnectWaterInTube = () =>{
-    waterInTubeRef.current.visible = true
+    
     if(selectedLesson ==14.3 && lessonStep==105){
       setLessonStep(106)
+      waterInTubeRef.current.visible = true
     }
+
     setSelectedObject(null)
   }
+
+
+
+
   const renderCondensorTableButtons = () =>{
     if(selectedObject?.name === "condensor"){
       if(selectedLesson==14.3 && lessonStep==103){
@@ -3648,6 +3711,10 @@ useEffect(()=>{
     }
     if(selectedLesson==14.3 && lessonStep == 106.3){
       setLessonStep(107)
+    }
+
+    if(selectedLesson==14.3 && lessonStep == 114){
+      setLessonStep(115)
     }
 
     setSelectedObject(null)

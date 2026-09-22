@@ -34,7 +34,7 @@ const ChlorinationLesson04 = () => {
     gogglesRef,
     gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
     gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,
-    digitalBalanceRef
+    digitalBalanceRef,mainDropperRef
   } = useContext(ModelContext)
 
   useEffect(()=>{
@@ -96,6 +96,10 @@ const ChlorinationLesson04 = () => {
 
      if(digitalBalanceRef.current){
       digitalBalanceRef.current.visible = false
+     }
+
+     if(mainDropperRef.current){
+      mainDropperRef.current.visible = true
      }
   },[selectedLesson])
 
@@ -164,6 +168,12 @@ model.traverse((child) => {
        }
       }
    },[potassiumHydrogenCarbonateRef,selectedLesson,lessonStep])
+
+   useEffect(()=>{
+    if(selectedLesson==14.3 && [108,114].includes(lessonStep)){
+      setSelectedRightHand(null)
+    }
+   },[selectedLesson,lessonStep])
 
 
   return (
@@ -366,12 +376,58 @@ model.traverse((child) => {
 
         {lessonStep ==110 && <DialogBox text={
           <>
-           110 
+            Now Pick Up a <strong>Test Tube </strong>So We Can <strong>Pour the Mixture</strong> into it 
+          </>
+          } 
+        />}   
 
+        {lessonStep ==111 && <DialogBox text={
+          <>
+            Press <strong>P</strong> to <strong>Enter Pour Mode</strong>
           </>
           } 
         />}           
 
+        {lessonStep ==112 && <DialogBox text={
+          <>
+           <strong>Scroll Down</strong> To <strong>Pour</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep ==113 && <DialogBox text={
+          <>
+           Keep <strong>Conical Flask</strong> Back On <strong>Table</strong>
+          </>
+          } 
+        />}          
+
+        {lessonStep ==114 && <DialogBox text={
+          <>
+           Click The <strong>Clamp</strong> And Select <strong>Disable Apparatus</strong>
+          </>
+          } 
+        />} 
+
+        {lessonStep ==115 && <DialogBox text={
+          <>
+           Pick Up The<strong> Dropper</strong>To<strong> Right Hand</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep ==116 && <DialogBox text={
+          <>
+           <strong>Scroll Down</strong> To <strong>Squeeze</strong> The <strong>Dropper</strong>
+          </>
+          } 
+        />}         
+        {lessonStep ==117 && <DialogBox text={
+          <>
+           117
+          </>
+          } 
+        />} 
         </>
   )
 }

@@ -287,6 +287,7 @@ const hideVerticalObjects=(root)=>{
     testube05Ref.current = scene.getObjectByName('main-testube-05')
     testube06Ref.current = scene.getObjectByName('main-testube-06')
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
+    
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
 

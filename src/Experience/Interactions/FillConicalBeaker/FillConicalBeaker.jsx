@@ -28,28 +28,80 @@ const FillConicalBeaker = ({
   const isFinishedRef =
     useRef(false)
 
-  console.log("Fill Conical Beaker")  
+  const debugTimerRef =
+    useRef(0)
 
   useEffect(() => {
-    if (!modelRef?.current) return
+    const model =
+      modelRef?.current
+
+    if (!model) {
+      console.log(
+        "[FillConicalBeaker] modelRef.current is missing"
+      )
+
+      return
+    }
 
     liquidRef.current = null
 
-    modelRef.current.traverse((child) => {
+    const liquidMeshes = []
+
+    model.traverse((child) => {
       const childName =
         child.name?.toLowerCase() || ""
 
-      if (childName.includes("liquid")) {
-        liquidRef.current = child
+      if (
+        child.isMesh &&
+        childName.includes("liquid")
+      ) {
+        liquidMeshes.push(child)
       }
     })
+
+    console.log(
+      "[FillConicalBeaker] liquid mesh count:",
+      liquidMeshes.length
+    )
+
+    if (!liquidMeshes.length) {
+      console.log(
+        "[FillConicalBeaker] No liquid mesh was found"
+      )
+
+      return
+    }
+
+    // ==========================================
+    // MAKE ALL LIQUID MESHES VISIBLE
+    // ==========================================
+
+    liquidMeshes.forEach((liquid) => {
+      liquid.visible = true
+
+      liquid.updateMatrixWorld(true)
+
+      console.log(
+        "[FillConicalBeaker] Liquid made visible:",
+        liquid.name
+      )
+    })
+
+    // ==========================================
+    // USE LAST LIQUID FOR FILL ANIMATION
+    // ==========================================
+
+    liquidRef.current =
+      liquidMeshes[
+        liquidMeshes.length - 1
+      ]
 
     const liquid =
       liquidRef.current
 
-    if (!liquid) return
-
-    liquid.visible = true
+    // ==========================================
+    // MATERIAL
+    // ==========================================
 
     if (liquid.material) {
       liquid.material =
@@ -62,18 +114,41 @@ const FillConicalBeaker = ({
         opacity
 
       if (liquid.material.color) {
-        liquid.material.color.set(color)
+        liquid.material.color.set(
+          color
+        )
       }
 
       liquid.material.needsUpdate =
         true
     }
 
+    // ==========================================
+    // FILL START
+    // ==========================================
+
     startScaleYRef.current =
       liquid.scale.y
 
     progressRef.current = 0
-    isFinishedRef.current = false
+
+    isFinishedRef.current =
+      false
+
+    debugTimerRef.current = 0
+
+    console.log(
+      "[FillConicalBeaker] Selected liquid:",
+      {
+        name: liquid.name,
+        visible: liquid.visible,
+        startingScaleY:
+          startScaleYRef.current,
+        targetAmount: amount,
+        opacity,
+        color,
+      }
+    )
   }, [
     modelRef,
     amount,
@@ -86,7 +161,16 @@ const FillConicalBeaker = ({
       liquidRef.current
 
     if (!liquid) return
-    if (isFinishedRef.current) return
+
+    if (
+      isFinishedRef.current
+    ) {
+      return
+    }
+
+    // ==========================================
+    // FILL PROGRESS
+    // ==========================================
 
     progressRef.current +=
       fillSpeed * delta
@@ -105,13 +189,68 @@ const FillConicalBeaker = ({
       ) *
         progress
 
+    liquid.visible = true
+
     liquid.updateMatrixWorld(true)
 
-    if (progress >= 1) {
-      liquid.scale.y = amount
-      liquid.updateMatrixWorld(true)
+    // ==========================================
+    // DEBUG
+    // ==========================================
 
-      isFinishedRef.current = true
+    debugTimerRef.current +=
+      delta
+
+    if (
+      debugTimerRef.current >=
+      0.5
+    ) {
+      debugTimerRef.current = 0
+
+      console.log(
+        "[FillConicalBeaker] Filling state:",
+        {
+          name: liquid.name,
+          visible:
+            liquid.visible,
+          scaleY:
+            liquid.scale.y,
+          targetAmount:
+            amount,
+          progress,
+          parentVisible:
+            liquid.parent
+              ?.visible,
+        }
+      )
+    }
+
+    // ==========================================
+    // FINISHED
+    // ==========================================
+
+    if (progress >= 1) {
+      liquid.scale.y =
+        amount
+
+      liquid.visible = true
+
+      liquid.updateMatrixWorld(
+        true
+      )
+
+      isFinishedRef.current =
+        true
+
+      console.log(
+        "[FillConicalBeaker] Filling finished:",
+        {
+          name: liquid.name,
+          visible:
+            liquid.visible,
+          finalScaleY:
+            liquid.scale.y,
+        }
+      )
     }
   })
 

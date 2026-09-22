@@ -8,10 +8,10 @@ import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionConte
 
 import FillDropper from "../FillDropper/FillDropper"
 
-const PROTEIN_LESSON = 7
+const PROTEIN_LESSON = [7, 14.3]
 const SCROLL_SPEED = 0.0008
 
-const DROP_ANIMATION_STEPS = [7, 9, 14]
+const DROP_ANIMATION_STEPS = [7, 9, 14, 116]
 
 const findLiquid = (object, onlyVisible = false) => {
   let liquid = null
@@ -109,6 +109,10 @@ const DropperScrollAnimation = ({hand}) => {
       latestDataRef.current
 
     if (selectedLesson !== PROTEIN_LESSON) return
+
+    if(selectedLesson==14.3 && lessonStep===116){
+      setLessonStep(117)
+    }
 
     if (lessonStep === 7) {
       setLessonStep(8)

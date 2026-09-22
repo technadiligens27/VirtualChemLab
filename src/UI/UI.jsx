@@ -376,7 +376,8 @@ useEffect(() => {
     (selectedLesson === 8 && lessonStep === 32) ||
     (selectedLesson ===12 && lessonStep===3) ||
     (selectedLesson ===9 && lessonStep===6) ||
-    (selectedLesson === 9 && lessonStep === 30)
+    (selectedLesson === 9 && lessonStep === 30) ||
+    (selectedLesson == 14.3 && lessonStep === 110)
   )
 }, [selectedLesson, lessonStep, hessGuidelineNumber])
 
@@ -389,7 +390,10 @@ useEffect(()=>{
 },[selectedLesson, lessonStep])
 
   useEffect(() => {
-    setShowDropperArrow(selectedLesson===7 && lessonStep===6)
+    setShowDropperArrow(
+      (selectedLesson===7 && lessonStep===6) ||
+      (selectedLesson==14.3 && lessonStep==115)
+    )
   }, [selectedLesson,lessonStep,showDropperArrow]);
 
   useEffect(()=>{

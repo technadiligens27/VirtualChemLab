@@ -1,20 +1,22 @@
 import {
   useContext,
   useEffect,
+  useRef,
 } from "react"
 
 import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PlaceDistillationHead = ({
   modelRef,
 
-  // Distillation-head scale.
   distillationHeadScale = 1,
 
-  // Position relative to the "mouth" child.
   distillationHeadXOffset = -0.35,
   distillationHeadYOffset = -0.5,
   distillationHeadZOffset = 0,
@@ -23,82 +25,111 @@ const PlaceDistillationHead = ({
     distillationHeadRef,
   } = useContext(ModelContext)
 
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext);
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
 
-  useEffect(()=>{
-    if(selectedLesson==14.3 && lessonStep==101){
-        setLessonStep(102)
-    }
-  },[selectedLesson,lessonStep])
+  const originalStateRef = useRef(null)
 
   useEffect(() => {
-    const model = modelRef?.current
+    if (
+      selectedLesson === 14.3 &&
+      lessonStep === 101
+    ) {
+      setLessonStep(102)
+    }
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
+
+  useEffect(() => {
+    const model =
+      modelRef?.current
 
     const distillationHead =
       distillationHeadRef?.current
 
-    if (!model || !distillationHead) {
-      console.warn(
-        "PlaceDistillationHead: model or distillation head was not found."
-      )
-
+    if (
+      !model ||
+      !distillationHead
+    ) {
       return
     }
+
+    // =============================================
+    // STORE ORIGINAL STATE
+    // =============================================
+
+    if (!originalStateRef.current) {
+      originalStateRef.current = {
+        parent:
+          distillationHead.parent,
+
+        position:
+          distillationHead.position.clone(),
+
+        quaternion:
+          distillationHead.quaternion.clone(),
+
+        scale:
+          distillationHead.scale.clone(),
+
+        visible:
+          distillationHead.visible,
+      }
+    }
+
+    // =============================================
+    // FIND MOUTH
+    // =============================================
 
     let mouthChild = null
 
     model.traverse((child) => {
-      if (mouthChild) {
-        return
-      }
+      if (mouthChild) return
 
       const childName =
-        child.name?.toLowerCase() || ""
+        child.name
+          ?.toLowerCase() || ""
 
-      if (childName.includes("mouth")) {
+      if (
+        childName.includes("mouth")
+      ) {
         mouthChild = child
       }
     })
 
-    if (!mouthChild) {
-      console.warn(
-        'PlaceDistillationHead: no child containing "mouth" was found.'
-      )
+    if (!mouthChild) return
 
-      return
-    }
+    // =============================================
+    // UPDATE MATRICES
+    // =============================================
 
-    // Save original state so it can be restored
-    // when this component unmounts.
-    const originalParent =
-      distillationHead.parent
+    model.updateWorldMatrix(
+      true,
+      true
+    )
 
-    const originalPosition =
-      distillationHead.position.clone()
-
-    const originalQuaternion =
-      distillationHead.quaternion.clone()
-
-    const originalScale =
-      distillationHead.scale.clone()
-
-    const originalVisible =
-      distillationHead.visible
-
-    model.updateWorldMatrix(true, true)
     mouthChild.updateWorldMatrix(
       true,
       true
     )
 
-    /*
-     * Attach keeps the current world transform
-     * temporarily, then local values below place
-     * the head exactly relative to the mouth.
-     */
+    // =============================================
+    // ATTACH TO MOUTH
+    // =============================================
+
     mouthChild.attach(
       distillationHead
     )
+
+    // =============================================
+    // POSITION
+    // =============================================
 
     distillationHead.position.set(
       distillationHeadXOffset,
@@ -106,52 +137,84 @@ const PlaceDistillationHead = ({
       distillationHeadZOffset
     )
 
-    distillationHead.scale.set(
-      distillationHeadScale,
-      distillationHeadScale,
+    // =============================================
+    // SCALE
+    // =============================================
+
+    distillationHead.scale.setScalar(
       distillationHeadScale
     )
 
+    // =============================================
+    // VISIBILITY
+    // =============================================
+
     distillationHead.visible = true
 
+    distillationHead.updateMatrix()
     distillationHead.updateMatrixWorld(
       true
     )
 
+    // =============================================
+    // CLEANUP
+    // =============================================
+
     return () => {
-      if (originalParent) {
-        originalParent.add(
-          distillationHead
+      const head =
+        distillationHeadRef?.current
+
+      const original =
+        originalStateRef.current
+
+      if (
+        !head ||
+        !original
+      ) {
+        return
+      }
+
+      // Restore original parent
+      if (original.parent) {
+        original.parent.attach(
+          head
         )
-      } else {
-        mouthChild.remove(
-          distillationHead
+      } else if (head.parent) {
+        head.parent.remove(
+          head
         )
       }
 
-      distillationHead.position.copy(
-        originalPosition
+      // Restore original position
+      head.position.copy(
+        original.position
       )
 
-      distillationHead.quaternion.copy(
-        originalQuaternion
+      // Restore original rotation
+      head.quaternion.copy(
+        original.quaternion
       )
 
-      distillationHead.scale.copy(
-        originalScale
+      // Restore original scale
+      head.scale.copy(
+        original.scale
       )
 
-      distillationHead.visible =
-        originalVisible
+      // Restore original visibility
+      head.visible =
+        original.visible
 
-      distillationHead.updateMatrixWorld(
-        true
-      )
+      head.updateMatrix()
+      head.updateMatrixWorld(true)
+
+      originalStateRef.current = null
     }
   }, [
     modelRef,
     distillationHeadRef,
+
     distillationHeadScale,
+
     distillationHeadXOffset,
     distillationHeadYOffset,
     distillationHeadZOffset,

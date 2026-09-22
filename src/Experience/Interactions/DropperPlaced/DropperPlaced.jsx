@@ -1,80 +1,159 @@
-import { useContext, useEffect } from "react"
+import {
+  useContext,
+  useEffect,
+} from "react"
+
 import * as THREE from "three"
-import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
-import DropperScrollAnimation from "../DropperScrollAnimation/DropperScrollAnimation"
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
-import ProteinBiuretReaction from "../../AllReactions/ProteinBiuretReaction/ProteinBiuretReaction"
 
-const DropperPlaced = ({ beakerRef, hand }) => {
-  const { mainDropperRef } = useContext(ModelContext)
-  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext);
-  const {isBiuretReaction,setIsBiuretReaction,} = useContext(ReactionContext)
+import {
+  ModelContext,
+} from "../../../Contexts/ModelContext/ModelContext"
 
-  useEffect(()=>{
-    if(selectedLesson ===7 && lessonStep===8){
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  ReactionContext,
+} from "../../../Contexts/ReactionContext/ReactionContext"
+
+import ProteinBiuretReaction from
+  "../../AllReactions/ProteinBiuretReaction/ProteinBiuretReaction"
+
+const DropperPlaced = ({
+  beakerRef,
+  hand,
+
+  beakerScale = 1,
+  dropperScale = 1,
+
+  // Height above the dropper marker.
+  dropperYOffset = 3,
+}) => {
+  const {
+    mainDropperRef,
+  } = useContext(ModelContext)
+
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext)
+
+  const {
+    isBiuretReaction,
+  } = useContext(ReactionContext)
+
+  console.log("Dropper Placed")
+
+  useEffect(() => {
+    if (selectedLesson === 7 &&lessonStep === 8) {
       setLessonStep(9)
     }
-  },[selectedLesson,lessonStep])
-
-  useEffect(()=>{
-    if(selectedLesson ===7 && lessonStep===13){
+    if (selectedLesson === 7 &&lessonStep === 13) {
       setLessonStep(14)
     }
-  },[selectedLesson,lessonStep])
 
+
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
 
   useEffect(() => {
     const beaker = beakerRef?.current
     const dropper = mainDropperRef?.current
 
-    if (!beaker || !dropper) return
+    if (!beaker || !dropper) {
+      return
+    }
 
-    // Save the original transforms
-    const originalBeakerPosition = beaker.position.clone()
-    const originalDropperPosition = dropper.position.clone()
+    const originalBeakerPosition =
+      beaker.position.clone()
+
+    const originalBeakerScale =
+      beaker.scale.clone()
+
+    const originalDropperPosition =
+      dropper.position.clone()
+
     const originalDropperQuaternion =
       dropper.quaternion.clone()
 
+    const originalDropperScale =
+      dropper.scale.clone()
+
     let marker = null
 
-    // Temporarily center the beaker
     beaker.position.x = 0
-    beaker.updateMatrixWorld(true)
 
-    // Find the child containing "dropper" in its name
+    beaker.scale.set(
+      beakerScale,
+      beakerScale,
+      beakerScale
+    )
+
+    dropper.scale.set(
+      dropperScale,
+      dropperScale,
+      dropperScale
+    )
+
+    beaker.updateMatrixWorld(true)
+    dropper.updateMatrixWorld(true)
+
     beaker.traverse((child) => {
       if (
         !marker &&
-        child.name?.toLowerCase().includes("dropper")
+        child.name?.toLowerCase().includes(
+          "dropper"
+        )
       ) {
         marker = child
       }
     })
 
     if (!marker) {
-      console.warn("Dropper marker not found")
+      beaker.position.copy(
+        originalBeakerPosition
+      )
 
-      // Restore beaker because the effect exits early
-      beaker.position.copy(originalBeakerPosition)
+      beaker.scale.copy(
+        originalBeakerScale
+      )
+
+      dropper.scale.copy(
+        originalDropperScale
+      )
+
       beaker.updateMatrixWorld(true)
+      dropper.updateMatrixWorld(true)
 
       return
     }
 
-    const markerWorldPosition = new THREE.Vector3()
-    const markerWorldQuaternion = new THREE.Quaternion()
+    const markerWorldPosition =
+      new THREE.Vector3()
 
-    marker.getWorldPosition(markerWorldPosition)
-    marker.getWorldQuaternion(markerWorldQuaternion)
+    const markerWorldQuaternion =
+      new THREE.Quaternion()
 
-    // Height offset
-    markerWorldPosition.y += 3
+    marker.getWorldPosition(
+      markerWorldPosition
+    )
+
+    marker.getWorldQuaternion(
+      markerWorldQuaternion
+    )
+
+    markerWorldPosition.y +=
+      dropperYOffset
 
     if (dropper.parent) {
-      // Convert marker world position into the
-      // dropper parent's local coordinate system
-      dropper.parent.worldToLocal(markerWorldPosition)
+      dropper.parent.worldToLocal(
+        markerWorldPosition
+      )
 
       const parentWorldQuaternion =
         new THREE.Quaternion()
@@ -83,38 +162,65 @@ const DropperPlaced = ({ beakerRef, hand }) => {
         parentWorldQuaternion
       )
 
-      // Convert marker world rotation into the
-      // dropper parent's local rotation
       dropper.quaternion
         .copy(parentWorldQuaternion.invert())
         .multiply(markerWorldQuaternion)
     } else {
-      dropper.quaternion.copy(markerWorldQuaternion)
+      dropper.quaternion.copy(
+        markerWorldQuaternion
+      )
     }
 
-    dropper.position.copy(markerWorldPosition)
+    dropper.position.copy(
+      markerWorldPosition
+    )
+
     dropper.updateMatrixWorld(true)
 
     return () => {
-      // Restore original transforms
-      beaker.position.copy(originalBeakerPosition)
+      beaker.position.copy(
+        originalBeakerPosition
+      )
 
-      dropper.position.copy(originalDropperPosition)
+      beaker.scale.copy(
+        originalBeakerScale
+      )
+
+      dropper.position.copy(
+        originalDropperPosition
+      )
+
       dropper.quaternion.copy(
         originalDropperQuaternion
+      )
+
+      dropper.scale.copy(
+        originalDropperScale
       )
 
       beaker.updateMatrixWorld(true)
       dropper.updateMatrixWorld(true)
     }
-  }, [beakerRef, mainDropperRef, hand])
+  }, [
+    beakerRef,
+    mainDropperRef,
+    hand,
+    beakerScale,
+    dropperScale,
+    dropperYOffset,
+  ])
 
   return (
     <>
-      {isBiuretReaction && <ProteinBiuretReaction beakerRef={beakerRef} mainDropperRef={mainDropperRef} hand={hand}/>}
+      {isBiuretReaction && (
+        <ProteinBiuretReaction
+          beakerRef={beakerRef}
+          mainDropperRef={mainDropperRef}
+          hand={hand}
+        />
+      )}
     </>
   )
-  
 }
 
 export default DropperPlaced

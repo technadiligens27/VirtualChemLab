@@ -76,7 +76,7 @@ const PouringMode02 = ({
 
   const {
     conicalBeakerRef02,
-    roundBeakerRef,
+    roundBeakerRef,testube01Ref
   } = useContext(
     ModelContext
   )
@@ -564,6 +564,27 @@ const PouringMode02 = ({
             otherLiquidColor = {"#F4D35E"}
           />
         )}
+
+      {selectedLeftHand?.name ===
+        "main-Conical-Flask-02" &&
+        selectedRightHand?.name ===
+          "main-testube-01" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+              conicalBeakerRef02
+            }
+            otherModelRef={
+              testube01Ref
+            }
+            modelLiquidEndScale={0}
+            otherLiquidEndScale={11.4}
+            otherLiquidColor = {"#ffffff"}
+            speed={15}
+          />
+        )}
+
+
     </>
   )
 }
