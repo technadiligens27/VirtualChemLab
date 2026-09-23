@@ -28,7 +28,7 @@ const AllArrows=()=>{
         showBoilingTube01Ref,showMeasuringCylinderArrow,showMeasuringCylinder50Arrow,
         setShowMeasuringCylinder50Arrow,showTestube03Arrow,setShowTestube03Arrow,showHeatingMantleArrow,
         setShowMeasuringCylinderArrow,showBromobutaneArrow,setshowBromobutaneArrow,showSeparatingFunnelArrow,setShowSeparatingFunnel
-        ,showCondensorArrow
+        ,showCondensorArrow,showTestube02Arrow,setShowTestube02Arrow
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -73,6 +73,7 @@ const AllArrows=()=>{
         {showSeparatingFunnelArrow && <ArrowGuides arrowRef={arrowSeparatingFunnelRef} speed={2.5} height={0.5} showStatus={showSeparatingFunnelArrow}/>}
         {showHeatingMantleArrow && <ArrowGuides arrowRef={arrowHeatingMantleRef} speed={2.5} height={0.5} showStatus={showHeatingMantleArrow}/>}
         {showCondensorArrow && <ArrowGuides arrowRef={arrowCondensorRef} speed={2.5} height={0.5} showStatus={showCondensorArrow}/>}
+        {showTestube02Arrow && <ArrowGuides arrowRef={arrowTestube03Ref} speed={2.5} height={0.5} showStatus={showTestube02Arrow}/>}
 
         </>
     )

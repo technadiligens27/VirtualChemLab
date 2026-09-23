@@ -44,8 +44,6 @@ const DropperPlaced = ({
     isBiuretReaction,
   } = useContext(ReactionContext)
 
-  console.log("Dropper Placed")
-
   useEffect(() => {
     if (selectedLesson === 7 &&lessonStep === 8) {
       setLessonStep(9)
@@ -53,8 +51,12 @@ const DropperPlaced = ({
     if (selectedLesson === 7 &&lessonStep === 13) {
       setLessonStep(14)
     }
-
-
+    if(selectedLesson ==14.3 && lessonStep == 117 ){
+      setLessonStep(118)
+    }
+    if(selectedLesson ==14.3 && lessonStep == 123 ){
+      setLessonStep(124)
+    }
   }, [
     selectedLesson,
     lessonStep,
@@ -107,7 +109,7 @@ const DropperPlaced = ({
       if (
         !marker &&
         child.name?.toLowerCase().includes(
-          "dropper"
+          "bottom"
         )
       ) {
         marker = child

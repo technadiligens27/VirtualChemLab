@@ -110,8 +110,6 @@ const Interaction = () => {
   }
 
   useEffect(()=>{
-    console.log('isPlacePolysterene:',isPlacePolysterene);
-    console.log('isPolystereneStirMode:',isPolystereneStirMode)
     console.log('selectedLeftHand:',selectedLeftHand);
     console.log('selectedRightHand:',selectedRightHand);
 
@@ -498,10 +496,34 @@ useEffect(() => {
       }
 
       {
-       selectedLesson==14.3 && isDropperPlaced && <DropperPlaced 
+        selectedLesson==14.3 && lessonStep==131 && <PouringMode02 
+        pourModelRef={graduatedBeakerRef}
+         receiveModelRef={testube02Ref}
+         pourModelXOffset = {-1.2}
+         pourModelYOffset = {-0.5}
+         pourModelScale={0.8}
+         receiveModelScale={0.7}
+         hand={"right"}
+         pourModelYRotation = {Math.PI}
+         receiveModelXOffset ={-2}         
+         />
+      }      
+
+      {
+       selectedLesson==14.3 && lessonStep<121  && isDropperPlaced && <DropperPlaced 
         beakerRef={testube01Ref} 
         dropperScale={0.9} 
-        dropperYOffset={2.2} 
+        dropperYOffset={2.1} 
+        beakerScale = {1}
+      
+      />
+      }
+
+      {
+       selectedLesson==14.3 && [123,124,125,126].includes(lessonStep)  && isDropperPlaced && <DropperPlaced 
+        beakerRef={testube02Ref} 
+        dropperScale={0.9} 
+        dropperYOffset={2.1} 
         beakerScale = {1}
       
       />

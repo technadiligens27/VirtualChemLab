@@ -424,10 +424,111 @@ model.traverse((child) => {
         />}         
         {lessonStep ==117 && <DialogBox text={
           <>
-           117
+           Click <strong>Held Dropper</strong> and Select <strong>Place Dropper</strong>
+          </>
+          } 
+        />}
+
+          {lessonStep ==118 && <DialogBox text={
+          <>
+           <strong>Scroll Up</strong> To <strong>Release</strong> The <strong>Dropper</strong>
+          </>
+          } 
+        />}
+
+          {lessonStep ==119 && <DialogBox text={
+          <>
+           Click The <strong>Dropper</strong> and Select <strong>Remove Dropper</strong>
+
+          </>
+          } 
+        />}  
+          {lessonStep ==120 && <DialogBox text={
+          <>
+           Keep <strong>Test Tube</strong> Back On <strong>Table</strong>
+          </>
+          } 
+        />}
+          {lessonStep ==121 && <DialogBox text={
+          <>
+           Pick Up Another <strong>Test Tube</strong>
+          </>
+          } 
+        />}
+
+          {/* {lessonStep ==122 && <DialogBox text={
+          <>
+           Pick Up Another <strong>Test Tube</strong>
+          </>
+          } 
+        />} */}
+
+          {lessonStep ==123 && <DialogBox text={
+          <>
+           Click <strong>Dropper</strong> And Select <strong>Place Dropper</strong>
+          </>
+          } 
+        />}
+
+          {lessonStep ==124 && <DialogBox text={
+          <>
+           <strong>Scroll Down</strong> To <strong>Squeeze</strong> The <strong>Dropper</strong>
+          </>
+          } 
+        />}
+          {lessonStep ==125 && <DialogBox text={
+          <>
+           Click <strong>Dropper</strong> And Select <strong>Remove Dropper</strong>
+          </>
+          } 
+        />}
+
+          {lessonStep ==126 && <DialogBox text={
+          <>
+           Keep <strong>Dropper</strong> Back On <strong>Table</strong>
           </>
           } 
         />} 
+
+          {lessonStep ==127 && <DialogBox text={
+          <>
+           Pick Up The <strong>Measuring Cylinder</strong>
+          </>
+          } 
+        />}
+
+          {lessonStep ==128 && <DialogBox text={
+          <>
+           Click The <strong>Held Measuring Cylinder</strong> And Select <strong>Add Liquid</strong>
+          </>
+          } 
+        />}          
+
+          {lessonStep ==129 && <DialogBox text={
+          <>
+           <strong>Fill</strong> With <strong>Ethanol (5cm3)</strong>
+          </>
+          } 
+        />}
+
+          {lessonStep ==130 && <DialogBox text={
+          <>
+           Press <strong>P</strong> To <strong>Enter Pour Mode</strong>
+          </>
+          } 
+        />}
+          {lessonStep ==131 && <DialogBox text={
+          <>
+           <strong>Scroll Down</strong> To <strong>Pour</strong>
+          </>
+          } 
+        />}
+          {lessonStep ==132 && <DialogBox text={
+          <>
+           Keep <strong>Measuring Cylinder</strong> Back On <strong>Table</strong>
+          </>
+          } 
+        />}
         </>
   )
 }

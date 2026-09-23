@@ -762,7 +762,7 @@ const ClickObject = () => {
     const handData = getHandData(hand)
 
     if([14,14.1,14.2,14.3].includes(selectedLesson)){
-      if(![14,24,50,69,93,97,113].includes(lessonStep)){
+      if(![14,24,50,69,93,97,113,120,126].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }
@@ -800,6 +800,10 @@ const ClickObject = () => {
     }
 
     if (!handData?.ref?.current) return
+
+    if (handData.name === "main-dropper" && selectedLesson === 14.3 && lessonStep === 126) {
+      setLessonStep(127)
+    }
 
     if (handData.name === "main-spoon" && selectedLesson === 14.3 && lessonStep === 93) {
       setLessonStep(94)
@@ -883,6 +887,10 @@ const ClickObject = () => {
 
     if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===14) {
       setLessonStep(15)
+    }
+
+    if (handData.name === "main-testube-01" && selectedLesson===14.3 && lessonStep ===120) {
+      setLessonStep(121)
     }
 
     if (handData.name === "volumetric-pipette" && selectedLesson===12.2 && lessonStep ===76) {
@@ -1347,7 +1355,7 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([14,14.1,14.3].includes(selectedLesson)){
-      if(![3,26,34,44,62,85,94,110,115].includes(lessonStep)){
+      if(![3,26,34,44,62,85,94,110,115,127].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false 
       }
@@ -1367,7 +1375,11 @@ const clickableObjects = selectableObjects
       if([115].includes(lessonStep) && selectedObject.name !=="main-dropper"){
         setShowErrorMsgNo(12)
         return false         
-      } 
+      }
+      if([127].includes(lessonStep) && selectedObject.name !=="main-graduated-cylinder"){
+        setShowErrorMsgNo(12)
+        return false         
+      }  
 
     }
 
@@ -1506,17 +1518,23 @@ const clickableObjects = selectableObjects
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
-    if([14.3].includes(selectedLesson) && ![86,106.1].includes(lessonStep)){{
+    if([14.3].includes(selectedLesson) && ![86,106.1,121].includes(lessonStep)){{
       setShowErrorMsgNo(1)
       return false
     }}
+    
 
     if([14.3].includes(selectedLesson) &&  [86,106.1].includes(lessonStep) && objectName !== "main-Conical-Flask-02"){
       setShowErrorMsgNo(1)
          return false
     }
 
-
+    if(selectedLesson ===14,3){
+      if(lessonStep===122 && objectName !== "main-testube-02"){
+        setShowErrorMsgNo(1)
+         return false
+      }
+    }
     if(selectedLesson ===14){
       if(lessonStep===6 && objectName !== "main-Conical-Flask-02"){
         setShowErrorMsgNo(1)
@@ -1926,7 +1944,8 @@ const toggleFunnelMode = () => {
       (selectedLesson ==12.2) && ([64].includes(lessonStep)) ||
       (selectedLesson ===13) && ([3.2,6,9,10].includes(lessonStep)) ||
       (selectedLesson===14) && ([4,10].includes(lessonStep)) ||
-      (selectedLesson===14.1) && ([45,63].includes(lessonStep))
+      (selectedLesson===14.1) && ([45,63].includes(lessonStep)) ||
+      (selectedLesson == 14.3) &&([128].includes(lessonStep))
 
 
     if (!isAllowedStep) {
@@ -2296,7 +2315,8 @@ const handlePlacePolysterene = () => {
   const placeDropper = () => {
     if (isTutorialMode &&
       ((selectedLesson === 7 && ([8,13].includes(lessonStep))) ||
-      (selectedLesson==14.3 && [117].includes(lessonStep))
+      (selectedLesson==14.3 && [117].includes(lessonStep)) ||
+      (selectedLesson ==14.3 && [123].includes(lessonStep))
     
     )
     ) {
@@ -2326,6 +2346,13 @@ const handlePlacePolysterene = () => {
       setShowErrorMsgNo(12)
       setSelectedObject(null)
       return
+    }
+
+    if(selectedLesson==14.3 && lessonStep == 119){
+      setLessonStep(120)
+    }
+    if(selectedLesson==14.3 && lessonStep == 125){
+      setLessonStep(126)
     }
 
     setIsDropperPlaced(false)
@@ -5119,7 +5146,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={buretteClampRef}
-      multiplier={(selectedLesson==14.3 && [86,94].includes(lessonStep)) ? 0 : 1.1}    
+      multiplier={(selectedLesson==14.3 && [86,94,127].includes(lessonStep)) ? 0 : 1.1}    
     />
 
     <ClickHitbox

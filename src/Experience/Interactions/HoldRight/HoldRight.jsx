@@ -495,6 +495,12 @@ const transformControlsRef = useRef()
     if(selectedLesson===14.3 && lessonStep==115){
       setLessonStep(116)
     }
+  },[selectedLesson,lessonStep]) 
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==127){
+      setLessonStep(128)
+    }
   },[selectedLesson,lessonStep])  
 
   useEffect(() => {
@@ -507,6 +513,10 @@ const transformControlsRef = useRef()
       if(selectedLesson ==14.3 && lessonStep==111){
         setLessonStep(112)
       }
+      if(selectedLesson ==14.3 && lessonStep==130){
+        setLessonStep(131)
+      }
+
     }
   }
 

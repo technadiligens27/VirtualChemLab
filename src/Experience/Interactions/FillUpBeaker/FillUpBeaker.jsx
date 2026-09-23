@@ -519,6 +519,10 @@ else if (
     amountRef.current = 0.4
     speedRef.current = 0.25
   }
+  else if(selectedLesson===14.3 && selectedAmount===5){
+    amountRef.current = 0.14
+    speedRef.current = 0.1
+  }
   else{
   amountRef.current =
     selectedAmount * 1.1
@@ -827,7 +831,9 @@ else if (
    if ( selectedLesson === 14.1 && lessonStep === 64 ) {
       setLessonStep(65)
     }   
-    
+   if ( selectedLesson === 14.3 && lessonStep === 129 ) {
+      setLessonStep(130)
+    }   
   }
 )
 

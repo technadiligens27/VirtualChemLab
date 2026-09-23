@@ -136,7 +136,8 @@ const UI = () => {
     showBuretteClampArrow,setShowBuretteClampArrow,setShowPotassiumHydrogenCarbonateArrow,
     setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
     setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow,showCondensorArrow,
-        setShowCondensorArrow
+        setShowCondensorArrow,showTestube02Arrow,
+        setShowTestube02Arrow
     
   } = useContext(MainGuidelineContext)
 
@@ -150,6 +151,12 @@ const UI = () => {
   } = useContext(InteractionContext)
 
   // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    setShowTestube02Arrow(
+      (selectedLesson==14.3 && lessonStep ==122)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowCondensorArrow(
@@ -173,7 +180,8 @@ const UI = () => {
     setShowMeasuringCylinder50Arrow(
       (selectedLesson===13 && lessonStep==3.1) ||
       (selectedLesson===14 && lessonStep==3) ||
-      (selectedLesson===14.1 && [44,62].includes(lessonStep))
+      (selectedLesson===14.1 && [44,62].includes(lessonStep)) ||
+      (selectedLesson == 14.3 && lessonStep==127)
     )
   },[selectedLesson,lessonStep])
 

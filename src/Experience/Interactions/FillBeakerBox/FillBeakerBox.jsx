@@ -128,14 +128,17 @@ const FillBeakerBox = () => {
       return true
     }
 
-    if(selectedLesson===14.1){
+    if([14.1,14.3].includes(selectedLesson)){
       if(lessonStep===46){
         if(!checkFill("Sodium Hydrogencarbonate",20)) return
       } 
      if(lessonStep===64){
         if(!checkFill("Sodium Hydrogencarbonate",20)) return
-      }  
-      
+      }   
+     if(lessonStep==127){
+        if(!checkFill("Ethanol (C2H5OH)",5)) return
+
+     }    
       
     }
 
@@ -198,6 +201,12 @@ const FillBeakerBox = () => {
     if(selectedLesson==14.1 && lessonStep==63){
       setLessonStep(64)
     }
+
+    if(selectedLesson==14.3 && lessonStep==128){
+      setLessonStep(129)
+    }
+
+
   },[lessonStep,selectedLesson])
 
   

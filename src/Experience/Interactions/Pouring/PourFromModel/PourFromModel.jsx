@@ -735,7 +735,12 @@ const PourFromModel = ({
         ) {
           setLessonStep(113)
         }
-
+        if (
+          selectedLesson === 14.3 &&
+          lessonStep === 131
+        ) {
+          setLessonStep(132)
+        }
       }
     }
 

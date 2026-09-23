@@ -145,11 +145,9 @@ const FillDropper = ({ hand }) => {
   })
 
   return (
-    <LiquidLabels
-      hand={hand}
-      modelRef={mainDropperRef}
-      liquidData={sourceFillData}
-    />
+    <>
+    
+    </>
   )
 }
 

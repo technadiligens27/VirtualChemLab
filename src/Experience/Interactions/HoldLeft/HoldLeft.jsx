@@ -55,7 +55,11 @@ const HoldLeft = ({ modeldata }) => {
   //     setShowNormalBeakerArrow(false)
   //   }
   // },[lessonStep])
-
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==121){
+      setLessonStep(123)
+    }
+  },[selectedLesson,lessonStep])   
 
   useEffect(()=>{
     if(lessonStep===106.1 && selectedLesson===14.3){
