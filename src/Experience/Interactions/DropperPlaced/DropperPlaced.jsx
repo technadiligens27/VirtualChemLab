@@ -57,6 +57,16 @@ const DropperPlaced = ({
     if(selectedLesson ==14.3 && lessonStep == 123 ){
       setLessonStep(124)
     }
+    if(selectedLesson ==14.4 && lessonStep == 123 ){
+      setLessonStep(124)
+    } 
+    if(selectedLesson ==14.4 && lessonStep==150){
+      setLessonStep(151)
+    }
+     if(selectedLesson ==14.4 && lessonStep==156){
+      setLessonStep(157)
+    }   
+    
   }, [
     selectedLesson,
     lessonStep,

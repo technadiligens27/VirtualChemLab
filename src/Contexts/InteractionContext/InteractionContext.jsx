@@ -190,6 +190,10 @@ export const InteractionProvider = ({ children }) => {
 
   const [isMantleTurnedOn,setIsMantleTurnedOn] = useState(false);
 
+  const [isAddWarmWater,setIsAddWarmWater] = useState(false)
+
+  const [isPlaceModelInBeaker,setIsPlaceModelInBeaker] = useState(false)
+
 
   const resetInteractions = () => {
   // Empty both hands
@@ -320,7 +324,9 @@ export const InteractionProvider = ({ children }) => {
   setIsInsertThermometer(false);
   setIsInsertCondensor(false);
   setIsFillCondensor(false);
-  setIsMantleTurnedOn(false)
+  setIsMantleTurnedOn(false);
+  setIsAddWarmWater(false);
+  setIsPlaceModelInBeaker(false)
 }
 
   return (
@@ -422,7 +428,8 @@ export const InteractionProvider = ({ children }) => {
         isAddDistillationHead,setIsAddDistillationHead,
         isInsertThermometer,setIsInsertThermometer,
         isInsertCondensor,setIsInsertCondensor,isFillCondensor,setIsFillCondensor,
-        isMantleTurnedOn,setIsMantleTurnedOn,distillationGasAnimationActions,setDistillationGasAnimationActions
+        isMantleTurnedOn,setIsMantleTurnedOn,distillationGasAnimationActions,setDistillationGasAnimationActions,
+        isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker
       }}
     >
       {children}

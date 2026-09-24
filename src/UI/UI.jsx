@@ -41,6 +41,7 @@ import ChlorinationLesson from "./AllLessons/ChlorinationLesson/ChlorinationLess
 import ChlorinationLesson02 from "./AllLessons/ChlorinationLesson/ChlorinationLesson02"
 import ChlorinationLesson03 from "./AllLessons/ChlorinationLesson/ChlorinationLesson03"
 import ChlorinationLesson04 from "./AllLessons/ChlorinationLesson/ChlorinationLesson04"
+import ChlorinationLesson05 from "./AllLessons/ChlorinationLesson/ChlorinationLesson05"
 
 const mainContent = [
   {
@@ -137,7 +138,7 @@ const UI = () => {
     setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
     setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow,showCondensorArrow,
         setShowCondensorArrow,showTestube02Arrow,
-        setShowTestube02Arrow
+        setShowTestube02Arrow,setShowGraduatedPippeteArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -151,6 +152,12 @@ const UI = () => {
   } = useContext(InteractionContext)
 
   // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    setShowGraduatedPippeteArrow(
+      (selectedLesson==14.3 && lessonStep == 133)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowTestube02Arrow(
@@ -400,7 +407,8 @@ useEffect(()=>{
   useEffect(() => {
     setShowDropperArrow(
       (selectedLesson===7 && lessonStep===6) ||
-      (selectedLesson==14.3 && lessonStep==115)
+      (selectedLesson==14.3 && lessonStep==115) ||
+      (selectedLesson == 14.4 && lessonStep==147)
     )
   }, [selectedLesson,lessonStep,showDropperArrow]);
 
@@ -682,6 +690,9 @@ useEffect(() => {
        }
       {
         selectedLesson==14.3 && (<ChlorinationLesson04/>)
+       }
+       {
+        selectedLesson == 14.4 && (<ChlorinationLesson05/>)
        }
 
         {/* {<MolarVolumeResults/>} */}

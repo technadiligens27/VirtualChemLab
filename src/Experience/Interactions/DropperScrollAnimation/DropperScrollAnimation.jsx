@@ -29,7 +29,7 @@ import FillDropperLiquid from "../FillDropperLiquid/FillDropperLiquid"
 
 const PROTEIN_LESSONS = [
   7,
-  14.3,
+  14.3,14.4
 ]
 
 const SCROLL_SPEED = 0.0008
@@ -41,6 +41,9 @@ const DROP_ANIMATION_STEPS = [
   116,
   118,
   124,
+  151,
+  152,
+  157
 ]
 
 const findLiquid = (
@@ -80,20 +83,9 @@ const hasLiquid = (liquid) => {
 const DropperScrollAnimation = ({
   hand,
 }) => {
-  const {
-    dropperAnimationAction,
-    mainDropperRef,testube02Ref
-  } = useContext(ModelContext)
+  const {dropperAnimationAction,mainDropperRef,testube02Ref} = useContext(ModelContext)
 
-  const {
-    isDropperFilled,
-    setIsDropperFilled,
-
-    selectedLeftHand,
-    leftBeakerFillData,
-  } = useContext(
-    InteractionContext
-  )
+  const {isDropperFilled,setIsDropperFilled,selectedLeftHand,leftBeakerFillData} = useContext(InteractionContext)
 
   const {
     selectedLesson,
@@ -264,7 +256,14 @@ const DropperScrollAnimation = ({
     // =====================================
     // LESSON 14.3
     // =====================================
+    if (
+      selectedLesson === 14.4 &&
+      lessonStep === 157
+    ) {
+      setLessonStep(158)
 
+      return
+    }
     if (
       selectedLesson === 14.3 &&
       lessonStep === 124
@@ -330,6 +329,20 @@ const DropperScrollAnimation = ({
     ) {
       return
     }
+
+    if (
+        selectedLesson === 14.4 &&
+        lessonStep === 152 &&
+        isFullyReleased
+      ) {
+        setIsPourFromDropper(false)
+
+        pourTriggeredRef.current = false
+
+        setLessonStep(153)
+
+        return
+      }
 
     if (
       selectedLesson === 14.3 &&
@@ -505,11 +518,11 @@ const DropperScrollAnimation = ({
 
   return (
     <>
-      {isDropperFilled && !isPourFromDropper && (
+      {isDropperFilled && !isPourFromDropper && selectedLesson==14.3  && (
         <FillDropperLiquid
           color="#ffffff"
           opacity={0.35}
-          amount={1}
+          amount={5}
           speed={1}
           otherModelRef={testube02Ref}
           otherLiquidEndAmount={0.6}

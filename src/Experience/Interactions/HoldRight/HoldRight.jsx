@@ -51,7 +51,7 @@ const HoldRight = ({ modeldata }) => {
   const {
     filterFoldedPaperRef,
     filterPaperRef,
-    funnelRef,
+    funnelRef,graduatedPipetteRef,
     spoonRef,volumetricRef,seperatingFunnelRef
   } = useContext(ModelContext)
 
@@ -199,9 +199,14 @@ const transformControlsRef = useRef()
     }else if(object.name === "kettle"){
       object.scale.set(0.75, 0.75, 0.75);
       
+    }else if(object.name === "graduated-pipette"){
+      object.scale.set(0.8, 0.8, 0.8);
+
     }else if(object.name === "volumetric-flask"){
       object.scale.set(1, 1, 1);
-    } else {
+    } 
+    
+    else {
       object.scale.set(1, 1, 1)
     }
 
@@ -501,6 +506,19 @@ const transformControlsRef = useRef()
     if(selectedLesson===14.3 && lessonStep==127){
       setLessonStep(128)
     }
+  },[selectedLesson,lessonStep]) 
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==133){
+      setLessonStep(134)
+    }
+    if(selectedLesson ==14.4 && lessonStep==141){
+      setLessonStep(142)
+    }
+    if(selectedLesson ==14.4 && lessonStep==147){
+      setLessonStep(148)
+    }
+
   },[selectedLesson,lessonStep])  
 
   useEffect(() => {
@@ -646,6 +664,9 @@ const transformControlsRef = useRef()
         selectedRightHand.name==='pipette' && <PipetteRubberAnimation/>
       }  
 
+      {
+        selectedRightHand.name==='graduated-pipette' && <PipetteRubberAnimation modelRef={graduatedPipetteRef}/>
+      }  
       {
         selectedRightHand?.name === 'volumetric-pipette' && <VolumetricRubberAnimation/>
       }

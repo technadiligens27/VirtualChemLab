@@ -16,6 +16,7 @@ import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox"
+import ChlorinationLesson05 from "./ChlorinationLesson05"
 
 const ChlorinationLesson04 = () => {
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
@@ -34,7 +35,7 @@ const ChlorinationLesson04 = () => {
     gogglesRef,
     gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
     gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,
-    digitalBalanceRef,mainDropperRef
+    digitalBalanceRef,mainDropperRef,graduatedPipetteRef
   } = useContext(ModelContext)
 
   useEffect(()=>{
@@ -100,6 +101,14 @@ const ChlorinationLesson04 = () => {
 
      if(mainDropperRef.current){
       mainDropperRef.current.visible = true
+     }
+
+     if(pipetteRef.current){
+      pipetteRef.current.visible = false
+     }
+
+     if(graduatedPipetteRef.current){
+      graduatedPipetteRef.current.visible = true
      }
   },[selectedLesson])
 
@@ -529,6 +538,18 @@ model.traverse((child) => {
           </>
           } 
         />}
+
+          {lessonStep ==133 && <DialogBox text={
+          <>
+           Pick Up The <strong>Graduated Pippete</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep > 133 && (
+          <ChlorinationLesson05/>
+        )}      
+
         </>
   )
 }

@@ -112,6 +112,9 @@ const FillUpBeaker = ({
       liquidName.includes("water") ||
       liquidName.includes("h2o")
 
+    const isAqueousSodiumHydroxide = 
+      liquidName.includes("graduated-pipette")
+
     const isEthanol =
       liquidName.includes(
         "ethanol"
@@ -409,6 +412,16 @@ const FillUpBeaker = ({
     // ========================================
     // NORMAL BEAKER
     // ========================================
+
+    else if(lowerBeakerName === "main-dropper"){     
+      amountRef.current = selectedAmount/10
+      speedRef.current = 0.3
+    }    
+
+    else if(lowerBeakerName === "graduated-pipette"){     
+      amountRef.current = selectedAmount/10
+      speedRef.current = 0.3
+    }
 
     else if (
       lowerBeakerName.includes(
@@ -833,7 +846,17 @@ else if (
     }   
    if ( selectedLesson === 14.3 && lessonStep === 129 ) {
       setLessonStep(130)
-    }   
+   }
+   if ( selectedLesson === 14.4 && lessonStep === 135 ) {
+      setLessonStep(136)
+   } 
+   if ( selectedLesson === 14.4 && lessonStep === 149 ) {
+      setLessonStep(150)
+   }    
+   if ( selectedLesson === 14.4 && lessonStep === 155 ) {
+      setLessonStep(156)
+   }    
+
   }
 )
 

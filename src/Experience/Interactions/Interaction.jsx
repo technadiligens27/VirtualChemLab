@@ -69,6 +69,7 @@ import DistillationGasAnimation from "./DistillationGasAnimation/DistillationGas
 import PourDropletsFromModel from "./PourDropletsFromModel/PourDropletsFromModel";
 import FillConicalBeaker02 from "./FillConicalBeaker02Ref/FillConicalBeaker02Ref";
 import DropperPlaced from "./DropperPlaced/DropperPlaced";
+import PlaceModelInBeaker from "./PlaceModelInBeaker/PlaceModelInBeaker";
 
 const Interaction = () => {
   const {
@@ -81,14 +82,15 @@ const Interaction = () => {
     ,showHCLTitrationReaction,isCleanBeaker,setIsCleanBeaker,isSulfamicInSpoon,isFillToMark,isFunnelMode,isClampTestube,
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
-    isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced
+    isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
+    isAddWarmWater,isPlaceModelInBeaker
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
         naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
-        tableConicalPos,heatingMantleRef,condensorRef
+        tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -230,20 +232,20 @@ useEffect(() => {
        {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
        && isPlacePolysterene && <StirUsingThermometer/>}
 
-       {(selectedLeftHand?.name === "iodobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode modelRef={iodobutaneBottleRef}/>}
+       {(selectedLeftHand?.name === "iodobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode pipetteModeRef={pipetteRef} modelRef={iodobutaneBottleRef}/>}
       
        {(selectedLeftHand?.name === "main-testube-01" && selectedRightHand?.name === "pipette") &&
-        isPipetteMode &&<PipetteMode modelRef={testube01Ref} yOffset={4} xOffset={-0.2}/>}
+        isPipetteMode &&<PipetteMode pipetteModeRef={pipetteRef} modelRef={testube01Ref} yOffset={4} xOffset={-0.2}/>}
 
         {(selectedLeftHand?.name === "main-testube-02" && selectedRightHand?.name === "pipette") &&
-        isPipetteMode &&<PipetteMode modelRef={testube02Ref} yOffset={4} xOffset={-0.2}/>}
+        isPipetteMode &&<PipetteMode pipetteModeRef={pipetteRef} modelRef={testube02Ref} yOffset={4} xOffset={-0.2}/>}
 
          {(selectedLeftHand?.name === "main-testube-03" && selectedRightHand?.name === "pipette") &&
-        isPipetteMode &&<PipetteMode modelRef={testube03Ref} yOffset={4} xOffset={-0.2}/>}
+        isPipetteMode &&<PipetteMode pipetteModeRef={pipetteRef} modelRef={testube03Ref} yOffset={4} xOffset={-0.2}/>}
 
-       {(selectedLeftHand?.name === "bromobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode modelRef={bromobutaneBottleRef}/>}
-        {(selectedLeftHand?.name === "chlorobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode modelRef={chlorobutaneBottleRef}/>}
-
+       {(selectedLeftHand?.name === "bromobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode pipetteModeRef={pipetteRef} modelRef={bromobutaneBottleRef}/>}
+        {(selectedLeftHand?.name === "chlorobutane-bottle" && selectedRightHand?.name === "pipette") && isPipetteMode &&<PipetteMode pipetteModeRef={pipetteRef} modelRef={chlorobutaneBottleRef}/>}
+          
 
        {fillPippette && isPipetteMode && (<FillPipette/>)} 
 
@@ -529,6 +531,19 @@ useEffect(() => {
       />
       }
 
+      {
+        selectedLeftHand?.name == "main-testube-02" && selectedRightHand?.name == "graduated-pipette" && isPipetteMode && (
+          <PipetteMode modelRef={testube02Ref} pipetteModeRef={graduatedPipetteRef} pipetteModeRefScale={0.6} modelRefScale={1} yOffset={3.5}  />
+        )
+      }
+
+      {
+        selectedLesson == 14.4 && isAddWarmWater && (
+          <FillConicalBeaker modelRef={normalBeakerRef} amount={0.5} color={"#0073a0"} opacity={0.35}/>
+        )
+      }
+      {isPlaceModelInBeaker && <PlaceModelInBeaker modelRef={testube02Ref} yOffset={0.7}/>}
+ 
     </>
   );
 };

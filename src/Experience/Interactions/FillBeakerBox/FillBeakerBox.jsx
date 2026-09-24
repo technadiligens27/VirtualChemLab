@@ -49,16 +49,15 @@ const FillBeakerBox = () => {
         { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./SilverNitrate.png" },
       ]
     }
-    if([14,14.1,14.2,14.3].includes(selectedLesson)){
+    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
       return [
         { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./EthanoicAcid.png" }, 
-        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.png' },
+{ name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./SilverNitrate.png" },        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.png' },
           { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
-        { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
+       { name: "Nitric Acid (HNO3)", color: "#f8fafc", imgPath: "./NitricAcid.png" },,
         { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
         // { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
-        { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
+        { name: "Aqueous sodium hydroxide", color: "#f8fafc",imgPath:'./Protein.png' },
         { name: "Sodium Hydrogencarbonate", color: "#EAF7FF", imgPath: "./SodiumHydrogencarbonateSolution.png" },
       ]
     }
@@ -87,15 +86,21 @@ const FillBeakerBox = () => {
         return [10, 25, 50, 100, 250]
       }   
     }
+
+    if(fillBeakerModel === "graduated-pipette"){
+      return [1,3,5,7,10]
+    }
+
+    if(fillBeakerModel === "main-dropper"){
+      return [2,5,7,9,10]
+    }    
+
     if (fillBeakerModel === "main-graduated-cylinder-100") {
       return [10,30,50,80,100]
     } 
     if (fillBeakerModel === "main-graduated-cylinder" || "main-testube-04" || "main-testube-05") {
       return [5, 10, 20,30,35, 50]
     }
-    
-
-
 
     return [50, 100, 200, 250]
   }
@@ -193,19 +198,21 @@ const FillBeakerBox = () => {
     if(lessonStep===10 && selectedLesson ===14){
       setLessonStep(11)
     }
-
     if(selectedLesson==14.1 && lessonStep==45){
       setLessonStep(46)
     }
-
     if(selectedLesson==14.1 && lessonStep==63){
       setLessonStep(64)
     }
-
     if(selectedLesson==14.3 && lessonStep==128){
       setLessonStep(129)
     }
-
+    if(selectedLesson==14.4 && lessonStep==148){
+      setLessonStep(149)
+    }
+    if(selectedLesson==14.4 && lessonStep==154){
+      setLessonStep(155)
+    }    
 
   },[lessonStep,selectedLesson])
 
@@ -326,7 +333,12 @@ const FillBeakerBox = () => {
       setLessonStep(4)
     }
   },[lessonStep,selectedLesson])  
-  
+   
+  useEffect(()=>{
+    if(lessonStep===134 && selectedLesson ===14.4){
+      setLessonStep(135)
+    }
+  },[lessonStep,selectedLesson])   
   
   // useEffect(()=>{
   //   if(lessonStep===18 && selectedLesson ===11){

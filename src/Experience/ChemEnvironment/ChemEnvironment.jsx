@@ -28,7 +28,8 @@ const ChemEnvironment = () => {
          arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,testube03CapRef,conicalBungRef,conicalBeakerRef02,
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
-         arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef
+         arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,arrowGraduatedPipette,
+         testube02OriginalStateRef,graduatedPipetteOriginalStateRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions,distillationGasAnimationActions,setDistillationGasAnimationActions} = useContext(InteractionContext)
@@ -260,7 +261,9 @@ const hideVerticalObjects=(root)=>{
     heatingMantleBeakerPosRef.current =scene.getObjectByName("heating-mantle-beaker-pos");
     clampHandleRef.current = scene.getObjectByName("clamp-handle");
     condensorRef.current = scene.getObjectByName("condensor");
-
+    graduatedPipetteRef.current = scene.getObjectByName("graduated-pipette")
+    graduatedPipetteRef.current.visible = false
+    
     hidePourObjects(normalBeakerRef)
     hidePourObjects(conicalBeakerRef)
     hidePourObjects(volumetricRef)
@@ -392,7 +395,25 @@ if (conicalBeakerRef02.current && ! conicalFlask02OriginalStateRef.current) {
     parent: conicalBeakerRef02.current.parent,
   }
 }
+if (testube02Ref.current && ! testube02OriginalStateRef.current) {
+    testube02OriginalStateRef.current = {
+    position: testube02Ref.current.position.clone(),
+    rotation:testube02Ref.current.rotation.clone(),
+    quaternion: testube02Ref.current.quaternion.clone(),
+    scale: testube02Ref.current.scale.clone(),
+    parent: testube02Ref.current.parent,
+  }
+}
 
+if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
+    graduatedPipetteOriginalStateRef.current = {
+    position: graduatedPipetteRef.current.position.clone(),
+    rotation:graduatedPipetteRef.current.rotation.clone(),
+    quaternion: graduatedPipetteRef.current.quaternion.clone(),
+    scale: graduatedPipetteRef.current.scale.clone(),
+    parent: graduatedPipetteRef.current.parent,
+  }
+}
 
   buretteClampRef.current = scene.getObjectByName('mainBuretteClamp');
   mainThermometerRef.current = scene.getObjectByName('mainThermometer');
@@ -535,6 +556,8 @@ if (conicalBeakerRef02.current && ! conicalFlask02OriginalStateRef.current) {
       arrowCondensorRef.current = scene.getObjectByName("condensor-arrow");
       arrowCondensorRef.current.visible = false;
 
+      arrowGraduatedPipette.current = scene.getObjectByName("graduated-pipette-arrow")
+      arrowGraduatedPipette.current.visible = false;
   }, [scene])
 
 
