@@ -16,6 +16,8 @@ import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox"
+import ChlorinationLesson05 from "./ChlorinationLesson05"
+import ChlorinationLesson04 from "./ChlorinationLesson04"
 
 const ChlorinationLesson03 = () => {
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
@@ -646,11 +648,7 @@ useEffect(() => {
                 </>
             }   />}
 
-            {lessonStep ==85 && <DialogBox text={
-                <>
-             85
-                </>
-            }   />}                
+            {lessonStep >84 && (<ChlorinationLesson04/>)}              
 
 
         </>

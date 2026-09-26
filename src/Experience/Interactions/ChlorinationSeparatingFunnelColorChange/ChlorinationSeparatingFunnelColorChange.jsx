@@ -14,6 +14,7 @@ import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
+
 const ChlorinationSeparatingFunnelColorChange = ({
   modelRef,
 
@@ -22,24 +23,55 @@ const ChlorinationSeparatingFunnelColorChange = ({
 
   liquidOpacity = 0.35,
 
+  // Seconds
   colorChangeDelay = 2,
+
+  // Seconds
   colorChangeDuration = 1,
 }) => {
   const {
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  const upperMeshesRef = useRef([])
-  const bottomMeshesRef = useRef([])
 
-  const elapsedTimeRef = useRef(0)
-  const initializedRef = useRef(false)
-  const lessonAdvancedRef = useRef(false)
+  // =========================================
+  // LIQUID REFS
+  // =========================================
+
+  const upperMeshesRef =
+    useRef([])
+
+  const bottomMeshesRef =
+    useRef([])
+
+
+  // =========================================
+  // ANIMATION REFS
+  // =========================================
+
+  const elapsedTimeRef =
+    useRef(0)
+
+  const initializedRef =
+    useRef(false)
+
+  const lessonAdvancedRef =
+    useRef(false)
+const lessonAdvanceTimerRef =
+  useRef(null)
+
+  // =========================================
+  // INITIALIZE
+  // =========================================
 
   useEffect(() => {
-    const model = modelRef?.current
+    const model =
+      modelRef?.current
+
 
     if (!model) {
       console.error(
@@ -49,8 +81,10 @@ const ChlorinationSeparatingFunnelColorChange = ({
       return
     }
 
+
     const upperMeshes = []
     const bottomMeshes = []
+
 
     const opacity =
       THREE.MathUtils.clamp(
@@ -59,26 +93,49 @@ const ChlorinationSeparatingFunnelColorChange = ({
         1
       )
 
-    const initialColor =
-      new THREE.Color(
-        bottomLiquidColor
-      )
 
-    // Apply exactly the same material
-    // properties to both liquid layers.
+    // =========================================
+    // PREPARE MATERIAL
+    // =========================================
+
     const prepareMaterial = (
       material
     ) => {
       if (!material) return null
 
+
+      // =========================================
+      // SAVE CURRENT COLOR
+      // BEFORE CHANGING ANYTHING
+      // =========================================
+
+      const startColor =
+        material.color
+          ? material.color.clone()
+          : new THREE.Color(
+              "#ffffff"
+            )
+
+
+      // =========================================
+      // CLONE MATERIAL
+      // =========================================
+
       const clonedMaterial =
         material.clone()
 
-      clonedMaterial.transparent = true
-      clonedMaterial.opacity = opacity
 
-      clonedMaterial.depthWrite = false
-      clonedMaterial.depthTest = true
+      clonedMaterial.transparent =
+        true
+
+      clonedMaterial.opacity =
+        opacity
+
+      clonedMaterial.depthWrite =
+        false
+
+      clonedMaterial.depthTest =
+        true
 
       clonedMaterial.side =
         THREE.DoubleSide
@@ -89,38 +146,58 @@ const ChlorinationSeparatingFunnelColorChange = ({
       clonedMaterial.premultipliedAlpha =
         false
 
-      clonedMaterial.alphaTest = 0
+      clonedMaterial.alphaTest =
+        0
 
-      // Normalize lighting properties.
-      if (
-        "roughness" in clonedMaterial
-      ) {
-        clonedMaterial.roughness = 0.15
-      }
 
-      if (
-        "metalness" in clonedMaterial
-      ) {
-        clonedMaterial.metalness = 0
-      }
+      // =========================================
+      // NORMALIZE MATERIAL
+      // =========================================
 
       if (
-        "transmission" in clonedMaterial
+        "roughness" in
+        clonedMaterial
       ) {
-        clonedMaterial.transmission = 0
+        clonedMaterial.roughness =
+          0.15
       }
 
-      if (
-        "thickness" in clonedMaterial
-      ) {
-        clonedMaterial.thickness = 0
-      }
 
       if (
-        "clearcoat" in clonedMaterial
+        "metalness" in
+        clonedMaterial
       ) {
-        clonedMaterial.clearcoat = 0
+        clonedMaterial.metalness =
+          0
       }
+
+
+      if (
+        "transmission" in
+        clonedMaterial
+      ) {
+        clonedMaterial.transmission =
+          0
+      }
+
+
+      if (
+        "thickness" in
+        clonedMaterial
+      ) {
+        clonedMaterial.thickness =
+          0
+      }
+
+
+      if (
+        "clearcoat" in
+        clonedMaterial
+      ) {
+        clonedMaterial.clearcoat =
+          0
+      }
+
 
       if (
         "clearcoatRoughness" in
@@ -130,141 +207,256 @@ const ChlorinationSeparatingFunnelColorChange = ({
           0
       }
 
+
       if (
-        "ior" in clonedMaterial
+        "ior" in
+        clonedMaterial
       ) {
-        clonedMaterial.ior = 1.33
+        clonedMaterial.ior =
+          1.33
       }
 
-      if (clonedMaterial.color) {
+
+      // =========================================
+      // IMPORTANT:
+      // KEEP ORIGINAL COLOR
+      // =========================================
+
+      if (
+        clonedMaterial.color
+      ) {
         clonedMaterial.color.copy(
-          initialColor
+          startColor
         )
       }
 
-      clonedMaterial.needsUpdate = true
 
-      return clonedMaterial
+      clonedMaterial.needsUpdate =
+        true
+
+
+      return {
+        material:
+          clonedMaterial,
+
+        startColor,
+      }
     }
 
-    model.traverse((child) => {
-      if (!child.isMesh) return
 
-      let currentObject = child
-      let liquidLayer = null
+    // =========================================
+    // FIND LIQUID MESHES
+    // =========================================
 
-      // Check the mesh and its parents
-      // to determine its liquid layer.
-      while (
-        currentObject &&
-        currentObject !== model.parent
-      ) {
-        const normalizedName =
-          (
-            currentObject.name?.toLowerCase() ||
-            ""
-          ).replace(/[-_\s]/g, "")
-
-        const isLiquid =
-          normalizedName.includes(
-            "liquid"
-          )
-
-        if (
-          isLiquid &&
-          normalizedName.includes(
-            "upper"
-          )
-        ) {
-          liquidLayer = "upper"
-          break
+    model.traverse(
+      (child) => {
+        if (!child.isMesh) {
+          return
         }
 
-        if (
-          isLiquid &&
-          (
-            normalizedName.includes(
-              "bottom"
-            ) ||
-            normalizedName.includes(
-              "lower"
+
+        let currentObject =
+          child
+
+        let liquidLayer =
+          null
+
+
+        // =========================================
+        // FIND UPPER / BOTTOM LAYER
+        // =========================================
+
+        while (
+          currentObject &&
+          currentObject !==
+            model.parent
+        ) {
+          const normalizedName =
+            (
+              currentObject.name
+                ?.toLowerCase() ||
+              ""
+            ).replace(
+              /[-_\s]/g,
+              ""
             )
-          )
-        ) {
-          liquidLayer = "bottom"
-          break
+
+
+          const isLiquid =
+            normalizedName.includes(
+              "liquid"
+            )
+
+
+          if (
+            isLiquid &&
+            normalizedName.includes(
+              "upper"
+            )
+          ) {
+            liquidLayer =
+              "upper"
+
+            break
+          }
+
+
+          if (
+            isLiquid &&
+            (
+              normalizedName.includes(
+                "bottom"
+              ) ||
+              normalizedName.includes(
+                "lower"
+              )
+            )
+          ) {
+            liquidLayer =
+              "bottom"
+
+            break
+          }
+
+
+          if (
+            currentObject ===
+            model
+          ) {
+            break
+          }
+
+
+          currentObject =
+            currentObject.parent
         }
+
+
+        if (!liquidLayer) {
+          return
+        }
+
+
+        // =========================================
+        // GET ORIGINAL MATERIALS
+        // =========================================
+
+        const originalMaterial =
+          child.material
+
+
+        const originalMaterials =
+          Array.isArray(
+            originalMaterial
+          )
+            ? originalMaterial
+            : [
+                originalMaterial,
+              ]
+
+
+        // =========================================
+        // CLONE + SAVE START COLORS
+        // =========================================
+
+        const preparedMaterials =
+          originalMaterials
+            .map(
+              prepareMaterial
+            )
+            .filter(Boolean)
+
+
+        // =========================================
+        // ASSIGN CLONED MATERIALS
+        // =========================================
+
+        child.material =
+          Array.isArray(
+            originalMaterial
+          )
+            ? preparedMaterials.map(
+                ({
+                  material,
+                }) =>
+                  material
+              )
+            : preparedMaterials[
+                0
+              ]?.material
+
+
+        // =========================================
+        // VISIBILITY
+        // =========================================
+
+        child.visible =
+          true
+
+        child.frustumCulled =
+          false
+
+        child.renderOrder =
+          1
+
+
+        // =========================================
+        // MAKE PARENTS VISIBLE
+        // =========================================
+
+        let currentParent =
+          child.parent
+
+
+        while (
+          currentParent &&
+          currentParent !==
+            model
+        ) {
+          currentParent.visible =
+            true
+
+          currentParent =
+            currentParent.parent
+        }
+
+
+        model.visible =
+          true
+
+
+        // =========================================
+        // SAVE MESH DATA
+        // =========================================
+
+        const meshData = {
+          object:
+            child,
+
+          materials:
+            preparedMaterials,
+        }
+
 
         if (
-          currentObject === model
+          liquidLayer ===
+          "upper"
         ) {
-          break
+          upperMeshes.push(
+            meshData
+          )
+        } else {
+          bottomMeshes.push(
+            meshData
+          )
         }
-
-        currentObject =
-          currentObject.parent
       }
+    )
 
-      if (!liquidLayer) return
 
-      const originalMaterial =
-        child.material
-
-      const originalMaterials =
-        Array.isArray(
-          originalMaterial
-        )
-          ? originalMaterial
-          : [originalMaterial]
-
-      const clonedMaterials =
-        originalMaterials.map(
-          prepareMaterial
-        )
-
-      child.material =
-        Array.isArray(
-          originalMaterial
-        )
-          ? clonedMaterials
-          : clonedMaterials[0]
-
-      child.visible = true
-      child.frustumCulled = false
-
-      // Use the same render order for
-      // the upper and bottom layers.
-      child.renderOrder = 1
-
-      // Make all parent groups visible.
-      let currentParent =
-        child.parent
-
-      while (
-        currentParent &&
-        currentParent !== model
-      ) {
-        currentParent.visible = true
-
-        currentParent =
-          currentParent.parent
-      }
-
-      model.visible = true
-
-      const meshData = {
-        object: child,
-        materials: clonedMaterials,
-      }
-
-      if (
-        liquidLayer === "upper"
-      ) {
-        upperMeshes.push(meshData)
-      } else {
-        bottomMeshes.push(meshData)
-      }
-    })
+    // =========================================
+    // SAVE REFS
+    // =========================================
 
     upperMeshesRef.current =
       upperMeshes
@@ -272,9 +464,20 @@ const ChlorinationSeparatingFunnelColorChange = ({
     bottomMeshesRef.current =
       bottomMeshes
 
-    elapsedTimeRef.current = 0
-    initializedRef.current = true
-    lessonAdvancedRef.current = false
+
+    elapsedTimeRef.current =
+      0
+
+    initializedRef.current =
+      true
+
+    lessonAdvancedRef.current =
+      false
+
+
+    // =========================================
+    // DEBUG
+    // =========================================
 
     console.log(
       "[Chlorination] Upper liquid meshes:",
@@ -284,6 +487,7 @@ const ChlorinationSeparatingFunnelColorChange = ({
       )
     )
 
+
     console.log(
       "[Chlorination] Bottom liquid meshes:",
       bottomMeshes.map(
@@ -292,37 +496,61 @@ const ChlorinationSeparatingFunnelColorChange = ({
       )
     )
 
+
     if (
-      upperMeshes.length === 0
+      upperMeshes.length ===
+      0
     ) {
       console.error(
         "[ChlorinationSeparatingFunnelColorChange] Upper liquid was not found."
       )
     }
 
+
     if (
-      bottomMeshes.length === 0
+      bottomMeshes.length ===
+      0
     ) {
       console.error(
         "[ChlorinationSeparatingFunnelColorChange] Bottom liquid was not found."
       )
     }
 
+
+    // =========================================
+    // CLEANUP
+    // =========================================
+
     return () => {
+      if (
+        lessonAdvanceTimerRef.current
+      ) {
+        clearTimeout(
+          lessonAdvanceTimerRef.current
+        )
+
+        lessonAdvanceTimerRef.current =
+          null
+      }
+
       upperMeshesRef.current = []
       bottomMeshesRef.current = []
 
       elapsedTimeRef.current = 0
       initializedRef.current = false
       lessonAdvancedRef.current = false
-
-      // Keep final colours and visibility.
     }
   }, [
     modelRef,
+    upperLiquidColor,
     bottomLiquidColor,
     liquidOpacity,
   ])
+
+
+  // =========================================
+  // ANIMATION
+  // =========================================
 
   useFrame((_, delta) => {
     if (
@@ -331,7 +559,14 @@ const ChlorinationSeparatingFunnelColorChange = ({
       return
     }
 
-    elapsedTimeRef.current += delta
+
+    elapsedTimeRef.current +=
+      delta
+
+
+    // =========================================
+    // SAFE DURATION
+    // =========================================
 
     const safeDuration =
       Math.max(
@@ -339,33 +574,45 @@ const ChlorinationSeparatingFunnelColorChange = ({
         0.001
       )
 
+
+    // =========================================
+    // COLOR PROGRESS
+    //
+    // Before delay:
+    // progress = 0
+    //
+    // After delay:
+    // progress 0 -> 1
+    // =========================================
+
     const colorProgress =
       THREE.MathUtils.clamp(
         (
           elapsedTimeRef.current -
           colorChangeDelay
-        ) / safeDuration,
+        ) /
+          safeDuration,
+
         0,
         1
       )
 
-    const bottomColor =
+
+    // =========================================
+    // TARGET COLORS
+    // =========================================
+
+    const targetBottomColor =
       new THREE.Color(
         bottomLiquidColor
       )
 
-    const upperEndColor =
+
+    const targetUpperColor =
       new THREE.Color(
         upperLiquidColor
       )
 
-    const currentUpperColor =
-      bottomColor
-        .clone()
-        .lerp(
-          upperEndColor,
-          colorProgress
-        )
 
     const opacity =
       THREE.MathUtils.clamp(
@@ -374,30 +621,56 @@ const ChlorinationSeparatingFunnelColorChange = ({
         1
       )
 
+
+    // =========================================
+    // UPDATE LIQUID
+    // =========================================
+
     const updateLiquidMesh = (
       meshData,
-      color
+      targetColor
     ) => {
       const {
         object,
         materials,
       } = meshData
 
-      object.visible = true
-      object.frustumCulled = false
 
-      // Both layers use the same order.
-      object.renderOrder = 1
+      object.visible =
+        true
+
+      object.frustumCulled =
+        false
+
+      object.renderOrder =
+        1
+
 
       materials.forEach(
-        (material) => {
-          if (!material) return
+        ({
+          material,
+          startColor,
+        }) => {
+          if (!material) {
+            return
+          }
 
-          material.transparent = true
-          material.opacity = opacity
 
-          material.depthWrite = false
-          material.depthTest = true
+          // =====================================
+          // MATERIAL SETTINGS
+          // =====================================
+
+          material.transparent =
+            true
+
+          material.opacity =
+            opacity
+
+          material.depthWrite =
+            false
+
+          material.depthTest =
+            true
 
           material.side =
             THREE.DoubleSide
@@ -408,78 +681,120 @@ const ChlorinationSeparatingFunnelColorChange = ({
           material.premultipliedAlpha =
             false
 
-          material.alphaTest = 0
+          material.alphaTest =
+            0
+
 
           if (
-            "roughness" in material
+            "roughness" in
+            material
           ) {
-            material.roughness = 0.15
+            material.roughness =
+              0.15
           }
+
 
           if (
-            "metalness" in material
+            "metalness" in
+            material
           ) {
-            material.metalness = 0
+            material.metalness =
+              0
           }
+
 
           if (
-            "transmission" in material
+            "transmission" in
+            material
           ) {
-            material.transmission = 0
+            material.transmission =
+              0
           }
+
 
           if (
-            "thickness" in material
+            "thickness" in
+            material
           ) {
-            material.thickness = 0
+            material.thickness =
+              0
           }
+
 
           if (
-            "clearcoat" in material
+            "clearcoat" in
+            material
           ) {
-            material.clearcoat = 0
+            material.clearcoat =
+              0
           }
 
-          if (material.color) {
-            material.color.copy(color)
+
+          // =====================================
+          // COLOR ANIMATION
+          // =====================================
+
+          if (
+            material.color
+          ) {
+            const currentColor =
+              startColor
+                .clone()
+                .lerp(
+                  targetColor,
+                  colorProgress
+                )
+
+
+            material.color.copy(
+              currentColor
+            )
           }
 
-          material.needsUpdate = true
+
+          material.needsUpdate =
+            true
         }
       )
 
-      object.updateMatrixWorld(true)
+
+      object.updateMatrixWorld(
+        true
+      )
     }
 
-    // ============================================
+
+    // =========================================
     // BOTTOM LIQUID
-    // ============================================
+    // =========================================
 
     bottomMeshesRef.current.forEach(
       (meshData) => {
         updateLiquidMesh(
           meshData,
-          bottomColor
+          targetBottomColor
         )
       }
     )
 
-    // ============================================
+
+    // =========================================
     // UPPER LIQUID
-    // ============================================
+    // =========================================
 
     upperMeshesRef.current.forEach(
       (meshData) => {
         updateLiquidMesh(
           meshData,
-          currentUpperColor
+          targetUpperColor
         )
       }
     )
 
-    // ============================================
+
+    // =========================================
     // ADVANCE LESSON
-    // ============================================
+    // =========================================
 
     if (
       colorProgress >= 1 &&
@@ -492,10 +807,14 @@ const ChlorinationSeparatingFunnelColorChange = ({
         selectedLesson === 14.1 &&
         lessonStep === 41
       ) {
-        setLessonStep(42)
+        lessonAdvanceTimerRef.current =
+          setTimeout(() => {
+            setLessonStep(42)
+          }, 1000)
       }
     }
   })
+
 
   return null
 }

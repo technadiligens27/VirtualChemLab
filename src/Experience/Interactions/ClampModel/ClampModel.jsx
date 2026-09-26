@@ -395,7 +395,7 @@ const ClampModel = ({
         lessonStep === 84 && (
           <PourFromModel
             isPouring={isPouring}
-            otherLiquidEndScale={0.3}
+            otherLiquidEndScale={1}
             otherModelRef={
               conicalBeakerRef02
             }
@@ -403,6 +403,7 @@ const ClampModel = ({
               seperatingFunnelRef
             }
             modelLiquidEndScale={0}
+            otherLiquidColor={"#F4D35E"}
           />
         )}
 

@@ -21,12 +21,15 @@ import {
 
 import FillLiquidBeaker from "../../FillLiquid/FillLiquidBeaker/FillLiquidBeaker"
 
+
 const PourFromGraduatedCylinder = ({
   isPouring,
 
   speed = 1,
-  pourSpeed = 200,
-  fallDistance = 55,
+  pourSpeed = 1,
+
+  // Final Y scale of the pouring stream.
+  pourScaleY = 1,
 
   otherModelRef = null,
   otherModelAmount = 0.6,
@@ -45,47 +48,70 @@ const PourFromGraduatedCylinder = ({
     boilingTube01Ref,
   } = useContext(ModelContext)
 
+
   const {
     fillTestubeLiquid,
     setFillTestubeLiquid,
+
     selectedLeftHand,
-  } = useContext(InteractionContext)
+  } = useContext(
+    InteractionContext
+  )
+
 
   const {
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(MainGuidelineContext)
+  } = useContext(
+    MainGuidelineContext
+  )
+
 
   // =============================================
   // OBJECT REFS
   // =============================================
 
-  const pourLiquidRef = useRef(null)
-  const cylinderLiquidRef = useRef(null)
-  const otherModelLiquidRef = useRef(null)
+  const pourLiquidRef =
+    useRef(null)
 
-  // Stores the upper conical liquid separately.
-  const conicalUpperLiquidRef = useRef(null)
+  const cylinderLiquidRef =
+    useRef(null)
+
+  const otherModelLiquidRef =
+    useRef(null)
+
+  const conicalUpperLiquidRef =
+    useRef(null)
+
 
   // =============================================
   // STARTING SCALE VALUES
   // =============================================
 
-  const cylinderStartScaleRef = useRef(0)
-  const otherModelStartScaleRef = useRef(0)
+  const cylinderStartScaleRef =
+    useRef(0)
+
+  const otherModelStartScaleRef =
+    useRef(0)
+
 
   // =============================================
   // POUR PROGRESS
   // =============================================
 
-  const progressRef = useRef(0)
-  const isPourFinishedRef = useRef(false)
+  const progressRef =
+    useRef(0)
+
+  const isPourFinishedRef =
+    useRef(false)
+
 
   const [
     isPourFullyScaled,
     setIsPourFullyScaled,
   ] = useState(false)
+
 
   // =============================================
   // FIND GRADUATED CYLINDER LIQUID
@@ -93,23 +119,38 @@ const PourFromGraduatedCylinder = ({
   // =============================================
 
   useEffect(() => {
-    const cylinder = graduatedBeakerRef?.current
+    const cylinder =
+      graduatedBeakerRef?.current
+
 
     if (!cylinder) return
+
 
     cylinder.traverse((child) => {
       if (!child.isMesh) return
 
+
       const childName =
-        child.name?.toLowerCase() || ""
+        child.name
+          ?.toLowerCase() || ""
 
-      // Find pouring stream.
+
+      // =========================================
+      // POUR STREAM
+      // =========================================
+
       if (
-        childName.includes("pour-fluid")
+        childName.includes(
+          "pour"
+        )
       ) {
-        pourLiquidRef.current = child
+        pourLiquidRef.current =
+          child
 
-        child.visible = false
+
+        child.visible =
+          false
+
 
         child.scale.set(
           child.scale.x,
@@ -117,77 +158,125 @@ const PourFromGraduatedCylinder = ({
           child.scale.z
         )
 
+
         return
       }
 
-      // Find liquid inside graduated cylinder.
+
+      // =========================================
+      // CYLINDER LIQUID
+      // =========================================
+
       if (
-        childName.includes("liquid")
+        childName.includes(
+          "liquid"
+        )
       ) {
-        cylinderLiquidRef.current = child
+        cylinderLiquidRef.current =
+          child
       }
     })
 
-    return () => {
-      if (!pourLiquidRef.current) return
 
-      pourLiquidRef.current.visible = false
-      pourLiquidRef.current.scale.y = 0
+    return () => {
+      if (
+        !pourLiquidRef.current
+      ) {
+        return
+      }
+
+
+      pourLiquidRef.current.visible =
+        false
+
+
+      pourLiquidRef.current.scale.y =
+        0
     }
-  }, [graduatedBeakerRef])
+  }, [
+    graduatedBeakerRef,
+  ])
+
 
   // =============================================
   // FIND AND STYLE RECEIVER LIQUID
   // =============================================
 
   useEffect(() => {
-    if (!otherModelRef?.current) {
-      otherModelLiquidRef.current = null
-      conicalUpperLiquidRef.current = null
+    if (
+      !otherModelRef?.current
+    ) {
+      otherModelLiquidRef.current =
+        null
+
+      conicalUpperLiquidRef.current =
+        null
+
 
       return
     }
 
-    const otherModel = otherModelRef.current
+
+    const otherModel =
+      otherModelRef.current
+
 
     const isConicalFlask02 =
-      otherModel === conicalBeakerRef02?.current
+      otherModel ===
+      conicalBeakerRef02?.current
 
-    otherModelLiquidRef.current = null
-    conicalUpperLiquidRef.current = null
+
+    otherModelLiquidRef.current =
+      null
+
+    conicalUpperLiquidRef.current =
+      null
+
 
     otherModel.traverse((child) => {
       if (!child.isMesh) return
 
+
       const childName =
-        child.name?.trim().toLowerCase() || ""
+        child.name
+          ?.trim()
+          .toLowerCase() || ""
+
 
       const isUpperLiquid =
         childName ===
         "conical-flask-02-liquid-upper"
 
+
       const isBottomLiquid =
         childName ===
         "conical-flask-02-liquid-bottom"
+
 
       // =========================================
       // CONICAL FLASK 02 LIQUIDS
       // =========================================
 
       if (isConicalFlask02) {
-        if (isUpperLiquid) {
-          conicalUpperLiquidRef.current = child
-          child.visible = true
+        if (
+          isUpperLiquid
+        ) {
+          conicalUpperLiquidRef.current =
+            child
         }
 
-        if (isBottomLiquid) {
-          // Only the bottom liquid scales up.
-          otherModelLiquidRef.current = child
-          child.visible = true
+
+        if (
+          isBottomLiquid
+        ) {
+          otherModelLiquidRef.current =
+            child
         }
+
 
         return
       }
+
 
       // =========================================
       // NORMAL RECEIVER LIQUID
@@ -195,72 +284,111 @@ const PourFromGraduatedCylinder = ({
 
       if (
         !otherModelLiquidRef.current &&
-        childName.includes("liquid")
+        childName.includes(
+          "liquid"
+        )
       ) {
-        otherModelLiquidRef.current = child
+        otherModelLiquidRef.current =
+          child
       }
     })
+
 
     const receiverLiquid =
       otherModelLiquidRef.current
 
-    if (!receiverLiquid) {
-      console.warn(
-        "[PourFromGraduatedCylinder] Receiver liquid not found."
-      )
 
+    if (!receiverLiquid) {
       return
     }
 
+
     // =========================================
-    // MATERIAL UPDATE FUNCTION
+    // MATERIAL UPDATE
     // =========================================
 
-    const updateMaterial = (material) => {
-      if (!material) return material
+    const updateMaterial =
+      (material) => {
+        if (!material) {
+          return material
+        }
 
-      const clonedMaterial = material.clone()
 
-      clonedMaterial.color?.set(
-        otherModelColor
-      )
+        const clonedMaterial =
+          material.clone()
 
-      clonedMaterial.transparent = true
-      clonedMaterial.opacity =
-        otherModelOpacity
 
-      clonedMaterial.depthWrite = false
+        clonedMaterial.color?.set(
+          otherModelColor
+        )
 
-      if ("roughness" in clonedMaterial) {
-        clonedMaterial.roughness = 0.1
+
+        clonedMaterial.transparent =
+          true
+
+
+        clonedMaterial.opacity =
+          otherModelOpacity
+
+
+        clonedMaterial.depthWrite =
+          false
+
+
+        if (
+          "roughness" in
+          clonedMaterial
+        ) {
+          clonedMaterial.roughness =
+            0.1
+        }
+
+
+        if (
+          "metalness" in
+          clonedMaterial
+        ) {
+          clonedMaterial.metalness =
+            0
+        }
+
+
+        clonedMaterial.needsUpdate =
+          true
+
+
+        return clonedMaterial
       }
 
-      if ("metalness" in clonedMaterial) {
-        clonedMaterial.metalness = 0
+
+    const updateLiquidMaterials =
+      (liquid) => {
+        if (!liquid) return
+
+
+        if (
+          Array.isArray(
+            liquid.material
+          )
+        ) {
+          liquid.material =
+            liquid.material.map(
+              updateMaterial
+            )
+        } else {
+          liquid.material =
+            updateMaterial(
+              liquid.material
+            )
+        }
       }
 
-      clonedMaterial.needsUpdate = true
 
-      return clonedMaterial
-    }
+    updateLiquidMaterials(
+      receiverLiquid
+    )
 
-    const updateLiquidMaterials = (liquid) => {
-      if (!liquid) return
 
-      if (Array.isArray(liquid.material)) {
-        liquid.material =
-          liquid.material.map(updateMaterial)
-      } else {
-        liquid.material =
-          updateMaterial(liquid.material)
-      }
-    }
-
-    // Apply color and opacity to the receiving liquid.
-    updateLiquidMaterials(receiverLiquid)
-
-    // For conicalBeakerRef02, apply the exact same
-    // color and opacity to the upper liquid.
     if (
       isConicalFlask02 &&
       conicalUpperLiquidRef.current
@@ -276,6 +404,7 @@ const PourFromGraduatedCylinder = ({
     otherModelOpacity,
   ])
 
+
   // =============================================
   // START NEW POUR
   // =============================================
@@ -283,35 +412,71 @@ const PourFromGraduatedCylinder = ({
   useEffect(() => {
     if (!isPouring) return
 
-    progressRef.current = 0
-    isPourFinishedRef.current = false
 
-    setIsPourFullyScaled(false)
+    progressRef.current =
+      0
 
-    // Reset pour stream.
-    if (pourLiquidRef.current) {
-      pourLiquidRef.current.scale.y = 0
-      pourLiquidRef.current.visible = true
+
+    isPourFinishedRef.current =
+      false
+
+
+    setIsPourFullyScaled(
+      false
+    )
+
+
+    // =========================================
+    // RESET POUR STREAM
+    // =========================================
+
+    if (
+      pourLiquidRef.current
+    ) {
+      pourLiquidRef.current.scale.y =
+        0
+
+
+      pourLiquidRef.current.visible =
+        true
     }
 
-    // Save cylinder liquid starting scale.
-    if (cylinderLiquidRef.current) {
+
+    // =========================================
+    // SAVE CYLINDER LIQUID START SCALE
+    // =========================================
+
+    if (
+      cylinderLiquidRef.current
+    ) {
       cylinderStartScaleRef.current =
-        cylinderLiquidRef.current.scale.y
+        cylinderLiquidRef.current
+          .scale.y
     }
 
-    // Save receiver bottom liquid starting scale.
+
+    // =========================================
+    // SAVE RECEIVER START SCALE
+    // =========================================
+
     if (
       otherModelRef?.current &&
       otherModelLiquidRef.current
     ) {
       otherModelStartScaleRef.current =
-        otherModelLiquidRef.current.scale.y
+        otherModelLiquidRef.current
+          .scale.y
 
-      otherModelLiquidRef.current.visible = true
+
+      otherModelLiquidRef.current.visible =
+        true
     }
 
-    // Keep conical upper liquid visible.
+
+    // =========================================
+    // KEEP CONICAL UPPER LIQUID VISIBLE
+    // =========================================
+
     if (
       otherModelRef?.current ===
         conicalBeakerRef02?.current &&
@@ -326,98 +491,147 @@ const PourFromGraduatedCylinder = ({
     conicalBeakerRef02,
   ])
 
+
   // =============================================
   // POUR ANIMATION
   // =============================================
 
   useFrame((_, delta) => {
-    const pourLiquid = pourLiquidRef.current
+    const pourLiquid =
+      pourLiquidRef.current
+
+
     const cylinderLiquid =
       cylinderLiquidRef.current
 
-    if (!pourLiquid || !cylinderLiquid) {
+
+    if (
+      !pourLiquid ||
+      !cylinderLiquid
+    ) {
       return
     }
+
 
     // =========================================
     // NOT POURING
     // =========================================
 
     if (!isPouring) {
-      pourLiquid.visible = false
-      pourLiquid.scale.y = 0
+      pourLiquid.visible =
+        false
 
-      if (isPourFullyScaled) {
-        setIsPourFullyScaled(false)
+
+      pourLiquid.scale.y =
+        0
+
+
+      if (
+        isPourFullyScaled
+      ) {
+        setIsPourFullyScaled(
+          false
+        )
       }
+
 
       return
     }
+
 
     // =========================================
     // ALREADY FINISHED
     // =========================================
 
-    if (isPourFinishedRef.current) {
-      pourLiquid.visible = false
-      pourLiquid.scale.y = 0
+    if (
+      isPourFinishedRef.current
+    ) {
+      pourLiquid.visible =
+        false
+
+
+      pourLiquid.scale.y =
+        0
+
 
       return
     }
+
 
     // =========================================
     // TRANSFER PROGRESS
     // =========================================
 
-    progressRef.current = Math.min(
-      progressRef.current + delta * speed,
-      1
-    )
+    progressRef.current =
+      Math.min(
+        progressRef.current +
+          delta * speed,
 
-    const progress = progressRef.current
+        1
+      )
+
+
+    const progress =
+      progressRef.current
+
 
     // =========================================
     // POUR STREAM
     // =========================================
 
-    pourLiquid.visible = true
+    pourLiquid.visible =
+      true
 
-    pourLiquid.scale.y = Math.min(
-      pourLiquid.scale.y +
-        delta * pourSpeed,
-      fallDistance
-    )
+
+    pourLiquid.scale.y =
+      Math.min(
+        pourLiquid.scale.y +
+          delta * pourSpeed,
+
+        pourScaleY
+      )
+
 
     // =========================================
-    // STREAM REACHED RECEIVER
+    // STREAM REACHED FINAL Y SCALE
     // =========================================
 
     if (
-      pourLiquid.scale.y >= fallDistance &&
+      pourLiquid.scale.y >=
+        pourScaleY &&
       !isPourFullyScaled
     ) {
-      setIsPourFullyScaled(true)
+      setIsPourFullyScaled(
+        true
+      )
+
 
       if (
         !otherModelRef &&
         !fillTestubeLiquid
       ) {
-        setFillTestubeLiquid(true)
+        setFillTestubeLiquid(
+          true
+        )
       }
     }
+
 
     // =========================================
     // CYLINDER LIQUID DECREASE
     // =========================================
 
-    cylinderLiquid.scale.y = Math.max(
-      cylinderStartScaleRef.current *
-        (1 - progress),
-      0
-    )
+    cylinderLiquid.scale.y =
+      Math.max(
+        cylinderStartScaleRef.current *
+          (1 - progress),
+
+        0
+      )
+
 
     // =========================================
-    // CUSTOM RECEIVER LIQUID INCREASE
+    // RECEIVER LIQUID INCREASE
     // =========================================
 
     if (
@@ -427,14 +641,17 @@ const PourFromGraduatedCylinder = ({
       const otherLiquid =
         otherModelLiquidRef.current
 
-      otherLiquid.visible = true
+
+      otherLiquid.visible =
+        true
+
 
       otherLiquid.scale.y =
         otherModelStartScaleRef.current +
-        otherModelAmount * progress
+        otherModelAmount *
+          progress
 
-      // The upper liquid remains visible and uses
-      // the same opacity as the bottom liquid.
+
       if (
         otherModelRef.current ===
           conicalBeakerRef02?.current &&
@@ -445,18 +662,34 @@ const PourFromGraduatedCylinder = ({
       }
     }
 
+
     // =========================================
     // POUR FINISHED
     // =========================================
 
-    if (progress >= 1) {
-      cylinderLiquid.scale.y = 0
-      cylinderLiquid.visible = false
+    if (
+      progress >= 1
+    ) {
+      cylinderLiquid.scale.y =
+        0
 
-      pourLiquid.visible = false
-      pourLiquid.scale.y = 0
 
-      // Set receiver final amount.
+      cylinderLiquid.visible =
+        false
+
+
+      pourLiquid.visible =
+        false
+
+
+      pourLiquid.scale.y =
+        0
+
+
+      // =========================================
+      // RECEIVER FINAL AMOUNT
+      // =========================================
+
       if (
         otherModelRef?.current &&
         otherModelLiquidRef.current
@@ -464,12 +697,17 @@ const PourFromGraduatedCylinder = ({
         otherModelLiquidRef.current.visible =
           true
 
+
         otherModelLiquidRef.current.scale.y =
           otherModelStartScaleRef.current +
           otherModelAmount
       }
 
-      // Keep upper conical liquid visible.
+
+      // =========================================
+      // KEEP UPPER CONICAL LIQUID VISIBLE
+      // =========================================
+
       if (
         otherModelRef?.current ===
           conicalBeakerRef02?.current &&
@@ -479,58 +717,80 @@ const PourFromGraduatedCylinder = ({
           true
       }
 
-      // Run finish logic once.
-      if (!isPourFinishedRef.current) {
-        isPourFinishedRef.current = true
 
-        console.log(
-          "Graduated cylinder pouring finished"
-        )
+      // =========================================
+      // FINISH LOGIC
+      // =========================================
+
+      if (
+        !isPourFinishedRef.current
+      ) {
+        isPourFinishedRef.current =
+          true
+
 
         if (
           selectedLesson === 13 &&
           lessonStep === 3.5
         ) {
-          setLessonStep(3.6)
+          setLessonStep(
+            3.6
+          )
         }
+
 
         if (
           selectedLesson === 14 &&
           lessonStep === 13
         ) {
-          setLessonStep(14)
+          setLessonStep(
+            14
+          )
         }
+
 
         if (
           selectedLesson === 14 &&
           lessonStep === 8
         ) {
-          setLessonStep(9)
+          setLessonStep(
+            9
+          )
         }
+
 
         if (
           selectedLesson === 10 &&
           lessonStep === 23
         ) {
-          setLessonStep(24)
+          setLessonStep(
+            24
+          )
         }
+
 
         if (
           selectedLesson === 10 &&
           lessonStep === 30
         ) {
-          setLessonStep(31)
+          setLessonStep(
+            31
+          )
         }
+
 
         if (
           selectedLesson === 10 &&
           lessonStep === 37
         ) {
-          setLessonStep(38)
+          setLessonStep(
+            38
+          )
         }
       }
     }
   })
+
 
   // =============================================
   // OLD FillLiquidBeaker SYSTEM
@@ -542,6 +802,7 @@ const PourFromGraduatedCylinder = ({
     isPouring &&
     isPourFullyScaled
 
+
   return (
     <>
       {!otherModelRef && (
@@ -550,43 +811,62 @@ const PourFromGraduatedCylinder = ({
             "main-testube-01" &&
             canFillTestTube && (
               <FillLiquidBeaker
-                modelRef={testube01Ref}
+                modelRef={
+                  testube01Ref
+                }
                 amount={20}
                 color="#f3f4f6"
-                isPouring={canFillTestTube}
+                isPouring={
+                  canFillTestTube
+                }
               />
             )}
+
 
           {selectedLeftHand?.name ===
             "main-testube-02" &&
             canFillTestTube && (
               <FillLiquidBeaker
-                modelRef={testube02Ref}
+                modelRef={
+                  testube02Ref
+                }
                 amount={50}
                 color="#f3f4f6"
-                isPouring={canFillTestTube}
+                isPouring={
+                  canFillTestTube
+                }
               />
             )}
+
 
           {selectedLeftHand?.name ===
             "main-testube-03" &&
             canFillTestTube && (
               <FillLiquidBeaker
-                modelRef={testube03Ref}
+                modelRef={
+                  testube03Ref
+                }
                 amount={50}
                 color="#f3f4f6"
-                isPouring={canFillTestTube}
+                isPouring={
+                  canFillTestTube
+                }
               />
             )}
+
 
           {selectedLeftHand?.name ===
             "boiliing-tube-01" &&
             canFillTestTube && (
               <FillLiquidBeaker
-                modelRef={boilingTube01Ref}
+                modelRef={
+                  boilingTube01Ref
+                }
                 amount={0.6}
                 color="#f3f4f6"
-                isPouring={canFillTestTube}
+                isPouring={
+                  canFillTestTube
+                }
               />
             )}
         </>

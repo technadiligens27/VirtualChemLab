@@ -91,7 +91,7 @@ const ClickObject = () => {
     kettleRef,pipetteRef,iodobutaneBottleRef,
     bromobutaneBottleRef,chlorobutaneBottleRef,volumetricPipetteRef,
     volumetricRef,volumetricBung,phenopthalineBottleRef,
-    sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,
+    sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,conicalFlask02OriginalStateRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,graduatedPipetteRef,
     conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef
   } = useContext(ModelContext)
@@ -766,7 +766,7 @@ const ClickObject = () => {
     const handData = getHandData(hand)
 
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
-      if(![14,24,50,69,93,97,113,120,126,132,140,146].includes(lessonStep)){
+      if(![14,24,33,50,69,93,97,113,120,126,132,140,146].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }
@@ -834,6 +834,7 @@ const ClickObject = () => {
     }
     if (handData.name === "main-graduated-cylinder" && selectedLesson === 14 && lessonStep === 24) {
       setLessonStep(25)
+      setSelectedLesson(14.1)
     }
     if (handData.name === "main-graduated-cylinder" && selectedLesson === 13 && lessonStep === 3.7) {
       setLessonStep(4)
@@ -1059,7 +1060,9 @@ const ClickObject = () => {
      if (handData.name === "main-Conical-Flask-02" && selectedLesson===14.3 && lessonStep ===113) {
       setLessonStep(114)
     }
-
+    if (handData.name === "main-Conical-Flask-02" && selectedLesson===14.3 && lessonStep ===97) {
+      setLessonStep(98)
+    }
     if ( handData.name === "main-testube-01" && isWeighTestube) {
 
       if (lessonStep === 17 && selectedLesson === 8) {
@@ -1187,7 +1190,7 @@ const ClickObject = () => {
       setSelectedObject(null)
       return
     }
-    if([14,14.1,14.2,14.3].includes(selectedLesson) && objectName==="mainMassBalance"){
+    if([14,14.1,14.2,14.3].includes(selectedLesson) && ["mainMassBalance","volumetricPipetteRef","main-buirette"].includes(objectName)){
       setSelectedObject(null)
       return
     }
@@ -1720,7 +1723,25 @@ const clickableObjects = selectableObjects
     return true
   }
 
+  const specialHandObjectCases = (hand)=>{
+    if(selectedLesson==14.3 && lessonStep==86 && selectedObject.name==="main-Conical-Flask-02"){
+      return {
+        hand,
+        name: selectedObject.name,
+        ref: selectedObject.ref,
+        originalParent: conicalFlask02OriginalStateRef.current.parent,
+        originalPosition: conicalFlask02OriginalStateRef.current.position.clone(),
+        originalRotation: conicalFlask02OriginalStateRef.current.rotation.clone(),
+      }
+    }
+
+  }
+
   const createHandObjectData = (hand) => {
+
+    const specialCase = specialHandObjectCases(hand)
+    if(specialCase) return specialCase
+
     return {
       hand,
       name: selectedObject.name,
@@ -3747,8 +3768,8 @@ useEffect(()=>{
 
   const advanceNextStep = ()=>{
     if(selectedLesson==14.3 && lessonStep==97){
-      setLessonStep(98)
       setIsModelCentre(false)
+      setIsClampTestube(false)
     }
 
     if(selectedLesson==14.3 && lessonStep == 106){
@@ -3796,7 +3817,7 @@ useEffect(()=>{
         if([14.3].includes(selectedLesson) && [97].includes(lessonStep)){
           return(
             <>
-              <button onClick={advanceNextStep}>
+              <button onClick={()=>{keepBackOnTable("left");advanceNextStep()}}>
                 Keep Back On Table
               </button>
               <button>
@@ -4658,11 +4679,11 @@ const placeConicalBung = ()=>{
   conicalBungRef.current.visible=true
 }
 
-useEffect(()=>{
-  if(selectedLesson==14.3 && lessonStep==87){
-    setIsClampTestube(false)
-  }
-},[selectedLesson,lessonStep])
+// useEffect(()=>{
+//   if(selectedLesson==14.3 && lessonStep==87){
+//     setIsClampTestube(false)
+//   }
+// },[selectedLesson,lessonStep])
 
 const removeConicalBung=()=>{
   if(selectedLesson===14 && lessonStep===18){
@@ -4879,6 +4900,7 @@ const handleAddFunnelMode = () => {
 
 const handleSeparatingFunnelBung = ()=>{
   separatingFunnelBungRef.current.visible = true
+  console.log("separatingFunnelBungRef.current.visible:",separatingFunnelBungRef.current.visible)
   setIsAddFunnelToMode(false)
 
   if(selectedLesson==14.1 && lessonStep===40){

@@ -1,5 +1,4 @@
 import {
-  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -20,7 +19,6 @@ import {
   InteractionContext,
 } from "../../../Contexts/InteractionContext/InteractionContext"
 
-const SCALE_EPSILON = 0.001
 
 const PlaceModelCentre = ({
   modelRef,
@@ -32,16 +30,23 @@ const PlaceModelCentre = ({
   modelXScale = 1.3,
   modelYScale = 1,
   modelZScale = 1.3,
-  hand
+
+  hand,
 }) => {
   const {
     balancePositionRef,
-  } = useContext(ModelContext)
+  } = useContext(
+    ModelContext
+  )
+
 
   const {
     setSelectedRightHand,
     setSelectedLeftHand,
-  } = useContext(InteractionContext)
+  } = useContext(
+    InteractionContext
+  )
+
 
   const {
     selectedLesson,
@@ -51,73 +56,35 @@ const PlaceModelCentre = ({
     MainGuidelineContext
   )
 
+
+  // =============================================
+  // ORIGINAL TRANSFORM
+  // =============================================
+
   const originalTransformRef =
     useRef(null)
 
-  const liquidStatesRef =
-    useRef([])
-
-  const animationFrameRef =
-    useRef(null)
 
   // =============================================
-  // CHECK WHETHER LIQUID HAS A NON-ZERO SCALE
+  // KEEP LATEST LESSON / STEP
   // =============================================
 
-  const hasVisibleScale = useCallback(
-    (object) => {
-      if (!object) {
-        return false
-      }
+  const latestLessonRef =
+    useRef(selectedLesson)
 
-      return (
-        Math.abs(object.scale.x) >
-          SCALE_EPSILON &&
-        Math.abs(object.scale.y) >
-          SCALE_EPSILON &&
-        Math.abs(object.scale.z) >
-          SCALE_EPSILON
-      )
-    },
-    []
-  )
+  const latestLessonStepRef =
+    useRef(lessonStep)
+
+
+  latestLessonRef.current =
+    selectedLesson
+
+  latestLessonStepRef.current =
+    lessonStep
+
 
   // =============================================
-  // APPLY SAVED LIQUID VISIBILITY
-  // =============================================
-
-  const applyLiquidVisibility =
-    useCallback(() => {
-      liquidStatesRef.current.forEach(
-        ({
-          object,
-          shouldRemainVisible,
-        }) => {
-          if (!object) {
-            return
-          }
-
-          const liquidHasScale =
-            hasVisibleScale(object)
-
-          /*
-           * The liquid is visible only if:
-           *
-           * 1. It was originally visible.
-           * 2. Its original scale was above zero.
-           * 3. Its current scale is still above zero.
-           */
-          object.visible =
-            shouldRemainVisible &&
-            liquidHasScale
-
-          object.updateMatrixWorld(true)
-        }
-      )
-    }, [hasVisibleScale])
-
-  // =============================================
-  // LESSON STEPS — LESSON 14.1
+  // LESSON STEPS
   // =============================================
 
   useEffect(() => {
@@ -128,6 +95,7 @@ const PlaceModelCentre = ({
       setLessonStep(43)
     }
 
+
     if (
       selectedLesson === 14.1 &&
       lessonStep === 60
@@ -135,30 +103,39 @@ const PlaceModelCentre = ({
       setLessonStep(61)
     }
 
+
     if (
       selectedLesson === 14.2 &&
       lessonStep === 83
     ) {
       setLessonStep(84)
-      setSelectedLeftHand(null)
+
+      setSelectedLeftHand(
+        null
+      )
     }
+
 
     if (
       selectedLesson === 14.3 &&
       lessonStep === 98
     ) {
       setLessonStep(99)
-      setSelectedLeftHand(null)
-    }    
 
+      setSelectedLeftHand(
+        null
+      )
+    }
   }, [
     selectedLesson,
     lessonStep,
     setLessonStep,
+    setSelectedLeftHand,
   ])
 
+
   // =============================================
-  // LESSON STEPS — LESSON 13
+  // LESSON 13
   // =============================================
 
   useEffect(() => {
@@ -168,40 +145,13 @@ const PlaceModelCentre = ({
     ) {
       setLessonStep(13)
 
-      setSelectedRightHand(null)
-      setSelectedLeftHand(null)
-
-      /*
-       * Hand-component cleanup may run after
-       * removing the object from the hand.
-       * Reapply liquid visibility afterward.
-       */
-      animationFrameRef.current =
-        requestAnimationFrame(() => {
-          applyLiquidVisibility()
-
-          animationFrameRef.current =
-            requestAnimationFrame(() => {
-              applyLiquidVisibility()
-
-              animationFrameRef.current =
-                null
-            })
-        })
-    }
-
-    return () => {
-      if (
-        animationFrameRef.current !==
+      setSelectedRightHand(
         null
-      ) {
-        cancelAnimationFrame(
-          animationFrameRef.current
-        )
+      )
 
-        animationFrameRef.current =
-          null
-      }
+      setSelectedLeftHand(
+        null
+      )
     }
   }, [
     selectedLesson,
@@ -209,11 +159,11 @@ const PlaceModelCentre = ({
     setLessonStep,
     setSelectedRightHand,
     setSelectedLeftHand,
-    applyLiquidVisibility,
   ])
 
+
   // =============================================
-  // PLACE MODEL AT CENTRE POSITION
+  // PLACE MODEL AT CENTRE
   // =============================================
 
   useLayoutEffect(() => {
@@ -223,6 +173,7 @@ const PlaceModelCentre = ({
     const balancePosition =
       balancePositionRef?.current
 
+
     if (
       !model ||
       !balancePosition
@@ -230,12 +181,14 @@ const PlaceModelCentre = ({
       return
     }
 
-    // ===========================================
-    // SAVE ORIGINAL MODEL TRANSFORM
-    // ===========================================
+
+    // =============================================
+    // SAVE ORIGINAL TRANSFORM
+    // =============================================
 
     originalTransformRef.current = {
-      parent: model.parent,
+      parent:
+        model.parent,
 
       position:
         model.position.clone(),
@@ -247,88 +200,39 @@ const PlaceModelCentre = ({
         model.scale.clone(),
     }
 
-    // ===========================================
-    // SAVE LIQUID STATES
-    // ===========================================
 
-    const liquidStates = []
-
-    model.traverse((child) => {
-      const childName =
-        child.name?.toLowerCase() ||
-        ""
-
-      if (
-        !childName.includes("liquid")
-      ) {
-        return
-      }
-
-      const liquidHasScale =
-        hasVisibleScale(child)
-
-      liquidStates.push({
-        object: child,
-
-        originalVisible:
-          child.visible,
-
-        originalScale:
-          child.scale.clone(),
-
-        /*
-         * A hidden or zero-scale liquid must
-         * remain hidden when the model moves.
-         */
-        shouldRemainVisible:
-          child.visible &&
-          liquidHasScale,
-      })
-
-      if (!liquidHasScale) {
-        child.visible = false
-      }
-    })
-
-    liquidStatesRef.current =
-      liquidStates
-
-    // ===========================================
-    // GET TARGET WORLD POSITION
-    // ===========================================
+    // =============================================
+    // TARGET WORLD POSITION
+    // =============================================
 
     const targetWorldPosition =
       balancePosition.getWorldPosition(
         new THREE.Vector3()
       )
 
-    // ===========================================
-    // GET TARGET PARENT
-    // ===========================================
 
     const targetParent =
       balancePosition.parent
 
-    // ===========================================
-    // MOVE MODEL TO TARGET PARENT
-    // ===========================================
+
+    // =============================================
+    // ATTACH TO TARGET PARENT
+    // =============================================
 
     if (targetParent) {
-      targetParent.attach(model)
+      targetParent.attach(
+        model
+      )
     }
 
-    /*
-     * Reparenting can expose children that
-     * were previously hidden by a parent.
-     */
-    applyLiquidVisibility()
 
-    // ===========================================
-    // CONVERT TARGET POSITION TO LOCAL POSITION
-    // ===========================================
+    // =============================================
+    // CONVERT WORLD POSITION TO LOCAL
+    // =============================================
 
     let targetLocalPosition =
       targetWorldPosition.clone()
+
 
     if (targetParent) {
       targetLocalPosition =
@@ -337,9 +241,10 @@ const PlaceModelCentre = ({
         )
     }
 
-    // ===========================================
-    // POSITION MODEL
-    // ===========================================
+
+    // =============================================
+    // POSITION
+    // =============================================
 
     model.position.set(
       targetLocalPosition.x +
@@ -352,9 +257,10 @@ const PlaceModelCentre = ({
         modelZOffset
     )
 
-    // ===========================================
-    // SCALE MODEL
-    // ===========================================
+
+    // =============================================
+    // SCALE
+    // =============================================
 
     model.scale.set(
       modelXScale,
@@ -362,50 +268,31 @@ const PlaceModelCentre = ({
       modelZScale
     )
 
-    model.updateMatrixWorld(true)
 
-    /*
-     * Apply twice so delayed cleanup from a
-     * hand component cannot expose the liquid.
-     */
-    animationFrameRef.current =
-      requestAnimationFrame(() => {
-        applyLiquidVisibility()
-
-        animationFrameRef.current =
-          requestAnimationFrame(() => {
-            applyLiquidVisibility()
-
-            animationFrameRef.current =
-              null
-          })
-      })
-
-    console.log(
-      "✅ Model placed at centre position"
+    model.updateMatrixWorld(
+      true
     )
 
-    // ===========================================
-    // CLEANUP / UNMOUNT
-    // ===========================================
+
+    // =============================================
+    // CLEANUP
+    // =============================================
 
     return () => {
-      
-
+      // Do NOT restore model at lesson 14.3 step 97
       if (
-        animationFrameRef.current !==
-        null
+        latestLessonRef.current ===
+          14.3 &&
+        latestLessonStepRef.current ===
+          98
       ) {
-        cancelAnimationFrame(
-          animationFrameRef.current
-        )
-
-        animationFrameRef.current =
-          null
+        return
       }
+
 
       const original =
         originalTransformRef.current
+
 
       if (
         !model ||
@@ -414,13 +301,19 @@ const PlaceModelCentre = ({
         return
       }
 
+
       // =========================================
-      // RETURN MODEL TO ORIGINAL PARENT
+      // RETURN TO ORIGINAL PARENT
       // =========================================
 
-      if (original.parent) {
-        original.parent.add(model)
+      if (
+        original.parent
+      ) {
+        original.parent.add(
+          model
+        )
       }
+
 
       // =========================================
       // RESTORE ORIGINAL TRANSFORM
@@ -438,40 +331,18 @@ const PlaceModelCentre = ({
         original.scale
       )
 
-      // =========================================
-      // RESTORE LIQUID VISIBILITY SAFELY
-      // =========================================
 
-      liquidStatesRef.current.forEach(
-        ({
-          object,
-          originalVisible,
-        }) => {
-          if (!object) {
-            return
-          }
-
-          /*
-           * Never make a zero-scale liquid
-           * visible during cleanup.
-           */
-          object.visible =
-            originalVisible &&
-            hasVisibleScale(object)
-
-          object.updateMatrixWorld(true)
-        }
+      model.updateMatrixWorld(
+        true
       )
 
-      model.updateMatrixWorld(true)
 
-      liquidStatesRef.current = []
+      // Liquid visibility is intentionally
+      // NOT changed here.
+
+
       originalTransformRef.current =
         null
-
-      console.log(
-        "✅ Model returned to original position"
-      )
     }
   }, [
     modelRef,
@@ -484,10 +355,8 @@ const PlaceModelCentre = ({
     modelXScale,
     modelYScale,
     modelZScale,
-
-    hasVisibleScale,
-    applyLiquidVisibility,
   ])
+
 
   return null
 }

@@ -11,6 +11,7 @@ import {
 import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const PourDropletsFromModel = ({
   modelRef,
@@ -39,6 +40,8 @@ const PourDropletsFromModel = ({
   } = useContext(
     MainGuidelineContext
   )
+
+  const {setIsChlorideIonReaction} = useContext(InteractionContext)
 
   const dropletsRef =
     useRef([])
@@ -370,7 +373,11 @@ const PourDropletsFromModel = ({
       hasAdvancedRef.current = true
       setLessonStep(152)
     }
-
+    if (hasFinished &&!hasAdvancedRef.current &&selectedLesson === 14.4 && lessonStep === 157) {
+      hasAdvancedRef.current = true
+      setLessonStep(158);
+      setIsChlorideIonReaction(true)
+    }
   })
 
 

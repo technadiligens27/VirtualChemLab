@@ -37,7 +37,6 @@ export const chlorinationGuidelineData = [
       "Stop when the volume reaches 35 cm³.",
       "Return the acid bottle to the table.",
       "Pour the complete 35 cm³ into the same conical flask.",
-      "Return the measuring cylinder to the table.",
     ],
 
     image: "./measureHydrochloricAcid.png",
@@ -120,12 +119,10 @@ export const chlorinationGuidelineData = [
     implementationSteps: [
       "Replace the bung securely.",
       "Gently swirl the conical flask.",
-      "Remove the bung periodically.",
-      "Allow the accumulated pressure to escape.",
-      "Replace the bung before swirling again.",
-      "Repeat the swirling and pressure-release process.",
-      "Continue until the reaction timer finishes.",
-      "Allow the mixture to form two liquid layers.",
+      "Remove the bung occasionally to release pressure.",
+      "Replace the bung and continue swirling.",
+      "Repeat until the reaction timer finishes.",
+      "Allow the mixture to settle into two liquid layers.",
     ],
 
     image: "./continueReactionMixing.png",

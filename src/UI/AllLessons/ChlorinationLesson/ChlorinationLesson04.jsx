@@ -25,17 +25,10 @@ const ChlorinationLesson04 = () => {
     setIsModelCentre} = useContext(InteractionContext)
 
   const {
-    graduatedBeakerRef,
-    conicalBeakerRef02,
-    conicalBeakerRef,
-
-    seperatingFunnelRef,
-    pipetteRef,
-
-    gogglesRef,
+    graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,pipetteRef,gogglesRef,
     gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
     gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,
-    digitalBalanceRef,mainDropperRef,graduatedPipetteRef
+    digitalBalanceRef,mainDropperRef,graduatedPipetteRef,conicalFlask02OriginalStateRef
   } = useContext(ModelContext)
 
   useEffect(()=>{
@@ -119,6 +112,7 @@ const ChlorinationLesson04 = () => {
     }
     
   },[selectedLesson,lessonStep])
+
 
 
 

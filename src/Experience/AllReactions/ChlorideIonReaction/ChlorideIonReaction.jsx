@@ -13,18 +13,30 @@ import * as THREE from "three"
 const ChlorideIonReaction = ({
   modelRef,
 
-  startHeight = 2,
-  fallDistance = 2,
+  // Delay before the whole reaction starts
+  startDelay = 0,
 
-  fallSpeed = 1,
+  // How far above the final level
+  // the powder starts
+  startHeight = 1,
+
+  // Final Y level where powder settles
+  finalYLevel = -1.2,
+
+  // Small random difference in final height
+  finalHeightRandomness = 0.3,
+
+  fallSpeed = 0.3,
 
   powderColor = "#ffffff",
-  endOpacity = 1,
+  endOpacity = 0.8,
 
-  powderScale = 1,
+  powderScale = 0.7,
 
+  // Random delay for each powder particle
   randomDelay = 1,
-  sidewaysAmount = 0.15,
+
+  sidewaysAmount = 0,
 }) => {
   const powdersRef =
     useRef([])
@@ -32,9 +44,9 @@ const ChlorideIonReaction = ({
   const elapsedTimeRef =
     useRef(0)
 
-
+  console.log("Chloride Ion Reaction")
   // =========================================
-  // INITIALIZE POWDER
+  // INITIALIZE
   // =========================================
 
   useEffect(() => {
@@ -61,7 +73,7 @@ const ChlorideIonReaction = ({
 
 
       // =========================================
-      // CLONE MATERIAL
+      // MATERIAL
       // =========================================
 
       if (child.material) {
@@ -84,7 +96,7 @@ const ChlorideIonReaction = ({
 
 
       // =========================================
-      // SAVE ORIGINAL DATA
+      // ORIGINAL VALUES
       // =========================================
 
       const originalPosition =
@@ -95,16 +107,37 @@ const ChlorideIonReaction = ({
 
 
       // =========================================
-      // START ABOVE ORIGINAL POSITION
+      // RANDOM FINAL HEIGHT
       // =========================================
 
-      child.position.y =
-        originalPosition.y +
+      const randomFinalOffset =
+        (
+          Math.random() -
+          0.5
+        ) *
+        finalHeightRandomness
+
+
+      const targetY =
+        finalYLevel +
+        randomFinalOffset
+
+
+      // =========================================
+      // START POSITION
+      // =========================================
+
+      const startY =
+        targetY +
         startHeight
 
 
+      child.position.y =
+        startY
+
+
       // =========================================
-      // APPLY SCALE
+      // SCALE
       // =========================================
 
       child.scale.set(
@@ -120,12 +153,17 @@ const ChlorideIonReaction = ({
 
 
       // =========================================
-      // RANDOM SETTINGS
+      // RANDOM DELAY
       // =========================================
 
       const delay =
         Math.random() *
         randomDelay
+
+
+      // =========================================
+      // RANDOM SIDEWAYS POSITION
+      // =========================================
 
       const randomX =
         (
@@ -133,6 +171,7 @@ const ChlorideIonReaction = ({
           0.5
         ) *
         sidewaysAmount
+
 
       const randomZ =
         (
@@ -150,6 +189,8 @@ const ChlorideIonReaction = ({
 
         startPosition:
           child.position.clone(),
+
+        targetY,
 
         delay,
 
@@ -200,12 +241,15 @@ const ChlorideIonReaction = ({
         }
       )
 
+
       powdersRef.current =
         []
     }
   }, [
     modelRef,
     startHeight,
+    finalYLevel,
+    finalHeightRandomness,
     powderColor,
     endOpacity,
     powderScale,
@@ -223,11 +267,29 @@ const ChlorideIonReaction = ({
       delta
 
 
+    // =========================================
+    // GLOBAL START DELAY
+    // =========================================
+
+    if (
+      elapsedTimeRef.current <
+      startDelay
+    ) {
+      return
+    }
+
+
+    const reactionTime =
+      elapsedTimeRef.current -
+      startDelay
+
+
     powdersRef.current.forEach(
       (powder) => {
         const {
           object,
           startPosition,
+          targetY,
           delay,
           randomX,
           randomZ,
@@ -235,11 +297,11 @@ const ChlorideIonReaction = ({
 
 
         // =========================================
-        // WAIT FOR RANDOM DELAY
+        // RANDOM PARTICLE DELAY
         // =========================================
 
         if (
-          elapsedTimeRef.current <
+          reactionTime <
           delay
         ) {
           return
@@ -247,7 +309,7 @@ const ChlorideIonReaction = ({
 
 
         // =========================================
-        // INCREASE PROGRESS
+        // PROGRESS
         // =========================================
 
         powder.progress +=
@@ -264,32 +326,35 @@ const ChlorideIonReaction = ({
 
 
         // =========================================
-        // FALL DOWN
+        // FALL TO COMMON FINAL LEVEL
         // =========================================
 
         object.position.y =
-          startPosition.y -
-          (
-            fallDistance *
+          THREE.MathUtils.lerp(
+            startPosition.y,
+            targetY,
             progress
           )
 
 
         // =========================================
-        // RANDOM SIDEWAYS MOVEMENT
+        // SMALL RANDOM SIDEWAYS MOVEMENT
         // =========================================
 
         object.position.x =
-          startPosition.x +
-          (
-            randomX *
+          THREE.MathUtils.lerp(
+            startPosition.x,
+            startPosition.x +
+              randomX,
             progress
           )
 
+
         object.position.z =
-          startPosition.z +
-          (
-            randomZ *
+          THREE.MathUtils.lerp(
+            startPosition.z,
+            startPosition.z +
+              randomZ,
             progress
           )
 

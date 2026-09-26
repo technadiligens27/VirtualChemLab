@@ -70,6 +70,7 @@ import PourDropletsFromModel from "./PourDropletsFromModel/PourDropletsFromModel
 import FillConicalBeaker02 from "./FillConicalBeaker02Ref/FillConicalBeaker02Ref";
 import DropperPlaced from "./DropperPlaced/DropperPlaced";
 import PlaceModelInBeaker from "./PlaceModelInBeaker/PlaceModelInBeaker";
+import ChlorideIonReaction from "../AllReactions/ChlorideIonReaction/ChlorideIonReaction";
 
 const Interaction = () => {
   const {
@@ -83,7 +84,7 @@ const Interaction = () => {
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
-    isAddWarmWater,isPlaceModelInBeaker
+    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -323,8 +324,8 @@ useEffect(() => {
  
       {selectedLesson==13 && isClampTestube && <ClampModel modelRef={boilingTube01Ref} modelScale={0.8} hand={"left"}/>}
       {selectedLesson==14.1 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} hand={"right"}/>}
-      {selectedLesson==14.2 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />}
-      {selectedLesson==14.3 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />}
+      {[14.2,14.3].includes(selectedLesson) && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />}
+      {/* {selectedLesson==14.3 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />} */}
 
       { isInvertCylinder && (<InvertCylinderModel/>)} 
       
@@ -379,33 +380,45 @@ useEffect(() => {
       
       />)}
 
-      {selectedLesson==14.1 && lessonStep ==53 && (<ChlorinationSeparatingFunnelColorChange 
+      {/* {selectedLesson==14.1 && lessonStep ==53 && (<ChlorinationSeparatingFunnelColorChange 
       modelRef={seperatingFunnelRef}
       upperLiquidColor = {"#DDE6A6"}
-      bottomLiquidColor = {"#DDE6A6"}
-      
-      />)}
-      {selectedLesson==14.1 && lessonStep >=58 && (<ChlorinationSeparatingFunnelColorChange 
+      bottomLiquidColor = {"#DDE6A6"}      
+      />)} */}
+
+      {/* {selectedLesson==14.1 && lessonStep >=53 && lessonStep<58 && (<ChlorinationSeparatingFunnelColorChange 
       modelRef={seperatingFunnelRef}
       upperLiquidColor = {"#F2C230"}
       bottomLiquidColor = {"#8FD3F4"}
       
-      />)}
-      {selectedLesson==14.2 && lessonStep >=73 && (<ChlorinationSeparatingFunnelColorChange 
-      modelRef={seperatingFunnelRef}
-      upperLiquidColor = {"#F4D35E"}
-      bottomLiquidColor = {"#DCEFF7"}
-      liquidOpacity = {0.35}
-      
-      />)}
-      {selectedLesson==14.2 && lessonStep >=82 && (<ChlorinationSeparatingFunnelColorChange 
-      modelRef={seperatingFunnelRef}
-      upperLiquidColor = {"#DDE6A6"}
-      bottomLiquidColor = {"#DDE6A6"}
-      liquidOpacity = {0.35}
-      
-      />)}   
+      />)}       */}
 
+        {selectedLesson === 14.1 &&
+          lessonStep > 53 &&
+          lessonStep !== 56 && (
+            <ChlorinationSeparatingFunnelColorChange
+              modelRef={seperatingFunnelRef}
+              upperLiquidColor="#F2C230"
+              bottomLiquidColor="#8FD3F4"
+              colorChangeDelay={0}
+              colorChangeDuration={0.5}
+            />
+        )}
+        
+
+      {selectedLesson === 14.2 &&
+        lessonStep >= 73 &&
+        lessonStep < 82 &&
+        lessonStep !== 76 && (
+          <ChlorinationSeparatingFunnelColorChange
+            modelRef={seperatingFunnelRef}
+            upperLiquidColor="#F4D35E"
+            bottomLiquidColor="#DCEFF7"
+            liquidOpacity={0.35}
+            colorChangeDelay={0}
+            colorChangeDuration={0.5}
+          />
+      )}
       {
         selectedLesson==14.3 && isPotassiumTransferred && lessonStep<106.3 && <ShowPowderBottomOfModel modelRef={conicalBeakerRef02}/>
       }   
@@ -472,13 +485,13 @@ useEffect(() => {
         isMantleTurnedOn && selectedLesson==14.3 && <HeatingMantleSurfaceColourChange/>
       }
       {
-        selectedLesson==14.3 && lessonStep==109 && <FillThermometer amount={0.75} startDelay={1}/>
+        selectedLesson==14.3 && lessonStep==109 && <FillThermometer amount={0.75} startDelay={0.5} fillSpeed={1} startingAmount={0.5}/>
       }
       {
-        selectedLesson==14.3 && lessonStep==109 && <DistillationGasAnimation/>
+        selectedLesson==14.3 && lessonStep==109 && <DistillationGasAnimation startDelay = {3000}/>
       }
       {
-        selectedLesson==14.3 && lessonStep==109 && <PourDropletsFromModel modelRef={condensorRef} loopTimes={5}/>
+        selectedLesson==14.3 && lessonStep==109 && <PourDropletsFromModel startDelay = {6} modelRef={condensorRef} loopTimes={5}/>
       }      
       {selectedLesson==14.3 && lessonStep>=109 && lessonStep<112 && (
         <FillConicalBeaker02 modelRef={conicalBeakerRef02}  amount={0.4}  colorUpper="#ffffff" colorBottom="#ffffff"/>
@@ -543,7 +556,9 @@ useEffect(() => {
         )
       }
       {isPlaceModelInBeaker && <PlaceModelInBeaker modelRef={testube02Ref} yOffset={0.7}/>}
- 
+      
+      {selectedLeftHand?.name==="main-testube-02" && isChlorideIonReaction && <ChlorideIonReaction modelRef={testube02Ref}/>}
+
     </>
   );
 };

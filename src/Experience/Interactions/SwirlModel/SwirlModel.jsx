@@ -2,6 +2,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 
 import {
@@ -15,6 +16,11 @@ import {
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 import ChlorinationSeparatingFunnelColorChange from "../ChlorinationSeparatingFunnelColorChange/ChlorinationSeparatingFunnelColorChange"
+
+import {
+  ModelContext,
+} from "../../../Contexts/ModelContext/ModelContext"
+
 
 const SwirlModel = ({
   modelRef,
@@ -40,6 +46,27 @@ const SwirlModel = ({
     MainGuidelineContext
   )
 
+  const {
+    seperatingFunnelRef,
+  } = useContext(
+    ModelContext
+  )
+
+
+  // =========================================
+  // REACT SWIRL STATE
+  // =========================================
+
+  const [
+    isSwirling,
+    setIsSwirling,
+  ] = useState(false)
+
+
+  // =========================================
+  // ANIMATION REFS
+  // =========================================
+
   const isSwirlingRef =
     useRef(false)
 
@@ -61,6 +88,7 @@ const SwirlModel = ({
   const lessonAdvancedRef =
     useRef(false)
 
+
   const originalRotationRef =
     useRef({
       x: 0,
@@ -68,10 +96,16 @@ const SwirlModel = ({
       z: 0,
     })
 
+
   // Shared group containing every direct
   // child of the model.
   const allChildrenGroupRef =
     useRef(null)
+
+
+  // =========================================
+  // INITIALIZE
+  // =========================================
 
   useEffect(() => {
     const model =
@@ -79,18 +113,22 @@ const SwirlModel = ({
 
     if (!model) return
 
+
     originalRotationRef.current = {
       x: model.rotation.x,
       y: model.rotation.y,
       z: model.rotation.z,
     }
 
-    // Store every direct child.
-    // Nested children remain attached to
-    // their direct parents.
+
+    // =========================================
+    // STORE ORIGINAL CHILDREN
+    // =========================================
+
     const originalChildren = [
       ...model.children,
     ]
+
 
     const originalChildrenData =
       originalChildren.map(
@@ -108,14 +146,20 @@ const SwirlModel = ({
         })
       )
 
+
     model.updateWorldMatrix(
       true,
       true
     )
 
-    // Find the centre of all children.
+
+    // =========================================
+    // FIND SHARED CENTRE
+    // =========================================
+
     const bounds =
       new THREE.Box3()
+
 
     originalChildren.forEach(
       (child) => {
@@ -125,6 +169,7 @@ const SwirlModel = ({
       }
     )
 
+
     const sharedCentre =
       bounds.isEmpty()
         ? new THREE.Vector3()
@@ -132,29 +177,38 @@ const SwirlModel = ({
             new THREE.Vector3()
           )
 
-    // Convert the world-space centre
-    // into the model's local space.
+
     model.worldToLocal(
       sharedCentre
     )
 
+
+    // =========================================
+    // CREATE SHARED CHILD GROUP
+    // =========================================
+
     const allChildrenGroup =
       new THREE.Group()
 
+
     allChildrenGroup.name =
       "all-children-swirl-group"
+
 
     allChildrenGroup.position.copy(
       sharedCentre
     )
 
+
     model.add(
       allChildrenGroup
     )
 
-    // Attach every direct child to the
-    // same pivot while preserving its
-    // world transform.
+
+    // =========================================
+    // ATTACH ALL CHILDREN
+    // =========================================
+
     originalChildren.forEach(
       (child) => {
         allChildrenGroup.attach(
@@ -163,15 +217,23 @@ const SwirlModel = ({
       }
     )
 
+
     allChildrenGroupRef.current =
       allChildrenGroup
 
-    // Reset animation state.
-    swirlTimeRef.current = 0
 
-    completedSwirlsRef.current = 0
+    // =========================================
+    // RESET ANIMATION STATE
+    // =========================================
 
-    hasFinishedRef.current = false
+    swirlTimeRef.current =
+      0
+
+    completedSwirlsRef.current =
+      0
+
+    hasFinishedRef.current =
+      false
 
     isReturningAfterFinishRef.current =
       false
@@ -182,12 +244,20 @@ const SwirlModel = ({
     isSwirlingRef.current =
       false
 
+    setIsSwirling(false)
+
     timeSinceLastScrollRef.current =
       0
+
+
+    // =========================================
+    // CLEANUP
+    // =========================================
 
     return () => {
       const currentGroup =
         allChildrenGroupRef.current
+
 
       if (currentGroup) {
         originalChildrenData.forEach(
@@ -197,9 +267,11 @@ const SwirlModel = ({
             quaternion,
             scale,
           }) => {
-            // Restore the child directly
-            // under the original model.
-            model.add(child)
+            // Restore child directly
+            // under original model.
+            model.add(
+              child
+            )
 
             child.position.copy(
               position
@@ -215,11 +287,18 @@ const SwirlModel = ({
           }
         )
 
+
         currentGroup.removeFromParent()
       }
 
+
       allChildrenGroupRef.current =
         null
+
+      isSwirlingRef.current =
+        false
+
+      setIsSwirling(false)
     }
   }, [
     modelRef,
@@ -227,11 +306,19 @@ const SwirlModel = ({
     targetSwirls,
   ])
 
+
+  // =========================================
+  // MOUSE WHEEL
+  // =========================================
+
   useEffect(() => {
     const handleWheel = () => {
-      if (!modelRef?.current) {
+      if (
+        !modelRef?.current
+      ) {
         return
       }
+
 
       // Do not start swirling again after
       // the target has been completed.
@@ -242,12 +329,21 @@ const SwirlModel = ({
         return
       }
 
+
+      // =========================================
+      // START SWIRLING
+      // =========================================
+
       isSwirlingRef.current =
         true
+
+      setIsSwirling(true)
+
 
       timeSinceLastScrollRef.current =
         0
     }
+
 
     window.addEventListener(
       "wheel",
@@ -256,6 +352,7 @@ const SwirlModel = ({
         passive: true,
       }
     )
+
 
     return () => {
       window.removeEventListener(
@@ -268,72 +365,99 @@ const SwirlModel = ({
     useTargetSwirls,
   ])
 
+
+  // =========================================
+  // ANIMATION
+  // =========================================
+
   useFrame((_, delta) => {
     const model =
       modelRef?.current
 
+
     if (!model) return
+
 
     const allChildrenGroup =
       allChildrenGroupRef.current
 
-    // =====================================
+
+    // =========================================
     // SWIRLING
-    // =====================================
+    // =========================================
 
     if (
       isSwirlingRef.current &&
       !hasFinishedRef.current
     ) {
       swirlTimeRef.current +=
-        delta * swirlSpeed
+        delta *
+        swirlSpeed
+
 
       timeSinceLastScrollRef.current +=
         delta
 
+
       const angle =
         swirlTimeRef.current
 
-      // Swirl the main model.
-      // All children follow this rotation.
+
+      // =========================================
+      // SWIRL MAIN MODEL
+      // =========================================
+
       model.rotation.x =
         originalRotationRef.current.x +
         Math.sin(angle) *
           swirlAmount
+
 
       model.rotation.z =
         originalRotationRef.current.z +
         Math.cos(angle) *
           swirlAmount
 
-      // Apply the additional swirl to the
-      // shared group. All children move
-      // together, including both liquids,
-      // powder and glass meshes.
+
+      // =========================================
+      // SWIRL CHILD GROUP
+      // =========================================
+
       if (allChildrenGroup) {
         const childAngle =
           angle *
           liquidSwirlSpeed
 
+
         allChildrenGroup.rotation.x =
-          Math.sin(childAngle) *
+          Math.sin(
+            childAngle
+          ) *
           liquidSwirlAmount
 
+
         allChildrenGroup.rotation.z =
-          Math.cos(childAngle) *
+          Math.cos(
+            childAngle
+          ) *
           liquidSwirlAmount
       }
 
-      // ===================================
+
+      // =========================================
       // TARGET SWIRL MODE
-      // ===================================
+      // =========================================
 
       if (useTargetSwirls) {
         const completedSwirls =
           Math.floor(
             swirlTimeRef.current /
-              (Math.PI * 2)
+              (
+                Math.PI *
+                2
+              )
           )
+
 
         if (
           completedSwirls >
@@ -342,11 +466,13 @@ const SwirlModel = ({
           completedSwirlsRef.current =
             completedSwirls
 
+
           console.log(
             "Swirl completed:",
             completedSwirlsRef.current
           )
         }
+
 
         if (
           completedSwirlsRef.current >=
@@ -355,45 +481,62 @@ const SwirlModel = ({
           hasFinishedRef.current =
             true
 
+
           isSwirlingRef.current =
             false
 
+          setIsSwirling(false)
+
+
           isReturningAfterFinishRef.current =
             true
+
 
           console.log(
             `✅ ${targetSwirls} swirls completed`
           )
 
+
           console.log(
             "Returning to original rotation..."
           )
+
 
           return
         }
       }
 
-      // Stop when the user stops scrolling.
+
+      // =========================================
+      // STOP WHEN USER STOPS SCROLLING
+      // =========================================
+
       if (
         timeSinceLastScrollRef.current >=
         stopDelay
       ) {
         isSwirlingRef.current =
           false
+
+        setIsSwirling(false)
       }
+
 
       return
     }
 
-    // =====================================
+
+    // =========================================
     // RETURN MODEL
-    // =====================================
+    // =========================================
 
     const returnFactor =
       Math.min(
-        returnSpeed * delta,
+        returnSpeed *
+          delta,
         1
       )
+
 
     model.rotation.x +=
       (
@@ -402,12 +545,14 @@ const SwirlModel = ({
       ) *
       returnFactor
 
+
     model.rotation.y +=
       (
         originalRotationRef.current.y -
         model.rotation.y
       ) *
       returnFactor
+
 
     model.rotation.z +=
       (
@@ -416,9 +561,10 @@ const SwirlModel = ({
       ) *
       returnFactor
 
-    // =====================================
-    // RETURN ALL CHILDREN
-    // =====================================
+
+    // =========================================
+    // RETURN CHILDREN
+    // =========================================
 
     if (allChildrenGroup) {
       allChildrenGroup.rotation.x +=
@@ -428,12 +574,14 @@ const SwirlModel = ({
         ) *
         returnFactor
 
+
       allChildrenGroup.rotation.y +=
         (
           0 -
           allChildrenGroup.rotation.y
         ) *
         returnFactor
+
 
       allChildrenGroup.rotation.z +=
         (
@@ -443,32 +591,43 @@ const SwirlModel = ({
         returnFactor
     }
 
+
+    // =========================================
+    // DIFFERENCE FROM ORIGINAL ROTATION
+    // =========================================
+
     const xDifference =
       Math.abs(
         model.rotation.x -
-          originalRotationRef.current.x
+        originalRotationRef.current.x
       )
+
 
     const yDifference =
       Math.abs(
         model.rotation.y -
-          originalRotationRef.current.y
+        originalRotationRef.current.y
       )
+
 
     const zDifference =
       Math.abs(
         model.rotation.z -
-          originalRotationRef.current.z
+        originalRotationRef.current.z
       )
 
-    // =====================================
+
+    // =========================================
     // FULLY RETURNED
-    // =====================================
+    // =========================================
 
     if (
-      xDifference < 0.001 &&
-      yDifference < 0.001 &&
-      zDifference < 0.001
+      xDifference <
+        0.001 &&
+      yDifference <
+        0.001 &&
+      zDifference <
+        0.001
     ) {
       model.rotation.set(
         originalRotationRef.current.x,
@@ -476,8 +635,7 @@ const SwirlModel = ({
         originalRotationRef.current.z
       )
 
-      // Return all children exactly to
-      // their original shared rotation.
+
       if (allChildrenGroup) {
         allChildrenGroup.rotation.set(
           0,
@@ -486,6 +644,11 @@ const SwirlModel = ({
         )
       }
 
+
+      // =========================================
+      // TARGET SWIRLS FINISHED
+      // =========================================
+
       if (
         useTargetSwirls &&
         isReturningAfterFinishRef.current
@@ -493,156 +656,301 @@ const SwirlModel = ({
         isReturningAfterFinishRef.current =
           false
 
+
         console.log(
           "✅ Returned to original rotation"
         )
 
-        // Lesson 14 — Step 21.
+
+        // =========================================
+        // LESSON 14 — STEP 21
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14 &&
-          lessonStep === 21
+          selectedLesson ===
+            14 &&
+          lessonStep ===
+            21
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(22)
+          setLessonStep(
+            22
+          )
         }
 
-        // Lesson 12.1 — Step 32.
+
+        // =========================================
+        // LESSON 12.1 — STEP 32
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 12.1 &&
-          lessonStep === 32
+          selectedLesson ===
+            12.1 &&
+          lessonStep ===
+            32
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(33)
+          setLessonStep(
+            33
+          )
         }
 
-        // Lesson 12.1 — Step 38.
+
+        // =========================================
+        // LESSON 12.1 — STEP 38
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 12.1 &&
-          lessonStep === 38
+          selectedLesson ===
+            12.1 &&
+          lessonStep ===
+            38
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(39)
+          setLessonStep(
+            39
+          )
         }
 
-        // Lesson 14 — Step 17.
+
+        // =========================================
+        // LESSON 14 — STEP 17
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14 &&
-          lessonStep === 17
+          selectedLesson ===
+            14 &&
+          lessonStep ===
+            17
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(18)
+          setLessonStep(
+            18
+          )
         }
 
-        // Lesson 14 — Step 15.
+
+        // =========================================
+        // LESSON 14 — STEP 15
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14 &&
-          lessonStep === 15
+          selectedLesson ===
+            14 &&
+          lessonStep ===
+            15
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(16)
+          setLessonStep(
+            16
+          )
         }
 
-        // Lesson 14.1 — Step 32.
+
+        // =========================================
+        // LESSON 14.1 — STEP 32
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14.1 &&
-          lessonStep === 32
+          selectedLesson ===
+            14.1 &&
+          lessonStep ===
+            32
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(33)
+          setLessonStep(
+            33
+          )
         }
 
-        // Lesson 14.1 — Step 53.
+
+        // =========================================
+        // LESSON 14.1 — STEP 53
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14.1 &&
-          lessonStep === 53
+          selectedLesson ===
+            14.1 &&
+          lessonStep ===
+            53
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(53.1)
+          setLessonStep(
+            53.1
+          )
         }
 
-        // Lesson 14.1 — Step 56.
+
+        // =========================================
+        // LESSON 14.1 — STEP 56
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14.1 &&
-          lessonStep === 56
+          selectedLesson ===
+            14.1 &&
+          lessonStep ===
+            56
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(56.1)
+          setLessonStep(
+            56.1
+          )
         }
 
-        // Lesson 14.2 — Step 72.
+
+        // =========================================
+        // LESSON 14.2 — STEP 72
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14.2 &&
-          lessonStep === 72
+          selectedLesson ===
+            14.2 &&
+          lessonStep ===
+            72
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(73)
+          setLessonStep(
+            73
+          )
         }
 
-        // Lesson 14.2 — Step 76.
+
+        // =========================================
+        // LESSON 14.2 — STEP 76
+        // =========================================
+
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14.2 &&
-          lessonStep === 76
+          selectedLesson ===
+            14.2 &&
+          lessonStep ===
+            76
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(77)
+          setLessonStep(
+            77
+          )
         }
+
+
+        // =========================================
+        // LESSON 14.3 — STEP 92
+        // =========================================
 
         if (
           !lessonAdvancedRef.current &&
-          selectedLesson === 14.3 &&
-          lessonStep === 92
+          selectedLesson ===
+            14.3 &&
+          lessonStep ===
+            92
         ) {
           lessonAdvancedRef.current =
             true
 
-          setLessonStep(93)
+          setLessonStep(
+            93
+          )
         }
-
       }
     }
   })
 
+
+  // =========================================
+  // RENDER
+  // =========================================
+
   return (
     <>
-      {selectedLesson === 14.2 &&
-        [72, 76].includes(lessonStep) && (
+
+      {/* ======================================
+          LESSON 14.1
+          COLOR CHANGE ONLY WHILE SWIRLING
+      ====================================== */}
+
+      {isSwirling &&
+        selectedLesson ===
+          14.1 &&
+        [53,56].includes(lessonStep) && (
           <ChlorinationSeparatingFunnelColorChange
+            modelRef={
+              seperatingFunnelRef
+            }
+
             upperLiquidColor="#DDE6A6"
+
             bottomLiquidColor="#DDE6A6"
-            colorChangeDelay={0}
-            colorChangeDuration={0.5}
+
+            colorChangeDelay={
+              0.5
+            }
+
+            colorChangeDuration={
+              0.5
+            }
           />
         )}
+
+
+      {/* ======================================
+          LESSON 14.2
+          COLOR CHANGE ONLY WHILE SWIRLING
+      ====================================== */}
+
+      {isSwirling &&
+        selectedLesson ===
+          14.2 &&
+        [72, 76].includes(
+          lessonStep
+        ) && (
+          <ChlorinationSeparatingFunnelColorChange
+            modelRef={
+              seperatingFunnelRef
+            }
+
+            upperLiquidColor="#DDE6A6"
+
+            bottomLiquidColor="#DDE6A6"
+
+            colorChangeDelay={
+              0.5
+            }
+
+            colorChangeDuration={
+              0.5
+            }
+          />
+        )}
+
     </>
   )
 }

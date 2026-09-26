@@ -28,6 +28,7 @@ const FillUpBeaker = ({
     lessonStep,
     setLessonStep,
     selectedLesson,
+    setSelectedLesson
   } = useContext(MainGuidelineContext)
 
   const fillData =
@@ -111,6 +112,10 @@ const FillUpBeaker = ({
     const isWater =
       liquidName.includes("water") ||
       liquidName.includes("h2o")
+
+    const isMethylPropane = 
+      liquidName.includes("2-methylpropan-2-ol") 
+
 
     const isAqueousSodiumHydroxide = 
       liquidName.includes("graduated-pipette")
@@ -295,12 +300,12 @@ const FillUpBeaker = ({
       // WATER
       // ======================================
 
-      else if (isWater) {
+      else if (isWater|| isMethylPropane) {
         clonedMaterial.transparent =
           true
 
         clonedMaterial.opacity =
-          0.35
+          0.2
 
         clonedMaterial.depthWrite =
           false
@@ -324,7 +329,7 @@ const FillUpBeaker = ({
         clonedMaterial.color?.set("#f5fbff")
 
         clonedMaterial.transparent = true
-        clonedMaterial.opacity = 0.4
+        clonedMaterial.opacity = 0.25
         clonedMaterial.depthWrite = false
 
         if ("roughness" in clonedMaterial) {
@@ -491,9 +496,7 @@ const FillUpBeaker = ({
 // ========================================
 
 else if (
-  lowerBeakerName.includes(
-    "main-graduated-cylinder-100"
-  )
+  lowerBeakerName.includes("main-graduated-cylinder-100")
 ) {
   if (
     selectedLesson === 13 &&
@@ -525,7 +528,7 @@ else if (
     speedRef.current = 0.47
   }  
   else if(selectedLesson===14 && selectedAmount===10){
-    amountRef.current = 0.2
+    amountRef.current = 0.22
     speedRef.current = 0.25
   }
   else if(selectedLesson===14.1 && selectedAmount===20){
@@ -843,6 +846,7 @@ else if (
     }
    if ( selectedLesson === 14.1 && lessonStep === 64 ) {
       setLessonStep(65)
+      setSelectedLesson(14.2)
     }   
    if ( selectedLesson === 14.3 && lessonStep === 129 ) {
       setLessonStep(130)

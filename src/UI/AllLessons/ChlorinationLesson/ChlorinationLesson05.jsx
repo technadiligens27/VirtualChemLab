@@ -319,10 +319,10 @@ const ChlorinationLesson05 = ()=>{
 
           {lessonStep ==158 && <DialogBox text={
           <>
-           <strong>Scroll Up</strong> To Release The <strong>Dropper</strong>
+           158
           </>
           } 
-        />}
+        />} 
 
         </>           
 

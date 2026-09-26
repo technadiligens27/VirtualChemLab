@@ -13,6 +13,7 @@ import * as THREE from "three"
 import {
   MainGuidelineContext,
 } from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../../Contexts/InteractionContext/InteractionContext"
 
 const PourFromModel = ({
   modelRef,
@@ -34,10 +35,12 @@ const PourFromModel = ({
   const {
     selectedLesson,
     lessonStep,
-    setLessonStep,
+    setLessonStep,setSelectedLesson
   } = useContext(
     MainGuidelineContext
   )
+
+  const {setSelectedRightHand} = useContext(InteractionContext)
 
   const pourMeshesRef =
     useRef([])
@@ -720,6 +723,9 @@ const PourFromModel = ({
           lessonStep === 84
         ) {
           setLessonStep(85)
+          setSelectedLesson(14.3)
+          setSelectedRightHand(null)
+
         }
 
         if (
@@ -741,6 +747,8 @@ const PourFromModel = ({
         ) {
           setLessonStep(132)
         }
+
+
       }
     }
 
@@ -855,139 +863,141 @@ const PourFromModel = ({
     // INCREASE RECEIVING LIQUIDS
     // ==========================================
 
-    receivingLiquidsRef.current.forEach(
-      ({
-        object,
-        startScaleX,
-        startScaleY,
-        startScaleZ,
-        liquidMeshes,
-      }) => {
-        /*
-         * Scale on all axes when receiving:
-         *
-         * 1. Separating funnel
-         * 2. main-Round-bottom-flask
-         */
-        const scaleAllAxes =
-          isReceivingSeparatingFunnelRef.current ||
-          isReceivingRoundBottomFlaskRef.current
+receivingLiquidsRef.current.forEach(
+  ({
+    object,
+    startScaleX,
+    startScaleY,
+    startScaleZ,
+    liquidMeshes,
+  }) => {
+    // ==========================================
+    // DO NOTHING UNTIL POURING ACTUALLY STARTS
+    // ==========================================
 
-        if (scaleAllAxes) {
-          object.scale.x =
-            THREE.MathUtils.lerp(
-              startScaleX,
-              otherLiquidEndScale,
-              progress
-            )
+    if (
+      progressRef.current <= 0
+    ) {
+      return
+    }
 
-          object.scale.y =
-            THREE.MathUtils.lerp(
-              startScaleY,
-              otherLiquidEndScale,
-              progress
-            )
+    const scaleAllAxes =
+      isReceivingSeparatingFunnelRef.current ||
+      isReceivingRoundBottomFlaskRef.current
 
-          object.scale.z =
-            THREE.MathUtils.lerp(
-              startScaleZ,
-              otherLiquidEndScale,
-              progress
-            )
-        } else {
-          object.scale.y =
-            THREE.MathUtils.lerp(
-              startScaleY,
-              otherLiquidEndScale,
-              progress
-            )
-        }
-
-        if (scaleAllAxes) {
-          object.visible =
-            Math.abs(object.scale.x) >
-              0.001 ||
-            Math.abs(object.scale.y) >
-              0.001 ||
-            Math.abs(object.scale.z) >
-              0.001
-        } else {
-          object.visible =
-            Math.abs(object.scale.y) >
-            0.001
-        }
-
-        liquidMeshes.forEach(
-          ({
-            object: liquidMesh,
-            clonedMaterials,
-            startOpacities,
-            startColors,
-          }) => {
-            if (progress > 0) {
-              liquidMesh.visible = true
-
-              liquidMesh.frustumCulled =
-                false
-
-              let currentParent =
-                liquidMesh.parent
-
-              while (
-                currentParent &&
-                currentParent !==
-                  otherModelRef?.current
-              ) {
-                currentParent.visible =
-                  true
-
-                currentParent =
-                  currentParent.parent
-              }
-            }
-
-            clonedMaterials.forEach(
-              (material, index) => {
-                if (!material) return
-
-                material.transparent =
-                  true
-
-                material.opacity =
-                  THREE.MathUtils.lerp(
-                    startOpacities[index],
-                    finalOpacity,
-                    progress
-                  )
-
-                material.depthWrite =
-                  material.opacity >= 1
-
-                const startColor =
-                  startColors[index]
-
-                if (
-                  material.color &&
-                  startColor
-                ) {
-                  material.color.lerpColors(
-                    startColor,
-                    finalLiquidColor,
-                    progress
-                  )
-                }
-
-                material.needsUpdate =
-                  true
-              }
-            )
-          }
+    if (scaleAllAxes) {
+      object.scale.x =
+        THREE.MathUtils.lerp(
+          startScaleX,
+          otherLiquidEndScale,
+          progress
         )
 
-        object.updateMatrix()
-        object.updateMatrixWorld(true)
+      object.scale.y =
+        THREE.MathUtils.lerp(
+          startScaleY,
+          otherLiquidEndScale,
+          progress
+        )
+
+      object.scale.z =
+        THREE.MathUtils.lerp(
+          startScaleZ,
+          otherLiquidEndScale,
+          progress
+        )
+    } else {
+      object.scale.y =
+        THREE.MathUtils.lerp(
+          startScaleY,
+          otherLiquidEndScale,
+          progress
+        )
+    }
+
+    // ==========================================
+    // NOW LIQUID CAN BECOME VISIBLE
+    // ==========================================
+
+    if (scaleAllAxes) {
+      object.visible =
+        Math.abs(object.scale.x) > 0.001 ||
+        Math.abs(object.scale.y) > 0.001 ||
+        Math.abs(object.scale.z) > 0.001
+    } else {
+      object.visible =
+        Math.abs(object.scale.y) > 0.001
+    }
+
+    liquidMeshes.forEach(
+      ({
+        object: liquidMesh,
+        clonedMaterials,
+        startOpacities,
+        startColors,
+      }) => {
+        liquidMesh.visible = true
+
+        liquidMesh.frustumCulled =
+          false
+
+        let currentParent =
+          liquidMesh.parent
+
+        while (
+          currentParent &&
+          currentParent !==
+            otherModelRef?.current
+        ) {
+          currentParent.visible =
+            true
+
+          currentParent =
+            currentParent.parent
+        }
+
+        clonedMaterials.forEach(
+          (material, index) => {
+            if (!material) return
+
+            material.transparent =
+              true
+
+            material.opacity =
+              THREE.MathUtils.lerp(
+                startOpacities[index],
+                finalOpacity,
+                progress
+              )
+
+            material.depthWrite =
+              material.opacity >= 1
+
+            const startColor =
+              startColors[index]
+
+            if (
+              material.color &&
+              startColor
+            ) {
+              material.color.lerpColors(
+                startColor,
+                finalLiquidColor,
+                progress
+              )
+            }
+
+            material.needsUpdate =
+              true
+          }
+        )
       }
     )
+
+    object.updateMatrix()
+    object.updateMatrixWorld(true)
+  }
+)
 
     // ==========================================
     // POUR STREAM

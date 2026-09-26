@@ -27,12 +27,25 @@ const ChlorinationLesson = ()=>{
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
     const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
     const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,volumetricRef,heatingMantleRef,
-      pipetteRef,roundBeakerRef
+      pipetteRef,roundBeakerRef,volumetricPipetteRef,mainBuiretteRef,digitalBalanceRef
     } = useContext(ModelContext)
 
     const resetLesson = useResetLesson()
 
     useEffect(()=>{
+
+      if(digitalBalanceRef.current){
+         digitalBalanceRef.current.visible = false
+      }  
+      
+      if(mainBuiretteRef.current){
+         mainBuiretteRef.current.visible = false
+      }
+     
+    if(volumetricPipetteRef.current){
+      volumetricPipetteRef.current.visible = false
+    }  
+
       if(conicalBeakerRef02.current){
         conicalBeakerRef02.current.visible=true
       }
@@ -60,10 +73,16 @@ const ChlorinationLesson = ()=>{
      if(heatingMantleRef.current){
       heatingMantleRef.current.visible = true
      }
-    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef,roundBeakerRef,volumetricRef,heatingMantleRef])
+    },[conicalBeakerRef,conicalBeakerRef02,seperatingFunnelRef,pipetteRef,roundBeakerRef,volumetricRef,
+      heatingMantleRef,
+      digitalBalanceRef,
+      mainBuiretteRef,
+      volumetricPipetteRef
+    ])
 
  return(
        <>
+
        {
          lessonStep===1 && <EnthalpyLessonOverview
           reactionData={molarVolumeReactionData[0]}
@@ -165,7 +184,7 @@ const ChlorinationLesson = ()=>{
 
 
       {lessonStep===11 && (<DialogBox text={<>
-        Fill With <strong>hydrochloric acid (35 cm³)</strong>     
+        Fill With <strong>Hydrochloric Acid (35 cm³)</strong>     
       </>}/>
       )} 
 
@@ -233,7 +252,7 @@ const ChlorinationLesson = ()=>{
       )} 
 
 
-      {lessonStep >=21 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[5]}/>)}
+      {lessonStep >=21 && lessonStep <=24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[5]}/>)}
 
 
 
@@ -260,9 +279,8 @@ const ChlorinationLesson = ()=>{
         </>}/>
       )} 
 
-      {lessonStep >=25 && lessonStep <28 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[6]}/>)}
 
-      {lessonStep >=25 && (<ChlorinationLesson02/>)}
+      {lessonStep >24 && (<ChlorinationLesson02/>)}
 
      
        </>

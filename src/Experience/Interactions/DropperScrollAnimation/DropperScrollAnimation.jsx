@@ -256,14 +256,7 @@ const DropperScrollAnimation = ({
     // =====================================
     // LESSON 14.3
     // =====================================
-    if (
-      selectedLesson === 14.4 &&
-      lessonStep === 157
-    ) {
-      setLessonStep(158)
 
-      return
-    }
     if (
       selectedLesson === 14.3 &&
       lessonStep === 124
@@ -522,7 +515,7 @@ const DropperScrollAnimation = ({
         <FillDropperLiquid
           color="#ffffff"
           opacity={0.35}
-          amount={5}
+          amount={0.3}
           speed={1}
           otherModelRef={testube02Ref}
           otherLiquidEndAmount={0.6}

@@ -52,7 +52,8 @@ const FillBeakerBox = () => {
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
       return [
         { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-{ name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./SilverNitrate.png" },        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.png' },
+{ name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./SilverNitrate.png" },
+        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.png' },
           { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
        { name: "Nitric Acid (HNO3)", color: "#f8fafc", imgPath: "./NitricAcid.png" },,
         { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },

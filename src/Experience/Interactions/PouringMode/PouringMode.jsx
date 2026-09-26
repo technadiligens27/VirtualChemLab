@@ -1499,7 +1499,7 @@ const PouringMode = ({
             otherModelAmount={0.3}
             speed={0.2}
             otherModelColor={"#f8fafc"}     
-            otherModelOpacity={0.25}       
+            otherModelOpacity={0.2}       
           />
         )}
 
