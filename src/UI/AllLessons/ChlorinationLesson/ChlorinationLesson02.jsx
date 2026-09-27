@@ -20,6 +20,7 @@ import {useResetLesson} from "../../ResetLessonButton/ResetLessonButton.jsx";
 import {chlorinationGuidelineData} from "../../Data/chlorinationLessonData/chlorinationLessonData.jsx"
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
 import ChlorinationLesson03 from "./ChlorinationLesson03.jsx";
+import ModelFocusMode from "../../../Experience/Interactions/AllModeFocusModes/ModelFocusMode/ModelFocusMode.jsx";
 
 
 const ChlorinationLesson02 = ()=>{
@@ -476,7 +477,6 @@ const ChlorinationLesson02 = ()=>{
      {
       lessonStep >64 && <ChlorinationLesson03/>
      } 
-
 
        </>
     )

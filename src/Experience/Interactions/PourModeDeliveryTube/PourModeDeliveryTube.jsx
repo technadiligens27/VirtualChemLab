@@ -530,7 +530,7 @@ const PourModeDeliveryTube = ({
         modelRef={graduatedBeakerRef}
         otherModelRef={seperatingFunnelRef}
         isPouring={isPouring}
-        pourScale={1}
+        pourScale={10}
         />
       }
 

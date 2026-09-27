@@ -5,6 +5,10 @@ import {
   InteractionContext,
 } from "../../../Contexts/InteractionContext/InteractionContext"
 
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
 const DialogBox = ({
   text,
 
@@ -20,13 +24,25 @@ const DialogBox = ({
     isFillBeakerBoxOpen,
   } = useContext(InteractionContext)
 
+  const {
+    isExplanationOpen,
+  } = useContext(MainGuidelineContext)
+
   return (
     <div
-      className={`dialog-box-container ${
-        isFillBeakerBoxOpen
-          ? "dialog-z-index"
-          : ""
-      }`}
+      className={`
+        dialog-box-container
+        ${
+          isFillBeakerBoxOpen
+            ? "dialog-z-index"
+            : ""
+        }
+        ${
+          isExplanationOpen
+            ? "dialog-box-blurred"
+            : ""
+        }
+      `}
     >
       <div className="dialog-box-inner">
         <div className="dialog-icon-container">

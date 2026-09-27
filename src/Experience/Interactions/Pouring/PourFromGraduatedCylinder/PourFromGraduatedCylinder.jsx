@@ -26,7 +26,7 @@ const PourFromGraduatedCylinder = ({
   isPouring,
 
   speed = 1,
-  pourSpeed = 1,
+  pourSpeed = 5,
 
   // Final Y scale of the pouring stream.
   pourScaleY = 1,

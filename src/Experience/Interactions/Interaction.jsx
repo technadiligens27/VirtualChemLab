@@ -71,6 +71,8 @@ import FillConicalBeaker02 from "./FillConicalBeaker02Ref/FillConicalBeaker02Ref
 import DropperPlaced from "./DropperPlaced/DropperPlaced";
 import PlaceModelInBeaker from "./PlaceModelInBeaker/PlaceModelInBeaker";
 import ChlorideIonReaction from "../AllReactions/ChlorideIonReaction/ChlorideIonReaction";
+import ModelFocusMode from "./AllModeFocusModes/ModelFocusMode/ModelFocusMode";
+import AllModeFocusModes from "./AllModeFocusModes/AllModeFocusModes";
 
 const Interaction = () => {
   const {
@@ -84,7 +86,7 @@ const Interaction = () => {
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
-    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction
+    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -142,6 +144,8 @@ useEffect(() => {
       {clickBeakerOption()}
       <FilterFunnelController/>
       <AllArrows/>
+      <AllModeFocusModes/>
+        
       {isAddSalt && <AddSaltToSpoon/>}      
       {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}
       {isPotassiumHydrogenCarbonateInSpoon && <AddPottasiumCarobnateToSpoon/>}
@@ -558,6 +562,9 @@ useEffect(() => {
       {isPlaceModelInBeaker && <PlaceModelInBeaker modelRef={testube02Ref} yOffset={0.7}/>}
       
       {selectedLeftHand?.name==="main-testube-02" && isChlorideIonReaction && <ChlorideIonReaction modelRef={testube02Ref}/>}
+      
+      
+
 
     </>
   );

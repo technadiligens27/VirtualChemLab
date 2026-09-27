@@ -42,6 +42,8 @@ import ChlorinationLesson02 from "./AllLessons/ChlorinationLesson/ChlorinationLe
 import ChlorinationLesson03 from "./AllLessons/ChlorinationLesson/ChlorinationLesson03"
 import ChlorinationLesson04 from "./AllLessons/ChlorinationLesson/ChlorinationLesson04"
 import ChlorinationLesson05 from "./AllLessons/ChlorinationLesson/ChlorinationLesson05"
+import Explanations from "../Experience/Interactions/Explanations/Explanations"
+import AllExplanations from "./AllExplanations/AllExplanations"
 
 const mainContent = [
   {
@@ -138,7 +140,7 @@ const UI = () => {
     setShowBoilingTube01Ref,setShowMeasuringCylinderArrow,setShowMeasuringCylinder50Arrow,
     setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow,showCondensorArrow,
         setShowCondensorArrow,showTestube02Arrow,
-        setShowTestube02Arrow,setShowGraduatedPippeteArrow
+        setShowTestube02Arrow,setShowGraduatedPippeteArrow,isExplanationOpen,setIsExplanationOpen
     
   } = useContext(MainGuidelineContext)
 
@@ -695,6 +697,8 @@ useEffect(() => {
         selectedLesson == 14.4 && (<ChlorinationLesson05/>)
        }
 
+        <AllExplanations/>
+        
         {/* {<MolarVolumeResults/>} */}
        {/* {<HessCalculationStep25/>} */}
        {/* <TitreValueRecorded/> */}

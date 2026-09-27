@@ -1,4 +1,4 @@
-import { createContext, useState ,useRef} from "react"
+import { createContext, useState ,useRef, useContext} from "react"
 
 export const MainGuidelineContext = createContext()
 
@@ -70,7 +70,9 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showCondensorArrow,setShowCondensorArrow] = useState(false)
 
   const [showTestube02Arrow,setShowTestube02Arrow] = useState(false);
-  const [showGraduatedPippeteArrow,setShowGraduatedPippeteArrow] = useState(false)
+  const [showGraduatedPippeteArrow,setShowGraduatedPippeteArrow] = useState(false);
+
+  const [isExplanationOpen,setIsExplanationOpen] = useState(false)
 
 
 
@@ -247,7 +249,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowTestube02Arrow,
 
         showGraduatedPippeteArrow,
-        setShowGraduatedPippeteArrow
+        setShowGraduatedPippeteArrow,
+
+        isExplanationOpen,
+        setIsExplanationOpen
 
 
       }}

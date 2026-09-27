@@ -2876,6 +2876,7 @@ useEffect(()=>{
       return      
     }
     setIsPotassiumHydrogenCarbonateInSpoon(true)
+    setSelectedObject(null)
   }
 
   useEffect(()=>{
@@ -4687,7 +4688,7 @@ const placeConicalBung = ()=>{
 
 const removeConicalBung=()=>{
   if(selectedLesson===14 && lessonStep===18){
-    setLessonStep(19)
+    setLessonStep(20)
   }
   if(selectedLesson===14 && lessonStep===22){
     setLessonStep(23)
