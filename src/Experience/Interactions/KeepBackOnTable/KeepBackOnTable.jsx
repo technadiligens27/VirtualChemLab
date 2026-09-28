@@ -20,6 +20,8 @@ const KeepBackOnTable = ({
 }) => {
   const { scene } = useThree()
 
+  console.log("KeepBackOnTable")
+
   useLayoutEffect(() => {
     const model = modelRef?.current
     const tablePosition = modelTablePosRef?.current

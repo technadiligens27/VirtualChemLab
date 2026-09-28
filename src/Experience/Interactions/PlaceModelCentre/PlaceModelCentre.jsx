@@ -39,14 +39,12 @@ const PlaceModelCentre = ({
     ModelContext
   )
 
-
   const {
     setSelectedRightHand,
     setSelectedLeftHand,
   } = useContext(
     InteractionContext
   )
-
 
   const {
     selectedLesson,
@@ -56,14 +54,12 @@ const PlaceModelCentre = ({
     MainGuidelineContext
   )
 
-
   // =============================================
   // ORIGINAL TRANSFORM
   // =============================================
 
   const originalTransformRef =
     useRef(null)
-
 
   // =============================================
   // KEEP LATEST LESSON / STEP
@@ -75,13 +71,11 @@ const PlaceModelCentre = ({
   const latestLessonStepRef =
     useRef(lessonStep)
 
-
   latestLessonRef.current =
     selectedLesson
 
   latestLessonStepRef.current =
     lessonStep
-
 
   // =============================================
   // LESSON STEPS
@@ -95,14 +89,12 @@ const PlaceModelCentre = ({
       setLessonStep(43)
     }
 
-
     if (
       selectedLesson === 14.1 &&
       lessonStep === 60
     ) {
       setLessonStep(61)
     }
-
 
     if (
       selectedLesson === 14.2 &&
@@ -114,7 +106,6 @@ const PlaceModelCentre = ({
         null
       )
     }
-
 
     if (
       selectedLesson === 14.3 &&
@@ -132,7 +123,6 @@ const PlaceModelCentre = ({
     setLessonStep,
     setSelectedLeftHand,
   ])
-
 
   // =============================================
   // LESSON 13
@@ -161,7 +151,6 @@ const PlaceModelCentre = ({
     setSelectedLeftHand,
   ])
 
-
   // =============================================
   // PLACE MODEL AT CENTRE
   // =============================================
@@ -173,7 +162,6 @@ const PlaceModelCentre = ({
     const balancePosition =
       balancePositionRef?.current
 
-
     if (
       !model ||
       !balancePosition
@@ -181,25 +169,41 @@ const PlaceModelCentre = ({
       return
     }
 
+    // =============================================
+    // SHOULD SKIP SAVING ORIGINAL
+    // =============================================
+
+    const shouldSkipOriginalSave =
+      selectedLesson === 14.3 && (model.name === "main-Conical-Flask-02" || model.name === "separating-funnel")
 
     // =============================================
     // SAVE ORIGINAL TRANSFORM
+    //
+    // IMPORTANT:
+    // THIS MUST HAPPEN BEFORE attach(),
+    // position changes or scale changes.
     // =============================================
 
-    originalTransformRef.current = {
-      parent:
-        model.parent,
+    if (
+      !shouldSkipOriginalSave
+    ) {
+      originalTransformRef.current = {
+        parent:
+          model.parent,
 
-      position:
-        model.position.clone(),
+        position:
+          model.position.clone(),
 
-      quaternion:
-        model.quaternion.clone(),
+        quaternion:
+          model.quaternion.clone(),
 
-      scale:
-        model.scale.clone(),
+        scale:
+          model.scale.clone(),
+      }
+    } else {
+      originalTransformRef.current =
+        null
     }
-
 
     // =============================================
     // TARGET WORLD POSITION
@@ -210,10 +214,8 @@ const PlaceModelCentre = ({
         new THREE.Vector3()
       )
 
-
     const targetParent =
       balancePosition.parent
-
 
     // =============================================
     // ATTACH TO TARGET PARENT
@@ -225,7 +227,6 @@ const PlaceModelCentre = ({
       )
     }
 
-
     // =============================================
     // CONVERT WORLD POSITION TO LOCAL
     // =============================================
@@ -233,14 +234,12 @@ const PlaceModelCentre = ({
     let targetLocalPosition =
       targetWorldPosition.clone()
 
-
     if (targetParent) {
       targetLocalPosition =
         targetParent.worldToLocal(
           targetWorldPosition.clone()
         )
     }
-
 
     // =============================================
     // POSITION
@@ -257,7 +256,6 @@ const PlaceModelCentre = ({
         modelZOffset
     )
 
-
     // =============================================
     // SCALE
     // =============================================
@@ -268,18 +266,17 @@ const PlaceModelCentre = ({
       modelZScale
     )
 
-
     model.updateMatrixWorld(
       true
     )
-
 
     // =============================================
     // CLEANUP
     // =============================================
 
     return () => {
-      // Do NOT restore model at lesson 14.3 step 97
+      // Special case:
+      // keep current transform at lesson 14.3 step 98.
       if (
         latestLessonRef.current ===
           14.3 &&
@@ -289,10 +286,8 @@ const PlaceModelCentre = ({
         return
       }
 
-
       const original =
         originalTransformRef.current
-
 
       if (
         !model ||
@@ -301,9 +296,8 @@ const PlaceModelCentre = ({
         return
       }
 
-
       // =========================================
-      // RETURN TO ORIGINAL PARENT
+      // RESTORE ORIGINAL PARENT
       // =========================================
 
       if (
@@ -314,9 +308,8 @@ const PlaceModelCentre = ({
         )
       }
 
-
       // =========================================
-      // RESTORE ORIGINAL TRANSFORM
+      // RESTORE ORIGINAL LOCAL TRANSFORM
       // =========================================
 
       model.position.copy(
@@ -331,15 +324,9 @@ const PlaceModelCentre = ({
         original.scale
       )
 
-
       model.updateMatrixWorld(
         true
       )
-
-
-      // Liquid visibility is intentionally
-      // NOT changed here.
-
 
       originalTransformRef.current =
         null
@@ -355,8 +342,9 @@ const PlaceModelCentre = ({
     modelXScale,
     modelYScale,
     modelZScale,
-  ])
 
+    selectedLesson,
+  ])
 
   return null
 }

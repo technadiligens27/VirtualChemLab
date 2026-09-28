@@ -33,7 +33,7 @@ const ReleaseGasBubbles = ({
   const {
     selectedLesson,
     lessonStep,
-    setLessonStep,
+    setLessonStep,isExplanationOpen
   } = useContext(MainGuidelineContext)
 
   const bubblesRef = useRef([])
@@ -290,6 +290,7 @@ const ReleaseGasBubbles = ({
     ) {
       lessonAdvancedRef.current = true
       setLessonStep(74)
+      
     }
 
     if (

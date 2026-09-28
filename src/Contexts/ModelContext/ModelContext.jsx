@@ -66,7 +66,8 @@ export const ModelProvider = ({ children }) => {
   const distillationHeadRef = useRef(null);
   const condensorRef = useRef(null);
   const heatingMantleSurfaceRef = useRef(null);
-  const graduatedPipetteRef = useRef(null)
+  const graduatedPipetteRef = useRef(null);
+
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -131,6 +132,7 @@ export const ModelProvider = ({ children }) => {
   const graduatedBeaker50OriginalStateRef = useRef(null);
   const testube02OriginalStateRef = useRef(null);
   const graduatedPipetteOriginalStateRef = useRef(null)
+  const seperatingFunnelOriginalStateRef = useRef(null)
 
   const [dropperAnimationAction,setDropperAnimationAction] = useState(null)
  
@@ -192,7 +194,8 @@ export const ModelProvider = ({ children }) => {
         arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,
         distillationHeadRef,condensorRef,arrowCondensorRef,waterOutTubeRef,
         waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,
-        arrowGraduatedPipette,testube02OriginalStateRef,graduatedPipetteOriginalStateRef
+        arrowGraduatedPipette,testube02OriginalStateRef,graduatedPipetteOriginalStateRef,
+        seperatingFunnelOriginalStateRef
       }}
     >
       {children}

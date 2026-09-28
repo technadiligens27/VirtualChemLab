@@ -524,15 +524,15 @@ else if (
     speedRef.current = 0.45
   }
   else if(selectedLesson===14 && selectedAmount===35){
-    amountRef.current = 0.7
+    amountRef.current = 0.586715
     speedRef.current = 0.47
   }  
   else if(selectedLesson===14 && selectedAmount===10){
-    amountRef.current = 0.22
+    amountRef.current = 0.184711
     speedRef.current = 0.25
   }
   else if(selectedLesson===14.1 && selectedAmount===20){
-    amountRef.current = 0.4
+    amountRef.current = 0.345348
     speedRef.current = 0.25
   }
   else if(selectedLesson===14.3 && selectedAmount===5){

@@ -2863,6 +2863,7 @@ useEffect(()=>{
       return
     }
     setIsPottasiumCarobnateInSpoon(true);
+    setSelectedObject(null)
   }
 
   const addPotassiumHydrogencarbonateToSpoon = ()=>{
@@ -3770,7 +3771,8 @@ useEffect(()=>{
   const advanceNextStep = ()=>{
     if(selectedLesson==14.3 && lessonStep==97){
       setIsModelCentre(false)
-      setIsClampTestube(false)
+      // setIsClampTestube(false)
+      setLessonStep(98)
     }
 
     if(selectedLesson==14.3 && lessonStep == 106){
@@ -3818,7 +3820,7 @@ useEffect(()=>{
         if([14.3].includes(selectedLesson) && [97].includes(lessonStep)){
           return(
             <>
-              <button onClick={()=>{keepBackOnTable("left");advanceNextStep()}}>
+              <button onClick={advanceNextStep}>
                 Keep Back On Table
               </button>
               <button>

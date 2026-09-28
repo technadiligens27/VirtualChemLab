@@ -563,7 +563,9 @@ useEffect(() => {
       
       {selectedLeftHand?.name==="main-testube-02" && isChlorideIonReaction && <ChlorideIonReaction modelRef={testube02Ref}/>}
       
-      
+      {/* {
+       selectedLesson==14.3 && lessonStep>=98 && <KeepBackOnTable modelRef={conicalBeakerRef02} modelTablePosRef={tableConicalPos}/>
+      } */}
 
 
     </>

@@ -28,7 +28,7 @@ const ChlorinationLesson04 = () => {
     graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,pipetteRef,gogglesRef,
     gloverightRef,graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,
     gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,
-    digitalBalanceRef,mainDropperRef,graduatedPipetteRef,conicalFlask02OriginalStateRef
+    digitalBalanceRef,mainDropperRef,graduatedPipetteRef,conicalFlask02OriginalStateRef,seperatingFunnelOriginalStateRef
   } = useContext(ModelContext)
 
   useEffect(()=>{
@@ -178,6 +178,74 @@ model.traverse((child) => {
     }
    },[selectedLesson,lessonStep])
 
+
+useEffect(() => {
+  if (
+    selectedLesson !== 14.3 || lessonStep !== 98 || !seperatingFunnelRef?.current || !seperatingFunnelOriginalStateRef?.current) {
+    return
+  }
+
+  const funnel = seperatingFunnelRef.current
+  const original = seperatingFunnelOriginalStateRef.current
+
+  // Restore original parent
+  if (original.parent) {
+    original.parent.add(funnel )
+  }
+
+  // Restore original table position
+  funnel.position.copy(
+    original.position
+  )
+
+  // Restore original rotation
+  funnel.quaternion.copy(
+    original.quaternion
+  )
+
+  // Restore original scale
+  funnel.scale.copy(
+    original.scale
+  )
+
+  funnel.updateMatrixWorld(
+    true
+  )
+}, [
+  selectedLesson,
+  lessonStep,
+  seperatingFunnelRef,
+  seperatingFunnelOriginalStateRef,
+])
+useEffect(() => {
+  if (selectedLesson !== 14.3 ||lessonStep !== 98 ||!conicalBeakerRef02?.current ||!conicalFlask02OriginalStateRef?.current) {
+    return
+  }
+
+  const conical = conicalBeakerRef02.current
+  const original = conicalFlask02OriginalStateRef.current
+
+  // Restore original parent
+  if (original.parent) {
+     original.parent.add( conical)
+  }
+
+  // Restore original table position
+  conical.position.copy(original.position)
+
+  // Restore original rotation
+  conical.quaternion.copy(original.quaternion)
+
+  // Restore original scale
+  conical.scale.copy(original.scale)
+
+  conical.updateMatrixWorld(true)
+}, [
+  selectedLesson,
+  lessonStep,
+  conicalBeakerRef02,
+  conicalFlask02OriginalStateRef,
+])
 
   return (
         <>

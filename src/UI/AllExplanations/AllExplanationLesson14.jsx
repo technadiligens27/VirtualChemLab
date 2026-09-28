@@ -7,15 +7,44 @@ const AllExplanationLesson14 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([14,20,28,31,35,37,43,47,53.1,71].includes(lessonStep)){
+        if([6,12,14,20,28,31,35,37,43,47,,52,53.1,,65,71,73,80,83,88,95].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
 
-    if(!isExplanationOpen)return
+    useEffect(()=>{
+        if([74].includes(lessonStep)){
+            setIsExplanationOpen(false)
+        }
+    },[lessonStep])    
 
+    if(!isExplanationOpen)return
     return(
         <>
+
+           {lessonStep==6 && <Explanations
+            text={
+                <>
+                <strong>2-methylpropan-2-ol</strong> is the reactant needed to make the desired <strong>2-chloro-2-methylpropane</strong> product.
+                </>
+            }
+            top="30%"
+            left="50%"
+            height="270px"
+            />}
+
+
+            {lessonStep==12 && <Explanations
+            text={
+                <>
+                We use <strong>hydrochloric acid</strong> with <strong>2-methylpropan-2-ol</strong> to make <strong>2-chloro-2-methylpropane</strong>.
+                </>
+            }
+            top="30%"
+            left="50%"
+            height="270px"
+            />}
+
        
            {lessonStep==14 && <Explanations
             text={
@@ -27,7 +56,7 @@ const AllExplanationLesson14 = ()=>{
             }
             top="30%"
             left="50%"
-            height="230px"
+            height="270px"
             />}
 
            {lessonStep==20 && <Explanations
@@ -40,7 +69,8 @@ const AllExplanationLesson14 = ()=>{
             }
             top="30%"
             left="30%"
-            height="260px"
+            height="320px"
+            width="400px"
             />}
 
            {lessonStep==28 && <Explanations
@@ -63,7 +93,7 @@ const AllExplanationLesson14 = ()=>{
                 </>
             }
             top="40%"
-            left="40%"
+            left="30%"
             height="230px"
             />}
            {lessonStep==35 && <Explanations
@@ -85,7 +115,7 @@ const AllExplanationLesson14 = ()=>{
             Now let’s pour the mixture into the <strong>separating funnel</strong> so we can separate the <strong>organic</strong> and <strong>aqueous</strong> layers.                </>
             }
             top="40%"
-            left="40%"
+            left="30%"
             height="230px"
             width="380px"
             />}
@@ -115,7 +145,7 @@ const AllExplanationLesson14 = ()=>{
 
             />}  
 
-           {[71,52].includes(lessonStep) && <Explanations
+           {[52,71].includes(lessonStep) && <Explanations
             text={
               <>
             Now let’s replace the <strong>bung</strong> and swirl the <strong>separating funnel</strong> so the sodium hydrogencarbonate can neutralise any remaining acid.
@@ -140,6 +170,109 @@ const AllExplanationLesson14 = ()=>{
             width="380px"
 
             />}             
+           {lessonStep==65 && <Explanations
+            text={
+              <>
+                Now we will <strong>wash the organic product again</strong> to remove any remaining acid and make it purer.
+              </>
+            }
+            top="40%"
+            left="50%"
+            height="225px"
+            width="380px"
+            />}   
+
+           {lessonStep==73 && <Explanations
+            text={
+              <>
+                Observe the <strong>CO₂ bubbles</strong> rising with less intensity than during the first wash.The bubbles are less intense because most of the <strong>hydrochloric acid
+                    </strong> was removed during the first wash, so less <strong>carbon dioxide</strong> is produced.
+              </>
+            }
+            top="40%"
+            left="40%"
+            height="325px"
+            width="450px"
+
+            />}     
+
+           {lessonStep==80 && <Explanations
+            text={
+              <>
+               Now Let's Discard the <strong>lower aqueous layer</strong> so only the purified <strong>organic product</strong> remains.
+              </>
+            }
+            top="40%"
+            left="40%"
+            height="325px"
+            width="450px"
+
+            />} 
+
+           {lessonStep==83 && <Explanations
+            text={
+              <>
+               Now transfer the <strong>organic product</strong> into a small conical flask so it can be <strong>dried</strong>.
+              </>
+            }
+            top="40%"
+            left="40%"
+            height="325px"
+            width="450px"
+
+            />} 
+
+           {lessonStep==88 && <Explanations
+            text={
+              <>
+               <strong>Anhydrous sodium sulfate</strong> removes any remaining <strong>water</strong> from the organic product, making it dry and clear.
+              </>
+            }
+            top="40%"
+            left="42%"
+            height="230px"
+            width="400px"
+
+            />}
+
+           {lessonStep==91 && <Explanations
+            text={
+              <>
+            Let’s add the <strong>bung</strong> to prevent spills while swirling. Swirling helps the <strong>sodium sulfate</strong> absorb water from the organic liquid.              </>
+            }
+            top="40%"
+            left="42%"
+            height="230px"
+            width="400px"
+
+            />} 
+
+
+           {lessonStep==95 && <Explanations
+            text={
+              <>
+                The <strong>round-bottomed flask</strong> is used because it can be heated safely for <strong>distillation</strong>.
+             </>
+            }
+            top="40%"
+            left="42%"
+            height="230px"
+            width="400px"
+
+            />}  
+
+           {lessonStep==97 && <Explanations
+            text={
+              <>
+                The <strong>round-bottomed flask</strong> now contains the clear, dry <strong>2-chloro-2-methylpropane</strong> ready for distillation.
+            </>
+            }
+            top="40%"
+            left="42%"
+            height="230px"
+            width="400px"
+
+            />}            
 
 
         </>

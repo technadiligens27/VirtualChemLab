@@ -29,7 +29,7 @@ const ChemEnvironment = () => {
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
          arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,arrowGraduatedPipette,
-         testube02OriginalStateRef,graduatedPipetteOriginalStateRef
+         testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions,distillationGasAnimationActions,setDistillationGasAnimationActions} = useContext(InteractionContext)
@@ -402,6 +402,16 @@ if (testube02Ref.current && ! testube02OriginalStateRef.current) {
     quaternion: testube02Ref.current.quaternion.clone(),
     scale: testube02Ref.current.scale.clone(),
     parent: testube02Ref.current.parent,
+  }
+}
+
+if (seperatingFunnelRef.current && !seperatingFunnelOriginalStateRef.current) {
+    seperatingFunnelOriginalStateRef.current = {
+    position: seperatingFunnelRef.current.position.clone(),
+    rotation:seperatingFunnelRef.current.rotation.clone(),
+    quaternion: seperatingFunnelRef.current.quaternion.clone(),
+    scale: seperatingFunnelRef.current.scale.clone(),
+    parent: seperatingFunnelRef.current.parent,
   }
 }
 
