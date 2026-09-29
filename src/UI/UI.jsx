@@ -213,7 +213,8 @@ const UI = () => {
       ([12,12.1].includes(selectedLesson) && [15].includes(lessonStep)) ||
       (selectedLesson===9 && [2,19].includes(lessonStep)) ||
       (selectedLesson===13 && [5].includes(lessonStep)) ||
-      (selectedLesson==14.1 && [60].includes(lessonStep))
+      (selectedLesson==14.1 && [60].includes(lessonStep)) ||
+      (selectedLesson==14.4 && lessonStep===141)
     )
   }, [selectedLesson, lessonStep])
 

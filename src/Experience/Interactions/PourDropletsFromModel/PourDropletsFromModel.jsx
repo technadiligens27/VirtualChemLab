@@ -85,18 +85,42 @@ const PourDropletsFromModel = ({
       // FIND DROPLETS
       // =========================================
 
-      if (
-        name.includes("droplet")
-      ) {
-        droplets.push({
-          object: child,
+  if (
+      name.includes("droplet")
+    ) {
+      child.traverse((mesh) => {
+        if (!mesh.isMesh) return
 
-          startPosition:
-            child.position.clone(),
-        })
+        if (Array.isArray(mesh.material)) {
+          mesh.material =
+            mesh.material.map(
+              (material) => {
+                const cloned =
+                  material.clone()
 
-        child.visible = true
-      }
+                cloned.transparent = true
+
+                return cloned
+              }
+            )
+        } else if (mesh.material) {
+          mesh.material =
+            mesh.material.clone()
+
+          mesh.material.transparent =
+            true
+        }
+      })
+
+      droplets.push({
+        object: child,
+
+        startPosition:
+          child.position.clone(),
+      })
+
+      child.visible = true
+    }
 
 
       // =========================================
@@ -287,29 +311,59 @@ const PourDropletsFromModel = ({
     // MOVE DROPLETS
     // =========================================
 
-    droplets.forEach(
-      ({
-        object,
-        startPosition,
-      }) => {
-        object.position.copy(
-          startPosition
-        )
+   // =========================================
+// MOVE DROPLETS
+// =========================================
 
-        object.position[
-          axis
-        ] -=
-          fallDistance *
-          fallProgress
-
-        object.visible = true
-
-        object.updateMatrixWorld(
-          true
-        )
-      }
+droplets.forEach(
+  ({
+    object,
+    startPosition,
+  }) => {
+    object.position.copy(
+      startPosition
     )
 
+    object.position[
+      axis
+    ] -=
+      fallDistance *
+      fallProgress
+
+    object.visible = true
+
+    object.traverse((child) => {
+      if (!child.isMesh) return
+
+      const material =
+        child.material
+
+      if (!material) return
+
+      const materials =
+        Array.isArray(material)
+          ? material
+          : [material]
+
+      materials.forEach(
+        (mat) => {
+          mat.transparent = true
+
+          mat.opacity =
+            isFalling
+              ? 1 - fallProgress
+              : 0
+
+          mat.needsUpdate = true
+        }
+      )
+    })
+
+    object.updateMatrixWorld(
+      true
+    )
+  }
+)
 
     // =========================================
     // REDUCE SOURCE LIQUID

@@ -528,6 +528,8 @@ const DropperScrollAnimation = ({
           fallAxis={"y"}
           loopTimes = {4}
           startDelay={0}
+          reduceModelLiquid={true}
+          
         />
       )}
     </>

@@ -18,23 +18,23 @@ const ChlorideIonReaction = ({
 
   // How far above the final level
   // the powder starts
-  startHeight = 1,
+  startHeight = 0.8,
 
   // Final Y level where powder settles
-  finalYLevel = -1.2,
+  finalYLevel = -1.25,
 
   // Small random difference in final height
   finalHeightRandomness = 0.3,
 
-  fallSpeed = 0.3,
+  fallSpeed = 0.1,
 
   powderColor = "#ffffff",
   endOpacity = 0.8,
 
-  powderScale = 0.7,
+  powderScale = 1,
 
   // Random delay for each powder particle
-  randomDelay = 1,
+  randomDelay = 4,
 
   sidewaysAmount = 0,
 }) => {

@@ -105,6 +105,8 @@ const ChlorinationLesson05 = ()=>{
             if(child.isMesh && child.name.includes("liquid")){
                 child.visible = true
                 child.scale.y = 53
+                child.material.opacity = 0.35
+                child.material.transparent = true
             }
         })
     }

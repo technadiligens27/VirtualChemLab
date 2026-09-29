@@ -233,7 +233,7 @@ const ChlorinationLesson = ()=>{
       )}
 
 
-      {lessonStep >=17 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[4]}/>)}
+      {/* {lessonStep >=17 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[4]}/>)} */}
 
 
 
