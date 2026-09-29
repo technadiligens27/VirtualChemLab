@@ -600,7 +600,7 @@ const PouringMode02 = ({
             otherLiquidEndScale={39}
             otherLiquidColor = {"#ffffff"}
             speed={15}
-             pourScale = {10}
+             pourScale = {1}
           />
         )}
 

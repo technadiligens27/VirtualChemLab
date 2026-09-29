@@ -8,7 +8,7 @@ const AllExplanations = ()=>{
 
     return(
         <>  
-          {[14,14.1,14.2,14.3].includes(selectedLesson) && <AllExplanationLesson14/>}     
+          {[14,14.1,14.2,14.3,14.4].includes(selectedLesson) && <AllExplanationLesson14/>}     
         </>
     )
 }

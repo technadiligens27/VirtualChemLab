@@ -55,8 +55,8 @@ const PourFromModel = ({
   // REFS
   // ============================================
 
-  const pourMeshesRef =
-    useRef([])
+  const pourMeshRef =
+    useRef(null)
 
   const sourceLiquidsRef =
     useRef([])
@@ -211,12 +211,9 @@ const PourFromModel = ({
       true
     )
 
-    const pourMeshes = []
     const sourceLiquids = []
-    const receivingLiquids = []
 
-    const foundPourMeshes =
-      new Set()
+    const receivingLiquids = []
 
     const foundSourceLiquids =
       new Set()
@@ -252,7 +249,52 @@ const PourFromModel = ({
       )
 
     // ==========================================
-    // FIND SOURCE POUR + LIQUIDS
+    // FIND SOURCE POUR MESH DIRECTLY
+    // ==========================================
+
+    let foundPourMesh = null
+
+    sourceModel.traverse(
+      (child) => {
+        if (
+          foundPourMesh
+        ) {
+          return
+        }
+
+        const name =
+          child.name
+            ?.toLowerCase() ||
+          ""
+
+        if (
+          child.isMesh &&
+          name.includes(
+            "pour"
+          )
+        ) {
+          foundPourMesh = {
+            object:
+              child,
+
+            originalScale:
+              child.scale.clone(),
+
+            originalVisible:
+              child.visible,
+
+            originalFrustumCulled:
+              child.frustumCulled,
+          }
+        }
+      }
+    )
+
+    pourMeshRef.current =
+      foundPourMesh
+
+    // ==========================================
+    // FIND SOURCE LIQUIDS
     // ==========================================
 
     sourceModel.traverse(
@@ -266,51 +308,6 @@ const PourFromModel = ({
           normalizeName(
             child.name
           )
-
-        // ======================================
-        // POUR STREAM
-        //
-        // IMPORTANT:
-        // Same logic as your working
-        // PourFromGraduatedCylinder.
-        // ======================================
-
-        if (
-          child.isMesh &&
-          name.includes(
-            "pour"
-          )
-        ) {
-          if (
-            !foundPourMeshes.has(
-              child
-            )
-          ) {
-            foundPourMeshes.add(
-              child
-            )
-
-            pourMeshes.push({
-              object:
-                child,
-
-              originalScale:
-                child.scale.clone(),
-
-              originalVisible:
-                child.visible,
-
-              originalFrustumCulled:
-                child.frustumCulled,
-            })
-          }
-
-          return
-        }
-
-        // ======================================
-        // SOURCE LIQUID
-        // ======================================
 
         const isConicalUpper =
           normalizedName.includes(
@@ -539,11 +536,8 @@ const PourFromModel = ({
     )
 
     // ==========================================
-    // STORE REFS
+    // STORE LIQUID REFS
     // ==========================================
-
-    pourMeshesRef.current =
-      pourMeshes
 
     sourceLiquidsRef.current =
       sourceLiquids
@@ -551,39 +545,39 @@ const PourFromModel = ({
     receivingLiquidsRef.current =
       receivingLiquids
 
-    progressRef.current = 0
+    progressRef.current =
+      0
 
-    finishedRef.current = false
+    finishedRef.current =
+      false
 
     // ==========================================
     // INITIAL POUR STREAM
     // ==========================================
 
-    pourMeshes.forEach(
-      ({
-        object,
-      }) => {
-        object.visible =
-          false
-
-        object.frustumCulled =
-          false
-
-        // Same as working graduated-cylinder code:
-        // only Y becomes 0.
-        object.scale.y = 0
-
-        object.updateMatrix()
-        object.updateMatrixWorld(
-          true
-        )
-      }
-    )
-
     if (
-      pourMeshes.length ===
-      0
+      pourMeshRef.current
     ) {
+      const {
+        object,
+      } =
+        pourMeshRef.current
+
+      object.visible =
+        false
+
+      object.frustumCulled =
+        false
+
+      object.scale.y =
+        0
+
+      object.updateMatrix()
+
+      object.updateMatrixWorld(
+        true
+      )
+    } else {
       console.error(
         "[PourFromModel] No pour mesh found.",
         sourceModel.name
@@ -621,25 +615,31 @@ const PourFromModel = ({
       // RESTORE POUR STREAM
       // ========================================
 
-      pourMeshes.forEach(
-        (
-          item
-        ) => {
-          item.object.scale.copy(
-            item.originalScale
-          )
+      if (
+        pourMeshRef.current
+      ) {
+        const {
+          object,
+          originalScale,
+          originalVisible,
+          originalFrustumCulled,
+        } =
+          pourMeshRef.current
 
-          item.object.visible =
-            item.originalVisible
+        object.scale.copy(
+          originalScale
+        )
 
-          item.object.frustumCulled =
-            item.originalFrustumCulled
+        object.visible =
+          originalVisible
 
-          item.object.updateMatrixWorld(
-            true
-          )
-        }
-      )
+        object.frustumCulled =
+          originalFrustumCulled
+
+        object.updateMatrixWorld(
+          true
+        )
+      }
 
       // ========================================
       // SOURCE FINAL STATE
@@ -749,8 +749,8 @@ const PourFromModel = ({
         }
       )
 
-      pourMeshesRef.current =
-        []
+      pourMeshRef.current =
+        null
 
       sourceLiquidsRef.current =
         []
@@ -1242,6 +1242,7 @@ const PourFromModel = ({
           )
 
           object.updateMatrix()
+
           object.updateMatrixWorld(
             true
           )
@@ -1250,9 +1251,6 @@ const PourFromModel = ({
 
       // ========================================
       // POUR STREAM
-      //
-      // SAME LOGIC AS WORKING
-      // PourFromGraduatedCylinder.
       // ========================================
 
       const showPourStream =
@@ -1261,55 +1259,60 @@ const PourFromModel = ({
         ) &&
         !finishedRef.current
 
-      pourMeshesRef.current.forEach(
-        ({
-          object,
-        }) => {
-          if (
-            showPourStream
-          ) {
-            object.visible =
-              true
+      const pourData =
+        pourMeshRef.current
 
-            object.frustumCulled =
-              false
+      if (
+        pourData?.object
+      ) {
+        const object =
+          pourData.object
 
-            object.scale.y =
-              Math.min(
-                object.scale.y +
-                  delta *
-                    speed,
-
-                pourScale
-              )
-          } else {
-            object.scale.y =
-              Math.max(
-                object.scale.y -
-                  delta *
-                    speed,
-
-                0
-              )
-
-            if (
-              object.scale.y <=
-              0
-            ) {
-              object.scale.y =
-                0
-
-              object.visible =
-                false
-            }
-          }
-
-          object.updateMatrix()
-          object.updateMatrixWorld(
+        if (
+          showPourStream
+        ) {
+          object.visible =
             true
-          )
+
+          object.frustumCulled =
+            false
+
+          object.scale.y =
+            Math.min(
+              object.scale.y +
+                delta *
+                  speed,
+
+              pourScale
+            )
+        } else {
+          object.scale.y =
+            Math.max(
+              object.scale.y -
+                delta *
+                  speed,
+
+              0
+            )
+
+          if (
+            object.scale.y <=
+            0
+          ) {
+            object.scale.y =
+              0
+
+            object.visible =
+              false
+          }
         }
-      )
+
+        object.updateMatrix()
+
+        object.updateMatrixWorld(
+          true
+        )
+      }
     }
   )
 

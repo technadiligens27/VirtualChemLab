@@ -19,6 +19,7 @@ import {
 } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import PourFromModel from "../Pouring/PourFromModel/PourFromModel"
+import PourFromGraduatedCylinder from "../Pouring/PourFromGraduatedCylinder/PourFromGraduatedCylinder"
 
 const PourModeDeliveryTube = ({
   modelRef,
@@ -525,11 +526,10 @@ const PourModeDeliveryTube = ({
 
       />}
       {
-        selectedLesson ===14.1 && lessonStep ===49 && <PourFromModel
+        selectedLesson ===14.1 && lessonStep ===49 && <PourFromGraduatedCylinder
         modelRef={graduatedBeakerRef}
         otherModelRef={seperatingFunnelRef}
         isPouring={isPouring}
-        pourScale={1}
         />
       }
 

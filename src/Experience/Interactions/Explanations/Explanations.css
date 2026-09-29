@@ -2,13 +2,9 @@
   position: fixed;
   inset: 0;
 
-  /* background-color: rgba(20, 15, 40, 0.25);
-
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px); */
-
   z-index: 9998;
 }
+
 
 .explanation-container {
   position: absolute;
@@ -24,26 +20,43 @@
   overflow: hidden;
 
   box-sizing: border-box;
-  padding-bottom: 50px;
 
-  animation: explanationEnter 0.5s ease-out forwards;
+  padding-bottom: 10px;
+
+  animation:
+    explanationEnter
+    0.5s
+    ease-out
+    forwards;
 }
+
 
 @keyframes explanationEnter {
   from {
     opacity: 0;
-    transform: translateY(15px) scale(0.96);
+
+    transform:
+      translateY(15px)
+      scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+
+    transform:
+      translateY(0)
+      scale(1);
   }
 }
 
+
+/* ================================= */
+/* HEADER */
+/* ================================= */
+
 .explanation-header {
   width: 100%;
-  min-height: 22%;
+  min-height: 18%;
 
   display: flex;
   align-items: center;
@@ -51,86 +64,189 @@
   background-color: #FFC01B;
 }
 
+
 .explanation-header h1 {
   width: 100%;
 
   margin: 0;
+
   padding-left: 20px;
 
-  font-family: "Reem Kufi", sans-serif;
+  font-family:
+    "Reem Kufi",
+    sans-serif;
+
   font-size: 19px;
+
   color: white;
 
   text-align: left;
 }
 
-.explanation-paragraph {
-  padding: 0 20px;
 
-  font-size: 19px;
+/* ================================= */
+/* TEXT AREA */
+/* ================================= */
+
+.explanation-paragraph-container {
+  position: relative;
+
+  flex: 1;
+
+  overflow: hidden;
 }
+
+
+.explanation-paragraph {
+  padding:
+    0
+    20px;
+}
+
 
 .explanation-paragraph p {
-  margin: 16px 0;
+  margin:
+    16px
+    0;
 
-  font-family: "Reem Kufi", sans-serif;
+  font-family:
+    "Reem Kufi",
+    sans-serif;
+
+  font-size: 19px;
+
   color: #51514C;
-  font-weight: 100;
-    line-height: 183%;
 
+  font-weight: 100;
+
+  line-height: 183%;
 }
+
+
+.explanation-paragraph strong {
+  font-weight: bold;
+
+  color: #000000;
+}
+
+
+/* ================================= */
+/* SLIDE-IN ANIMATION */
+/* ================================= */
+
+.explanation-slide-in {
+  animation:
+    explanationSlideIn
+    0.45s
+    ease-out
+    forwards;
+}
+
+
+@keyframes explanationSlideIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(0);
+  }
+}
+
+
+/* ================================= */
+/* BUTTONS */
+/* ================================= */
 
 .explanation-btn-container {
-  padding-left: 20px;
+  padding:
+    0
+    20px;
+
+  display: flex;
+
+  gap: 10px;
+
 }
+
 
 .explanation-btn-container button {
   width: 140px;
   height: 30px;
 
   background-color: #FFC01B;
+
   color: white;
+
   border: none;
+
   border-radius: 7px;
 
-  font-family: "Reem Kufi", sans-serif;
+  font-family:
+    "Reem Kufi",
+    sans-serif;
 
   cursor: pointer;
 
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+
 }
+
 
 .explanation-btn-container button:hover {
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.15);
+    0 4px 10px
+    rgba(
+      0,
+      0,
+      0,
+      0.15
+    );
 }
 
+
 .explanation-btn-container button:active {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
+
+
+/* ================================= */
+/* CLOSE ICON */
+/* ================================= */
 
 .explanation-container img {
   width: 25px;
+
   margin-right: 10px;
 
   cursor: pointer;
 
-  transition: transform 0.2s ease;
+  transition:
+    transform
+    0.2s
+    ease;
 }
+
 
 .explanation-container img:hover {
-  transform: scale(1.1);
+  transform:
+    scale(1.1);
 }
+
 
 .explanation-container img:active {
-  transform: scale(0.95);
-}
-
-.explanation-paragraph strong {
-  font-weight: bold;
-  color: #000000;
+  transform:
+    scale(0.95);
 }

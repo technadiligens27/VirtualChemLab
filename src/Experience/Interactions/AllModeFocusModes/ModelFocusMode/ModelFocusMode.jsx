@@ -16,7 +16,8 @@ const FOCUS_LAYER = 31
 
 
 const ModelFocusMode = ({
-  modelRef,
+  modelRef = null,
+  modelRefs = [],
 
   active = true,
 
@@ -27,11 +28,11 @@ const ModelFocusMode = ({
   blurStrength = 2.5,
 
   // Tint applied to blurred background
-  blurColor="#f2ebeb",
+  blurColor = "#f2ebeb",
 
   // 0 = no tint
   // 1 = full tint colour
-  blurColorStrength=0.1,
+  blurColorStrength = 0.1,
 
   // Seconds for the WHOLE blur effect to fade in
   transitionTime = 0.5,
@@ -41,6 +42,39 @@ const ModelFocusMode = ({
     scene,
     camera,
   } = useThree()
+
+
+  // =============================================
+  // COMBINE SINGLE + MULTIPLE MODEL REFS
+  // =============================================
+
+  const focusedModelRefs =
+    useMemo(() => {
+      const refs = []
+
+      if (modelRef) {
+        refs.push(
+          modelRef
+        )
+      }
+
+      if (
+        Array.isArray(
+          modelRefs
+        )
+      ) {
+        refs.push(
+          ...modelRefs
+        )
+      }
+
+      return refs.filter(
+        Boolean
+      )
+    }, [
+      modelRef,
+      modelRefs,
+    ])
 
 
   // =============================================
@@ -70,9 +104,11 @@ const ModelFocusMode = ({
           format:
             THREE.RGBAFormat,
 
-          depthBuffer: true,
+          depthBuffer:
+            true,
 
-          stencilBuffer: false,
+          stencilBuffer:
+            false,
         }
       )
     }, [])
@@ -97,9 +133,11 @@ const ModelFocusMode = ({
           format:
             THREE.RGBAFormat,
 
-          depthBuffer: false,
+          depthBuffer:
+            false,
 
-          stencilBuffer: false,
+          stencilBuffer:
+            false,
         }
       )
     }, [])
@@ -320,11 +358,14 @@ const ModelFocusMode = ({
         `,
 
 
-        transparent: true,
+        transparent:
+          true,
 
-        depthTest: false,
+        depthTest:
+          false,
 
-        depthWrite: false,
+        depthWrite:
+          false,
 
         blending:
           THREE.NormalBlending,
@@ -428,7 +469,7 @@ const ModelFocusMode = ({
       0
   }, [
     active,
-    modelRef,
+    focusedModelRefs,
     verticalBlurMaterial,
   ])
 
@@ -472,14 +513,18 @@ const ModelFocusMode = ({
       .uniforms
       .blurColor
       .value
-      .copy(color)
+      .copy(
+        color
+      )
 
 
     verticalBlurMaterial
       .uniforms
       .blurColor
       .value
-      .copy(color)
+      .copy(
+        color
+      )
 
 
     horizontalBlurMaterial
@@ -507,7 +552,7 @@ const ModelFocusMode = ({
 
 
   // =============================================
-  // SET FOCUSED MODEL LAYER
+  // SET FOCUSED MODEL LAYERS
   // =============================================
 
   useEffect(() => {
@@ -516,11 +561,23 @@ const ModelFocusMode = ({
     }
 
 
-    const model =
-      modelRef?.current
+    const models =
+      focusedModelRefs
+        .map(
+          (
+            ref
+          ) =>
+            ref?.current
+        )
+        .filter(
+          Boolean
+        )
 
 
-    if (!model) {
+    if (
+      models.length ===
+      0
+    ) {
       return
     }
 
@@ -530,19 +587,33 @@ const ModelFocusMode = ({
 
 
     // =========================================
-    // MODEL
+    // MODELS
     // =========================================
 
-    model.traverse(
-      (child) => {
-        originalModelLayersRef.current.set(
-          child,
-          child.layers.mask
-        )
+    models.forEach(
+      (
+        model
+      ) => {
+        model.traverse(
+          (
+            child
+          ) => {
+            if (
+              !originalModelLayersRef.current.has(
+                child
+              )
+            ) {
+              originalModelLayersRef.current.set(
+                child,
+                child.layers.mask
+              )
+            }
 
 
-        child.layers.enable(
-          FOCUS_LAYER
+            child.layers.enable(
+              FOCUS_LAYER
+            )
+          }
         )
       }
     )
@@ -553,16 +624,26 @@ const ModelFocusMode = ({
     // =========================================
 
     scene.traverse(
-      (child) => {
-        if (!child.isLight) {
+      (
+        child
+      ) => {
+        if (
+          !child.isLight
+        ) {
           return
         }
 
 
-        originalLightLayersRef.current.set(
-          child,
-          child.layers.mask
-        )
+        if (
+          !originalLightLayersRef.current.has(
+            child
+          )
+        ) {
+          originalLightLayersRef.current.set(
+            child,
+            child.layers.mask
+          )
+        }
 
 
         child.layers.enable(
@@ -601,6 +682,7 @@ const ModelFocusMode = ({
 
       originalModelLayersRef.current.clear()
 
+
       originalLightLayersRef.current.clear()
 
 
@@ -614,7 +696,7 @@ const ModelFocusMode = ({
     }
   }, [
     active,
-    modelRef,
+    focusedModelRefs,
     scene,
     camera,
   ])
@@ -646,25 +728,42 @@ const ModelFocusMode = ({
   // =============================================
 
   useFrame(
-    (_, delta) => {
+    (
+      _,
+      delta
+    ) => {
       if (!active) {
         return
       }
 
 
-      const model =
-        modelRef?.current
+      const models =
+        focusedModelRefs
+          .map(
+            (
+              ref
+            ) =>
+              ref?.current
+          )
+          .filter(
+            Boolean
+          )
 
 
-      if (!model) {
+      if (
+        models.length ===
+        0
+      ) {
         gl.setRenderTarget(
           null
         )
+
 
         gl.render(
           scene,
           camera
         )
+
 
         return
       }
@@ -740,7 +839,6 @@ const ModelFocusMode = ({
       const resolutionScale =
         Math.min(
           1,
-
           blurResolution /
             screenHeight
         )
@@ -749,7 +847,6 @@ const ModelFocusMode = ({
       const targetWidth =
         Math.max(
           1,
-
           Math.floor(
             screenWidth *
               resolutionScale
@@ -760,7 +857,6 @@ const ModelFocusMode = ({
       const targetHeight =
         Math.max(
           1,
-
           Math.floor(
             screenHeight *
               resolutionScale
@@ -991,7 +1087,7 @@ const ModelFocusMode = ({
       // =========================================
       // PASS 6
       //
-      // SHARP FOCUSED MODEL ON TOP
+      // SHARP FOCUSED MODELS ON TOP
       // =========================================
 
       gl.clearDepth()
@@ -1032,11 +1128,15 @@ const ModelFocusMode = ({
     return () => {
       firstRenderTarget.dispose()
 
+
       secondRenderTarget.dispose()
+
 
       horizontalBlurMaterial.dispose()
 
+
       verticalBlurMaterial.dispose()
+
 
       fullscreenQuad.geometry.dispose()
     }

@@ -537,7 +537,7 @@ else if (
   }
   else if(selectedLesson===14.3 && selectedAmount===5){
     amountRef.current = 0.14
-    speedRef.current = 0.1
+    speedRef.current = 0.106699
   }
   else{
   amountRef.current =

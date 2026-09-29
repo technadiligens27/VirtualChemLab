@@ -113,7 +113,19 @@ const ChlorinationLesson04 = () => {
     
   },[selectedLesson,lessonStep])
 
-
+  useEffect(() => {
+  if (
+    lessonStep === 111 && conicalBeakerRef02?.current && conicalFlask02OriginalStateRef?.current) {
+    setSelectedLeftHand({
+      hand: "left",
+      name: conicalBeakerRef02.current.name,
+      ref: conicalBeakerRef02,
+      originalParent: conicalFlask02OriginalStateRef.current.parent,
+      originalPosition: conicalFlask02OriginalStateRef.current.position.clone(),
+      originalRotation: conicalFlask02OriginalStateRef.current.rotation.clone(),
+    })
+  }
+}, [lessonStep])
 
 
 useEffect(() => {
