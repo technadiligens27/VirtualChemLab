@@ -53,6 +53,7 @@ const ModelFocusLesson14 = ()=>{
         {lessonStep==143 && <ModelFocusMode modelRef={normalBeakerRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==150 && <ModelFocusMode modelRef={mainDropperRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==156 && <ModelFocusMode modelRef={mainDropperRef} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==158 && <ModelFocusMode modelRef={testube02Ref} blurResolution={360} blurStrength={3}/> } 
 
         </>
     )

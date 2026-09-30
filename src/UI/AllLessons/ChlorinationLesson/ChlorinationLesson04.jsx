@@ -342,7 +342,7 @@ useEffect(() => {
         />}        
         {lessonStep ==96 && <DialogBox text={
           <>
-            Press <strong>P</strong> to Enter <strong>Pour Mode</strong>
+            <strong>Scroll Down</strong> to  <strong>Pour</strong>
 
           </>
           } 

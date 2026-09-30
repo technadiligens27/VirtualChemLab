@@ -41,7 +41,7 @@ const PipetteRubberAnimation = ({
     InteractionContext
   )
 
-  const {graduatedPipetteRef} = useContext(ModelContext)
+  const {graduatedPipetteRef,testube02Ref} = useContext(ModelContext)
 
   const [isFullySqueezed,setIsFullySqueezed] = useState(false)
 
@@ -286,6 +286,10 @@ const PipetteRubberAnimation = ({
         reduceModelLiquid = {true}
         reduceModelLiquidAmount={0}
         loopTimes={4}
+        otherModelIncrease={true}
+         otherModelRefEndAmount={45}
+         otherModelRef={testube02Ref}
+        otherModelLiquidOpacity={0.35} 
         />)}
     
     </>

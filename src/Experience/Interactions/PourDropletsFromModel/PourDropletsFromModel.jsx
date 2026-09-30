@@ -11,10 +11,37 @@ import {
 import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
-import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+
+import {
+  InteractionContext,
+} from "../../../Contexts/InteractionContext/InteractionContext"
+
 
 const PourDropletsFromModel = ({
   modelRef,
+
+  // =========================================
+  // OTHER MODEL
+  // =========================================
+
+  otherModelRef,
+
+  // Should other model liquid change?
+  otherModelIncrease= false,
+
+  // Final Y scale of other model liquid
+  otherModelRefEndAmount = 1,
+
+  // Other model liquid colour
+  otherModelLiquidColour = "#ffffff",
+
+  // Other model liquid opacity
+  otherModelLiquidOpacity = 1,
+
+
+  // =========================================
+  // DROPLET SETTINGS
+  // =========================================
 
   fallDistance = 0.8,
   fallTime = 0.7,
@@ -27,12 +54,18 @@ const PourDropletsFromModel = ({
 
   loopTimes = 10,
 
+
+  // =========================================
+  // SOURCE MODEL LIQUID
+  // =========================================
+
   // Reduce source model liquid
   reduceModelLiquid = false,
 
-  // How much Y scale should be reduced
+  // Final Y scale of source liquid
   reduceModelLiquidAmount = 0,
 }) => {
+
   const {
     selectedLesson,
     lessonStep,
@@ -41,7 +74,17 @@ const PourDropletsFromModel = ({
     MainGuidelineContext
   )
 
-  const {setIsChlorideIonReaction} = useContext(InteractionContext)
+
+  const {
+    setIsChlorideIonReaction,
+  } = useContext(
+    InteractionContext
+  )
+
+
+  // =========================================
+  // REFS
+  // =========================================
 
   const dropletsRef =
     useRef([])
@@ -52,6 +95,11 @@ const PourDropletsFromModel = ({
   const hasAdvancedRef =
     useRef(false)
 
+
+  // =========================================
+  // SOURCE LIQUID
+  // =========================================
+
   const liquidRef =
     useRef(null)
 
@@ -60,24 +108,56 @@ const PourDropletsFromModel = ({
 
 
   // =========================================
+  // OTHER MODEL LIQUID
+  // =========================================
+
+  const otherLiquidRef =
+    useRef(null)
+
+  const originalOtherLiquidScaleYRef =
+    useRef(null)
+
+
+  // =========================================
   // INITIALIZE
   // =========================================
 
   useEffect(() => {
+
     const model =
       modelRef?.current
 
     if (!model) return
 
+
     const droplets = []
 
-    liquidRef.current = null
-    originalLiquidScaleYRef.current = null
 
+    // Reset source
+    liquidRef.current =
+      null
+
+    originalLiquidScaleYRef.current =
+      null
+
+
+    // Reset other model
+    otherLiquidRef.current =
+      null
+
+    originalOtherLiquidScaleYRef.current =
+      null
+
+
+    // =========================================
+    // TRAVERSE SOURCE MODEL
+    // =========================================
 
     model.traverse((child) => {
+
       const name =
-        child.name?.toLowerCase() ||
+        child.name
+          ?.toLowerCase() ||
         ""
 
 
@@ -85,52 +165,85 @@ const PourDropletsFromModel = ({
       // FIND DROPLETS
       // =========================================
 
-  if (
-      name.includes("droplet")
-    ) {
-      child.traverse((mesh) => {
-        if (!mesh.isMesh) return
+      if (
+        name.includes(
+          "droplet"
+        )
+      ) {
 
-        if (Array.isArray(mesh.material)) {
-          mesh.material =
-            mesh.material.map(
-              (material) => {
-                const cloned =
-                  material.clone()
+        child.traverse(
+          (mesh) => {
 
-                cloned.transparent = true
+            if (
+              !mesh.isMesh
+            ) {
+              return
+            }
 
-                return cloned
-              }
-            )
-        } else if (mesh.material) {
-          mesh.material =
-            mesh.material.clone()
 
-          mesh.material.transparent =
-            true
-        }
-      })
+            // =========================================
+            // CLONE DROPLET MATERIAL
+            // =========================================
 
-      droplets.push({
-        object: child,
+            if (
+              Array.isArray(
+                mesh.material
+              )
+            ) {
 
-        startPosition:
-          child.position.clone(),
-      })
+              mesh.material =
+                mesh.material.map(
+                  (material) => {
 
-      child.visible = true
-    }
+                    const cloned =
+                      material.clone()
+
+                    cloned.transparent =
+                      true
+
+                    return cloned
+                  }
+                )
+
+            } else if (
+              mesh.material
+            ) {
+
+              mesh.material =
+                mesh.material.clone()
+
+              mesh.material.transparent =
+                true
+            }
+          }
+        )
+
+
+        droplets.push({
+          object:
+            child,
+
+          startPosition:
+            child.position.clone(),
+        })
+
+
+        child.visible =
+          true
+      }
 
 
       // =========================================
-      // FIND LIQUID
+      // FIND SOURCE LIQUID
       // =========================================
 
       if (
         child.isMesh &&
-        name.includes("liquid")
+        name.includes(
+          "liquid"
+        )
       ) {
+
         liquidRef.current =
           child
 
@@ -139,6 +252,116 @@ const PourDropletsFromModel = ({
       }
     })
 
+
+    // =========================================
+    // TRAVERSE OTHER MODEL
+    // =========================================
+
+    const otherModel =
+      otherModelRef?.current
+
+
+    if (otherModel) {
+
+      otherModel.traverse(
+        (child) => {
+
+          const name =
+            child.name
+              ?.toLowerCase() ||
+            ""
+
+
+          if (
+            child.isMesh &&
+            name.includes(
+              "liquid"
+            )
+          ) {
+
+            otherLiquidRef.current =
+              child
+
+            originalOtherLiquidScaleYRef.current =
+              child.scale.y
+
+
+            // =========================================
+            // CLONE + CHANGE OTHER LIQUID MATERIAL
+            // =========================================
+
+            if (
+              Array.isArray(
+                child.material
+              )
+            ) {
+
+              child.material =
+                child.material.map(
+                  (material) => {
+
+                    const cloned =
+                      material.clone()
+
+
+                    if (
+                      cloned.color
+                    ) {
+                      cloned.color.set(
+                        otherModelLiquidColour
+                      )
+                    }
+
+
+                    cloned.transparent =
+                      true
+
+                    cloned.opacity =
+                      otherModelLiquidOpacity
+
+                    cloned.needsUpdate =
+                      true
+
+
+                    return cloned
+                  }
+                )
+
+            } else if (
+              child.material
+            ) {
+
+              child.material =
+                child.material.clone()
+
+
+              if (
+                child.material.color
+              ) {
+                child.material.color.set(
+                  otherModelLiquidColour
+                )
+              }
+
+
+              child.material.transparent =
+                true
+
+              child.material.opacity =
+                otherModelLiquidOpacity
+
+              child.material.needsUpdate =
+                true
+            }
+          }
+        }
+      )
+    }
+
+
+    // =========================================
+    // STORE DROPLETS
+    // =========================================
 
     dropletsRef.current =
       droplets
@@ -155,8 +378,14 @@ const PourDropletsFromModel = ({
     // =========================================
 
     return () => {
+
+      // =========================================
+      // RESTORE DROPLETS
+      // =========================================
+
       droplets.forEach(
         (droplet) => {
+
           droplet.object.position.copy(
             droplet.startPosition
           )
@@ -164,27 +393,63 @@ const PourDropletsFromModel = ({
       )
 
 
-      // Restore liquid scale
-      if (
-        liquidRef.current &&
-        originalLiquidScaleYRef.current !==
-          null
-      ) {
-        liquidRef.current.scale.y =
-          originalLiquidScaleYRef.current
+      // =========================================
+      // RESTORE SOURCE LIQUID SCALE
+      // =========================================
 
-        liquidRef.current.updateMatrixWorld(
-          true
-        )
-      }
+      // if (
+      //   liquidRef.current &&
+      //   originalLiquidScaleYRef.current !==
+      //     null
+      // ) {
 
-      liquidRef.current = null
+      //   liquidRef.current.scale.y =
+      //     originalLiquidScaleYRef.current
+
+      //   liquidRef.current.updateMatrixWorld(
+      //     true
+      //   )
+      // }
+
+
+      // =========================================
+      // RESTORE OTHER MODEL LIQUID SCALE
+      // =========================================
+
+      // if (
+      //   otherLiquidRef.current &&
+      //   originalOtherLiquidScaleYRef.current !==
+      //     null
+      // ) {
+
+      //   otherLiquidRef.current.scale.y =
+      //     originalOtherLiquidScaleYRef.current
+
+      //   otherLiquidRef.current.updateMatrixWorld(
+      //     true
+      //   )
+      // }
+
+
+      liquidRef.current =
+        null
 
       originalLiquidScaleYRef.current =
         null
+
+
+      otherLiquidRef.current =
+        null
+
+      originalOtherLiquidScaleYRef.current =
+        null
     }
+
   }, [
     modelRef,
+    otherModelRef,
+    otherModelLiquidColour,
+    otherModelLiquidOpacity,
   ])
 
 
@@ -193,10 +458,16 @@ const PourDropletsFromModel = ({
   // =========================================
 
   useFrame((_, delta) => {
+
     const droplets =
       dropletsRef.current
 
-    if (!droplets.length) return
+
+    if (
+      !droplets.length
+    ) {
+      return
+    }
 
 
     elapsedTimeRef.current +=
@@ -292,6 +563,25 @@ const PourDropletsFromModel = ({
 
 
     // =========================================
+    // OVERALL ANIMATION PROGRESS
+    // =========================================
+
+    let overallProgress =
+      0
+
+
+    if (hasLoopLimit) {
+
+      overallProgress =
+        Math.min(
+          animationTime /
+            totalLoopTime,
+          1
+        )
+    }
+
+
+    // =========================================
     // FALL AXIS
     // =========================================
 
@@ -311,63 +601,87 @@ const PourDropletsFromModel = ({
     // MOVE DROPLETS
     // =========================================
 
-   // =========================================
-// MOVE DROPLETS
-// =========================================
+    droplets.forEach(
+      ({
+        object,
+        startPosition,
+      }) => {
 
-droplets.forEach(
-  ({
-    object,
-    startPosition,
-  }) => {
-    object.position.copy(
-      startPosition
+        object.position.copy(
+          startPosition
+        )
+
+
+        object.position[
+          axis
+        ] -=
+          fallDistance *
+          fallProgress
+
+
+        object.visible =
+          true
+
+
+        // =========================================
+        // FADE DROPLETS
+        // =========================================
+
+        object.traverse(
+          (child) => {
+
+            if (
+              !child.isMesh
+            ) {
+              return
+            }
+
+
+            const material =
+              child.material
+
+
+            if (!material) {
+              return
+            }
+
+
+            const materials =
+              Array.isArray(
+                material
+              )
+                ? material
+                : [material]
+
+
+            materials.forEach(
+              (mat) => {
+
+                mat.transparent =
+                  true
+
+
+                mat.opacity =
+                  isFalling
+                    ? 1 -
+                      fallProgress
+                    : 0
+
+
+                mat.needsUpdate =
+                  true
+              }
+            )
+          }
+        )
+
+
+        object.updateMatrixWorld(
+          true
+        )
+      }
     )
 
-    object.position[
-      axis
-    ] -=
-      fallDistance *
-      fallProgress
-
-    object.visible = true
-
-    object.traverse((child) => {
-      if (!child.isMesh) return
-
-      const material =
-        child.material
-
-      if (!material) return
-
-      const materials =
-        Array.isArray(material)
-          ? material
-          : [material]
-
-      materials.forEach(
-        (mat) => {
-          mat.transparent = true
-
-          mat.opacity =
-            isFalling
-              ? 1 - fallProgress
-              : 0
-
-          mat.needsUpdate = true
-        }
-      )
-    })
-
-    object.updateMatrixWorld(
-      true
-    )
-  }
-)
-
-    // =========================================
-    // REDUCE SOURCE LIQUID
-    // =========================================
 
     // =========================================
     // REDUCE SOURCE LIQUID
@@ -376,23 +690,17 @@ droplets.forEach(
     if (
       reduceModelLiquid &&
       liquidRef.current &&
-      originalLiquidScaleYRef.current !== null
+      originalLiquidScaleYRef.current !==
+        null
     ) {
-      let overallProgress = 0
-
-      if (hasLoopLimit) {
-        overallProgress =
-          Math.min(
-            animationTime / totalLoopTime,
-            1
-          )
-      }
 
       const originalScaleY =
         originalLiquidScaleYRef.current
 
+
       const targetScaleY =
         reduceModelLiquidAmount
+
 
       const newScaleY =
         originalScaleY +
@@ -400,12 +708,57 @@ droplets.forEach(
           targetScaleY -
           originalScaleY
         ) *
-        overallProgress
+          overallProgress
+
 
       liquidRef.current.scale.y =
         newScaleY
 
+
       liquidRef.current.updateMatrixWorld(
+        true
+      )
+    }
+
+
+    // =========================================
+    // CHANGE OTHER MODEL LIQUID
+    // =========================================
+
+    if (
+      otherModelIncrease &&
+      otherLiquidRef.current &&
+      originalOtherLiquidScaleYRef.current !==
+        null
+    ) {
+
+      const originalScaleY =
+        originalOtherLiquidScaleYRef.current
+
+
+      const targetScaleY =
+        otherModelRefEndAmount
+
+
+      const newScaleY =
+        originalScaleY +
+        (
+          targetScaleY -
+          originalScaleY
+        ) *
+          overallProgress
+
+
+      otherLiquidRef.current.scale.y =
+        newScaleY
+
+
+      // Make sure other liquid is visible
+      otherLiquidRef.current.visible =
+        true
+
+
+      otherLiquidRef.current.updateMatrixWorld(
         true
       )
     }
@@ -415,27 +768,85 @@ droplets.forEach(
     // LESSON STEP
     // =========================================
 
-    if (hasFinished &&!hasAdvancedRef.current &&selectedLesson === 14.3 && lessonStep === 109) {
-      hasAdvancedRef.current = true
-      setLessonStep(110)
+    if (
+      hasFinished &&
+      !hasAdvancedRef.current &&
+      selectedLesson ===
+        14.3 &&
+      lessonStep ===
+        109
+    ) {
+
+      hasAdvancedRef.current =
+        true
+
+      setLessonStep(
+        110
+      )
     }
-    if (hasFinished &&!hasAdvancedRef.current &&selectedLesson === 14.4 && lessonStep === 137) {
-      hasAdvancedRef.current = true
-      setLessonStep(138)
+
+
+    if (
+      hasFinished &&
+      !hasAdvancedRef.current &&
+      selectedLesson ===
+        14.4 &&
+      lessonStep ===
+        137
+    ) {
+
+      hasAdvancedRef.current =
+        true
+
+      setLessonStep(
+        138
+      )
     }
-    if (hasFinished &&!hasAdvancedRef.current &&selectedLesson === 14.4 && lessonStep === 151) {
-      hasAdvancedRef.current = true
-      setLessonStep(152)
+
+
+    if (
+      hasFinished &&
+      !hasAdvancedRef.current &&
+      selectedLesson ===
+        14.4 &&
+      lessonStep ===
+        151
+    ) {
+
+      hasAdvancedRef.current =
+        true
+
+      setLessonStep(
+        152
+      )
     }
-    if (hasFinished &&!hasAdvancedRef.current &&selectedLesson === 14.4 && lessonStep === 157) {
-      hasAdvancedRef.current = true
-      setLessonStep(158);
-      setIsChlorideIonReaction(true)
+
+
+    if (
+      hasFinished &&
+      !hasAdvancedRef.current &&
+      selectedLesson ===
+        14.4 &&
+      lessonStep ===
+        157
+    ) {
+
+      hasAdvancedRef.current =
+        true
+
+      setLessonStep(
+        158
+      )
+
+      setIsChlorideIonReaction(
+        true
+      )
     }
   })
 
 
   return null
 }
+
 
 export default PourDropletsFromModel

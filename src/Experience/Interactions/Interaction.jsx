@@ -339,7 +339,7 @@ useEffect(() => {
       {[14.2,14.3].includes(selectedLesson) && lessonStep>=83 && lessonStep<98 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)}
       {/* {selectedLesson==14.3 && lessonStep>=85 && lessonStep<98 &&  isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.3} modelZOffset={0} modelRef={conicalBeakerRef02}/>)} */}
       {selectedLesson==14.3 && lessonStep>=98 && lessonStep<106.1 &&isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-0.1} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
-      {selectedLesson==14.3 && lessonStep>=106.1 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
+      {[14.3,14.4].includes(selectedLesson) && lessonStep>=106.1 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
       {selectedLesson==14.3 && lessonStep>=107 && lessonStep<110 &&isModelCentre && (<PlaceModelCentre modelZScale={1}  modelYScale={1} modelXScale={1} modelXOffset={6} modelZOffset={2.5}  modelRef={conicalBeakerRef02}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
@@ -498,7 +498,7 @@ useEffect(() => {
         selectedLesson==14.3 && lessonStep==109 && <PourDropletsFromModel fallDistance={1.5} startDelay = {6} modelRef={condensorRef} loopTimes={5}/>
       }      
       {selectedLesson==14.3 && lessonStep>=109 && lessonStep<112 && (
-        <FillConicalBeaker02 modelRef={conicalBeakerRef02}  amount={0.4}  colorUpper="#ffffff" colorBottom="#ffffff"/>
+        <FillConicalBeaker02 startDelay={7} modelRef={conicalBeakerRef02}  amount={0.4}  colorUpper="#ffffff" colorBottom="#ffffff"/>
       )}      
       {
         selectedLesson==14.3 && lessonStep==112 && <PouringMode02 
@@ -518,9 +518,9 @@ useEffect(() => {
         selectedLesson==14.3 && lessonStep==131 && <PouringMode02 
         pourModelRef={graduatedBeakerRef}
          receiveModelRef={testube02Ref}
-         pourModelXOffset = {-1.2}
+         pourModelXOffset = {-1.5}
          pourModelYOffset = {-1}
-         pourModelScale={1.5}
+         pourModelScale={1}
          receiveModelScale={0.7}
          hand={"right"}
          pourModelYRotation = {Math.PI}

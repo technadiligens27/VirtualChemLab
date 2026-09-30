@@ -91,6 +91,10 @@ const ChlorinationLesson05 = ()=>{
      if(graduatedPipetteRef.current){
       graduatedPipetteRef.current.visible = true
      }
+
+     if(roundBeakerRef.current){
+      roundBeakerRef.current.visible = false
+     }
   },[selectedLesson])  
 
   useEffect(()=>{
@@ -104,9 +108,9 @@ const ChlorinationLesson05 = ()=>{
         testube02Ref.current.traverse((child)=>{
             if(child.isMesh && child.name.includes("liquid")){
                 child.visible = true
-                child.scale.y = 53
                 child.material.opacity = 0.35
                 child.material.transparent = true
+                child.scale.y = 39                
             }
         })
     }
@@ -321,7 +325,7 @@ const ChlorinationLesson05 = ()=>{
 
           {lessonStep ==158 && <DialogBox text={
           <>
-           158
+           Lesson Finished!!
           </>
           } 
         />} 

@@ -20,6 +20,9 @@ const FillConicalBeaker02 = ({
   colorUpper = "#ffffff",
   colorBottom = "#ffffff",
   speed = 2,
+
+  // Seconds before filling starts
+  startDelay = 0,
 }) => {
   const {
     conicalBeakerRef02,
@@ -28,6 +31,14 @@ const FillConicalBeaker02 = ({
   const liquidsRef =
     useRef([])
 
+  const elapsedTimeRef =
+    useRef(0)
+
+
+  // =========================================
+  // INITIALIZE
+  // =========================================
+
   useEffect(() => {
     const beaker =
       conicalBeakerRef02?.current
@@ -35,6 +46,9 @@ const FillConicalBeaker02 = ({
     if (!beaker) return
 
     const liquids = []
+
+    elapsedTimeRef.current = 0
+
 
     beaker.traverse((child) => {
       const name =
@@ -47,11 +61,13 @@ const FillConicalBeaker02 = ({
         return
       }
 
+
       const isUpperLiquid =
         name.includes("upper")
 
       const isBottomLiquid =
         name.includes("bottom")
+
 
       const liquidColor =
         isUpperLiquid
@@ -60,41 +76,64 @@ const FillConicalBeaker02 = ({
             ? colorBottom
             : colorBottom
 
+
       const originalMaterials =
         Array.isArray(child.material)
           ? child.material
           : [child.material]
 
+
       const clonedMaterials =
-        originalMaterials.map((material) => {
-          const clonedMaterial =
-            material.clone()
+        originalMaterials.map(
+          (material) => {
+            const clonedMaterial =
+              material.clone()
 
-          if (clonedMaterial.color) {
-            clonedMaterial.color.set(
-              liquidColor
-            )
+            if (
+              clonedMaterial.color
+            ) {
+              clonedMaterial.color.set(
+                liquidColor
+              )
+            }
+
+            clonedMaterial.transparent =
+              true
+
+            clonedMaterial.opacity =
+              opacity
+
+            clonedMaterial.needsUpdate =
+              true
+
+            return clonedMaterial
           }
+        )
 
-          clonedMaterial.transparent = true
-          clonedMaterial.opacity = opacity
-          clonedMaterial.needsUpdate = true
-
-          return clonedMaterial
-        })
 
       child.material =
         Array.isArray(child.material)
           ? clonedMaterials
           : clonedMaterials[0]
 
-      // Make its parent groups visible too.
-      let currentObject = child
 
-      while (currentObject) {
-        currentObject.visible = true
+      // =========================================
+      // MAKE PARENTS VISIBLE
+      // =========================================
 
-        if (currentObject === beaker) {
+      let currentObject =
+        child
+
+      while (
+        currentObject
+      ) {
+        currentObject.visible =
+          true
+
+        if (
+          currentObject ===
+          beaker
+        ) {
           break
         }
 
@@ -102,10 +141,29 @@ const FillConicalBeaker02 = ({
           currentObject.parent
       }
 
-      liquids.push(child)
+
+      liquids.push(
+        child
+      )
     })
 
-    liquidsRef.current = liquids
+
+    liquidsRef.current =
+      liquids
+
+
+    // =========================================
+    // CLEANUP
+    // =========================================
+
+    return () => {
+      liquidsRef.current =
+        []
+
+      elapsedTimeRef.current =
+        0
+    }
+
   }, [
     conicalBeakerRef02,
     colorUpper,
@@ -113,12 +171,39 @@ const FillConicalBeaker02 = ({
     opacity,
   ])
 
+
+  // =========================================
+  // ANIMATION
+  // =========================================
+
   useFrame((_, delta) => {
+
+    elapsedTimeRef.current +=
+      delta
+
+
+    // =========================================
+    // START DELAY
+    // =========================================
+
+    if (
+      elapsedTimeRef.current <
+      startDelay
+    ) {
+      return
+    }
+
+
     const targetAmount =
-      Math.max(amount, 0)
+      Math.max(
+        amount,
+        0
+      )
+
 
     liquidsRef.current.forEach(
       (liquid) => {
+
         liquid.scale.y =
           THREE.MathUtils.damp(
             liquid.scale.y,
@@ -127,23 +212,30 @@ const FillConicalBeaker02 = ({
             delta
           )
 
+
         if (
           Math.abs(
             liquid.scale.y -
-              targetAmount
+            targetAmount
           ) < 0.001
         ) {
           liquid.scale.y =
             targetAmount
         }
 
-        liquid.visible =
-          liquid.scale.y > 0.001
 
-        liquid.updateMatrixWorld(true)
+        liquid.visible =
+          liquid.scale.y >
+          0.001
+
+
+        liquid.updateMatrixWorld(
+          true
+        )
       }
     )
   })
+
 
   return null
 }

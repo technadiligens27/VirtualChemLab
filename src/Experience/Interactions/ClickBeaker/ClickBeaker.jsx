@@ -1186,6 +1186,11 @@ const ClickObject = () => {
 
     const objectName = selectedItem.name
 
+    if([14.4].includes(selectedLesson) && objectName==="main-Round-bottom-flask"){
+      setSelectedObject(null)
+      return
+    }
+
     if([14.3].includes(selectedLesson) && [85,86].includes(lessonStep) && objectName==="mainBuretteClamp"){
       setSelectedObject(null)
       return

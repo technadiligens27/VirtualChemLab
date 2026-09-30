@@ -8,7 +8,7 @@ const AllExplanationLesson14 = ()=>{
 
     useEffect(()=>{
         if([6,12,14,16,20,28,31,35,37,42,47,,52,53.1,55,65,71,73,79,80,83,88,95,98,102,103,104,105,106,106.3,108.111,116,123,130,
-          134,136,143,150,156
+          134,136,143,150,156,158
         ].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
@@ -592,7 +592,18 @@ const AllExplanationLesson14 = ()=>{
                 />
               )} 
 
-
+              {lessonStep === 158 && (
+                <Explanations
+                  text={
+                    <>
+<strong>Silver nitrate</strong> reacts with <strong>chloride ions</strong> to form a white <strong>silver chloride</strong> precipitate, confirming chlorine is present.                                     </>
+                  }
+                  top="40%"
+                  left="52%"
+                  height="270px"
+                  width="340px"
+                />
+              )}
 
         </>
     )                

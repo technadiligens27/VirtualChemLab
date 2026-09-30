@@ -83,7 +83,7 @@ const hasLiquid = (liquid) => {
 const DropperScrollAnimation = ({
   hand,
 }) => {
-  const {dropperAnimationAction,mainDropperRef,testube02Ref} = useContext(ModelContext)
+  const {dropperAnimationAction,mainDropperRef,testube02Ref,testube01Ref} = useContext(ModelContext)
 
   const {isDropperFilled,setIsDropperFilled,selectedLeftHand,leftBeakerFillData} = useContext(InteractionContext)
 
@@ -141,7 +141,29 @@ const DropperScrollAnimation = ({
   // =========================================
   // RESET POUR FOR NEW SQUEEZE STEPS
   // =========================================
+useEffect(() => {
+  if (
+    selectedLesson !== 14.4 
+  ) {
+    return
+  }
 
+  const action =
+    dropperAnimationAction
+
+  if (!action) return
+
+  const mixer =
+    action.getMixer()
+
+  action.time = 0
+
+  mixer.update(0)
+
+}, [
+  selectedLesson,
+  dropperAnimationAction,
+])
   useEffect(() => {
     if (
       DROP_ANIMATION_STEPS.includes(
@@ -299,6 +321,9 @@ const DropperScrollAnimation = ({
       return
     }
   }
+
+
+
 
   // =========================================
   // FULLY RELEASED
@@ -517,21 +542,53 @@ const DropperScrollAnimation = ({
           opacity={0.35}
           amount={0.3}
           speed={1}
-          otherModelRef={testube02Ref}
+          otherModelRef={testube01Ref}
           otherLiquidEndAmount={0.6}
         />
       )}
 
-      {isDropperFilled && isPourFromDropper && (
+      {selectedLesson==14.3 && lessonStep==116 &&isDropperFilled && isPourFromDropper && (
         <PourDropletsFromModel
           modelRef={mainDropperRef}
           fallAxis={"y"}
           loopTimes = {4}
           startDelay={0}
           reduceModelLiquid={true}
-          
+          otherModelRef={testube02Ref}
+          otherModelIncrease={true}
+          otherModelRefEndAmount={17}
+          otherModelLiquidOpacity={0.35}
         />
       )}
+
+      {selectedLesson==14.4 && lessonStep==151 &&isDropperFilled && isPourFromDropper && (
+        <PourDropletsFromModel
+          modelRef={mainDropperRef}
+          fallAxis={"y"}
+          loopTimes = {4}
+          startDelay={0}
+          reduceModelLiquid={true}
+          otherModelRef={testube02Ref}
+          otherModelIncrease={true}
+          otherModelRefEndAmount={50}
+          otherModelLiquidOpacity={0.35}
+        />
+      )}
+
+      {selectedLesson==14.4 && lessonStep==157 &&isDropperFilled && isPourFromDropper && (
+        <PourDropletsFromModel
+          modelRef={mainDropperRef}
+          fallAxis={"y"}
+          loopTimes = {4}
+          startDelay={0}
+          reduceModelLiquid={true}
+          otherModelRef={testube02Ref}
+          otherModelIncrease={true}
+          otherModelRefEndAmount={55}
+          otherModelLiquidOpacity={0.35}
+        />
+      )}
+
     </>
   )
 }
