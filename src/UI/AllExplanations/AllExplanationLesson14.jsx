@@ -7,7 +7,7 @@ const AllExplanationLesson14 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([6,12,14,20,28,31,35,37,43,47,,52,53.1,65,71,73,80,83,88,95,98,102,103,104,105,106,106.3,108.111,116,123,130,
+        if([6,12,14,16,20,28,31,35,37,42,47,,52,53.1,55,65,71,73,79,80,83,88,95,98,102,103,104,105,106,106.3,108.111,116,123,130,
           134,136,143,150,156
         ].includes(lessonStep)){
             setIsExplanationOpen(true)
@@ -15,7 +15,7 @@ const AllExplanationLesson14 = ()=>{
     },[lessonStep])
 
     useEffect(()=>{
-        if([74].includes(lessonStep)){
+        if([74,24].includes(lessonStep)){
             setIsExplanationOpen(false)
         }
     },[lessonStep])    
@@ -44,7 +44,8 @@ const AllExplanationLesson14 = ()=>{
             }
             top="30%"
             left="50%"
-            height="270px"
+            height="230px"
+            width="310px"
             />}
 
        
@@ -58,9 +59,27 @@ const AllExplanationLesson14 = ()=>{
             }
             top="20%"
             left="50%"
-            height="270px"
-            width="380px"
+            height="225px"
+            width="400px"
             />}
+
+              {lessonStep === 16 && (
+                <Explanations
+                  text={
+                    <>
+                      Fit the <strong>bung securely</strong> into the{" "}
+                      <strong>conical flask</strong> to seal it, then gently{" "}
+                      <strong>swirl the reaction mixture</strong> to ensure the
+                      reactants mix thoroughly.
+                    </>
+                  }
+                  top="44%"
+                  left="32%"
+                  height="280px"
+                  width="370px"
+                />
+              )}
+
 
            {lessonStep==20 && <Explanations
             text={
@@ -72,9 +91,22 @@ const AllExplanationLesson14 = ()=>{
             }
             top="30%"
             left="30%"
-            height="320px"
-            width="400px"
+            height="280px"
+            width="450px"
             />}
+
+           {/* {lessonStep==23 && <Explanations
+            text={
+                <>
+                Remove the <strong>bung</strong> to release any built-up <strong>pressure</strong> while swirling the <strong>conical flask</strong>.
+                </>
+            }
+            top="30%"
+            left="30%"
+            height="280px"
+            width="450px"
+            />} */}
+
 
            {lessonStep==28 && <Explanations
             text={
@@ -103,11 +135,17 @@ const AllExplanationLesson14 = ()=>{
             text={
                 <>
                 A <strong>separating funnel</strong> is used to separate the two immiscible liquid layers.
-                The <strong>lower aqueous layer</strong> can be drained away through the tap, while the <strong>upper organic product layer</strong> remains inside for purification.                </>
+                </>
+            }
+
+            text02={
+              <>
+                The <strong>lower aqueous layer</strong> can be drained away through the tap, while the <strong>upper organic product layer</strong> remains inside for purification.   
+              </>
             }
             top="40%"
             left="40%"
-            height="310px"
+            height="220px"
             width="470px"
 
             />}
@@ -123,7 +161,24 @@ const AllExplanationLesson14 = ()=>{
             width="380px"
             />}
 
-           {lessonStep==43 && <Explanations
+          {lessonStep === 42 && (
+            <Explanations
+              text={
+                <>
+                  As you can see, <strong>two separate layers</strong> have formed.
+                  The <strong>organic product</strong> is the upper layer, while the{" "}
+                  <strong>aqueous layer</strong> is at the bottom.
+                </>
+              }
+              top="30%"
+              left="57%"
+              height="280px"
+              width="370px"
+            />
+          )}
+
+
+           {/* {lessonStep==43 && <Explanations
             text={
                 <>
             We will use a Beaker to act as the <strong>Waste Beaker</strong> to collect the unwanted <strong>aqueous layer</strong>, keeping it separate from the desired <strong>organic product</strong>.                </>
@@ -133,7 +188,7 @@ const AllExplanationLesson14 = ()=>{
             height="275px"
             width="380px"
 
-            />} 
+            />}  */}
 
 
            {lessonStep==47 && <Explanations
@@ -172,7 +227,22 @@ const AllExplanationLesson14 = ()=>{
             height="280px"
             width="380px"
 
-            />}             
+            />} 
+
+           {lessonStep==55 && <Explanations
+            text={
+              <>
+              Let's Remove the <strong>bung</strong> so the built-up <strong>carbon dioxide gas</strong> can escape, preventing dangerous pressure inside the <strong>separating funnel</strong>.              </>
+            }
+            top="40%"
+            left="50%"
+            height="280px"
+            width="380px"
+
+            />}  
+
+
+
            {lessonStep==65 && <Explanations
             text={
               <>
@@ -197,7 +267,24 @@ const AllExplanationLesson14 = ()=>{
             height="325px"
             width="450px"
 
-            />}     
+            />}    
+
+            {lessonStep === 79 && (
+              <Explanations
+                text={
+                  <>
+                    The <strong>carbon dioxide pressure</strong> inside the{" "}
+                    <strong>separating funnel</strong> has now been released safely.
+                    This prevents pressure from building up while the mixture is being
+                    washed.
+                  </>
+                }
+                top="40%"
+                left="52%"
+                height="280px"
+                width="420px"
+              />
+            )}
 
            {lessonStep==80 && <Explanations
             text={
@@ -207,8 +294,8 @@ const AllExplanationLesson14 = ()=>{
             }
             top="40%"
             left="40%"
-            height="325px"
-            width="450px"
+            height="200px"
+            width="440px"
 
             />} 
 
@@ -220,8 +307,8 @@ const AllExplanationLesson14 = ()=>{
             }
             top="40%"
             left="40%"
-            height="325px"
-            width="450px"
+            height="200px"
+            width="370px"
 
             />} 
 
@@ -402,8 +489,8 @@ const AllExplanationLesson14 = ()=>{
                       A <strong>dropper</strong> is used to transfer a small, controlled amount of the distilled product into the <strong>test tube</strong>.
                     </>
                   }
-                  top="40%"
-                  left="22%"
+                  top="35%"
+                  left="52%"
                   height="250px"
                   width="360px"
                 />
@@ -504,6 +591,9 @@ const AllExplanationLesson14 = ()=>{
                   width="340px"
                 />
               )} 
+
+
+
         </>
     )                
 }

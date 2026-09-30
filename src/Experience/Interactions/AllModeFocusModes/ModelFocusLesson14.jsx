@@ -16,17 +16,22 @@ const ModelFocusLesson14 = ()=>{
         {lessonStep==6 && <ModelFocusMode modelRef={graduatedBeakerRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==12 && <ModelFocusMode modelRef={graduatedBeakerRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==14 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={350} blurStrength={3}/> } 
+        {lessonStep==16 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==20 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={350} blurStrength={3}/> } 
+        {/* {lessonStep===23 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={350} blurStrength={3}/> }  */}
         {lessonStep==28 && <ModelFocusMode modelRef={spoonRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==31 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==35 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==37 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={360} blurStrength={3}/> } 
-        {lessonStep==43 && <ModelFocusMode modelRef={normalBeakerRef} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==42 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
+        {/* {lessonStep==43 && <ModelFocusMode modelRef={normalBeakerRef} blurResolution={360} blurStrength={3}/> }  */}
         {lessonStep==47 && <ModelFocusMode modelRef={graduatedBeakerRef} blurResolution={360} blurStrength={3}/> } 
         {[71,52].includes(lessonStep) && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==53.1 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==55 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==65 && <ModelFocusMode modelRef={graduatedBeakerRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==73 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==79 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> }      
         {lessonStep==80 && <ModelFocusMode modelRef={seperatingFunnelRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==83 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==88 && <ModelFocusMode modelRef={spoonRef} blurResolution={360} blurStrength={3}/> } 

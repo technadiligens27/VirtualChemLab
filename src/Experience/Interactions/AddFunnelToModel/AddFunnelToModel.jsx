@@ -58,7 +58,11 @@ const AddFunnelToModel = ({
     ) {
       setLessonStep(48)
     }
-    if(selectedLesson==14.2 && lessonStep===65){
+
+    if (
+      selectedLesson === 14.2 &&
+      lessonStep === 65
+    ) {
       setLessonStep(66)
     }
   }, [
@@ -107,9 +111,6 @@ const AddFunnelToModel = ({
       ) {
         bungObjects.push({
           object: child,
-
-          originalVisible:
-            child.visible,
         })
       }
     })
@@ -123,7 +124,7 @@ const AddFunnelToModel = ({
     }
 
     // ===========================================
-    // HIDE BUNG
+    // HIDE BUNG WHILE NORMAL FUNNEL IS ATTACHED
     // ===========================================
 
     bungObjects.forEach(
@@ -254,18 +255,11 @@ const AddFunnelToModel = ({
 
       funnel.updateMatrixWorld(true)
 
-      // Restore every bung's original state.
-      bungObjects.forEach(
-        ({
-          object,
-          originalVisible,
-        }) => {
-          object.visible =
-            originalVisible
-
-          object.updateMatrixWorld(true)
-        }
-      )
+      /*
+       * Do not restore bung visibility here.
+       * handleSeparatingFunnelBung controls
+       * whether the bung is shown.
+       */
     }
   }, [
     modelRef,

@@ -196,7 +196,7 @@ const ChlorinationLesson03 = () => {
         child.frustumCulled = false
 
         child.scale.x = 1
-        child.scale.y = 0.4
+        child.scale.y = 0.344131
         child.scale.z = 1
 
         const updateMaterial = (
@@ -598,13 +598,13 @@ useEffect(() => {
 
             {lessonStep ==76 && <DialogBox text={
                 <>
-           <strong>Scroll Down</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong> again
+           <strong>Scroll Down Continously</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong> again
                 </>
             }   />}
 
             {lessonStep ==77 && <DialogBox text={
                 <>
-              Observe the CO₂ rising, but with less intensity than before.
+              Observe the CO₂ rising again.
                 </>
             }   />}
 

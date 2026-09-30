@@ -5337,6 +5337,15 @@ const renderHeldObjectButtons = () => {
       />
     }
 
+    {
+      selectedLesson==14.3 && lessonStep== 101 &&
+      <ClickHitbox modelRef={roundBeakerRef} multiplier={2}/>
+    }
+    {
+      selectedLesson===14.3 && lessonStep==108 &&
+      <ClickHitbox modelRef={heatingMantleRef} multiplier={2}/>
+    }
+
   </>
 )
 }

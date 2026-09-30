@@ -380,7 +380,7 @@ const ClampModel = ({
         lessonStep === 81 && (
           <PourFromModel
             isPouring={isPouring}
-            otherLiquidEndScale={0.5}
+            otherLiquidEndScale={0.8}
             otherModelRef={
               normalBeakerRef
             }

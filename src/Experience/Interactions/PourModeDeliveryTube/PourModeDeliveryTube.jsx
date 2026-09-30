@@ -526,7 +526,7 @@ const PourModeDeliveryTube = ({
 
       />}
       {
-        selectedLesson ===14.1 && lessonStep ===49 && <PourFromGraduatedCylinder
+        selectedLesson ===14.1 && lessonStep ===49 && <PourFromModel
         modelRef={graduatedBeakerRef}
         otherModelRef={seperatingFunnelRef}
         isPouring={isPouring}

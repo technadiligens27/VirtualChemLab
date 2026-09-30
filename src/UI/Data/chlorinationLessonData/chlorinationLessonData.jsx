@@ -286,7 +286,7 @@ export const chlorinationGuidelineData = [
       "Close the tap when the boundary reaches it.",
     ],
 
-    image: "./removeWashedAqueousLayer.png",
+    image: "./removeLowerAqueousLayer.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

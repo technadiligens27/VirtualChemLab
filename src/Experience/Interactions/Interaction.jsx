@@ -495,7 +495,7 @@ useEffect(() => {
         selectedLesson==14.3 && lessonStep==109 && <DistillationGasAnimation startDelay = {3000}/>
       }
       {
-        selectedLesson==14.3 && lessonStep==109 && <PourDropletsFromModel startDelay = {6} modelRef={condensorRef} loopTimes={5}/>
+        selectedLesson==14.3 && lessonStep==109 && <PourDropletsFromModel fallDistance={1.5} startDelay = {6} modelRef={condensorRef} loopTimes={5}/>
       }      
       {selectedLesson==14.3 && lessonStep>=109 && lessonStep<112 && (
         <FillConicalBeaker02 modelRef={conicalBeakerRef02}  amount={0.4}  colorUpper="#ffffff" colorBottom="#ffffff"/>
@@ -519,8 +519,8 @@ useEffect(() => {
         pourModelRef={graduatedBeakerRef}
          receiveModelRef={testube02Ref}
          pourModelXOffset = {-1.2}
-         pourModelYOffset = {-0.5}
-         pourModelScale={0.8}
+         pourModelYOffset = {-1}
+         pourModelScale={1.5}
          receiveModelScale={0.7}
          hand={"right"}
          pourModelYRotation = {Math.PI}
@@ -567,6 +567,9 @@ useEffect(() => {
        selectedLesson==14.3 && lessonStep>=98 && <KeepBackOnTable modelRef={conicalBeakerRef02} modelTablePosRef={tableConicalPos}/>
       } */}
 
+      {
+        [14,14.1].includes(selectedLesson) && lessonStep >=25 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)
+      }
 
     </>
   );

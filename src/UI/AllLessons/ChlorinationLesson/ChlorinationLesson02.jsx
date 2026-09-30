@@ -32,8 +32,9 @@ const ChlorinationLesson02 = ()=>{
 
     const resetLesson = useResetLesson()
     
-    const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,safetyStep,
+    const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,safetyStep,setIsPotassiumTransferred
     } = useContext(InteractionContext)
+
 
 
     useEffect(()=>{
@@ -217,7 +218,7 @@ const ChlorinationLesson02 = ()=>{
         />
       )} 
       {lessonStep===32 && (<DialogBox text={<>
-        Now By <strong>Scrolling Down</strong> Gently <strong>Swirl</strong> the Conical Flask
+        Now By <strong>Scrolling Down Continously</strong> Gently <strong>Swirl</strong> the Conical Flask
 
         </>}
         />
@@ -293,7 +294,7 @@ const ChlorinationLesson02 = ()=>{
         />
       )}      
 
-    {lessonStep >=42 && lessonStep <47 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[9]}/>)}
+    {lessonStep >=43 && lessonStep <44 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[9]}/>)}
 
 
     {lessonStep===42 && (<DialogBox text={<>
@@ -353,7 +354,7 @@ const ChlorinationLesson02 = ()=>{
         />
       )}
     {lessonStep===49 && (<DialogBox text={<>
-      <strong>Scroll Down</strong> to Pour <strong>Sodium Hydrogencarbonate</strong> to the <strong>Separating Funnel</strong>
+      <strong>Scroll Down Continuously</strong> to Pour <strong>Sodium Hydrogencarbonate</strong> to the <strong>Separating Funnel</strong>
     </>}
         />
       )}
@@ -379,7 +380,7 @@ const ChlorinationLesson02 = ()=>{
         />
       )}
     {lessonStep===53 && (<DialogBox text={<>
-     <strong>Scroll Down</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong>
+     <strong>Scroll Down Continuously</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong>
     </>}
         />
       )}
@@ -402,7 +403,7 @@ const ChlorinationLesson02 = ()=>{
       )}
 
     {lessonStep===56 && (<DialogBox text={<>
-     <strong>Scroll Down</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong>
+     <strong>Scroll Down Continuously</strong> to <strong>Swirl</strong> the <strong>Separating Funnel</strong>
     </>}
         />
       )}

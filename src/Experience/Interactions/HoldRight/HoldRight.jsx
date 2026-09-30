@@ -56,7 +56,7 @@ const HoldRight = ({ modeldata }) => {
   } = useContext(ModelContext)
 
   const {lessonStep,isMainGuideline,setLessonStep,selectedLesson,isTutorialMode,
-    
+    setSelectedLesson
   } = useContext(MainGuidelineContext)
 
   const {isReactionRef} = useContext(ReactionContext)
@@ -511,6 +511,7 @@ const transformControlsRef = useRef()
   useEffect(()=>{
     if(selectedLesson===14.3 && lessonStep==133){
       setLessonStep(134)
+      setSelectedLesson(14.4)
     }
     if(selectedLesson ==14.4 && lessonStep==141){
       setLessonStep(142)
@@ -642,7 +643,7 @@ const transformControlsRef = useRef()
             spoonRef={spoonRef}
             hand="right"
             heightOffset={0.6}
-            xOffset={0.6}
+            xOffset={0.8}
           />
         )
       }      

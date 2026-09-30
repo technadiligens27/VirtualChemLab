@@ -203,18 +203,18 @@ const ChlorinationLesson = ()=>{
         </>}/>
       )}   
 
-      {lessonStep >=15 && lessonStep <20 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[2]}/>)}
+      {lessonStep >=15 && lessonStep <21 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[2]}/>)}
 
 
       {lessonStep===15 && (<DialogBox text={<>
-         Now <strong>Scroll Down</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong>
+         Now <strong>Scroll Down Continuously</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong>
         </>}/>
       )}                
 
 
 
 
-      {lessonStep >=16 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[3]}/>)}
+      {/* {lessonStep >=16 && lessonStep <24 && (<SulfamicGuidelines guidelineData={chlorinationGuidelineData[3]}/>)} */}
 
 
 
@@ -228,7 +228,7 @@ const ChlorinationLesson = ()=>{
 
 
       {lessonStep===17 && (<DialogBox text={<>
-         Now <strong>Scroll Down</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong> again
+         Now <strong>Scroll Down Continuously</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong> again
         </>}/>
       )}
 
@@ -257,7 +257,7 @@ const ChlorinationLesson = ()=>{
 
 
       {lessonStep===21 && (<DialogBox text={<>
-         Now <strong>Scroll Down</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong> again
+         Now <strong>Scroll Down Continuously</strong> to gently <strong>Swirl</strong> the <strong>Conical Flask</strong> again
       </>}/>
       )}
 

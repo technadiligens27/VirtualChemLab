@@ -22,7 +22,7 @@ const ChlorinationLesson04 = () => {
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,
-    setIsModelCentre} = useContext(InteractionContext)
+    setIsModelCentre,setIsPotassiumTransferred,setIsPotassiumHydrogenCarbonateInSpoon} = useContext(InteractionContext)
 
   const {
     graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,pipetteRef,gogglesRef,
@@ -39,9 +39,10 @@ const ChlorinationLesson04 = () => {
     setIsClampInCenter(true)
     setIsClampTestube(true)
     setIsModelCentre(true)
-
+    setIsPotassiumTransferred(false)
     setSelectedLeftHand(null)
     setSelectedRightHand(null)
+    setIsPotassiumHydrogenCarbonateInSpoon(false)
 
     if(conicalBeakerRef.current){
         conicalBeakerRef.current.visible = false
@@ -311,7 +312,7 @@ useEffect(() => {
         />}         
         {lessonStep ==92 && <DialogBox text={
           <>
-        <strong>Scroll Down</strong> to <strong>Swirl</strong>
+        <strong>Scroll Down Continously</strong> to <strong>Swirl</strong>
 
           </>
           } 
