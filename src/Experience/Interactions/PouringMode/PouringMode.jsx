@@ -548,8 +548,8 @@ const PouringMode = ({
 ) {
   localPosition.add(
     new THREE.Vector3(
-      2,
-      -1.3,
+      1.5,
+      -1,
       -0.5
     )
   )

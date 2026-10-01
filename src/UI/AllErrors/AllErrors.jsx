@@ -8,7 +8,7 @@ const AllErrors = ()=>{
 
     return(
         <>
-            {showErrorMsgNo === 1 && <ErrorMsg text="Use left hand" />}
+            {showErrorMsgNo === 1 && <ErrorMsg text="Incorrect Action" />}
             {showErrorMsgNo === 2 && <ErrorMsg text="Wrong liquid or amount" />}
             {showErrorMsgNo === 3 && <ErrorMsg text="Press P to pour" />}
             {showErrorMsgNo === 4 && <ErrorMsg text="Not available now" />}

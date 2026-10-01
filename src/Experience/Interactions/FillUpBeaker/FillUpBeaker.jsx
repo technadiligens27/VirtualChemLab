@@ -520,7 +520,7 @@ else if (
   lowerBeakerName === "main-graduated-cylinder" 
 ) {
   if(selectedLesson===13 && selectedAmount===30){
-    amountRef.current = 0.61
+    amountRef.current = 0.506804
     speedRef.current = 0.45
   }
   else if(selectedLesson===14 && selectedAmount===35){
@@ -551,15 +551,16 @@ else if (
     // BURETTE
     // ========================================
 
-    else if (
-      lowerBeakerName.includes(
-        "main-buirette"
-      )
-    ) {
-      amountRef.current =
-        selectedAmount / 63
+    else if (lowerBeakerName.includes("main-buirette")) {
+      if(selectedAmount===30){
+        amountRef.current = 0.648391
+        speedRef.current = 0.4
+      }else{
+        amountRef.current = selectedAmount / 63
+        speedRef.current = 0.4
 
-      speedRef.current = 0.4
+      }
+
     }
 
     // ========================================

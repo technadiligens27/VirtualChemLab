@@ -151,14 +151,14 @@ const LessonMenu = () => {
     //   divider: "purple",
     // },
 
-// {
-//   id: 13,
-//   name: "Molar Volume of a Gas",
-//   imgPath: "./AlkaliTest.png",
-//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-//   number: 13,
-//   divider: "purple",
-// },
+{
+  id: 13,
+  name: "Molar Volume of a Gas",
+  imgPath: "./AlkaliTest.png",
+  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+  number: 13,
+  divider: "purple",
+},
 
 {
   id: 14,

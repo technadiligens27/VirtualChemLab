@@ -105,7 +105,7 @@ const MolarVolumeLesson = ()=>{
 
 
 
-      {lessonStep>=4 && lessonStep<15 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[1]}/>)}
+      {lessonStep>=4 && lessonStep<16 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[1]}/>)}
 
 
 
@@ -179,7 +179,7 @@ const MolarVolumeLesson = ()=>{
 
 
 
-      {lessonStep >= 15 && lessonStep < 23 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[2]}/>)}
+      {lessonStep >= 16 && lessonStep < 22 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[2]}/>)}
 
 
 
@@ -240,7 +240,7 @@ const MolarVolumeLesson = ()=>{
 
 
 
-      {lessonStep >= 23 && lessonStep < 25 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[3]}/>)}
+      {lessonStep >= 22 && lessonStep < 26 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[3]}/>)}
 
 
 
@@ -265,7 +265,7 @@ const MolarVolumeLesson = ()=>{
 
 
 
-      {lessonStep >= 25 && lessonStep < 32 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[4]}/>)}
+      {lessonStep >= 26 && lessonStep < 32 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[4]}/>)}
 
 
 

@@ -772,6 +772,13 @@ const ClickObject = () => {
       }
     }
 
+    if([8,9].includes(selectedLesson)){
+      if(![7,15].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return 
+      }
+    }
+
     //--------Selected Lesson 10--------------
 
     if(selectedLesson===13){
@@ -1186,6 +1193,18 @@ const ClickObject = () => {
 
     const objectName = selectedItem.name
 
+    if([8,9].includes(selectedLesson)){
+      if([13].includes(lessonStep) && objectName==="main-testube-01"){
+        setSelectedObject(null)
+        return
+      }
+    }
+
+    if(selectedLesson===13 && [23,24,17].includes(lessonStep) && ["mainBuretteClamp", "boiliing-tube-01"].includes(objectName)){
+      setSelectedObject(null)
+      return
+    }  
+
     if([14.4].includes(selectedLesson) && objectName==="main-Round-bottom-flask"){
       setSelectedObject(null)
       return
@@ -1252,10 +1271,7 @@ const ClickObject = () => {
     }
 
 
-    if(selectedLesson===13 && [23,24,17].includes(lessonStep) && ["mainBuretteClamp", "boiliing-tube-01"].includes(objectName)){
-      setSelectedObject(null)
-      return
-    }    
+  
   
     // if(selectedLesson===13 && objectName==="main-graduated-cylinder"){
     //   setSelectedObject(null)
@@ -1378,6 +1394,45 @@ const clickableObjects = selectableObjects
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if([8,9].includes(selectedLesson)){
+      if(![4,9,21,30,32].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return false 
+      }
+
+      if([4].includes(lessonStep)){
+        if(objectName !=="mainPolysterene"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([9].includes(lessonStep)){
+        if(objectName !=="main-spoon"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([21].includes(lessonStep)){
+        if(objectName !=="main-normal-beaker"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([30].includes(lessonStep)){
+        if(objectName !=="mainThermometer"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([32].includes(lessonStep)){
+        if(objectName !=="main-testube-01"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+
+    }
+
     if([14,14.1,14.3].includes(selectedLesson)){
       if(![3,26,34,44,62,85,94,110,115,127,133].includes(lessonStep)){
         setShowErrorMsgNo(12)
@@ -1435,49 +1490,6 @@ const clickableObjects = selectableObjects
     }
 
 
-
-      
-    if(lessonStep===6 && selectedLesson===7){
-      if(objectName !=='main-dropper'){
-        setShowErrorMsgNo(12)
-        return false
-      }        
-    }
-
-    if(lessonStep==8){
-        if(objectName !== "mainPolysterene"){
-          setShowErrorMsgNo(1)
-          return false
-        }
-    }
-
-
-    if(lessonStep==6 && selectedLesson ===6){
-      if(objectName !== 'main-Conical-Flask'){
-        setShowErrorMsgNo(12)
-        return false
-      }
-    }
-
-    if(lessonStep==6 && selectedLesson ===3){
-      if(objectName !== 'main-red-litmus'){
-        setShowErrorMsgNo(6)
-        return false
-      }
-    }
-
-    //--------------Selected Lesson 08---------------------------
-
-    if(selectedLesson==8){
-      if(lessonStep==3){
-        setShowErrorMsgNo(1)
-        return false
-      }
-      if(lessonStep===7 && objectName !=="main-testube-01"){
-        setShowErrorMsgNo(1)
-        return false
-      }
-    }
     //--------------------Selected Lesson 10--------
 
     if(selectedLesson===10){
@@ -1547,6 +1559,31 @@ const clickableObjects = selectableObjects
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if([8,9].includes(selectedLesson)){
+      if(![3,8,18].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return false
+      }
+      if([3].includes(lessonStep)){
+        if(objectName !== "main-normal-beaker"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([8].includes(lessonStep)){
+        if(objectName !== "main-testube-01"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([18].includes(lessonStep)){
+        if(objectName !== "main-buirette"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+    }
+
     if([14.3].includes(selectedLesson) && ![86,106.1,121].includes(lessonStep)){{
       setShowErrorMsgNo(1)
       return false
@@ -1591,36 +1628,6 @@ const clickableObjects = selectableObjects
          return false
       }
      }
-    if(selectedLesson ===8){
-      if(lessonStep===8){
-        if (objectName !== "main-testube-01") {
-          setShowErrorMsgNo(1)
-          return false
-      }
-    }
-      // if(lessonStep===8){
-      //   if(objectName !== "mainPolysterene"){
-      //     setShowErrorMsgNo(1)
-      //     return false
-      //   }
-      // }
-  }
-
-    if(selectedLesson===8 && lessonStep ==3){
-      if (objectName !== "main-normal-beaker") {
-        setShowErrorMsgNo(1)
-        return false
-      }
-    }
-
-    if (selectedLesson === 7 && lessonStep === 3) {
-      if (objectName !== "main-testube-01") {
-        setShowErrorMsgNo(1)
-        return false
-      }
-
-      return true
-    }
 
     //---------------Selected Lesson 10-------------//
 
@@ -2845,12 +2852,9 @@ useEffect(()=>{
     }
   }
 
-  useEffect(()=>{
-    console.log("isWeighTestube:",isWeighTestube)
-  },[isWeighTestube])
-
   const coverPolystereneCup = ()=>{
     setIsPolystereneCovered(true)
+    setSelectedObject(null)
   }
 
   const removePolystereneLid = ()=>{
@@ -2863,10 +2867,6 @@ useEffect(()=>{
       return
     }
 
-    if(selectedLesson ===10){
-      setShowErrorMsgNo(1)
-      return
-    }
     setIsPottasiumCarobnateInSpoon(true);
     setSelectedObject(null)
   }
@@ -5264,7 +5264,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={spoonRef}
-      multiplier={2}
+      multiplier={(selectedLesson==8 && lessonStep==13) ? 3 :2}
     />
 
     <ClickHitbox
@@ -5274,7 +5274,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={testube01Ref}
-      multiplier={1.2}
+      multiplier={(selectedLesson==8 && lessonStep==13) ? 0 :1.2}
     />
 
     <ClickHitbox
@@ -5294,7 +5294,15 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={buretteClampRef}
-      multiplier={(selectedLesson==14.3 && [86,94,127].includes(lessonStep)) ? 0 : 1.1}    
+        multiplier={
+          selectedLesson == 14.3 &&
+          [86, 94, 127].includes(lessonStep)
+            ? 0
+            : selectedLesson == 8 &&
+              lessonStep == 29
+              ? 3
+              : 1.1
+        }
     />
 
     <ClickHitbox

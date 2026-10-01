@@ -61,10 +61,10 @@ const {
       "In this experiment, potassium carbonate reacts with hydrochloric acid inside a polystyrene cup. The temperature change is measured and later used in Hess’s Law calculations.",
 
     step2:
-      "Click the normal beaker and select the Left Hand option to pick it up.",
+      "Click the <strong>normal beaker</strong> and select the Left Hand option to pick it up.",
 
     step3:
-      "Click the polystyrene cup and select the Right Hand option to pick it up.",
+      "Click the <strong>Polystyrene Cup</strong> and select the Right Hand option to pick it up.", 
 
     step4:
       "Click the polystyrene cup and select Place in Beaker.",
@@ -639,180 +639,430 @@ const {
                 text={Enthalpy[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />}   */}
-
         {
-          lessonStep ===3 && <DialogBox text={"Click the normal beaker and select the Left Hand option to pick it up."}/>
+          lessonStep === 3 && (
+            <DialogBox
+              text={
+                <>
+                  Click the <strong>Beaker</strong> and select the <strong>Left Hand</strong> option to pick it up.
+                </>
+              }
+            />
+          )
         }
 
         {
-            lessonStep ===4 && 
-            <DialogBox text={Enthalpy[0].step3}/>
-        }
+          lessonStep === 4 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Polystyrene Cup</strong> and select the <strong>Right Hand</strong> option to pick it up.
+                 </>
+              }
+            />
+          )
+        }        
 
         {
-            lessonStep===5 && isFillBeakerBoxOpen &&
-            <DialogBox text={Enthalpy[0].step4}/>
-        }
+          lessonStep === 6  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Polystyrene Cup</strong> and select <strong>Place in Beaker</strong> 
+                </>
+              }
+            />
+          )
+        }     
+
 
         {
-            lessonStep===6  &&
-            <DialogBox text={Enthalpy[0].step4}/>
+          lessonStep === 7  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker </strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+            />
+          )
         }  
 
-        {
-            lessonStep===7  &&
-            <DialogBox text={Enthalpy[0].step5}/>
-        }  
 
         {
-            lessonStep===8  &&
-            <DialogBox text={Enthalpy[0].step6}/>
-        }
+          lessonStep === 8  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Test Tube</strong> and select the <strong>Left Hand</strong> option
 
+                </>
+              }
+            />
+          )
+        } 
         {
-            lessonStep===9  &&
-            <DialogBox text={Enthalpy[0].step7}/>
+          lessonStep === 9  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Spatula</strong> and select the <strong>Right Hand</strong> option.
+                </>
+              }
+            />
+          )
         } 
 
         {
-           lessonStep ===10 && 
-           <DialogBox text={Enthalpy[0].step8}/>
+          lessonStep === 10  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>potassium carbonate container</strong> and select <strong>Take Potassium Carbonate</strong>
+                </>
+              }
+            />
+          )
+        } 
+        {
+          lessonStep === 11  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Spatula</strong> and select <strong>Pour into Test Tube</strong>
+                </>
+              }
+            />
+          )
+        } 
+  
+        {
+          lessonStep === 12  && (
+            <DialogBox
+              text={
+                <>
+                <strong>Scroll Down Continously</strong> to <strong>Pour</strong>
+                </>
+              }
+            />
+          )
+        } 
+ 
+        {
+          lessonStep === 13  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Spatula</strong> and <strong>Disable Pour Mode</strong>
+                </>
+              }
+            />
+          )
+        } 
+        {
+          lessonStep === 14  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Digital Balance</strong> and select <strong>Place Balance</strong>
+                </>
+              }
+            />
+          )
+        } 
+
+        {
+          lessonStep === 15  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Spatula</strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+            />
+          )
+        } 
+        {
+          lessonStep === 16  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Test Tube</strong> and select <strong>Weigh Test Tube</strong>
+                </>
+              }
+            />
+          )
         }
-        {
-           lessonStep ===11 && 
-           <DialogBox text={Enthalpy[0].step9}/>
-        }  
 
         {
-           lessonStep ===12 && 
-           <DialogBox text={Enthalpy[0].step10}/>
-        }    
-
-        {
-           lessonStep ===13 && 
-           <DialogBox text={Enthalpy[0].step11}/>
+          lessonStep === 17  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Test Tube</strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+            />
+          )
         }
-
-        {
-           lessonStep ===14 && 
-           <DialogBox text={Enthalpy[0].step12}/>
-        }
-
-        {
-          lessonStep ===15 && 
-           <DialogBox text={Enthalpy[0].step13}/>
-        }
-
-        {
-          lessonStep ===16 && 
-           <DialogBox text={Enthalpy[0].step14}/>
-        }  
-
         
-        {lessonStep ===17 && 
-           <DialogBox text={Enthalpy[0].step15}/>
-        }  
+        {
+          lessonStep === 18  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Burette</strong> and select the <strong>Left Hand</strong> 
+                </>
+              }
+            />
+          )
+        }
 
-        {lessonStep ===18 && 
-           <DialogBox text={Enthalpy[0].step16}/>
-        } 
+        {
+          lessonStep === 19  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Burette</strong> and select the <strong>Add Liquid</strong> 
+                </>
+              }
+            />
+          )
+        }
 
-       {lessonStep ===19 && 
-           <DialogBox text={Enthalpy[0].step17}/>
-       }
-
-       {lessonStep ===20 && 
-           <DialogBox text={Enthalpy[0].step18}/>
-       }
-
-       {lessonStep ===21 && 
-           <DialogBox text={Enthalpy[0].step19}/>
-       }
-
-       {lessonStep ===22 && 
-           <DialogBox text={Enthalpy[0].step20}/>
-       }
-
-       {lessonStep ===23 && 
-           <DialogBox text={Enthalpy[0].step21}/>
-       }
-
-       {lessonStep ===24 && 
-           <DialogBox text={Enthalpy[0].step22}/>
-       }
-
-       {lessonStep ===25 && 
-           <DialogBox text={Enthalpy[0].step23}/>
-       }
-       
-
-       {lessonStep ===26 && 
-           <DialogBox text={Enthalpy[0].step24}/>
-       }
+        {
+          lessonStep === 20  && (
+            <DialogBox
+              text={
+                <>
+                Add <strong>30 cm³ of Hydrochloric acid</strong> to the urette 
+                </>
+              }
+            />
+          )
+        }
 
 
-
-       {lessonStep ===27 && 
-           <DialogBox text={Enthalpy[0].step25}/>
-       }  
-
-
-       {lessonStep ===28 && 
-           <DialogBox text={Enthalpy[0].step26}/>
-       } 
-
-       {lessonStep ===28.5 && 
-           <DialogBox text={Enthalpy[0].step26_5}/>
-       } 
-
-       {lessonStep ===29 && 
-           <DialogBox text={Enthalpy[0].step27}/>
-       }
-
-       {lessonStep ===30 && 
-           <DialogBox text={Enthalpy[0].step28}/>
-       }
-
-       {lessonStep ===31 && 
-           <DialogBox text={Enthalpy[0].step29}/>
-       }
-
-       {lessonStep ===32 && 
-           <DialogBox text={Enthalpy[0].step30}/>
-       }
-
-       {lessonStep ===33 && 
-           <DialogBox text={Enthalpy[0].step31}/>
-       }
-
-       {lessonStep ===34 && 
-           <DialogBox text={Enthalpy[0].step32}/>
-       } 
-
-      {lessonStep ===35 && 
-           <DialogBox text={Enthalpy[0].step33}/>
-       }      
-          
-      {lessonStep ===36 && 
-           <DialogBox text={Enthalpy[0].step34}/>
-       }
-
-      {lessonStep ===37 && 
-           <DialogBox text={Enthalpy[0].step35}/>
-      } 
-
-      {lessonStep ===38 && 
-           <DialogBox text={Enthalpy[0].step36}/>
-      }
-
-      {lessonStep ===39 && 
-           <DialogBox text={Enthalpy[0].step37}/>
-      } 
-
-      {lessonStep ===40 && 
-           <DialogBox text={Enthalpy[0].step38} 
-          />
-      }
+        {
+          lessonStep === 21  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Beaker</strong> and select the <strong>Right Hand</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 22  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Digital Balance</strong> and select <strong>Remove Balance</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 23  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Burette</strong> and select <strong>Clamp Burette</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 24  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Burette</strong> and select <strong>Clamp Burette</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 25  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Burette</strong> and select <strong>Place in Centre</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 26  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker</strong> and select <strong>Place Beaker</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 27  && (
+            <DialogBox
+              text={
+                <>
+                <strong>Scroll Down</strong> to <strong>Pour Hydrochloric acid</strong> from the <strong>Burette</strong> into the <strong>Polystyrene cup</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 28  && (
+            <DialogBox
+              text={
+                <>
+                Now click the <strong>Beaker</strong> and select <strong>Remove Beaker</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 28.5  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Beaker</strong> and select <strong>Cover Cup</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 29  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Burette Clamp</strong> and select <strong>Remove from Centre</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 30  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Thermometer</strong> and select the <strong>Right Hand</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 31  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Thermometer</strong> and select <strong>Place Thermometer</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 32  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Test Tube</strong> and Select the <strong>Right Hand</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 33  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker</strong>and Select <strong>Stir</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 34  && (
+            <DialogBox
+              text={
+                <>
+                Press <strong>P</strong> to <strong>Enter Pour Mode</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 35  && (
+            <DialogBox
+              text={
+                <>
+                <strong>Scroll Down Continously</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 36  && (
+            <DialogBox
+              text={
+                <>
+                <strong>Press P again</strong> to exit Pouring Mode
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 37  && (
+            <DialogBox
+              text={
+                <>
+                Click the normal beaker and select Unstir to remove the stirring tool
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 39  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>test tube</strong> and select <strong>Weigh Test Tube</strong>.
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 40  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker</strong>  and select <strong>Remove Thermometer</strong>
+                </>
+              }
+            />
+          )
+        }
 
       {lessonStep ===41 && 
            <DialogBox text={Enthalpy[0].step39} />
