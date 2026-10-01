@@ -512,9 +512,9 @@ const {
           (lessonStep>=18 && lessonStep<=30)  && <HessGuidelines guidelineData={guidelineData[4]}/>
         }
 
-        {
+        {/* {
           (lessonStep>=31 &&  lessonStep<=31)  && <HessStartingTemperature />
-        }
+        } */}
 
         {
           (lessonStep>=32 && lessonStep<=38)  && <HessGuidelines guidelineData={guidelineData[5]}/>
@@ -799,7 +799,7 @@ const {
             <DialogBox
               text={
                 <>
-                Click the <strong>Test Tube</strong> and select <strong>Keep Back on Table</strong>
+                Click the <strong>Weighed Test Tube</strong> and select <strong>Keep Back on Table</strong>
                 </>
               }
             />
@@ -835,7 +835,7 @@ const {
             <DialogBox
               text={
                 <>
-                Add <strong>30 cm³ of Hydrochloric acid</strong> to the urette 
+                Add <strong>30 cm³ of Hydrochloric acid</strong> to the Burette 
                 </>
               }
             />
@@ -980,7 +980,7 @@ const {
             <DialogBox
               text={
                 <>
-                Click the <strong>Test Tube</strong> and Select the <strong>Right Hand</strong>
+                Click the <strong>Held Test Tube</strong> and Select the <strong>Right Hand</strong>
                 </>
               }
             />
@@ -1046,7 +1046,7 @@ const {
             <DialogBox
               text={
                 <>
-                Click the <strong>test tube</strong> and select <strong>Weigh Test Tube</strong>.
+                Click the <strong>Held Test Tube</strong> and select <strong>Weigh Test Tube</strong>.
                 </>
               }
             />
@@ -1063,18 +1063,66 @@ const {
             />
           )
         }
+        {
+          lessonStep === 41  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Thermometer</strong> and select <strong>Reset Thermometer</strong>
+                </>
+              }
+            />
+          )
+        }
 
-      {lessonStep ===41 && 
-           <DialogBox text={Enthalpy[0].step39} />
-      }
+        {
+          lessonStep === 42  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Thermometer</strong> and select <strong>Keep Back On Table</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 43  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker</strong> and select <strong>Dispose Cup</strong>
+                </>
+              }
+            />
+          )
+        }
+        {
+          lessonStep === 44  && (
+            <DialogBox
+              text={
+                <>
+                Reaction 1 is complete. Review the recorded results before continuing.
+                </>
+              }
+              onbtnClick={() => {
+                setShowEnthalyResultOne(true)
+                }}
 
-      {lessonStep ===42 && 
-           <DialogBox text={Enthalpy[0].step40}/>
-      }
+             onbtn2Click={() => {
+                    labModels.forEach((modelRef) => {
+                      if (modelRef?.current) {
+                        resetModel(modelRef.current)
+                      }
+                    })
 
-      {lessonStep ===43 && 
-           <DialogBox text={Enthalpy[0].step41}/>
-      }
+                    setSelectedLesson(9)
+                    setLessonStep(1)
+                  }}
+            />
+          )
+        }
+
 
       {lessonStep ===44 && 
            <DialogBox text={Enthalpy[0].step42}

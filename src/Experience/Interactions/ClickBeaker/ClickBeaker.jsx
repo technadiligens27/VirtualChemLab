@@ -545,6 +545,10 @@ const ClickObject = () => {
   }
 
   const handlePlaceBeaker = () => {
+    if(selectedLesson==9 && lessonStep !==23){
+      setShowErrorMsgNo(1)
+      return
+    }
     if(selectedLesson===8 && lessonStep!==26){
       setShowErrorMsgNo(1)
       return
@@ -556,6 +560,10 @@ const ClickObject = () => {
 }
 
   const handlePlaceBeakerRemove = ()=>{
+    if(selectedLesson==9 && lessonStep!==25){
+      setShowErrorMsgNo(1)
+      return
+    }
     setIsBeakerNearClamp(false)
     if(lessonStep===28 && selectedLesson===8){
       setLessonStep(28.5);
@@ -765,6 +773,14 @@ const ClickObject = () => {
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
+    if([9].includes(selectedLesson)){
+      if(![5,14].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+         return 
+      }      
+    }
+
+
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
       if(![14,24,33,50,69,93,97,113,120,126,132,140,146].includes(lessonStep)){
         setShowErrorMsgNo(1)
@@ -772,8 +788,8 @@ const ClickObject = () => {
       }
     }
 
-    if([8,9].includes(selectedLesson)){
-      if(![7,15].includes(lessonStep)){
+    if([8].includes(selectedLesson)){
+      if(![7,15,42].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return 
       }
@@ -1083,11 +1099,8 @@ const ClickObject = () => {
     }
 
     if (handData.name === "mainThermometer") {
-      if (
-        lessonStep === 43 &&
-        selectedLesson === 8
-      ) {
-        setLessonStep(44)
+      if ( lessonStep === 42 && selectedLesson === 8) {
+        setLessonStep(43)
       }
 
 
@@ -1394,7 +1407,35 @@ const clickableObjects = selectableObjects
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
-    if([8,9].includes(selectedLesson)){
+    if(selectedLesson==9){
+      if(![3,7,19].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+
+      if([3].includes(lessonStep)){
+        if(objectName !=="mainPolysterene"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([7].includes(lessonStep)){
+        if(objectName !=="main-spoon"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([19].includes(lessonStep)){
+        if(objectName !=="main-normal-beaker"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+
+    }
+
+
+    if([8].includes(selectedLesson)){
       if(![4,9,21,30,32].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return false 
@@ -1559,7 +1600,34 @@ const clickableObjects = selectableObjects
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
-    if([8,9].includes(selectedLesson)){
+    if(selectedLesson===9){
+      if(![2,6,16].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return 
+      }
+
+      if([2].includes(lessonStep)){
+        if(objectName !== "main-normal-beaker"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+      if([6].includes(lessonStep)){
+        if(objectName !== "main-testube-01"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+
+      if([16].includes(lessonStep)){
+        if(objectName !== "main-buirette"){
+          setShowErrorMsgNo(1)
+          return false
+        }
+      }
+    }
+
+    if([8].includes(selectedLesson)){
       if(![3,8,18].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return false
@@ -2027,6 +2095,15 @@ const toggleFunnelMode = () => {
 }
 
    const togglePourIntoTestTube = () => {
+    if(selectedLesson==9 && lessonStep !==11){
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if(selectedLesson==8 && lessonStep !==13){
+      setShowErrorMsgNo(1)
+      return
+    }    
       setIsPourIntoTestube((previousValue) => {
         if (previousValue) {
           if(selectedLesson===14.3 && lessonStep ===90 ){
@@ -2475,29 +2552,26 @@ const handlePlacePolysterene = () => {
 }
 
  const handleRemoveTestTube = () => {
-  if (
-    !isWeighTestube ||
-    !isTestTube(selectedObject?.name)
-  ) {
+
+  if(![12,13].includes(selectedLesson) && (![6,14,24].includes(lessonStep))){
+    setShowErrorMsgNo(1)
     return
   }
 
-  const previousHandData =
-    weighedTestTubeHandDataRef.current
+  if (!isWeighTestube || !isTestTube(selectedObject?.name)) {
+    return
+  }
+
+  const previousHandData =weighedTestTubeHandDataRef.current
 
   if (!previousHandData) {
-    console.log(
-      "Previous test tube hand data not found"
-    )
+    console.log("Previous test tube hand data not found")
     return
   }
 
   // Lesson 12 Step 14
   // Force test tube into RIGHT hand
-  if (
-    selectedLesson === 12 &&
-    lessonStep === 14
-  ) {
+  if (selectedLesson === 12 && lessonStep === 14) {
     setSelectedRightHand({
       ...previousHandData,
       hand: "right",
@@ -2507,8 +2581,7 @@ const handlePlacePolysterene = () => {
 
     setIsWeighTestube(false)
 
-    weighedTestTubeHandDataRef.current =
-      null
+    weighedTestTubeHandDataRef.current =null
 
     setLessonStep(15)
     setSelectedObject(null)
@@ -2649,17 +2722,26 @@ useEffect(()=>{
   }
 },[selectedLesson,lessonStep])
 
-  const handleRemoveBalance=()=>{
-      setIsBalancePlaced(false);
-      setSelectedObject(null)
-      if(isBalancePlaced && selectedLesson ===8 && lessonStep ===22){
-        setLessonStep(23)
-      }
+const handleRemoveBalance = () => {
+  const isValid = (selectedLesson === 8 && lessonStep === 22) ||
+                  (selectedLesson === 9 && lessonStep === 20)
 
-      if(isBalancePlaced && selectedLesson ===9 && lessonStep ===20){
-        setLessonStep(21)
-      }
+  if (!isValid) {
+    setShowErrorMsgNo(1)
+    return
   }
+
+  setIsBalancePlaced(false)
+  setSelectedObject(null)
+
+  if ( isBalancePlaced && selectedLesson === 8 && lessonStep === 22) {
+    setLessonStep(23)
+  }
+
+  if ( isBalancePlaced && selectedLesson === 9 && lessonStep === 20) {
+    setLessonStep(21)
+  }
+}
 
   const handleShowBung=(modelName)=>{
 
@@ -2721,26 +2803,39 @@ useEffect(()=>{
   },[selectedLeftHand,selectedRightHand,isPlacePolysterene,isPlaceThermometer])
 
   const placeThermometer = () => {
-      const thermometer = mainThermometerRef.current
+    if (selectedLesson !== 8 || lessonStep !== 31) {
+      setShowErrorMsgNo(1)
+      return
+    }
 
-      if (!thermometer) return
+    const thermometer = mainThermometerRef.current
 
-      if (!thermometerOriginalTransformRef.current) {
-        const handData =
-          selectedRightHand?.name === "mainThermometer"
-            ? selectedRightHand
-            : selectedLeftHand
+    if (!thermometer) return
 
-        thermometerOriginalTransformRef.current = {
-          parent: handData?.originalParent,
-          position: handData?.originalPosition?.clone(),
-          rotation: handData?.originalRotation?.clone(),
-        }
+    if (!thermometerOriginalTransformRef.current) {
+      const handData =
+        selectedRightHand?.name ===
+        "mainThermometer"
+          ? selectedRightHand
+          : selectedLeftHand
+
+      thermometerOriginalTransformRef.current = {
+        parent:
+          handData?.originalParent,
+
+        position:
+          handData?.originalPosition
+            ?.clone(),
+
+        rotation:
+          handData?.originalRotation
+            ?.clone(),
       }
+    }
 
-      setIsPlaceThermometer(true)
-      setSelectedObject(null)
-}
+    setIsPlaceThermometer(true)
+    setSelectedObject(null)
+  }
 
   const removeThermometer = () => {
     const original =
@@ -2844,13 +2939,23 @@ useEffect(()=>{
   }
 }
 
-  const disposeCup = ()=>{
-    setIsPlacePolysterene(false)
-    if(lessonStep==42 && selectedLesson==8){
-      mainPolystereneRef.current.visible=false
-      setLessonStep(43)
-    }
+const disposeCup = () => {
+  const isValid = selectedLesson === 8 && lessonStep === 43
+  if (!isValid) {
+    setShowErrorMsgNo(1)
+    setSelectedObject(null)
+    return
   }
+
+  setIsPlacePolysterene(false)
+
+  if (mainPolystereneRef.current) {
+    mainPolystereneRef.current.visible = false
+  }
+
+  setLessonStep(44)
+  setSelectedObject(null)
+}
 
   const coverPolystereneCup = ()=>{
     setIsPolystereneCovered(true)
@@ -2873,6 +2978,11 @@ useEffect(()=>{
 
   const addPotassiumHydrogencarbonateToSpoon = ()=>{
     if(selectedLesson===8 && lessonStep!==12){
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if(selectedLesson==9 && lessonStep!==8){
       setShowErrorMsgNo(1)
       return
     }
@@ -4051,6 +4161,22 @@ useEffect(()=>{
       }
       //----------------Tutorial Mode-------------////
       if ( (selectedLesson === 8 || selectedLesson === 9) && selectedObject.name === "main-normal-beaker" && isTutorialMode) {
+        if(lessonStep === 40 && selectedLesson ===8){
+          return(
+            <>
+            <button onClick={removeThermometer}>
+              Remove Thermometer
+            </button>
+            <button
+                onClick={() =>
+                  keepBackOnTable(selectedObject.hand)
+                }
+              >
+              Keep Back On Table
+            </button>
+            </>
+          )
+        } 
         return (
         <>
           <button
@@ -4094,13 +4220,6 @@ useEffect(()=>{
 
         }
 
-        {
-          lessonStep === 40 && selectedLesson ===8 && (
-            <button onClick={removeThermometer}>
-              Remove Thermometer
-            </button>
-          )
-        }
 
           {
           lessonStep === 35.5 && selectedLesson ===9 && (
@@ -4111,7 +4230,7 @@ useEffect(()=>{
         }
 
         {
-          lessonStep === 42 && selectedLesson ===8 && (
+          lessonStep === 43 && selectedLesson ===8 && (
             <button onClick={disposeCup}>
               Dispose Cup
             </button>
@@ -4287,7 +4406,7 @@ const renderThermometerHeldButtons=()=>{
         </button>
 
         {!isPlaceThermometer && 
-          <button onClick={()=>placeThermometer()}>
+          <button onClick={placeThermometer}>
             Place Thermometer
           </button>
         }
@@ -4350,7 +4469,7 @@ const renderBuretteHeldButtons = ()=>{
       )
     }
 
-    if (selectedObject.name === "main-buirette" && [12.2,8].includes(selectedLesson)  && [61,23].includes(lessonStep)) {
+    if (selectedObject.name === "main-buirette" && [12.2,8,9].includes(selectedLesson)  && [61,23,21].includes(lessonStep)) {
       return (
         <>
           <button onClick={handleClampBurette}>
@@ -5264,7 +5383,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={spoonRef}
-      multiplier={(selectedLesson==8 && lessonStep==13) ? 3 :2}
+      multiplier={(selectedLesson==8 && lessonStep==13) ? 3 : (selectedLesson==9 && lessonStep==11)?3 :2}
     />
 
     <ClickHitbox
@@ -5274,7 +5393,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={testube01Ref}
-      multiplier={(selectedLesson==8 && lessonStep==13) ? 0 :1.2}
+      multiplier={(selectedLesson==8 && lessonStep==13) ? 0 :(selectedLesson==9 && lessonStep==11)?0 : 1.2}
     />
 
     <ClickHitbox

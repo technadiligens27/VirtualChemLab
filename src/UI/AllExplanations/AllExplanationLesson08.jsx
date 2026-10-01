@@ -7,7 +7,7 @@ const AllExplanationLesson08 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([6,11,15,17,19,21,29,31,35,36,40].includes(lessonStep)){
+        if([6,11,15,17,19,21,29,31,35,36,40,41].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
@@ -73,7 +73,7 @@ const AllExplanationLesson08 = ()=>{
            {lessonStep==19 && <Explanations
             text={
                 <>
-               We will use the <strong>burette</strong> to add a measured amount of <strong>hydrochloric acid</strong> accurately into the polystyrene cup
+               We will use the <strong>burette</strong> to add a 30 cm3 of <strong>hydrochloric acid</strong> accurately into the polystyrene cup
                 </>
             }
             top="30%"
@@ -94,6 +94,20 @@ const AllExplanationLesson08 = ()=>{
             width="380px"
             />}
    
+          {lessonStep==28 && <Explanations
+            text={
+                <>
+                The <strong>polystyrene cup</strong> now contains <strong>30 cm³ of hydrochloric acid</strong>.
+                </>
+            }
+
+            top="38%"
+            left="58%"
+            height="265px"
+            width="420px"
+            />} 
+
+
            {lessonStep==29 && <Explanations
             text={
                 <>
@@ -111,6 +125,12 @@ const AllExplanationLesson08 = ()=>{
                 <strong>Thermometer</strong> will be used in the <strong>Polystyrene cup</strong> to measure the starting temperature of the <strong>Hydrochloric acid</strong>
                 </>
             }
+
+            text02={
+                <>
+                The current room temperature, as indicated by the <strong>thermometer</strong>, is <strong>22°C</strong>.
+                </>
+            }
             top="28%"
             left="48%"
             height="235px"
@@ -122,9 +142,9 @@ const AllExplanationLesson08 = ()=>{
                 <>
             Let’s gradually pour the <strong>potassium carbonate</strong> in the test tube into the <strong>hydrochloric acid</strong> while continuously stirring the mixture.                </>
             }
-            top="28%"
-            left="48%"
-            height="235px"
+            top="8%"
+            left="8%"
+            height="255px"
             width="420px"
             />} 
            {lessonStep==36 && <Explanations
@@ -151,7 +171,18 @@ const AllExplanationLesson08 = ()=>{
             height="265px"
             width="420px"
             />} 
+          {lessonStep==41 && <Explanations
+            text={
+                <>
+                The temperature has risen to <strong>42°C</strong>, which is an increase of <strong>20°C</strong>.
+                </>
+            }
 
+            top="38%"
+            left="48%"
+            height="200px"
+            width="420px"
+            />} 
         </>
     )                
 }

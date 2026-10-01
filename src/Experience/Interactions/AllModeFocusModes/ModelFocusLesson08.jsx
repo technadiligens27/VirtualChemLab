@@ -25,6 +25,7 @@ const ModelFocusLesson08 = ()=>{
         {lessonStep==35 && <ModelFocusMode modelRefs={[testube01Ref,normalBeakerRef,mainThermometerRef]} blurResolution={350} blurStrength={3}/> }          
         {lessonStep==36 && <ModelFocusMode modelRefs={[testube01Ref,normalBeakerRef,mainThermometerRef]} blurResolution={350} blurStrength={3}/> }          
         {lessonStep==40 && <ModelFocusMode modelRefs={[testube01Ref,digitalBalanceRef]} blurResolution={350} blurStrength={3}/> }          
+        {lessonStep==41 && <ModelFocusMode modelRef={mainThermometerRef} blurResolution={350} blurStrength={3}/> }          
     
         </>
     )

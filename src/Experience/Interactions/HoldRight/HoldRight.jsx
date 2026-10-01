@@ -631,7 +631,7 @@ const transformControlsRef = useRef()
             spoonRef={spoonRef}
             hand="right"
             heightOffset={0.6}
-            xOffset={0.6}
+            xOffset={0.7}
           />
         )
       }

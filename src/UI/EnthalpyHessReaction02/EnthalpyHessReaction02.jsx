@@ -637,46 +637,64 @@ const EnthalpyHessReaction02 = () => {
           LESSON STEPS
       ===================================================== */}
 
-      {lessonStep === 2 && (
-        <DialogBox
-          text={
-            "Click Beaker and Select Left Hand Option"
-          }
-        />
-      )}
+
+        {
+          lessonStep === 2 && (
+            <DialogBox
+              text={
+                <>
+                  Click the <strong>Beaker</strong> and select the <strong>Left Hand</strong> option to pick it up.
+                </>
+              }
+            />
+          )
+        }
+
+        {
+          lessonStep === 3 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Polystyrene Cup</strong> and select the <strong>Right Hand</strong> option to pick it up.
+                </>
+              }
+            />
+          )
+        }
 
 
-      {lessonStep === 3 && (
-        <DialogBox
-          text={
-            "Click Polysterene Cup and Select Right Hand Option"
-          }
-        />
-      )}
+        {
+          lessonStep === 4 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Polystyrene Cup</strong> and select <strong>Place in Beaker</strong> 
+                </>
+              }
+            />
+          )
+        }
 
+        {
+          lessonStep === 5 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker </strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+            />
+          )
+        }
 
-      {lessonStep === 4 && (
-        <DialogBox
-          text={
-            "Click Polysterene Cup and Select Place In Beaker"
-          }
-        />
-      )}
-
-
-      {lessonStep === 5 && (
-        <DialogBox
-          text={
-            "Keep Beaker In Table"
-          }
-        />
-      )}
 
 
       {lessonStep === 6 && (
         <DialogBox
           text={
-            "Select Testube and select Left Hand"
+            <>
+           Click the <strong>Test Tube</strong> and select the <strong>Left Hand</strong> option          
+            </>
           }
         />
       )}
@@ -685,7 +703,10 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 7 && (
         <DialogBox
           text={
-            "Select Spatula and select Right Hand Option"
+            <>
+                Click the <strong>Spatula</strong> and select the <strong>Right Hand</strong> option.
+
+            </>
           }
         />
       )}
@@ -694,7 +715,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 8 && (
         <DialogBox
           text={
-            "Click Potassium Hydrogencarbonate container And Select Potassium Hydrogencarbonate"
+            <>
+            Click the <strong>potassium hydrogencarbonate container</strong> and select <strong>Potassium Hydrogencarbonate</strong>.
+            </>
           }
         />
       )}
@@ -703,7 +726,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 9 && (
         <DialogBox
           text={
-            "Click the Test tube and select Pour Into Testube"
+            <>
+           Click the <strong>Spatula</strong> and select <strong>Pour into Test Tube</strong>
+            </>
           }
         />
       )}
@@ -712,35 +737,46 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 10 && (
         <DialogBox
           text={
-            "Scroll Down to Pour"
+            <>
+                <strong>Scroll Down Continously</strong> to <strong>Pour</strong>
+
+            </>
           }
         />
       )}
 
+        {
+          lessonStep === 11  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Spatula</strong> and <strong>Disable Pour Mode</strong>
+                </>
+              }
+            />
+          )
+        } 
 
-      {lessonStep === 11 && (
-        <DialogBox
-          text={
-            "Click the Spatula And Disable Pour Mode"
-          }
-        />
-      )}
-
-
-      {lessonStep === 12 && (
-        <DialogBox
-          text={
-            "Click the Digital balance and select Place Balance."
-          }
-        />
-      )}
+        {
+          lessonStep === 12  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Digital Balance</strong> and select <strong>Place Balance</strong>
+                </>
+              }
+            />
+          )
+        } 
 
 
       {lessonStep === 13 && (
         <DialogBox
           text={
-            "Click the Test Tube and select Weigh Testube."
-          }
+             <>
+             Click the <strong>Test Tube</strong> and select <strong>Weigh Test Tube</strong>
+             </>
+           }
         />
       )}
 
@@ -748,17 +784,21 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 14 && (
         <DialogBox
           text={
-            "Click the spatula and select Keep Back on Table."
-          }
+                <>
+                Click the <strong>Spatula</strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 15 && (
         <DialogBox
-          text={
-            "Click the test tube again and select Keep on Table."
-          }
+         text={
+                <>
+                Click the <strong>Weighed Test Tube</strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
         />
       )}
 
@@ -766,8 +806,10 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 16 && (
         <DialogBox
           text={
-            "Click the burette and select the Left Hand option."
-          }
+                <>
+                Click the <strong>Burette</strong> and select the <strong>Left Hand</strong> 
+                </>
+              }
         />
       )}
 
@@ -775,7 +817,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 17 && (
         <DialogBox
           text={
-            "Click the burette and select Add Liquid."
+                <>
+                Click the <strong>Burette</strong> and select <strong>Add Liquid</strong>
+                </>
           }
         />
       )}
@@ -784,17 +828,21 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 18 && (
         <DialogBox
           text={
-            "Add 30 cm³ of hydrochloric acid to the burette."
-          }
+                <>
+                Add <strong>30 cm³ of Hydrochloric acid</strong> to the Burette 
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 19 && (
         <DialogBox
-          text={
-            "Click the normal beaker and select the Right Hand option."
-          }
+         text={
+                <>
+                Click the <strong>Beaker</strong> and select the <strong>Right Hand</strong>
+                </>
+              }
         />
       )}
 
@@ -802,7 +850,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 20 && (
         <DialogBox
           text={
-            "Click the Digital balance and select Remove Balance."
+                <>
+                Click the <strong>Digital Balance</strong> and select <strong>Remove Balance</strong>
+                </>
           }
         />
       )}
@@ -811,62 +861,76 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 21 && (
         <DialogBox
           text={
-            "Click the Burette and select Clamp Burette."
-          }
+                <>
+                Click the <strong>Burette</strong> and select <strong>Clamp Burette</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 22 && (
         <DialogBox
-          text={
-            "Click the Burette clamp and select Place in Centre."
-          }
+              text={
+                <>
+                Click the <strong>Burette</strong> and select <strong>Place in Centre</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 23 && (
         <DialogBox
-          text={
-            "Click the normal beaker and select Place Beaker."
-          }
+              text={
+                <>
+                Click the <strong>Held Beaker</strong> and select <strong>Place Beaker</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 24 && (
         <DialogBox
-          text={
-            "Scroll down to pour hydrochloric acid from the burette into the polystyrene cup."
-          }
+              text={
+                <>
+                <strong>Scroll Down</strong> to <strong>Pour Hydrochloric acid</strong> from the <strong>Burette</strong> into the <strong>Polystyrene cup</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 25 && (
         <DialogBox
-          text={
-            "Click the normal beaker and select Remove Beaker."
-          }
+              text={
+                <>
+                Now click the <strong>Beaker</strong> and select <strong>Remove Beaker</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 26 && (
         <DialogBox
-          text={
-            "Click the normal beaker and select Cover Polysterene Cup."
-          }
+                text={
+                <>
+                Click the <strong> Held Beaker</strong> and select <strong>Cover Cup</strong>
+                </>
+              }
         />
       )}
 
 
       {lessonStep === 27 && (
         <DialogBox
-          text={
-            "Click the burette clamp and select Remove from Centre."
-          }
+              text={
+                <>
+                Click the <strong>Burette Clamp</strong> and select <strong>Remove from Centre</strong>
+                </>
+              }
         />
       )}
 
