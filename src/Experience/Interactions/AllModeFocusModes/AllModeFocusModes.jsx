@@ -6,6 +6,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 import ModelFocusLesson13 from "./ModelFocusLesson13"
 import ModelFocusLesson08 from "./ModelFocusLesson08"
 import ModelFocusLesson09 from "./ModelFocusLesson09"
+import ModelFocusLesson11 from "./ModelFocusLesson11"
 
 const AllModeFocusModes = () =>{
 
@@ -17,6 +18,7 @@ const AllModeFocusModes = () =>{
         {isExplanationOpen && [13].includes(selectedLesson) && <ModelFocusLesson13/> }    
         {isExplanationOpen && [8].includes(selectedLesson) && <ModelFocusLesson08/> }    
         {isExplanationOpen && [9].includes(selectedLesson) && <ModelFocusLesson09/> }    
+        {isExplanationOpen && [11].includes(selectedLesson) && <ModelFocusLesson11/> }    
 
         </>
     )

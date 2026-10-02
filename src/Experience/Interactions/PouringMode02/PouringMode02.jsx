@@ -76,7 +76,7 @@ const PouringMode02 = ({
 
   const {
     conicalBeakerRef02,graduatedBeakerRef,
-    roundBeakerRef,testube01Ref,testube02Ref
+    roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,volumetricRef
   } = useContext(
     ModelContext
   )
@@ -604,7 +604,25 @@ const PouringMode02 = ({
           />
         )}
 
-
+      {selectedLeftHand?.name ===
+        "water-bottle" &&
+        selectedRightHand?.name ===
+          "volumetric-flask" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+              waterBottleRef
+            }
+            otherModelRef={
+              volumetricRef
+            }
+            modelLiquidEndScale={0}
+            otherLiquidEndScale={0.8}
+            otherLiquidColor = {"#ffffff"}
+            speed={15}
+             pourScale = {1}
+          />
+        )}
     </>
   )
 }

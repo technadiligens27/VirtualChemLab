@@ -465,11 +465,18 @@ const guidelineData = [
 
             {lessonStep >2 && lessonStep <6 && <HessGuidelines guidelineData={guidelineData[0]}/>}
 
-            {lessonStep === 3 && <DialogBox text={"Select the normal beaker and place it in your right hand."}/>}
-
+          {lessonStep === 3 && (
+            <DialogBox
+              text={
+                <>
+                  Select the <strong>Beaker</strong> and place it in your <strong>Right Hand</strong>.
+                </>
+              }
+            />
+          )}
             {lessonStep === 4 && <DialogBox text={
               <>
-              Click held Beaker and select <strong>Add Liquid</strong> 
+              Click the <strong>Held Beaker</strong> and select <strong>Add Liquid</strong> 
               </>
               }/>}
 
@@ -485,7 +492,7 @@ const guidelineData = [
 
 
 
-            {lessonStep >=6 && lessonStep <17 && <HessGuidelines guidelineData={guidelineData[1]}/>}
+            {lessonStep >=7 && lessonStep <17 && <HessGuidelines guidelineData={guidelineData[1]}/>}
 
 
             {lessonStep === 6 && <DialogBox text={<>
@@ -527,7 +534,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                 Click the <strong>Volumetric Pipette</strong> And Select Exit <strong>Pipette Mode</strong>.
+                 Click the <strong>Volumetric Pipette</strong> And Select <strong>Exit Pipette Mode</strong>.
                 </>
               }
             />
@@ -537,7 +544,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                  Place the <strong>normal beaker</strong> back on the <strong>table</strong>.
+                  Place the <strong>Held Beaker</strong> back on the <strong>Table</strong>.
                 </>
               }
             />
@@ -561,7 +568,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                 Select held Volumetric Pipette and Enter <strong>Pipette Mode</strong>.
+                 Select <strong>Held Volumetric Pipette</strong> and Enter <strong>Pipette Mode</strong>.
                 </>
               }
             />
@@ -571,7 +578,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                  <strong>Scroll down</strong> to release the <strong>hydrochloric acid</strong> into the <strong>volumetric flask</strong>.
+                  <strong>Scroll Down</strong> to <strong>Pour</strong>
                 </>
               }
             />
@@ -581,7 +588,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                  Select Volumetric Pipette and select <strong>Exit Pipette Mode</strong>.
+                  Select <strong>Volumetric Pipette </strong> and select <strong>Exit Pipette Mode</strong>.
                 </>
               }
             />

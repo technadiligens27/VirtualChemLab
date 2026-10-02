@@ -93,7 +93,7 @@ const Interaction = () => {
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
         naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
-        tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef
+        tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef,waterBottleRef
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -569,6 +569,19 @@ useEffect(() => {
 
       {
         [14,14.1].includes(selectedLesson) && lessonStep >=25 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)
+      }
+
+      {
+        selectedLesson===11 && lessonStep==21 && <PouringMode02
+          pourModelRef = {waterBottleRef}
+          receiveModelRef = {volumetricRef}
+          hand={"left"}
+          pourModelXOffset = {-2.5}
+          pourModelYOffset = {-2.5}
+          pourModelZOffset = {0}
+
+        
+        />
       }
 
     </>

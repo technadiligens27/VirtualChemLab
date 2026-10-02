@@ -134,6 +134,12 @@ const FillBeakerBox = () => {
       return true
     }
 
+    if([11].includes(selectedLesson)){
+      if([5].includes(lessonStep)){
+        if(!checkFill("Hydrochloric Acid (HCl)",25)) return
+      }
+    }
+
     if([8,9].includes(selectedLesson)){
       if([20,18].includes(lessonStep)){
         if(!checkFill("Hydrochloric Acid (HCl)",30)) return

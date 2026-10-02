@@ -378,8 +378,7 @@ const EnthalpyHessReaction02 = () => {
         "Add Potassium Hydrogencarbonate and Measure the Temperature Change",
 
       description:
-        "Add the potassium hydrogencarbonate to the hydrochloric acid while stirring continuously. Observe the thermometer as the temperature falls and record the lowest stable temperature reached during the reaction.",
-
+      "Add potassium hydrogencarbonate to the hydrochloric acid while stirring. Observe the temperature drop and record the lowest stable temperature reached.",
       implementationSteps: [
         "Add the potassium hydrogencarbonate gradually to the HCL acid.",
         "Stir the mixture continuously while adding the potassium hydrogencarbonate.",
@@ -774,7 +773,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
           text={
              <>
-             Click the <strong>Test Tube</strong> and select <strong>Weigh Test Tube</strong>
+             Click the <strong>Held Test Tube</strong> and select <strong>Weigh Test Tube</strong>
              </>
            }
         />
@@ -938,7 +937,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 28 && (
         <DialogBox
           text={
-            "Click the Thermometer and select the Right Hand option."
+                <>
+                Click the <strong>Thermometer</strong> and select the <strong>Right Hand</strong>
+                </>
           }
         />
       )}
@@ -946,12 +947,14 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep === 29 && (
         <>
-          <HessStartingTemperature />
+          {/* <HessStartingTemperature /> */}
 
           <DialogBox
-            text={
-              "Click the Thermometer again and select Place Thermometer."
-            }
+              text={
+                <>
+                Click the <strong>Held Thermometer</strong> and select <strong>Place Thermometer</strong>
+                </>
+              }
           />
         </>
       )}
@@ -960,8 +963,10 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 30 && (
         <DialogBox
           text={
-            "Click the test tube and select the Right Hand option."
-          }
+                <>
+                Pick up the <strong>Test Tube</strong> to the <strong>Right Hand</strong>
+                </> 
+                }
         />
       )}
 
@@ -969,8 +974,10 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 31 && (
         <DialogBox
           text={
-            "Press P to enter Pouring Mode."
-          }
+                <>
+                <strong>Press P again</strong> to exit Pouring Mode
+                </>
+              }
         />
       )}
 
@@ -978,7 +985,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 32 && (
         <DialogBox
           text={
-            "Scroll down to stir the mixture and gradually pour the potassium hydrogencarbonate from the test tube."
+            <>
+            <strong>Scroll Down Continuously</strong> to stir the mixture and gradually pour the <strong>potassium hydrogencarbonate</strong> from the test tube.
+            </>
           }
         />
       )}
@@ -987,7 +996,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 33 && (
         <DialogBox
           text={
-            "Press P again to exit Pouring Mode."
+            <>
+            <strong>Press P again</strong> to exit Pouring Mode
+            </>
           }
         />
       )}
@@ -1005,7 +1016,10 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 35 && (
         <DialogBox
           text={
-            "Click the test tube and select Weigh Test Tube."
+            <>
+                Click the <strong>Held Test Tube</strong> and select <strong>Weigh Test Tube</strong>.
+
+            </>
           }
         />
       )}
@@ -1014,7 +1028,9 @@ const EnthalpyHessReaction02 = () => {
       {lessonStep === 35.5 && (
         <DialogBox
           text={
-            "Click the normal beaker and select Remove Thermometer."
+            <>
+            Click the <strong>Held Beaker</strong>  and select <strong>Remove Thermometer</strong>
+            </>
           }
         />
       )}

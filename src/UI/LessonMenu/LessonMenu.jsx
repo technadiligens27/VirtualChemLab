@@ -117,14 +117,14 @@ const LessonMenu = () => {
       number: 9,
       divider: "purple",
     },  
-    // {
-    //   id: 11.1,
-    //   name: "HCl Titration Part 2",
-    //   imgPath: "./AlkaliTest.png",
-    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-    //   number: 11.1,
-    //   divider: "purple",
-    // }, 
+    {
+      id: 11.1,
+      name: "HCl Titration Part 2",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 11.1,
+      divider: "purple",
+    }, 
     {
       id: 12,
       name: "Sulfamic Acid–NaOH Titration",

@@ -221,7 +221,8 @@ const UI = () => {
   useEffect(()=>{
     setShowVolumetricFlaskArrow(
       ([12.1,12.2].includes(selectedLesson) && [26,55].includes(lessonStep)) ||
-      ([14.3].includes(selectedLesson) && [94].includes(lessonStep))
+      ([14.3].includes(selectedLesson) && [94].includes(lessonStep)) ||
+      ([11].includes(selectedLesson) && [12].includes(lessonStep))
     )
   },[selectedLesson,lessonStep])
 
@@ -280,7 +281,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowNaOHBBottleArrowRef(
-      ([12.2].includes(selectedLesson) && [63].includes(lessonStep))
+      ([12.2].includes(selectedLesson) && [63].includes(lessonStep)) ||
+      ([11].includes(selectedLesson) && [17].includes(lessonStep))
     )
   },[selectedLesson,lessonStep])
 

@@ -13,10 +13,11 @@ import {
   InteractionContext,
 } from "../../../Contexts/InteractionContext/InteractionContext"
 
-// import {PourDropletsFromModel} from "../../../Experience/Interactions/PourDropletsFromModel/PourDropletsFromModel.jsx"
-import { ModelContext } from "../../../Contexts/ModelContext/ModelContext.jsx"
-import PourDropletsFromModel from "../PourDropletsFromModel/PourDropletsFromModel.jsx"
+import {
+  ModelContext,
+} from "../../../Contexts/ModelContext/ModelContext.jsx"
 
+import PourDropletsFromModel from "../PourDropletsFromModel/PourDropletsFromModel.jsx"
 
 const PipetteRubberAnimation = ({
   modelRef,
@@ -33,7 +34,6 @@ const PipetteRubberAnimation = ({
   )
 
   const {
-    fillPippette,
     setFillPipette,
     isPipetteFilled,
     setPipetteDroplet,
@@ -41,41 +41,60 @@ const PipetteRubberAnimation = ({
     InteractionContext
   )
 
-  const {graduatedPipetteRef,testube02Ref} = useContext(ModelContext)
+  const {
+    graduatedPipetteRef,
+    testube02Ref,
+  } = useContext(ModelContext)
 
-  const [isFullySqueezed,setIsFullySqueezed] = useState(false)
+  const [
+    isFullySqueezed,
+    setIsFullySqueezed,
+  ] = useState(false)
 
-  const rubberRef =
-    useRef(null)
+  const rubberRef = useRef(null)
 
   const originalRubberScaleXRef =
     useRef(null)
 
-  const [
-    fillAmount,
-    setFillAmount,
-  ] = useState(0)
+  // =========================================
+  // LOCK SCROLL DIRECTIONS AT SPECIFIC STEPS
+  // =========================================
 
+  const shouldDisableScrollUp =
+    (selectedLesson === 11 &&
+      lessonStep === 8)
+
+  const shouldDisableScrollDown =
+    (selectedLesson === 14.4 &&
+      lessonStep === 139)
+
+  // Add more conditions here when needed:
+  //
+  // const shouldDisableScrollUp =
+  //   (selectedLesson === 14.4 && lessonStep === 138) ||
+  //   (selectedLesson === 10 && lessonStep === 44)
+  //
+  // const shouldDisableScrollDown =
+  //   (selectedLesson === 14.4 && lessonStep === 139) ||
+  //   (selectedLesson === 10 && lessonStep === 45)
 
   // =========================================
   // FIND RUBBER CHILD
   // =========================================
 
   useEffect(() => {
-    const model =
-      modelRef?.current
+    const model = modelRef?.current
 
-    if (!model) return
+    if (!model) {
+      return
+    }
 
     model.traverse((child) => {
       const childName =
         child.name?.toLowerCase() || ""
 
-      if (
-        childName.includes("rubber")
-      ) {
-        rubberRef.current =
-          child
+      if (childName.includes("rubber")) {
+        rubberRef.current = child
 
         originalRubberScaleXRef.current =
           child.scale.x
@@ -83,14 +102,14 @@ const PipetteRubberAnimation = ({
     })
 
     if (!rubberRef.current) {
-      console.log(
-        "Rubber child not found"
-      )
+      console.log("Rubber child not found")
     }
 
     return () => {
       if (
-        !rubberRef.current || originalRubberScaleXRef.current === null
+        !rubberRef.current ||
+        originalRubberScaleXRef.current ===
+          null
       ) {
         return
       }
@@ -104,52 +123,56 @@ const PipetteRubberAnimation = ({
     }
   }, [modelRef])
 
-
   // =========================================
   // CONTROL RUBBER
   // =========================================
 
-  const controlRubberScale = (direction) => {
-    if (!rubberRef.current) return
-
-    if (originalRubberScaleXRef.current ===null) {
+  const controlRubberScale = (
+    direction
+  ) => {
+    if (!rubberRef.current) {
       return
     }
 
-    const rubber =  rubberRef.current
-    const originalScaleX = originalRubberScaleXRef.current 
+    if (
+      originalRubberScaleXRef.current ===
+      null
+    ) {
+      return
+    }
 
-    // =========================================
+    const rubber = rubberRef.current
+
+    const originalScaleX =
+      originalRubberScaleXRef.current
+
+    // =======================================
     // SQUEEZE RUBBER
-    // =========================================
+    // =======================================
 
     if (direction === "down") {
       const previousScaleX = rubber.scale.x
 
-      rubber.scale.x =
-        Math.max(rubber.scale.x - rubberScaleSpeed, rubberMinScaleX)
+      rubber.scale.x = Math.max(
+        rubber.scale.x - rubberScaleSpeed,
+        rubberMinScaleX
+      )
 
       const reachedMinimum =
-        previousScaleX >
-          rubberMinScaleX &&
-        rubber.scale.x ===
-          rubberMinScaleX
+        previousScaleX > rubberMinScaleX &&
+        rubber.scale.x === rubberMinScaleX
 
       if (reachedMinimum) {
-
-        console.log("fully Squeezed")
+        console.log("Rubber fully squeezed")
 
         setIsFullySqueezed(true)
 
         if (isPipetteFilled) {
-          setPipetteDroplet(
-            true
-          )
+          setPipetteDroplet(true)
         }
 
         if (
-          selectedLesson ===
-            10 &&
+          selectedLesson === 10 &&
           lessonStep === 43
         ) {
           setLessonStep(44)
@@ -157,100 +180,84 @@ const PipetteRubberAnimation = ({
       }
     }
 
-
-    // =========================================
+    // =======================================
     // RELEASE RUBBER
-    // =========================================
+    // =======================================
 
     if (direction === "up") {
-      const previousScaleX =
-        rubber.scale.x
+      const previousScaleX = rubber.scale.x
 
-      rubber.scale.x =
-        Math.min(
-          rubber.scale.x +
-            rubberScaleSpeed,
-
-          originalScaleX
-        )
+      rubber.scale.x = Math.min(
+        rubber.scale.x + rubberScaleSpeed,
+        originalScaleX
+      )
 
       if (!isPipetteFilled) {
         setFillPipette(true)
       }
 
       const fullyReleased =
-        previousScaleX <
-          originalScaleX &&
-        rubber.scale.x ===
-          originalScaleX
+        previousScaleX < originalScaleX &&
+        rubber.scale.x === originalScaleX
 
       if (fullyReleased) {
-        console.log(
-          "Rubber fully released"
-        )
+        console.log("Rubber fully released")
 
         if (
-          selectedLesson ===
-            10 &&
+          selectedLesson === 10 &&
           lessonStep === 45
         ) {
           setLessonStep(46)
         }
 
         if (
-          selectedLesson ===
-            10 &&
+          selectedLesson === 10 &&
           lessonStep === 55
         ) {
           setLessonStep(56)
         }
 
         if (
-          selectedLesson ===
-            10 &&
+          selectedLesson === 10 &&
           lessonStep === 65
         ) {
           setLessonStep(66)
         }
 
-
         if (
-          selectedLesson ===
-            14.4 &&
+          selectedLesson === 14.4 &&
           lessonStep === 138
         ) {
           setLessonStep(139)
         }
-
-
       }
     }
 
-
-    rubber.updateMatrixWorld(
-      true
-    )
+    rubber.updateMatrixWorld(true)
   }
-
 
   // =========================================
   // MOUSE WHEEL
   // =========================================
 
   useEffect(() => {
-    const handleWheel = (
-      event
-    ) => {
+    const handleWheel = (event) => {
+      // Scroll down = squeeze rubber.
       if (event.deltaY > 0) {
-        controlRubberScale(
-          "down"
-        )
+        if (shouldDisableScrollDown) {
+          return
+        }
+
+        controlRubberScale("down")
       }
 
+      // Scroll up = release rubber.
       if (event.deltaY < 0) {
-        controlRubberScale(
-          "up"
-        )
+        if (shouldDisableScrollUp) {
+          return
+        }
+
+        controlRubberScale("up")
       }
     }
 
@@ -272,26 +279,27 @@ const PipetteRubberAnimation = ({
     lessonStep,
     setLessonStep,
     isPipetteFilled,
-    modelRef,
+    shouldDisableScrollUp,
+    shouldDisableScrollDown,
   ])
-
 
   return (
     <>
-      {isFullySqueezed && (<PourDropletsFromModel 
-        modelRef={graduatedPipetteRef} 
-        fallAxis={"y"} 
-        startDelay={0} 
-        fallDistance={1.8} 
-        reduceModelLiquid = {true}
-        reduceModelLiquidAmount={0}
-        loopTimes={4}
-        otherModelIncrease={true}
-         otherModelRefEndAmount={45}
-         otherModelRef={testube02Ref}
-        otherModelLiquidOpacity={0.35} 
-        />)}
-    
+      {isFullySqueezed && (
+        <PourDropletsFromModel
+          modelRef={graduatedPipetteRef}
+          fallAxis="y"
+          startDelay={0}
+          fallDistance={1.8}
+          reduceModelLiquid={true}
+          reduceModelLiquidAmount={0}
+          loopTimes={4}
+          otherModelIncrease={true}
+          otherModelRefEndAmount={45}
+          otherModelRef={testube02Ref}
+          otherModelLiquidOpacity={0.35}
+        />
+      )}
     </>
   )
 }

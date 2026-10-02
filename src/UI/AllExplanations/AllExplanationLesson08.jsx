@@ -122,7 +122,7 @@ const AllExplanationLesson08 = ()=>{
            {lessonStep==31 && <Explanations
             text={
                 <>
-                <strong>Thermometer</strong> will be used in the <strong>Polystyrene cup</strong> to measure the starting temperature of the <strong>Hydrochloric acid</strong>
+                <strong>Thermometer</strong> will be used in the <strong>Polystyrene cup</strong> to measure the Temperature Change
                 </>
             }
 
@@ -147,6 +147,7 @@ const AllExplanationLesson08 = ()=>{
             height="255px"
             width="420px"
             />} 
+
            {lessonStep==36 && <Explanations
             text={
                 <>
@@ -158,6 +159,7 @@ const AllExplanationLesson08 = ()=>{
             height="235px"
             width="420px"
             />} 
+
           {lessonStep==40 && <Explanations
             text={
                 <>
@@ -171,6 +173,7 @@ const AllExplanationLesson08 = ()=>{
             height="265px"
             width="420px"
             />} 
+            
           {lessonStep==41 && <Explanations
             text={
                 <>

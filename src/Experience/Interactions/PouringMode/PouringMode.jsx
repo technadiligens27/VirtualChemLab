@@ -887,7 +887,7 @@ const PouringMode = ({
               9 &&
             lessonStep === 33
           ) {
-            setLessonStep(34)
+            setLessonStep(35)
 
             setShowBubbles(
               false
@@ -1369,7 +1369,7 @@ const PouringMode = ({
   return (
     <>
       {selectedLesson !== 12 &&
-        selectedLesson !== 8 &&
+        selectedLesson !== 8 && selectedLesson !==9  &&
         hand === "right" &&
         selectedRightHand?.name ===
           "main-testube-01" &&
