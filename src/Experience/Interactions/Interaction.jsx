@@ -332,7 +332,6 @@ useEffect(() => {
       {/* {selectedLesson==14.3 && isClampTestube && <ClampModel modelRef={seperatingFunnelRef} clampYOffset={-1} clampScale={0.8}  modelScale={0.85} />} */}
 
       { isInvertCylinder && (<InvertCylinderModel/>)} 
-      
       {selectedLesson==13 && isModelCentre && (<PlaceModelCentre modelRef={normalBeakerRef}/>)}
       {selectedLesson==14.1 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={-0.2} modelRef={normalBeakerRef}/>)}
       {selectedLesson==14.2 && lessonStep<83 && isModelCentre && (<PlaceModelCentre  modelYScale={0.8} modelXScale={0.9} modelXOffset={0.6} modelRef={normalBeakerRef}/>)}
@@ -583,6 +582,21 @@ useEffect(() => {
         
         />
       }
+
+      {
+        selectedLesson===12.1 && lessonStep==28 && <PouringMode02
+          pourModelRef = {normalBeakerRef}
+          receiveModelRef = {volumetricRef}
+          hand={"left"}
+          pourModelXOffset = {-2.3}
+          pourModelYOffset = {0.3}
+          pourModelZOffset = {0}        
+          receiveModelXOffset ={0}
+          pourModelScale={0.9}
+          receiveModelScale={0.9}
+          receiveModelYOffset={-0.5}
+        />
+      }      
 
     </>
   );

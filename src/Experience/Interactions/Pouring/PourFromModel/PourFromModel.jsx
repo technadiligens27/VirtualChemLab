@@ -952,10 +952,19 @@ const PourFromModel = ({
               21
           ) {
             setLessonStep(
-              22
+              23
             )
           }
-
+          if (
+            selectedLesson ===
+              12.1 &&
+            lessonStep ===
+              28
+          ) {
+            setLessonStep(
+              30
+            )
+          }
 
         }
       }

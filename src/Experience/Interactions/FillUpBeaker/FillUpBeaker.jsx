@@ -437,6 +437,8 @@ const FillUpBeaker = ({
         amountRef.current = 1
       }else if(selectedLesson === 12 && selectedAmount === 100){
         amountRef.current = 0.4
+      }else if(selectedLesson === 12.1 && selectedAmount === 31){
+        amountRef.current = 0.2
       }else if(selectedLesson === 13 && selectedAmount === 100){
         amountRef.current = 0.5
       } else {

@@ -231,7 +231,8 @@ const UI = () => {
     setShowBuretteArrow(
       (lessonStep===18 && selectedLesson===8) ||
       (lessonStep===52 && selectedLesson===12.2) ||
-      (lessonStep ===16 && selectedLesson ===9)
+      (lessonStep ===16 && selectedLesson ===9) ||
+      (lessonStep==30 && selectedLesson===11)
     )
   },[selectedLesson, lessonStep])
 
@@ -240,7 +241,9 @@ const UI = () => {
     setShowBuretteClampArrow(
       (lessonStep==82 && selectedLesson==12.2) ||
       (lessonStep ===22 && selectedLesson ===9) ||
-      (lessonStep===13 && selectedLesson ===13)
+      (lessonStep===13 && selectedLesson ===13) ||
+      (lessonStep ===50 && selectedLesson ===11.1) ||
+      (lessonStep===63 && selectedLesson===11.1)
     )
   },[selectedLesson, lessonStep])
 
@@ -270,7 +273,10 @@ const UI = () => {
 
   useEffect(()=>{
     setShowVolumetricArrow(
-      (([11,12.2].includes(selectedLesson)) && ([6,66].includes(lessonStep))))
+      (([11,12.2].includes(selectedLesson)) && ([6,66].includes(lessonStep)) ||
+      (selectedLesson ==11 && lessonStep===34)
+    
+    ))
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
@@ -365,12 +371,17 @@ const UI = () => {
     setShowArrowConicalArrow(
       (selectedLesson===12.2 && lessonStep==72) ||
       (selectedLesson ===14 && lessonStep===6) ||
-      (selectedLesson ==14.3 && lessonStep==106.1)
+      (selectedLesson ==14.3 && lessonStep==106.1) ||
+      (selectedLesson==11 && lessonStep==40)
     )
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
-    setShowMethylArrow(selectedLesson===12.2 && lessonStep==77)
+    setShowMethylArrow(
+      (selectedLesson===12.2 && lessonStep==77) ||
+      (selectedLesson===11.1 && lessonStep===45) ||
+      (selectedLesson == 11.1 && lessonStep==58)
+    )
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{

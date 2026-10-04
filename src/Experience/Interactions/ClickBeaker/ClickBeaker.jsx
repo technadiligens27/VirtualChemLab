@@ -773,8 +773,15 @@ const ClickObject = () => {
   const keepBackOnTable = (hand) => {
     const handData = getHandData(hand)
 
-    if([11].includes(selectedLesson)){
-      if(![11,16].includes(lessonStep)){
+    if([12,12.1,12.2].includes(selectedLesson)){
+      if(![0,13,21,25].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+         return 
+      } 
+    }
+
+    if([11,11.1].includes(selectedLesson)){
+      if(![11,16,23,39,44,49,62].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       }      
@@ -1070,10 +1077,10 @@ const ClickObject = () => {
       setSelectedLesson(11.1)
     }   
     
-    if (handData.name === "phenopthaline-dropper-bottle" && selectedLesson===11.1 && lessonStep ===49) {
+    if (handData.name === "methyl-dropper-bottle" && selectedLesson===11.1 && lessonStep ===49) {
       setLessonStep(50)
     }  
-    if (handData.name === "phenopthaline-dropper-bottle" && selectedLesson===11.1 && lessonStep ===62) {
+    if (handData.name === "methyl-dropper-bottle" && selectedLesson===11.1 && lessonStep ===62) {
       setLessonStep(63)
     }   
     
@@ -1173,28 +1180,74 @@ const ClickObject = () => {
   const handleHoldingObjectClick = (clickedObject) => {
     const isLeftHoldingClickedObject =
       selectedLeftHand?.ref?.current &&
-      isClickedInsideObject(clickedObject, selectedLeftHand.ref.current)
+      isClickedInsideObject(
+        clickedObject,
+        selectedLeftHand.ref.current
+      )
 
     const isRightHoldingClickedObject =
       selectedRightHand?.ref?.current &&
-      isClickedInsideObject(clickedObject, selectedRightHand.ref.current)
+      isClickedInsideObject(
+        clickedObject,
+        selectedRightHand.ref.current
+      )
+
 
     if (isLeftHoldingClickedObject) {
-      console.log("Clicked object:", selectedLeftHand.name)
+      const objectName =
+        selectedLeftHand.name
 
-      selectHeldObject(selectedLeftHand, "left")
+
+      // Disable click for specific held object
+      // if (
+      //   objectName === "separating-funnel"
+      // ) {
+      //   setSelectedObject(null)
+      //   return true
+      // }
+
+      // if([12,12.1,12.2].includes(selectedLesson)){
+      //   if(objectName==="main-testube-01" && lessonStep===11){
+      //     setSelectedObject(null)
+      //     return
+      //   }
+      // }
+
+      selectHeldObject(
+        selectedLeftHand,
+        "left"
+      )
+
       return true
     }
+
 
     if (isRightHoldingClickedObject) {
-      console.log("Clicked object:", selectedRightHand.name)
+      const objectName =
+        selectedRightHand.name
 
-      selectHeldObject(selectedRightHand, "right")
+
+      // Disable click for specific held object
+      if (
+        objectName === "separating-funnel"
+      ) {
+        setSelectedObject(null)
+        return true
+      }
+
+
+      selectHeldObject(
+        selectedRightHand,
+        "right"
+      )
+
       return true
     }
+
 
     return false
   }
+
 
   const handleTableObjectClick = (clickedObject) => {
     const selectedItem = selectableObjects.find((item) => {
@@ -1421,8 +1474,24 @@ const clickableObjects = selectableObjects
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if([12,12.1,12.2].includes(selectedLesson)){
+      if(![7,22,26].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([7,22].includes(lessonStep) && objectName !=="main-spoon"){
+        setShowErrorMsgNo(1)
+        return
+      }       
+      if([26].includes(lessonStep) && objectName !=="volumetric-flask"){
+        setShowErrorMsgNo(1)
+        return
+      }       
+
+    }
+
     if(selectedLesson===11){
-      if(![3,12].includes(lessonStep)){
+      if(![3,12,40].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
@@ -1434,7 +1503,10 @@ const clickableObjects = selectableObjects
           setShowErrorMsgNo(1)
           return false
       }
-
+      if([40].includes(lessonStep) && objectName !=="main-Conical-Flask"){
+          setShowErrorMsgNo(1)
+          return false
+      }
 
     }
 
@@ -1643,8 +1715,19 @@ const clickableObjects = selectableObjects
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if([12,12.1,12.2].includes(selectedLesson)){
+      if(![3,15].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([3].includes(lessonStep) && objectName !=="main-testube-01"){
+        setShowErrorMsgNo(1)
+        return
+      }       
+    }
+
     if(selectedLesson===11){
-      if(![6,17].includes(lessonStep)){
+      if(![6,17,30,34].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
@@ -1653,6 +1736,14 @@ const clickableObjects = selectableObjects
         return
       }
       if([17].includes(lessonStep) && objectName !== "water-bottle"){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([30].includes(lessonStep) && objectName !== "main-buirette"){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([34].includes(lessonStep) && objectName !== "volumetric-pipette"){
         setShowErrorMsgNo(1)
         return
       }
@@ -2163,6 +2254,11 @@ const toggleFunnelMode = () => {
       setShowErrorMsgNo(1)
       return
     }    
+
+    if([12,12.1,12.2] && lessonStep !==9){
+      setShowErrorMsgNo(1)
+      return      
+    }
       setIsPourIntoTestube((previousValue) => {
         if (previousValue) {
           if(selectedLesson===14.3 && lessonStep ===90 ){
@@ -2232,6 +2328,7 @@ const toggleFunnelMode = () => {
 
 
 const handleClampBurette = () => {
+
   // CURRENT false = we are about to CLAMP
   if (!isBuiretteClamped) {
     if (selectedObject?.hand === "left") {
@@ -2555,7 +2652,11 @@ const handlePlacePolysterene = () => {
   }
 
   const keepWeighedTestTubeOnTable = (hand) => {
-  
+    if(selectedLesson==12){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if(isWeighTestube){
       setIsWeighTestube(false)
     }
@@ -4058,7 +4159,7 @@ const disposeCup = () => {
         ) {
           return (
             <button onClick={handleModelPlaceCentre}>
-              Place Near Beaker
+              Place Near Clamp
             </button>
           )
         }
@@ -4168,7 +4269,7 @@ const disposeCup = () => {
 
 
   const handleModelPlaceCentre = ()=>{
-    setIsModelCentre(true)
+    setIsBeakerNearClamp(true)
     setSelectedObject(null)
   }
 
@@ -4861,7 +4962,7 @@ const renderTestubeHeldButtons = ()=>{
 
 const placeVolmetricBung = ()=>{
 
-  if(selectedLesson===11){
+  if(selectedLesson===11 && lessonStep!==23.5){
     setShowErrorMsgNo(1)
     return
   }
@@ -4874,6 +4975,8 @@ const placeVolmetricBung = ()=>{
     setLessonStep(44)
   }
    volumetricBung.current.visible = true
+
+  setSelectedObject(null) 
 }
 
 const placeConicalBung = ()=>{
@@ -5259,12 +5362,12 @@ const renderHeldMethylButtons = ()=>{
     if(isTutorialMode){
       return(
         <>
-          <button onClick={() => setIsPhenopthalinePourMode(true)}>
+          <button onClick={handlePhenopthalinePourMode}>
               Pour Mode
           </button>
 
           {isPhenopthalinePourMode && (
-            <button onClick={() => handleRemovePhenopthalinPourMode()}>
+            <button onClick={handleRemovePhenopthalinPourMode}>
               Exit Pour Mode
             </button>
           )}
@@ -5473,7 +5576,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={spoonRef}
-      multiplier={(selectedLesson==8 && lessonStep==13) ? 3 : (selectedLesson==9 && lessonStep==11)?3 :2}
+      multiplier={(selectedLesson==8 && lessonStep==13) ? 3 : (selectedLesson==9 && lessonStep==11)?  3 : (selectedLesson===12 && lessonStep===11) ? 3  :2}
     />
 
     <ClickHitbox

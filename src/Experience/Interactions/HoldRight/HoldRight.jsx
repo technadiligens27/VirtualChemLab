@@ -525,6 +525,11 @@ const transformControlsRef = useRef()
   useEffect(() => {
   const handleKeyDown = (event) => {
     if (event.code === "KeyP") {
+
+      if(selectedLesson==12.1 && lessonStep==27){
+        setLessonStep(28)
+      }
+
       if(selectedLesson==14.3 && lessonStep==95){
         setLessonStep(96)
       }
@@ -568,7 +573,7 @@ const transformControlsRef = useRef()
       {!isStirMode &&
         selectedLeftHand &&
         selectedRightHand && 
-        !isFunnelMode &&  ![14.3,11].includes(selectedLesson) &&
+        !isFunnelMode &&  ![14.3,11,12,12.1].includes(selectedLesson) &&
         
         (
           <PouringMode hand="right" />

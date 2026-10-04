@@ -415,7 +415,7 @@ const SulfamicAcidNaOHTitration02 = () => {
           <DialogBox
             text={
               <>
-              Click Held Spatula and Select <strong>Stir Mode</strong>
+              Click <strong>Held Spatula</strong> and Select <strong>Stir Mode</strong>
               </>
               
             }
@@ -505,21 +505,19 @@ const SulfamicAcidNaOHTitration02 = () => {
         )
       }
 
-
       {
         lessonStep === 27 &&
         (
           <DialogBox
             text={
               <>
-              Press <strong>Shift + P</strong> to enter Pour Mode
+              Press <strong> P</strong> to enter <strong>Pour Mode</strong>
               </>
               
             }
           />
         )
       }
-
 
       {
         lessonStep === 28 &&

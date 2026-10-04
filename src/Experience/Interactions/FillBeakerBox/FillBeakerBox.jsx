@@ -133,10 +133,25 @@ const FillBeakerBox = () => {
 
       return true
     }
+    if([12,12.1].includes(selectedLesson)){
+      if([17].includes(lessonStep)){
+        if(!checkFill("Water (H2O)",100)) return
+      }
+      if([31].includes(lessonStep)){
+        if(!checkFill("Water (H2O)",30)) return
+      }
 
-    if([11].includes(selectedLesson)){
+
+    }
+    if([11,11.1].includes(selectedLesson)){
       if([5].includes(lessonStep)){
         if(!checkFill("Hydrochloric Acid (HCl)",25)) return
+      }
+      if([32,65].includes(lessonStep)){
+        if(!checkFill("Sodium Hydroxide (NaOH)",30)) return
+      }
+      if([56].includes(lessonStep)){
+        if(!checkFill("Hydrochloric Acid (HCl)",30)) return
       }
     }
 

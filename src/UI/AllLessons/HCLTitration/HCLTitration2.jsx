@@ -691,7 +691,7 @@ const HCLTitration2 = () => {
       <DialogBox
         text={
           <>
-            Take the <strong>Phenolphthalein Dropper Bottle</strong> in your <strong>Left hand</strong>.
+            Take the <strong>Phenolphthalein Dropper Bottle</strong> to your <strong>Left hand</strong>.
           </>
         }
       />
@@ -766,7 +766,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              <strong>Scroll down</strong> to <strong>pour</strong>.
+              <strong>Scroll Down Continously</strong> to <strong>Pour</strong> and <strong>Swirl the Conical Flask</strong>.
             </>
           }
         />
@@ -776,13 +776,13 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Remove the <strong>Conical Flask</strong>.
+              Select the <strong>Conical Flask</strong> and click <strong>Remove Beaker </strong>.
             </>
           }
         />
       )}
 
-      {lessonStep === 53 && (<TitreValueRecorded
+      {/* {lessonStep === 53 && (<TitreValueRecorded
        titreValue ={24.8}
        imageSrc={'./buretteTitre03.png'}
        initialReading = {5.2}
@@ -791,7 +791,7 @@ const HCLTitration2 = () => {
        />)
        
        
-       }
+       } */}
 
       {lessonStep >= 54 && lessonStep <= 57 && (
         <HessGuidelines guidelineData={guidelineData[9]} />
@@ -812,7 +812,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Click <strong>Add Liquid</strong>.
+              Click <strong> Held Conical Flask</strong> and select <strong>Add Liquid</strong>
             </>
           }
         />
@@ -832,7 +832,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Remove the <strong>burette</strong> from the <strong>centre</strong>.
+             Click the <strong>Clamp</strong> and select <strong>Remove From Center</strong>.
             </>
           }
         />
@@ -857,7 +857,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Enter <strong>Pour Mode</strong>.
+            Click the <strong>Phenolphthalein Dropper</strong> and Select <strong>Pour Mode</strong>.
             </>
           }
         />
@@ -902,7 +902,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Click the <strong>Burette</strong> and place it in your <strong>Left hand</strong>.
+              Click the <strong>Clamp</strong> and select <strong>Unclamp</strong>.
             </>
           }
         />
@@ -912,7 +912,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Click <strong>Add Liquid</strong>.
+              Click the <strong>Held Burette and </strong>Select <strong>Add Liquid</strong>.
             </>
           }
         />
@@ -932,7 +932,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              <strong>Clamp the burette</strong> securely in an <strong>upright position</strong>.
+              Click the <strong>Held Burette and </strong>Select <strong>Clamp</strong>.
             </>
           }
         />
@@ -942,7 +942,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Place the <strong>burette clamp</strong> in the <strong>centre</strong>.
+             Click the <strong>Clamp</strong> and select <strong>Place In Center</strong>.
             </>
           }
         />
@@ -952,7 +952,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Place the <strong>Conical Flask</strong> under the <strong>burette</strong>.
+              Click the <strong>Conical Flask</strong> and select <strong>Place Near Clamp</strong>.
             </>
           }
         />
@@ -963,7 +963,15 @@ const HCLTitration2 = () => {
       )}
 
 
-      {lessonStep === 69 && (<DialogBox text="scroll down"/>)}
+      {lessonStep === 69 && (
+        <DialogBox
+          text={
+            <>
+            <strong>Scroll Down Continously</strong> to <strong>Pour</strong> and <strong>Swirl the Conical Flask</strong>.
+            </>
+          }
+        />
+      )}              
 
       {lessonStep === 70 && (<TitreValueRecorded
         titreValue ={24.7}

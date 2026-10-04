@@ -21,6 +21,7 @@ import {
 import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PouringMode02 = ({
   pourModelRef,
@@ -62,24 +63,16 @@ const PouringMode02 = ({
   const isReadyRef =
     useRef(false)
 
-  const [
-    isPouring,
-    setIsPouring,
-  ] = useState(false)
+  const [isPouring,setIsPouring] = useState(false)
 
-  const {
-    selectedLeftHand,
-    selectedRightHand,
-  } = useContext(
-    InteractionContext
-  )
+  const {selectedLeftHand,selectedRightHand} = useContext(InteractionContext)
 
-  const {
-    conicalBeakerRef02,graduatedBeakerRef,
-    roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,volumetricRef
-  } = useContext(
+  const {conicalBeakerRef02,graduatedBeakerRef,roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,
+    volumetricRef,normalBeakerRef} = useContext(
     ModelContext
   )
+
+  const {selectedLesson,lessonStep} = useContext(MainGuidelineContext)
 
   // ==========================================
   // POSITION AND SCALE MODELS
@@ -255,7 +248,7 @@ const PouringMode02 = ({
 
     // Keep this if you want the receiving
     // model's X position forced to zero.
-    receiveModel.position.x = 0
+    receiveModel.position.x = 0.7
 
     receiveModel.updateMatrix()
     receiveModel.updateMatrixWorld(true)
@@ -617,10 +610,30 @@ const PouringMode02 = ({
               volumetricRef
             }
             modelLiquidEndScale={0}
-            otherLiquidEndScale={0.8}
+            otherLiquidEndScale={1}
             otherLiquidColor = {"#ffffff"}
             speed={15}
              pourScale = {1}
+          />
+        )}
+
+      {selectedLesson==12.1 && lessonStep===28 &&selectedLeftHand?.name ===
+        "main-normal-beaker" &&
+        selectedRightHand?.name ===
+          "volumetric-flask" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+              normalBeakerRef
+            }
+            otherModelRef={
+              volumetricRef
+            }
+            modelLiquidEndScale={0}
+            otherLiquidEndScale={0.4}
+            otherLiquidColor = {"#ffffff"}
+            speed={15}
+             pourScale = {10}
           />
         )}
     </>

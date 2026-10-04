@@ -18,7 +18,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 const BuiretteTitrationFlow = ({
   modelRef,
 
-  totalTime = 6,
+  totalTime = 4,
 
   totalLiquidDecreasePercent = 80,
 

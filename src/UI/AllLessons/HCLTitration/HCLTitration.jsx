@@ -642,7 +642,7 @@ const guidelineData = [
               <DialogBox
                 text={
                   <>
-                    Press <strong>Shift + P</strong> to enter <strong>Pour Mode</strong>.
+                    Press <strong>P</strong> to enter <strong>Pour Mode</strong>.
                   </>
                 }
               />

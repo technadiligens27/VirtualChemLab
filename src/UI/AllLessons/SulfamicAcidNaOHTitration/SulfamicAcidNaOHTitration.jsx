@@ -114,10 +114,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 3 && (
         <DialogBox
           text={
-            <>
-              Click the test tube, then select{" "}
-              <strong>Left Hand</strong> to pick it up.
-            </>
+           <>
+            Click the <strong>Test Tube</strong>, then select{" "}
+            <strong>Left Hand</strong> to pick it up.
+          </>
           }
         />
       )}
@@ -126,8 +126,8 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
             <>
-              Click the digital balance and select{" "}
-              <strong>Place Balance</strong> to bring it to the centre
+              Click the <strong>Digital Balance</strong> and select{" "}
+              <strong>Place Balance</strong> to bring it to the centre.
             </>
           }
         />
@@ -137,8 +137,8 @@ const SulfamicAcidNaOHTitration = () => {
       <DialogBox
         text={
           <>
-            Select the held test tube, then choose{" "}
-            <strong>Weigh Test Tube</strong>
+            Select the held <strong>test tube</strong>, then choose{" "}
+            <strong>Weigh Test Tube</strong>.
           </>
         }
       />
@@ -148,8 +148,8 @@ const SulfamicAcidNaOHTitration = () => {
       <DialogBox
         text={
           <>
-            Click the weighed test tube and select{" "}
-            <strong>Remove Test Tube</strong>
+            Click the weighed <strong>test tube</strong> and select{" "}
+            <strong>Remove Test Tube</strong>.
           </>
         }
       />
@@ -173,7 +173,7 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
             <>
-              Click the spatula, then select{" "}
+              Click the <strong>Spatula</strong>, then select{" "}
               <strong>Right Hand</strong> to pick it up
             </>
           }
@@ -184,8 +184,8 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
             <>
-              Click the bottle, then select{" "}
-              <strong>Take Sulfamic Acid</strong>
+              Click the <strong>sulfamic acid bottle</strong>, then select{" "}
+              <strong>Take Sulfamic Acid</strong>.
             </>
           }
         />
@@ -195,8 +195,8 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
             <>
-              Click the held spoon, then select{" "}
-              <strong>Pour into Test Tube</strong>
+              Click the <strong>Held spoon</strong>, then select{" "}
+              <strong>Pour into Test Tube</strong>.
             </>
           }
         />
@@ -204,11 +204,13 @@ const SulfamicAcidNaOHTitration = () => {
 
       {lessonStep === 10 && (
         <DialogBox
-          text={
-            <>
-              <strong>Scroll down</strong> to pour the sulfamic acid into the test tube.
-            </>
-          }
+        text={
+          <>
+            <strong>Scroll Down</strong> to pour the{" "}
+            <strong>sulfamic acid</strong> into the{" "}
+            <strong>test tube</strong>.
+          </>
+        }
         />
       )}
 
@@ -223,22 +225,22 @@ const SulfamicAcidNaOHTitration = () => {
         />
       )}
 
-      {lessonStep === 12 && (
-          <DialogBox
-            text={
-              <>
-                Select the held test tube, then choose{" "}
-                <strong>Weigh Test Tube</strong>
-              </>
-            }
-          />
-        )}
+    {lessonStep === 12 && (
+      <DialogBox
+        text={
+          <>
+            Select the  <strong>held test tube</strong>, then choose{" "}
+            <strong>Weigh Test Tube</strong>.
+          </>
+        }
+      />
+    )}
 
       {lessonStep === 13 && (
         <DialogBox
           text={
             <>
-              Click the spatula, then select{" "}
+              Click the <strong>Held Spatula </strong>, then select{" "}
               <strong>Keep Back on Table</strong>.
             </>
           }
@@ -249,7 +251,7 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
             <>
-              Click the weighed test tube, then select{" "}
+              Click the <strong>weighed test tube</strong>, then select{" "}
               <strong>Remove Test Tube</strong>
             </>
           }
@@ -273,10 +275,10 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 15 && (
         <DialogBox
           text={
-            <>
-              Now take the beaker on to your{" "}
-              <strong>Left Hand</strong>
-            </>
+        <>
+          Now <strong>Pick up</strong> the <strong>Beaker</strong> on to your{" "}
+          <strong>left hand</strong>.
+        </>
           }
         />
       )}
@@ -337,7 +339,9 @@ const SulfamicAcidNaOHTitration = () => {
       {lessonStep === 21 && (
         <DialogBox
           text={
-            "Keep the held Testube Back In Table "
+            <>
+              Keep the held <strong>test tube</strong> back on the table.
+            </>
           }
         />
       )}

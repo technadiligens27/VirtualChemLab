@@ -7,6 +7,7 @@ import ModelFocusLesson13 from "./ModelFocusLesson13"
 import ModelFocusLesson08 from "./ModelFocusLesson08"
 import ModelFocusLesson09 from "./ModelFocusLesson09"
 import ModelFocusLesson11 from "./ModelFocusLesson11"
+import ModelFocusLesson12 from "./ModelFocusLesson12"
 
 const AllModeFocusModes = () =>{
 
@@ -18,7 +19,8 @@ const AllModeFocusModes = () =>{
         {isExplanationOpen && [13].includes(selectedLesson) && <ModelFocusLesson13/> }    
         {isExplanationOpen && [8].includes(selectedLesson) && <ModelFocusLesson08/> }    
         {isExplanationOpen && [9].includes(selectedLesson) && <ModelFocusLesson09/> }    
-        {isExplanationOpen && [11].includes(selectedLesson) && <ModelFocusLesson11/> }    
+        {isExplanationOpen && [11,11.1].includes(selectedLesson) && <ModelFocusLesson11/> } 
+        {isExplanationOpen && [12,12.1,12.2].includes(selectedLesson) && <ModelFocusLesson12/> } 
 
         </>
     )
