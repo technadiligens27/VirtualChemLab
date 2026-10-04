@@ -68,7 +68,7 @@ const VolumetricRubberAnimation = ({
         lessonStep
       )) ||
     (selectedLesson === 12.2 &&
-      [67, 91].includes(
+      [67, 91,74,98].includes(
         lessonStep
       ))
 
@@ -77,7 +77,7 @@ const VolumetricRubberAnimation = ({
     (selectedLesson === 11 &&
       [9,37].includes(lessonStep)) ||
     (selectedLesson === 12.2 &&
-      [69].includes(lessonStep))
+      [69,93].includes(lessonStep))
 
   // =========================================
   // FIND FILLER CHILD

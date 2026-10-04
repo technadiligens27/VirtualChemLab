@@ -37,13 +37,22 @@ const SulfamicAcidNaOHTitration03 = () => {
     normalBeakerRef,
     volumetricRef,
     volumetricBung,
-    digitalBalanceRef
+    digitalBalanceRef,
+    naohBottleRef,waterBottleRef
   } = useContext(ModelContext)
 
 
   useEffect(()=>{
     digitalBalanceRef.current.visible=false
-  },[digitalBalanceRef])
+
+    if(waterBottleRef.current){
+      waterBottleRef.current.visible = false
+    }
+
+    if(naohBottleRef.current){
+      naohBottleRef.current.visible = true
+    }
+  },[digitalBalanceRef,naohBottleRef,waterBottleRef])
 
   // =========================================================
   // INITIALIZE PART 2
@@ -199,7 +208,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the beaker, then select{" "}
+              Click the <strong>Held Beaker</strong>, then select{" "}
               <strong>Keep Back on Table</strong>.
             </>
           }
@@ -210,7 +219,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric flask, then select{" "}
+              Click the <strong>volumetric flask</strong>, then select{" "}
               <strong>Keep Back on Table</strong>.
             </>
           }
@@ -229,21 +238,21 @@ const SulfamicAcidNaOHTitration03 = () => {
       }
 
      {lessonStep === 52 && (
-  <DialogBox
-    text={
-      <>
-        Click the burette, then select{" "}
-        <strong>Left Hand</strong>.
-      </>
-    }
-  />
+      <DialogBox
+        text={
+          <>
+            Click the <strong>Burette</strong>, then select{" "}
+            <strong>Left Hand</strong>.
+          </>
+        }
+      />
       )}
 
       {lessonStep === 53 && (
         <DialogBox
           text={
             <>
-              Click the funnel, then select{" "}
+              Click the <strong>Funnel</strong>, then select{" "}
               <strong>Right Hand</strong>.
             </>
           }
@@ -254,7 +263,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the funnel, then select{" "}
+              Click the <strong>Funnel</strong>, then select{" "}
               <strong>Funnel Mode</strong>.
             </>
           }
@@ -265,7 +274,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric flask, then select{" "}
+              Click the <strong>Volumetric Flask</strong>, then select{" "}
               <strong>Right Hand</strong>.
             </>
           }
@@ -308,7 +317,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric flask, then select{" "}
+              Click the <strong>Held Volumetric Flask</strong>, then select{" "}
               <strong>Keep Back on Table</strong>.
             </>
           }
@@ -319,7 +328,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the burette, then select{" "}
+              Click the <strong>Held Burette</strong>, then select{" "}
               <strong>Exit Funnel Mode</strong>.
             </>
           }
@@ -336,18 +345,13 @@ const SulfamicAcidNaOHTitration03 = () => {
           }
         />
       )}
+   
 
-
-      
-
-
-
-
-        {lessonStep === 62 && (
+      {lessonStep === 62 && (
           <DialogBox
             text={
               <>
-                Click the funnel, then select{" "}
+                Click the <strong>Funnel</strong>, then select{" "}
                 <strong>Keep Back on Table</strong>.
               </>
             }
@@ -368,7 +372,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the NaOH reagent bottle, then select{" "}
+              Click the <strong>NaOH reagent bottle</strong>, then select{" "}
               <strong>Right Hand</strong>.
             </>
           }
@@ -393,7 +397,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the volumetric pipette, then select{" "}
+            Click the <strong>Volumetric Pipette</strong>, then select{" "}
             <strong>Left Hand</strong>.
           </>
         }
@@ -414,7 +418,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the volumetric pipette, then select{" "}
+            Click the <strong>Volumetric Pipette</strong>, then select{" "}
             <strong>Pipette Mode</strong>.
           </>
         }
@@ -425,7 +429,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            <strong>Scroll up</strong> to draw the NaOH solution into the pipette.
+            <strong>Scroll up</strong> to draw the <strong>NaOH solution</strong> into the pipette.
           </>
         }
       />
@@ -435,7 +439,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the volumetric pipette, then select{" "}
+            Click the <strong>Volumetric Pipette</strong>, then select{" "}
             <strong>Exit Pipette Mode</strong>.
           </>
         }
@@ -446,7 +450,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the NaOH reagent bottle, then select{" "}
+            Click the <strong>NaOH reagent bottle</strong>, then select{" "}
             <strong>Keep Back on Table</strong>.
           </>
         }
@@ -467,7 +471,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the conical flask, then select{" "}
+              Click the <strong>Conical Flask</strong>, then select{" "}
               <strong>Right Hand</strong>.
             </>
           }
@@ -478,7 +482,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric pipette, then select{" "}
+              Click the <strong>Volumetric Pipette</strong>, then select{" "}
               <strong>Pipette Mode</strong>.
             </>
           }
@@ -489,7 +493,7 @@ const SulfamicAcidNaOHTitration03 = () => {
   <DialogBox
     text={
       <>
-        <strong>Scroll down</strong> to release the NaOH solution into the conical flask.
+        <strong>Scroll down</strong> to release the <strong>NaOH solution</strong> into the <strong>Conical Flask</strong>
       </>
     }
   />
@@ -499,7 +503,7 @@ const SulfamicAcidNaOHTitration03 = () => {
   <DialogBox
     text={
       <>
-        Click the volumetric pipette, then select{" "}
+        Click the <strong>Volumetric Pipette</strong>, then select{" "}
         <strong>Exit Pipette Mode</strong>.
       </>
     }
@@ -510,7 +514,7 @@ const SulfamicAcidNaOHTitration03 = () => {
   <DialogBox
     text={
       <>
-        Click the volumetric pipette, then select{" "}
+        Click the <strong>Volumetric Pipette</strong>, then select{" "}
         <strong>Keep Back on Table</strong>.
       </>
     }
@@ -531,7 +535,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the methyl orange bottle, then select{" "}
+              Click the <strong>Methyl Orange Bottle</strong>, then select{" "}
               <strong>Left Hand</strong>.
             </>
           }
@@ -542,8 +546,8 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the dropper, then select{" "}
-              <strong>Pour into Test Tube</strong>.
+              Click the <strong>Dropper</strong>, then select{" "}
+              <strong>Pour Mode</strong>
             </>
           }
         />
@@ -553,7 +557,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              <strong>Squeeze the bottle</strong> to add methyl orange.
+              <strong>Squeeze the bottle</strong> to add <strong>Methyl Orange</strong>
             </>
           }
         />
@@ -563,7 +567,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the dropper, then select{" "}
+              Click the <strong>Dropper</strong>, then select{" "}
               <strong>Exit Pour Mode</strong>.
             </>
           }
@@ -574,7 +578,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the methyl orange bottle, then select{" "}
+              Click the <strong>Methyl Orange</strong>, then select{" "}
               <strong>Keep Back on Table</strong>.
             </>
           }
@@ -599,8 +603,8 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the burette clamp, then select{" "}
-              <strong>Place Clamp in Centre</strong>.
+              Click the <strong>Clamp</strong>, then select{" "}
+              <strong>Place In Centre</strong>.
             </>
           }
         />
@@ -610,8 +614,8 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the conical flask, then select{" "}
-              <strong>Place Near Burette</strong>.
+              Click the <strong>Conical Flask</strong>, then select{" "}
+              <strong>Place Near Clamp</strong>.
             </>
           }
         />
@@ -621,20 +625,20 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              <strong>Scroll down</strong> to add the sulfamic acid solution.
+              <strong>Scroll Down Continously</strong> to add the <strong>Sulfamic acid solution</strong>
             </>
           }
         />
       )}
 
-      {lessonStep===85 && (<TitreValueRecorded imageSrc={'./buretteTitre01.png'}/>)}
+      {/* {lessonStep===85 && (<TitreValueRecorded imageSrc={'./buretteTitre01.png'}/>)} */}
 
       {lessonStep === 85 && (
         <DialogBox
           text={
             <>
-              Click the conical flask, then select{" "}
-              <strong>Remove from Burette</strong>.
+              Click the <strong>Conical Flask</strong>, then select{" "}
+              <strong>Remove Beaker</strong>.
             </>
           }
         />
@@ -655,8 +659,8 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the burette clamp, then select{" "}
-            <strong>Remove Clamp from Centre</strong>.
+            Click the <strong>Clamp</strong> , then select{" "}
+            <strong>Remove From Center</strong>.
           </>
         }
       />
@@ -666,7 +670,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the conical flask, then select{" "}
+            Click the <strong> Held Conical Flask</strong>, then select{" "}
             <strong>Clean Conical Flask</strong>.
           </>
         }
@@ -677,7 +681,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the conical flask, then select{" "}
+            Click the <strong> Held Conical Flask</strong>, then select{" "}
             <strong>Keep Back on Table</strong>.
           </>
         }
@@ -688,7 +692,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the NaOH reagent bottle, then select{" "}
+            Click the <strong>NaOH Reagent Bottle</strong>, then select{" "}
             <strong>Right Hand</strong>.
           </>
         }
@@ -699,7 +703,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the volumetric pipette, then select{" "}
+            Click the <strong>Volumetric Pipette</strong>, then select{" "}
             <strong>Left Hand</strong>.
           </>
         }
@@ -710,8 +714,10 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            <strong>Scroll down</strong> to release the air from the pipette filler.
-          </>
+
+        <strong>Scroll down</strong> to release the air from the{" "}
+        <strong>pipette filler</strong>.
+      </>        
         }
       />
     )}
@@ -720,7 +726,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the volumetric pipette, then select{" "}
+            Click the <strong>Volumetric Pipette</strong>, then select{" "}
             <strong>Pipette Mode</strong>.
           </>
         }
@@ -731,7 +737,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            <strong>Scroll up</strong> to draw the NaOH solution into the pipette.
+            <strong>Scroll up</strong> to draw the <strong>NaOH solution</strong> into the pipette.
           </>
         }
       />
@@ -741,7 +747,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the volumetric pipette, then select{" "}
+            Click the <strong>Volumetric Pipette</strong>, then select{" "}
             <strong>Exit Pipette Mode</strong>.
           </>
         }
@@ -752,7 +758,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       <DialogBox
         text={
           <>
-            Click the NaOH reagent bottle, then select{" "}
+            Click the <strong>NaOH Reagent Bottle</strong>, then select{" "}
             <strong>Keep Back on Table</strong>.
           </>
         }
@@ -776,7 +782,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the conical flask, then select{" "}
+              Click the <strong>Conical Flask</strong>, then select{" "}
               <strong>Right Hand</strong>.
             </>
           }
@@ -787,7 +793,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric pipette, then select{" "}
+              Click the <strong>Volumetric Pipette</strong>, then select{" "}
               <strong>Pipette Mode</strong>.
             </>
           }
@@ -798,20 +804,20 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              <strong>Scroll down</strong> to release the NaOH solution into the conical flask.
+              <strong>Scroll Down</strong> to release the <strong>NaOH Reagent Bottle</strong> into the conical flask.
             </>
           }
         />
       )}
 
 
-      {lessonStep===99 && (<TitreValueRecorded titreValue ={24.7} imageSrc={'./buretteTitre02.png'}/>)}
+      {/* {lessonStep===99 && (<TitreValueRecorded titreValue ={24.7} imageSrc={'./buretteTitre02.png'}/>)} */}
 
       {lessonStep === 99 && (
         <DialogBox
           text={
             <>
-              Click the volumetric pipette, then select{" "}
+              Click the <strong>Volumetric Pipette</strong>, then select{" "}
               <strong>Exit Pipette Mode</strong>.
             </>
           }
@@ -832,7 +838,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric pipette, then select{" "}
+              Click the <strong>Volumetric Pipette</strong>, then select{" "}
               <strong>Keep Back on Table</strong>.
             </>
           }
@@ -843,8 +849,8 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the burette clamp, then select{" "}
-              <strong>Place Clamp in Centre</strong>.
+              Click the <strong>Clamp</strong>, then select{" "}
+              <strong>Place In Center</strong>.
             </>
           }
         />
@@ -854,8 +860,8 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the conical flask, then select{" "}
-              <strong>Place Near Burette</strong>.
+              Click the <strong>Conical Flask</strong>, then select{" "}
+              <strong>Place Near Clamp</strong>.
             </>
           }
         />
@@ -865,7 +871,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              <strong>Scroll down</strong> to add the sulfamic acid solution.
+              <strong>Scroll Down Continously</strong> to <strong>Pour</strong> and <strong>Swirl</strong>
             </>
           }
         />
@@ -898,49 +904,49 @@ const SulfamicAcidNaOHTitration03 = () => {
       )}
 
       {showQuestionCardNo === 12.1 && (
-  <QuestionCard
-    questionSetTitle="Question Set — Sulfamic Acid Standard Solution"
+        <QuestionCard
+          questionSetTitle="Question Set — Sulfamic Acid Standard Solution"
 
-    questionNumber={1}
+          questionNumber={1}
 
-    question="Why is the empty test tube weighed before adding sulfamic acid?"
+          question="Why is the empty test tube weighed before adding sulfamic acid?"
 
-    answers={[
-      {
-        id: "A",
-        text: "To determine the mass of sulfamic acid by difference",
-      },
-      {
-        id: "B",
-        text: "To measure the volume of sulfamic acid",
-      },
-      {
-        id: "C",
-        text: "To find the concentration of sodium hydroxide",
-      },
-      {
-        id: "D",
-        text: "To calibrate the balance",
-      },
-    ]}
+          answers={[
+            {
+              id: "A",
+              text: "To determine the mass of sulfamic acid by difference",
+            },
+            {
+              id: "B",
+              text: "To measure the volume of sulfamic acid",
+            },
+            {
+              id: "C",
+              text: "To find the concentration of sodium hydroxide",
+            },
+            {
+              id: "D",
+              text: "To calibrate the balance",
+            },
+          ]}
 
-    correctAnswer="A"
+          correctAnswer="A"
 
-    hintText="Think about why the test tube is weighed both before and after the sulfamic acid is added."
+          hintText="Think about why the test tube is weighed both before and after the sulfamic acid is added."
 
-    correctMessage="Correct! The empty test tube mass allows the mass of sulfamic acid to be determined by difference."
+          correctMessage="Correct! The empty test tube mass allows the mass of sulfamic acid to be determined by difference."
 
-    incorrectMessage="Incorrect. The empty test tube is weighed so the mass of sulfamic acid can be determined by difference."
+          incorrectMessage="Incorrect. The empty test tube is weighed so the mass of sulfamic acid can be determined by difference."
 
-    submitButtonText="Submit Answer"
+          submitButtonText="Submit Answer"
 
-    continueButtonText="Continue"
+          continueButtonText="Continue"
 
-    onContinue={() => {
-      setShowQuestionCardNo(12.2)
-    }}
-  />
-)}
+          onContinue={() => {
+            setShowQuestionCardNo(12.2)
+          }}
+        />
+      )}
 {showQuestionCardNo === 12.2 && (
   <QuestionCard
     questionSetTitle="Question Set — Sulfamic Acid Standard Solution"

@@ -584,19 +584,36 @@ useEffect(() => {
       }
 
       {
-        selectedLesson===12.1 && lessonStep==28 && <PouringMode02
+        selectedLesson===12.1 && [28,34,40].includes(lessonStep) && <PouringMode02
           pourModelRef = {normalBeakerRef}
           receiveModelRef = {volumetricRef}
           hand={"left"}
           pourModelXOffset = {-2.3}
-          pourModelYOffset = {0.3}
+          pourModelYOffset = {0.1}
           pourModelZOffset = {0}        
           receiveModelXOffset ={0}
           pourModelScale={0.9}
           receiveModelScale={0.9}
           receiveModelYOffset={-0.5}
         />
-      }      
+      }  
+
+      {
+        selectedLesson===12.2 && [57].includes(lessonStep) && <PouringMode02
+          pourModelRef = {volumetricRef}
+          receiveModelRef = {mainBuiretteRef}
+          hand={"right"}
+          pourModelXOffset = {1.45}
+          pourModelYOffset = {-0.2}
+          pourModelZOffset = {0}        
+          receiveModelXOffset ={0}
+          pourModelScale={0.8}
+          receiveModelScale={0.8}
+          receiveModelYOffset={-0.5}
+          receiveModelBaseX={-0.8}
+        />
+      }       
+
 
     </>
   );

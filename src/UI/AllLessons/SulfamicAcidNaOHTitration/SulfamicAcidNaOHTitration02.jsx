@@ -459,7 +459,7 @@ const SulfamicAcidNaOHTitration02 = () => {
           <DialogBox
             text={
               <>
-                Keep <strong>Spatula</strong> back on the Table
+                Keep <strong>Spatula</strong> back on the <strong>Table</strong>
               </>
               
             }
@@ -572,8 +572,8 @@ const SulfamicAcidNaOHTitration02 = () => {
         <DialogBox
           text={
             <>
-              Click the normal beaker, then select{" "}
-              <strong>Add Liquid</strong>.
+              Click the <strong>Held Beaker</strong>, then select{" "}
+              <strong>Add Liquid</strong>
             </>
           }
         />
@@ -610,7 +610,7 @@ const SulfamicAcidNaOHTitration02 = () => {
         <DialogBox
           text={
             <>
-              Press <strong>Shift + P</strong> to enter{" "}
+              Press <strong> P</strong> to enter{" "}
               <strong>Pouring Mode</strong>.
             </>
           }
@@ -643,8 +643,8 @@ const SulfamicAcidNaOHTitration02 = () => {
         <DialogBox
           text={
             <>
-              Click the held beaker, then select{" "}
-              <strong>Add Liquid</strong>.
+              Click the <strong>held beaker</strong>, then select{" "}
+              <strong>Add Liquid</strong>
             </>
           }
         />
@@ -686,7 +686,7 @@ const SulfamicAcidNaOHTitration02 = () => {
         <DialogBox
           text={
             <>
-              Press <strong>Shift + P</strong> to enter{" "}
+              Press <strong>P</strong> to enter{" "}
               <strong>Pouring Mode</strong>.
             </>
           }
@@ -741,7 +741,7 @@ const SulfamicAcidNaOHTitration02 = () => {
         <DialogBox
           text={
             <>
-              Click the volumetric flask, then select{" "}
+              Click the <strong>volumetric flask</strong>, then select{" "}
               <strong>Add Water</strong>.
             </>
           }

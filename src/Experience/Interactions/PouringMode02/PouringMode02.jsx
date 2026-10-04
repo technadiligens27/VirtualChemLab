@@ -26,7 +26,7 @@ import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/Mai
 const PouringMode02 = ({
   pourModelRef,
   receiveModelRef,
-
+  receiveModelBaseX=0.7,
   hand,
 
   // Pour model offset from mouth.
@@ -68,7 +68,7 @@ const PouringMode02 = ({
   const {selectedLeftHand,selectedRightHand} = useContext(InteractionContext)
 
   const {conicalBeakerRef02,graduatedBeakerRef,roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,
-    volumetricRef,normalBeakerRef} = useContext(
+    volumetricRef,normalBeakerRef,mainBuiretteRef} = useContext(
     ModelContext
   )
 
@@ -248,7 +248,7 @@ const PouringMode02 = ({
 
     // Keep this if you want the receiving
     // model's X position forced to zero.
-    receiveModel.position.x = 0.7
+    receiveModel.position.x = receiveModelBaseX
 
     receiveModel.updateMatrix()
     receiveModel.updateMatrixWorld(true)
@@ -632,10 +632,73 @@ const PouringMode02 = ({
             modelLiquidEndScale={0}
             otherLiquidEndScale={0.4}
             otherLiquidColor = {"#ffffff"}
-            speed={15}
+            speed={35}
              pourScale = {10}
           />
         )}
+
+      {selectedLesson==12.1 && lessonStep===34 &&selectedLeftHand?.name ===
+        "main-normal-beaker" &&
+        selectedRightHand?.name ===
+          "volumetric-flask" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+              normalBeakerRef
+            }
+            otherModelRef={
+              volumetricRef
+            }
+            modelLiquidEndScale={0}
+            otherLiquidEndScale={0.6}
+            otherLiquidColor = {"#ffffff"}
+            speed={35}
+            pourScale = {10}
+          />
+        )}
+
+      {selectedLesson==12.1 && lessonStep===40 &&selectedLeftHand?.name ===
+        "main-normal-beaker" &&
+        selectedRightHand?.name ===
+          "volumetric-flask" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+              normalBeakerRef
+            }
+            otherModelRef={
+              volumetricRef
+            }
+            modelLiquidEndScale={0}
+            otherLiquidEndScale={0.8}
+            otherLiquidColor = {"#ffffff"}
+            speed={35}
+            pourScale = {10}
+          />
+        )}
+
+      {selectedLesson==12.2 && lessonStep===57 &&selectedLeftHand?.name ===
+        "main-buirette" &&
+        selectedRightHand?.name ===
+          "volumetric-flask" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+               volumetricRef
+            }
+            otherModelRef={
+              mainBuiretteRef
+            }
+            modelLiquidEndScale={0.6}
+            otherLiquidEndScale={1}
+            otherLiquidColor = {"#ffffff"}
+            speed={3}
+            pourScale = {1}
+            liquidSpeed={0.25}
+          />
+        )}
+
+        
     </>
   )
 }

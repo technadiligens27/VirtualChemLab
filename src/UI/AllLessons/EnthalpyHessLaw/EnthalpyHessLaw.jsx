@@ -14,6 +14,7 @@ import { enthalpyReactionData } from "../../Data/enthalpyReactionData/enthalpyRe
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import QuestionCard from "../../QuestionCard/QuestionCard";
 import {resetModel} from "../../../Experience/resetModels/resetModels"
+import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
 
 const EnthalpyHessLaw = () =>{
 
@@ -238,7 +239,7 @@ const {
     {
       id: 1,
 
-      title: "Prepare the Polystyrene Cup",
+      title: "Let's Prepare the Polystyrene Cup",
 
       description:
         "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
@@ -415,7 +416,7 @@ const {
 
         {
          lessonStep===1 && <EnthalpyLessonOverview
-          reactionData={enthalpyReactionData[1]}
+          reactionData={enthalpyReactionData[0]}
           onStartLesson={() => {
             setLessonStep(2)
           }}
@@ -498,18 +499,18 @@ const {
       />
 
 
-        {(lessonStep >= 2 && lessonStep <= 7 ) && ( <HessGuidelines guidelineData={guidelineData[0]}/>)}
+        {(lessonStep >= 2 && lessonStep <= 7 ) && ( <SulfamicGuidelines guidelineData={guidelineData[0]}/>)}
         
         {
-          (lessonStep>=8 && lessonStep<=13)  && <HessGuidelines guidelineData={guidelineData[1]}/>
+          (lessonStep>=8 && lessonStep<=13)  && <SulfamicGuidelines guidelineData={guidelineData[1]}/>
         }
 
         {
-          (lessonStep>=14 && lessonStep<=17)  && <HessGuidelines guidelineData={guidelineData[3]}/>
+          (lessonStep>=14 && lessonStep<=17)  && <SulfamicGuidelines guidelineData={guidelineData[3]}/>
         }
 
         {
-          (lessonStep>=18 && lessonStep<=30)  && <HessGuidelines guidelineData={guidelineData[4]}/>
+          (lessonStep>=18 && lessonStep<=30)  && <SulfamicGuidelines guidelineData={guidelineData[4]}/>
         }
 
         {/* {
@@ -517,7 +518,7 @@ const {
         } */}
 
         {
-          (lessonStep>=32 && lessonStep<=38)  && <HessGuidelines guidelineData={guidelineData[5]}/>
+          (lessonStep>=32 && lessonStep<=38)  && <SulfamicGuidelines guidelineData={guidelineData[5]}/>
         }
 
         {

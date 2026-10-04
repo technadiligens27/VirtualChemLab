@@ -137,7 +137,7 @@ const FillBeakerBox = () => {
       if([17].includes(lessonStep)){
         if(!checkFill("Water (H2O)",100)) return
       }
-      if([31].includes(lessonStep)){
+      if([31,37].includes(lessonStep)){
         if(!checkFill("Water (H2O)",30)) return
       }
 

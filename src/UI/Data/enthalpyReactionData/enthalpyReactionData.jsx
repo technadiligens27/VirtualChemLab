@@ -73,13 +73,31 @@ export const enthalpyReactionData = [
       "The temperature of the reaction mixture rises.",
       "Carbon dioxide gas is produced.",
       "Heat is released to the surroundings.",
+      "The solid potassium carbonate gradually disappears as it reacts.",
     ],
 
     informationTitle: "What Happens",
 
     information: [
-      "Potassium carbonate reacts with hydrochloric acid.",
-      "The reaction releases heat, causing the temperature inside the polystyrene cup to rise.",
+      <>
+        In the first reaction, we are going to react{" "}
+        <strong>potassium carbonate</strong> with{" "}
+        <strong>hydrochloric acid</strong> inside the{" "}
+        <strong>polystyrene cup</strong>.
+      </>,
+
+      <>
+        We will measure the <strong>starting temperature</strong>, add the{" "}
+        <strong>potassium carbonate</strong> while <strong>stirring</strong>,
+        and then record the <strong>highest temperature reached</strong>.
+      </>,
+
+      <>
+        As the reaction happens, we should see{" "}
+        <strong>carbon dioxide bubbles</strong> and the{" "}
+        <strong>temperature should rise</strong>, showing that the reaction is{" "}
+        <strong>exothermic</strong>.
+      </>,
     ],
 
     importantTitle: "Important:",

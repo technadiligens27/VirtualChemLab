@@ -243,7 +243,8 @@ const UI = () => {
       (lessonStep ===22 && selectedLesson ===9) ||
       (lessonStep===13 && selectedLesson ===13) ||
       (lessonStep ===50 && selectedLesson ===11.1) ||
-      (lessonStep===63 && selectedLesson===11.1)
+      (lessonStep===63 && selectedLesson===11.1) ||
+      (lessonStep == 101 && selectedLesson ==12.2)
     )
   },[selectedLesson, lessonStep])
 
@@ -274,21 +275,23 @@ const UI = () => {
   useEffect(()=>{
     setShowVolumetricArrow(
       (([11,12.2].includes(selectedLesson)) && ([6,66].includes(lessonStep)) ||
-      (selectedLesson ==11 && lessonStep===34)
+      (selectedLesson ==11 && lessonStep===34) ||
+      (selectedLesson ==12.2 && lessonStep==90)
     
     ))
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowFunnelArrow(
-      (selectedLesson==12.2 && lessonStep==53)
+      (selectedLesson==12.2 && lessonStep==53) 
     )
   },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowNaOHBBottleArrowRef(
-      ([12.2].includes(selectedLesson) && [63].includes(lessonStep)) ||
+      ([12.2].includes(selectedLesson) && [63,89].includes(lessonStep)) ||
       ([11].includes(selectedLesson) && [17].includes(lessonStep))
+      
     )
   },[selectedLesson,lessonStep])
 
@@ -372,7 +375,9 @@ const UI = () => {
       (selectedLesson===12.2 && lessonStep==72) ||
       (selectedLesson ===14 && lessonStep===6) ||
       (selectedLesson ==14.3 && lessonStep==106.1) ||
-      (selectedLesson==11 && lessonStep==40)
+      (selectedLesson==11 && lessonStep==40) ||
+      (selectedLesson===12.2 && lessonStep==96) 
+
     )
   },[selectedLesson,lessonStep])
 
@@ -571,17 +576,35 @@ useEffect(() => {
         <LessonMenu />
       )}
 
-      {safetyStep === 1 && !showLessonMenu && (
-        <DialogBox text="Click the goggles to put them on" />
-      )}
+    {safetyStep === 1 && !showLessonMenu && (
+      <DialogBox
+        text={
+          <>
+            Click the <strong>goggles</strong> to put them on.
+          </>
+        }
+      />
+    )}
 
-      {safetyStep === 2 && (
-        <DialogBox text="Click the left glove to put it on" />
-      )}
+    {safetyStep === 2 && (
+      <DialogBox
+        text={
+          <>
+            Click the <strong>left glove</strong> to put it on.
+          </>
+        }
+      />
+    )}
 
-      {safetyStep === 3 && (
-        <DialogBox text="Click the right glove to put it on" />
-      )}
+    {safetyStep === 3 && (
+      <DialogBox
+        text={
+          <>
+            Click the <strong>right glove</strong> to put it on.
+          </>
+        }
+      />
+    )}
 
       {safetyStep === 4 &&
         isLessonStart &&

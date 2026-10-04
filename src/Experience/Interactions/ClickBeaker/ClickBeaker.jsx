@@ -774,7 +774,7 @@ const ClickObject = () => {
     const handData = getHandData(hand)
 
     if([12,12.1,12.2].includes(selectedLesson)){
-      if(![0,13,21,25].includes(lessonStep)){
+      if(![0,13,21,25,50,51,59,62,71,76,81,88,95,100].includes(lessonStep)){
         setShowErrorMsgNo(1)
          return 
       } 
@@ -1475,7 +1475,7 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([12,12.1,12.2].includes(selectedLesson)){
-      if(![7,22,26].includes(lessonStep)){
+      if(![7,22,26,53,55,63,72,89,96].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
@@ -1487,7 +1487,23 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(1)
         return
       }       
-
+      if([53].includes(lessonStep) && objectName !=="main-funnel"){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([55].includes(lessonStep) && objectName !=="volumetric-flask"){
+        setShowErrorMsgNo(1)
+        return
+      }       
+      if([63].includes(lessonStep) && objectName !=="NaOH-bottle"){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([72,96].includes(lessonStep) && objectName !=="main-Conical-Flask"){
+        setShowErrorMsgNo(1)
+        return
+      }       
+      
     }
 
     if(selectedLesson===11){
@@ -1716,14 +1732,28 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([12,12.1,12.2].includes(selectedLesson)){
-      if(![3,15].includes(lessonStep)){
+      if(![3,15,52,66,77,90].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
       if([3].includes(lessonStep) && objectName !=="main-testube-01"){
         setShowErrorMsgNo(1)
         return
+      }
+      if([52].includes(lessonStep) && objectName !=="main-buirette"){
+        setShowErrorMsgNo(1)
+        return
       }       
+      if([66,90].includes(lessonStep) && objectName !=="volumetric-pipette"){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([77].includes(lessonStep) && objectName !=="methyl-dropper-bottle"){
+        setShowErrorMsgNo(1)
+        return
+      }       
+      
+
     }
 
     if(selectedLesson===11){
@@ -2010,6 +2040,11 @@ const toggleFunnelMode = () => {
   // ENTER FUNNEL MODE
   // =====================================================
 
+  if(selectedLesson==12.2 && ![54,60].includes(lessonStep)){
+    setShowErrorMsgNo(1)
+    return
+  }
+
   if (!isFunnelMode) {
     const funnelHand =
       selectedObject?.hand
@@ -2250,12 +2285,12 @@ const toggleFunnelMode = () => {
       return
     }
 
-    if(selectedLesson==8 && lessonStep !==13){
+    if(selectedLesson==8 && ![11,13].includes(lessonStep)){
       setShowErrorMsgNo(1)
       return
     }    
 
-    if([12,12.1,12.2] && lessonStep !==9){
+    if([12,12.1,12.2].includes(selectedLesson) && lessonStep !==9){
       setShowErrorMsgNo(1)
       return      
     }
@@ -3871,23 +3906,50 @@ const disposeCup = () => {
   
   }
 
-  const handleRemovePhenopthalinPourMode=()=>{
-     setIsPhenopthalinePourMode(false)
-     if(selectedLesson===11.1 && lessonStep==48){
-          setLessonStep(49)
-     }
-     if(selectedLesson===11.1 && lessonStep==61){
-          setLessonStep(62)
-     }
+  const handleRemovePhenopthalinPourMode = () => {
+      const isValid =
+        (selectedLesson === 11.1 && lessonStep === 48) ||
+        (selectedLesson === 11.1 && lessonStep === 61) ||
+        (selectedLesson === 12.2 && lessonStep === 80)
 
-     if(selectedLesson===12.2 && lessonStep==80){
-          setLessonStep(81)
-     }
+      if (!isValid) {
+        setShowErrorMsgNo(1)
+        return
+      }
 
-     setSelectedObject(null)
-  }
+      setIsPhenopthalinePourMode(false)
+
+      if (
+        selectedLesson === 11.1 &&
+        lessonStep === 48
+      ) {
+        setLessonStep(49)
+      }
+
+      if (
+        selectedLesson === 11.1 &&
+        lessonStep === 61
+      ) {
+        setLessonStep(62)
+      }
+
+      if (
+        selectedLesson === 12.2 &&
+        lessonStep === 80
+      ) {
+        setLessonStep(81)
+      }
+
+      setSelectedObject(null)
+    }
 
   const handlePhenopthalinePourMode = ()=>{
+
+    if(selectedLesson==12.2 && ![78,80].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if(!isPhenopthalinePourMode){
       setIsPhenopthalinePourMode(true);
     }
@@ -4269,6 +4331,10 @@ const disposeCup = () => {
 
 
   const handleModelPlaceCentre = ()=>{
+    if(selectedLesson==12.2 && ![83,102].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
     setIsBeakerNearClamp(true)
     setSelectedObject(null)
   }
