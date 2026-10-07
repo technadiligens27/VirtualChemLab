@@ -227,7 +227,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       )}
 
       {
-        lessonStep === 52 &&
+        lessonStep === 52 && lessonStep<59 &&
         (
           <SulfamicGuidelines
             guidelineData={
@@ -313,6 +313,17 @@ const SulfamicAcidNaOHTitration03 = () => {
         />
       )}
 
+      {
+        lessonStep >=59 && lessonStep<59 &&
+        (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[8]
+            }
+          />
+        )
+      }
+
       {lessonStep === 59 && (
         <DialogBox
           text={
@@ -339,7 +350,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              Click the burette, then select{" "}
+              Click the <strong>Held Burette</strong> , then select{" "}
               <strong>Clamp Burette</strong>.
             </>
           }
@@ -557,7 +568,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         <DialogBox
           text={
             <>
-              <strong>Squeeze the bottle</strong> to add <strong>Methyl Orange</strong>
+              <strong>Scroll Down </strong> to Squeeze the bottle so we can add <strong>Methyl Orange</strong>
             </>
           }
         />
@@ -638,7 +649,7 @@ const SulfamicAcidNaOHTitration03 = () => {
           text={
             <>
               Click the <strong>Conical Flask</strong>, then select{" "}
-              <strong>Remove Beaker</strong>.
+              <strong>Pick Up</strong>.
             </>
           }
         />
@@ -1042,18 +1053,18 @@ const SulfamicAcidNaOHTitration03 = () => {
           testTubeWithSulfamicMass={lessonStep >= 13 ? 24.22 : null}
           sulfamicAcidMass={lessonStep >= 13 ? 2.50 : null}
           beakerWaterAmount={lessonStep >= 18 && lessonStep < 42 ? 100 : null}
-          volumetricFlaskAmount={lessonStep >= 44 ? 250 : lessonStep >= 41 ? 190 : lessonStep >= 35 ? 160 : lessonStep >= 28 ? 130 : lessonStep >= 20 ? 100 : null}
-          buretteSulfamicAmount={(lessonStep >= 50) ? 50 : null}
-          conicalFlaskNaOHAmount={selectedLesson === 12.2 && lessonStep >= 74 ? 25 : null}
-          indicatorStatus={selectedLesson === 12.2 && lessonStep >= 79 ? "Added" : null}
+          volumetricFlaskAmount={  lessonStep>52 ? 200 : lessonStep >= 43 ? 250 : lessonStep >= 41 ? 160 : lessonStep >= 34 ? 130 : lessonStep >= 20 ? 100 : null}
+          buretteSulfamicAmount={lessonStep >= 103 ? 1.05 : lessonStep >=85 ? 25.8 : (lessonStep >= 50) ? 50 : null}
+          conicalFlaskNaOHAmount={lessonStep >= 103 ? 49.75 : lessonStep >= 99 ? 25 : lessonStep >=88 ? 0 : lessonStep >=85 ? 49.8 : lessonStep >= 74 ? 25 : null}
+          indicatorStatus={ lessonStep>=102 ? "Added" : lessonStep >=88 ? null: lessonStep >= 79 ? "Added" : null}
           initialBuretteReading={selectedLesson === 12.2 && lessonStep >= 82 ? 0 : null}
           currentBuretteReading={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
           sulfamicAcidDelivered={selectedLesson === 12.2 && lessonStep === 84 ? 24.80 : selectedLesson === 12.2 && lessonStep === 103 ? 24.70 : null}
           endpointStatus={selectedLesson === 12.2 && [84, 103].includes(lessonStep) ? "Endpoint reached" : "Waiting"}
           roughTitre={selectedLesson === 12.2 && lessonStep >= 85 ? 24.75 : null}
-          trialOne={selectedLesson === 12.2 && lessonStep >= 84 ? 24.70 : null}
-          trialTwo={selectedLesson === 12.2 && lessonStep >= 104 ? 24.80 : null}
-          meanTitre={selectedLesson === 12.2 && lessonStep >= 104 ? 24.75 : null}
+          trialOne={selectedLesson === 12.2 && lessonStep >= 84 ? 24.80 : null}
+          trialTwo={selectedLesson === 12.2 && lessonStep >= 104 ? 24.75 : null}
+          meanTitre={selectedLesson === 12.2 && lessonStep >= 104 ? 24.775 : null}
           sulfamicAcidConcentration={null}
           naohConcentration={null}
           selectedLesson={selectedLesson}

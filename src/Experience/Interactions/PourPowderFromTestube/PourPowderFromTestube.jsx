@@ -618,7 +618,7 @@ const PourPowderFromTestube = ({
           19
       ) {
         setLessonStep(
-          20
+          21
         )
 
         setIsPottasiumCarobnateInTestube01(

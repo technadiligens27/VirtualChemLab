@@ -27,7 +27,7 @@ const ModelFocusLesson11 = ()=>{
         {lessonStep==46 && <ModelFocusMode modelRef={methylBottleRef} blurResolution={350} blurStrength={3}/> }          
         {lessonStep==52 && <ModelFocusMode modelRefs={[conicalBeakerRef,mainBuiretteRef]} blurResolution={350} blurStrength={3}/> }          
         {lessonStep==53 && <ModelFocusMode modelRef={mainBuiretteRef} blurResolution={350} blurStrength={3}/> }               
-        {lessonStep==57 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={350} blurStrength={3}/> }               
+        {lessonStep==57 && <ModelFocusMode modelRef={conicalBeakerRef} blurResolution={350} blurStrength={3}/> }               
         {lessonStep==66 && <ModelFocusMode modelRef={mainBuiretteRef} blurResolution={350} blurStrength={3}/> }               
         {lessonStep==70 && <ModelFocusMode modelRef={mainBuiretteRef} blurResolution={350} blurStrength={3}/> }               
         

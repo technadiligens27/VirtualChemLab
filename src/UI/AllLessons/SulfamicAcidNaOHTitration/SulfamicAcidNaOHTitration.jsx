@@ -361,7 +361,7 @@ const SulfamicAcidNaOHTitration = () => {
           testTubeWithSulfamicMass={lessonStep >= 13 ? 24.22 : null}
           sulfamicAcidMass={lessonStep >= 13 ? 2.50 : null}
           beakerWaterAmount={lessonStep >= 18 && lessonStep < 42 ? 100 : null}
-          volumetricFlaskAmount={lessonStep >= 44 ? 250 : lessonStep >= 41 ? 190 : lessonStep >= 35 ? 160 : lessonStep >= 28 ? 130 : lessonStep >= 20 ? 100 : null}
+          volumetricFlaskAmount={lessonStep >= 44 ? 250 : lessonStep >= 41 ? 190 : lessonStep >= 35 ? 160 : lessonStep >= 32 ? 130 : lessonStep >= 20 ? 100 : null}
           buretteSulfamicAmount={(lessonStep >= 50) ? 50 : null}
           conicalFlaskNaOHAmount={selectedLesson === 12.2 && lessonStep >= 74 ? 25 : null}
           indicatorStatus={selectedLesson === 12.2 && lessonStep >= 79 ? "Added" : null}

@@ -87,7 +87,7 @@ const LessonMenu = () => {
       name: "Enthalpy Change Using Hess’s Law",
       imgPath: "./AlkaliTest.png",
       text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 8,
+      number: 1,
       divider: "purple",
     },
 
@@ -114,7 +114,7 @@ const LessonMenu = () => {
       name: "HCl Titration",
       imgPath: "./AlkaliTest.png",
       text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-      number: 9,
+      number: 2,
       divider: "purple",
     },  
     // {
@@ -130,33 +130,33 @@ const LessonMenu = () => {
       name: "Sulfamic Acid–NaOH Titration",
       imgPath: "./AlkaliTest.png",
       text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-      number: 11,
+      number: 3,
       divider: "purple",
     },
-    // {
-    //   id: 12.1,
-    //   name: "Sulfamic Acid–NaOH Titration",
-    //   imgPath: "./AlkaliTest.png",
-    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-    //   number: 12.1,
-    //   divider: "purple",
-    // },
+    {
+      id: 12.1,
+      name: "Sulfamic Acid–NaOH Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 12.1,
+      divider: "purple",
+    },
 
-    // {
-    //   id: 12.2,
-    //   name: "Sulfamic Acid–NaOH Titration",
-    //   imgPath: "./AlkaliTest.png",
-    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-    //   number: 12.2,
-    //   divider: "purple",
-    // },
+    {
+      id: 12.2,
+      name: "Sulfamic Acid–NaOH Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 12.2,
+      divider: "purple",
+    },
 
 {
   id: 13,
   name: "Molar Volume of a Gas",
   imgPath: "./AlkaliTest.png",
   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 13,
+  number: 4,
   divider: "purple",
 },
 
@@ -165,7 +165,7 @@ const LessonMenu = () => {
   name: "Chlorination of 2-methylpropan-2-ol",
   imgPath: "./AlkaliTest.png",
   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14,
+  number: 5,
   divider: "purple",
 },
 

@@ -12,6 +12,7 @@ import HCLTitrationLiveDataPanel from "../../HCLTitrationLiveDataPanel/HCLTitrat
 import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecorded/TitreValueRecorded.jsx"
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx"
 import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
+import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx";
 
 const HCLTitration2 = () => {
   const {
@@ -252,7 +253,7 @@ const HCLTitration2 = () => {
   {
     id: 10,
 
-    title: "Prepare for the Titration",
+    title: "Clean The Conical Flask",
 
     description:
       "After completing the rough titration, clean the conical flask and prepare a fresh portion of hydrochloric acid for a more accurate titration.",
@@ -289,7 +290,7 @@ const HCLTitration2 = () => {
       "Return the dropper bottle to the table.",
     ],
 
-    image: "./addPhenolphthaleinTrial.png",
+    image: "./addPhenolphthalein.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -313,7 +314,7 @@ const HCLTitration2 = () => {
       "Place the burette and clamp back in the centre.",
     ],
 
-    image: "./refillBurette.png",
+    image: "./prepareBuretteNaOH.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -336,7 +337,7 @@ const HCLTitration2 = () => {
       "Stop adding sodium hydroxide immediately.",
     ],
 
-    image: "./accurateTitration.png",
+    image: "./roughTitration.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -508,7 +509,7 @@ const HCLTitration2 = () => {
           if (childName.includes("liquid")) {
             child.visible = true
 
-            child.scale.y = 0.45
+            child.scale.y = 0.650918
 
             child.updateMatrixWorld(true)
 
@@ -586,13 +587,8 @@ const HCLTitration2 = () => {
 
             volumetricFlaskAmount={ lessonStep >=38 ? 225 : lessonStep >= 22 ? 250 : lessonStep >= 15 ? 25 :  null}
 
-            conicalFlaskAmount={lessonStep >=57 ?30 : lessonStep> 55 ? 0 : lessonStep >= 43 ? 25 : null}
+            conicalFlaskAmount={lessonStep >= 70 ? 49.70 : lessonStep >=57 ?30 : lessonStep>= 55 ? 0 : lessonStep>= 53  ? 49.80 : lessonStep >= 43 ? 25 : null}
 
-            buretteNaOHAmount={
-              lessonStep >= 32
-                ? 30
-                : null
-            }
 
             initialBuretteReading={
               lessonStep >= 52
@@ -601,14 +597,28 @@ const HCLTitration2 = () => {
             }
 
             currentBuretteReading={
-              lessonStep >= 52
-                ? 24.7
+            lessonStep >= 70
+                ? 5.3
+                :  
+
+            lessonStep >= 66
+                ? 30
+                :
+             lessonStep >= 53
+                ? 5.2
+                :
+              lessonStep >= 32
+                ? 30
                 : null
+
             }
 
+
             naohDelivered={
+              lessonStep >=70 
+              ? 24.7 :
               lessonStep >= 52
-                ? 24.7
+                ? 24.8
                 : null
             }
 
@@ -631,8 +641,8 @@ const HCLTitration2 = () => {
             }
 
             meanTitre={
-              lessonStep >= 71
-                ? 24.65
+              lessonStep >= 70
+                ? 24.75
                 : null
             }
 
@@ -645,7 +655,6 @@ const HCLTitration2 = () => {
             }
 
             autoShowConditions={[
-
               {
                 selectedLesson: 11,
                 lessonStep: 15,
@@ -670,7 +679,10 @@ const HCLTitration2 = () => {
                 selectedLesson: 11.1,
                 lessonStep: 55,
               }, 
-              
+              {
+                selectedLesson: 11.1,
+                lessonStep:66,
+              },              
               {
                 selectedLesson: 11.1,
                 lessonStep: 70,
@@ -684,7 +696,7 @@ const HCLTitration2 = () => {
           />
 
      {lessonStep >= 45 && lessonStep <= 49 && (
-        <HessGuidelines guidelineData={guidelineData[7]} />
+        <SulfamicGuidelines guidelineData={guidelineData[7]} />
       )}
 
     {lessonStep === 45 && (
@@ -711,7 +723,7 @@ const HCLTitration2 = () => {
       <DialogBox
         text={
           <>
-            <strong>Squeeze the dropper</strong> to add <strong>2–3 drops</strong> of <strong>Phenolphthalein</strong>.
+            <strong>Scroll Down</strong> to Squeeze the dropper to add <strong>2–3 drops</strong> of <strong>Phenolphthalein</strong>.
           </>
         }
       />
@@ -721,7 +733,7 @@ const HCLTitration2 = () => {
       <DialogBox
         text={
           <>
-            Click the <strong>Phenolphthalein Dropper</strong> and exit <strong>Pour Mode</strong>.
+            Click the <strong>Phenolphthalein Dropper</strong> and <strong>Exit Pour Mode</strong>.
           </>
         }
       />
@@ -738,7 +750,7 @@ const HCLTitration2 = () => {
     )}
 
       {lessonStep >= 50 && lessonStep <= 53 && (
-        <HessGuidelines guidelineData={guidelineData[8]} />
+        <SulfamicGuidelines guidelineData={guidelineData[8]} />
       )}
 
 
@@ -746,7 +758,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Place the <strong>clamp</strong> in the <strong>centre</strong>.
+              Click the <strong>Clamp</strong> and select <strong>Place In Centre</strong>.
             </>
           }
         />
@@ -756,7 +768,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Place the <strong>Conical Flask</strong> near the <strong>clamp</strong>.
+              Place the <strong>Held Conical Flask</strong> near the <strong>Clamp</strong>.
             </>
           }
         />
@@ -794,7 +806,7 @@ const HCLTitration2 = () => {
        } */}
 
       {lessonStep >= 54 && lessonStep <= 57 && (
-        <HessGuidelines guidelineData={guidelineData[9]} />
+        <SulfamicGuidelines guidelineData={guidelineData[9]} />
       )}
 
 
@@ -839,7 +851,7 @@ const HCLTitration2 = () => {
       )}
 
       {lessonStep >= 58 && lessonStep <= 62 && (
-        <HessGuidelines guidelineData={guidelineData[10]} />
+        <SulfamicGuidelines guidelineData={guidelineData[10]} />
       )}
 
 
@@ -867,8 +879,8 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              <strong>Squeeze the dropper</strong> to add <strong>2–3 drops</strong> of <strong>Phenolphthalein</strong>.
-            </>
+          <strong>Scroll Down</strong> to Squeeze the dropper to add <strong>2–3 drops</strong> of <strong>Phenolphthalein</strong>
+          </>
           }
         />
       )}
@@ -894,7 +906,7 @@ const HCLTitration2 = () => {
       )}
           
       {lessonStep >= 63 && lessonStep <= 67 && (
-        <HessGuidelines guidelineData={guidelineData[11]} />
+        <SulfamicGuidelines guidelineData={guidelineData[11]} />
       )}
 
 
@@ -959,7 +971,7 @@ const HCLTitration2 = () => {
       )}
 
       {lessonStep >= 68 && lessonStep <= 70 && (
-        <HessGuidelines guidelineData={guidelineData[12]} />
+        <SulfamicGuidelines guidelineData={guidelineData[12]} />
       )}
 
 
@@ -973,7 +985,7 @@ const HCLTitration2 = () => {
         />
       )}              
 
-      {lessonStep === 70 && (<TitreValueRecorded
+      {/* {lessonStep === 70 && (<TitreValueRecorded
         titreValue ={24.7}
         imageSrc={'./buretteTitre04.png'}
         initialReading = {5.3}
@@ -981,7 +993,7 @@ const HCLTitration2 = () => {
         explanationText="The titre is the volume of sodium hydroxide delivered from the burette during the titration."
         />)
        
-       }
+       } */}
 
       {lessonStep === 70 && (
         <DialogBox
@@ -1017,20 +1029,21 @@ const HCLTitration2 = () => {
 
       {lessonStep === 71 && (
         <SulfamicAcidResult
-            sulfamicAcidMass={2.5}
+            // sulfamicAcidMass={2.5}
             volumetricFlaskVolume={250}
             aliquotVolume={25}
             // roughTitre={24.8}
-            trialOne={24.7}
-            trialTwo={24.75}
-            topLabelText="Titration Results"
-            mainTitleText="Hydrochloric Acid – Sodium Hydroxide"
-            subtitleText="Final experimental results"
-            sulfamicAcidLabelText="Hydrochloric acid"
-            concentrationLabelText="Concentration of HCl"
-            molesSulfamicAcidLabelText="Moles of HCl"
-            sulfamicAcidConcentrationLabelText="HCl concentration"
-            imageSrc="./buretteTitre.png"
+            trialOne={24.80}
+            trialTwo={24.70}
+            showExperimentalData={false}
+            // topLabelText="Titration Results"
+            // mainTitleText="Hydrochloric Acid – Sodium Hydroxide"
+            // subtitleText="Final experimental results"
+            // sulfamicAcidLabelText="Hydrochloric acid"
+            // concentrationLabelText="Concentration of HCl"
+            // molesSulfamicAcidLabelText="Moles of HCl"
+            // sulfamicAcidConcentrationLabelText="HCl concentration"
+            // imageSrc="./buretteTitre.png"
           />
       )}
 

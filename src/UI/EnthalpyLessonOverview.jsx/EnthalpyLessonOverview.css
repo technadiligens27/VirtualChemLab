@@ -23,7 +23,7 @@
 .reaction-one-container {
   position: relative;
 
-  width: 85vw;
+  width: 80vw;
   height: 92vh;
 
   padding: 45px 48px 34px ;
@@ -183,6 +183,7 @@
   font-weight: 800;
   letter-spacing: 1.8px;
   text-transform: uppercase;
+
 }
 
 .reaction-one-heading h1 {
@@ -256,6 +257,8 @@ font-family: "Baloo Thambi 2", sans-serif;
 
   box-shadow:
     0 10px 25px rgba(69, 151, 66, 0.08);
+    width: 90%;
+    
 }
 
 .reaction-one-flask-icon {
@@ -269,7 +272,7 @@ font-family: "Baloo Thambi 2", sans-serif;
 
   color: #41a23e;
 
-  font-size: 34px;
+  font-size: 31px;
 
   background-color: #e4f5df;
 
@@ -289,7 +292,7 @@ font-family: "Baloo Thambi 2", sans-serif;
     Georgia,
     "Times New Roman",
     serif;
-  font-size: 22px;
+  font-size: 21px;
   font-style: italic;
   line-height: 1.4;
 }
@@ -419,6 +422,7 @@ font-family: "Baloo Thambi 2", sans-serif;
 
   box-shadow:
     0 14px 28px rgba(68, 35, 143, 0.1);
+    border: 1px solid black;
 }
 
 .reaction-one-information-header {

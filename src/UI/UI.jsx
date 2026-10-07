@@ -265,7 +265,7 @@ const UI = () => {
   useEffect(()=>{
     setShowBalanceArrow(
       ([14,22].includes(lessonStep) && selectedLesson === 8) ||
-      ([4,6,14].includes(lessonStep) && selectedLesson ===12) ||
+      ([4].includes(lessonStep) && selectedLesson ===12) ||
       (selectedLesson===9 && [12,20].includes(lessonStep)) ||
       (selectedLesson===13 && [22].includes(lessonStep))
 
@@ -484,7 +484,12 @@ useEffect(() => {
         )}
 
         {chairStep === 2 && (
-          <DialogBox text="Press E to Sit" />
+          <DialogBox text={
+            <>
+              Press <strong>E</strong> to <strong>Sit</strong>
+            </>
+          }
+          />
         )}
 
         {clickedModel && (
@@ -557,11 +562,19 @@ useEffect(() => {
 
       {selectedMainGuideline === 5 &&
         chairStep === 1 && (
-          <DialogBox text="Press G to Slide Chair" />
+          <DialogBox text={
+            <>
+              Press <strong>G</strong> to Slide the<strong> Chair</strong>
+            </>
+          } />
         )}
 
       {chairStep === 2 && (
-        <DialogBox text="Press E to Sit" />
+        <DialogBox text={
+            <>
+              Press <strong>E</strong> to <strong>Sit</strong>
+            </>
+          } />
       )}
 
       {(

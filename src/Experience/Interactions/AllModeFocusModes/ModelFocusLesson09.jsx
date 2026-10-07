@@ -14,6 +14,7 @@ const ModelFocusLesson09 = ()=>{
 
     return(
         <>
+        {lessonStep==3 && <ModelFocusMode modelRef={normalBeakerRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==4 && <ModelFocusMode modelRef={mainPolystereneRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==9 && <ModelFocusMode modelRef={spoonRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==13 && <ModelFocusMode modelRef={digitalBalanceRef} blurResolution={350} blurStrength={3}/> } 
@@ -24,7 +25,7 @@ const ModelFocusLesson09 = ()=>{
         {lessonStep==29 && <ModelFocusMode modelRef={mainThermometerRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==32 && <ModelFocusMode modelRefs={[mainThermometerRef,normalBeakerRef,testube01Ref]} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==33 && <ModelFocusMode modelRefs={[mainThermometerRef,normalBeakerRef,testube01Ref]} blurResolution={350} blurStrength={3}/> } 
-        {lessonStep==35 && <ModelFocusMode modelRefs={[digitalBalanceRef,testube01Ref]} blurResolution={350} blurStrength={3}/> } 
+        {lessonStep==35.5 && <ModelFocusMode modelRefs={[digitalBalanceRef,testube01Ref]} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==36 && <ModelFocusMode modelRef={mainThermometerRef} blurResolution={350} blurStrength={3}/> } 
 
     

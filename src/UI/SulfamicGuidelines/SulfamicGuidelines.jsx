@@ -45,7 +45,6 @@ const SulfamicGuidelines = ({
         )
       }
 
-    // Start outside screen
     gsap.set(guideline, {
       x: getClosedPosition(),
     })
@@ -54,7 +53,6 @@ const SulfamicGuidelines = ({
       rotation: 0,
     })
 
-    // Slide in
     gsap.to(guideline, {
       x: 0,
 
@@ -65,7 +63,6 @@ const SulfamicGuidelines = ({
       ease: "power3.inOut",
     })
 
-    // Rotate arrow
     gsap.to(arrow, {
       rotation: 180,
 
@@ -75,10 +72,6 @@ const SulfamicGuidelines = ({
 
       ease: "power3.inOut",
     })
-
-    // =======================================================
-    // HANDLE WINDOW RESIZE
-    // =======================================================
 
     const handleResize = () => {
       if (
@@ -297,21 +290,15 @@ const SulfamicGuidelines = ({
           =============================================== */}
 
           <div className="sulfamic-guideline-left">
-            {/* TITLE */}
-
             <div className="sulfamic-title-container">
               <h1>
                 {title}
               </h1>
             </div>
 
-            {/* DESCRIPTION */}
-
             <p className="sulfamic-description">
               {description}
             </p>
-
-            {/* IMPLEMENTATION */}
 
             <div className="sulfamic-steps-container">
               <div className="sulfamic-steps-header">
@@ -344,16 +331,13 @@ const SulfamicGuidelines = ({
               </div>
             </div>
 
-            {/* CONTINUE BUTTON */}
-
-            <button
-              className="sulfamic-continue-button"
-              onClick={
-                handleContinue
-              }
-            >
+            <div className="sulfamic-continue-button-container">
+            
+            <button className="sulfamic-continue-button" onClick={handleContinue}            >
               Continue
-            </button>
+            </button>            
+            </div>    
+
           </div>
 
           {/* ===============================================

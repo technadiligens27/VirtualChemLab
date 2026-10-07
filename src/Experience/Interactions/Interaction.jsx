@@ -162,9 +162,11 @@ useEffect(() => {
       {selectedLesson===9 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={25.67}/>}
 
       {selectedLesson===12 && lessonStep===6 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
+
       {selectedLesson===12 && (lessonStep===13 || lessonStep===14)  && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={24.22}/>}
 
       {selectedLesson===13 && lessonStep==24 && <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.77}/>}
+
       {selectedLesson===13 && lessonStep==31 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={21.72}/>}
 
       {isBuiretteClamped &&  <ClampBurette/>}
@@ -172,14 +174,16 @@ useEffect(() => {
       {selectedLesson ==14.1 && isClampInCenter && <PlaceClampInCenter clampYOffset={6} 
         clampXScale = {0.8}
         clampYScale = {0.8}
-        clampZScale = {0.8}/>}
-      {selectedLesson ==14.2 && isClampInCenter && <PlaceClampInCenter 
-      
+        clampZScale = {0.8}/>
+      }
+
+      {selectedLesson ==14.2 && isClampInCenter && <PlaceClampInCenter      
         clampYOffset={6.5} 
         clampXScale = {0.8}
         clampYScale = {0.8}
         clampZScale = {0.8}
-        clampScale={0.8}  />}
+        clampScale={0.8}  />
+      }
 
       {selectedLesson ==14.3  && lessonStep < 106.1   && isClampInCenter && <PlaceClampInCenter 
       
@@ -225,11 +229,9 @@ useEffect(() => {
       {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')
        && isPlacePolysterene && <StirModePolysterene heightOffset={2}/>}   
 
-       {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={0.6}/>} 
-       {/* {isPlaceThermometer && <FillThermometer amount={0.6}/> } */}
+       {selectedLesson ===8 && lessonStep===36 && <FillThermometer amount={0.522574}/>} 
 
-        {/* {(selectedLeftHand?.name==='main-normal-beaker' || selectedRightHand?.name==='main-normal-beaker') 
-         && isPlacePolysterene && <ReleaseGasBubbles modelRef={mainPolystereneRef} />}   */}
+       {selectedLesson ===9 && lessonStep===32 && <FillThermometer amount={0.406325}/>} 
 
        {showBubbles && <ReleaseGasBubbles modelRef={mainPolystereneRef}/>}  
        {isPolystereneCovered && <CoverPolysterene/>}
@@ -614,7 +616,21 @@ useEffect(() => {
         />
       }       
 
-
+      {
+        selectedLesson===12 && [19].includes(lessonStep) && <PouringMode02
+          pourModelRef = {testube01Ref}
+          receiveModelRef = {normalBeakerRef}
+          hand={"right"} 
+          pourModelXOffset = {0.55}
+          pourModelYOffset = {-0.2}
+          pourModelZOffset = {0}        
+          receiveModelXOffset ={0}
+          pourModelScale={0.8}
+          receiveModelScale={0.8}
+          receiveModelYOffset={-0.5}
+          receiveModelBaseX={-0.8}
+        />
+      }  
     </>
   );
 };

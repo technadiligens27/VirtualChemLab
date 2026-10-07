@@ -96,7 +96,7 @@ const ClickObject = () => {
     conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef
   } = useContext(ModelContext)
 
-  const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep} =
+  const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,safetyStep} =
     useContext(MainGuidelineContext)
 
  const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,setIsInsertThermometer,
@@ -660,6 +660,18 @@ const ClickObject = () => {
 
 
   const handlePlaceBuretteInCentre = () => {
+
+    if([12,12.1,12.2].includes(selectedLesson) && ![82,101].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+
+    if([11,11.1].includes(selectedLesson) && ![50,57,67].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     console.log("Place burette in centre")
     setIsClampInCenter(true)
     setSelectedObject(null)
@@ -770,386 +782,1046 @@ const ClickObject = () => {
 
   
 
-  const keepBackOnTable = (hand) => {
-    const handData = getHandData(hand)
+ const keepBackOnTable = (hand) => {
+  const handData = getHandData(hand)
 
-    if([12,12.1,12.2].includes(selectedLesson)){
-      if(![0,13,21,25,50,51,59,62,71,76,81,88,95,100].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-         return 
-      } 
+  // =====================================================
+  // GENERAL LESSON STEP VALIDATION
+  // =====================================================
+
+  if ([12, 12.1, 12.2].includes(selectedLesson)) {
+    if (
+      ![
+        0,
+        13,
+        21,
+        25,
+        50,
+        51,
+        59,
+        62,
+        71,
+        76,
+        81,
+        88,
+        95,
+        100,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
+    }
+  }
+
+  if ([11, 11.1].includes(selectedLesson)) {
+    if (
+      ![
+        11,
+        16,
+        23,
+        39,
+        44,
+        49,
+        62,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
+    }
+  }
+
+  if (selectedLesson === 9) {
+    if (![5, 14, 15].includes(lessonStep)) {
+      setShowErrorMsgNo(1)
+      return
+    }
+  }
+
+  if (
+    [
+      14,
+      14.1,
+      14.2,
+      14.3,
+      14.4,
+    ].includes(selectedLesson)
+  ) {
+    if (
+      ![
+        10,
+        14,
+        24,
+        33,
+        50,
+        69,
+        93,
+        97,
+        113,
+        120,
+        126,
+        132,
+        140,
+        146,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
+    }
+  }
+
+  if (selectedLesson === 8) {
+    if (
+      ![
+        7,
+        15,
+        17,
+        42,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
+    }
+  }
+
+  if (selectedLesson === 13) {
+    if (
+      ![
+        3.7,
+        21,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
+    }
+  }
+
+  // =====================================================
+  // LESSON 10 SPECIAL VALIDATION
+  // =====================================================
+
+  if (selectedLesson === 10) {
+    if (
+      [
+        5,
+        20,
+        21,
+        22,
+        23,
+        24,
+        26,
+        27,
+        29,
+        30,
+        31,
+        33,
+        34,
+        36,
+        37,
+        38,
+        42,
+        43,
+        44,
+        45,
+        46,
+        48,
+        49,
+        50,
+        51,
+        53,
+        54,
+        55,
+        56,
+        58,
+        59,
+        60,
+        61,
+        63,
+        64,
+        65,
+        66,
+        69,
+        70,
+        71,
+        75,
+        76,
+        77,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        90,
+        91,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
     }
 
-    if([11,11.1].includes(selectedLesson)){
-      if(![11,16,23,39,44,49,62].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-         return 
-      }      
+    if (
+      hand === "right" &&
+      [
+        14,
+        25,
+        32,
+        47,
+        52,
+        57,
+        62,
+        67,
+        68,
+        72,
+        78,
+        79,
+        81,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
     }
 
-    if([9].includes(selectedLesson)){
-      if(![5,14].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-         return 
-      }      
+    if (
+      hand === "left" &&
+      [
+        17,
+        39,
+        92,
+        95,
+      ].includes(lessonStep)
+    ) {
+      setShowErrorMsgNo(1)
+      return
     }
+  }
 
+  if (!handData?.ref?.current) return
 
-    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
-      if(![14,24,33,50,69,93,97,113,120,126,132,140,146].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-         return 
-      }
-    }
+  // =====================================================
+  // EXPECTED OBJECT VALIDATION
+  // =====================================================
 
-    if([8].includes(selectedLesson)){
-      if(![7,15,42].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-        return 
-      }
-    }
+  const expectedObjects = {
+    // =========================
+    // LESSON 8
+    // =========================
+    8: {
+      15: "main-spoon",
+      17: "main-testube-01",
+      42: "mainThermometer",
+    },
 
-    //--------Selected Lesson 10--------------
+    // =========================
+    // LESSON 9
+    // =========================
+    9: {
+      5: "main-normal-beaker",
+      14: "main-spoon",
+      15: "main-testube-01",
+    },
 
-    if(selectedLesson===13){
-      if(![3.7,21].includes(lessonStep)){
-         setShowErrorMsgNo(1)
-         return 
-      }
-    }
+    // =========================
+    // LESSON 10
+    // =========================
+    10: {
+      8: "main-normal-beaker",
+      9: "kettle",
 
-    if(selectedLesson==10){
+      14: "main-testube-01",
+      17: "main-testube-02",
+      18: "main-testube-03",
 
-      if([5,20,21,22,23,24,26,27,29,30,31,33,34,36,37,38,42,43,44,45,46,48,49,50,51,53,54,55,56,58,59,60,61,63,64,65,66,69,70,71,75,
-        76,77,80,82,83,84,85,86,87,90,91
+      25: "main-testube-01",
+      32: "main-testube-02",
 
-      ].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-        return
-      }
+      39: "main-graduated-cylinder",
+      40: "main-testube-03",
 
-      if(hand==='right' && [14,25,32,47,52,57,62,67,68,72,78,79,81].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-        return        
-      }
+      47: "iodobutane-bottle",
+      52: "main-testube-01",
+      57: "bromobutane-bottle",
+      62: "main-testube-02",
+      67: "chlorobutane-bottle",
 
-      if(hand==='left' && [17,39,92,95].includes(lessonStep)){
-        setShowErrorMsgNo(1)
-        return        
-      }      
+      72: "main-testube-03",
+      73: "pipette",
+      78: "main-testube-01",
+      81: "main-testube-03",
 
-    }
+      88: "main-normal-beaker",
+      95: "main-testube-05",
+      99: "main-testube-04",
 
-    if (!handData?.ref?.current) return
+      106: "main-normal-beaker",
 
-    if (handData.name === "graduated-pipette" && selectedLesson === 14.4 && lessonStep === 140) {
-      setLessonStep(141)
-    }   
+      113: "main-testube-01",
+      114: "main-testube-04",
 
-    if (handData.name === "main-dropper" && selectedLesson === 14.3 && lessonStep === 126) {
-      setLessonStep(127)
-    }
+      121: "main-testube-02",
+      122: "main-testube-03",
+    },
 
-    if (handData.name === "main-spoon" && selectedLesson === 14.3 && lessonStep === 93) {
-      setLessonStep(94)
-    }
+    // =========================
+    // LESSON 11
+    // =========================
+    11: {
+      11: "main-normal-beaker",
+      16: "volumetric-pipette",
+      23: "water-bottle",
+      39: "volumetric-flask",
+      44: "volumetric-pipette",
+    },
 
-    if (handData.name === "main-spoon" && selectedLesson === 13 && lessonStep === 21) {
-      setLessonStep(22)
-    }
+    // =========================
+    // LESSON 11.1
+    // =========================
+    11.1: {
+      49: "methyl-dropper-bottle",
+      62: "methyl-dropper-bottle",
+    },
 
-    if (handData.name === "main-graduated-cylinder" && selectedLesson === 14.3 && lessonStep ===132) {
-      setLessonStep(133)
-    }
+    // =========================
+    // LESSON 12
+    // =========================
+    12: {
+      13: "main-spoon",
+      21: "main-testube-01",
+    },
 
-    if (handData.name === "main-graduated-cylinder" && selectedLesson === 14.2 && lessonStep ===69) {
-      setLessonStep(70)
-    }
+    // =========================
+    // LESSON 12.1
+    // =========================
+    12.1: {
+      25: "main-spoon",
+    },
 
-    if (handData.name === "main-graduated-cylinder" && selectedLesson === 14.1 && lessonStep === 50) {
-      setLessonStep(51)
-    }
-    if (handData.name === "main-graduated-cylinder" && selectedLesson === 14 && lessonStep === 24) {
-      setLessonStep(25)
-      setSelectedLesson(14.1)
-    }
-    if (handData.name === "main-graduated-cylinder" && selectedLesson === 13 && lessonStep === 3.7) {
-      setLessonStep(4)
-    }
-    if (handData.name === "methyl-dropper-bottle" &&selectedLesson === 12.2 && lessonStep === 81) {
-      setLessonStep(82)
-    }
+    // =========================
+    // LESSON 12.2
+    // =========================
+    12.2: {
+      50: "main-normal-beaker",
+      51: "volumetric-flask",
+      59: "volumetric-flask",
+      62: "main-funnel",
+      71: "NaOH-bottle",
+      76: "volumetric-pipette",
+      81: "methyl-dropper-bottle",
+      88: "main-Conical-Flask",
+      95: "NaOH-bottle",
+      100: "volumetric-pipette",
+    },
 
-    if (handData.name === "main-spoon" &&selectedLesson === 12 && lessonStep === 13) {
-      setLessonStep(14)
-    }
+    // =========================
+    // LESSON 13
+    // =========================
+    13: {
+      3.7: "main-graduated-cylinder",
+      21: "main-spoon",
+    },
 
-    if (handData.name === "main-spoon" &&selectedLesson === 8 && lessonStep === 15) {
-      setLessonStep(16)
-    }
-    if (handData.name === "main-spoon" &&selectedLesson === 14.1 && lessonStep === 33) {
-      setLessonStep(34)
-    }
-    if (handData.name === "main-spoon" &&selectedLesson === 12.1 && lessonStep === 25) {
-      setLessonStep(26)
-    }
+    // =========================
+    // LESSON 14
+    // =========================
+    14: {
+      10: "main-Conical-Flask",
+      24: "main-graduated-cylinder",
+    },
 
-    if (handData.name === "main-spoon" && selectedLesson === 9 && lessonStep === 14) {
-      setLessonStep(15)
-    }
+    // =========================
+    // LESSON 14.1
+    // =========================
+    14.1: {
+      33: "main-spoon",
+      50: "main-graduated-cylinder",
+    },
 
-    if(lessonStep===146 && selectedLesson ===14.4 && handData.name === "main-normal-beaker"){
-      setLessonStep(147)
-    }
+    // =========================
+    // LESSON 14.2
+    // =========================
+    14.2: {
+      69: "main-graduated-cylinder",
+    },
 
-    if(lessonStep===5 && selectedLesson ===9 && handData.name === "main-normal-beaker"){
-      setLessonStep(6)
-    }
+    // =========================
+    // LESSON 14.3
+    // =========================
+    14.3: {
+      93: "main-spoon",
+      97: "main-Conical-Flask-02",
+      113: "main-Conical-Flask-02",
+      120: "main-testube-01",
+      126: "main-dropper",
+      132: "main-graduated-cylinder",
+    },
 
-    if(lessonStep===71 && selectedLesson ===12.2 && handData.name === "NaOH-bottle"){
-      setLessonStep(72)
-    }
+    // =========================
+    // LESSON 14.4
+    // =========================
+    14.4: {
+      140: "graduated-pipette",
+      146: "main-normal-beaker",
+    },
+  }
 
-    if(lessonStep===95 && selectedLesson ===12.2 && handData.name === "NaOH-bottle"){
-      setLessonStep(96)
-    }
+  const expectedObject =
+    expectedObjects[selectedLesson]?.[
+      lessonStep
+    ]
 
-    if(lessonStep===106  && selectedLesson === 10 && handData.name === "main-normal-beaker"){
-      setLessonStep(107)
-    }
+  if (
+    expectedObject &&
+    handData.name !== expectedObject
+  ) {
+    setShowErrorMsgNo(1)
+    return
+  }
 
-    if(lessonStep===8 && selectedLesson ===10 && handData.name === "main-normal-beaker"){
-      setLessonStep(9)
-    }
+  // =====================================================
+  // LESSON STEP CHANGES
+  // =====================================================
 
-    if(lessonStep===23 && selectedLesson ===11 && handData.name === "water-bottle"){
-      setLessonStep(23.5)
-    }
+  if (
+    handData.name === "graduated-pipette" &&
+    selectedLesson === 14.4 &&
+    lessonStep === 140
+  ) {
+    setLessonStep(141)
+  }
 
-    if(lessonStep===9 && selectedLesson ===10 && handData.name === "kettle"){
-      setLessonStep(10)
-    }
+  if (
+    handData.name === "main-dropper" &&
+    selectedLesson === 14.3 &&
+    lessonStep === 126
+  ) {
+    setLessonStep(127)
+  }
 
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 14.3 &&
+    lessonStep === 93
+  ) {
+    setLessonStep(94)
+  }
 
-    if (hand === "left" &&selectedLesson === 8 &&lessonStep === 7) {
-      setLessonStep(8)
-    }
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 13 &&
+    lessonStep === 21
+  ) {
+    setLessonStep(22)
+  }
 
-    if (handData.name === "main-spoon" && isPourIntoTestube) {
-      setIsPourIntoTestube(false)
-    }
+  if (
+    handData.name ===
+      "main-graduated-cylinder" &&
+    selectedLesson === 14.3 &&
+    lessonStep === 132
+  ) {
+    setLessonStep(133)
+  }
 
-    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===14) {
-      setLessonStep(15)
-    }
+  if (
+    handData.name ===
+      "main-graduated-cylinder" &&
+    selectedLesson === 14.2 &&
+    lessonStep === 69
+  ) {
+    setLessonStep(70)
+  }
 
-    if (handData.name === "main-testube-01" && selectedLesson===14.3 && lessonStep ===120) {
-      setLessonStep(121)
-    }
+  if (
+    handData.name ===
+      "main-graduated-cylinder" &&
+    selectedLesson === 14.1 &&
+    lessonStep === 50
+  ) {
+    setLessonStep(51)
+  }
 
-    if (handData.name === "volumetric-pipette" && selectedLesson===12.2 && lessonStep ===76) {
-      setLessonStep(77)
-    }
+  if (
+    handData.name ===
+      "main-graduated-cylinder" &&
+    selectedLesson === 14 &&
+    lessonStep === 24
+  ) {
+    setLessonStep(25)
+    setSelectedLesson(14.1)
+  }
 
-    if (handData.name === "volumetric-pipette" && selectedLesson===12.2 && lessonStep ===100) {
-      setLessonStep(101)
-    }
+  if (
+    handData.name ===
+      "main-graduated-cylinder" &&
+    selectedLesson === 13 &&
+    lessonStep === 3.7
+  ) {
+    setLessonStep(4)
+  }
 
-    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===25) {
-      setLessonStep(26)
-    }
+  if (
+    handData.name ===
+      "methyl-dropper-bottle" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 81
+  ) {
+    setLessonStep(82)
+  }
 
-    if (handData.name === "main-testube-01" && selectedLesson===12 && lessonStep ===21) {
-      setLessonStep(22)
-      setSelectedLesson(12.1)
-    }
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 12 &&
+    lessonStep === 13
+  ) {
+    setLessonStep(14)
+  }
 
-    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===17) {
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 8 &&
+    lessonStep === 15
+  ) {
+    setLessonStep(16)
+  }
+
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 14.1 &&
+    lessonStep === 33
+  ) {
+    setLessonStep(34)
+  }
+
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 12.1 &&
+    lessonStep === 25
+  ) {
+    setLessonStep(26)
+  }
+
+  if (
+    handData.name === "main-spoon" &&
+    selectedLesson === 9 &&
+    lessonStep === 14
+  ) {
+    setLessonStep(15)
+  }
+
+  if (
+    selectedLesson === 14.4 &&
+    lessonStep === 146 &&
+    handData.name === "main-normal-beaker"
+  ) {
+    setLessonStep(147)
+  }
+
+  if (
+    selectedLesson === 9 &&
+    lessonStep === 5 &&
+    handData.name === "main-normal-beaker"
+  ) {
+    setLessonStep(6)
+  }
+
+  if (
+    selectedLesson === 12.2 &&
+    lessonStep === 71 &&
+    handData.name === "NaOH-bottle"
+  ) {
+    setLessonStep(72)
+  }
+
+  if (
+    selectedLesson === 12.2 &&
+    lessonStep === 95 &&
+    handData.name === "NaOH-bottle"
+  ) {
+    setLessonStep(96)
+  }
+
+  if (
+    selectedLesson === 10 &&
+    lessonStep === 106 &&
+    handData.name === "main-normal-beaker"
+  ) {
+    setLessonStep(107)
+  }
+
+  if (
+    selectedLesson === 10 &&
+    lessonStep === 8 &&
+    handData.name === "main-normal-beaker"
+  ) {
+    setLessonStep(9)
+  }
+
+  if (
+    selectedLesson === 11 &&
+    lessonStep === 23 &&
+    handData.name === "water-bottle"
+  ) {
+    setLessonStep(23.5)
+  }
+
+  if (
+    selectedLesson === 10 &&
+    lessonStep === 9 &&
+    handData.name === "kettle"
+  ) {
+    setLessonStep(10)
+  }
+
+  // =====================================================
+  // SPECIAL HAND CONDITION
+  // =====================================================
+
+  if (
+    hand === "left" &&
+    selectedLesson === 8 &&
+    lessonStep === 7
+  ) {
+    setLessonStep(8)
+  }
+
+  // =====================================================
+  // POUR INTO TEST TUBE
+  // =====================================================
+
+  if (
+    handData.name === "main-spoon" &&
+    isPourIntoTestube
+  ) {
+    setIsPourIntoTestube(false)
+  }
+
+  // =====================================================
+  // TEST TUBES
+  // =====================================================
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 10 &&
+    lessonStep === 14
+  ) {
+    setLessonStep(15)
+  }
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 14.3 &&
+    lessonStep === 120
+  ) {
+    setLessonStep(121)
+  }
+
+  if (
+    handData.name ===
+      "volumetric-pipette" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 76
+  ) {
+    setLessonStep(77)
+  }
+
+  if (
+    handData.name ===
+      "volumetric-pipette" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 100
+  ) {
+    setLessonStep(101)
+  }
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 10 &&
+    lessonStep === 25
+  ) {
+    setLessonStep(26)
+  }
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 12 &&
+    lessonStep === 21
+  ) {
+    setLessonStep(22)
+    setSelectedLesson(12.1)
+  }
+
+  if (
+    handData.name === "main-testube-02" &&
+    selectedLesson === 10 &&
+    lessonStep === 17
+  ) {
+    setLessonStep(18)
+  }
+
+  if (
+    handData.name === "main-testube-02" &&
+    selectedLesson === 10 &&
+    lessonStep === 32
+  ) {
+    setLessonStep(33)
+  }
+
+  if (
+    handData.name === "main-testube-02" &&
+    selectedLesson === 10 &&
+    lessonStep === 62
+  ) {
+    setLessonStep(63)
+  }
+
+  if (
+    handData.name === "main-testube-03" &&
+    selectedLesson === 10 &&
+    lessonStep === 18
+  ) {
+    setLessonStep(19)
+  }
+
+  if (
+    handData.name === "main-testube-03" &&
+    selectedLesson === 10 &&
+    lessonStep === 40
+  ) {
+    setLessonStep(41)
+  }
+
+  if (
+    handData.name === "main-testube-03" &&
+    selectedLesson === 10 &&
+    lessonStep === 72
+  ) {
+    setLessonStep(73)
+  }
+
+  if (
+    handData.name === "main-testube-04" &&
+    selectedLesson === 10 &&
+    lessonStep === 99
+  ) {
+    setLessonStep(100)
+  }
+
+  if (
+    handData.name === "pipette" &&
+    selectedLesson === 10 &&
+    lessonStep === 73
+  ) {
+    setLessonStep(74)
+  }
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 10 &&
+    lessonStep === 52
+  ) {
+    setLessonStep(53)
+  }
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 10 &&
+    lessonStep === 78
+  ) {
+    setLessonStep(79)
+  }
+
+  if (
+    handData.name === "main-testube-01" &&
+    selectedLesson === 10 &&
+    lessonStep === 113
+  ) {
+    setLessonStep(114)
+  }
+
+  if (
+    handData.name === "main-testube-04" &&
+    selectedLesson === 10 &&
+    lessonStep === 114
+  ) {
+    setLessonStep(115)
+  }
+
+  if (
+    handData.name ===
+      "main-graduated-cylinder" &&
+    selectedLesson === 10 &&
+    lessonStep === 39
+  ) {
+    setLessonStep(40)
+  }
+
+  if (
+    handData.name === "iodobutane-bottle" &&
+    selectedLesson === 10 &&
+    lessonStep === 47
+  ) {
+    setLessonStep(48)
+  }
+
+  if (
+    handData.name === "bromobutane-bottle" &&
+    selectedLesson === 10 &&
+    lessonStep === 57
+  ) {
+    setLessonStep(58)
+  }
+
+  if (
+    handData.name ===
+      "chlorobutane-bottle" &&
+    selectedLesson === 10 &&
+    lessonStep === 67
+  ) {
+    setLessonStep(68)
+  }
+
+  if (
+    handData.name === "main-testube-03" &&
+    selectedLesson === 10 &&
+    lessonStep === 81
+  ) {
+    setLessonStep(82)
+  }
+
+  if (
+    handData.name === "main-normal-beaker" &&
+    selectedLesson === 10 &&
+    lessonStep === 88
+  ) {
+    setLessonStep(89)
+  }
+
+  if (
+    handData.name === "main-testube-05" &&
+    selectedLesson === 10 &&
+    lessonStep === 95
+  ) {
+    setLessonStep(96)
+  }
+
+  if (
+    handData.name === "main-normal-beaker" &&
+    selectedLesson === 11 &&
+    lessonStep === 11
+  ) {
+    setLessonStep(12)
+  }
+
+  if (
+    handData.name === "main-normal-beaker" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 50
+  ) {
+    setLessonStep(51)
+  }
+
+  if (
+    handData.name === "main-testube-02" &&
+    selectedLesson === 10 &&
+    lessonStep === 121
+  ) {
+    setLessonStep(122)
+  }
+
+  if (
+    handData.name === "main-testube-03" &&
+    selectedLesson === 10 &&
+    lessonStep === 122
+  ) {
+    setLessonStep(123)
+  }
+
+  // =====================================================
+  // VOLUMETRIC EQUIPMENT
+  // =====================================================
+
+  if (
+    handData.name ===
+      "volumetric-pipette" &&
+    selectedLesson === 11 &&
+    lessonStep === 16
+  ) {
+    setLessonStep(17)
+  }
+
+  if (
+    handData.name === "volumetric-flask" &&
+    selectedLesson === 11 &&
+    lessonStep === 39
+  ) {
+    setLessonStep(40)
+  }
+
+  if (
+    handData.name === "volumetric-flask" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 59
+  ) {
+    setLessonStep(60)
+  }
+
+  if (
+    handData.name === "volumetric-flask" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 51
+  ) {
+    setLessonStep(52)
+  }
+
+  if (
+    handData.name ===
+      "volumetric-pipette" &&
+    selectedLesson === 11 &&
+    lessonStep === 44
+  ) {
+    setLessonStep(45)
+    setSelectedLesson(11.1)
+  }
+
+  // =====================================================
+  // DROPPER BOTTLES
+  // =====================================================
+
+  if (
+    handData.name ===
+      "methyl-dropper-bottle" &&
+    selectedLesson === 11.1 &&
+    lessonStep === 49
+  ) {
+    setLessonStep(50)
+  }
+
+  if (
+    handData.name ===
+      "methyl-dropper-bottle" &&
+    selectedLesson === 11.1 &&
+    lessonStep === 62
+  ) {
+    setLessonStep(63)
+  }
+
+  // =====================================================
+  // FUNNEL / CONICAL FLASK
+  // =====================================================
+
+  if (
+    handData.name === "main-funnel" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 62
+  ) {
+    setLessonStep(63)
+  }
+
+  if (
+    handData.name ===
+      "main-Conical-Flask" &&
+    selectedLesson === 12.2 &&
+    lessonStep === 88
+  ) {
+    setLessonStep(89)
+  }
+
+  if (
+    handData.name ===
+      "main-Conical-Flask" &&
+    selectedLesson === 14 &&
+    lessonStep === 10
+  ) {
+    setLessonStep(11)
+  }
+
+  if (
+    handData.name ===
+      "main-Conical-Flask-02" &&
+    selectedLesson === 14.3 &&
+    lessonStep === 113
+  ) {
+    setLessonStep(114)
+  }
+
+  if (
+    handData.name ===
+      "main-Conical-Flask-02" &&
+    selectedLesson === 14.3 &&
+    lessonStep === 97
+  ) {
+    setLessonStep(98)
+  }
+
+  // =====================================================
+  // WEIGH TEST TUBE
+  // =====================================================
+
+  if (
+    handData.name === "main-testube-01" &&
+    isWeighTestube
+  ) {
+    if (
+      lessonStep === 17 &&
+      selectedLesson === 8
+    ) {
       setLessonStep(18)
     }
 
-    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===32) {
-      setLessonStep(33)
+    if (
+      lessonStep === 15 &&
+      selectedLesson === 9
+    ) {
+      setLessonStep(16)
     }
+  }
 
-    
-    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===62) {
-      setLessonStep(63)
+  // =====================================================
+  // THERMOMETER
+  // =====================================================
+
+  if (handData.name === "mainThermometer") {
+    if (
+      lessonStep === 42 &&
+      selectedLesson === 8
+    ) {
+      setLessonStep(43)
     }
+  }
 
-    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===18) {
-      setLessonStep(19)
-    }
+  // =====================================================
+  // RETURN OBJECT TO TABLE
+  // =====================================================
 
-    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===40) {
-      setLessonStep(41)
-    }
+  const object = handData.ref.current
 
-    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===72) {
-      setLessonStep(73)
-    }
+  handData.originalParent.add(object)
 
-    if (handData.name === "main-testube-04" && selectedLesson===10 && lessonStep ===99) {
-      setLessonStep(100)
-    }
+  object.position.copy(
+    handData.originalPosition
+  )
 
-    if (handData.name === "pipette" && selectedLesson===10 && lessonStep ===73) {
-      setLessonStep(74)
-    }
+  object.rotation.copy(
+    handData.originalRotation
+  )
 
-    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===52) {
-      setLessonStep(53)
-    }
+  object.scale.set(1, 1, 1)
+  object.updateMatrixWorld(true)
 
-    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===78) {
-      setLessonStep(79)
-    }
+  clearHandData(hand)
+  setSelectedObject(null)
 
-    if (handData.name === "main-testube-01" && selectedLesson===10 && lessonStep ===113) {
-      setLessonStep(114)
-    }
-
-    if (handData.name === "main-testube-04" && selectedLesson===10 && lessonStep ===114) {
-      setLessonStep(115)
-    }
-
-    if (handData.name === "main-graduated-cylinder" && selectedLesson===10 && lessonStep ===39) {
-      setLessonStep(40)
-    }
-
-    if (handData.name === "iodobutane-bottle" && selectedLesson===10 && lessonStep ===47) {
-      setLessonStep(48)
-    }
-
-    if (handData.name === "bromobutane-bottle" && selectedLesson===10 && lessonStep ===57) {
-      setLessonStep(58)
-    }
-
-    if (handData.name === "chlorobutane-bottle" && selectedLesson===10 && lessonStep ===67) {
-      setLessonStep(68)
-    }
-
-    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===81) {
-      setLessonStep(82)
-    }
-
-    if (handData.name === "main-normal-beaker" && selectedLesson===10 && lessonStep ===88) {
-      setLessonStep(89)
-    }
-
-    if (handData.name === "main-testube-05" && selectedLesson===10 && lessonStep ===95) {
-      setLessonStep(96)
-    }
-
-
-    if (handData.name === "main-normal-beaker" && selectedLesson===11 && lessonStep ===11) {
-      setLessonStep(12)
-    }
-
-    if (handData.name === "main-normal-beaker" && selectedLesson===12.2 && lessonStep ===50) {
-      setLessonStep(51)
-    }
-
-    if (handData.name === "main-testube-02" && selectedLesson===10 && lessonStep ===121) {
-      setLessonStep(122)
-    }
-    if (handData.name === "main-testube-03" && selectedLesson===10 && lessonStep ===122) {
-      setLessonStep(123)
-    }
-
-    if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===16) {
-      setLessonStep(17)
-    }
-    if (handData.name === "volumetric-flask" && selectedLesson===11 && lessonStep ===39) {
-      setLessonStep(40)
-    }
-
-    if (handData.name === "volumetric-flask" && selectedLesson===12.2 && lessonStep ===59) {
-      setLessonStep(60)
-    }
-
-    if (handData.name === "volumetric-flask" && selectedLesson===12.2 && lessonStep ===51) {
-      setLessonStep(52)
-    }
-
-    if (handData.name === "volumetric-pipette" && selectedLesson===11 && lessonStep ===44) {
-      setLessonStep(45)
-      setSelectedLesson(11.1)
-    }   
-    
-    if (handData.name === "methyl-dropper-bottle" && selectedLesson===11.1 && lessonStep ===49) {
-      setLessonStep(50)
-    }  
-    if (handData.name === "methyl-dropper-bottle" && selectedLesson===11.1 && lessonStep ===62) {
-      setLessonStep(63)
-    }   
-    
-   if (handData.name === "main-funnel" && selectedLesson===12.2 && lessonStep ===62) {
-      setLessonStep(63)
-    }
-   if (handData.name === "main-Conical-Flask" && selectedLesson===12.2 && lessonStep ===88) {
-      setLessonStep(89)
-    } 
-
-     if (handData.name === "main-Conical-Flask" && selectedLesson===14 && lessonStep ===10) {
-      setLessonStep(11)
-    }
-     if (handData.name === "main-Conical-Flask-02" && selectedLesson===14.3 && lessonStep ===113) {
-      setLessonStep(114)
-    }
-    if (handData.name === "main-Conical-Flask-02" && selectedLesson===14.3 && lessonStep ===97) {
-      setLessonStep(98)
-    }
-    if ( handData.name === "main-testube-01" && isWeighTestube) {
-
-      if (lessonStep === 17 && selectedLesson === 8) {
-        setLessonStep(18)
-      }
-      
-      if (lessonStep === 15 && selectedLesson === 9) {
-        setLessonStep(16)
-      }
-
-    }
-
-    if (handData.name === "mainThermometer") {
-      if ( lessonStep === 42 && selectedLesson === 8) {
-        setLessonStep(43)
-      }
-
-
-      
-
-    }
-
-    const object = handData.ref.current
-
-    handData.originalParent.add(object)
-
-    object.position.copy(
-      handData.originalPosition
-    )
-
-    object.rotation.copy(
-      handData.originalRotation
-    )
-
+  requestAnimationFrame(() => {
     object.scale.set(1, 1, 1)
+
     object.updateMatrixWorld(true)
 
-    clearHandData(hand)
-    setSelectedObject(null)
-
-    requestAnimationFrame(() => {
-      object.scale.set(1, 1, 1)
-      object.updateMatrixWorld(true)
-
-      console.log(
-        "Final table scale:",
-        object.scale
-      )
-    })
-  }
+    console.log(
+      "Final table scale:",
+      object.scale
+    )
+  })
+}
 
   const getWorldPopupPosition = (objectRef) => {
     const worldPosition = new THREE.Vector3()
@@ -1266,8 +1938,15 @@ const ClickObject = () => {
 
     const objectName = selectedItem.name
 
-    if(selectedLesson===11){
+
+
+
+    if([11,11.1].includes(selectedLesson)){
       if(lessonStep==15 && objectName==="volumetric-flask"){
+        setSelectedObject(null)
+        return
+      }
+      if(lessonStep>=45 && objectName==="main-buirette"){
         setSelectedObject(null)
         return
       }
@@ -1469,6 +2148,7 @@ const clickableObjects = selectableObjects
     selectableObjects,
     selectedLeftHand,
     selectedRightHand,
+    safetyStep
   ])
 
   const validateRightHandPick = (objectName) => {
@@ -1756,8 +2436,8 @@ const clickableObjects = selectableObjects
 
     }
 
-    if(selectedLesson===11){
-      if(![6,17,30,34].includes(lessonStep)){
+    if([11,11.1].includes(selectedLesson)){
+      if(![6,17,30,34,45,58].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
@@ -1777,7 +2457,10 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(1)
         return
       }
-
+      if([45].includes(lessonStep) && objectName !== "methyl-dropper-bottle"){
+        setShowErrorMsgNo(1)
+        return
+      }
     }
 
     if(selectedLesson===9){
@@ -2039,8 +2722,12 @@ const toggleFunnelMode = () => {
   // =====================================================
   // ENTER FUNNEL MODE
   // =====================================================
+  if([8,9].includes(selectedLesson)){
+    setShowErrorMsgNo(1)
+    return
+  }
 
-  if(selectedLesson==12.2 && ![54,60].includes(lessonStep)){
+  if([12,12.1,12.2].includes(selectedLesson)&& ![54,60].includes(lessonStep)){
     setShowErrorMsgNo(1)
     return
   }
@@ -2159,6 +2846,11 @@ const toggleFunnelMode = () => {
 }
 
   const toggleStirMode = () => {
+
+    if(selectedLesson==8){
+      setShowErrorMsgNo(1)
+      return
+    }
 
   if ( isTutorialMode && selectedLesson === 1 && lessonStep === 7) {
     setShowErrorMsgNo(4)
@@ -2290,7 +2982,7 @@ const toggleFunnelMode = () => {
       return
     }    
 
-    if([12,12.1,12.2].includes(selectedLesson) && lessonStep !==9){
+    if([12,12.1,12.2].includes(selectedLesson) && ![9,11].includes(lessonStep)){
       setShowErrorMsgNo(1)
       return      
     }
@@ -2363,6 +3055,27 @@ const toggleFunnelMode = () => {
 
 
 const handleClampBurette = () => {
+
+  if([12,12.1,12.2].includes(selectedLesson) && ![61].includes(lessonStep)){
+    setShowErrorMsgNo(1)
+    setSelectedObject(null)
+    return
+  }
+
+  if([11,11.1].includes(selectedLesson) && ![63,66,33].includes(lessonStep)){
+    setShowErrorMsgNo(1)
+    return
+  }
+
+  if(selectedLesson ==9 && ![21].includes(lessonStep)){
+    setShowErrorMsgNo(1)
+    return
+  }
+
+  if(selectedLesson===8 && ![23].includes(lessonStep)){
+    setShowErrorMsgNo(1)
+    return
+  }
 
   // CURRENT false = we are about to CLAMP
   if (!isBuiretteClamped) {
@@ -2687,6 +3400,15 @@ const handlePlacePolysterene = () => {
   }
 
   const keepWeighedTestTubeOnTable = (hand) => {
+
+    if(selectedLesson==8 && ![17].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
+    if(selectedLesson==9 && ![15].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
     if(selectedLesson==12){
       setShowErrorMsgNo(1)
       return
@@ -2891,20 +3613,30 @@ const reappearDeliverySetup =()=>{
 }
 
 
-const handlePlaceBalance = () => {
-  setIsBalancePlaced(true)
-  setSelectedObject(null)
+  const handlePlaceBalance = () => {
+    const isValidCondition =
+      (selectedLesson === 8 && lessonStep === 14) ||
+      (selectedLesson === 13 && lessonStep === 22) ||
+      (selectedLesson === 9 && lessonStep ===12) ||
+      (selectedLesson==12 && lessonStep == 4)
 
-  if(lessonStep===38 && selectedLesson===8){
-    setLessonStep(39)
+    if (!isValidCondition) {
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    setIsBalancePlaced(true)
+    setSelectedObject(null)
+
+    if ( selectedLesson === 8 && lessonStep === 38 ) {
+      setLessonStep(39)
+    }
+
+    if ( selectedLesson === 13 && lessonStep === 22 ) {
+      disappearDeliverySetup()
+      setLessonStep(23)
+    }
   }
-
-  if(selectedLesson===13 && lessonStep===22){
-    disappearDeliverySetup()
-    setLessonStep(23)
-  }  
-
-}
 
 useEffect(()=>{
   if(selectedLesson===13 && lessonStep ===30){
@@ -3065,7 +3797,7 @@ const handleRemoveBalance = () => {
     setSelectedObject(null)
 
     if (selectedLesson === 8 &&lessonStep === 40) {
-      setLessonStep(41)
+      setLessonStep(42)
     }
 
     if(selectedLesson===9 && lessonStep==35.5){
@@ -3166,6 +3898,17 @@ const disposeCup = () => {
   }
 
   const addPottasiumCarbinateToSpoon = ()=>{
+
+    if([11,11.1,12,12.1,12.2].includes(selectedLesson)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if(selectedLesson ==9 && ![0].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if(selectedLesson===8 && lessonStep!==10){
       setShowErrorMsgNo(1)
       return
@@ -3181,6 +3924,17 @@ const disposeCup = () => {
   }
 
   const addPotassiumHydrogencarbonateToSpoon = ()=>{
+
+    if([12,12.1,12.2].includes(selectedLesson)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if([11,11.1].includes(selectedLesson)){
+      setShowErrorMsgNo(1)
+      return
+    }    
+
     if(selectedLesson===8 && lessonStep!==12){
       setShowErrorMsgNo(1)
       return
@@ -3210,21 +3964,32 @@ const disposeCup = () => {
     
   },[selectedLesson,lessonStep])
 
-  const handleRemoveClampFromCenter = ()=>{
+  const handleRemoveClampFromCenter = () => {
+    const isAllowedStep = (selectedLesson === 8 && lessonStep === 29) ||
+                          (selectedLesson === 9 && lessonStep === 27) ||
+                          (selectedLesson === 11.1 && lessonStep === 57) ||
+                          (selectedLesson === 12.2 && lessonStep === 86)
+
+    if (!isAllowedStep) {
+      setShowErrorMsgNo(1)
+      return
+    }
+
     setIsClampInCenter(false)
-    if(selectedLesson ===8 && lessonStep===29){
+
+    if (selectedLesson === 8) {
       setLessonStep(30)
     }
 
-    if(selectedLesson ===9 && lessonStep===27){
+    if (selectedLesson === 9) {
       setLessonStep(28)
     }
 
-    if(selectedLesson ===11.1 && lessonStep===57){
+    if (selectedLesson === 11.1) {
       setLessonStep(58)
     }
 
-    if(selectedLesson ===12.2 && lessonStep===86){
+    if (selectedLesson === 12.2) {
       setLessonStep(87)
     }
 
@@ -3244,11 +4009,22 @@ const disposeCup = () => {
 
   const handlePolystereneStirMode = ()=>{
     
+    if(selectedLesson===8){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     setIsPolystereneStirMode(true)
     setSelectedObject(null)
   }
 
   const removePolystereneStirMode = ()=>{
+
+    if(selectedLesson==9){
+      setSelectedObject(null)
+      return
+    }
+
     setIsPolystereneStirMode(false);
     setSelectedObject(null);
 
@@ -3575,7 +4351,7 @@ const disposeCup = () => {
           {
             isBuiretteClamped &&
             <button  onClick={handleClampBurette}>
-              Unclamped
+              Unclamp
             </button>
           }
           {/* <button>
@@ -3590,6 +4366,19 @@ const disposeCup = () => {
   }
 
   const addSulfamicAcidToSpoon = ()=>{
+
+    if([12,12.1,12.2].includes(selectedLesson) && ![8].includes(lessonStep)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if([8,9,11,11.1,11.2].includes(selectedLesson)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
     setIsSulfamicInSpoon(true)
     setSelectedObject(null)
   }
@@ -3950,6 +4739,11 @@ const disposeCup = () => {
       return
     }
 
+    if([11,11.1,11.2].includes(selectedLesson) && ![46,59].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if(!isPhenopthalinePourMode){
       setIsPhenopthalinePourMode(true);
     }
@@ -4232,7 +5026,7 @@ const disposeCup = () => {
         ) {
           return (
             <button onClick={handlePlaceBeakerRemove}>
-              Remove Beaker
+              Pick Up
             </button>
           )
         }
@@ -4452,24 +5246,24 @@ const disposeCup = () => {
 
         {isBeakerNearClamp && (
           <button onClick={handlePlaceBeakerRemove}>
-            Remove Beaker
+            Pick Up
           </button>
         )}
 
-        {isPlacePolysterene && isPlaceThermometer && !isPolystereneStirMode && (
+        {/* {isPlacePolysterene && isPlaceThermometer && !isPolystereneStirMode && (
           <button onClick={handlePolystereneStirMode}>
             Stir
           </button>
-        )}
+        )} */}
 
-        {
+        {/* {
         isPlacePolysterene && isPlaceThermometer && isPolystereneStirMode && (
           <button onClick={removePolystereneStirMode}>
             Unstir
           </button>
         )
 
-        }
+        } */}
 
 
           {
@@ -4777,9 +5571,9 @@ const renderBuretteHeldButtons = ()=>{
             {isBuiretteClamped ? "Unclamp" : "Clamp"}
           </button>
 
-          <button onClick={()=>{toggleFunnelMode();setLessonStep(61)}}>
+          {/* <button onClick={()=>{toggleFunnelMode()}}>
             Exit Funnel Mode
-          </button>
+          </button> */}
         </>
       )
     }
@@ -4794,8 +5588,11 @@ const handleClampTestube = ()=>{
 }
 
 const handleUnclampTestube = ()=>{
-  setIsClampTestube(false)
-  setSelectedObject(null)
+
+  if(selectedLesson==11.1){
+    setShowErrorMsgNo(1)
+    return
+  }
 
   if(selectedLesson==14.1 && lessonStep===51){
     setLessonStep(52)
@@ -4803,7 +5600,8 @@ const handleUnclampTestube = ()=>{
   if(selectedLesson==14.2 && lessonStep===70){
     setLessonStep(71)
   }
-
+  setIsClampTestube(false)
+  setSelectedObject(null)
 
 }
 
@@ -5030,6 +5828,7 @@ const placeVolmetricBung = ()=>{
 
   if(selectedLesson===11 && lessonStep!==23.5){
     setShowErrorMsgNo(1)
+    setSelectedObject(null) 
     return
   }
 
@@ -5041,8 +5840,8 @@ const placeVolmetricBung = ()=>{
     setLessonStep(44)
   }
    volumetricBung.current.visible = true
-
-  setSelectedObject(null) 
+setSelectedObject(null) 
+  
 }
 
 const placeConicalBung = ()=>{
@@ -5095,9 +5894,11 @@ const renderVolumetricHeldButtons = ()=>{
               Keep Back On Table
             </button>
 
-            <button onClick={placeVolmetricBung} >
+            {selectedLesson === 12.1 && lessonStep === 43 && (
+              <button onClick={placeVolmetricBung} >
               Place Bung
             </button>
+            )}
 
             {selectedLesson === 12.1 && lessonStep === 42 && (
               <button onClick={()=>{setLessonStep(43)}}>
@@ -5428,9 +6229,9 @@ const renderHeldMethylButtons = ()=>{
     if(isTutorialMode){
       return(
         <>
-          <button onClick={handlePhenopthalinePourMode}>
+          {!isPhenopthalinePourMode && <button onClick={handlePhenopthalinePourMode}>
               Pour Mode
-          </button>
+          </button>}
 
           {isPhenopthalinePourMode && (
             <button onClick={handleRemovePhenopthalinPourMode}>
@@ -5641,6 +6442,11 @@ const renderHeldObjectButtons = () => {
     )}
 
     <ClickHitbox
+      modelRef={conicalBeakerRef}
+      multiplier={(selectedLesson==12.2 && lessonStep==85) ? 1.5 :null}
+    />
+
+    <ClickHitbox
       modelRef={spoonRef}
       multiplier={(selectedLesson==8 && lessonStep==13) ? 3 : (selectedLesson==9 && lessonStep==11)?  3 : (selectedLesson===12 && lessonStep===11) ? 3  :2}
     />
@@ -5690,7 +6496,7 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={volumetricPipetteRef}
-      multiplier={(selectedLesson ===11 && lessonStep ==15) ? 3 : 1.2}
+      multiplier={(selectedLesson ===11 && [15,38].includes(lessonStep)) ? 6 : 1.2}
     />
 
     <ClickHitbox

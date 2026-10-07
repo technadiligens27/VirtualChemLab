@@ -161,7 +161,7 @@ const AllExplanationLesson11 = ()=>{
                 </>
             }
             top="25%"
-            left="60%"
+            left="25%"
             height="150px"
             width="380px"
             />}
@@ -169,7 +169,7 @@ const AllExplanationLesson11 = ()=>{
            {lessonStep==57 && <Explanations
             text={
                 <>                
-                    We use a fresh <strong>25.0 cm³ sample of diluted hydrochloric acid</strong> for the second titration
+                    We use a fresh <strong>30.0 cm³ sample of diluted hydrochloric acid</strong> for the second titration
                 </>
             }
             top="25%"
@@ -193,11 +193,12 @@ const AllExplanationLesson11 = ()=>{
            {lessonStep==70 && <Explanations
             text={
                 <>                
-                Your second recorded <strong>titre</strong> is <strong>24.70 cm³</strong>.                </>
+                Your second recorded <strong>titre</strong> is <strong>24.70 cm³</strong>
+                </>
             }
             top="25%"
             left="25%"
-            height="220px"
+            height="150px"
             width="380px"
             />}
 

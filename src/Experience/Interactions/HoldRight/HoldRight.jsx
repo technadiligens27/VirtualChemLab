@@ -526,6 +526,10 @@ const transformControlsRef = useRef()
   const handleKeyDown = (event) => {
     if (event.code === "KeyP") {
 
+      if(selectedLesson==12 && lessonStep==18){
+        setLessonStep(19)
+      }
+
       if(selectedLesson==12.2 && lessonStep==56){
         setLessonStep(57)
       }
@@ -693,7 +697,7 @@ const transformControlsRef = useRef()
         selectedRightHand?.name === 'volumetric-pipette' && <VolumetricRubberAnimation/>
       }
       {
-       selectedLesson===11 && ([24,25,26,27,28,29,30].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask' && !isVolumetricPipetteMode && <InvertModel modelRef={volumetricRef}/>
+       selectedLesson===11 && ([24,25,26,27,28,29].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask' && !isVolumetricPipetteMode && <InvertModel modelRef={volumetricRef}/>
       }
 
       {

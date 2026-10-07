@@ -39,7 +39,7 @@ const AllExplanationLesson12 = ()=>{
                 The recorded mass of the <strong>test tube</strong> is <strong>21.72 g</strong>.                </>
             }
             top="50%"
-            left="60%"
+            left="30%"
             height="150px"
             width="420px"
             />}
@@ -68,8 +68,8 @@ const AllExplanationLesson12 = ()=>{
                  So <strong>Sulfumic acid</strong> that will be used is <strong>2.50 g</strong>
                 </>
             }
-            top="50%"
-            left="60%"
+            top="45%"
+            left="30%"
             height="190px"
             width="420px"
             />}
@@ -259,7 +259,7 @@ const AllExplanationLesson12 = ()=>{
                 </>
                 }
             top="27%"
-            left="60%"
+            left="20%"
             height="270px"
             width="370px"
             />}
@@ -283,7 +283,7 @@ const AllExplanationLesson12 = ()=>{
                 </>
                 }
             top="27%"
-            left="60%"
+            left="20%"
             height="145px"
             width="370px"
             />}

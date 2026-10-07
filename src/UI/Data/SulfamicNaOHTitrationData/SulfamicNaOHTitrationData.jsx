@@ -113,10 +113,25 @@ export const sulfamicAcidNaOHTitrationReactionData = [
     informationTitle: "What Happens",
 
     information: [
-      "Sulfamic acid is used to prepare a standard solution.",
-      "It reacts with sodium hydroxide in a 1:1 mole ratio.",
-      "The titre is used to calculate the sodium hydroxide concentration.",
-    ],
+        <>
+          In this practical, we will prepare a standard{" "}
+          <strong>sulfamic acid solution</strong> and use it to react with{" "}
+          <strong>sodium hydroxide</strong> during a{" "}
+          <strong>titration</strong>.
+        </>,
+
+        <>
+          We will accurately weigh the <strong>sulfamic acid</strong>, dissolve it in{" "}
+          <strong>distilled water</strong>, and make the solution up to{" "}
+          <strong>250 cm³</strong> in a volumetric flask.
+        </>,
+
+        <>
+          We will add the sulfamic acid from a <strong>burette</strong> into sodium{" "}
+          hydroxide while <strong>swirling</strong>, until methyl orange changes to a{" "}
+          <strong>permanent pale orange colour</strong>.
+        </>,
+      ],
 
     importantTitle: "Important:",
 
@@ -283,7 +298,7 @@ export const guidelineData = [
       "Make sure the final liquid level is at the calibration line.",
     ],
 
-    image: "./volumetricFlaskWithBung.png",
+    image: "./volumetricFlask.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -306,7 +321,7 @@ export const guidelineData = [
       "Make sure the solution is thoroughly mixed.",
     ],
 
-    image: "./mixSulfamicVolumetricFlask.png",
+    image: "./volumetricFlaskWithBungInvert.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

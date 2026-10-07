@@ -111,11 +111,24 @@ export const hclTitrationReactionData = [
     ],
 
     informationTitle: "What Happens",
-
+    
     information: [
-      "Hydrochloric acid reacts with sodium hydroxide in a 1:1 mole ratio.",
-      "Hydrogen ions from the acid react with hydroxide ions from the alkali to form water.",
-      "The volume of sodium hydroxide used can be used to calculate the concentration of the hydrochloric acid.",
+      <>
+        We will find the <strong>concentration of hydrochloric acid</strong> by titrating it with{" "}
+        <strong>standardised sodium hydroxide</strong>.
+      </>,
+
+      <>
+        We will use <strong>25.0 cm³ of diluted HCl</strong>, add{" "}
+        <strong>phenolphthalein</strong>, and titrate until a{" "}
+        <strong>pale pink endpoint</strong> is reached.
+      </>,
+
+      <>
+        We will record the <strong>burette readings</strong>, calculate the{" "}
+        <strong>titre</strong>, and repeat until we obtain{" "}
+        <strong>two concordant titres</strong>.
+      </>,
     ],
 
     importantTitle: "Important:",

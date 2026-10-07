@@ -267,7 +267,7 @@ const {
       title: "Prepare the Potassium Carbonate",
 
       description:
-        "Transfer potassium carbonate into a test tube so that its mass can be measured before it is added to the hydrochloric acid. The potassium carbonate will react with the acid and produce the temperature change required for the enthalpy calculation.",
+        "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. The hydrochloric acid can then be delivered accurately into the polystyrene cup.",
 
       implementationSteps: [
         "Pick up an empty test tube.",
@@ -315,7 +315,6 @@ const {
         "Measure and record the combined mass of the test tube and potassium carbonate. This measurement will later be used to determine the exact mass of potassium carbonate added to the hydrochloric acid.",
 
       implementationSteps: [
-        "Place the digital balance in the centre of the workspace.",
         "Close the test tube securely with its cap.",
         "Place the test tube on the centre of the balance.",
         "Wait until the balance reading becomes stable.",
@@ -335,8 +334,7 @@ const {
   title: "Add HCL Acid to the Polystyrene Cup",
 
   description:
-    "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. The hydrochloric acid can then be delivered accurately into the polystyrene cup.",
-
+    "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and place the polystyrene cup beneath it so the acid can be delivered accurately.",
   implementationSteps: [
     "Add hydrochloric acid to the burette.",
     "Secure the burette vertically in the burette clamp.",
@@ -427,13 +425,13 @@ const {
         reactionNumber={1}
 
         volumeOfSolution={
-          lessonStep >= 21
+          lessonStep >= 28
             ? 30
             : null
         }
 
         solutionDensity={
-          lessonStep >= 21
+          lessonStep >= 28
             ? 1
             : null
         }
@@ -466,7 +464,7 @@ const {
 
         massAfterEmptying={
           lessonStep >= 40
-            ? 21.72
+            ? 21.70
             : null
         }
 
@@ -481,7 +479,7 @@ const {
           },
           {
             selectedLesson: selectedLesson,
-            lessonStep: 21,
+            lessonStep: 28,
           },
           {
             selectedLesson: selectedLesson,
@@ -510,7 +508,7 @@ const {
         }
 
         {
-          (lessonStep>=18 && lessonStep<=30)  && <SulfamicGuidelines guidelineData={guidelineData[4]}/>
+          (lessonStep>=18 && lessonStep<=32)  && <SulfamicGuidelines guidelineData={guidelineData[4]}/>
         }
 
         {/* {
@@ -518,11 +516,12 @@ const {
         } */}
 
         {
-          (lessonStep>=32 && lessonStep<=38)  && <SulfamicGuidelines guidelineData={guidelineData[5]}/>
+          (lessonStep>=33 && lessonStep<=38)  && <SulfamicGuidelines guidelineData={guidelineData[5]}/>
         }
 
         {
-          showEnthalyResultOne && <HessReactionOneResults   onQuestions={() => {
+          showEnthalyResultOne && <HessReactionOneResults 
+          onQuestions={() => {
            setShowQuestionCardNo(8.1);setShowEnthalyResultOne(false)
           }}/>
         }

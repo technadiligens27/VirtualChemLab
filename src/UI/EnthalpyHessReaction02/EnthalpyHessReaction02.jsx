@@ -31,6 +31,8 @@ import {
   ModelContext,
 } from "../../Contexts/ModelContext/ModelContext.jsx"
 import HessReactionOneResults from "../HessReactionOneResults/HessReactionOneResults.jsx"
+import SulfamicGuidelines from "../SulfamicGuidelines/SulfamicGuidelines.jsx"
+import HessReactionTwoResults from "../HessReactionTwoResults.jsx/HessReactionTwoResults.jsx"
 
 
 const EnthalpyHessReaction02 = () => {
@@ -388,7 +390,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./addPotassiumHydrogencarbonateAndStir.png",
+        "./addPotassiumCarbonateAndStir.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -415,7 +417,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./weighEmptyTestube.png",
+        "./weighEmptyTestTube.png",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -499,7 +501,7 @@ const EnthalpyHessReaction02 = () => {
 
         massWithPowder={
           lessonStep >= 14
-            ? 24.7
+            ? 25.67
             : null
         }
 
@@ -564,7 +566,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 2 &&
         lessonStep <= 5 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[0]
             }
@@ -574,7 +576,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 6 &&
         lessonStep <= 11 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[1]
             }
@@ -584,7 +586,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 12 &&
         lessonStep <= 15 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[2]
             }
@@ -594,7 +596,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 16 &&
         lessonStep <= 25 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[3]
             }
@@ -604,7 +606,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 26 &&
         lessonStep <= 29 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[4]
             }
@@ -614,7 +616,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 30 &&
         lessonStep <= 33 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[5]
             }
@@ -624,7 +626,7 @@ const EnthalpyHessReaction02 = () => {
 
       {lessonStep >= 34 &&
         lessonStep <= 36 && (
-          <HessGuidelines
+          <SulfamicGuidelines
             guidelineData={
               guidelineData[6]
             }
@@ -1058,7 +1060,7 @@ const EnthalpyHessReaction02 = () => {
         />
       )}
         {
-          showEnthalyResultTwo && <HessReactionOneResults  onQuestions={() => {
+          showEnthalyResultTwo && <HessReactionTwoResults  onQuestions={() => {
            setShowQuestionCardNo(9.1);setShowEnthalyResultTwo(false)
           }}/>
         }

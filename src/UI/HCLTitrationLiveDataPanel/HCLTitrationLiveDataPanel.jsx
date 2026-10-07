@@ -9,6 +9,7 @@ import { gsap } from "gsap"
 
 import "./HCLTitrationLiveDataPanel.css"
 
+
 const HCLTitrationLiveDataPanel = ({
   // =========================================================
   // CURRENT VOLUMES
@@ -22,6 +23,7 @@ const HCLTitrationLiveDataPanel = ({
 
   buretteNaOHAmount = null,
 
+
   // =========================================================
   // TITRATION LIVE DATA
   // =========================================================
@@ -33,6 +35,7 @@ const HCLTitrationLiveDataPanel = ({
   naohDelivered = null,
 
   endpointStatus = null,
+
 
   // =========================================================
   // RESULTS
@@ -46,8 +49,9 @@ const HCLTitrationLiveDataPanel = ({
 
   meanTitre = null,
 
+
   // =========================================================
-  // AUTO SHOW CONTROL
+  // LESSON CONTROL
   // =========================================================
 
   selectedLesson,
@@ -56,7 +60,10 @@ const HCLTitrationLiveDataPanel = ({
 
   autoShowConditions = [],
 
-  showDuration = 3000,
+
+  // How long panel stays open
+  // after automatically showing
+  autoDelay = 2000,
 }) => {
 
   // =========================================================
@@ -66,19 +73,23 @@ const HCLTitrationLiveDataPanel = ({
   const panelRef =
     useRef(null)
 
+
   const arrowRef =
     useRef(null)
 
-  const isPanelOpenRef =
-    useRef(false)
 
   const autoCloseTimeoutRef =
     useRef(null)
 
 
   // =========================================================
-  // STATE
+  // PANEL STATE
+  // START CLOSED
   // =========================================================
+
+  const isPanelOpenRef =
+    useRef(false)
+
 
   const [
     isPanelOpen,
@@ -102,8 +113,10 @@ const HCLTitrationLiveDataPanel = ({
       return "TBD"
     }
 
+
     const numericValue =
       Number(value)
+
 
     if (
       Number.isNaN(
@@ -112,6 +125,7 @@ const HCLTitrationLiveDataPanel = ({
     ) {
       return "TBD"
     }
+
 
     return `${numericValue.toFixed(
       decimals
@@ -135,118 +149,60 @@ const HCLTitrationLiveDataPanel = ({
       return "TBD"
     }
 
+
     return value
   }
 
 
   // =========================================================
-  // CLOSED POSITION
+  // AUTO SHOW CONDITION
   // =========================================================
 
-  const getClosedPosition =
-    () => {
+  const shouldAutoShow =
+    autoShowConditions.some(
+      (condition) =>
+        condition.selectedLesson ===
+          selectedLesson &&
+        condition.lessonStep ===
+          lessonStep
+    )
 
-      const panel =
-        panelRef.current
 
-      if (!panel) {
-        return 0
-      }
+  // =========================================================
+  // GET CLOSED POSITION
+  // =========================================================
 
-      return (
-        panel.offsetWidth -
-        34
-      )
+  const getClosedPosition = () => {
+
+    const panel =
+      panelRef.current
+
+
+    if (!panel) {
+      return 0
     }
 
 
-  // =========================================================
-  // CLEAR AUTO CLOSE
-  // =========================================================
-
-  const clearAutoClose =
-    () => {
-
-      if (
-        autoCloseTimeoutRef.current
-      ) {
-
-        clearTimeout(
-          autoCloseTimeoutRef.current
-        )
-
-        autoCloseTimeoutRef.current =
-          null
-      }
-    }
-
-
-  // =========================================================
-  // CLOSE PANEL
-  // =========================================================
-
-  const closePanel =
-    () => {
-
-      const panel =
-        panelRef.current
-
-      const arrow =
-        arrowRef.current
-
-      if (
-        !panel ||
-        !arrow
-      ) {
-        return
-      }
-
-      clearAutoClose()
-
-      isPanelOpenRef.current =
-        false
-
-      setIsPanelOpen(
-        false
-      )
-
-      gsap.to(panel, {
-        x:
-          getClosedPosition(),
-
-        duration:
-          0.65,
-
-        ease:
-          "power3.inOut",
-      })
-
-      gsap.to(arrow, {
-        rotation:
-          180,
-
-        duration:
-          0.65,
-
-        ease:
-          "power3.inOut",
-      })
-    }
+    return (
+      panel.offsetWidth -
+      34
+    )
+  }
 
 
   // =========================================================
   // OPEN PANEL
   // =========================================================
 
-  const openPanel = (
-    autoClose = false
-  ) => {
+  const openPanel = () => {
 
     const panel =
       panelRef.current
 
+
     const arrow =
       arrowRef.current
+
 
     if (
       !panel ||
@@ -255,60 +211,88 @@ const HCLTitrationLiveDataPanel = ({
       return
     }
 
-    clearAutoClose()
 
     isPanelOpenRef.current =
       true
+
 
     setIsPanelOpen(
       true
     )
 
+
     gsap.to(panel, {
-      x:
-        -60,
+      x: -60,
 
-      duration:
-        0.65,
+      duration: 0.65,
 
-      ease:
-        "power3.inOut",
+      ease: "power3.inOut",
     })
+
 
     gsap.to(arrow, {
-      rotation:
-        0,
+      rotation: 0,
 
-      duration:
-        0.65,
+      duration: 0.65,
 
-      ease:
-        "power3.inOut",
+      ease: "power3.inOut",
     })
-
-
-    // =======================================================
-    // AUTO CLOSE AFTER SHOW DURATION
-    // =======================================================
-
-    if (
-      autoClose
-    ) {
-
-      autoCloseTimeoutRef.current =
-        setTimeout(
-          () => {
-
-            closePanel()
-
-          },
-          showDuration
-        )
-    }
   }
 
 
   // =========================================================
+  // CLOSE PANEL
+  // =========================================================
+
+  const closePanel = () => {
+
+    const panel =
+      panelRef.current
+
+
+    const arrow =
+      arrowRef.current
+
+
+    if (
+      !panel ||
+      !arrow
+    ) {
+      return
+    }
+
+
+    isPanelOpenRef.current =
+      false
+
+
+    setIsPanelOpen(
+      false
+    )
+
+
+    gsap.to(panel, {
+      x:
+        getClosedPosition(),
+
+      duration: 0.65,
+
+      ease: "power3.inOut",
+    })
+
+
+    gsap.to(arrow, {
+      rotation: 180,
+
+      duration: 0.65,
+
+      ease: "power3.inOut",
+    })
+  }
+
+
+  // =========================================================
+  // INITIAL PANEL POSITION
   // START CLOSED
   // =========================================================
 
@@ -317,8 +301,10 @@ const HCLTitrationLiveDataPanel = ({
     const panel =
       panelRef.current
 
+
     const arrow =
       arrowRef.current
+
 
     if (
       !panel ||
@@ -327,18 +313,21 @@ const HCLTitrationLiveDataPanel = ({
       return
     }
 
+
     gsap.set(panel, {
       x:
         getClosedPosition(),
     })
 
+
     gsap.set(arrow, {
-      rotation:
-        180,
+      rotation: 180,
     })
+
 
     isPanelOpenRef.current =
       false
+
 
     setIsPanelOpen(
       false
@@ -349,28 +338,18 @@ const HCLTitrationLiveDataPanel = ({
     // RESIZE
     // =======================================================
 
-    const handleResize =
-      () => {
+    const handleResize = () => {
 
-        if (
-          isPanelOpenRef.current
-        ) {
+      if (
+        !isPanelOpenRef.current
+      ) {
 
-          gsap.set(panel, {
-            x:
-              -60,
-          })
-
-        }
-
-        else {
-
-          gsap.set(panel, {
-            x:
-              getClosedPosition(),
-          })
-        }
+        gsap.set(panel, {
+          x:
+            getClosedPosition(),
+        })
       }
+    }
 
 
     window.addEventListener(
@@ -386,9 +365,11 @@ const HCLTitrationLiveDataPanel = ({
         handleResize
       )
 
+
       gsap.killTweensOf(
         panel
       )
+
 
       gsap.killTweensOf(
         arrow
@@ -404,43 +385,103 @@ const HCLTitrationLiveDataPanel = ({
 
   useEffect(() => {
 
-    const shouldAutoShow =
-      autoShowConditions.some(
-        (condition) =>
-          condition.selectedLesson ===
-            selectedLesson &&
-          condition.lessonStep ===
-            lessonStep
-      )
-
+    // Only run when current
+    // lesson + step matches
 
     if (
-      shouldAutoShow
+      !shouldAutoShow
+    ) {
+      return
+    }
+
+
+    // Clear previous timer
+
+    if (
+      autoCloseTimeoutRef.current
     ) {
 
-      openPanel(
-        true
+      clearTimeout(
+        autoCloseTimeoutRef.current
       )
+
+
+      autoCloseTimeoutRef.current =
+        null
+    }
+
+
+    // =======================================================
+    // OPEN
+    // =======================================================
+
+    openPanel()
+
+
+    // =======================================================
+    // AUTO CLOSE
+    // =======================================================
+
+    autoCloseTimeoutRef.current =
+      setTimeout(() => {
+
+        closePanel()
+
+
+        autoCloseTimeoutRef.current =
+          null
+
+      }, autoDelay)
+
+
+    // =======================================================
+    // CLEANUP
+    // =======================================================
+
+    return () => {
+
+      if (
+        autoCloseTimeoutRef.current
+      ) {
+
+        clearTimeout(
+          autoCloseTimeoutRef.current
+        )
+
+
+        autoCloseTimeoutRef.current =
+          null
+      }
     }
 
   }, [
     selectedLesson,
     lessonStep,
-    autoShowConditions,
-    showDuration,
+    shouldAutoShow,
+    autoDelay,
   ])
 
 
   // =========================================================
-  // CLEANUP
+  // COMPONENT CLEANUP
   // =========================================================
 
   useEffect(() => {
 
     return () => {
 
-      clearAutoClose()
+      if (
+        autoCloseTimeoutRef.current
+      ) {
 
+        clearTimeout(
+          autoCloseTimeoutRef.current
+        )
+
+
+        autoCloseTimeoutRef.current =
+          null
+      }
     }
 
   }, [])
@@ -450,29 +491,36 @@ const HCLTitrationLiveDataPanel = ({
   // MANUAL TOGGLE
   // =========================================================
 
-  const handlePanelToggle =
-    () => {
+  const handlePanelToggle = () => {
 
-      // If user manually interacts,
-      // cancel automatic close timer.
-      clearAutoClose()
+    // Stop auto-close timer
+    // if user interacts manually
+
+    if (
+      autoCloseTimeoutRef.current
+    ) {
+
+      clearTimeout(
+        autoCloseTimeoutRef.current
+      )
 
 
-      if (
-        isPanelOpenRef.current
-      ) {
-
-        closePanel()
-
-      }
-
-      else {
-
-        openPanel(
-          false
-        )
-      }
+      autoCloseTimeoutRef.current =
+        null
     }
+
+
+    if (
+      isPanelOpenRef.current
+    ) {
+
+      closePanel()
+
+    } else {
+
+      openPanel()
+    }
+  }
 
 
   // =========================================================
@@ -491,13 +539,10 @@ const HCLTitrationLiveDataPanel = ({
 
       <button
         type="button"
-
         className="hcl-live-data-toggle"
-
         onClick={
           handlePanelToggle
         }
-
         aria-label={
           isPanelOpen
             ? "Close HCl titration live data panel"
@@ -507,7 +552,6 @@ const HCLTitrationLiveDataPanel = ({
 
         <span
           ref={arrowRef}
-
           className="hcl-live-data-toggle-arrow"
         >
           ❯
@@ -564,7 +608,7 @@ const HCLTitrationLiveDataPanel = ({
 
             {/* NORMAL BEAKER */}
 
-            {/* <div className="hcl-live-data-row">
+            <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
 
@@ -599,7 +643,7 @@ const HCLTitrationLiveDataPanel = ({
 
               </div>
 
-            </div> */}
+            </div>
 
 
             {/* VOLUMETRIC FLASK */}
@@ -749,7 +793,7 @@ const HCLTitrationLiveDataPanel = ({
             <div className="hcl-live-data-divider" />
 
 
-            {/* INITIAL BURETTE */}
+            {/* INITIAL BURETTE READING */}
 
             <div className="hcl-live-data-row">
 
@@ -789,7 +833,7 @@ const HCLTitrationLiveDataPanel = ({
             </div>
 
 
-            {/* CURRENT BURETTE */}
+            {/* CURRENT BURETTE READING */}
 
             <div className="hcl-live-data-row">
 
@@ -1055,7 +1099,7 @@ const HCLTitrationLiveDataPanel = ({
 
             {/* MEAN TITRE */}
 
-            {/* <div className="hcl-live-data-row">
+            <div className="hcl-live-data-row">
 
               <div className="hcl-live-data-label">
 
@@ -1090,7 +1134,7 @@ const HCLTitrationLiveDataPanel = ({
 
               </div>
 
-            </div> */}
+            </div>
 
           </div>
 
@@ -1118,5 +1162,6 @@ const HCLTitrationLiveDataPanel = ({
     </div>
   )
 }
+
 
 export default HCLTitrationLiveDataPanel

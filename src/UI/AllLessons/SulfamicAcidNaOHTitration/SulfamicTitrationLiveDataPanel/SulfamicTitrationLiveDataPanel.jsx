@@ -743,7 +743,7 @@ const SulfamicTitrationLiveDataPanel = ({
 
 
             {/* BEAKER WATER */}
-
+{/* 
             <div className="sulfamic-live-data-row">
 
               <div className="sulfamic-live-data-label">
@@ -777,7 +777,7 @@ const SulfamicTitrationLiveDataPanel = ({
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* VOLUMETRIC FLASK */}

@@ -22,6 +22,7 @@ import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import PourPowderFromTestube from "../PourPowderFromTestube/PourPowderFromTestube"
 
 const PouringMode02 = ({
   pourModelRef,
@@ -65,7 +66,7 @@ const PouringMode02 = ({
 
   const [isPouring,setIsPouring] = useState(false)
 
-  const {selectedLeftHand,selectedRightHand} = useContext(InteractionContext)
+  const {selectedLeftHand,selectedRightHand,isPottasiumCarobnateInTestube01} = useContext(InteractionContext)
 
   const {conicalBeakerRef02,graduatedBeakerRef,roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,
     volumetricRef,normalBeakerRef,mainBuiretteRef} = useContext(
@@ -73,6 +74,9 @@ const PouringMode02 = ({
   )
 
   const {selectedLesson,lessonStep} = useContext(MainGuidelineContext)
+
+  console.log("PouringMode02")
+
 
   // ==========================================
   // POSITION AND SCALE MODELS
@@ -344,15 +348,20 @@ const PouringMode02 = ({
       isReadyRef.current = false
       rotationZRef.current = 0
 
-      // Make all bung children visible again.
-      bungChildren.forEach((child) => {
-        child.visible = true
+        if (
+          ![12, 12.1, 12.2].includes(
+            selectedLesson
+          )
+        ) {
+          bungChildren.forEach((child) => {
+            child.visible = true
 
-        console.log(
-          "Restored bung:",
-          child.name
-        )
-      })
+            console.log(
+              "Restored bung:",
+              child.name
+            )
+          })
+        }
 
       // Restore pour model parent if another
       // component changed it.
@@ -676,6 +685,20 @@ const PouringMode02 = ({
             pourScale = {10}
           />
         )}
+
+
+      {hand === "right" &&
+        selectedRightHand?.name ===
+          "main-testube-01" &&
+        isPottasiumCarobnateInTestube01 && (
+          <PourPowderFromTestube
+            isPouring={isPouring}
+            model={
+              testube01Ref.current
+            }
+          />
+        )}  
+
 
       {selectedLesson==12.2 && lessonStep===57 &&selectedLeftHand?.name ===
         "main-buirette" &&

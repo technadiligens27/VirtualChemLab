@@ -7,7 +7,7 @@ const AllExplanationLesson08 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([6,11,15,17,19,21,29,31,35,36,40,41].includes(lessonStep)){
+        if([4,6,11,15,17,19,21,28,29,31,35,36,40,42].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
@@ -21,6 +21,19 @@ const AllExplanationLesson08 = ()=>{
     if(!isExplanationOpen)return
     return(
         <>
+
+           {lessonStep==4 && <Explanations
+            text={
+                <>
+            We will use the <strong>beaker</strong> to hold and support the <strong>polystyrene cup</strong> in the next step 
+                </>
+            }
+            top="30%"
+            left="37%"
+            height="190px"
+            width="430px"
+            />}
+
 
            {lessonStep==6 && <Explanations
             text={
@@ -65,7 +78,7 @@ const AllExplanationLesson08 = ()=>{
                 </>
             }
             top="60%"
-            left="65%"
+            left="18%"
             height="190px"
             width="380px"
             />}
@@ -73,7 +86,7 @@ const AllExplanationLesson08 = ()=>{
            {lessonStep==19 && <Explanations
             text={
                 <>
-               We will use the <strong>burette</strong> to add a 30 cm3 of <strong>hydrochloric acid</strong> accurately into the polystyrene cup
+               We will use the <strong>burette</strong> to add 30 cm³ of <strong>hydrochloric acid</strong> accurately into the polystyrene cup
                 </>
             }
             top="30%"
@@ -102,8 +115,8 @@ const AllExplanationLesson08 = ()=>{
             }
 
             top="38%"
-            left="58%"
-            height="265px"
+            left="28%"
+            height="185px"
             width="420px"
             />} 
 
@@ -164,20 +177,20 @@ const AllExplanationLesson08 = ()=>{
             text={
                 <>
                 After pouring the <strong>potassium carbonate</strong>, the <strong>test tube</strong> now weighs <strong>21.70 g</strong>. 
-                This means the amount of <strong>potassium carbonate</strong> used is <strong>2.90 g</strong>.
+                This means the amount of <strong>potassium carbonate</strong> used is <strong>3.00 g</strong>.
                 </>
             }
 
-            top="38%"
-            left="58%"
-            height="265px"
+            top="60%"
+            left="15%"
+            height="260px"
             width="420px"
             />} 
             
-          {lessonStep==41 && <Explanations
+          {lessonStep==42 && <Explanations
             text={
                 <>
-                The temperature has risen to <strong>42°C</strong>, which is an increase of <strong>20°C</strong>.
+                The temperature has risen to <strong>31.5°C</strong>, which is an increase of <strong>9.5°C</strong>.
                 </>
             }
 

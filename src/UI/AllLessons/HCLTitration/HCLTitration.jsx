@@ -10,6 +10,7 @@ import DialogBox from "../../AllDialogBox/DialogBox/DialogBox.jsx";
 import HCLTitration2 from "./HCLTitration2.jsx";
 import HessGuidelines from "../../HessGuidelines/HessGuidelines.jsx";
 import HCLTitrationLiveDataPanel from "../../HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel.jsx";
+import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx";
 
 const HCLTitration = ()=>{
 
@@ -27,7 +28,7 @@ const guidelineData = [
     title: "Prepare the Hydrochloric Acid",
 
     description:
-      "Transfer hydrochloric acid into a clean beaker so that an accurate 25.0 cm³ portion can be measured using a volumetric pipette.",
+      "Transfer hydrochloric acid into a clean beaker so that an accurate 25.0 cm³ portion can be measured using a volumetric pipette. By reacting it with a known sodium hydroxide solution, we can calculate the hydrochloric acid concentration",
 
     implementationSteps: [
       "Pick up the normal beaker.",
@@ -109,7 +110,7 @@ const guidelineData = [
       "Place the beaker back on the table.",
     ],
 
-    image: "./diluteHCL.png",
+    image: "./transferSulfamicToVolumetricFlask.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -180,7 +181,7 @@ const guidelineData = [
       "Return the pipette to the table.",
     ],
 
-    image: "./prepareConicalFlaskHCL.png",
+    image: "./transferNaOHToConicalFlask.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -362,11 +363,6 @@ const guidelineData = [
 
             conicalFlaskAmount={ lessonStep >= 55 ? 0 : lessonStep >= 43 ? 25 : null}
 
-            buretteNaOHAmount={
-              lessonStep >= 32
-                ? 30
-                : null
-            }
 
             initialBuretteReading={
               lessonStep >= 52
@@ -375,6 +371,9 @@ const guidelineData = [
             }
 
             currentBuretteReading={
+                            lessonStep >= 32
+                ? 30
+                : 
               lessonStep >= 52
                 ? 24.7
                 : null
@@ -463,7 +462,7 @@ const guidelineData = [
               />
             )}
 
-            {lessonStep >2 && lessonStep <6 && <HessGuidelines guidelineData={guidelineData[0]}/>}
+            {lessonStep >2 && lessonStep <6 && <SulfamicGuidelines guidelineData={guidelineData[0]}/>}
 
           {lessonStep === 3 && (
             <DialogBox
@@ -492,7 +491,7 @@ const guidelineData = [
 
 
 
-            {lessonStep >=7 && lessonStep <17 && <HessGuidelines guidelineData={guidelineData[1]}/>}
+            {lessonStep >=7 && lessonStep <17 && <SulfamicGuidelines guidelineData={guidelineData[1]}/>}
 
 
             {lessonStep === 6 && <DialogBox text={<>
@@ -551,7 +550,7 @@ const guidelineData = [
           )}
 
             {lessonStep >= 12 && lessonStep <= 16 && (
-              <HessGuidelines guidelineData={guidelineData[2]} />
+              <SulfamicGuidelines guidelineData={guidelineData[2]} />
             )}
 
           {lessonStep === 12 && (
@@ -598,14 +597,14 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                 Click <strong>Volumetric Pipette</strong> and select <strong> Keep Back On Table</strong>.
+                 Click <strong>Held Volumetric Pipette</strong> and select <strong> Keep Back On Table</strong>.
                 </>
               }
             />
           )}
 
             {lessonStep >= 17 && lessonStep <= 23 && (
-              <HessGuidelines guidelineData={guidelineData[3]} />
+              <SulfamicGuidelines guidelineData={guidelineData[3]} />
             )}
 
             {lessonStep === 17 && (
@@ -672,14 +671,14 @@ const guidelineData = [
               <DialogBox
                 text={
                   <>
-                    Place the <strong>Distilled Water Bottle</strong> back on the <strong>table</strong>.
+                    Place the <strong>Held Distilled Water Bottle</strong> back on the <strong>table</strong>.
                   </>
                 }
               />
             )}
 
             {lessonStep >= 23.5 && lessonStep <= 29 && (
-              <HessGuidelines guidelineData={guidelineData[4]} />
+              <SulfamicGuidelines guidelineData={guidelineData[4]} />
             )}
 
             {lessonStep === 23.5 && (
@@ -753,7 +752,7 @@ const guidelineData = [
             )}
 
             {lessonStep >= 30 && lessonStep <= 33 && (
-              <HessGuidelines guidelineData={guidelineData[5]} />
+              <SulfamicGuidelines guidelineData={guidelineData[5]} />
             )}
 
             {lessonStep === 30 && (
@@ -770,7 +769,7 @@ const guidelineData = [
               <DialogBox
                 text={
                   <>
-                    Click Held <strong>Burette</strong> and Select <strong>Add Liquid</strong>.
+                    Click <strong>Held Burette</strong> and Select <strong>Add Liquid</strong>.
                   </>
                 }
               />
@@ -797,7 +796,7 @@ const guidelineData = [
             )}
 
             {lessonStep >= 34 && lessonStep <= 44 && (
-              <HessGuidelines guidelineData={guidelineData[6]} />
+              <SulfamicGuidelines guidelineData={guidelineData[6]} />
             )}
 
 
@@ -805,7 +804,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                  Pick up the <strong>Volumetric Pipette</strong>.
+                  Pick up the <strong>Held Volumetric Pipette</strong>.
                 </>
               }
             />
@@ -905,7 +904,7 @@ const guidelineData = [
             <DialogBox
               text={
                 <>
-                  Place the <strong>Volumetric Pipette</strong> back on the <strong>table</strong>.
+                  Place the <strong>Held Volumetric Pipette</strong> back on the <strong>table</strong>.
                 </>
               }
             />

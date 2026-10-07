@@ -1,3 +1,7 @@
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+
 .sulfamic-result-overlay {
   position: fixed;
   inset: 0;
@@ -10,38 +14,56 @@
   align-items: center;
   justify-content: center;
 
-  padding: 20px 85px 20px 20px;
+  padding:
+    20px
+    85px
+    20px
+    20px;
 
   box-sizing: border-box;
 
-  font-family: "Nunito", sans-serif;
+  font-family:
+    "Nunito",
+    sans-serif;
 
   transition:
     background-color 0.4s ease,
     backdrop-filter 0.4s ease;
 }
 
+
 .sulfamic-result-overlay-open {
   background-color:
-    rgba(31, 20, 50, 0.25);
+    rgba(
+      31,
+      20,
+      50,
+      0.25
+    );
 
-  backdrop-filter: blur(5px);
+  backdrop-filter:
+    blur(5px);
 
   -webkit-backdrop-filter:
     blur(5px);
 }
 
-.sulfamic-result-overlay-closed {
-  background-color: transparent;
 
-  backdrop-filter: blur(0);
+.sulfamic-result-overlay-closed {
+  background-color:
+    transparent;
+
+  backdrop-filter:
+    blur(0);
 
   -webkit-backdrop-filter:
     blur(0);
 
   pointer-events: none;
+
   padding-left: 90px;
 }
+
 
 /* =========================================================
    WRAPPER
@@ -50,19 +72,62 @@
 .sulfamic-result-wrapper {
   position: relative;
 
-  width: 70vw;
+  width:
+    min(
+      45vw,
+      760px
+    );
+
   height: 95vh;
+
+  max-height:
+    calc(
+      100dvh - 30px
+    );
 
   padding: 8px;
 
-  border: 9px solid #ffc94d;
+  border:
+    9px solid
+    #ffc94d;
 
-  border-radius: 22px;
+  border-radius:
+    22px;
 
-  background-color: #fffaf3;
+  background-color:
+    #fffaf3;
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
+
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    max-height 0.3s ease;
 }
+
+
+/* =========================================================
+   WRAPPER - NO EXPERIMENTAL DATA
+   ========================================================= */
+
+.sulfamic-result-wrapper-no-data {
+  width:
+    min(
+      42vw,
+      650px
+    );
+
+  height: auto;
+
+  min-height: 0;
+
+  max-height:
+    calc(
+      100dvh - 40px
+    );
+}
+
 
 /* =========================================================
    INNER
@@ -72,28 +137,47 @@
   width: 100%;
   height: 100%;
 
-  display: grid;
+  display: flex;
 
-  grid-template-columns:
-    58% 42%;
-
-  gap: 25px;
+  align-items: center;
+  justify-content: center;
 
   padding:
-    78px 35px 30px;
+    78px
+    35px
+    30px;
 
-  border-radius: 15px;
+  border-radius:
+    15px;
 
   background-color:
     #ffffff;
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
+
+/* =========================================================
+   INNER - NO EXPERIMENTAL DATA
+   ========================================================= */
+
+.sulfamic-result-inner-no-data {
+  height: auto;
+
+  min-height: 0;
+
+  overflow: visible;
+
+  padding:
+    78px
+    35px
+    32px;
+}
+
 
 /* =========================================================
    TOP LABEL
@@ -107,7 +191,12 @@
 
   z-index: 2;
 
-  width: 340px;
+  width:
+    min(
+      340px,
+      75%
+    );
+
   height: 68px;
 
   display: flex;
@@ -116,7 +205,10 @@
   justify-content: center;
 
   border-radius:
-    0 0 32px 32px;
+    0
+    0
+    32px
+    32px;
 
   background:
     linear-gradient(
@@ -129,28 +221,50 @@
     translateX(-50%);
 }
 
+
 .sulfamic-result-label h1 {
   margin: 0;
 
-  color: #2f2386;
+  color:
+    #2f2386;
 
-  font-size: 28px;
+  font-size:
+    clamp(
+      21px,
+      2vw,
+      28px
+    );
 
   font-weight: 900;
+
+  text-align: center;
 }
+
 
 /* =========================================================
    LEFT
    ========================================================= */
 
 .sulfamic-result-left {
+  width: 100%;
+
   min-width: 0;
 
   display: flex;
 
   flex-direction: column;
-
 }
+
+
+/* =========================================================
+   NO EXPERIMENTAL DATA LEFT SIDE
+   ========================================================= */
+
+.sulfamic-result-inner-no-data
+.sulfamic-result-left {
+  justify-content: center;
+}
+
 
 /* =========================================================
    HEADING
@@ -160,36 +274,65 @@
   margin-bottom: 15px;
 }
 
+
 .sulfamic-result-heading h1 {
   margin: 0;
 
-  color: #31247f;
+  color:
+    #31247f;
 
-  font-size: 27px;
+  font-size:
+    clamp(
+      22px,
+      2vw,
+      27px
+    );
+
+  line-height: 1.25;
 
   font-weight: 900;
 }
 
+
 .sulfamic-result-heading p {
-  margin: 4px 0 0;
+  margin:
+    4px
+    0
+    0;
 
-  color: #7a718d;
+  color:
+    #7a718d;
 
-  font-size: 15px;
+  font-size:
+    clamp(
+      13px,
+      1.1vw,
+      15px
+    );
+
+  line-height: 1.4;
 
   font-weight: 700;
 }
+
 
 /* =========================================================
    TITRE CARD
    ========================================================= */
 
 .sulfamic-result-titre-card {
-  padding: 18px 24px;
+  width: 100%;
 
-  border: 2px solid #d4c2ff;
+  padding:
+    18px
+    24px;
 
-  border-radius: 22px;
+  border:
+    2px solid
+    #d4c2ff;
+
+  border-radius:
+    22px;
 
   background:
     linear-gradient(
@@ -198,8 +341,20 @@
       #fbf9ff
     );
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
+
+
+/* =========================================================
+   WHEN DATA IS HIDDEN
+   ========================================================= */
+
+.sulfamic-result-inner-no-data
+.sulfamic-result-titre-card {
+  margin-top: 4px;
+}
+
 
 /* =========================================================
    CARD TITLE
@@ -215,15 +370,23 @@
   margin-bottom: 14px;
 }
 
+
 .sulfamic-result-card-title h2 {
   margin: 0;
 
-  color: #33237e;
+  color:
+    #33237e;
 
-  font-size: 21px;
+  font-size:
+    clamp(
+      18px,
+      1.5vw,
+      21px
+    );
 
   font-weight: 900;
 }
+
 
 /* =========================================================
    ICON
@@ -249,10 +412,12 @@
       #6f4ce8
     );
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
   font-size: 23px;
 }
+
 
 /* =========================================================
    TITRE ROW
@@ -264,26 +429,47 @@
   align-items: center;
   justify-content: space-between;
 
+  gap: 15px;
+
   min-height: 40px;
 
-  padding: 4px 5px;
+  padding:
+    4px
+    5px;
 }
 
-.sulfamic-result-titre-row span {
-  color: #637084;
 
-  font-size: 16px;
+.sulfamic-result-titre-row span {
+  color:
+    #637084;
+
+  font-size:
+    clamp(
+      14px,
+      1.1vw,
+      16px
+    );
 
   font-weight: 700;
 }
 
-.sulfamic-result-titre-row strong {
-  color: #38248e;
 
-  font-size: 18px;
+.sulfamic-result-titre-row strong {
+  color:
+    #38248e;
+
+  font-size:
+    clamp(
+      16px,
+      1.2vw,
+      18px
+    );
 
   font-weight: 900;
+
+  white-space: nowrap;
 }
+
 
 /* =========================================================
    DIVIDER
@@ -293,11 +479,14 @@
   width: 100%;
   height: 2px;
 
-  margin: 8px 0;
+  margin:
+    8px
+    0;
 
   background-color:
     #ddd1fa;
 }
+
 
 /* =========================================================
    MEAN
@@ -306,9 +495,12 @@
 .sulfamic-result-mean-row {
   margin-top: 4px;
 
-  padding: 10px 13px;
+  padding:
+    10px
+    13px;
 
-  border-radius: 13px;
+  border-radius:
+    13px;
 
   background-color:
     rgba(
@@ -319,28 +511,44 @@
     );
 }
 
+
 .sulfamic-result-mean-row span {
-  color: #37228f;
+  color:
+    #37228f;
 
   font-weight: 900;
 }
 
+
 .sulfamic-result-mean-row strong {
-  font-size: 21px;
+  font-size:
+    clamp(
+      18px,
+      1.5vw,
+      21px
+    );
 }
+
 
 /* =========================================================
    DATA CARD
    ========================================================= */
 
 .sulfamic-result-data-card {
+  width: 100%;
+
   margin-top: 15px;
 
-  padding: 17px 22px;
+  padding:
+    17px
+    22px;
 
-  border: 2px solid #ddd1fa;
+  border:
+    2px solid
+    #ddd1fa;
 
-  border-radius: 20px;
+  border-radius:
+    20px;
 
   background:
     linear-gradient(
@@ -349,8 +557,10 @@
       #f4f0ff
     );
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
+
 
 /* =========================================================
    INFO ICON
@@ -376,14 +586,15 @@
       #5d3fc2
     );
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
   font-size: 22px;
-
   font-weight: 900;
 
   font-family: serif;
 }
+
 
 /* =========================================================
    DATA GRID
@@ -393,15 +604,27 @@
   display: grid;
 
   grid-template-columns:
-    repeat(2, 1fr);
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
 
   gap: 10px;
 }
 
-.sulfamic-result-data-item {
-  padding: 12px 15px;
 
-  border-radius: 13px;
+.sulfamic-result-data-item {
+  min-width: 0;
+
+  padding:
+    12px
+    15px;
+
+  border-radius:
+    13px;
 
   background-color:
     rgba(
@@ -410,32 +633,49 @@
       255,
       0.75
     );
+
+  box-sizing:
+    border-box;
 }
 
-.sulfamic-result-data-item p {
-  margin: 0 0 3px;
 
-  color: #788398;
+.sulfamic-result-data-item p {
+  margin:
+    0
+    0
+    3px;
+
+  color:
+    #788398;
 
   font-size: 13px;
 
   font-weight: 700;
 }
 
+
 .sulfamic-result-data-item strong {
-  color: #37228f;
+  color:
+    #37228f;
 
   font-size: 17px;
 
   font-weight: 900;
 }
 
+
 /* =========================================================
    BUTTON
    ========================================================= */
 
 .sulfamic-result-button {
-  width: 210px;
+  flex-shrink: 0;
+
+  width:
+    min(
+      210px,
+      100%
+    );
 
   min-height: 52px;
 
@@ -443,7 +683,8 @@
 
   border: none;
 
-  border-radius: 20px;
+  border-radius:
+    20px;
 
   background:
     linear-gradient(
@@ -452,9 +693,11 @@
       #33207e
     );
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
-  font-family: inherit;
+  font-family:
+    inherit;
 
   font-size: 18px;
 
@@ -467,12 +710,15 @@
     box-shadow 0.25s ease;
 }
 
+
 .sulfamic-result-button:hover {
   transform:
     translateY(-2px);
 
   box-shadow:
-    0 10px 20px
+    0
+    10px
+    20px
     rgba(
       57,
       32,
@@ -481,10 +727,22 @@
     );
 }
 
+
 .sulfamic-result-button:active {
   transform:
     translateY(0);
 }
+
+
+/* =========================================================
+   NO EXPERIMENTAL DATA BUTTON
+   ========================================================= */
+
+.sulfamic-result-inner-no-data
+.sulfamic-result-button {
+  margin-top: 20px;
+}
+
 
 /* =========================================================
    RIGHT
@@ -498,11 +756,11 @@
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
 
   gap: 14px;
 }
+
 
 /* =========================================================
    IMAGE
@@ -517,7 +775,9 @@
 
   filter:
     drop-shadow(
-      0 13px 13px
+      0
+      13px
+      13px
       rgba(
         58,
         54,
@@ -527,6 +787,7 @@
     );
 }
 
+
 /* =========================================================
    FINAL RESULT
    ========================================================= */
@@ -534,11 +795,16 @@
 .sulfamic-result-final-card {
   width: 100%;
 
-  padding: 17px 15px;
+  padding:
+    17px
+    15px;
 
-  border: 2px solid #8b65e6;
+  border:
+    2px solid
+    #8b65e6;
 
-  border-radius: 20px;
+  border-radius:
+    20px;
 
   background:
     linear-gradient(
@@ -549,40 +815,51 @@
 
   text-align: center;
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
 
-.sulfamic-result-final-card p {
-  margin: 0 0 5px;
 
-  color: #62538a;
+.sulfamic-result-final-card p {
+  margin:
+    0
+    0
+    5px;
+
+  color:
+    #62538a;
 
   font-size: 15px;
 
   font-weight: 800;
 }
 
+
 .sulfamic-result-final-card h2 {
   display: inline;
 
   margin: 0;
 
-  color: #38248e;
+  color:
+    #38248e;
 
   font-size: 45px;
 
   font-weight: 900;
 }
 
+
 .sulfamic-result-final-card span {
   margin-left: 7px;
 
-  color: #5b448f;
+  color:
+    #5b448f;
 
   font-size: 17px;
 
   font-weight: 800;
 }
+
 
 /* =========================================================
    CALCULATION
@@ -591,25 +868,35 @@
 .sulfamic-result-calculation {
   width: 100%;
 
-  padding: 14px 17px;
+  padding:
+    14px
+    17px;
 
-  border-radius: 18px;
+  border-radius:
+    18px;
 
   background-color:
     #f8f5ff;
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
 
-.sulfamic-result-calculation h3 {
-  margin: 0 0 8px;
 
-  color: #33237e;
+.sulfamic-result-calculation h3 {
+  margin:
+    0
+    0
+    8px;
+
+  color:
+    #33237e;
 
   font-size: 17px;
 
   font-weight: 900;
 }
+
 
 .sulfamic-result-calculation-row {
   display: flex;
@@ -618,19 +905,25 @@
 
   gap: 15px;
 
-  padding: 5px 0;
+  padding:
+    5px
+    0;
 }
 
+
 .sulfamic-result-calculation-row span {
-  color: #6c788a;
+  color:
+    #6c788a;
 
   font-size: 12px;
 
   font-weight: 700;
 }
 
+
 .sulfamic-result-calculation-row strong {
-  color: #37228f;
+  color:
+    #37228f;
 
   font-size: 12px;
 
@@ -638,6 +931,7 @@
 
   text-align: right;
 }
+
 
 /* =========================================================
    SIDE BUTTON
@@ -664,7 +958,10 @@
   border: none;
 
   border-radius:
-    0 24px 24px 0;
+    0
+    24px
+    24px
+    0;
 
   background:
     linear-gradient(
@@ -679,6 +976,7 @@
     translateY(-50%);
 }
 
+
 .sulfamic-result-side-container img {
   width: 34px;
   height: 34px;
@@ -688,36 +986,83 @@
   pointer-events: none;
 }
 
+
 .sulfamic-result-overlay-closed
-  .sulfamic-result-side-container {
+.sulfamic-result-side-container {
   pointer-events: auto;
 }
 
+
 /* =========================================================
-   SMALL HEIGHT
+   SHORT HEIGHT
    ========================================================= */
 
-@media (max-height: 780px) {
-  .sulfamic-result-inner {
-    padding-top: 68px;
-  }
+@media (
+  max-height: 780px
+) {
 
   .sulfamic-result-wrapper {
     max-height:
-      calc(100vh - 25px);
+      calc(
+        100dvh - 25px
+      );
   }
 
-  .sulfamic-result-image {
-    max-height: 160px;
+
+  .sulfamic-result-wrapper:not(
+    .sulfamic-result-wrapper-no-data
+  ) {
+    height:
+      calc(
+        100dvh - 25px
+      );
   }
+
+
+  .sulfamic-result-inner {
+    padding-top:
+      68px;
+  }
+
+
+  .sulfamic-result-wrapper-no-data {
+    height: auto;
+
+    max-height:
+      calc(
+        100dvh - 25px
+      );
+  }
+
+
+  .sulfamic-result-inner-no-data {
+    height: auto;
+
+    padding-top:
+      68px;
+  }
+
 
   .sulfamic-result-titre-row {
     min-height: 32px;
   }
 
-  .sulfamic-result-data-item {
-    padding: 8px 12px;
+
+  .sulfamic-result-data-card {
+    margin-top: 10px;
+
+    padding:
+      12px
+      16px;
   }
+
+
+  .sulfamic-result-data-item {
+    padding:
+      8px
+      12px;
+  }
+
 
   .sulfamic-result-button {
     min-height: 44px;
@@ -726,104 +1071,444 @@
   }
 }
 
+
+/* =========================================================
+   VERY SHORT DESKTOP
+   ========================================================= */
+
+@media (
+  max-height: 650px
+) and (
+  min-width: 761px
+) {
+
+  .sulfamic-result-inner {
+    padding:
+      58px
+      25px
+      18px;
+  }
+
+
+  .sulfamic-result-wrapper-no-data
+  .sulfamic-result-inner {
+    padding-bottom:
+      20px;
+  }
+
+
+  .sulfamic-result-heading {
+    margin-bottom: 10px;
+  }
+
+
+  .sulfamic-result-heading h1 {
+    font-size: 22px;
+  }
+
+
+  .sulfamic-result-titre-card {
+    padding:
+      12px
+      18px;
+  }
+
+
+  .sulfamic-result-card-title {
+    margin-bottom: 8px;
+  }
+
+
+  .sulfamic-result-icon {
+    width: 34px;
+    height: 34px;
+
+    font-size: 19px;
+  }
+
+
+  .sulfamic-result-titre-row {
+    min-height: 29px;
+
+    padding:
+      2px
+      4px;
+  }
+
+
+  .sulfamic-result-mean-row {
+    padding:
+      7px
+      10px;
+  }
+
+
+  .sulfamic-result-data-card {
+    padding:
+      10px
+      14px;
+  }
+
+
+  .sulfamic-result-data-grid {
+    gap: 7px;
+  }
+
+
+  .sulfamic-result-button {
+    min-height: 40px;
+
+    margin-top: 10px;
+  }
+}
+
+
 /* =========================================================
    TABLET
    ========================================================= */
 
-@media (max-width: 1050px) {
+@media (
+  max-width: 1050px
+) {
+
   .sulfamic-result-overlay {
-    padding-right: 72px;
+    padding-right:
+      72px;
   }
+
 
   .sulfamic-result-wrapper {
-    width: 95%;
+    width:
+      min(
+        78vw,
+        720px
+      );
   }
+
+
+  .sulfamic-result-wrapper-no-data {
+    width:
+      min(
+        68vw,
+        620px
+      );
+
+    height: auto;
+  }
+
 
   .sulfamic-result-inner {
-    grid-template-columns:
-      60% 40%;
+    padding-left:
+      22px;
 
-    gap: 15px;
-
-    padding-left: 22px;
-    padding-right: 22px;
-  }
-
-  .sulfamic-result-image {
-    width: 100%;
+    padding-right:
+      22px;
   }
 }
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (
+  max-width: 850px
+) {
+
+  .sulfamic-result-wrapper {
+    width:
+      min(
+        84vw,
+        680px
+      );
+  }
+
+
+  .sulfamic-result-wrapper-no-data {
+    width:
+      min(
+        76vw,
+        590px
+      );
+  }
+
+
+  .sulfamic-result-inner {
+    padding:
+      72px
+      20px
+      24px;
+  }
+
+
+  .sulfamic-result-data-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+}
+
 
 /* =========================================================
    MOBILE
    ========================================================= */
 
-@media (max-width: 760px) {
+@media (
+  max-width: 760px
+) {
+
   .sulfamic-result-overlay {
     padding:
-      12px 60px 12px 12px;
+      12px
+      60px
+      12px
+      12px;
   }
 
-  .sulfamic-result-wrapper {
+
+  .sulfamic-result-wrapper,
+  .sulfamic-result-wrapper-no-data {
     width: 100%;
 
-    max-height:
-      calc(100vh - 24px);
+    height: auto;
 
-    border-width: 7px;
+    max-height:
+      calc(
+        100dvh - 24px
+      );
+
+    border-width:
+      7px;
   }
 
-  .sulfamic-result-inner {
+
+  .sulfamic-result-inner,
+  .sulfamic-result-inner-no-data {
+    height: auto;
+
     display: flex;
 
-    flex-direction: column;
+    flex-direction:
+      column;
 
     padding:
-      65px 15px 20px;
+      65px
+      15px
+      20px;
 
     overflow-y: auto;
+    overflow-x: hidden;
   }
 
+
   .sulfamic-result-label {
-    width: 260px;
+    width:
+      min(
+        260px,
+        75%
+      );
 
     height: 58px;
   }
+
 
   .sulfamic-result-label h1 {
     font-size: 22px;
   }
 
+
   .sulfamic-result-heading h1 {
     font-size: 22px;
   }
+
+
+  .sulfamic-result-heading p {
+    font-size: 14px;
+  }
+
+
+  .sulfamic-result-titre-card {
+    padding:
+      16px
+      18px;
+  }
+
 
   .sulfamic-result-data-grid {
     grid-template-columns:
       1fr;
   }
 
-  .sulfamic-result-right {
-    margin-top: 10px;
+
+  .sulfamic-result-button {
+    width: 100%;
   }
 
-  .sulfamic-result-image {
-    max-height: 200px;
-  }
 
   .sulfamic-result-side-container {
     right: -50px;
 
     width: 50px;
-
     height: 110px;
 
     border-radius:
-      0 18px 18px 0;
+      0
+      18px
+      18px
+      0;
   }
+
 
   .sulfamic-result-side-container img {
     width: 28px;
     height: 28px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (
+  max-width: 430px
+) {
+
+  .sulfamic-result-overlay {
+    padding:
+      8px
+      50px
+      8px
+      8px;
+  }
+
+
+  .sulfamic-result-wrapper,
+  .sulfamic-result-wrapper-no-data {
+    max-height:
+      calc(
+        100dvh - 16px
+      );
+  }
+
+
+  .sulfamic-result-inner,
+  .sulfamic-result-inner-no-data {
+    padding:
+      60px
+      12px
+      16px;
+  }
+
+
+  .sulfamic-result-label {
+    width:
+      min(
+        220px,
+        76%
+      );
+
+    height: 54px;
+  }
+
+
+  .sulfamic-result-label h1 {
+    font-size: 19px;
+  }
+
+
+  .sulfamic-result-heading h1 {
+    font-size: 20px;
+  }
+
+
+  .sulfamic-result-heading p {
+    font-size: 13px;
+  }
+
+
+  .sulfamic-result-titre-card {
+    padding:
+      14px
+      15px;
+  }
+
+
+  .sulfamic-result-card-title {
+    gap: 9px;
+  }
+
+
+  .sulfamic-result-icon,
+  .sulfamic-result-info-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+
+  .sulfamic-result-card-title h2 {
+    font-size: 17px;
+  }
+
+
+  .sulfamic-result-titre-row {
+    min-height: 36px;
+
+    gap: 8px;
+  }
+
+
+  .sulfamic-result-titre-row span {
+    font-size: 14px;
+  }
+
+
+  .sulfamic-result-titre-row strong {
+    font-size: 16px;
+  }
+
+
+  .sulfamic-result-mean-row {
+    padding:
+      8px
+      10px;
+  }
+
+
+  .sulfamic-result-mean-row strong {
+    font-size: 18px;
+  }
+
+
+  .sulfamic-result-data-card {
+    padding:
+      13px
+      14px;
+  }
+
+
+  .sulfamic-result-data-item {
+    padding:
+      10px
+      12px;
+  }
+
+
+  .sulfamic-result-side-container {
+    right: -43px;
+
+    width: 43px;
+    height: 95px;
+  }
+
+
+  .sulfamic-result-side-container img {
+    width: 23px;
+    height: 23px;
   }
 }

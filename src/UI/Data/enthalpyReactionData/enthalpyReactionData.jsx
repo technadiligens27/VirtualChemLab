@@ -182,15 +182,33 @@ export const enthalpyReactionData = [
       "The temperature of the reaction mixture falls.",
       "Carbon dioxide gas is produced.",
       "Heat is absorbed from the surroundings.",
+      "This shows that the reaction is endothermic.",
     ],
 
     informationTitle: "What Happens",
 
     information: [
-      "Potassium hydrogencarbonate reacts with hydrochloric acid.",
-      "The reaction absorbs heat, causing the temperature inside the polystyrene cup to fall.",
-    ],
+        <>
+          In the second reaction, we are going to react{" "}
+          <strong>potassium hydrogencarbonate</strong> with{" "}
+          <strong>hydrochloric acid</strong> inside a fresh{" "}
+          <strong>polystyrene cup</strong>.
+        </>,
 
+        <>
+          We will measure the <strong>starting temperature</strong>, add the{" "}
+          <strong>potassium hydrogencarbonate</strong> while{" "}
+          <strong>stirring</strong>, and then record the{" "}
+          <strong>lowest temperature reached</strong>.
+        </>,
+
+        <>
+          As the reaction happens, we should see{" "}
+          <strong>carbon dioxide bubbles</strong> and the{" "}
+          <strong>temperature should fall</strong>, showing that the reaction is{" "}
+          <strong>endothermic</strong>.
+        </>,
+      ],
     importantTitle: "Important:",
 
     importantText:

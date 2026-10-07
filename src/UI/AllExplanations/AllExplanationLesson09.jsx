@@ -7,7 +7,7 @@ const AllExplanationLesson09 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([4,9,13,14,17,19,25,29,32,33,35,36].includes(lessonStep)){
+        if([3,4,9,13,14,17,19,25,29,32,33,35.5,36].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
@@ -21,6 +21,18 @@ const AllExplanationLesson09 = ()=>{
     if(!isExplanationOpen)return
     return(
         <>
+
+
+           {lessonStep==3 && <Explanations
+            text={
+                <>
+            We will use the <strong>beaker</strong> to hold and support the <strong>polystyrene cup</strong> in the next step                </>
+            }
+            top="30%"
+            left="37%"
+            height="190px"
+            width="430px"
+            />}        
 
            {lessonStep==4 && <Explanations
             text={
@@ -41,7 +53,7 @@ const AllExplanationLesson09 = ()=>{
                           </>
             }
             top="30%"
-            left="45%"
+            left="43%"
             height="230px"
             width="400px"
             />} 
@@ -64,8 +76,8 @@ const AllExplanationLesson09 = ()=>{
                 The <strong>test tube</strong> and <strong>potassium hydrogencarbonate</strong> together weigh <strong>25.67 g</strong> 
                 </>
             }
-            top="60%"
-            left="65%"
+            top="55%"
+            left="15%"
             height="220px"
             width="400px"
             />}
@@ -149,7 +161,7 @@ const AllExplanationLesson09 = ()=>{
             width="420px"
             />}
 
-          {lessonStep==35 && <Explanations
+          {lessonStep==35.5 && <Explanations
             text={
                 <>
                 After pouring the <strong>potassium hydrogencarbonate</strong>, the <strong>test tube</strong> now weighs <strong>25.67 g</strong>. 

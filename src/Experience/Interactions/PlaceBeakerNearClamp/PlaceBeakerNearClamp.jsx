@@ -210,10 +210,11 @@ const PlaceBeakerNearClamp = ({
       <BuiretteTitrationFlow 
       modelRef={mainBuiretteRef}/>}
       
-      { [12.2].includes(selectedLesson) && beakerRef?.current?.name==='main-Conical-Flask' && 
+      { [12.2].includes(selectedLesson) && [84,103].includes(lessonStep) && beakerRef?.current?.name==='main-Conical-Flask' && 
         <BuiretteTitrationFlow 
             modelRef={mainBuiretteRef} 
             liquidDecreaseAmount={ lessonStep ===103 ? 0.494 : 0.496}
+            totalTime={3}
         />
       }
 
