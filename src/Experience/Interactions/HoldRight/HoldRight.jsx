@@ -589,7 +589,7 @@ const transformControlsRef = useRef()
       {!isStirMode &&
         selectedLeftHand &&
         selectedRightHand && 
-        !isFunnelMode &&  ![14.3,11,12,12.1,12.2].includes(selectedLesson) &&
+        !isFunnelMode &&  ![14.3,11,12,12.1,12.2,14.4].includes(selectedLesson) &&
         
         (
           <PouringMode hand="right" />
@@ -668,7 +668,7 @@ const transformControlsRef = useRef()
             spoonRef={spoonRef}
             hand="right"
             heightOffset={0.6}
-            xOffset={0.8}
+            xOffset={0.7}
           />
         )
       }      
@@ -681,7 +681,7 @@ const transformControlsRef = useRef()
             spoonRef={spoonRef}
             hand="right"
             heightOffset={0.6}
-            xOffset={0.6}
+            xOffset={0.8}
           />
         )
       }      
@@ -714,7 +714,7 @@ const transformControlsRef = useRef()
        />}
 
       {selectedLesson==14.1 && lessonStep ==56.1 && <ReleaseGasBubbles 
-      loopTimes={2}
+      loopTimes={1}
        bubblePercentage={70}
        modelRef={seperatingFunnelRef}
        minimumSpeed={0.5}
@@ -722,7 +722,7 @@ const transformControlsRef = useRef()
       sidewaysMovement={0.1}
       />}
       {selectedLesson==14.2 && lessonStep ==73 && <ReleaseGasBubbles 
-      loopTimes={2}
+      loopTimes={1}
        bubblePercentage={60}
        modelRef={seperatingFunnelRef}
        minimumSpeed={0.5}
@@ -731,7 +731,7 @@ const transformControlsRef = useRef()
       />}
 
       {selectedLesson==14.2 && lessonStep ==77 && <ReleaseGasBubbles 
-      loopTimes={2}
+      loopTimes={1}
        bubblePercentage={40}
        modelRef={seperatingFunnelRef}
        minimumSpeed={0.5}

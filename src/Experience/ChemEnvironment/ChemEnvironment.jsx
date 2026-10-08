@@ -209,9 +209,9 @@ const hideVerticalObjects=(root)=>{
 
   const action = actions[names[3]]
 
-  const actionDeliveryGas01 = actions[names[5]]
-  const actionDeliveryGas02 = actions[names[6]]
-  const actionDeliveryGas03 = actions[names[7]]
+  const actionDeliveryGas01 = actions[names[6]]
+  const actionDeliveryGas02 = actions[names[7]]
+  const actionDeliveryGas03 = actions[names[8]]
 
   const actionDistillationGas01 = actions[names[0]]
   const actionDistillationGas02 = actions[names[1]]
@@ -274,6 +274,7 @@ const hideVerticalObjects=(root)=>{
     hidePourObjects(testube05Ref)
     hidePourObjects(testube06Ref);
     hideConicalGasObjects(conicalBeakerRef)
+    // hideConicalGasObjects(boilingTube01Ref)
 
     roundBeakerRef.current = scene.getObjectByName('main-Round-bottom-flask');
     roundBeakerRef.current.visible = false

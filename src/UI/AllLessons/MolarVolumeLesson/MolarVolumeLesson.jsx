@@ -88,7 +88,7 @@ const MolarVolumeLesson = ()=>{
         </>}/>
       )}      
       {lessonStep===3.5 && (<DialogBox text={<>
-        <strong>Scroll Down</strong> to Pour from Measuring Cylinder
+        <strong>Scroll Down</strong> to Pour from <strong>Measuring Cylinder</strong>
         </>}/>
       )}    
       {lessonStep===3.6 && (<DialogBox text={<>
@@ -225,7 +225,7 @@ const MolarVolumeLesson = ()=>{
 
       {lessonStep===21 && (<DialogBox text={
         <>
-         Keep Spatula <strong>Back on the table</strong>
+         Now Click Held <strong>Spatula</strong> and select <strong>Keep Back On Table</strong>
         </>}/>
       )}
 
@@ -281,7 +281,7 @@ const MolarVolumeLesson = ()=>{
       )}            
       {lessonStep===26 && (<DialogBox text={
         <>
-        Select held <strong>Test Tube</strong> Containing Calcium Carbonate and click <strong>Pour Mode</strong>
+        Select <strong>Held Test Tube</strong> Containing Calcium Carbonate and click <strong>Pour Mode</strong>
         </>}/>
       )}
 
@@ -296,11 +296,11 @@ const MolarVolumeLesson = ()=>{
         </>}/>
       )}
 
-      {lessonStep==29 && <MolarVolumeReduced/>}
+      {/* {lessonStep==29 && <MolarVolumeReduced/>} */}
 
       {lessonStep===29 && (<DialogBox text={
         <>
-        Click the Testube We poured From and Select <strong>Disable Pour Mode</strong>
+        Click the <strong>Testube</strong> We poured From and Select <strong>Disable Pour Mode</strong>
         </>}/>
       )}
 

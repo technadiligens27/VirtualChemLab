@@ -1469,7 +1469,7 @@ const PouringMode = ({
           />
         )}
 
-      {selectedLesson !==13 && selectedLesson !==14&& hand === "right" &&
+      {![13,14,14.1,14.2].includes(selectedLesson) && hand === "right" &&
         selectedRightHand?.name ===
           "main-graduated-cylinder" && (
           <PourFromGraduatedCylinder

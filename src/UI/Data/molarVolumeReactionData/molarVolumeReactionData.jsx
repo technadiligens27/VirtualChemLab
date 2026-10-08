@@ -90,10 +90,23 @@ export const molarVolumeReactionData = [
   informationTitle: "What Happens",
 
   information: [
-    "Calcium carbonate reacts with ethanoic acid to form calcium ethanoate, water and carbon dioxide.",
-    "Carbon dioxide travels through the delivery tube and collects over water.",
-    "The measured gas volume is used to determine its molar volume.",
-  ],
+  <>
+    In this practical, we will react <strong>calcium carbonate</strong> with{" "}
+    <strong>ethanoic acid</strong> inside a sealed{" "}
+    <strong>boiling tube</strong>.
+  </>,
+
+  <>
+    We will collect the <strong>carbon dioxide gas</strong> in an inverted{" "}
+    <strong>measuring cylinder</strong> and measure the volume of gas produced.
+  </>,
+
+  <>
+    We will repeat the reaction using different masses of{" "}
+    <strong>calcium carbonate</strong> to calculate the{" "}
+    <strong>molar volume of carbon dioxide</strong>.
+  </>,
+],
 
   importantTitle: "Important:",
 

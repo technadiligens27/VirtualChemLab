@@ -689,7 +689,7 @@ const PouringMode02 = ({
 
       {hand === "right" &&
         selectedRightHand?.name ===
-          "main-testube-01" &&
+          "main-testube-01" && ![14.3].includes(selectedLesson) &&
         isPottasiumCarobnateInTestube01 && (
           <PourPowderFromTestube
             isPouring={isPouring}

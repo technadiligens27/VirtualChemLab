@@ -22,9 +22,9 @@ const ModelFocusLesson13 = ()=>{
         {lessonStep==18 && <ModelFocusMode modelRef={spoonRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==23 && <ModelFocusMode modelRef={digitalBalanceRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==24 && <ModelFocusMode modelRefs={[digitalBalanceRef,boilingTube01Ref]} blurResolution={350} blurStrength={3}/> } 
-        {lessonStep==25 && <ModelFocusMode modelRefs={[boilingTube01Ref]} blurResolution={350} blurStrength={3}/> } 
-        {[28,29].includes(lessonStep) && <ModelFocusMode modelRef={[buretteClampRef,boilingTube01Ref,normalBeakerRef,graduatedCylinder100Ref]} blurResolution={350} blurStrength={3}/> } 
-        {lessonStep==31 && <ModelFocusMode modelRef={testube03Ref} blurResolution={350} blurStrength={3}/> } 
+        {lessonStep==25 && <ModelFocusMode modelRefs={[boilingTube01Ref,normalBeakerRef,buretteClampRef]} blurResolution={350} blurStrength={3}/> } 
+        {lessonStep==29 && <ModelFocusMode modelRefs={[buretteClampRef,boilingTube01Ref,normalBeakerRef,graduatedCylinder100Ref]} blurResolution={350} blurStrength={3}/> } 
+        {lessonStep==31 && <ModelFocusMode modelRefs={[testube03Ref,digitalBalanceRef]} blurResolution={350} blurStrength={3}/> } 
 
         </>
     )

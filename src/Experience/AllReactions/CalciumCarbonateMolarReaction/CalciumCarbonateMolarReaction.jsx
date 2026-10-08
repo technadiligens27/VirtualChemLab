@@ -21,13 +21,13 @@ const CalciumCarbonateMolarReaction = ({
   calciumCarbonateGasBubbleRiseDistance = 1.5, // bubble rise height
   calciumCarbonateGasBubbleRiseSpeed = 0.4, // bubble rise speed
 
-  calciumCarbonateGasBubbleXOffsetRange = 0.10, // random X movement
+  calciumCarbonateGasBubbleXOffsetRange = 0.04, // random X movement
   calciumCarbonateGasBubbleYOffsetRange = 0.08, // random Y variation
-  calciumCarbonateGasBubbleRandomMovement = 0.10, // random Z movement
+  calciumCarbonateGasBubbleRandomMovement = 0.06, // random Z movement
 
-  calciumCarbonateGasBubbleStartDelay = 0.08, // initial bubble delay
+  calciumCarbonateGasBubbleStartDelay = 0.45, // initial bubble delay
   calciumCarbonateGasBubbleSlowdown = 0.18, // slows bubbling over time
-  calciumCarbonateGasBubbleFullOpacity = 1, // bubble max opacity
+  calciumCarbonateGasBubbleFullOpacity = 0.8, // bubble max opacity
 }) => {
   const {
     setSelectedLesson,selectedLesson,lessonStep,setLessonStep

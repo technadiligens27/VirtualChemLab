@@ -7,16 +7,16 @@ const AllExplanationLesson13 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([3.1,3.4,8,12,15,18,23,24,25,28,31].includes(lessonStep)){
+        if([3.1,3.4,8,12,15,18,23,24,25,29,31].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
 
-    useEffect(()=>{
-        if([29].includes(lessonStep)){
-            setIsExplanationOpen(false)
-        }
-    },[lessonStep])    
+    // useEffect(()=>{
+    //     if([29].includes(lessonStep)){
+    //         setIsExplanationOpen(false)
+    //     }
+    // },[lessonStep])    
 
     if(!isExplanationOpen)return
     return(
@@ -113,7 +113,7 @@ const AllExplanationLesson13 = ()=>{
                 </>
             }
             top="45%"
-            left="60%"
+            left="30%"
             height="180px"
             width="380px"
             />}
@@ -131,14 +131,14 @@ const AllExplanationLesson13 = ()=>{
             width="380px"
             />}
 
-           {[28,29].includes(lessonStep) && <Explanations
+           {lessonStep==29 && <Explanations
             text={
                 <>
                 The <strong>calcium carbonate</strong> reacts with <strong>ethanoic acid</strong> in the boiling tube, producing <strong>carbon dioxide bubbles</strong>. The gas travels through the <strong>delivery tube</strong> and enters the inverted measuring cylinder. It pushes the <strong>water</strong> down, so the volume of carbon dioxide collected can be measured.
               </>
             }
-             top="25%"
-            left="60%"
+             top="15%"
+            left="65%"
             height="360px"
             width="480px"
             />}
@@ -156,7 +156,7 @@ const AllExplanationLesson13 = ()=>{
                 </>
             }
             top="45%"
-            left="60%"
+            left="30%"
             height="165px"
             width="380px"
             />}

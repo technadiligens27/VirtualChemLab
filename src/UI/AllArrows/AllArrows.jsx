@@ -13,7 +13,7 @@ const AllArrows=()=>{
         arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
         ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef,
         arrowBoilingTube01Ref,arrowMeasuringCylnder,arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,
-        arrowSeparatingFunnelRef,arrowHeatingMantleRef,arrowCondensorRef,arrowGraduatedPipette
+        arrowSeparatingFunnelRef,arrowHeatingMantleRef,arrowCondensorRef,arrowGraduatedPipette,arrowTestube02Ref
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -73,8 +73,9 @@ const AllArrows=()=>{
         {showSeparatingFunnelArrow && <ArrowGuides arrowRef={arrowSeparatingFunnelRef} speed={2.5} height={0.5} showStatus={showSeparatingFunnelArrow}/>}
         {showHeatingMantleArrow && <ArrowGuides arrowRef={arrowHeatingMantleRef} speed={2.5} height={0.5} showStatus={showHeatingMantleArrow}/>}
         {showCondensorArrow && <ArrowGuides arrowRef={arrowCondensorRef} speed={2.5} height={0.5} showStatus={showCondensorArrow}/>}
-        {showTestube02Arrow && <ArrowGuides arrowRef={arrowTestube03Ref} speed={2.5} height={0.5} showStatus={showTestube02Arrow}/>}
+        {showTestube03Arrow && <ArrowGuides arrowRef={arrowTestube03Ref} speed={2.5} height={0.5} showStatus={showTestube02Arrow}/>}
         {showGraduatedPippeteArrow && <ArrowGuides arrowRef={arrowGraduatedPipette} speed={2.5} height={0.5} showStatus={arrowGraduatedPipette}/>}
+        {showTestube02Arrow && <ArrowGuides arrowRef={arrowTestube02Ref} speed={2.5} height={0.5} showStatus={showTestube02Arrow}/>}
 
         </>
     )

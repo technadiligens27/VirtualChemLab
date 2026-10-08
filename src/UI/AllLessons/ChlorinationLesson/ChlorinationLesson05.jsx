@@ -3,6 +3,9 @@ import { InteractionContext } from "../../../Contexts/InteractionContext/Interac
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox"
+import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines"
+import {chlorinationGuidelineData} from "../../Data/chlorinationLessonData/chlorinationLessonData.jsx"
+import ChlorinationLiveDataPanel from "./ChlorinationLiveDataPanel/ChlorinationLiveDataPanel.jsx"
 
 const ChlorinationLesson05 = ()=>{
 
@@ -16,7 +19,7 @@ const ChlorinationLesson05 = ()=>{
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
-    setIsDropperFilled
+    setIsDropperFilled,setIsBeakerNearClamp
   } = useContext(InteractionContext)
 
   useEffect(()=>{
@@ -27,7 +30,7 @@ const ChlorinationLesson05 = ()=>{
     setIsClampInCenter(true)
     setIsClampTestube(true)
     setIsModelCentre(true)
-
+    setIsBeakerNearClamp(false)
     setSelectedLeftHand(null)
     setSelectedRightHand(null)
 
@@ -211,6 +214,10 @@ const ChlorinationLesson05 = ()=>{
           } 
         />}  
 
+
+        {lessonStep >=140 && lessonStep <147 && (<SulfamicGuidelines  guidelineData={chlorinationGuidelineData[24]}/>)}
+
+
           {lessonStep ==141 && <DialogBox text={
           <>
            Pick Up The <strong>Beaker</strong>
@@ -256,6 +263,10 @@ const ChlorinationLesson05 = ()=>{
           } 
         />}
 
+        {lessonStep >=147 && lessonStep <154 && (<SulfamicGuidelines  guidelineData={chlorinationGuidelineData[25]}/>)}
+
+
+
           {lessonStep ==148 && <DialogBox text={
           <>
            Click The <strong>Dropper</strong> And Select <strong>Add Liquid</strong>
@@ -297,6 +308,12 @@ const ChlorinationLesson05 = ()=>{
           } 
         />}
 
+
+        {lessonStep >=154  && (<SulfamicGuidelines  guidelineData={chlorinationGuidelineData[26]}/>)}
+
+
+
+
           {lessonStep ==154 && <DialogBox text={
           <>
            Click The <strong>Dropper</strong> And Select <strong>Add Liquid</strong>
@@ -329,6 +346,233 @@ const ChlorinationLesson05 = ()=>{
           </>
           } 
         />} 
+
+
+    {[14,14.1,14.2,14.3,14.4].includes(selectedLesson) && (
+      <ChlorinationLiveDataPanel
+        alcoholAmount={ lessonStep >= 5 ? 10 : null }
+
+        hydrochloricAcidAmount={lessonStep >= 11 ? 35 : null}
+
+        mixingTime={lessonStep >= 23 ? 1200 : lessonStep >= 15 ? "In progress" : null}
+
+        reactionStatus={lessonStep >= 23 ? "Complete" : lessonStep >= 15 ? "Reacting" : lessonStep >= 13 ? "Mixture prepared" : null}
+
+        layerStatus={lessonStep >= 41 ? "Separated" : lessonStep >= 23 ? "Two layers formed" : null}
+
+        calciumChlorideMass={lessonStep >= 30 ? 6 : null}
+
+        sodiumHydrogencarbonateAmount={lessonStep >= 67 ? 40 : lessonStep >= 49 ? 20 : null}
+
+        secondWashStatus={lessonStep >= 81 ? "Complete" : lessonStep >= 67 ? "In progress" : lessonStep >= 62 ? "Preparing" : null}
+
+        funnelPressure={
+          [53,53.1,56,56.1,72,73,76,77].includes(lessonStep) ? "Pressure building" : [54,57,74,78].includes(lessonStep)
+              ? "Released" : lessonStep > 78 ? "Released" : null}
+
+      aqueousLayerStatus={lessonStep >= 81 ? "Removed" : lessonStep >= 67 ? "Present" : lessonStep >= 61 ? "Removed" : lessonStep >= 49 ? "Present" : lessonStep >= 43 ? "Removed" : lessonStep >= 41 ? "Present" : null}
+
+      organicLiquidStatus={lessonStep >= 93 ? "Clear and dry" : lessonStep >= 89 ? "Drying" : lessonStep >= 84 ? "Collected" : null}
+
+      currentTemperature={selectedLesson === 14.3 && lessonStep >= 109 ? 51 : selectedLesson === 14.4 ? 51 : null}
+
+      collectionRange="50–52°C"
+
+        fractionStatus={
+          selectedLesson === 14.3 &&
+          lessonStep >= 110
+            ? "Correct fraction collected"
+            : selectedLesson === 14.3 &&
+                lessonStep >= 109
+              ? "Collecting product"
+              : selectedLesson === 14.3 &&
+                  lessonStep >= 108
+                ? "Heating"
+                : selectedLesson === 14.4
+                  ? "Correct fraction collected"
+                  : null
+        }
+
+        productCollectionStatus={
+          selectedLesson === 14.3 &&
+          lessonStep >= 110
+            ? "Complete"
+            : selectedLesson === 14.3 &&
+                lessonStep >= 109
+              ? "In progress"
+              : selectedLesson === 14.4
+                ? "Complete"
+                : null
+        }
+
+        // =======================================================
+        // PRODUCT ANALYSIS
+        // =======================================================
+
+        ethanolAmount={
+          lessonStep >= 129
+            ? 5
+            : null
+        }
+
+        sodiumHydroxideAmount={
+          lessonStep >= 135
+            ? 1
+            : null
+        }
+
+        nitricAcidAmount={
+          lessonStep >= 149
+            ? 2
+            : null
+        }
+
+        silverNitrateStatus={
+          lessonStep >= 157
+            ? "2.0 cm³ added"
+            : lessonStep >= 155
+              ? "2.0 cm³ prepared"
+              : null
+        }
+
+        observation={
+          lessonStep >= 158
+            ? "White precipitate"
+            : lessonStep >= 157
+              ? "Reaction occurring"
+              : null
+        }
+
+        testConclusion={
+          lessonStep >= 158
+            ? "Chloride ions confirmed"
+            : null
+        }
+
+        // =======================================================
+        // LESSON CONTROL
+        // =======================================================
+
+        selectedLesson={
+          selectedLesson
+        }
+
+        lessonStep={
+          lessonStep
+        }
+
+        autoShowConditions={[
+          // Initial reactants
+          {
+            selectedLesson: 14,
+            lessonStep: 6,
+          },
+          {
+            selectedLesson: 14,
+            lessonStep: 12,
+          },
+
+          // Reaction complete and layers formed
+          {
+            selectedLesson: 14,
+            lessonStep: 23,
+          },
+
+          // Calcium chloride added
+          {
+            selectedLesson: 14.1,
+            lessonStep: 30,
+          },
+
+          // Layers separated
+          {
+            selectedLesson: 14.1,
+            lessonStep: 41,
+          },
+
+          // First NaHCO₃ wash
+          {
+            selectedLesson: 14.1,
+            lessonStep: 50,
+          },
+
+          // First wash pressure released
+          {
+            selectedLesson: 14.1,
+            lessonStep: 57,
+          },
+
+          // Second wash added
+          {
+            selectedLesson: 14.2,
+            lessonStep: 67,
+          },
+
+          // Second wash pressure released
+          {
+            selectedLesson: 14.2,
+            lessonStep: 78,
+          },
+
+          // Aqueous layer removed
+          {
+            selectedLesson: 14.2,
+            lessonStep: 81,
+          },
+
+          // Organic layer collected
+          {
+            selectedLesson: 14.2,
+            lessonStep: 84,
+          },
+
+          // Organic product dried
+          {
+            selectedLesson: 14.3,
+            lessonStep: 93,
+          },
+
+          // Distillation started
+          {
+            selectedLesson: 14.3,
+            lessonStep: 109,
+          },
+
+          // Ethanol added
+          {
+            selectedLesson: 14.3,
+            lessonStep: 131,
+          },
+
+          // Sodium hydroxide added
+          {
+            selectedLesson: 14.4,
+            lessonStep: 137,
+          },
+
+          // Nitric acid added
+          {
+            selectedLesson: 14.4,
+            lessonStep: 151,
+          },
+
+          // Silver nitrate added
+          {
+            selectedLesson: 14.4,
+            lessonStep: 157,
+          },
+
+          // Final observation
+          {
+            selectedLesson: 14.4,
+            lessonStep: 158,
+          },
+        ]}
+
+        autoHideDelay={3000}
+      />
+    )}
+
 
         </>           
 

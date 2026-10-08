@@ -10,6 +10,10 @@ import "./SulfamicGuidelines.css"
 
 const SulfamicGuidelines = ({
   guidelineData,
+
+  // Auto slide in when mounted.
+  // Defaults to true.
+  autoSlide = true,
 }) => {
   const guidelineRef = useRef(null)
   const arrowRef = useRef(null)
@@ -45,33 +49,67 @@ const SulfamicGuidelines = ({
         )
       }
 
-    gsap.set(guideline, {
-      x: getClosedPosition(),
-    })
+    // =======================================================
+    // AUTO SLIDE ENABLED
+    // =======================================================
 
-    gsap.set(arrow, {
-      rotation: 0,
-    })
+    if (autoSlide) {
+      // Start outside screen.
+      gsap.set(guideline, {
+        x: getClosedPosition(),
+      })
 
-    gsap.to(guideline, {
-      x: 0,
+      gsap.set(arrow, {
+        rotation: 0,
+      })
 
-      duration: 0.8,
+      // Slide into view.
+      gsap.to(guideline, {
+        x: 0,
 
-      delay: 0.2,
+        duration: 0.8,
 
-      ease: "power3.inOut",
-    })
+        delay: 0.2,
 
-    gsap.to(arrow, {
-      rotation: 180,
+        ease: "power3.inOut",
+      })
 
-      duration: 0.8,
+      gsap.to(arrow, {
+        rotation: 180,
 
-      delay: 0.2,
+        duration: 0.8,
 
-      ease: "power3.inOut",
-    })
+        delay: 0.2,
+
+        ease: "power3.inOut",
+      })
+    }
+
+    // =======================================================
+    // AUTO SLIDE DISABLED
+    // =======================================================
+
+    else {
+      // Immediately show panel without animation.
+      gsap.set(guideline, {
+        x: 0,
+      })
+
+      gsap.set(arrow, {
+        rotation: 180,
+      })
+
+      isGuidelineOpenRef.current =
+        true
+
+      setIsGuidelineOpen(
+        true
+      )
+    }
+
+    // =======================================================
+    // RESIZE
+    // =======================================================
 
     const handleResize = () => {
       if (
@@ -104,7 +142,9 @@ const SulfamicGuidelines = ({
         arrow
       )
     }
-  }, [])
+  }, [
+    autoSlide,
+  ])
 
   if (!guidelineData) {
     return null
@@ -332,12 +372,15 @@ const SulfamicGuidelines = ({
             </div>
 
             <div className="sulfamic-continue-button-container">
-            
-            <button className="sulfamic-continue-button" onClick={handleContinue}            >
-              Continue
-            </button>            
-            </div>    
-
+              <button
+                className="sulfamic-continue-button"
+                onClick={
+                  handleContinue
+                }
+              >
+                Continue
+              </button>
+            </div>
           </div>
 
           {/* ===============================================

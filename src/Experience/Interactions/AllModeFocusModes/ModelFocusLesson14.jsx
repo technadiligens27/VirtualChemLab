@@ -38,12 +38,13 @@ const ModelFocusLesson14 = ()=>{
         {lessonStep==95 && <ModelFocusMode modelRef={roundBeakerRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==98 && <ModelFocusMode modelRef={heatingMantleRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==102 && <ModelFocusMode modelRefs={[heatingMantleRef,roundBeakerRef,distillationHeadRef]} blurResolution={360} blurStrength={3}/> } 
-        {lessonStep==103 && <ModelFocusMode modelRefs={[distillationHeadRef,roundBeakerRef,mainThermometerRef]} blurResolution={360} blurStrength={3}/> } 
-        {lessonStep==104 && <ModelFocusMode modelRefs={[distillationHeadRef,roundBeakerRef,mainThermometerRef,condensorRef]} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==103 && <ModelFocusMode modelRefs={[heatingMantleRef,distillationHeadRef,roundBeakerRef,mainThermometerRef]} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==104 && <ModelFocusMode modelRefs={[heatingMantleRef,distillationHeadRef,roundBeakerRef,mainThermometerRef,condensorRef]} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==105 && <ModelFocusMode modelRefs={[condensorRef,waterOutTubeRef]} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==106 && <ModelFocusMode modelRefs={[condensorRef,waterOutTubeRef,waterInTubeRef]} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==106.3 && <ModelFocusMode modelRef={conicalBeakerRef02} blurResolution={360} blurStrength={3}/> } 
-        {lessonStep==108 && <ModelFocusMode modelRef={heatingMantleRef} blurResolution={360} blurStrength={3}/> } 
+        {lessonStep==108 && <ModelFocusMode modelRef={heatingMantleRef} blurResolution={360} blurStrength={3}/> }
+        {lessonStep==109 && <ModelFocusMode modelRefs={[heatingMantleRef,roundBeakerRef,distillationHeadRef,mainThermometerRef,condensorRef,waterInTubeRef,waterOutTubeRef,conicalBeakerRef02]} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==111 && <ModelFocusMode modelRefs={[conicalBeakerRef02,testube01Ref]} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==116 && <ModelFocusMode modelRef={mainDropperRef} blurResolution={360} blurStrength={3}/> } 
         {lessonStep==123 && <ModelFocusMode modelRef={testube02Ref} blurResolution={360} blurStrength={3}/> } 

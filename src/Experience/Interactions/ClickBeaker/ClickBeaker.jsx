@@ -1900,12 +1900,12 @@ const ClickObject = () => {
 
 
       // Disable click for specific held object
-      if (
-        objectName === "separating-funnel"
-      ) {
-        setSelectedObject(null)
-        return true
-      }
+      // if (
+      //   objectName === "separating-funnel"
+      // ) {
+      //   setSelectedObject(null)
+      //   return true
+      // }
 
 
       selectHeldObject(
@@ -1939,7 +1939,10 @@ const ClickObject = () => {
     const objectName = selectedItem.name
 
 
-
+    if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
+      setSelectedObject(null)
+      return
+    }
 
     if([11,11.1].includes(selectedLesson)){
       if(lessonStep==15 && objectName==="volumetric-flask"){
@@ -1978,10 +1981,7 @@ const ClickObject = () => {
       return
     }
 
-    if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
-      setSelectedObject(null)
-      return
-    }
+
     if(selectedLesson===14){
       if(objectName === "main-Conical-Flask"){
         setSelectedObject(null)
@@ -2289,7 +2289,14 @@ const clickableObjects = selectableObjects
       if(![3,26,34,44,62,85,94,110,115,127,133].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false 
-      }      
+      }  
+      
+      if([34].includes(lessonStep) && selectedObject.name !=="separating-funnel"){
+        setShowErrorMsgNo(12)
+        return false         
+      }    
+
+
       if([133].includes(lessonStep) && selectedObject.name !=="graduated-pipette"){
         setShowErrorMsgNo(12)
         return false         
@@ -2322,8 +2329,8 @@ const clickableObjects = selectableObjects
 
     if(selectedLesson==13){
 
-      if([3,4,15].includes(lessonStep)){
-        setShowErrorMsgNo(12)
+      if(![3.1,5,16].includes(lessonStep)){
+        setShowErrorMsgNo(1)
         return false     
       }  
       if(lessonStep==3.1 && selectedObject.name !=="main-graduated-cylinder"){
@@ -2410,6 +2417,22 @@ const clickableObjects = selectableObjects
 
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
+
+    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
+      if(![6,86,106.1,121].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([6,86,106.1].includes(lessonStep) && objectName !=="main-Conical-Flask-02"){
+        setShowErrorMsgNo(1)
+        return
+      }
+      if([121].includes(lessonStep) && objectName !=="main-testube-02"){
+        setShowErrorMsgNo(1)
+        return
+      }
+
+    }
 
     if([12,12.1,12.2].includes(selectedLesson)){
       if(![3,15,52,66,77,90].includes(lessonStep)){
@@ -2515,32 +2538,16 @@ const clickableObjects = selectableObjects
       }
     }
 
-    if([14.3].includes(selectedLesson) && ![86,106.1,121].includes(lessonStep)){{
-      setShowErrorMsgNo(1)
-      return false
-    }}
-    
 
-    if([14.3].includes(selectedLesson) &&  [86,106.1].includes(lessonStep) && objectName !== "main-Conical-Flask-02"){
-      setShowErrorMsgNo(1)
-         return false
-    }
-
-    if(selectedLesson ===14,3){
-      if(lessonStep===122 && objectName !== "main-testube-02"){
-        setShowErrorMsgNo(1)
-         return false
-      }
-    }
-    if(selectedLesson ===14){
-      if(lessonStep===6 && objectName !== "main-Conical-Flask-02"){
-        setShowErrorMsgNo(1)
-         return false
-      }
-    }
 
     //--------Selected Lesson 13---------/////
     if(selectedLesson===13){
+
+      if(![3,8,15].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return false
+      }
+
       if(lessonStep===8 && objectName !== "main-graduated-cylinder-100"){
         setShowErrorMsgNo(1)
          return false
@@ -2554,10 +2561,6 @@ const clickableObjects = selectableObjects
          return false
       }
 
-      if([5,6].includes(lessonStep) ){
-        setShowErrorMsgNo(1)
-         return false
-      }
      }
 
     //---------------Selected Lesson 10-------------//
@@ -2944,10 +2947,24 @@ const toggleFunnelMode = () => {
       (selectedLesson ===13) && ([3.2,6,9,10].includes(lessonStep)) ||
       (selectedLesson===14) && ([4,10].includes(lessonStep)) ||
       (selectedLesson===14.1) && ([45,63].includes(lessonStep)) ||
-      ([14.3,14.4].includes(selectedLesson)) &&([128,134,148,154].includes(lessonStep))
+      ([14.3,14.4].includes(selectedLesson)) &&([128,134,148,154].includes(lessonStep)) 
+    
+      const isAllowedObject =
+       (selectedLesson==13 && lessonStep==3.2 && selectedObject?.name=="main-graduated-cylinder") ||
+       (selectedLesson==13 && [6].includes(lessonStep)) ||
+       (selectedLesson==13 && [9].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder-100") ||
+       (selectedLesson==14 && [4].includes(lessonStep)) || 
+       (selectedLesson==14 && [10].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder") ||
+       (selectedLesson==14.1 && [45].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder") ||
+       (selectedLesson==14.1 && [63].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder") ||
+       (selectedLesson==14.3 && [128].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder") ||
+       (selectedLesson==14.4 && [134].includes(lessonStep) && selectedObject?.name=="graduated-pipette") ||
+       (selectedLesson==14.4 && [148].includes(lessonStep) && selectedObject?.name=="main-dropper") 
 
 
-    if (!isAllowedStep) {
+
+
+    if (!isAllowedStep || !isAllowedObject) {
       setShowErrorMsgNo(4)
       setSelectedObject(null)
       return
@@ -2972,6 +2989,18 @@ const toggleFunnelMode = () => {
 }
 
    const togglePourIntoTestTube = () => {
+
+    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![28,30,88,90].includes(lessonStep)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if(selectedLesson==13 && ![18,20].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if(selectedLesson==9 && ![9,11].includes(lessonStep)){
       setShowErrorMsgNo(1)
       return
@@ -3400,6 +3429,11 @@ const handlePlacePolysterene = () => {
   }
 
   const keepWeighedTestTubeOnTable = (hand) => {
+
+    if(selectedLesson==13){
+      setShowErrorMsgNo(1)
+      return
+    }
 
     if(selectedLesson==8 && ![17].includes(lessonStep)){
       setShowErrorMsgNo(1)
@@ -3899,7 +3933,13 @@ const disposeCup = () => {
 
   const addPottasiumCarbinateToSpoon = ()=>{
 
-    if([11,11.1,12,12.1,12.2].includes(selectedLesson)){
+    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![87].includes(lessonStep)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if([11,11.1,12,12.1,12.2,13].includes(selectedLesson)){
       setShowErrorMsgNo(1)
       return
     }
@@ -3925,7 +3965,13 @@ const disposeCup = () => {
 
   const addPotassiumHydrogencarbonateToSpoon = ()=>{
 
-    if([12,12.1,12.2].includes(selectedLesson)){
+    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![27].includes(lessonStep)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    if([12,12.1,12.2,13].includes(selectedLesson)){
       setShowErrorMsgNo(1)
       return
     }
@@ -4367,6 +4413,12 @@ const disposeCup = () => {
 
   const addSulfamicAcidToSpoon = ()=>{
 
+    if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![0].includes(lessonStep)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if([12,12.1,12.2].includes(selectedLesson) && ![8].includes(lessonStep)){
       setSelectedObject(null)
       setShowErrorMsgNo(1)
@@ -4377,6 +4429,10 @@ const disposeCup = () => {
       setSelectedObject(null)
       setShowErrorMsgNo(1)
       return
+    }
+
+    if([13].includes(lessonStep) && ![17].includes(lessonStep)){
+
     }
 
     setIsSulfamicInSpoon(true)
@@ -5073,6 +5129,7 @@ const disposeCup = () => {
 
   const handleInvertCylinder=()=>{
     setIsInvertCylinder(true)
+    setSelectedObject(null)
   }
 
   const renderMeasuringCylinderHeldButtons =()=>{   
@@ -5129,9 +5186,18 @@ const disposeCup = () => {
       setShowErrorMsgNo(1)
       return
     }
+
+    if(selectedLesson==13 && lessonStep==12){
+      setIsModelCentre(true)
+      setSelectedObject(null)
+      return
+    }
+    setIsModelCentre(true)
     setIsBeakerNearClamp(true)
     setSelectedObject(null)
   }
+
+  
 
   const renderGraduatedPipetteHeldButtons = ()=>{
     if(selectedObject.name === "graduated-pipette"){

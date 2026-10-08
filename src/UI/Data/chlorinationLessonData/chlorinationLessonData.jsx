@@ -1,3 +1,112 @@
+export const chlorinationReactionData = [
+  {
+    id: 1,
+
+    topTitle:
+      "Core Practical 6",
+
+    label:
+      "Preparation of 2-chloro-2-methylpropane",
+
+    title: (
+      <>
+        Chlorination of
+        <br />
+        2-methylpropan-2-ol
+      </>
+    ),
+
+    reactionType:
+      "Substitution Reaction",
+
+    reactionIcon: "🧪",
+
+    equation: [
+      {
+        id: "reactant-1",
+        content: (
+          <>
+            (CH<sub>3</sub>)<sub>3</sub>COH
+          </>
+        ),
+      },
+      {
+        id: "plus-1",
+        content: "+",
+      },
+      {
+        id: "reactant-2",
+        content: "HCl",
+      },
+      {
+        id: "arrow",
+        content: "→",
+        className: "reaction-one-arrow",
+      },
+      {
+        id: "product-1",
+        content: (
+          <>
+            (CH<sub>3</sub>)<sub>3</sub>CCl
+          </>
+        ),
+      },
+      {
+        id: "plus-2",
+        content: "+",
+      },
+      {
+        id: "product-2",
+        content: (
+          <>
+            H<sub>2</sub>O
+          </>
+        ),
+      },
+    ],
+
+    noticeTitle:
+      "What You Should Notice",
+
+    notices: [
+      "Two liquid layers form during the reaction.",
+      "The upper organic layer contains the crude product.",
+      "Carbon dioxide bubbles form during the sodium hydrogencarbonate washes.",
+      "A colourless purified product is collected after distillation.",
+    ],
+
+    informationTitle:
+      "What Happens",
+
+    information: [
+      <>
+        In this practical, we will react{" "}
+        <strong>2-methylpropan-2-ol</strong> with concentrated{" "}
+        <strong>hydrochloric acid</strong> to make{" "}
+        <strong>2-chloro-2-methylpropane</strong>.
+      </>,
+
+      <>
+        We will separate and wash the crude organic product using a{" "}
+        <strong>separating funnel</strong>, then remove any remaining{" "}
+        <strong>water</strong> using a drying agent.
+      </>,
+
+      <>
+        We will purify the product by <strong>distillation</strong> and test it
+        for <strong>chloride ions</strong> using silver nitrate solution.
+      </>,
+    ],
+
+    importantTitle: "Important:",
+
+    importantText:
+      "Work in a fume cupboard, wear goggles and gloves, and release pressure carefully when swirling sealed apparatus.",
+
+    buttonText: "Start Experiment",
+  },
+]
+
 export const chlorinationGuidelineData = [
   {
     id: 2,
@@ -310,7 +419,7 @@ export const chlorinationGuidelineData = [
       "Continue until the bubbling becomes less intense.",
     ],
 
-    image: "./repeatOrganicProductWash.png",
+    image: "./addSodiumHydrogencarbonate.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -334,7 +443,7 @@ export const chlorinationGuidelineData = [
       "Close the tap before the organic layer escapes.",
     ],
 
-    image: "./discardSecondAqueousLayer.png",
+    image: "./removeLowerAqueousLayer.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -381,7 +490,7 @@ export const chlorinationGuidelineData = [
       "Swirl occasionally until the liquid becomes clear.",
     ],
 
-    image: "./dryOrganicProduct.png",
+    image: "./addCalciumChloride.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -448,7 +557,7 @@ export const chlorinationGuidelineData = [
       "Watch the condensed liquid drip into the receiver.",
     ],
 
-    image: "./heatDistillationMixture.png",
+    image: "./assembleDistillationApparatus.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -535,7 +644,7 @@ export const chlorinationGuidelineData = [
       "Gently mix the contents.",
     ],
 
-    image: "./addEthanolAndSodiumHydroxide.png",
+    image: "./measureEthanoicAcid.png",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

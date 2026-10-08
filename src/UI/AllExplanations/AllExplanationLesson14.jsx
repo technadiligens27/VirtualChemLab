@@ -7,7 +7,7 @@ const AllExplanationLesson14 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([6,12,14,16,20,28,31,35,37,42,47,,52,53.1,55,65,71,73,79,80,83,88,95,98,102,103,104,105,106,106.3,108.111,116,123,130,
+        if([6,12,14,16,20,28,31,35,37,42,47,,52,53.1,55,65,71,73,79,80,83,88,95,98,102,103,104,105,106,106.3,108,109,111,116,123,130,
           134,136,143,150,156,158
         ].includes(lessonStep)){
             setIsExplanationOpen(true)
@@ -15,7 +15,7 @@ const AllExplanationLesson14 = ()=>{
     },[lessonStep])
 
     useEffect(()=>{
-        if([74,24].includes(lessonStep)){
+        if([74,24,110].includes(lessonStep)){
             setIsExplanationOpen(false)
         }
     },[lessonStep])    
@@ -364,7 +364,7 @@ const AllExplanationLesson14 = ()=>{
             </>
             }
             top="40%"
-            left="42%"
+            left="33%"
             height="230px"
             width="400px"
 
@@ -467,6 +467,22 @@ const AllExplanationLesson14 = ()=>{
               />
             )}
 
+            {lessonStep === 109 && (
+              <Explanations
+                text={
+                  <>
+                    Observe The Reaction
+                  </>
+                }
+                top="55%"
+                left="8%"
+                height="130px"
+                width="360px"
+              />
+            )}
+
+
+
             {lessonStep === 111 && (
                 <Explanations
                   text={
@@ -527,7 +543,7 @@ const AllExplanationLesson14 = ()=>{
                 <Explanations
                   text={
                     <>
-                      A <strong>graduated cylinder</strong> is used to accurately measure <strong>1 cm³ of aqueous sodium hydroxide</strong>.
+                      A <strong>graduated Pipette</strong> is used to accurately measure <strong>1 cm³ of aqueous sodium hydroxide</strong>.
                     </>
                   }
                   top="40%"

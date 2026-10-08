@@ -561,6 +561,21 @@ useEffect(() => {
         />
       )}
 
+
+      {selectedLesson==14.3 && lessonStep==125 &&isDropperFilled && isPourFromDropper && (
+        <PourDropletsFromModel
+          modelRef={mainDropperRef}
+          fallAxis={"y"}
+          loopTimes = {4}
+          startDelay={0}
+          reduceModelLiquid={true}
+          otherModelRef={testube02Ref}
+          otherModelIncrease={true}
+          otherModelRefEndAmount={17}
+          otherModelLiquidOpacity={0.35}
+        />
+      )}
+
       {selectedLesson==14.4 && lessonStep==151 &&isDropperFilled && isPourFromDropper && (
         <PourDropletsFromModel
           modelRef={mainDropperRef}

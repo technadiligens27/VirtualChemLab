@@ -366,8 +366,8 @@ useEffect(() => {
 
       {/* {selectedLeftHand?.name==="boiliing-tube-01" && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)} */}
 
-      {selectedLesson===13 && lessonStep==28 && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)}
-      {/* {selectedLesson===13 && lessonStep==29 && (<DeliveryTubeGasRise/>)} */}
+      {selectedLesson===13 && lessonStep>=28 && (<CalciumCarbonateMolarReaction modelRef={boilingTube01Ref}/>)}
+      {/* {selectedLesson===13 && lessonStep==28 && (<DeliveryTubeGasRise/>)} */}
 
       {selectedLesson===14 && [19,23].includes(lessonStep) && <ConicalGasCloud/>}
       {selectedLesson==14 && lessonStep >=24 && (<ChlorinationLiquidColorChange modelRef={conicalBeakerRef02}/>)}

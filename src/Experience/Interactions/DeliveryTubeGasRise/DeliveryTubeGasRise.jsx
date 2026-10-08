@@ -20,7 +20,7 @@ import {
 const DeliveryTubeGasRise = ({
   loopCount = 3,
   animationSpeed = 1,
-  startDelay = 2000,
+  startDelay = 3000,
 }) => {
   const {
     deliveryAnimationActions,
@@ -35,59 +35,107 @@ const DeliveryTubeGasRise = ({
   )
 
   const {
-    setLessonStep,selectedLesson,lessonStep
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
   } = useContext(
     MainGuidelineContext
   )
 
-  useEffect(() => {
-    if (!deliveryAnimationActions) {
+  // ==========================================
+  // FIND AND SHOW / HIDE GAS BUBBLE MESHES
+  // ==========================================
+
+  const setGasBubblesVisible = (
+    shouldBeVisible
+  ) => {
+    const deliveryTubeBung =
+      deliveryTubeBungRef?.current
+
+    if (!deliveryTubeBung) {
+      console.warn(
+        "DeliveryTubeGasRise: deliveryTubeBungRef is not ready"
+      )
+
       return
     }
 
-    // ==========================================
-    // SHOW GAS BUBBLES
-    // ==========================================
+    const foundBubbleNames = []
 
-    if (
-      deliveryTubeBungRef?.current
-    ) {
-      deliveryTubeBungRef.current.traverse(
-        (child) => {
-          const childName =
-            child.name?.toLowerCase() ||
-            ""
+    deliveryTubeBung.traverse(
+      (child) => {
+        const childName =
+          child.name?.toLowerCase() || ""
 
-          if (
-            childName.includes(
-              "bubble"
-            )
-          ) {
-            child.visible = true
-          }
+        const isGasBubble =
+          childName.includes("gas") ||
+          childName.includes("bubble")
+
+        if (!isGasBubble) {
+          return
         }
+
+        child.visible =
+          shouldBeVisible
+
+        child.updateMatrixWorld(true)
+
+        foundBubbleNames.push(
+          child.name
+        )
+      }
+    )
+
+    console.log(
+      "DeliveryTubeGasRise bubble objects:",
+      foundBubbleNames
+    )
+
+    if (foundBubbleNames.length === 0) {
+      console.warn(
+        'DeliveryTubeGasRise: No child containing "gas" or "bubble" was found.'
       )
     }
+  }
 
-    // ==========================================
-    // GAS ANIMATION ACTIONS
-    // ==========================================
+  // ==========================================
+  // SHOW BUBBLES EVEN IF ANIMATION ACTIONS
+  // HAVE NOT LOADED YET
+  // ==========================================
 
+  useEffect(() => {
+    setGasBubblesVisible(true)
+
+    return () => {
+      setGasBubblesVisible(false)
+    }
+  }, [
+    deliveryTubeBungRef,
+  ])
+
+  // ==========================================
+  // PLAY DELIVERY TUBE GAS ANIMATIONS
+  // ==========================================
+
+  useEffect(() => {
     const actions = [
-      deliveryAnimationActions.deliveryGas01,
-      deliveryAnimationActions.deliveryGas02,
-      deliveryAnimationActions.deliveryGas03,
+      deliveryAnimationActions?.deliveryGas01,
+      deliveryAnimationActions?.deliveryGas02,
+      deliveryAnimationActions?.deliveryGas03,
     ].filter(Boolean)
 
-    if (
-      actions.length === 0
-    ) {
+    console.log(
+      "DeliveryTubeGasRise actions:",
+      actions
+    )
+
+    if (actions.length === 0) {
+      console.warn(
+        "DeliveryTubeGasRise: Gas animation actions are not ready."
+      )
+
       return
     }
-
-    // ==========================================
-    // TRACK FINISHED ACTIONS
-    // ==========================================
 
     const finishedActions =
       new Set()
@@ -115,9 +163,10 @@ const DeliveryTubeGasRise = ({
         event.action
       )
 
-      // ========================================
-      // WAIT UNTIL ALL GAS ANIMATIONS FINISH
-      // ========================================
+      console.log(
+        "Finished gas animation:",
+        event.action.getClip().name
+      )
 
       if (
         finishedActions.size !==
@@ -126,19 +175,17 @@ const DeliveryTubeGasRise = ({
         return
       }
 
-      // ========================================
-      // ALL ANIMATIONS FINISHED
-      // ========================================
-if(selectedLesson===13 && lessonStep ===28){
-      setLessonStep(29)
+      console.log(
+        "All delivery gas animations finished"
+      )
 
-}
-
+      if (
+        selectedLesson === 13 &&
+        lessonStep === 28
+      ) {
+        setLessonStep(29)
+      }
     }
-
-    // ==========================================
-    // ADD FINISHED LISTENERS
-    // ==========================================
 
     mixers.forEach(
       (mixer) => {
@@ -149,12 +196,15 @@ if(selectedLesson===13 && lessonStep ===28){
       }
     )
 
-    // ==========================================
-    // START AFTER DELAY
-    // ==========================================
+    const timeout = setTimeout(
+      () => {
+        console.log(
+          "Starting delivery tube gas animation"
+        )
 
-    const timeout =
-      setTimeout(() => {
+        // Ensure animation does not leave meshes hidden.
+        setGasBubblesVisible(true)
+
         actions.forEach(
           (action) => {
             action.reset()
@@ -170,22 +220,26 @@ if(selectedLesson===13 && lessonStep ===28){
             action.clampWhenFinished =
               true
 
+            action.enabled =
+              true
+
             action.paused =
               false
 
             action.play()
+
+            console.log(
+              "Playing gas action:",
+              action.getClip().name
+            )
           }
         )
-      }, startDelay)
-
-    // ==========================================
-    // CLEANUP
-    // ==========================================
+      },
+      startDelay
+    )
 
     return () => {
-      clearTimeout(
-        timeout
-      )
+      clearTimeout(timeout)
 
       mixers.forEach(
         (mixer) => {
@@ -201,34 +255,14 @@ if(selectedLesson===13 && lessonStep ===28){
           action.stop()
         }
       )
-
-      if (
-        deliveryTubeBungRef?.current
-      ) {
-        deliveryTubeBungRef.current.traverse(
-          (child) => {
-            const childName =
-              child.name?.toLowerCase() ||
-              ""
-
-            if (
-              childName.includes(
-                "bubble"
-              )
-            ) {
-              child.visible =
-                false
-            }
-          }
-        )
-      }
     }
   }, [
     deliveryAnimationActions,
-    deliveryTubeBungRef,
     loopCount,
     animationSpeed,
     startDelay,
+    selectedLesson,
+    lessonStep,
     setLessonStep,
   ])
 

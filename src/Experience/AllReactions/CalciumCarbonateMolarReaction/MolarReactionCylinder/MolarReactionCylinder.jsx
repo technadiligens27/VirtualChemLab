@@ -8,7 +8,7 @@ const MolarReactionCylinder = ({
   // ==========================================
   // LIQUID
   // ==========================================
-  liquidOffsetY = 0.5,
+  liquidOffsetY = 0.6,
   liquidScaleDecrease = 0.12,
   startDelay = 3000,
   decreaseSpeed = 0.5,
@@ -18,7 +18,7 @@ const MolarReactionCylinder = ({
   // ==========================================
   bubbleRiseHeight = 3.5,
   bubbleRiseSpeed = 0.3,
-  bubbleRandomness = 1500,
+  bubbleRandomness = 2500,
   bubbleLoop = false,
   bubbleLoopDelay =4000,
 }) => {
