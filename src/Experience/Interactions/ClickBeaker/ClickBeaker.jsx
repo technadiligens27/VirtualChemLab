@@ -2950,6 +2950,7 @@ const toggleFunnelMode = () => {
       ([14.3,14.4].includes(selectedLesson)) &&([128,134,148,154].includes(lessonStep)) 
     
       const isAllowedObject =
+       (selectedLesson==8 && lessonStep==19 && selectedObject?.name=="main-buirette") ||
        (selectedLesson==13 && lessonStep==3.2 && selectedObject?.name=="main-graduated-cylinder") ||
        (selectedLesson==13 && [6].includes(lessonStep)) ||
        (selectedLesson==13 && [9].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder-100") ||

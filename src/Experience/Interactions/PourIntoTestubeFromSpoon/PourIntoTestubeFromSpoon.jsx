@@ -82,7 +82,8 @@ const PourIntoTestubeFromSpoon = ({
 
   const canScrollDown = ([14,14.1,14.2,14.3,14.4] && [29,89].includes(lessonStep)) ||
                         (selectedLesson === 12 && lessonStep === 10) ||
-                        (selectedLesson ===13 && lessonStep===19) 
+                        (selectedLesson ===13 && lessonStep===19) ||
+                        (selectedLesson==8 && lessonStep==12) 
                         
 
   const canScrollUp = ((selectedLesson === 14.3 && lessonStep === 90) ||

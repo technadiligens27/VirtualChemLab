@@ -132,7 +132,7 @@ export const ModelProvider = ({ children }) => {
   const graduatedBeaker50OriginalStateRef = useRef(null);
   const testube02OriginalStateRef = useRef(null);
   const graduatedPipetteOriginalStateRef = useRef(null)
-  const seperatingFunnelOriginalStateRef = useRef(null)
+  const seperatingFunnelOriginalStateRef = useRef(null);
 
   const [dropperAnimationAction,setDropperAnimationAction] = useState(null)
  

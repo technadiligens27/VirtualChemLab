@@ -80,22 +80,22 @@ export const enthalpyReactionData = [
 
     information: [
       <>
-        In the first reaction, we are going to react{" "}
+        In the first reaction, we react{" "}
         <strong>potassium carbonate</strong> with{" "}
-        <strong>hydrochloric acid</strong> inside the{" "}
+        <strong>hydrochloric acid</strong> in the{" "}
         <strong>polystyrene cup</strong>.
       </>,
 
       <>
-        We will measure the <strong>starting temperature</strong>, add the{" "}
-        <strong>potassium carbonate</strong> while <strong>stirring</strong>,
-        and then record the <strong>highest temperature reached</strong>.
+        Measure the <strong>starting temperature</strong>, add the{" "}
+        <strong>potassium carbonate</strong> while{" "}
+        <strong>stirring</strong>, then record the{" "}
+        <strong>highest temperature reached</strong>.
       </>,
 
       <>
-        As the reaction happens, we should see{" "}
-        <strong>carbon dioxide bubbles</strong> and the{" "}
-        <strong>temperature should rise</strong>, showing that the reaction is{" "}
+        We should see <strong>carbon dioxide bubbles</strong> and the{" "}
+        <strong>temperature rise</strong>, showing the reaction is{" "}
         <strong>exothermic</strong>.
       </>,
     ],
@@ -187,28 +187,27 @@ export const enthalpyReactionData = [
 
     informationTitle: "What Happens",
 
-    information: [
-        <>
-          In the second reaction, we are going to react{" "}
-          <strong>potassium hydrogencarbonate</strong> with{" "}
-          <strong>hydrochloric acid</strong> inside a fresh{" "}
-          <strong>polystyrene cup</strong>.
-        </>,
+information: [
+  <>
+    In the second reaction, we react{" "}
+    <strong>potassium hydrogencarbonate</strong> with{" "}
+    <strong>hydrochloric acid</strong> in a fresh{" "}
+    <strong>polystyrene cup</strong>.
+  </>,
 
-        <>
-          We will measure the <strong>starting temperature</strong>, add the{" "}
-          <strong>potassium hydrogencarbonate</strong> while{" "}
-          <strong>stirring</strong>, and then record the{" "}
-          <strong>lowest temperature reached</strong>.
-        </>,
+  <>
+    Measure the <strong>starting temperature</strong>, add the{" "}
+    <strong>potassium hydrogencarbonate</strong> while{" "}
+    <strong>stirring</strong>, then record the{" "}
+    <strong>lowest temperature reached</strong>.
+  </>,
 
-        <>
-          As the reaction happens, we should see{" "}
-          <strong>carbon dioxide bubbles</strong> and the{" "}
-          <strong>temperature should fall</strong>, showing that the reaction is{" "}
-          <strong>endothermic</strong>.
-        </>,
-      ],
+  <>
+    We should see <strong>carbon dioxide bubbles</strong> and the{" "}
+    <strong>temperature fall</strong>, showing the reaction is{" "}
+    <strong>endothermic</strong>.
+  </>,
+],
     importantTitle: "Important:",
 
     importantText:

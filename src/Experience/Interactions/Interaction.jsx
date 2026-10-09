@@ -157,7 +157,7 @@ useEffect(() => {
 
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={"right"}/>)} */}
       {/* {selectedLeftHand &&selectedRightHand && (<PouringMode hand={'left'}/>)} */}
-      {selectedLesson===8  &&  <BalanceReading  balanceRef={digitalBalanceRef} isWeighTestube={isWeighTestube} finalMass={24.7}/>}
+      {selectedLesson===8  && [40,17].includes(lessonStep) && <BalanceReading  balanceRef={digitalBalanceRef} isWeighTestube={isWeighTestube} finalMass={24.7}/>}
 
       {selectedLesson===9 &&  <BalanceReading   balanceRef={digitalBalanceRef}  isWeighTestube={isWeighTestube} finalMass={25.67}/>}
 

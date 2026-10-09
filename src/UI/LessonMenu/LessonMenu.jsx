@@ -84,21 +84,21 @@ const LessonMenu = () => {
 
     {
       id: 8,
-      name: "Enthalpy Change Using Hess’s Law",
+      name: "Exothermic Reaction Using Hess’s Law",
       imgPath: "./AlkaliTest.png",
       text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
       number: 1,
       divider: "purple",
     },
 
-    // {
-    //   id: 9,
-    //   name: "Enthalpy Change Reaction 2",
-    //   imgPath: "./AlkaliTest.png",
-    //   text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-    //   number: 8,
-    //   divider: "purple",
-    // },
+    {
+      id: 9,
+      name: "Endothermic Reaction",
+      imgPath: "./AlkaliTest.png",
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+      number: 8,
+      divider: "purple",
+    },
 
     // {
     //   id: 10,
@@ -125,14 +125,14 @@ const LessonMenu = () => {
     //   number: 11.1,
     //   divider: "purple",
     // }, 
-//     {
-//       id: 12,
-//       name: "Sulfamic Acid–NaOH Titration",
-//       imgPath: "./AlkaliTest.png",
-//       text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-//       number: 3,
-//       divider: "purple",
-//     },
+    {
+      id: 12,
+      name: "Sulfamic Acid–NaOH Titration",
+      imgPath: "./AlkaliTest.png",
+      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+      number: 3,
+      divider: "purple",
+    },
 //     {
 //       id: 12.1,
 //       name: "Sulfamic Acid–NaOH Titration",
@@ -151,14 +151,14 @@ const LessonMenu = () => {
 //       divider: "purple",
 //     },
 
-// {
-//   id: 13,
-//   name: "Molar Volume of a Gas",
-//   imgPath: "./AlkaliTest.png",
-//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-//   number: 4,
-//   divider: "purple",
-// },
+{
+  id: 13,
+  name: "Molar Volume of a Gas",
+  imgPath: "./AlkaliTest.png",
+  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+  number: 4,
+  divider: "purple",
+},
 
 {
   id: 14,
@@ -169,39 +169,39 @@ const LessonMenu = () => {
   divider: "purple",
 },
 
-{
-  id: 14.1,
-  name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14.1,
-  divider: "purple",
-},
-{
-  id: 14.2,
-  name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14.2,
-  divider: "purple",
-},
-{
-  id: 14.3,
-  name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14.3,
-  divider: "purple",
-},
+// {
+//   id: 14.1,
+//   name: "Chlorination of 2-methylpropan-2-ol",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 14.1,
+//   divider: "purple",
+// },
+// {
+//   id: 14.2,
+//   name: "Chlorination of 2-methylpropan-2-ol",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 14.2,
+//   divider: "purple",
+// },
+// {
+//   id: 14.3,
+//   name: "Chlorination of 2-methylpropan-2-ol",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 14.3,
+//   divider: "purple",
+// },
 
-{
-  id: 14.4,
-  name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14.4,
-  divider: "purple",
-},
+// {
+//   id: 14.4,
+//   name: "Chlorination of 2-methylpropan-2-ol",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 14.4,
+//   divider: "purple",
+// },
 
   ]
 

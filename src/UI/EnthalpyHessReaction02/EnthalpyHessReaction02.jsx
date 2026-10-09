@@ -132,7 +132,7 @@ const EnthalpyHessReaction02 = () => {
     setIsClampInCenter(
       false
     )
-  }, [])
+  }, [selectedLesson,lessonStep])
 
 
   // =====================================================

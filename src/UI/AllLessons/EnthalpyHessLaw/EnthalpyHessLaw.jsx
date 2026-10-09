@@ -925,7 +925,7 @@ const {
             <DialogBox
               text={
                 <>
-                Now click the <strong>Beaker</strong> and select <strong>Remove Beaker</strong>
+                Now click the <strong>Beaker</strong> and select <strong>Pick Up</strong>
                 </>
               }
             />
@@ -1109,16 +1109,16 @@ const {
                 setShowEnthalyResultOne(true)
                 }}
 
-             onbtn2Click={() => {
-                    labModels.forEach((modelRef) => {
-                      if (modelRef?.current) {
-                        resetModel(modelRef.current)
-                      }
-                    })
+            //  onbtn2Click={() => {
+            //         labModels.forEach((modelRef) => {
+            //           if (modelRef?.current) {
+            //             resetModel(modelRef.current)
+            //           }
+            //         })
 
-                    setSelectedLesson(9)
-                    setLessonStep(1)
-                  }}
+            //         setSelectedLesson(9)
+            //         setLessonStep(1)
+            //       }}
             />
           )
         }
@@ -1131,25 +1131,25 @@ const {
             }}
 
             
-             onbtn2Click={() => {
-                    labModels.forEach((modelRef) => {
-                      if (modelRef?.current) {
-                        resetModel(modelRef.current)
-                      }
-                    })
+            //  onbtn2Click={() => {
+            //         labModels.forEach((modelRef) => {
+            //           if (modelRef?.current) {
+            //             resetModel(modelRef.current)
+            //           }
+            //         })
 
-                    setSelectedLesson(9)
-                    setLessonStep(1)
-                  }}
+            //         setSelectedLesson(9)
+            //         setLessonStep(1)
+            //       }}
                         
            />
       }     
 
-      {
+      {/* {
          lessonStep===45 && <EnthalpyLessonOverview onStartLesson={() => {
               setLessonStep(2)
          }}/>
-      } 
+      }  */}
 
         </>
     )

@@ -244,7 +244,8 @@ const UI = () => {
       (lessonStep===13 && selectedLesson ===13) ||
       (lessonStep ===50 && selectedLesson ===11.1) ||
       (lessonStep===63 && selectedLesson===11.1) ||
-      (lessonStep == 101 && selectedLesson ==12.2)
+      (lessonStep == 101 && selectedLesson ==12.2)||
+      (lessonStep==25 && selectedLesson ===8 )
     )
   },[selectedLesson, lessonStep])
 
