@@ -218,7 +218,7 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
             <>
-              Click the spatula, then select{" "}
+              Click the <strong>Held Spatula</strong>, then select{" "}
               <strong>Disable Pour Mode</strong>.
             </>
           }
@@ -286,7 +286,7 @@ const SulfamicAcidNaOHTitration = () => {
         <DialogBox
           text={
            <>
-            Click held Beaker and Select <strong>Add Liquid</strong> 
+            Click the <strong>Held Beaker</strong> and Select <strong>Add Liquid</strong> 
 
            </> 
           }

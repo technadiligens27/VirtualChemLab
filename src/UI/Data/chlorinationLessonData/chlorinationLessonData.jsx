@@ -80,7 +80,7 @@ export const chlorinationReactionData = [
 
     information: [
       <>
-        In this practical, we will react{" "}
+       We will react{" "}
         <strong>2-methylpropan-2-ol</strong> with concentrated{" "}
         <strong>hydrochloric acid</strong> to make{" "}
         <strong>2-chloro-2-methylpropane</strong>.
@@ -101,7 +101,7 @@ export const chlorinationReactionData = [
     importantTitle: "Important:",
 
     importantText:
-      "Work in a fume cupboard, wear goggles and gloves, and release pressure carefully when swirling sealed apparatus.",
+      "Wear goggles and gloves, and release pressure carefully when swirling sealed apparatus.",
 
     buttonText: "Start Experiment",
   },

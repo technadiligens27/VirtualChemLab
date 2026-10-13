@@ -96,43 +96,43 @@ const EnthalpyHessReaction02 = () => {
   // CLEAR OLD REACTION STATES
   // =====================================================
 
-  useEffect(() => {
-    setSelectedRightHand(null)
+  // useEffect(() => {
+  //   setSelectedRightHand(null)
 
-    setSelectedLeftHand(null)
+  //   setSelectedLeftHand(null)
 
-    setIsPotassiumHydrogenCarbonateInSpoon(
-      false
-    )
+  //   setIsPotassiumHydrogenCarbonateInSpoon(
+  //     false
+  //   )
 
-    setIsWeighTestube(
-      false
-    )
+  //   setIsWeighTestube(
+  //     false
+  //   )
 
-    setIsPotassiumTransferred(
-      false
-    )
+  //   setIsPotassiumTransferred(
+  //     false
+  //   )
 
-    setIsPottasiumCarobnateInTestube01(
-      false
-    )
+  //   setIsPottasiumCarobnateInTestube01(
+  //     false
+  //   )
 
-    setIsPottasiumCarobnateInSpoon(
-      false
-    )
+  //   setIsPottasiumCarobnateInSpoon(
+  //     false
+  //   )
 
-    setIsBalancePlaced(
-      false
-    )
+  //   setIsBalancePlaced(
+  //     false
+  //   )
 
-    setIsBuiretteClamped(
-      false
-    )
+  //   setIsBuiretteClamped(
+  //     false
+  //   )
 
-    setIsClampInCenter(
-      false
-    )
-  }, [selectedLesson,lessonStep])
+  //   setIsClampInCenter(
+  //     false
+  //   )
+  // }, [selectedLesson,lessonStep])
 
 
   // =====================================================
@@ -728,7 +728,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
           text={
             <>
-           Click the <strong>Spatula</strong> and select <strong>Pour into Test Tube</strong>
+           Click the <strong>Held Spatula</strong> and select <strong>Pour into Test Tube</strong>
             </>
           }
         />
@@ -751,7 +751,7 @@ const EnthalpyHessReaction02 = () => {
             <DialogBox
               text={
                 <>
-                Click the <strong>Spatula</strong> and <strong>Disable Pour Mode</strong>
+                Click the <strong>Held Spatula</strong> and <strong>Disable Pour Mode</strong>
                 </>
               }
             />
@@ -786,7 +786,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
           text={
                 <>
-                Click the <strong>Spatula</strong> and select <strong>Keep Back on Table</strong>
+                Click the <strong>Held Spatula</strong> and select <strong>Keep Back on Table</strong>
                 </>
               }
         />
@@ -819,7 +819,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
           text={
                 <>
-                Click the <strong>Burette</strong> and select <strong>Add Liquid</strong>
+                Click the <strong>Held Burette</strong> and select <strong>Add Liquid</strong>
                 </>
           }
         />
@@ -907,7 +907,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
               text={
                 <>
-                Now click the <strong>Beaker</strong> and select <strong>Remove Beaker</strong>
+                Now click the <strong>Beaker</strong> and select <strong>Pick Up</strong>
                 </>
               }
         />
@@ -977,7 +977,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
           text={
                 <>
-                <strong>Press P again</strong> to exit Pouring Mode
+                <strong>Press P again</strong> to <strong>Enter Pouring Mode</strong>
                 </>
               }
         />
@@ -999,7 +999,7 @@ const EnthalpyHessReaction02 = () => {
         <DialogBox
           text={
             <>
-            <strong>Press P again</strong> to exit Pouring Mode
+            <strong>Press P again</strong> to <strong>Exit Pouring Mode</strong>
             </>
           }
         />

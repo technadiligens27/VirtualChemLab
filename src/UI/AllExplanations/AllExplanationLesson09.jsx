@@ -7,7 +7,7 @@ const AllExplanationLesson09 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([3,4,9,13,14,17,19,25,29,32,33,35.5,36].includes(lessonStep)){
+        if([3,4,9,13,14,17,19,25,27,29,32,33,35.5,36].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
@@ -114,10 +114,28 @@ const AllExplanationLesson09 = ()=>{
             }
 
             top="58%"
-            left="60%"
-            height="205px"
+            left="20%"
+            height="190px"
             width="420px"
-            />}            
+            />}
+
+            {lessonStep === 27 && (
+            <Explanations
+                text={
+                <>
+                   We Cover the <strong>polystyrene cup</strong> to reduce heat transfer
+                    between the reaction mixture and the surroundings, so the temperature
+                    decrease can be measured more accurately.
+                </>
+                }
+                top="38%"
+                left="37%"
+                height="265px"
+                width="420px"
+            />
+            )}
+
+
 
           {lessonStep==29 && <Explanations
             text={
@@ -132,8 +150,8 @@ const AllExplanationLesson09 = ()=>{
                 </>
             } 
 
-            top="58%"
-            left="60%"
+            top="45%"
+            left="50%"
             height="225px"
             width="420px"
             />}   
@@ -169,8 +187,8 @@ const AllExplanationLesson09 = ()=>{
                 </>
             }
 
-            top="38%"
-            left="58%"
+            top="33%"
+            left="28%"
             height="265px"
             width="420px"
             />}            

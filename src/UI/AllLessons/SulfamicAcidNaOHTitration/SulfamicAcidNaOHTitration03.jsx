@@ -8,8 +8,8 @@ import {guidelineData} from "../../Data/SulfamicNaOHTitrationData/SulfamicNaOHTi
 import SulfamicTitrationLiveDataPanel from "./SulfamicTitrationLiveDataPanel/SulfamicTitrationLiveDataPanel.jsx"
 import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecorded/TitreValueRecorded.jsx"
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
-import useResetLesson from "../../ResetLessonButton/ResetLessonButton.jsx"
 import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
+import {useResetLesson} from "../../../UI/ResetLessonButton/ResetLessonButton.jsx"
 
 
 const SulfamicAcidNaOHTitration03 = () => {

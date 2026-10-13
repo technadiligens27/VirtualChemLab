@@ -685,7 +685,7 @@ const guidelineData = [
               <DialogBox
                 text={
                   <>
-                    Fit the <strong>bung</strong> securely into the <strong>volumetric flask</strong>.
+                   Click the <strong>Held Volumetric Flask</strong> and select <strong>Place bung</strong>
                   </>
                 }
               />
@@ -789,7 +789,7 @@ const guidelineData = [
               <DialogBox
                 text={
                   <>
-                    <strong>Clamp</strong> the <strong>burette</strong> securely in an <strong>upright position</strong>.
+                   Click the <strong>Held Burette</strong> and select <strong>Clamp</strong> to Clamp the <strong>burette</strong> securely.
                   </>
                 }
               />

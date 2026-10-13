@@ -72,6 +72,8 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showTestube02Arrow,setShowTestube02Arrow] = useState(false);
   const [showGraduatedPippeteArrow,setShowGraduatedPippeteArrow] = useState(false);
 
+  const [showHeatingMatArrow,setShowHeatingMatArow] = useState(false)
+
   const [isExplanationOpen,setIsExplanationOpen] = useState(false)
 
 
@@ -252,7 +254,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowGraduatedPippeteArrow,
 
         isExplanationOpen,
-        setIsExplanationOpen
+        setIsExplanationOpen,
+
+        showHeatingMatArrow,
+        setShowHeatingMatArow
 
 
       }}

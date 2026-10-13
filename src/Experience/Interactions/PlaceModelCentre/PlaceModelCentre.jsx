@@ -81,6 +81,12 @@ const PlaceModelCentre = ({
   // LESSON STEPS
   // =============================================
 
+  useEffect(()=>{
+    if(selectedLesson===15 && lessonStep == 3){
+      setLessonStep(4)
+    }
+  },[selectedLesson,lessonStep])
+
   useEffect(() => {
     if (
       selectedLesson === 14.1 &&

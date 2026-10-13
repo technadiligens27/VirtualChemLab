@@ -29,7 +29,8 @@ const ChemEnvironment = () => {
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
          arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,arrowGraduatedPipette,
-         testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef
+         testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,arrowHeatingMatRef,heatingMatRef
+         
   } = useContext(ModelContext);
 
   const {setConcialGasAnimationAction,setDeliveryAnimationActions,distillationGasAnimationActions,setDistillationGasAnimationActions} = useContext(InteractionContext)
@@ -291,7 +292,7 @@ const hideVerticalObjects=(root)=>{
     testube05Ref.current = scene.getObjectByName('main-testube-05')
     testube06Ref.current = scene.getObjectByName('main-testube-06')
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
-    
+    heatingMatRef.current = scene.getObjectByName("heating-mat")
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
 
@@ -569,6 +570,9 @@ if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
 
       arrowGraduatedPipette.current = scene.getObjectByName("graduated-pipette-arrow")
       arrowGraduatedPipette.current.visible = false;
+
+      arrowHeatingMantleRef.current = scene.getObjectByName("heating-mat-arrow");
+      arrowHeatingMantleRef.current.visible = false
   }, [scene])
 
 

@@ -519,7 +519,7 @@ const CalciumCarbonateMolarReaction = ({
 
   return (
     <>
-      <DeliveryTubeGasRise/>    
+     {lessonStep ==28 && <DeliveryTubeGasRise/> }     
       <MolarReactionCylinder modelRef={graduatedCylinder100Ref}/>
     </>
   )

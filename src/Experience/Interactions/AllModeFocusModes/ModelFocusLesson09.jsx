@@ -22,6 +22,7 @@ const ModelFocusLesson09 = ()=>{
         {lessonStep==17 && <ModelFocusMode modelRef={mainBuiretteRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==19 && <ModelFocusMode modelRef={mainBuiretteRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==25 && <ModelFocusMode modelRef={normalBeakerRef} blurResolution={350} blurStrength={3}/> } 
+        {lessonStep==27 && <ModelFocusMode modelRef={normalBeakerRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==29 && <ModelFocusMode modelRef={mainThermometerRef} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==32 && <ModelFocusMode modelRefs={[mainThermometerRef,normalBeakerRef,testube01Ref]} blurResolution={350} blurStrength={3}/> } 
         {lessonStep==33 && <ModelFocusMode modelRefs={[mainThermometerRef,normalBeakerRef,testube01Ref]} blurResolution={350} blurStrength={3}/> } 

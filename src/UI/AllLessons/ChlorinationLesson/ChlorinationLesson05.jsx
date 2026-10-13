@@ -13,13 +13,13 @@ const ChlorinationLesson05 = ()=>{
     graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,pipetteRef,gogglesRef,gloverightRef,
     graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,
     heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,digitalBalanceRef,mainDropperRef,graduatedPipetteRef,testube02Ref,
-    testube02OriginalStateRef,graduatedPipetteOriginalStateRef
+    testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef
   } = useContext(ModelContext)    
     
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
-    setIsDropperFilled,setIsBeakerNearClamp
+    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced
   } = useContext(InteractionContext)
 
   useEffect(()=>{
@@ -32,7 +32,8 @@ const ChlorinationLesson05 = ()=>{
     setIsModelCentre(true)
     setIsBeakerNearClamp(false)
     setSelectedLeftHand(null)
-    setSelectedRightHand(null)
+    setSelectedRightHand(null);
+    setIsDropperPlaced(false)
 
     if(conicalBeakerRef.current){
         conicalBeakerRef.current.visible = false
@@ -70,7 +71,7 @@ const ChlorinationLesson05 = ()=>{
      if(heatingMantleRef.current){
       heatingMantleRef.current.visible = true
      }
-
+ 
      if(volumetricPipetteRef.current){
       volumetricPipetteRef.current.visible = false
      }
@@ -144,6 +145,27 @@ const ChlorinationLesson05 = ()=>{
      })
     }
   },[testube02OriginalStateRef,graduatedPipetteRef])
+
+
+   useEffect(() => {
+    if (selectedLesson !== 14.3 ||lessonStep !== 98 || !seperatingFunnelRef?.current || !seperatingFunnelOriginalStateRef?.current) {
+      return
+    }
+
+    const separatingFunnel = seperatingFunnelRef.current
+    const original = seperatingFunnelOriginalStateRef.current
+
+    // Restore original parent.
+    if (original.parent) {
+       original.parent.add(separatingFunnel)
+    }
+
+    // Restore original table transform.
+    separatingFunnel.position.copy( original.position)
+    separatingFunnel.quaternion.copy( original.quaternion)
+    separatingFunnel.scale.copy(original.scale)
+    separatingFunnel.updateMatrixWorld(true)
+  }, [selectedLesson,lessonStep,seperatingFunnelRef,seperatingFunnelOriginalStateRef])
 
   useEffect(() => {
   if (

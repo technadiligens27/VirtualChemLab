@@ -13,6 +13,7 @@ import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecor
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx"
 import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx";
+import {useResetLesson} from "../../../UI/ResetLessonButton/ResetLessonButton.jsx"
 
 const HCLTitration2 = () => {
   const {
@@ -36,6 +37,8 @@ const HCLTitration2 = () => {
     volumetricBung,
     volumetricRef,
   } = useContext(ModelContext)
+
+  
 
   const guidelineData = [
   {
@@ -371,7 +374,7 @@ const HCLTitration2 = () => {
   // =========================================================
   // INITIALIZE HCL TITRATION PART 2 SHORTCUT STATE
   // =========================================================
-
+const resetLesson = useResetLesson()
   useEffect(() => {
     if (selectedLesson !== 11.1) return
 
@@ -713,7 +716,7 @@ const HCLTitration2 = () => {
       <DialogBox
         text={
           <>
-            Position the <strong>Phenolphthalein Dropper</strong> above the <strong>Conical Flask</strong> and enter <strong>Pour Mode</strong>.
+            Click the <strong>Phenolphthalein Dropper</strong> and select <strong>Pour Mode</strong>.
           </>
         }
       />
@@ -788,7 +791,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Select the <strong>Conical Flask</strong> and click <strong>Remove Beaker </strong>.
+              Select the <strong>Conical Flask</strong> and click <strong>Pick Up</strong>
             </>
           }
         />
@@ -999,7 +1002,7 @@ const HCLTitration2 = () => {
         <DialogBox
           text={
             <>
-              Remove the <strong>Conical Flask</strong>.
+              Pick Up the <strong>Conical Flask</strong>.
             </>
           }
         />

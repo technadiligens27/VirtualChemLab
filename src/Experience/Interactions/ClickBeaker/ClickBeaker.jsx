@@ -93,7 +93,8 @@ const ClickObject = () => {
     volumetricRef,volumetricBung,phenopthalineBottleRef,
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,conicalFlask02OriginalStateRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,graduatedPipetteRef,
-    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef
+    conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef,
+    heatingMatRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,safetyStep} =
@@ -301,6 +302,10 @@ const ClickObject = () => {
       {
         name:"graduated-pipette",
         ref:graduatedPipetteRef
+      },
+      {
+        name:"heating-mat",
+        ref:heatingMatRef
       }
       ],
     [
@@ -335,7 +340,8 @@ const ClickObject = () => {
       sulfamicBottleRef,methylBottleRef,
       naohBottleRef,waterBottleRef,condensorRef,
       boilingTube01Ref,graduatedCylinder100Ref,
-      conicalBeakerRef02,heatingMantleRef,graduatedPipetteRef
+      conicalBeakerRef02,heatingMantleRef,graduatedPipetteRef,
+      heatingMatRef
     ]
   )
 
@@ -1989,7 +1995,7 @@ const ClickObject = () => {
       }
     }
 
-    if ([12, 12.1, 12.2].includes(selectedLesson)) {
+    if ([12, 12.1, 12.2,12.3,12.4].includes(selectedLesson)) {
       if (["kettle", "main-dropper","water-bottle"].includes(objectName)) {
         setSelectedObject(null)
         return
@@ -2153,6 +2159,13 @@ const clickableObjects = selectableObjects
 
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
+    
+    if([15].includes(selectedLesson)){
+      if(![0].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+    }
 
     if([12,12.1,12.2].includes(selectedLesson)){
       if(![7,22,26,53,55,63,72,89,96].includes(lessonStep)){
@@ -2418,6 +2431,13 @@ const clickableObjects = selectableObjects
   const validateLeftHandPick = (objectName) => {
     if (!isMainGuideline) return true
 
+    if([15].includes(selectedLesson)){
+      if(![0].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+    }
+
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
       if(![6,86,106.1,121].includes(lessonStep)){
         setShowErrorMsgNo(1)
@@ -2439,6 +2459,8 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(1)
         return
       }
+
+      
       if([3].includes(lessonStep) && objectName !=="main-testube-01"){
         setShowErrorMsgNo(1)
         return
@@ -2960,7 +2982,16 @@ const toggleFunnelMode = () => {
        (selectedLesson==14.1 && [63].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder") ||
        (selectedLesson==14.3 && [128].includes(lessonStep) && selectedObject?.name=="main-graduated-cylinder") ||
        (selectedLesson==14.4 && [134].includes(lessonStep) && selectedObject?.name=="graduated-pipette") ||
-       (selectedLesson==14.4 && [148].includes(lessonStep) && selectedObject?.name=="main-dropper") 
+       (selectedLesson==14.4 && [148].includes(lessonStep) && selectedObject?.name=="main-dropper") ||
+       (selectedLesson ==14.4 && [154].includes(lessonStep) && selectedObject?.name == "main-dropper") ||
+       (selectedLesson ==9 && [17].includes(lessonStep) && selectedObject?.name == "main-buirette") ||
+       (selectedLesson ==11 && [4].includes(lessonStep) && selectedObject?.name == "main-normal-beaker") || 
+       (selectedLesson ==11 && [31].includes(lessonStep) && selectedObject?.name == "main-buirette") ||
+       (selectedLesson ==11.1 && [55].includes(lessonStep) && selectedObject?.name == "main-Conical-Flask") ||
+       (selectedLesson ==11.1 && [64].includes(lessonStep) && selectedObject?.name == "main-buirette") ||
+       ([12,12.1].includes(selectedLesson) && [16,30,36].includes(lessonStep) && selectedObject?.name == "main-normal-beaker")
+
+
 
 
 
@@ -3287,7 +3318,7 @@ const canShowMainHoldingButton = () => {
 
 
 const renderHandSelectionButtons = () => {
-if (isTutorialMode && ![8, 9, 10, 11, 11.1, 12, 12.1, 12.2, 13, 14, 14.1, 14.2, 14.3,14.4].includes(selectedLesson)) {
+if (isTutorialMode && ![8, 9, 10, 11, 11.1, 12, 12.1, 12.2, 13, 14, 14.1, 14.2, 14.3,14.4,15].includes(selectedLesson)) {
     return <p>Can't pick now</p>
   }
 
@@ -3407,6 +3438,12 @@ const handlePlacePolysterene = () => {
       setSelectedObject(null)
       return
     }
+
+    if(selectedLesson ==14.4 && lessonStep!==153){
+      setShowErrorMsgNo(1)
+      return
+    }
+
 
     if(selectedLesson==14.3 && lessonStep == 119){
       setLessonStep(120)
@@ -3934,6 +3971,12 @@ const disposeCup = () => {
 
   const addPottasiumCarbinateToSpoon = ()=>{
 
+    if([15].includes(selectedLesson)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![87].includes(lessonStep)){
       setSelectedObject(null)
       setShowErrorMsgNo(1)
@@ -3965,6 +4008,12 @@ const disposeCup = () => {
   }
 
   const addPotassiumHydrogencarbonateToSpoon = ()=>{
+
+    if([15].includes(selectedLesson)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
 
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![27].includes(lessonStep)){
       setSelectedObject(null)
@@ -4414,6 +4463,12 @@ const disposeCup = () => {
 
   const addSulfamicAcidToSpoon = ()=>{
 
+    if([15].includes(selectedLesson)){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && ![0].includes(lessonStep)){
       setSelectedObject(null)
       setShowErrorMsgNo(1)
@@ -4538,6 +4593,9 @@ const disposeCup = () => {
   
 
   const renderTableObjectButtons = () => {
+
+    const heatingMatButtons = renderHeatingMatTableButtons()
+    if(heatingMatButtons) return heatingMatButtons
 
     const condensorTableButtons  = renderCondensorTableButtons();
     if(condensorTableButtons) return condensorTableButtons
@@ -4945,6 +5003,17 @@ const disposeCup = () => {
   }
 
 
+  const renderHeatingMatTableButtons = ()=>{
+    if(selectedObject?.name === "heating-mat" && selectedLesson===15 && lessonStep===3){
+      return (
+        <button onClick={handleModelPlaceCentre}>
+          Place In Center
+        </button>
+      )
+    }
+  }
+
+
   const renderNormalBeakerTableButtons = ()=>{
 
     if(selectedObject?.name === "main-normal-beaker" && selectedLesson===14.2 && [82].includes(lessonStep)){
@@ -5067,8 +5136,7 @@ const disposeCup = () => {
 
         if (
           [11.1, 12.2,,14.2].includes(selectedLesson) &&
-          [51, 68, 83,102,83].includes(lessonStep) &&
-          !isBeakerNearClamp
+          [51, 68, 83,102,83].includes(lessonStep)
         ) {
           return (
             <button onClick={handleModelPlaceCentre}>
@@ -5183,6 +5251,12 @@ const disposeCup = () => {
 
 
   const handleModelPlaceCentre = ()=>{
+
+    if(selectedLesson==15 && lessonStep !==3){
+      setShowErrorMsgNo(1)
+      return
+    }  
+
     if(selectedLesson==12.2 && ![83,102].includes(lessonStep)){
       setShowErrorMsgNo(1)
       return
@@ -5967,6 +6041,12 @@ const renderVolumetricHeldButtons = ()=>{
             </button>
             )}
 
+            {selectedLesson === 11 && lessonStep === 23.5 && (
+              <button onClick={placeVolmetricBung} >
+              Place Bung
+            </button>
+            )}
+
             {selectedLesson === 12.1 && lessonStep === 42 && (
               <button onClick={()=>{setLessonStep(43)}}>
                  Add Water
@@ -5989,7 +6069,7 @@ const renderPolystereneHeldButtons=()=>{
           Keep Back On Table
         </button>
 
-        <button onClick={()=>handlePlacePolysterene()} >
+        <button onClick={handlePlacePolysterene} >
           Place In Beaker
         </button>
       </>
@@ -6365,6 +6445,7 @@ const renderHeldSpoonButtons = () => {
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
+
    const graduatedPipppeteButtons  = renderGraduatedPipetteHeldButtons()
    if (graduatedPipppeteButtons) return graduatedPipppeteButtons
 
@@ -6489,6 +6570,9 @@ const renderHeldObjectButtons = () => {
 
  return (
   <>
+
+
+  
     {selectedObject && !isFillBeakerBoxOpen && (
       <Html position={selectedObject.position} center
       zIndexRange={[100,0]}>
@@ -6508,9 +6592,14 @@ const renderHeldObjectButtons = () => {
       <HoldRight modeldata={selectedRightHand} />
     )}
 
+    {
+      selectedLesson ==12.2 && lessonStep==55 && 
+      <ClickHitbox modelRef={volumetricRef} multiplier={3}/>
+    }
+
     <ClickHitbox
       modelRef={conicalBeakerRef}
-      multiplier={(selectedLesson==12.2 && lessonStep==85) ? 1.5 :null}
+      multiplier={(selectedLesson==12.2 && lessonStep==85) ?  1.5 : (selectedLesson==11.1 && lessonStep==53) ? 1 : null}
     />
 
     <ClickHitbox
@@ -6545,15 +6634,8 @@ const renderHeldObjectButtons = () => {
 
     <ClickHitbox
       modelRef={buretteClampRef}
-        multiplier={
-          selectedLesson == 14.3 &&
-          [86, 94, 127].includes(lessonStep)
-            ? 0
-            : selectedLesson == 8 &&
-              lessonStep == 29
-              ? 3
-              : 1.1
-        }
+        multiplier={selectedLesson == 14.3 && [86, 94, 127].includes(lessonStep) ? 0 : selectedLesson == 8 && lessonStep == 29 ? 3 :
+          selectedLesson == 12.2 && lessonStep == 82 ? null : 1.1}
     />
 
     <ClickHitbox
@@ -6609,6 +6691,7 @@ const renderHeldObjectButtons = () => {
       selectedLesson===14.3 && lessonStep==108 &&
       <ClickHitbox modelRef={heatingMantleRef} multiplier={2}/>
     }
+
 
   </>
 )

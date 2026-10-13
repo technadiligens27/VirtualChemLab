@@ -448,8 +448,8 @@ const AllExplanationLesson14 = ()=>{
                 }
                 top="40%"
                 left="22%"
-                height="250px"
-                width="360px"
+                height="230px"
+                width="440px"
               />
             )}
 
