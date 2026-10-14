@@ -228,7 +228,8 @@ const UI = () => {
       (selectedLesson===9 && [2,19].includes(lessonStep)) ||
       (selectedLesson===13 && [5].includes(lessonStep)) ||
       (selectedLesson==14.1 && [42,60].includes(lessonStep)) ||
-      (selectedLesson==14.4 && lessonStep===141)
+      (selectedLesson==14.4 && lessonStep===141) ||
+      (selectedLesson==15 && lessonStep==6)
     )
   }, [selectedLesson, lessonStep])
 
@@ -305,7 +306,8 @@ const UI = () => {
   useEffect(()=>{
     setShowNaOHBBottleArrowRef(
       ([12.2].includes(selectedLesson) && [63,89].includes(lessonStep)) ||
-      ([11].includes(selectedLesson) && [17].includes(lessonStep))
+      ([11].includes(selectedLesson) && [17].includes(lessonStep)) ||
+      ([15].includes(selectedLesson) && [9].includes(lessonStep))
       
     )
   },[selectedLesson,lessonStep])

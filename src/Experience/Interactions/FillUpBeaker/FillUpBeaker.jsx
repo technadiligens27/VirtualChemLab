@@ -863,7 +863,9 @@ else if (
    if ( selectedLesson === 14.4 && lessonStep === 155 ) {
       setLessonStep(156)
    }    
-
+  if ( selectedLesson === 15 && lessonStep === 8 ) {
+      setLessonStep(9)
+   }
   }
 )
 

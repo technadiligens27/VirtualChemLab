@@ -95,7 +95,7 @@ const ClickObject = () => {
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,conicalFlask02OriginalStateRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,graduatedPipetteRef,
     conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef,
-    heatingMatRef,bunsenBurnerRef
+    heatingMatRef,bunsenBurnerRef,gasTubeRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,safetyStep} =
@@ -799,6 +799,14 @@ const ClickObject = () => {
   // =====================================================
   // GENERAL LESSON STEP VALIDATION
   // =====================================================
+
+  if([15].includes(selectedLesson)){
+    if(![0].includes(lessonStep)){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+  }
 
   if ([12, 12.1, 12.2].includes(selectedLesson)) {
     if (
@@ -2166,7 +2174,12 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
     
     if([15].includes(selectedLesson)){
-      if(![0].includes(lessonStep)){
+      if(![6].includes(lessonStep)){
+        setShowErrorMsgNo(1)
+        return
+      }
+
+      if([6].includes(lessonStep) && objectName !== "main-normal-beaker"){
         setShowErrorMsgNo(1)
         return
       }
@@ -2437,8 +2450,13 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([15].includes(selectedLesson)){
-      if(![0].includes(lessonStep)){
+      if(![0,9].includes(lessonStep)){
         setShowErrorMsgNo(1)
+        return
+      }
+      if([9].includes(lessonStep) && objectName!== "water-bottle"){
+        setShowErrorMsgNo(1)
+        setSelectedObject(null)
         return
       }
     }
@@ -2974,7 +2992,8 @@ const toggleFunnelMode = () => {
       (selectedLesson ===13) && ([3.2,6,9,10].includes(lessonStep)) ||
       (selectedLesson===14) && ([4,10].includes(lessonStep)) ||
       (selectedLesson===14.1) && ([45,63].includes(lessonStep)) ||
-      ([14.3,14.4].includes(selectedLesson)) &&([128,134,148,154].includes(lessonStep)) 
+      ([14.3,14.4].includes(selectedLesson)) &&([128,134,148,154].includes(lessonStep)) ||
+      ([15].includes(selectedLesson) && [7].includes(lessonStep))
     
       const isAllowedObject =
        (selectedLesson==8 && lessonStep==19 && selectedObject?.name=="main-buirette") ||
@@ -2994,7 +3013,8 @@ const toggleFunnelMode = () => {
        (selectedLesson ==11 && [31].includes(lessonStep) && selectedObject?.name == "main-buirette") ||
        (selectedLesson ==11.1 && [55].includes(lessonStep) && selectedObject?.name == "main-Conical-Flask") ||
        (selectedLesson ==11.1 && [64].includes(lessonStep) && selectedObject?.name == "main-buirette") ||
-       ([12,12.1].includes(selectedLesson) && [16,30,36].includes(lessonStep) && selectedObject?.name == "main-normal-beaker")
+       ([12,12.1].includes(selectedLesson) && [16,30,36].includes(lessonStep) && selectedObject?.name == "main-normal-beaker") ||
+       ([15].includes(selectedLesson) && [7].includes(lessonStep) && selectedObject?.name == "main-normal-beaker")
 
 
 
@@ -5034,6 +5054,24 @@ const disposeCup = () => {
     }
   }
 
+  const handleConnectGasTube = ()=>{
+    const isValid = (selectedLesson==15 && lessonStep==5)
+
+    if(!isValid){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+
+    if(selectedLesson==15 && lessonStep==5){
+      setLessonStep(6)
+    }
+
+    gasTubeRef.current.visible = true
+    setSelectedObject(null)
+  }
+
+
   const renderBunsenBurnerTableButtons = () =>{
     if(selectedObject?.name === "bunsen-burner" && selectedLesson===15 && [4].includes(lessonStep)){
       return (
@@ -5041,7 +5079,16 @@ const disposeCup = () => {
           Place In Heating Mat
         </button>
       )
-    }   
+    }
+    if(selectedObject?.name === "bunsen-burner" && selectedLesson===15 && [5].includes(lessonStep)){
+      return (
+        <button onClick={handleConnectGasTube}>
+          Connect Gas Tube
+        </button>
+      )
+    }     
+    
+    
   }
 
 
@@ -5283,7 +5330,7 @@ const disposeCup = () => {
 
   const handleModelPlaceCentre = ()=>{
 
-    if(selectedLesson==15 && lessonStep !==3){
+    if(selectedLesson==15 && ![3,7].includes(lessonStep)){
       setShowErrorMsgNo(1)
       return
     }  

@@ -218,7 +218,7 @@ useEffect(() => {
       {selectedLesson !==13 && selectedLesson !==14.1 && selectedLesson !==14.2 && isClampInCenter && <PlaceClampInCenter/>}
       {selectedLesson ===13 && isClampInCenter && <PlaceClampInCenter clampXOffset = {-5}/>}
 
-      {selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
+      {selectedLesson!==15 && selectedRightHand?.name==='main-normal-beaker' &&isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.6} heightOffset ={-4} scaleOffset={0.45} beakerRef={normalBeakerRef}/>}
       {selectedRightHand?.name==='main-Conical-Flask' && isBeakerNearClamp && <PlaceBeakerNearClamp  xOffset={0.3} heightOffset ={-4} scaleOffset={0.45} beakerRef={conicalBeakerRef}/>}
 
 
@@ -345,7 +345,7 @@ useEffect(() => {
       {[14.3,14.4].includes(selectedLesson) && lessonStep>=106.1 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
       {selectedLesson==14.3 && lessonStep>=107 && lessonStep<110 &&isModelCentre && (<PlaceModelCentre modelZScale={1}  modelYScale={1} modelXScale={1} modelXOffset={6} modelZOffset={2.5}  modelRef={conicalBeakerRef02}/>)}
 
-      {selectedLesson ==15 && lessonStep >=3 && isModelCentre && (<PlaceModelCentre modelYOffset={0} modelXOffset={-1} modelRef={heatingMatRef}/>)}
+      {selectedLesson ==15 && lessonStep >=3 && isModelCentre && (<PlaceModelCentre modelXScale={1} modelZScale={1} modelYScale={1} modelYOffset={0} modelXOffset={-1} modelRef={heatingMatRef}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 

@@ -218,6 +218,12 @@ const transformControlsRef = useRef()
   const isLitmus = (name) => name?.toLowerCase().includes("litmus");
 
   useEffect(()=>{
+    if(selectedLesson ===15 && lessonStep ===6){
+      setLessonStep(7)
+    }
+  },[lessonStep,selectedLesson])    
+
+  useEffect(()=>{
     if(selectedLesson ===14.1 && lessonStep ===62){
       setLessonStep(63)
     }

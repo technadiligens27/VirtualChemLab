@@ -73,11 +73,52 @@ const FlameTest = ()=>{
 
         {lessonStep == 4 && <DialogBox text={
           <>
-          4
+          Click <strong>the Bunsen Burner</strong> and select <strong>Place In Heating Mat</strong>
           </>
           } 
         />}
 
+        {lessonStep == 5 && <DialogBox text={
+          <>
+          Click <strong>the Bunsen Burner</strong> and select <strong>Connect Gas Tube</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep == 6 && <DialogBox text={
+          <>
+          Click The <strong>Beaker</strong> and Select <strong>Right Hand</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep == 7 && <DialogBox text={
+          <>
+          Click The <strong>Beaker</strong> and Select <strong>Add Liquid</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep == 8 && <DialogBox text={
+          <>
+          Fill With <strong>Hydrochloric Acid (30 cm³)</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep == 9 && <DialogBox text={
+          <>
+          Click The <strong>Water Bottle</strong> and Select <strong>Left Hand</strong>
+          </>
+          } 
+        />}
+
+        {lessonStep == 10 && <DialogBox text={
+          <>
+          10
+          </>
+          } 
+        />}
 
         </>           
 

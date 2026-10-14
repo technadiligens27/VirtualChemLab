@@ -191,16 +191,10 @@ const FillBeakerBox = () => {
       
     }
 
-    if(selectedLesson===10){
-      if(lessonStep===20.5 || lessonStep===28 || lessonStep===35){
-        if(!checkFill("Ethanol (C2H5OH)",5)) return
-      }
-
-      if(lessonStep===91 || lessonStep===98 || lessonStep===94){
-        if(!checkFill('Silver Nitrate (AgNO3)',5)) return
-      }
-
-      
+    if(selectedLesson===15){
+      if(lessonStep===8){
+        if(!checkFill("Hydrochloric Acid (HCl)",30)) return
+      } 
     }
 
     const fillData = {
@@ -220,6 +214,10 @@ const FillBeakerBox = () => {
   }
 
   useEffect(()=>{
+   if(lessonStep===7 && selectedLesson ===15){
+      setLessonStep(8)
+    }
+    
     if(lessonStep===4 && selectedLesson ===14){
       setLessonStep(5)
     }
