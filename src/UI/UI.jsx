@@ -142,7 +142,7 @@ const UI = () => {
     setShowTestube03Arrow,setShowSeparatingFunnel,setShowHeatingMantleArrow,showCondensorArrow,
     setShowCondensorArrow,showTestube02Arrow,
     setShowTestube02Arrow,setShowGraduatedPippeteArrow,isExplanationOpen,setIsExplanationOpen,
-    setShowHeatingMatArow   
+    setShowHeatingMatArow,showBunsenBurnerArrow,setShowBunsenBurnerArrow  
     
   } = useContext(MainGuidelineContext)
 
@@ -156,6 +156,12 @@ const UI = () => {
   } = useContext(InteractionContext)
 
   // ------------------------ Lesson 08 -------------
+
+  useEffect(()=>{
+    setShowBunsenBurnerArrow(
+      (selectedLesson==15 && lessonStep ==4)
+    )
+  },[selectedLesson,lessonStep])
 
   useEffect(()=>{
     setShowHeatingMatArow(

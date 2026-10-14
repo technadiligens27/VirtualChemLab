@@ -73,6 +73,7 @@ import PlaceModelInBeaker from "./PlaceModelInBeaker/PlaceModelInBeaker";
 import ChlorideIonReaction from "../AllReactions/ChlorideIonReaction/ChlorideIonReaction";
 import ModelFocusMode from "./AllModeFocusModes/ModelFocusMode/ModelFocusMode";
 import AllModeFocusModes from "./AllModeFocusModes/AllModeFocusModes";
+import PlaceModelInHeatingMat from "./PlaceModelInHeatingMat/PlaceModelInHeatingMat";
 
 const Interaction = () => {
   const {
@@ -86,14 +87,15 @@ const Interaction = () => {
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
-    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen
+    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen,isModelInHeatingMat
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
           bromobutaneBottleRef,testube03Ref,chlorobutaneBottleRef,testube04Ref,testube05Ref,testube06Ref,volumetricRef,
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
         naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
-        tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef,waterBottleRef,heatingMatRef
+        tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef,waterBottleRef,heatingMatRef,
+        bunsenBurnerRef
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -633,6 +635,10 @@ useEffect(() => {
           receiveModelBaseX={-0.8}
         />
       }  
+
+      {selectedLesson==15 && isModelInHeatingMat && <PlaceModelInHeatingMat modelRef={bunsenBurnerRef}/>}
+
+
     </>
   );
 };

@@ -29,7 +29,8 @@ const ChemEnvironment = () => {
          seperatingFunnelRef,arrowSeparatingFunnelRef,separatingFunnelBungRef,graduatedBeaker50OriginalStateRef, conicalFlask02OriginalStateRef,
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
          arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,arrowGraduatedPipette,
-         testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,arrowHeatingMatRef,heatingMatRef
+         testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,arrowHeatingMatRef,heatingMatRef,
+         bunsenBurnerRef,arrowBunsenBurner,gasTubeRef
          
   } = useContext(ModelContext);
 
@@ -76,6 +77,22 @@ const hideBubblesObjects = (root) => {
   })
 }
 
+
+const hideFlameObjects = (root) => {
+  if (!root) return
+
+  root.traverse((child) => {
+    const childName = child.name?.toLowerCase() || ""
+
+    if (childName.includes("flame")) {
+      child.visible = false
+
+      child.traverse((labelChild) => {
+        labelChild.visible = false
+      })
+    }
+  })
+}
 
 const hideLabelObjects = (root) => {
   if (!root) return
@@ -296,6 +313,8 @@ const hideVerticalObjects=(root)=>{
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
 
+    bunsenBurnerRef.current= scene.getObjectByName("bunsen-burner");
+
     distillationHeadRef.current = scene.getObjectByName("distillation-head");
 
     seperatingFunnelRef.current = scene.getObjectByName("separating-funnel");
@@ -331,7 +350,11 @@ const hideVerticalObjects=(root)=>{
     sulfamicBottleRef.current = scene.getObjectByName("sulfamic-bottle")
     methylBottleRef.current = scene.getObjectByName("methyl-dropper-bottle")
     naohBottleRef.current = scene.getObjectByName('NaOH-bottle');
-    naohLiquidRef.current = scene.getObjectByName('NaOH-bottle-liquid')
+    naohLiquidRef.current = scene.getObjectByName('NaOH-bottle-liquid');
+
+    gasTubeRef.current = scene.getObjectByName("gas-tube");
+    gasTubeRef.current.visible = false
+
 
     conicalBeakerLiquidRef.current=scene.getObjectByName('conical-liquid-25.');
 
@@ -440,8 +463,6 @@ if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
   waterBottleRef.current = scene.getObjectByName('water-bottle');
   naohBottleRef.current.visible = false
   
-
-
   hidePrecipitateObjects(scene)
   hideLiquidObjects(scene)
   hideSaltBits(scene)
@@ -451,7 +472,8 @@ if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
   hideCloudObjects(scene)
   hideVerticalObjects(scene);
   hideDropletObjects(scene);
-  hideBubblesObjects(scene)
+  hideBubblesObjects(scene);
+  hideFlameObjects(scene)
 
  thermometerLiquidRef.current.visible=true;
  naohLiquidRef.current.visible = true
@@ -573,6 +595,9 @@ if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
 
       arrowHeatingMantleRef.current = scene.getObjectByName("heating-mat-arrow");
       arrowHeatingMantleRef.current.visible = false
+
+      arrowBunsenBurner.current = scene.getObjectByName("bunsen-burner-arrow");
+      arrowBunsenBurner.current.visible = false
   }, [scene])
 
 

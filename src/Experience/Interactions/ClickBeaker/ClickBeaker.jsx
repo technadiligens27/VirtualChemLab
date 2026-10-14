@@ -55,7 +55,8 @@ const ClickObject = () => {
     isPottasiumCarobnateInSpoon,isPotassiumHydrogenCarbonateInSpoon,
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode,
-    setIsPlaceInMantle,setIsAddDistillationHead,isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker
+    setIsPlaceInMantle,setIsAddDistillationHead,isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker,
+    isModelInHeatingMat,setIsModelInHeatingMat
   } = useContext(InteractionContext)
 
   const {
@@ -94,7 +95,7 @@ const ClickObject = () => {
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,conicalFlask02OriginalStateRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,graduatedPipetteRef,
     conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef,
-    heatingMatRef
+    heatingMatRef,bunsenBurnerRef
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,safetyStep} =
@@ -306,10 +307,14 @@ const ClickObject = () => {
       {
         name:"heating-mat",
         ref:heatingMatRef
+      },
+      {
+        name:"bunsen-burner",
+        ref:bunsenBurnerRef
       }
       ],
     [
-      seperatingFunnelRef,
+      seperatingFunnelRef,bunsenBurnerRef,
       normalBeakerRef,
       conicalBeakerRef,
       roundBeakerRef,
@@ -3684,13 +3689,26 @@ const reappearDeliverySetup =()=>{
   }
 }
 
+  const handlePlaceInHeatingMat = () =>{
+    const isValid = (selectedLesson ==15 && lessonStep ==4)
+
+    if(!isValid){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+
+    setIsModelInHeatingMat(true)
+    setSelectedObject(null)
+  }
+
 
   const handlePlaceBalance = () => {
     const isValidCondition =
       (selectedLesson === 8 && lessonStep === 14) ||
       (selectedLesson === 13 && lessonStep === 22) ||
       (selectedLesson === 9 && lessonStep ===12) ||
-      (selectedLesson==12 && lessonStep == 4)
+      (selectedLesson==12 && lessonStep == 4) 
 
     if (!isValidCondition) {
       setShowErrorMsgNo(1)
@@ -4594,6 +4612,9 @@ const disposeCup = () => {
 
   const renderTableObjectButtons = () => {
 
+    const bunsenBurnerButtons = renderBunsenBurnerTableButtons()
+    if(bunsenBurnerButtons) return bunsenBurnerButtons
+
     const heatingMatButtons = renderHeatingMatTableButtons()
     if(heatingMatButtons) return heatingMatButtons
 
@@ -5011,6 +5032,16 @@ const disposeCup = () => {
         </button>
       )
     }
+  }
+
+  const renderBunsenBurnerTableButtons = () =>{
+    if(selectedObject?.name === "bunsen-burner" && selectedLesson===15 && [4].includes(lessonStep)){
+      return (
+        <button onClick={handlePlaceInHeatingMat}>
+          Place In Heating Mat
+        </button>
+      )
+    }   
   }
 
 

@@ -76,6 +76,8 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [isExplanationOpen,setIsExplanationOpen] = useState(false)
 
+  const [showBunsenBurnerArrow,setShowBunsenBurnerArrow] = useState(false)
+
 
 
   const resetLessonGuidelines = () => {
@@ -257,7 +259,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setIsExplanationOpen,
 
         showHeatingMatArrow,
-        setShowHeatingMatArow
+        setShowHeatingMatArow,
+
+        showBunsenBurnerArrow,
+        setShowBunsenBurnerArrow
 
 
       }}

@@ -68,7 +68,8 @@ export const ModelProvider = ({ children }) => {
   const heatingMantleSurfaceRef = useRef(null);
   const graduatedPipetteRef = useRef(null);
   const heatingMatRef = useRef(null);
-
+  const bunsenBurnerRef = useRef(null)
+  const gasTubeRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -118,7 +119,8 @@ export const ModelProvider = ({ children }) => {
   const arrowHeatingMantleRef = useRef(null);
   const arrowCondensorRef = useRef(null);
   const arrowGraduatedPipette = useRef(null);
-  const arrowHeatingMatRef = useRef(null)
+  const arrowHeatingMatRef = useRef(null);
+  const arrowBunsenBurner = useRef(null)
 
 
   const tableConicalPos = useRef(null)
@@ -197,7 +199,8 @@ export const ModelProvider = ({ children }) => {
         distillationHeadRef,condensorRef,arrowCondensorRef,waterOutTubeRef,
         waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,
         arrowGraduatedPipette,testube02OriginalStateRef,graduatedPipetteOriginalStateRef,
-        seperatingFunnelOriginalStateRef,heatingMatRef,arrowHeatingMatRef
+        seperatingFunnelOriginalStateRef,heatingMatRef,arrowHeatingMatRef,bunsenBurnerRef,
+        arrowBunsenBurner,gasTubeRef
       }}
     >
       {children}

@@ -8,20 +8,29 @@ import * as THREE from "three"
 import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const PlaceModelInHeatingMat = ({
   modelRef,
 
   modelXOffset = 0,
-  modelYOffset = 0,
+  modelYOffset = 0.5,
   modelZOffset = 0,
 
-  modelScale = [1, 1, 1],
+  modelScale = [1.3, 1.3, 1.3],
   heatingMatScale = [1, 1, 1],
 }) => {
   const {
     heatingMatRef,
   } = useContext(ModelContext)
+
+  const {selectedLesson,lessonStep,setLessonStep} = useContext(MainGuidelineContext);
+
+  useEffect(()=>{
+    if(selectedLesson ==15 && lessonStep==4){
+      setLessonStep(5)
+    }
+  },[selectedLesson,lessonStep])
 
   useEffect(() => {
     const model = modelRef?.current
