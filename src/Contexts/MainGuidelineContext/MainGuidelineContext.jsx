@@ -76,7 +76,8 @@ export const MainGuidelineProvider = ({ children }) => {
 
   const [isExplanationOpen,setIsExplanationOpen] = useState(false)
 
-  const [showBunsenBurnerArrow,setShowBunsenBurnerArrow] = useState(false)
+  const [showBunsenBurnerArrow,setShowBunsenBurnerArrow] = useState(false);
+  const [showNichromeWireArrow,setShowNichromeWireArrow] = useState(false);
 
 
 
@@ -262,7 +263,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowHeatingMatArow,
 
         showBunsenBurnerArrow,
-        setShowBunsenBurnerArrow
+        setShowBunsenBurnerArrow,
+
+        showNichromeWireArrow,
+        setShowNichromeWireArrow
 
 
       }}

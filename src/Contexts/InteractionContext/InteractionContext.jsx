@@ -193,7 +193,9 @@ export const InteractionProvider = ({ children }) => {
 
   const [isChlorideIonReaction,setIsChlorideIonReaction] = useState(false);
 
-  const [isModelInHeatingMat,setIsModelInHeatingMat] = useState(false)
+  const [isModelInHeatingMat,setIsModelInHeatingMat] = useState(false);
+  const [isDipMode,setIsDipMode] = useState(false)
+  const [showBunsenFlame,setShowBunsenFlame] = useState(false)
 
 
   const resetInteractions = () => {
@@ -328,7 +330,10 @@ export const InteractionProvider = ({ children }) => {
   setIsMantleTurnedOn(false);
   setIsAddWarmWater(false);
   setIsPlaceModelInBeaker(false);
-  setIsChlorideIonReaction(false)
+  setIsChlorideIonReaction(false);
+  setIsModelInHeatingMat(false);
+  setIsDipMode(false);
+  setShowBunsenFlame(false);
 }
 
   return (
@@ -433,7 +438,8 @@ export const InteractionProvider = ({ children }) => {
         isMantleTurnedOn,setIsMantleTurnedOn,distillationGasAnimationActions,setDistillationGasAnimationActions,
         isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker,
         isChlorideIonReaction,setIsChlorideIonReaction,
-        isModelInHeatingMat,setIsModelInHeatingMat
+        isModelInHeatingMat,setIsModelInHeatingMat,
+        setIsDipMode,isDipMode,showBunsenFlame,setShowBunsenFlame
       }}
     >
       {children}

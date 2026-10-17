@@ -19,7 +19,6 @@ import {
   InteractionContext,
 } from "../../../Contexts/InteractionContext/InteractionContext"
 
-
 const PlaceModelCentre = ({
   modelRef,
 
@@ -31,39 +30,28 @@ const PlaceModelCentre = ({
   modelYScale = 1,
   modelZScale = 1.3,
 
+  modelXRotation = 0,
+  modelYRotation = 0,
+  modelZRotation = 0,
+
   hand,
 }) => {
   const {
     balancePositionRef,
-  } = useContext(
-    ModelContext
-  )
+  } = useContext(ModelContext)
 
   const {
     setSelectedRightHand,
     setSelectedLeftHand,
-  } = useContext(
-    InteractionContext
-  )
+  } = useContext(InteractionContext)
 
   const {
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(
-    MainGuidelineContext
-  )
+  } = useContext(MainGuidelineContext)
 
-  // =============================================
-  // ORIGINAL TRANSFORM
-  // =============================================
-
-  const originalTransformRef =
-    useRef(null)
-
-  // =============================================
-  // KEEP LATEST LESSON / STEP
-  // =============================================
+  const originalTransformRef = useRef(null)
 
   const latestLessonRef =
     useRef(selectedLesson)
@@ -81,11 +69,18 @@ const PlaceModelCentre = ({
   // LESSON STEPS
   // =============================================
 
-  useEffect(()=>{
-    if(selectedLesson===15 && lessonStep == 3){
+  useEffect(() => {
+    if (
+      selectedLesson === 15 &&
+      lessonStep === 3
+    ) {
       setLessonStep(4)
     }
-  },[selectedLesson,lessonStep])
+  }, [
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  ])
 
   useEffect(() => {
     if (
@@ -108,9 +103,7 @@ const PlaceModelCentre = ({
     ) {
       setLessonStep(84)
 
-      setSelectedLeftHand(
-        null
-      )
+      setSelectedLeftHand(null)
     }
 
     if (
@@ -119,9 +112,7 @@ const PlaceModelCentre = ({
     ) {
       setLessonStep(99)
 
-      setSelectedLeftHand(
-        null
-      )
+      setSelectedLeftHand(null)
     }
   }, [
     selectedLesson,
@@ -141,13 +132,8 @@ const PlaceModelCentre = ({
     ) {
       setLessonStep(13)
 
-      setSelectedRightHand(
-        null
-      )
-
-      setSelectedLeftHand(
-        null
-      )
+      setSelectedRightHand(null)
+      setSelectedLeftHand(null)
     }
   }, [
     selectedLesson,
@@ -162,58 +148,33 @@ const PlaceModelCentre = ({
   // =============================================
 
   useLayoutEffect(() => {
-    const model =
-      modelRef?.current
+    const model = modelRef?.current
 
     const balancePosition =
       balancePositionRef?.current
 
-    if (
-      !model ||
-      !balancePosition
-    ) {
+    if (!model || !balancePosition) {
       return
     }
 
-    // =============================================
-    // SHOULD SKIP SAVING ORIGINAL
-    // =============================================
-
     const shouldSkipOriginalSave =
-      selectedLesson === 14.3 && (model.name === "main-Conical-Flask-02" || model.name === "separating-funnel")
+      selectedLesson === 14.3 &&
+      (
+        model.name === "main-Conical-Flask-02" ||
+        model.name === "separating-funnel"
+      )
 
-    // =============================================
-    // SAVE ORIGINAL TRANSFORM
-    //
-    // IMPORTANT:
-    // THIS MUST HAPPEN BEFORE attach(),
-    // position changes or scale changes.
-    // =============================================
-
-    if (
-      !shouldSkipOriginalSave
-    ) {
+    // Save current model state before moving it.
+    if (!shouldSkipOriginalSave) {
       originalTransformRef.current = {
-        parent:
-          model.parent,
-
-        position:
-          model.position.clone(),
-
-        quaternion:
-          model.quaternion.clone(),
-
-        scale:
-          model.scale.clone(),
+        parent: model.parent,
+        position: model.position.clone(),
+        quaternion: model.quaternion.clone(),
+        scale: model.scale.clone(),
       }
     } else {
-      originalTransformRef.current =
-        null
+      originalTransformRef.current = null
     }
-
-    // =============================================
-    // TARGET WORLD POSITION
-    // =============================================
 
     const targetWorldPosition =
       balancePosition.getWorldPosition(
@@ -223,19 +184,10 @@ const PlaceModelCentre = ({
     const targetParent =
       balancePosition.parent
 
-    // =============================================
-    // ATTACH TO TARGET PARENT
-    // =============================================
-
+    // Move model under the centre marker's parent.
     if (targetParent) {
-      targetParent.attach(
-        model
-      )
+      targetParent.attach(model)
     }
-
-    // =============================================
-    // CONVERT WORLD POSITION TO LOCAL
-    // =============================================
 
     let targetLocalPosition =
       targetWorldPosition.clone()
@@ -247,47 +199,34 @@ const PlaceModelCentre = ({
         )
     }
 
-    // =============================================
-    // POSITION
-    // =============================================
-
+    // Position
     model.position.set(
-      targetLocalPosition.x +
-        modelXOffset,
-
-      targetLocalPosition.y +
-        modelYOffset,
-
-      targetLocalPosition.z +
-        modelZOffset
+      targetLocalPosition.x + modelXOffset,
+      targetLocalPosition.y + modelYOffset,
+      targetLocalPosition.z + modelZOffset
     )
 
-    // =============================================
-    // SCALE
-    // =============================================
+    // Rotation
+    model.rotation.set(
+      modelXRotation,
+      modelYRotation,
+      modelZRotation
+    )
 
+    // Scale
     model.scale.set(
       modelXScale,
       modelYScale,
       modelZScale
     )
 
-    model.updateMatrixWorld(
-      true
-    )
-
-    // =============================================
-    // CLEANUP
-    // =============================================
+    model.updateMatrixWorld(true)
 
     return () => {
-      // Special case:
-      // keep current transform at lesson 14.3 step 98.
+      // Keep the current transform for this special case.
       if (
-        latestLessonRef.current ===
-          14.3 &&
-        latestLessonStepRef.current ===
-          98
+        latestLessonRef.current === 14.3 &&
+        latestLessonStepRef.current === 98
       ) {
         return
       }
@@ -295,29 +234,16 @@ const PlaceModelCentre = ({
       const original =
         originalTransformRef.current
 
-      if (
-        !model ||
-        !original
-      ) {
+      if (!original) {
         return
       }
 
-      // =========================================
-      // RESTORE ORIGINAL PARENT
-      // =========================================
-
-      if (
-        original.parent
-      ) {
-        original.parent.add(
-          model
-        )
+      // Restore original parent.
+      if (original.parent) {
+        original.parent.add(model)
       }
 
-      // =========================================
-      // RESTORE ORIGINAL LOCAL TRANSFORM
-      // =========================================
-
+      // Restore original transform.
       model.position.copy(
         original.position
       )
@@ -330,12 +256,9 @@ const PlaceModelCentre = ({
         original.scale
       )
 
-      model.updateMatrixWorld(
-        true
-      )
+      model.updateMatrixWorld(true)
 
-      originalTransformRef.current =
-        null
+      originalTransformRef.current = null
     }
   }, [
     modelRef,
@@ -348,6 +271,10 @@ const PlaceModelCentre = ({
     modelXScale,
     modelYScale,
     modelZScale,
+
+    modelXRotation,
+    modelYRotation,
+    modelZRotation,
 
     selectedLesson,
   ])

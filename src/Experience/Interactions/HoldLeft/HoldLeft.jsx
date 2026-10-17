@@ -55,6 +55,13 @@ const HoldLeft = ({ modeldata }) => {
   //     setShowNormalBeakerArrow(false)
   //   }
   // },[lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===15 && lessonStep==14){
+      setLessonStep(15)
+    }
+  },[selectedLesson,lessonStep])   
+
   useEffect(()=>{
     if(selectedLesson===14.3 && lessonStep==121){
       setLessonStep(123)
@@ -481,7 +488,7 @@ const isLitmus = (name) => name?.toLowerCase().includes("litmus")
         !isLitmusMode &&
         !isFunnelMode &&
         selectedLeftHand &&
-        selectedRightHand && ![14.3,14.4,11,12,12.1,12.2].includes(selectedLesson) && (
+        selectedRightHand && ![14.3,14.4,11,12,12.1,12.2,15].includes(selectedLesson) && (
           <PouringMode hand="left" />
       )}
 

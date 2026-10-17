@@ -69,7 +69,9 @@ export const ModelProvider = ({ children }) => {
   const graduatedPipetteRef = useRef(null);
   const heatingMatRef = useRef(null);
   const bunsenBurnerRef = useRef(null)
-  const gasTubeRef = useRef(null)
+  const gasTubeRef = useRef(null);
+  const nichromeWireRef = useRef(null);
+  const powderContainer = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -120,7 +122,8 @@ export const ModelProvider = ({ children }) => {
   const arrowCondensorRef = useRef(null);
   const arrowGraduatedPipette = useRef(null);
   const arrowHeatingMatRef = useRef(null);
-  const arrowBunsenBurner = useRef(null)
+  const arrowBunsenBurner = useRef(null);
+  const arrowNichromeWireRef = useRef(null)
 
 
   const tableConicalPos = useRef(null)
@@ -138,7 +141,8 @@ export const ModelProvider = ({ children }) => {
   const graduatedPipetteOriginalStateRef = useRef(null)
   const seperatingFunnelOriginalStateRef = useRef(null);
 
-  const [dropperAnimationAction,setDropperAnimationAction] = useState(null)
+  const [dropperAnimationAction,setDropperAnimationAction] = useState(null);
+
  
   return (
     <ModelContext.Provider
@@ -200,7 +204,8 @@ export const ModelProvider = ({ children }) => {
         waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,
         arrowGraduatedPipette,testube02OriginalStateRef,graduatedPipetteOriginalStateRef,
         seperatingFunnelOriginalStateRef,heatingMatRef,arrowHeatingMatRef,bunsenBurnerRef,
-        arrowBunsenBurner,gasTubeRef
+        arrowBunsenBurner,gasTubeRef,nichromeWireRef,
+        arrowNichromeWireRef,powderContainer
       }}
     >
       {children}

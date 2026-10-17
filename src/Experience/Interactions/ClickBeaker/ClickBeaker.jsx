@@ -56,7 +56,7 @@ const ClickObject = () => {
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode,
     setIsPlaceInMantle,setIsAddDistillationHead,isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker,
-    isModelInHeatingMat,setIsModelInHeatingMat
+    isModelInHeatingMat,setIsModelInHeatingMat,setIsDipMode,setShowBunsenFlame
   } = useContext(InteractionContext)
 
   const {
@@ -95,7 +95,7 @@ const ClickObject = () => {
     sulfamicBottleRef,methylBottleRef,naohBottleRef,waterBottleRef,conicalFlask02OriginalStateRef,
     boilingTube01Ref,graduatedCylinder100Ref,graduatedBeakerRef,conicalBungRef,graduatedPipetteRef,
     conicalBeakerRef02,seperatingFunnelRef,separatingFunnelBungRef,heatingMantleRef,condensorRef,waterOutTubeRef,waterInTubeRef,
-    heatingMatRef,bunsenBurnerRef,gasTubeRef
+    heatingMatRef,bunsenBurnerRef,gasTubeRef,nichromeWireRef,powderContainer
   } = useContext(ModelContext)
 
   const { lessonStep,setSelectedLesson,setShowErrorMsgNo, isMainGuideline,selectedLesson,isTutorialMode,setLessonStep,safetyStep} =
@@ -311,11 +311,19 @@ const ClickObject = () => {
       {
         name:"bunsen-burner",
         ref:bunsenBurnerRef
+      },
+      {
+        name:"nichrome-wire",
+        ref:nichromeWireRef
+      },
+      {
+        name:"volumetric-pipette",
+        ref:powderContainer
       }
       ],
     [
-      seperatingFunnelRef,bunsenBurnerRef,
-      normalBeakerRef,
+      seperatingFunnelRef,bunsenBurnerRef,nichromeWireRef,
+      normalBeakerRef,powderContainer,
       conicalBeakerRef,
       roundBeakerRef,
       graduatedBeakerRef,
@@ -801,7 +809,7 @@ const ClickObject = () => {
   // =====================================================
 
   if([15].includes(selectedLesson)){
-    if(![0].includes(lessonStep)){
+    if(![0,12,24].includes(lessonStep)){
       setShowErrorMsgNo(1)
       setSelectedObject(null)
       return
@@ -1181,6 +1189,11 @@ const ClickObject = () => {
       140: "graduated-pipette",
       146: "main-normal-beaker",
     },
+
+    15:{
+      12:"water-bottle",
+      24:"main-normal-beaker"
+    }
   }
 
   const expectedObject =
@@ -1199,6 +1212,24 @@ const ClickObject = () => {
   // =====================================================
   // LESSON STEP CHANGES
   // =====================================================
+
+  if (
+    handData.name === "main-normal-beaker" &&
+    selectedLesson === 15 &&
+    lessonStep === 24
+  ) {
+    setLessonStep(25)
+  }
+
+  if (
+    handData.name === "water-bottle" &&
+    selectedLesson === 15 &&
+    lessonStep === 12
+  ) {
+    setLessonStep(13)
+  }
+
+
 
   if (
     handData.name === "graduated-pipette" &&
@@ -1957,6 +1988,10 @@ const ClickObject = () => {
 
     const objectName = selectedItem.name
 
+    if(selectedLesson !==15 &&  objectName==="nichrome-wire"){
+      setSelectedObject(null)
+      return
+    }
 
     if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
       setSelectedObject(null)
@@ -2450,11 +2485,17 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
 
     if([15].includes(selectedLesson)){
-      if(![0,9].includes(lessonStep)){
+      if(![0,9,14].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
       if([9].includes(lessonStep) && objectName!== "water-bottle"){
+        setShowErrorMsgNo(1)
+        setSelectedObject(null)
+        return
+      }
+
+      if([14].includes(lessonStep) && objectName!== "nichrome-wire"){
         setShowErrorMsgNo(1)
         setSelectedObject(null)
         return
@@ -5071,6 +5112,22 @@ const disposeCup = () => {
     setSelectedObject(null)
   }
 
+  const handleBunsenFlame = ()=>{
+    
+    const isValid = (selectedLesson==15 && lessonStep==18);
+
+    if(!isValid){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+
+    setShowBunsenFlame(true)
+    setSelectedObject(null)
+    return
+
+  }
+
 
   const renderBunsenBurnerTableButtons = () =>{
     if(selectedObject?.name === "bunsen-burner" && selectedLesson===15 && [4].includes(lessonStep)){
@@ -5087,7 +5144,13 @@ const disposeCup = () => {
         </button>
       )
     }     
-    
+    if(selectedObject?.name === "bunsen-burner" && selectedLesson===15 && [18].includes(lessonStep)){
+      return (
+        <button onClick={handleBunsenFlame}>
+          Light
+        </button>
+      )
+    }     
     
   }
 
@@ -5383,6 +5446,35 @@ const disposeCup = () => {
     if(selectedLesson==14.4 && lessonStep==142){
       setLessonStep(143)
     }
+  }
+
+  const handleDipMode = ()=>{
+    const isValid = (selectedLesson==15 && [15,21].includes(lessonStep))
+
+    if(!isValid){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+
+    setIsDipMode(true)
+    setSelectedObject(null)
+  }
+
+
+  const renderNichromeHeldButtons = ()=>{
+       if(selectedLesson===15 && [15,21].includes(lessonStep) && selectedObject.name === "nichrome-wire"){
+        return(
+          <>
+            <button onClick={handleDipMode}>
+              Dip
+            </button>
+            <button onClick={keepBackOnTable}>
+              Keep Back On Table
+            </button>          
+          </>
+        )
+      }   
   }
 
   const renderNormalBeakerHeldButtons=()=>{
@@ -6523,6 +6615,8 @@ const renderHeldSpoonButtons = () => {
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
+  const NichromeHeldButtons = renderNichromeHeldButtons();
+  if(NichromeHeldButtons) return NichromeHeldButtons
 
    const graduatedPipppeteButtons  = renderGraduatedPipetteHeldButtons()
    if (graduatedPipppeteButtons) return graduatedPipppeteButtons
@@ -6768,6 +6862,11 @@ const renderHeldObjectButtons = () => {
     {
       selectedLesson===14.3 && lessonStep==108 &&
       <ClickHitbox modelRef={heatingMantleRef} multiplier={2}/>
+    }
+
+    {
+      selectedLesson === 15 &&
+      <ClickHitbox modelRef={nichromeWireRef} multiplier={2}/>
     }
 
 

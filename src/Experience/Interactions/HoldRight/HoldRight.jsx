@@ -566,7 +566,9 @@ const transformControlsRef = useRef()
       if(selectedLesson===11 && lessonStep === 20){
         setLessonStep(21)
       }
-
+      if(selectedLesson===15 && lessonStep === 10){
+        setLessonStep(11)
+      }
     }
   }
 
@@ -595,7 +597,7 @@ const transformControlsRef = useRef()
       {!isStirMode &&
         selectedLeftHand &&
         selectedRightHand && 
-        !isFunnelMode &&  ![14.3,11,12,12.1,12.2,14.4].includes(selectedLesson) &&
+        !isFunnelMode &&  ![14.3,11,12,12.1,12.2,14.4,15].includes(selectedLesson) &&
         
         (
           <PouringMode hand="right" />

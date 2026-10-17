@@ -721,6 +721,29 @@ const PouringMode02 = ({
           />
         )}
 
+
+      {selectedLesson==15 && lessonStep===11 &&selectedLeftHand?.name ===
+        "water-bottle" &&
+        selectedRightHand?.name ===
+          "main-normal-beaker" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+               waterBottleRef
+            }
+            otherModelRef={
+              normalBeakerRef
+            }
+            modelLiquidEndScale={0.2}
+            otherLiquidEndScale={0.6}
+            otherLiquidColor = {"#ffffff"}
+            speed={6}
+            pourScale = {2.5}
+            liquidSpeed={0.25}
+          />
+        )}
+
+
         
     </>
   )

@@ -867,19 +867,21 @@ const SwirlModel = ({
         // =========================================
 
         if (
-          !lessonAdvancedRef.current &&
-          selectedLesson ===
-            14.3 &&
-          lessonStep ===
-            92
+          !lessonAdvancedRef.current && selectedLesson === 14.3 & lessonStep === 92
         ) {
-          lessonAdvancedRef.current =
-            true
-
-          setLessonStep(
-            93
-          )
+          lessonAdvancedRef.current = true
+          setLessonStep(93)
         }
+
+        if (
+          !lessonAdvancedRef.current && selectedLesson === 15 & lessonStep === 13
+        ) {
+          lessonAdvancedRef.current = true
+          setLessonStep(14)
+        }
+
+
+
       }
     }
   })

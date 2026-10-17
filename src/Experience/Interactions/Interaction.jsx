@@ -74,6 +74,10 @@ import ChlorideIonReaction from "../AllReactions/ChlorideIonReaction/ChlorideIon
 import ModelFocusMode from "./AllModeFocusModes/ModelFocusMode/ModelFocusMode";
 import AllModeFocusModes from "./AllModeFocusModes/AllModeFocusModes";
 import PlaceModelInHeatingMat from "./PlaceModelInHeatingMat/PlaceModelInHeatingMat";
+import DipMode from "./DipMode/DipMode";
+import BunsenFlame from "./BunsenFlame/BunsenFlame";
+import MoveModelByScrolling from "./MoveModelByScrolling/MoveModelByScrolling";
+import PlaceModelNearModel from "./PlaceModelNearModel/PlaceModelNearModel";
 
 const Interaction = () => {
   const {
@@ -87,7 +91,8 @@ const Interaction = () => {
     isInvertCylinder,isModelCentre,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
-    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen,isModelInHeatingMat
+    isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen,isModelInHeatingMat,isDipMode,
+    showBunsenFlame
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -95,7 +100,7 @@ const Interaction = () => {
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
         naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
         tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef,waterBottleRef,heatingMatRef,
-        bunsenBurnerRef
+        bunsenBurnerRef,nichromeWireRef
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -316,8 +321,9 @@ useEffect(() => {
       {selectedLesson ===14.1 && [53,56].includes(lessonStep) && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={3}/> }
       {selectedLesson ===14.2 && [72,76].includes(lessonStep) && <SwirlModel modelRef={seperatingFunnelRef} useTargetSwirls={true} targetSwirls={5}/> }
       {selectedLesson ===14.3 && [92].includes(lessonStep) && <SwirlModel modelRef={conicalBeakerRef02} useTargetSwirls={true} targetSwirls={5}/> }
+      {selectedLesson ===15 && [13].includes(lessonStep) && <SwirlModel modelRef={normalBeakerRef} useTargetSwirls={true} targetSwirls={3}/>};
 
-      
+
       {selectedLesson===12.1 && lessonStep===43 && <ScaleLiquid modelRef={volumetricRef} finalLiquidAmount={1}/>}
 
       {selectedLeftHand?.name==="main-buirette"&& isFunnelMode && <FunnelMode 
@@ -531,7 +537,21 @@ useEffect(() => {
          pourModelYRotation = {Math.PI}
          receiveModelXOffset ={-2}         
          />
-      }      
+      }
+      
+      {
+        selectedLesson==15 && lessonStep==11 && <PouringMode02 
+        pourModelRef={waterBottleRef}
+         receiveModelRef={normalBeakerRef}
+         pourModelXOffset = {-1.5}
+         pourModelYOffset = {-1.5}
+         pourModelScale={1}
+         receiveModelScale={0.7}
+         hand={"left"}
+         pourModelYRotation = {0}
+         receiveModelXOffset ={-2}         
+         />
+      }             
 
       {
        selectedLesson==14.3 && lessonStep<121  && isDropperPlaced && <DropperPlaced 
@@ -637,6 +657,24 @@ useEffect(() => {
       }  
 
       {selectedLesson==15 && isModelInHeatingMat && <PlaceModelInHeatingMat modelRef={bunsenBurnerRef}/>}
+
+      {selectedLesson==15  && selectedLeftHand?.name=="nichrome-wire" && selectedRightHand?.name ==="main-normal-beaker"  && 
+      isDipMode && <DipMode dipModelScale={0.8} recieveModelScale={0.8} yOffset={2} xOffset={1.3}
+       DipmodelRef={nichromeWireRef} recieveModelRef={normalBeakerRef}  recieveModelYOffset={-0.8}/> }
+
+      {selectedLesson==15 && showBunsenFlame && lessonStep>=18 && <BunsenFlame/>}
+      {selectedLesson==15 &&  [19,20].includes(lessonStep) && <PlaceModelNearModel
+        zRotation={Math.PI/2} 
+        xOffset={-7} 
+        yOffset={6.5}
+        modelRef={nichromeWireRef}
+        modelRefScale={[1.5,1.5,1.5]}
+        otherModelRefScale={[1.3,1.3,1.3]}
+        otherModelRef={bunsenBurnerRef}
+        isAttachedToCamera={true}      
+      />}
+
+      {selectedLesson==15 && [19,20].includes(lessonStep) && <MoveModelByScrolling modelRef={nichromeWireRef} distance={3.5} speed={0.5}/>}
 
 
     </>

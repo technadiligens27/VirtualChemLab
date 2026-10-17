@@ -4,21 +4,51 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
 
 const BunsenFlame = ({
   innerColour = "#65DFFF",
   OuterColur = "#1677FF",
+
+  // Flame opacity (0 - 1)
+  innerOpacity = 1,
+  outerOpacity = 1,
+
   duration = 1.5,
   swaySpeed = 2,
-  swayRange = 0.08,
+  swayRange = 0.05,
 }) => {
   const { bunsenBurnerRef } = useContext(ModelContext);
+
+  const {
+    selectedLesson,
+    lessonStep,
+    setLessonStep,
+  } = useContext(MainGuidelineContext);
 
   const flamesRef = useRef([]);
   const elapsedRef = useRef(0);
 
+  // =====================================================
+  // LESSON STEP
+  // =====================================================
+
+  useEffect(() => {
+    if (
+      selectedLesson === 15 &&
+      lessonStep === 18
+    ) {
+      setLessonStep(19);
+    }
+  }, [selectedLesson, lessonStep, setLessonStep]);
+
+  // =====================================================
+  // FIND FLAMES + INITIALIZE
+  // =====================================================
+
   useEffect(() => {
     const burner = bunsenBurnerRef?.current;
+
     if (!burner) return;
 
     const flames = [];
@@ -37,8 +67,12 @@ const BunsenFlame = ({
       const originalVisible = child.visible;
       const originalRotation = child.rotation.clone();
       const originalScale = child.scale.clone();
+      const originalRenderOrder = child.renderOrder;
 
-      // Clone to avoid affecting other objects
+      // ===================================
+      // CLONE MATERIALS
+      // ===================================
+
       const materials = (
         Array.isArray(originalMaterial)
           ? originalMaterial
@@ -75,6 +109,9 @@ const BunsenFlame = ({
 
       child.visible = true;
 
+      // Inner flame renders after outer flame
+      child.renderOrder = isInner ? 2 : 1;
+
       flames.push({
         mesh: child,
         materials,
@@ -82,7 +119,7 @@ const BunsenFlame = ({
         originalVisible,
         originalRotation,
         originalScale,
-        baseOpacity: 1,
+        originalRenderOrder,
         isInner,
         phase: isInner ? 0.8 : 0,
       });
@@ -90,6 +127,10 @@ const BunsenFlame = ({
 
     flamesRef.current = flames;
     elapsedRef.current = 0;
+
+    // =====================================================
+    // CLEANUP
+    // =====================================================
 
     return () => {
       flames.forEach((flame) => {
@@ -100,6 +141,7 @@ const BunsenFlame = ({
           originalVisible,
           originalRotation,
           originalScale,
+          originalRenderOrder,
         } = flame;
 
         mesh.material = originalMaterial;
@@ -108,6 +150,8 @@ const BunsenFlame = ({
         mesh.rotation.copy(originalRotation);
         mesh.scale.copy(originalScale);
 
+        mesh.renderOrder = originalRenderOrder;
+
         materials.forEach((material) => {
           material.dispose();
         });
@@ -115,7 +159,15 @@ const BunsenFlame = ({
 
       flamesRef.current = [];
     };
-  }, [bunsenBurnerRef, innerColour, OuterColur]);
+  }, [
+    bunsenBurnerRef,
+    innerColour,
+    OuterColur,
+  ]);
+
+  // =====================================================
+  // ANIMATION
+  // =====================================================
 
   useFrame((_, delta) => {
     if (!flamesRef.current.length) return;
@@ -124,7 +176,10 @@ const BunsenFlame = ({
 
     const elapsed = elapsedRef.current;
 
-    // Fade-in progress: 0 -> 1
+    // ===================================
+    // FADE-IN PROGRESS
+    // ===================================
+
     const progress =
       duration <= 0
         ? 1
@@ -149,76 +204,93 @@ const BunsenFlame = ({
       } = flame;
 
       // ===================================
-      // FADE IN
+      // OPACITY + FADE IN
       // ===================================
+
+      const targetOpacity = THREE.MathUtils.clamp(
+        isInner ? innerOpacity : outerOpacity,
+        0,
+        1
+      );
 
       materials.forEach((material) => {
-        material.opacity = fade;
+        material.opacity = targetOpacity * fade;
       });
-
-      // ===================================
-      // NATURAL SWAY
-      // ===================================
 
       const t = elapsed * swaySpeed;
 
-      const mainSway =
-        Math.sin(t + phase) * swayRange;
+      // ===================================
+      // OUTER FLAME SWAY
+      // ===================================
 
-      const secondarySway =
-        Math.sin(t * 1.7 + phase) *
-        swayRange *
-        0.25;
+      if (!isInner) {
+        const mainSway =
+          Math.sin(t + phase) * swayRange;
 
-      const microSway =
-        Math.sin(t * 3.2 + phase) *
-        swayRange *
-        0.08;
-
-      const totalSway =
-        mainSway +
-        secondarySway +
-        microSway;
-
-      // Inner flame sways less than outer
-      const swayMultiplier = isInner ? 0.45 : 1;
-
-      mesh.rotation.z =
-        originalRotation.z +
-        totalSway * swayMultiplier * fade;
-
-      mesh.rotation.x =
-        originalRotation.x +
-        Math.sin(t * 0.8 + phase) *
+        const secondarySway =
+          Math.sin(t * 1.7 + phase) *
           swayRange *
-          0.35 *
-          swayMultiplier *
-          fade;
+          0.25;
+
+        const microSway =
+          Math.sin(t * 3.2 + phase) *
+          swayRange *
+          0.08;
+
+        const totalSway =
+          mainSway +
+          secondarySway +
+          microSway;
+
+        mesh.rotation.z =
+          originalRotation.z +
+          totalSway * fade;
+
+        mesh.rotation.x =
+          originalRotation.x +
+          Math.sin(t * 0.8 + phase) *
+            swayRange *
+            0.35 *
+            fade;
+      } else {
+        // Keep inner flame upright
+        mesh.rotation.copy(originalRotation);
+      }
 
       // ===================================
-      // SUBTLE FLAME STRETCH
+      // SUBTLE HEIGHT FLICKER
       // ===================================
 
       const stretch =
         1 +
-        Math.sin(t * 2.1 + phase) * 0.035 +
-        Math.sin(t * 3.4 + phase) * 0.015;
+        Math.sin(t * 2.1 + phase) * 0.025 +
+        Math.sin(t * 3.4 + phase) * 0.01;
 
       mesh.scale.y =
-        originalScale.y * stretch;
+        originalScale.y *
+        (isInner
+          ? 1 + (stretch - 1) * 0.4
+          : stretch);
 
       // ===================================
       // SUBTLE WIDTH FLICKER
       // ===================================
 
       const widthFlicker =
-        1 + Math.sin(t * 2.5 + phase) * 0.025;
+        1 +
+        Math.sin(t * 2.5 + phase) * 0.015;
 
       mesh.scale.x =
-        originalScale.x * widthFlicker;
+        originalScale.x *
+        (isInner
+          ? 1 + (widthFlicker - 1) * 0.4
+          : widthFlicker);
 
       mesh.scale.z =
-        originalScale.z * widthFlicker;
+        originalScale.z *
+        (isInner
+          ? 1 + (widthFlicker - 1) * 0.4
+          : widthFlicker);
     });
   });
 
