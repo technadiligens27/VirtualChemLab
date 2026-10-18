@@ -25,7 +25,7 @@ const DialogBox = ({
   } = useContext(InteractionContext)
 
   const {
-    isExplanationOpen,
+    isExplanationOpen,showPowderBox
   } = useContext(MainGuidelineContext)
 
   return (
@@ -33,7 +33,7 @@ const DialogBox = ({
       className={`
         dialog-box-container
         ${
-          isFillBeakerBoxOpen
+          (isFillBeakerBoxOpen || showPowderBox)
             ? "dialog-z-index"
             : ""
         }

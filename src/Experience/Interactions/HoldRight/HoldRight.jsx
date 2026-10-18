@@ -204,6 +204,9 @@ const transformControlsRef = useRef()
 
     }else if(object.name === "volumetric-flask"){
       object.scale.set(1, 1, 1);
+
+    }else if(object.name === "metal-salt-container"){
+      object.scale.set(0.8, 0.8, 0.8);
     } 
     
     else {
@@ -221,6 +224,11 @@ const transformControlsRef = useRef()
     if(selectedLesson ===15 && lessonStep ===6){
       setLessonStep(7)
     }
+    if(selectedLesson ==15.2 && lessonStep==25){
+      setLessonStep(26)
+    }
+
+
   },[lessonStep,selectedLesson])    
 
   useEffect(()=>{
@@ -525,6 +533,9 @@ const transformControlsRef = useRef()
     if(selectedLesson ==14.4 && lessonStep==147){
       setLessonStep(148)
     }
+
+
+
 
   },[selectedLesson,lessonStep])  
 

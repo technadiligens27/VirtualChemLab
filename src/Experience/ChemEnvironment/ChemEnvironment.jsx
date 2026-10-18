@@ -30,7 +30,7 @@ const ChemEnvironment = () => {
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
          arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,arrowGraduatedPipette,
          testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,arrowHeatingMatRef,heatingMatRef,
-         bunsenBurnerRef,arrowBunsenBurner,gasTubeRef,arrowNichromeWireRef,nichromeWireRef,powderContainer
+         bunsenBurnerRef,arrowBunsenBurner,gasTubeRef,arrowNichromeWireRef,nichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef
          
   } = useContext(ModelContext);
 
@@ -309,7 +309,14 @@ const hideVerticalObjects=(root)=>{
     testube05Ref.current = scene.getObjectByName('main-testube-05')
     testube06Ref.current = scene.getObjectByName('main-testube-06')
     filterPaperRef.current = scene.getObjectByName('main-filter-paper');
-    heatingMatRef.current = scene.getObjectByName("heating-mat")
+    metalSaltRef.current = scene.getObjectByName("metal-salt");
+    metalSaltRef.current.visible = false
+    heatingMatRef.current = scene.getObjectByName("heating-mat");
+    heatingMatRef.current.visible = false;
+
+    nichromeWirePowderRef.current = scene.getObjectByName("nichrome-wire-powder")
+    nichromeWirePowderRef.current.visible = false
+
     mainDropperRef.current = scene.getObjectByName('main-dropper');
     mainDropperRef.current.visible = false
 
@@ -371,6 +378,7 @@ const hideVerticalObjects=(root)=>{
 
     funnelRef.current = scene.getObjectByName('main-funnel');
     powderContainer.current = scene.getObjectByName("metal-salt-container");
+    powderContainer.current.visible = false
 
     normalBeakerLiquidRef.current = scene.getObjectByName('main-normal-beaker-liquid');
     if (normalBeakerLiquidRef.current) {

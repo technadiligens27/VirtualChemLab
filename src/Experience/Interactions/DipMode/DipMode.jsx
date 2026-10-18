@@ -35,10 +35,10 @@ const DipMode = ({
   // =====================================================
 
   const SCROLL_DOWN_CONDITION =
-    selectedLesson === 15 && [16,22].includes(lessonStep);
+    [15,15.2].includes(selectedLesson) && [16,22,29].includes(lessonStep);
 
   const SCROLL_UP_CONDITION =
-    selectedLesson === 15 && [17,23].includes(lessonStep);
+    [15,15.2].includes(selectedLesson) && [17,23,30].includes(lessonStep);
 
   // =====================================================
   // REFS
@@ -91,6 +91,10 @@ const DipMode = ({
 
     if(selectedLesson == 15 && lessonStep === 21){
       setLessonStep(22)
+    }
+
+    if(selectedLesson == 15.2 && lessonStep === 28){
+      setLessonStep(29)
     }
   }, [
     selectedLesson,
@@ -310,6 +314,13 @@ const DipMode = ({
             setLessonStep(23);
           }
 
+          if (
+            selectedLesson === 15.2 &&
+            lessonStep === 29
+          ) {
+            setLessonStep(30);
+          }
+
         }
       }
 
@@ -356,7 +367,12 @@ const DipMode = ({
           ) {
             setLessonStep(24);
           }
-          
+          if (
+            selectedLesson === 15.2 &&
+            lessonStep === 30
+          ) {
+            setLessonStep(31);
+          }
         }
       }
     };

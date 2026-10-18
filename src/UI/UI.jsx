@@ -45,6 +45,7 @@ import ChlorinationLesson05 from "./AllLessons/ChlorinationLesson/ChlorinationLe
 import Explanations from "../Experience/Interactions/Explanations/Explanations"
 import AllExplanations from "./AllExplanations/AllExplanations"
 import FlameTest from "./AllLessons/FlameTest/FlameTest"
+import FlameTest02 from "./AllLessons/FlameTest/FlameTest02"
 
 const mainContent = [
   {
@@ -202,7 +203,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowSeparatingFunnel(
-      (selectedLesson==14.1 && lessonStep ==34)
+      (selectedLesson==14.1 && lessonStep ==34) ||
+      (selectedLesson ==15.2 && lessonStep == 25)
     )
   },[selectedLesson,lessonStep])
 
@@ -770,6 +772,11 @@ useEffect(() => {
        {
         selectedLesson == 14.4 && (<ChlorinationLesson05/>)
        }
+
+       {
+        selectedLesson == 15.2 && (<FlameTest02/>)
+       }
+
        {safetyStep === 4 &&
         isLessonStart &&
         selectedLesson===15 && (

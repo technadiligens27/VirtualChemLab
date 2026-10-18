@@ -78,6 +78,8 @@ import DipMode from "./DipMode/DipMode";
 import BunsenFlame from "./BunsenFlame/BunsenFlame";
 import MoveModelByScrolling from "./MoveModelByScrolling/MoveModelByScrolling";
 import PlaceModelNearModel from "./PlaceModelNearModel/PlaceModelNearModel";
+import PowderBox from "../../UI/PowderBox/PowderBox";
+import ShowPowderInEmptyContainer from "./showPowderInEmptyContainer/showPowderInEmptyContainer";
 
 const Interaction = () => {
   const {
@@ -92,7 +94,7 @@ const Interaction = () => {
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
     isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen,isModelInHeatingMat,isDipMode,
-    showBunsenFlame
+    showBunsenFlame,showPowderBox,showPowderInContainer
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -100,7 +102,7 @@ const Interaction = () => {
         conicalBeakerRef,phenopthalineBottleRef,mainBuiretteRef,funnelRef,methylBottleRef,
         naohBottleRef,boilingTube01Ref,conicalBeakerRef02,seperatingFunnelRef,graduatedBeakerRef,roundBeakerRef,
         tableConicalPos,heatingMantleRef,condensorRef,pipetteRef,graduatedPipetteRef,waterBottleRef,heatingMatRef,
-        bunsenBurnerRef,nichromeWireRef
+        bunsenBurnerRef,nichromeWireRef,powderContainer
       } = useContext(ModelContext)
 
   const {lessonStep,isTutorialMode,safetyStep,setLessonStep,selectedLesson} = useContext(MainGuidelineContext)
@@ -152,6 +154,8 @@ useEffect(() => {
       <FilterFunnelController/>
       <AllArrows/>
       <AllModeFocusModes/>
+
+      
         
       {isAddSalt && <AddSaltToSpoon/>}      
       {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}
@@ -351,7 +355,7 @@ useEffect(() => {
       {[14.3,14.4].includes(selectedLesson) && lessonStep>=106.1 && isModelCentre && (<PlaceModelCentre modelZScale={0.8}  modelYScale={0.9} modelXScale={0.8} modelXOffset={-5} modelZOffset={2.5}  modelRef={heatingMantleRef}/>)}
       {selectedLesson==14.3 && lessonStep>=107 && lessonStep<110 &&isModelCentre && (<PlaceModelCentre modelZScale={1}  modelYScale={1} modelXScale={1} modelXOffset={6} modelZOffset={2.5}  modelRef={conicalBeakerRef02}/>)}
 
-      {selectedLesson ==15 && lessonStep >=3 && isModelCentre && (<PlaceModelCentre modelXScale={1} modelZScale={1} modelYScale={1} modelYOffset={0} modelXOffset={-1} modelRef={heatingMatRef}/>)}
+      {[15,15.2].includes(selectedLesson) && lessonStep >=3 && isModelCentre && (<PlaceModelCentre modelXScale={1} modelZScale={1} modelYScale={1} modelYOffset={0} modelXOffset={-1} modelRef={heatingMatRef}/>)}
 
       {isDeliveryTubeConnected && (<ConnectDeliveryTube  modelRef= {boilingTube01Ref}/>)}
 
@@ -656,13 +660,19 @@ useEffect(() => {
         />
       }  
 
-      {selectedLesson==15 && isModelInHeatingMat && <PlaceModelInHeatingMat modelRef={bunsenBurnerRef}/>}
+      {[15,15.2].includes(selectedLesson) && isModelInHeatingMat && <PlaceModelInHeatingMat modelRef={bunsenBurnerRef}/>}
 
-      {selectedLesson==15  && selectedLeftHand?.name=="nichrome-wire" && selectedRightHand?.name ==="main-normal-beaker"  && 
+      {[15,15.2].includes(selectedLesson)  && selectedLeftHand?.name=="nichrome-wire" && selectedRightHand?.name ==="main-normal-beaker"  && 
       isDipMode && <DipMode dipModelScale={0.8} recieveModelScale={0.8} yOffset={2} xOffset={1.3}
        DipmodelRef={nichromeWireRef} recieveModelRef={normalBeakerRef}  recieveModelYOffset={-0.8}/> }
 
-      {selectedLesson==15 && showBunsenFlame && lessonStep>=18 && <BunsenFlame/>}
+      {[15.2].includes(selectedLesson)  && selectedLeftHand?.name=="nichrome-wire" && selectedRightHand?.name ==="metal-salt-container"  && 
+      isDipMode && <DipMode dipModelScale={0.8} recieveModelScale={0.8} yOffset={4} xOffset={0.95}
+       DipmodelRef={nichromeWireRef} recieveModelRef={powderContainer}  recieveModelYOffset={-0.8}/> }
+
+
+
+      {[15,15.2].includes(selectedLesson) && showBunsenFlame && lessonStep>=18 && <BunsenFlame/>}
       {selectedLesson==15 &&  [19,20].includes(lessonStep) && <PlaceModelNearModel
         zRotation={Math.PI/2} 
         xOffset={-7} 
@@ -675,7 +685,7 @@ useEffect(() => {
       />}
 
       {selectedLesson==15 && [19,20].includes(lessonStep) && <MoveModelByScrolling modelRef={nichromeWireRef} distance={3.5} speed={0.5}/>}
-
+      {showPowderInContainer && <ShowPowderInEmptyContainer/>}
 
     </>
   );

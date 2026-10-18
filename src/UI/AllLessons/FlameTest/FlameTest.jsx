@@ -8,6 +8,7 @@ import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLes
 import { flameTestData } from "../../Data/flameTestData/flameTestData"
 import SafetyScreen from "../../SafetyScreen/SafetyScreen"
 import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction"
+import FlameTest02 from "./FlameTest02"
 
 const FlameTest = ()=>{
 
@@ -15,7 +16,7 @@ const FlameTest = ()=>{
     graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,pipetteRef,gogglesRef,gloverightRef,
     graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,
     heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,digitalBalanceRef,mainDropperRef,graduatedPipetteRef,testube02Ref,
-    testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,condensorRef,
+    testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,condensorRef,heatingMatRef,powderContainer
   } = useContext(ModelContext)    
     
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
@@ -30,6 +31,13 @@ const FlameTest = ()=>{
     }
     if(volumetricPipetteRef.current){
       volumetricPipetteRef.current.visible = false
+    }
+    if(heatingMatRef.current){
+      heatingMatRef.current.visible = true
+    }
+
+    if(powderContainer.current){
+      powderContainer.current.visible = true
     }
     },[])    
  
@@ -228,12 +236,12 @@ const FlameTest = ()=>{
 
         {lessonStep == 25 && <DialogBox text={
           <>
-         Click the <strong>lithium chloride sample</strong> and <strong>Pick Up</strong>
+         Click the <strong>Empty Container</strong> and <strong>Pick Up</strong>
           </>
           } 
         />}
 
-
+        {lessonStep >=26 && <FlameTest02/>}
         </>           
 
     )

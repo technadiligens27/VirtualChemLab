@@ -194,9 +194,13 @@ export const InteractionProvider = ({ children }) => {
   const [isChlorideIonReaction,setIsChlorideIonReaction] = useState(false);
 
   const [isModelInHeatingMat,setIsModelInHeatingMat] = useState(false);
-  const [isDipMode,setIsDipMode] = useState(false)
-  const [showBunsenFlame,setShowBunsenFlame] = useState(false)
+  const [isDipMode,setIsDipMode] = useState(false);
+  const [showBunsenFlame,setShowBunsenFlame] = useState(false);
 
+  const [showPowderBox,setShowPowderBox] = useState(false);
+  const [selectedPowder,setSelectedPowder] = useState(null);
+
+  const [showPowderInContainer,setShowPowderInContainer] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -334,6 +338,10 @@ export const InteractionProvider = ({ children }) => {
   setIsModelInHeatingMat(false);
   setIsDipMode(false);
   setShowBunsenFlame(false);
+  setShowPowderBox(false);
+  setSelectedPowder(false);
+  setShowPowderInContainer(false)
+
 }
 
   return (
@@ -439,7 +447,8 @@ export const InteractionProvider = ({ children }) => {
         isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker,
         isChlorideIonReaction,setIsChlorideIonReaction,
         isModelInHeatingMat,setIsModelInHeatingMat,
-        setIsDipMode,isDipMode,showBunsenFlame,setShowBunsenFlame
+        setIsDipMode,isDipMode,showBunsenFlame,setShowBunsenFlame,
+        showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer
       }}
     >
       {children}

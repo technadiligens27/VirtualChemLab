@@ -102,7 +102,7 @@ const ClickObject = () => {
     useContext(MainGuidelineContext)
 
  const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,setIsInsertThermometer,
-  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor,setIsMantleTurnedOn} = useContext(InteractionContext)  
+  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor,setIsMantleTurnedOn,setShowPowderBox} = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
 
@@ -317,7 +317,7 @@ const ClickObject = () => {
         ref:nichromeWireRef
       },
       {
-        name:"volumetric-pipette",
+        name:"metal-salt-container",
         ref:powderContainer
       }
       ],
@@ -1993,6 +1993,11 @@ const ClickObject = () => {
       return
     }
 
+    if(selectedLesson ===15 && ["volumetric-pipette","pipette"].includes(objectName)){
+      setSelectedObject(null)
+      return
+    }
+
     if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
       setSelectedObject(null)
       return
@@ -2209,7 +2214,7 @@ const clickableObjects = selectableObjects
     if (!isMainGuideline) return true
     
     if([15].includes(selectedLesson)){
-      if(![6].includes(lessonStep)){
+      if(![6,25].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
@@ -2218,6 +2223,12 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(1)
         return
       }
+
+      if([25].includes(lessonStep) && objectName !== "metal-salt-container"){
+        setShowErrorMsgNo(1)
+        return
+      }
+
     }
 
     if([12,12.1,12.2].includes(selectedLesson)){
@@ -3384,7 +3395,7 @@ const canShowMainHoldingButton = () => {
 
 
 const renderHandSelectionButtons = () => {
-if (isTutorialMode && ![8, 9, 10, 11, 11.1, 12, 12.1, 12.2, 13, 14, 14.1, 14.2, 14.3,14.4,15].includes(selectedLesson)) {
+if (isTutorialMode && ![8, 9, 10, 11, 11.1, 12, 12.1, 12.2, 13, 14, 14.1, 14.2, 14.3,14.4,15,15.2].includes(selectedLesson)) {
     return <p>Can't pick now</p>
   }
 
@@ -5449,7 +5460,7 @@ const disposeCup = () => {
   }
 
   const handleDipMode = ()=>{
-    const isValid = (selectedLesson==15 && [15,21].includes(lessonStep))
+    const isValid = ([15,15.2].includes(selectedLesson) && [15,21,28].includes(lessonStep))
 
     if(!isValid){
       setShowErrorMsgNo(1)
@@ -5463,7 +5474,7 @@ const disposeCup = () => {
 
 
   const renderNichromeHeldButtons = ()=>{
-       if(selectedLesson===15 && [15,21].includes(lessonStep) && selectedObject.name === "nichrome-wire"){
+       if([15,15.2].includes(selectedLesson) && [15,21,28].includes(lessonStep) && selectedObject.name === "nichrome-wire"){
         return(
           <>
             <button onClick={handleDipMode}>
@@ -5476,6 +5487,35 @@ const disposeCup = () => {
         )
       }   
   }
+
+  const handlePowderBox = ()=>{
+    const isValid = (selectedLesson==15.2 && lessonStep==26)
+
+    if(!isValid){
+      setShowErrorMsgNo(1)
+      setSelectedObject(null)
+      return
+    }
+
+    setShowPowderBox(true)
+    setSelectedObject(null)
+  }
+
+  const renderEmptyContainerHeldButtons = ()=>{
+       if([15,15.2].includes(selectedLesson) && [26].includes(lessonStep) && selectedObject.name === "metal-salt-container"){
+        return(
+          <>
+            <button onClick={handlePowderBox}>
+              Add Powder
+            </button>
+            <button onClick={keepBackOnTable}>
+              Keep Back On Table
+            </button>          
+          </>
+        )
+      }   
+  }
+
 
   const renderNormalBeakerHeldButtons=()=>{
 
@@ -6615,6 +6655,9 @@ const renderHeldSpoonButtons = () => {
 const renderHeldObjectButtons = () => {
   if (!selectedObject?.isHolding) return null
 
+  const emptyContainerButtons = renderEmptyContainerHeldButtons();
+  if(emptyContainerButtons) return emptyContainerButtons
+
   const NichromeHeldButtons = renderNichromeHeldButtons();
   if(NichromeHeldButtons) return NichromeHeldButtons
 
@@ -6655,7 +6698,7 @@ const renderHeldObjectButtons = () => {
   if(volumetricPippetteButtons ) return volumetricPippetteButtons 
 
   const normalBeakerButtons =
-    renderNormalBeakerHeldButtons()
+    renderNormalBeakerHeldButtons();
 
   if (normalBeakerButtons) return normalBeakerButtons
 
