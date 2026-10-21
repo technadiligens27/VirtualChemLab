@@ -5,9 +5,10 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines"
 import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview"
-import { flameTestData } from "../../Data/flameTestData/flameTestData"
+import { flameTestData,flameTestGuidelineData } from "../../Data/flameTestData/flameTestData"
 import SafetyScreen from "../../SafetyScreen/SafetyScreen"
 import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction"
+import FlameTestSummary from "../../Summary/FlameTestSummary/FlameTestSummary"
 
 const FlameTest02 = ()=>{
 
@@ -16,13 +17,13 @@ const FlameTest02 = ()=>{
     graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,
     heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,digitalBalanceRef,mainDropperRef,graduatedPipetteRef,testube02Ref,
     testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,condensorRef,heatingMatRef,powderContainer,
-    nichromeWireRef
+    nichromeWireRef,nichromeWirePowderRef,metalSaltRef,airHoleRef,bunsenBurnerRef
   } = useContext(ModelContext)    
     
-  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep,setSelectedLesson} = useContext(MainGuidelineContext)
+  const {selectedLesson,setLessonStep,setSafetyStep,lessonStep,setSelectedLesson} = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
-    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setIsModelInHeatingMat,setShowBunsenFlame
+    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setIsModelInHeatingMat,setShowBunsenFlame,setShowPowderInContainer
   } = useContext(InteractionContext)
 
     useEffect(()=>{
@@ -42,14 +43,44 @@ const FlameTest02 = ()=>{
     },[])    
 
     useEffect(()=>{
+      if(selectedLesson==15.2 && lessonStep==29){
+        bunsenBurnerRef.current.visible = false
+      }
+      if(selectedLesson==15.2 && lessonStep==31){
+        bunsenBurnerRef.current.visible = true
+      }
+
+    },[lessonStep])
+
+    useEffect(()=>{
         setSelectedLesson(15.2)
         setSafetyStep(4)
-        setLessonStep(25)
+        setLessonStep(26)
+        // setShowBunsenFlame(false)
+
         gogglesRef.current.visible = false 
-     gloverightRef.current.visible = false 
-     gloveleftRef.current.visible = false 
+        gloverightRef.current.visible = false 
+        gloveleftRef.current.visible = false 
     },[])
- 
+
+    useEffect(()=>{
+      if(selectedLesson==15.2 && lessonStep==30){
+        nichromeWirePowderRef.current.visible = true
+      }
+    },[lessonStep])
+
+    const handleRestart = ()=>{
+      setLessonStep(26);
+      nichromeWirePowderRef.current.visible = false;
+      setShowPowderInContainer(false)
+    }
+
+    useEffect(()=>{
+      if(airHoleRef.current){
+        airHoleRef.current.visible = true
+      }
+    },[])
+
     useEffect(()=>{
       if (selectedLeftHand?.name !== "nichrome-wire") {
             setSelectedLeftHand({
@@ -74,7 +105,6 @@ const FlameTest02 = ()=>{
     useEffect(()=>{
         setIsModelCentre(true);
         setIsModelInHeatingMat(true);
-        setShowBunsenFlame(true)
     },[])
     useEffect(()=>{
       if(selectedLesson==15.2 && [31].includes(lessonStep)){
@@ -84,6 +114,7 @@ const FlameTest02 = ()=>{
     return(
         <>
 
+      {lessonStep >=26 &&  lessonStep <=28 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[7]}/>}
 
         {lessonStep == 26 && <DialogBox text={
           <>
@@ -122,10 +153,33 @@ const FlameTest02 = ()=>{
 
         {lessonStep == 31 && <DialogBox text={
           <>
-         <strong>Scroll Down Continously</strong> to <strong>Dip</strong> the <strong>Nichrome Wire 31</strong>
+         Click the <strong>Bunsen burner</strong> and <strong>light it</strong>
           </>
           } 
         />}
+
+        {lessonStep == 32 && <DialogBox text={
+          <>
+         <strong>Scroll Down Continously</strong> to <strong>Heat</strong> the Nichrome Wire 
+          </>
+          } 
+        />}
+
+        {lessonStep == 33 && <DialogBox text={
+          <>
+         <strong>Observe the Flame Colour Change</strong> 
+          </>
+          } 
+          button1Text="Try Difference Metal Salt"
+          onbtnClick={handleRestart}
+
+          // button2Text="Questions"
+
+        />}
+
+        {
+          lessonStep === 34 && <FlameTestSummary/>
+        }
 
         </>           
 

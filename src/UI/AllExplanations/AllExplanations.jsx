@@ -6,6 +6,7 @@ import AllExplanationLesson08 from "./AllExplanationLesson08"
 import AllExplanationLesson09 from "./AllExplanationLesson09"
 import AllExplanationLesson11 from "./AllExplanationLesson11"
 import AllExplanationLesson12 from "./AllExplanationLesson12"
+import AllExplanationLesson15 from "./AllExplanationLesson15"
 
 const AllExplanations = ()=>{
 
@@ -19,6 +20,7 @@ const AllExplanations = ()=>{
           {[9].includes(selectedLesson) && <AllExplanationLesson09/>}  
           {[11,11.1].includes(selectedLesson) && <AllExplanationLesson11/>}  
           {[12,12.1,12.2].includes(selectedLesson) && <AllExplanationLesson12/>}  
+          {[15,15.2].includes(selectedLesson) && <AllExplanationLesson15/>}  
 
         </>
     )

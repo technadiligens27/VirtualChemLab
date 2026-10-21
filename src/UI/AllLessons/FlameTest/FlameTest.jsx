@@ -5,7 +5,7 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 import DialogBox from "../../AllDialogBox/DialogBox/DialogBox"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines"
 import EnthalpyLessonOverview from "../../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview"
-import { flameTestData } from "../../Data/flameTestData/flameTestData"
+import { flameTestData,flameTestGuidelineData } from "../../Data/flameTestData/flameTestData"
 import SafetyScreen from "../../SafetyScreen/SafetyScreen"
 import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction"
 import FlameTest02 from "./FlameTest02"
@@ -16,13 +16,14 @@ const FlameTest = ()=>{
     graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,pipetteRef,gogglesRef,gloverightRef,
     graduatedBeaker50OriginalStateRef,volumetricRef,roundBeakerRef,gloveleftRef,potassiumHydrogenCarbonateRef,separatingFunnelBungRef,
     heatingMantleRef,volumetricPipetteRef,mainBuiretteRef,digitalBalanceRef,mainDropperRef,graduatedPipetteRef,testube02Ref,
-    testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,condensorRef,heatingMatRef,powderContainer
+    testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,condensorRef,heatingMatRef,powderContainer,
+     airHoleRef
   } = useContext(ModelContext)    
     
   const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
-    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode
+    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setShowBunsenFlame
   } = useContext(InteractionContext)
 
     useEffect(()=>{
@@ -48,6 +49,19 @@ const FlameTest = ()=>{
     },[lessonStep])
 
 
+    // useEffect(()=>{
+    //   if(selectedLesson==15  && lessonStep==21){
+    //   setShowBunsenFlame(false)
+
+    //   }
+    // },[lessonStep])
+
+     useEffect(()=>{
+      if(selectedLesson==15 && lessonStep==19){
+        airHoleRef.current.visible = true
+      }
+    },[lessonStep])
+ 
     return(
         <>
 
@@ -81,6 +95,8 @@ const FlameTest = ()=>{
         />
       )}
 
+      {lessonStep >=3 && lessonStep <5 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[0]}/>}
+
         {lessonStep == 3 && <DialogBox text={
           <>
            Click <strong>Heating Mat</strong> and Select <strong>Place In Center</strong>
@@ -95,12 +111,18 @@ const FlameTest = ()=>{
           } 
         />}
 
+      {lessonStep ==5 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[1]}/>}
+        
+
         {lessonStep == 5 && <DialogBox text={
           <>
           Click <strong>the Bunsen Burner</strong> and select <strong>Connect Gas Tube</strong>
           </>
           } 
         />}
+
+      {lessonStep >=6 &&  lessonStep <14 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[2]}/>}
+
 
         {lessonStep == 6 && <DialogBox text={
           <>
@@ -158,6 +180,10 @@ const FlameTest = ()=>{
           } 
         />}
 
+
+      {lessonStep >=14 &&  lessonStep <18 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[3]}/>}
+
+
         {lessonStep == 14 && <DialogBox text={
           <>
           <strong>Pick Up </strong> the <strong>Nichrome Wire </strong> to <strong>Left Hand</strong>
@@ -186,12 +212,28 @@ const FlameTest = ()=>{
           } 
         />}
 
+      {lessonStep >=18 &&  lessonStep <18.1 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[4]}/>}
+
+
+
         {lessonStep == 18 && <DialogBox text={
           <>
          Click the <strong>Bunsen burner</strong> and <strong>light it</strong>
           </>
           } 
         />}
+
+      {lessonStep ==18.1 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[5]}/>}
+
+
+        {lessonStep == 18.1 && <DialogBox text={
+          <>
+         Click the <strong>Bunsen burner</strong> and select <strong>Open Air Hole</strong>
+          </>
+          } 
+        />}
+
+      {lessonStep >18.1 &&  lessonStep <=25 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[6]}/>}
 
         {lessonStep == 19 && <DialogBox text={
           <>
@@ -206,7 +248,7 @@ const FlameTest = ()=>{
           </>
           } 
         />}
-        {lessonStep == 21 && <DialogBox text={
+        {/* {lessonStep == 21 && <DialogBox text={
           <>
          Click the <strong> Held Wire</strong> and Select <strong>Dip </strong>
           </>
@@ -225,7 +267,11 @@ const FlameTest = ()=>{
          <strong>Scroll Up Continously</strong> to <strong>Remove</strong> the <strong>Nichrome Wire</strong> 
           </>
           } 
-        />}
+        />} */}
+
+              {/* {lessonStep >=21 &&  lessonStep <=25 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[6]}/>} */}
+
+
 
         {lessonStep == 24 && <DialogBox text={
           <>

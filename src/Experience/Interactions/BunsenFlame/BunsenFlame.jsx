@@ -5,10 +5,12 @@ import * as THREE from "three";
 
 import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext";
+import ChangeBunsenFlameColor from "../ChangeBunsenFlameColor/ChangeBunsenFlameColor";
 
 const BunsenFlame = ({
-  innerColour = "#65DFFF",
-  OuterColur = "#1677FF",
+innerColour = "#FFE066",
+OuterColur = "#FF9500",
 
   // Flame opacity (0 - 1)
   innerOpacity = 1,
@@ -19,6 +21,7 @@ const BunsenFlame = ({
   swayRange = 0.05,
 }) => {
   const { bunsenBurnerRef } = useContext(ModelContext);
+  const {selectedPowder} = useContext(InteractionContext)
 
   const {
     selectedLesson,
@@ -34,12 +37,13 @@ const BunsenFlame = ({
   // =====================================================
 
   useEffect(() => {
-    if (
-      selectedLesson === 15 &&
-      lessonStep === 18
-    ) {
-      setLessonStep(19);
+    if ( selectedLesson === 15 && lessonStep === 18) {
+      setLessonStep(18.1);
     }
+    if ( selectedLesson === 15.2 && lessonStep === 31) {
+      setLessonStep(32);
+    }
+
   }, [selectedLesson, lessonStep, setLessonStep]);
 
   // =====================================================
@@ -294,7 +298,33 @@ const BunsenFlame = ({
     });
   });
 
-  return null;
+  return (
+    <>
+   {[15,15.2].includes(selectedLesson) && lessonStep>=19 &&<ChangeBunsenFlameColor
+      innerColor="#65DFFF"
+      outerColor="#1677FF"
+      duration={1.5}
+    />}
+
+    
+   {selectedPowder?.name === 'Lithium Chloride' && selectedLesson==15.2 && lessonStep>=33 &&<ChangeBunsenFlameColor
+      innerColor="#FF4569"
+      outerColor="#DC143C"
+      duration={1.5}
+    />}
+
+  {selectedPowder?.name === "Sodium Chloride" &&
+    selectedLesson === 15.2 &&
+    lessonStep >= 33 && (
+      <ChangeBunsenFlameColor
+        innerColor="#FFF176"
+        outerColor="#FFD700"
+        duration={1.5}
+      />
+  )}
+
+    </>
+  );
 };
 
 export default BunsenFlame;

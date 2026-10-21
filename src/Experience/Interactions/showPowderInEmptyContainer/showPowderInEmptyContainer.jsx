@@ -1,3 +1,4 @@
+
 import {
   useContext,
   useEffect,
@@ -16,112 +17,117 @@ const ShowPowderInEmptyContainer = ({
   } = useContext(ModelContext)
 
   useEffect(() => {
-    const metalSalt =
-      metalSaltRef?.current
+    const metalSalt = metalSaltRef?.current
 
-    if (!metalSalt) {
-      return
-    }
+    if (!metalSalt) return
 
     const materials = []
+    const originalMeshes = []
+
+    // ============================================
+    // SHOW POWDER
+    // ============================================
 
     metalSalt.visible = true
 
     metalSalt.traverse((child) => {
-      if (!child.isMesh) {
-        return
-      }
+      if (!child.isMesh) return
+
+      originalMeshes.push({
+        mesh: child,
+        material: child.material,
+      })
 
       child.visible = true
 
-      const childMaterials = Array.isArray(
-        child.material
-      )
+      const childMaterials = Array.isArray(child.material)
         ? child.material
         : [child.material]
 
-      const clonedMaterials =
-        childMaterials.map((material) => {
-          if (!material) {
-            return material
-          }
+      const clonedMaterials = childMaterials.map((material) => {
+        if (!material) return material
 
-          const clonedMaterial =
-            material.clone()
+        const clonedMaterial = material.clone()
 
-          clonedMaterial.transparent = true
-          clonedMaterial.opacity = 0
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0
 
-          if (clonedMaterial.color) {
-            clonedMaterial.color.set(
-              powderColor
-            )
-          }
+        if (clonedMaterial.color) {
+          clonedMaterial.color.set(powderColor)
+        }
 
-          clonedMaterial.needsUpdate = true
+        clonedMaterial.needsUpdate = true
 
-          materials.push(clonedMaterial)
+        materials.push(clonedMaterial)
 
-          return clonedMaterial
-        })
+        return clonedMaterial
+      })
 
-      // Assign cloned material(s) back to mesh.
-      child.material = Array.isArray(
-        child.material
-      )
+      child.material = Array.isArray(child.material)
         ? clonedMaterials
         : clonedMaterials[0]
     })
 
-    const startTime = performance.now()
+    // ============================================
+    // FADE-IN ANIMATION
+    // ============================================
 
+    const startTime = performance.now()
     let animationFrameId
 
-    const animatePowderAppearance = (
-      currentTime
-    ) => {
+    const animatePowderAppearance = (currentTime) => {
       const elapsedSeconds =
         (currentTime - startTime) / 1000
 
-      const progress = Math.min(
-        elapsedSeconds / duration,
-        1
-      )
+      const progress =
+        duration <= 0
+          ? 1
+          : Math.min(elapsedSeconds / duration, 1)
 
       const smoothProgress =
         progress * progress * (3 - 2 * progress)
 
       materials.forEach((material) => {
         material.opacity = smoothProgress
-        material.needsUpdate = true
       })
 
       if (progress < 1) {
-        animationFrameId =
-          requestAnimationFrame(
-            animatePowderAppearance
-          )
+        animationFrameId = requestAnimationFrame(
+          animatePowderAppearance
+        )
       }
     }
 
     if (duration <= 0) {
       materials.forEach((material) => {
         material.opacity = 1
-        material.needsUpdate = true
       })
-
-      return
-    }
-
-    animationFrameId =
-      requestAnimationFrame(
+    } else {
+      animationFrameId = requestAnimationFrame(
         animatePowderAppearance
       )
+    }
+
+    // ============================================
+    // CLEANUP - HIDE POWDER ON UNMOUNT
+    // ============================================
 
     return () => {
-      // Intentionally keep the powder's current
-      // visibility, colour, and opacity on unmount.
       cancelAnimationFrame(animationFrameId)
+
+      // Hide entire powder model
+      metalSalt.visible = false
+
+      // Restore original materials
+      originalMeshes.forEach(({ mesh, material }) => {
+        mesh.visible = false
+        mesh.material = material
+      })
+
+      // Dispose cloned materials
+      materials.forEach((material) => {
+        material.dispose()
+      })
     }
   }, [
     metalSaltRef,

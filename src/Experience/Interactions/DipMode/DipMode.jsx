@@ -1,9 +1,19 @@
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
 
-import { useContext, useEffect, useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
+import {
+  useFrame,
+  useThree,
+} from "@react-three/fiber"
 
-import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext";
+import * as THREE from "three"
+
+import {
+  MainGuidelineContext,
+} from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
 const DipMode = ({
   DipmodelRef,
@@ -26,107 +36,159 @@ const DipMode = ({
     selectedLesson,
     lessonStep,
     setLessonStep,
-  } = useContext(MainGuidelineContext);
+  } = useContext(
+    MainGuidelineContext
+  )
 
-  const { gl } = useThree();
+  const {
+    gl,
+  } = useThree()
 
-  // =====================================================
+  // =========================================
+  // KEEP CURRENT LESSON / STEP UPDATED
+  // =========================================
+
+  const latestLessonRef =
+    useRef(selectedLesson)
+
+  const latestLessonStepRef =
+    useRef(lessonStep)
+
+  latestLessonRef.current =
+    selectedLesson
+
+  latestLessonStepRef.current =
+    lessonStep
+
+  // =========================================
   // SCROLL CONDITIONS
-  // =====================================================
+  // =========================================
 
   const SCROLL_DOWN_CONDITION =
-    [15,15.2].includes(selectedLesson) && [16,22,29].includes(lessonStep);
+    [15, 15.2].includes(
+      selectedLesson
+    ) &&
+    [16, 22, 29].includes(
+      lessonStep
+    )
 
   const SCROLL_UP_CONDITION =
-    [15,15.2].includes(selectedLesson) && [17,23,30].includes(lessonStep);
+    [15, 15.2].includes(
+      selectedLesson
+    ) &&
+    [17, 23, 30].includes(
+      lessonStep
+    )
 
-  // =====================================================
+  // =========================================
   // REFS
-  // =====================================================
+  // =========================================
 
-  const originalDipRef = useRef(null);
-  const originalReceiveRef = useRef(null);
+  const originalDipRef =
+    useRef(null)
 
-  const mouthRef = useRef(null);
+  const originalReceiveRef =
+    useRef(null)
+
+  const mouthRef =
+    useRef(null)
 
   // 0 = fully raised, 1 = fully dipped
-  const dipProgressRef = useRef(0);
+  const dipProgressRef =
+    useRef(0)
 
-  // Prevent repeated step advancement
-  const hasFullyDippedRef = useRef(false);
-  const hasFullyLiftedRef = useRef(false);
+  const hasFullyDippedRef =
+    useRef(false)
 
-  const mouthWorldPosition = useRef(
-    new THREE.Vector3()
-  );
+  const hasFullyLiftedRef =
+    useRef(false)
 
-  const targetLocalPosition = useRef(
-    new THREE.Vector3()
-  );
+  const mouthWorldPosition =
+    useRef(new THREE.Vector3())
 
-  const downWorldDirection = useRef(
-    new THREE.Vector3(0, -1, 0)
-  );
+  const targetLocalPosition =
+    useRef(new THREE.Vector3())
 
-  const downLocalDirection = useRef(
-    new THREE.Vector3()
-  );
+  const downWorldDirection =
+    useRef(new THREE.Vector3(0, -1, 0))
 
-  const parentQuaternionRef = useRef(
-    new THREE.Quaternion()
-  );
+  const downLocalDirection =
+    useRef(new THREE.Vector3())
 
-  const parentScaleRef = useRef(
-    new THREE.Vector3()
-  );
+  const parentQuaternionRef =
+    useRef(new THREE.Quaternion())
 
-  // =====================================================
-  // AUTOMATIC STEP 15 -> 16
-  // =====================================================
+  const parentScaleRef =
+    useRef(new THREE.Vector3())
+
+  // =========================================
+  // AUTOMATIC LESSON STEPS
+  // =========================================
 
   useEffect(() => {
-    if ( selectedLesson === 15 && lessonStep === 15) {
-      setLessonStep(16);
+    if (
+      selectedLesson === 15 &&
+      lessonStep === 15
+    ) {
+      setLessonStep(16)
     }
 
-    if(selectedLesson == 15 && lessonStep === 21){
+    if (
+      selectedLesson === 15 &&
+      lessonStep === 21
+    ) {
       setLessonStep(22)
     }
 
-    if(selectedLesson == 15.2 && lessonStep === 28){
+    if (
+      selectedLesson === 15.2 &&
+      lessonStep === 28
+    ) {
       setLessonStep(29)
     }
   }, [
     selectedLesson,
     lessonStep,
     setLessonStep,
-  ]);
+  ])
 
-  // =====================================================
+  // =========================================
   // SAVE ORIGINAL TRANSFORMS + FIND MOUTH
-  // =====================================================
+  // =========================================
 
   useEffect(() => {
-    const dipModel = DipmodelRef?.current;
-    const receiveModel = recieveModelRef?.current;
+    const dipModel =
+      DipmodelRef?.current
 
-    if (!dipModel || !receiveModel) return;
+    const receiveModel =
+      recieveModelRef?.current
 
-    const saveTransform = (model) => ({
+    if (!dipModel || !receiveModel) {
+      return
+    }
+
+    const saveTransform = (
+      model
+    ) => ({
       parent: model.parent,
-      position: model.position.clone(),
-      quaternion: model.quaternion.clone(),
-      scale: model.scale.clone(),
-    });
+
+      position:
+        model.position.clone(),
+
+      quaternion:
+        model.quaternion.clone(),
+
+      scale:
+        model.scale.clone(),
+    })
 
     originalDipRef.current =
-      saveTransform(dipModel);
+      saveTransform(dipModel)
 
     originalReceiveRef.current =
-      saveTransform(receiveModel);
+      saveTransform(receiveModel)
 
-    // Find receiving model's mouth
-    let mouth = null;
+    let mouth = null
 
     receiveModel.traverse((child) => {
       if (
@@ -135,131 +197,168 @@ const DipMode = ({
           ?.toLowerCase()
           .includes("mouth")
       ) {
-        mouth = child;
+        mouth = child
       }
-    });
+    })
 
-    mouthRef.current = mouth;
+    mouthRef.current = mouth
 
     if (!mouth) {
       console.warn(
         "DipMode: No child containing 'mouth' found."
-      );
+      )
     }
 
-    // Apply model scales
+    // =======================================
+    // APPLY MODEL SCALES
+    // =======================================
+
     dipModel.scale
       .copy(originalDipRef.current.scale)
-      .multiplyScalar(dipModelScale);
+      .multiplyScalar(dipModelScale)
 
     receiveModel.scale
       .copy(originalReceiveRef.current.scale)
-      .multiplyScalar(recieveModelScale);
+      .multiplyScalar(recieveModelScale)
 
-    dipProgressRef.current = 0;
+    dipProgressRef.current = 0
 
-    hasFullyDippedRef.current = false;
-    hasFullyLiftedRef.current = false;
+    hasFullyDippedRef.current = false
+    hasFullyLiftedRef.current = false
 
-    // =====================================================
-    // CENTER RECEIVING MODEL + APPLY Y OFFSET
-    // =====================================================
+    // =======================================
+    // POSITION RECEIVING MODEL
+    // =======================================
 
-    receiveModel.position.x = 0;
+    receiveModel.position.x = 0
 
     receiveModel.position.y =
       originalReceiveRef.current.position.y +
-      recieveModelYOffset;
+      recieveModelYOffset
 
-    receiveModel.updateMatrixWorld(true);
+    receiveModel.updateMatrixWorld(true)
 
-    // =====================================================
-    // RESTORE ON UNMOUNT
-    // =====================================================
+    // =======================================
+    // CLEANUP
+    // =======================================
 
     return () => {
-      const restore = (model, original) => {
-        if (!model || !original) return;
+      // Add more conditions here if needed.
+      // const shouldSkipRestore =
+      //   latestLessonRef.current === 15.2 &&
+      //   latestLessonStepRef.current === 31
 
-        if (original.parent) {
-          if (model.parent !== original.parent) {
-            original.parent.add(model);
-          }
-        } else {
-          model.removeFromParent();
+      // // Do not restore either model at this step.
+      // if (shouldSkipRestore) {
+      //   return
+      // }
+
+      const restore = (
+        model,
+        original
+      ) => {
+        if (!model || !original) {
+          return
         }
 
-        model.position.copy(original.position);
-        model.quaternion.copy(original.quaternion);
-        model.scale.copy(original.scale);
+        if (original.parent) {
+          if (
+            model.parent !== original.parent
+          ) {
+            original.parent.add(model)
+          }
+        } else {
+          model.removeFromParent()
+        }
 
-        model.updateMatrixWorld(true);
-      };
+        model.position.copy(
+          original.position
+        )
+
+        model.quaternion.copy(
+          original.quaternion
+        )
+
+        model.scale.copy(
+          original.scale
+        )
+
+        model.updateMatrixWorld(true)
+      }
 
       restore(
         dipModel,
         originalDipRef.current
-      );
+      )
 
       restore(
         receiveModel,
         originalReceiveRef.current
-      );
+      )
 
-      mouthRef.current = null;
+      mouthRef.current = null
 
-      originalDipRef.current = null;
-      originalReceiveRef.current = null;
+      originalDipRef.current = null
+      originalReceiveRef.current = null
 
-      dipProgressRef.current = 0;
+      dipProgressRef.current = 0
 
-      hasFullyDippedRef.current = false;
-      hasFullyLiftedRef.current = false;
-    };
+      hasFullyDippedRef.current = false
+      hasFullyLiftedRef.current = false
+    }
   }, [
     DipmodelRef,
     recieveModelRef,
     dipModelScale,
     recieveModelScale,
-  ]);
+    recieveModelYOffset,
+  ])
 
-  // =====================================================
+  // =========================================
   // UPDATE RECEIVING MODEL Y OFFSET
-  // =====================================================
+  // =========================================
 
   useEffect(() => {
-    const receiveModel = recieveModelRef?.current;
-    const original = originalReceiveRef.current;
+    const receiveModel =
+      recieveModelRef?.current
 
-    if (!receiveModel || !original) return;
+    const original =
+      originalReceiveRef.current
 
-    receiveModel.position.x = 0;
+    if (!receiveModel || !original) {
+      return
+    }
+
+    receiveModel.position.x = 0
 
     receiveModel.position.y =
-      original.position.y + recieveModelYOffset;
+      original.position.y +
+      recieveModelYOffset
 
-    receiveModel.updateMatrixWorld(true);
+    receiveModel.updateMatrixWorld(true)
   }, [
     recieveModelRef,
     recieveModelYOffset,
-  ]);
+  ])
 
-  // =====================================================
+  // =========================================
   // SCROLL HANDLER
-  // =====================================================
+  // =========================================
 
   useEffect(() => {
-    const canvas = gl.domElement;
+    const canvas = gl.domElement
 
     const handleWheel = (event) => {
-      const delta = event.deltaY;
+      const delta = event.deltaY
 
       const modelReady =
         DipmodelRef?.current &&
         recieveModelRef?.current &&
-        mouthRef.current;
+        mouthRef.current
 
-      if (!modelReady || delta === 0) return;
+      if (!modelReady || delta === 0) {
+        return
+      }
 
       const wheelPixels =
         delta *
@@ -267,17 +366,17 @@ const DipMode = ({
           ? 16
           : event.deltaMode === 2
             ? canvas.clientHeight
-            : 1);
+            : 1)
 
-      // ===========================================
+      // =====================================
       // SCROLL DOWN — DIP MODEL
-      // ===========================================
+      // =====================================
 
       if (
         delta > 0 &&
         SCROLL_DOWN_CONDITION
       ) {
-        event.preventDefault();
+        event.preventDefault()
 
         dipProgressRef.current =
           THREE.MathUtils.clamp(
@@ -286,53 +385,46 @@ const DipMode = ({
                 scrollSpeed,
             0,
             1
-          );
+          )
 
-        // FULLY DIPPED
         if (
           dipProgressRef.current >= 1 &&
           !hasFullyDippedRef.current
         ) {
-          hasFullyDippedRef.current = true;
+          hasFullyDippedRef.current = true
 
-          console.log(
-            "Nichrome wire fully dipped!"
-          );
-
-          // Lesson 15: Step 16 -> 17
           if (
             selectedLesson === 15 &&
             lessonStep === 16
           ) {
-            setLessonStep(17);
+            setLessonStep(17)
           }
 
           if (
             selectedLesson === 15 &&
             lessonStep === 22
           ) {
-            setLessonStep(23);
+            setLessonStep(23)
           }
 
           if (
             selectedLesson === 15.2 &&
             lessonStep === 29
           ) {
-            setLessonStep(30);
+            setLessonStep(30)
           }
-
         }
       }
 
-      // ===========================================
+      // =====================================
       // SCROLL UP — LIFT MODEL
-      // ===========================================
+      // =====================================
 
       if (
         delta < 0 &&
         SCROLL_UP_CONDITION
       ) {
-        event.preventDefault();
+        event.preventDefault()
 
         dipProgressRef.current =
           THREE.MathUtils.clamp(
@@ -341,41 +433,37 @@ const DipMode = ({
                 scrollSpeed,
             0,
             1
-          );
+          )
 
-        // FULLY LIFTED
         if (
           dipProgressRef.current <= 0 &&
           !hasFullyLiftedRef.current
         ) {
-          hasFullyLiftedRef.current = true;
+          hasFullyLiftedRef.current = true
 
-          console.log(
-            "Nichrome wire fully lifted!"
-          );
-
-          // Lesson 15: Step 17 -> 18
           if (
             selectedLesson === 15 &&
             lessonStep === 17
           ) {
-            setLessonStep(18);
+            setLessonStep(18)
           }
+
           if (
             selectedLesson === 15 &&
             lessonStep === 23
           ) {
-            setLessonStep(24);
+            setLessonStep(24)
           }
+
           if (
             selectedLesson === 15.2 &&
             lessonStep === 30
           ) {
-            setLessonStep(31);
+            setLessonStep(31)
           }
         }
       }
-    };
+    }
 
     canvas.addEventListener(
       "wheel",
@@ -383,14 +471,14 @@ const DipMode = ({
       {
         passive: false,
       }
-    );
+    )
 
     return () => {
       canvas.removeEventListener(
         "wheel",
         handleWheel
-      );
-    };
+      )
+    }
   }, [
     gl,
     DipmodelRef,
@@ -401,18 +489,20 @@ const DipMode = ({
     selectedLesson,
     lessonStep,
     setLessonStep,
-  ]);
+  ])
 
-  // =====================================================
+  // =========================================
   // ANIMATE DIPPING MODEL
-  // =====================================================
+  // =========================================
 
   useFrame((state, delta) => {
-    const dipModel = DipmodelRef?.current;
-    const receiveModel =
-      recieveModelRef?.current;
+    const dipModel =
+      DipmodelRef?.current
 
-    const mouth = mouthRef.current;
+    const receiveModel =
+      recieveModelRef?.current
+
+    const mouth = mouthRef.current
 
     if (
       !dipModel ||
@@ -420,91 +510,80 @@ const DipMode = ({
       !mouth ||
       !dipModel.parent
     ) {
-      return;
+      return
     }
 
-    // Update world matrices
     receiveModel.updateWorldMatrix(
       true,
       true
-    );
+    )
 
     dipModel.parent.updateWorldMatrix(
       true,
       false
-    );
+    )
 
-    // Get mouth position in world space
     mouth.getWorldPosition(
       mouthWorldPosition.current
-    );
+    )
 
-    // Convert to dipping model parent's
-    // local coordinate system
     targetLocalPosition.current.copy(
       mouthWorldPosition.current
-    );
+    )
 
     dipModel.parent.worldToLocal(
       targetLocalPosition.current
-    );
+    )
 
-    // Apply offsets
     targetLocalPosition.current.x +=
-      xOffset;
+      xOffset
 
     targetLocalPosition.current.y +=
-      yOffset;
+      yOffset
 
-    // Get parent's world rotation
     dipModel.parent.getWorldQuaternion(
       parentQuaternionRef.current
-    );
+    )
 
-    // Convert world downward direction
-    // to parent's local direction
     downLocalDirection.current
       .copy(downWorldDirection.current)
       .applyQuaternion(
         parentQuaternionRef.current
           .clone()
           .invert()
-      );
+      )
 
-    // Account for parent's scale
     dipModel.parent.getWorldScale(
       parentScaleRef.current
-    );
+    )
 
     downLocalDirection.current.x /=
-      parentScaleRef.current.x || 1;
+      parentScaleRef.current.x || 1
 
     downLocalDirection.current.y /=
-      parentScaleRef.current.y || 1;
+      parentScaleRef.current.y || 1
 
     downLocalDirection.current.z /=
-      parentScaleRef.current.z || 1;
+      parentScaleRef.current.z || 1
 
-    // Apply dip distance
     targetLocalPosition.current.addScaledVector(
       downLocalDirection.current,
       Math.max(0, dipDistance) *
         dipProgressRef.current
-    );
+    )
 
-    // Smooth animation
     const smoothing =
       1 - Math.exp(
         -animationSpeed * delta
-      );
+      )
 
     dipModel.position.lerp(
       targetLocalPosition.current,
       smoothing
-    );
-  });
+    )
+  })
 
-  return null;
-};
+  return null
+}
 
-export default DipMode;
+export default DipMode

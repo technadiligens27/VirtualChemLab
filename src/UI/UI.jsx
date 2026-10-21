@@ -46,6 +46,7 @@ import Explanations from "../Experience/Interactions/Explanations/Explanations"
 import AllExplanations from "./AllExplanations/AllExplanations"
 import FlameTest from "./AllLessons/FlameTest/FlameTest"
 import FlameTest02 from "./AllLessons/FlameTest/FlameTest02"
+import FlameTestSummary from "./Summary/FlameTestSummary/FlameTestSummary"
 
 const mainContent = [
   {
@@ -144,7 +145,7 @@ const UI = () => {
     setShowCondensorArrow,showTestube02Arrow,
     setShowTestube02Arrow,setShowGraduatedPippeteArrow,isExplanationOpen,setIsExplanationOpen,
     setShowHeatingMatArow,showBunsenBurnerArrow,setShowBunsenBurnerArrow,showNichromeWireArrow,
-        setShowNichromeWireArrow
+        setShowNichromeWireArrow,setLessonStep
     
   } = useContext(MainGuidelineContext)
 
@@ -204,7 +205,7 @@ const UI = () => {
   useEffect(()=>{
     setShowSeparatingFunnel(
       (selectedLesson==14.1 && lessonStep ==34) ||
-      (selectedLesson ==15.2 && lessonStep == 25)
+      (selectedLesson ==15 && lessonStep == 25)
     )
   },[selectedLesson,lessonStep])
 
@@ -784,6 +785,14 @@ useEffect(() => {
         )
        }
         <AllExplanations/>
+        <FlameTestSummary
+            onQuestions={() => {
+      setLessonStep(35);
+    }}
+    onEndLesson={() => {
+      // Replace with your existing lesson reset function
+      handleEndLesson();
+    }}/>
         
         {/* {<MolarVolumeResults/>} */}
        {/* {<HessCalculationStep25/>} */}

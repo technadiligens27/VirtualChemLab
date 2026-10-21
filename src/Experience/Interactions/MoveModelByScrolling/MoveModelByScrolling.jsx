@@ -8,6 +8,36 @@ import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
+// =========================================
+// ALLOWED SCROLL STEPS
+// =========================================
+
+const scrollDownSteps = [
+  {
+    lesson: 15,
+    step: 19,
+    nextStep: 20,
+  },
+  {
+    lesson: 15.2,
+    step: 32,
+    nextStep: 33,
+  },
+]
+
+const scrollUpSteps = [
+  {
+    lesson: 15,
+    step: 20,
+    nextStep: 24,
+  },
+  // {
+  //   lesson: 15.2,
+  //   step: 32,
+  //   nextStep: 33,
+  // },
+]
+
 const MoveModelByScrolling = ({
   modelRef,
   moveAxis = "x",
@@ -31,8 +61,8 @@ const MoveModelByScrolling = ({
   const hasReachedEndRef =
     useRef(false)
 
-  // Keeps the wheel event updated without
-  // resetting the model when lessonStep changes.
+  // Keep current values available without
+  // resetting the movement effect.
   const latestLessonRef =
     useRef(selectedLesson)
 
@@ -59,15 +89,43 @@ const MoveModelByScrolling = ({
     hasReachedEndRef.current = false
 
     const handleWheel = (event) => {
+      const currentLesson =
+        latestLessonRef.current
+
+      const currentStep =
+        latestLessonStepRef.current
+
       if (!startPositionRef.current) {
         return
       }
 
-      // =========================================
+      // =====================================
+      // FIND CURRENT ALLOWED STEP
+      // =====================================
+
+      const scrollDownStep =
+        scrollDownSteps.find(
+          (item) =>
+            item.lesson === currentLesson &&
+            item.step === currentStep
+        )
+
+      const scrollUpStep =
+        scrollUpSteps.find(
+          (item) =>
+            item.lesson === currentLesson &&
+            item.step === currentStep
+        )
+
+      // =====================================
       // SCROLL DOWN — MOVE FORWARD
-      // =========================================
+      // =====================================
 
       if (event.deltaY > 0) {
+        if (!scrollDownStep) {
+          return
+        }
+
         const remainingDistance =
           distance - movedDistanceRef.current
 
@@ -95,20 +153,21 @@ const MoveModelByScrolling = ({
         ) {
           hasReachedEndRef.current = true
 
-          if (
-            latestLessonRef.current === 15 &&
-            latestLessonStepRef.current === 19
-          ) {
-            setLessonStep(20)
-          }
+          setLessonStep(
+            scrollDownStep.nextStep
+          )
         }
       }
 
-      // =========================================
-      // SCROLL UP — MOVE BACK TO ORIGINAL POSITION
-      // =========================================
+      // =====================================
+      // SCROLL UP — RETURN TO START
+      // =====================================
 
       if (event.deltaY < 0) {
+        if (!scrollUpStep) {
+          return
+        }
+
         if (movedDistanceRef.current <= 0) {
           return
         }
@@ -124,9 +183,10 @@ const MoveModelByScrolling = ({
         movedDistanceRef.current -=
           moveAmount
 
-        // Ensure it reaches the exact original
-        // position without tiny decimal errors.
-                if (movedDistanceRef.current <= 0) {
+        const hasReturnedToStart =
+          movedDistanceRef.current <= 0
+
+        if (hasReturnedToStart) {
           movedDistanceRef.current = 0
 
           model.position[moveAxis] =
@@ -136,12 +196,9 @@ const MoveModelByScrolling = ({
 
           hasReachedEndRef.current = false
 
-          if (
-            latestLessonRef.current === 15 &&
-            latestLessonStepRef.current === 20
-          ) {
-            setLessonStep(21)
-          }
+          setLessonStep(
+            scrollUpStep.nextStep
+          )
         }
       }
 
@@ -158,15 +215,6 @@ const MoveModelByScrolling = ({
         "wheel",
         handleWheel
       )
-
-      // Restore original position on unmount.
-      // if (startPositionRef.current) {
-      //   model.position.copy(
-      //     startPositionRef.current
-      //   )
-
-      //   model.updateMatrixWorld(true)
-      // }
     }
   }, [
     modelRef,

@@ -56,7 +56,7 @@ const ClickObject = () => {
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode,
     setIsPlaceInMantle,setIsAddDistillationHead,isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker,
-    isModelInHeatingMat,setIsModelInHeatingMat,setIsDipMode,setShowBunsenFlame
+    isModelInHeatingMat,setIsModelInHeatingMat,setIsDipMode,setShowBunsenFlame,setIsAirHoleOpen
   } = useContext(InteractionContext)
 
   const {
@@ -808,7 +808,7 @@ const ClickObject = () => {
   // GENERAL LESSON STEP VALIDATION
   // =====================================================
 
-  if([15].includes(selectedLesson)){
+  if([15,15.2].includes(selectedLesson)){
     if(![0,12,24].includes(lessonStep)){
       setShowErrorMsgNo(1)
       setSelectedObject(null)
@@ -2213,7 +2213,7 @@ const clickableObjects = selectableObjects
   const validateRightHandPick = (objectName) => {
     if (!isMainGuideline) return true
     
-    if([15].includes(selectedLesson)){
+    if([15,15.2].includes(selectedLesson)){
       if(![6,25].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
@@ -5125,7 +5125,9 @@ const disposeCup = () => {
 
   const handleBunsenFlame = ()=>{
     
-    const isValid = (selectedLesson==15 && lessonStep==18);
+    const isValid = 
+    (selectedLesson==15 && lessonStep==18) ||
+    (selectedLesson==15.2 && lessonStep==31)
 
     if(!isValid){
       setShowErrorMsgNo(1)
@@ -5136,6 +5138,20 @@ const disposeCup = () => {
     setShowBunsenFlame(true)
     setSelectedObject(null)
     return
+
+  }
+
+  const handleAirFlow = ()=>{
+    const isValid = (selectedLesson==15 && lessonStep==18.1)
+
+    if(!isValid){
+      setSelectedObject(null)
+      setShowErrorMsgNo(1)
+      return
+    }
+
+    setIsAirHoleOpen(true)
+    setSelectedObject(null)
 
   }
 
@@ -5155,10 +5171,18 @@ const disposeCup = () => {
         </button>
       )
     }     
-    if(selectedObject?.name === "bunsen-burner" && selectedLesson===15 && [18].includes(lessonStep)){
+    if(selectedObject?.name === "bunsen-burner" && [15,15.2].includes(selectedLesson) && [18].includes(lessonStep)){
       return (
         <button onClick={handleBunsenFlame}>
           Light
+        </button>
+      )
+    }
+    
+    if(selectedObject?.name === "bunsen-burner" && [15,15.2].includes(selectedLesson) && [18.1].includes(lessonStep)){
+      return (
+        <button onClick={()=>{setLessonStep(19);setSelectedObject(null)}}>
+          Open Air Hole
         </button>
       )
     }     
@@ -5486,6 +5510,17 @@ const disposeCup = () => {
           </>
         )
       }   
+
+       if([15,15.2].includes(selectedLesson) && [31].includes(lessonStep) && selectedObject.name === "nichrome-wire"){
+        return(
+          <>
+            <button onClick={()=>{setLessonStep(32);setSelectedObject(null)}}>
+              Test Metal Salt
+            </button>        
+          </>
+        )
+      } 
+
   }
 
   const handlePowderBox = ()=>{

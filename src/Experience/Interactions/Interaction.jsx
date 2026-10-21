@@ -80,6 +80,7 @@ import MoveModelByScrolling from "./MoveModelByScrolling/MoveModelByScrolling";
 import PlaceModelNearModel from "./PlaceModelNearModel/PlaceModelNearModel";
 import PowderBox from "../../UI/PowderBox/PowderBox";
 import ShowPowderInEmptyContainer from "./showPowderInEmptyContainer/showPowderInEmptyContainer";
+import OpenAirHole from "./OpenAirHole/OpenAirHole";
 
 const Interaction = () => {
   const {
@@ -94,7 +95,7 @@ const Interaction = () => {
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
     isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen,isModelInHeatingMat,isDipMode,
-    showBunsenFlame,showPowderBox,showPowderInContainer
+    showBunsenFlame,showPowderBox,showPowderInContainer,isAirHoleOpen,setIsAirHoleOpen
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -673,7 +674,7 @@ useEffect(() => {
 
 
       {[15,15.2].includes(selectedLesson) && showBunsenFlame && lessonStep>=18 && <BunsenFlame/>}
-      {selectedLesson==15 &&  [19,20].includes(lessonStep) && <PlaceModelNearModel
+      {[15,15.2].includes(Number(selectedLesson)) &&  [19,20,32,33].includes(lessonStep) && <PlaceModelNearModel
         zRotation={Math.PI/2} 
         xOffset={-7} 
         yOffset={6.5}
@@ -684,8 +685,11 @@ useEffect(() => {
         isAttachedToCamera={true}      
       />}
 
-      {selectedLesson==15 && [19,20].includes(lessonStep) && <MoveModelByScrolling modelRef={nichromeWireRef} distance={3.5} speed={0.5}/>}
+      {[15,15.2].includes(Number(selectedLesson)) && [19,20,32].includes(lessonStep) && <MoveModelByScrolling modelRef={nichromeWireRef} distance={3.5} speed={0.5}/>}
+
       {showPowderInContainer && <ShowPowderInEmptyContainer/>}
+
+      {/* {selectedLesson==15 && lessonStep===18.1 && <OpenAirHole/>} */}
 
     </>
   );

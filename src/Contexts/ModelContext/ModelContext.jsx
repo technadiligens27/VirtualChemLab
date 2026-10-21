@@ -73,7 +73,8 @@ export const ModelProvider = ({ children }) => {
   const nichromeWireRef = useRef(null);
   const powderContainer = useRef(null);
   const metalSaltRef = useRef(null);
-  const nichromeWirePowderRef = useRef(null)
+  const nichromeWirePowderRef = useRef(null);
+  const airHoleRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -207,7 +208,8 @@ export const ModelProvider = ({ children }) => {
         arrowGraduatedPipette,testube02OriginalStateRef,graduatedPipetteOriginalStateRef,
         seperatingFunnelOriginalStateRef,heatingMatRef,arrowHeatingMatRef,bunsenBurnerRef,
         arrowBunsenBurner,gasTubeRef,nichromeWireRef,
-        arrowNichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef
+        arrowNichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef,
+        airHoleRef
       }}
     >
       {children}

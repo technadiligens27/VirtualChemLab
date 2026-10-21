@@ -30,7 +30,8 @@ const ChemEnvironment = () => {
          heatingMantleRef,tableConicalPos,arrowHeatingMantleRef,heatingMantleBeakerPosRef,clampHandleRef,distillationHeadRef,condensorRef,
          arrowCondensorRef,waterOutTubeRef,waterInTubeRef,heatingMantleSurfaceRef,graduatedPipetteRef,arrowGraduatedPipette,
          testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,arrowHeatingMatRef,heatingMatRef,
-         bunsenBurnerRef,arrowBunsenBurner,gasTubeRef,arrowNichromeWireRef,nichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef
+         bunsenBurnerRef,arrowBunsenBurner,gasTubeRef,arrowNichromeWireRef,nichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef,
+         airHoleRef
          
   } = useContext(ModelContext);
 
@@ -281,6 +282,9 @@ const hideVerticalObjects=(root)=>{
     condensorRef.current = scene.getObjectByName("condensor");
     graduatedPipetteRef.current = scene.getObjectByName("graduated-pipette")
     graduatedPipetteRef.current.visible = false
+
+    airHoleRef.current = scene.getObjectByName('bunsen-air-hole');
+    airHoleRef.current.visible = false
     
     hidePourObjects(normalBeakerRef)
     hidePourObjects(conicalBeakerRef)

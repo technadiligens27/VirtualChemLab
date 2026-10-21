@@ -200,7 +200,8 @@ export const InteractionProvider = ({ children }) => {
   const [showPowderBox,setShowPowderBox] = useState(false);
   const [selectedPowder,setSelectedPowder] = useState(null);
 
-  const [showPowderInContainer,setShowPowderInContainer] = useState(false)
+  const [showPowderInContainer,setShowPowderInContainer] = useState(false);
+  const [isAirHoleOpen,setIsAirHoleOpen] = useState(false)
 
   const resetInteractions = () => {
   // Empty both hands
@@ -340,7 +341,8 @@ export const InteractionProvider = ({ children }) => {
   setShowBunsenFlame(false);
   setShowPowderBox(false);
   setSelectedPowder(false);
-  setShowPowderInContainer(false)
+  setShowPowderInContainer(false);
+  isAirHoleOpen,setIsAirHoleOpen(false)
 
 }
 
@@ -448,7 +450,8 @@ export const InteractionProvider = ({ children }) => {
         isChlorideIonReaction,setIsChlorideIonReaction,
         isModelInHeatingMat,setIsModelInHeatingMat,
         setIsDipMode,isDipMode,showBunsenFlame,setShowBunsenFlame,
-        showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer
+        showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer,
+        isAirHoleOpen,setIsAirHoleOpen
       }}
     >
       {children}

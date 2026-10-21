@@ -1,0 +1,707 @@
+/* =========================================================
+   FLAME TEST SUMMARY
+   ========================================================= */
+
+.flame-summary-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.flame-summary-overlay-open {
+  background: rgba(14, 11, 35, 0.72);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.flame-summary-overlay-closed {
+  background: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.flame-summary-overlay *,
+.flame-summary-overlay *::before,
+.flame-summary-overlay *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.flame-summary-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 80vw;
+  height: 92vh;
+  min-height: 0;
+
+  padding: 78px 40px 26px;
+
+  overflow: visible;
+
+  pointer-events: auto;
+
+  background: #ffffff;
+
+  border: 10px solid #ffcb4d;
+  border-radius: 34px;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+/* =========================================================
+   TOP TAB
+   ========================================================= */
+
+.flame-summary-tab {
+  position: absolute;
+
+  top: -10px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(30vw, 480px);
+  min-width: 280px;
+  height: 70px;
+
+  transform: translateX(-50%);
+
+  background: #ffcb4d;
+
+  border-radius: 0 0 40px 40px;
+
+  color: #2d1979;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   SIDE TOGGLE
+   ========================================================= */
+
+.flame-summary-side-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: -60px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 150px;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 0 20px 20px 0;
+
+  background: #ffcb4d;
+
+  cursor: pointer;
+}
+
+.flame-summary-side-toggle:hover {
+  background: #f2bb2e;
+}
+
+.flame-summary-side-toggle:active {
+  background: #e7ac16;
+}
+
+.flame-summary-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  will-change: transform;
+}
+
+/* =========================================================
+   PAGE LAYOUT
+   ========================================================= */
+
+.flame-summary-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.35fr);
+  gap: clamp(20px, 2.3vw, 38px);
+
+  flex: 1;
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   RESULT CARD
+   ========================================================= */
+
+.flame-result-card {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+  overflow: hidden;
+
+  background: #fbf9ff;
+
+  border: 2px solid #a78aff;
+  border-radius: 18px;
+}
+
+.flame-result-card-header {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  min-height: 58px;
+  padding: 10px 22px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+}
+
+.flame-result-card-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.flame-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 32px;
+  height: 32px;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  font-size: 16px;
+  line-height: 1;
+}
+
+.flame-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 120px;
+
+  padding: 12px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #fbf8ff 62%,
+      #f3efff 100%
+    );
+}
+
+.flame-image-wrapper img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   METAL SALT DROPDOWN
+   ========================================================= */
+
+.flame-salt-label {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  width: calc(100% - 58px);
+  min-height: 48px;
+  margin: 12px auto 8px;
+
+  background: #6242b3;
+  border-radius: 14px;
+}
+
+.flame-salt-label select {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 48px 8px 20px;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.flame-salt-label select option {
+  background: #ffffff;
+
+  color: #21165e;
+}
+
+.flame-chevron {
+  position: absolute;
+
+  right: 18px;
+
+  pointer-events: none;
+
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+.flame-result-text {
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 6px 30px 20px;
+
+  color: #21165e;
+
+  font-size: clamp(15px, 1.25vw, 21px);
+  line-height: 1.35;
+}
+
+.crimson-text {
+  color: #b91f47;
+}
+
+.yellow-text {
+  color: #db8c00;
+}
+
+.lilac-text {
+  color: #8e5bb5;
+}
+
+.brick-red-text {
+  color: #b74831;
+}
+
+.blue-green-text {
+  color: #138f91;
+}
+
+.apple-green-text {
+  color: #4c9e39;
+}
+
+/* =========================================================
+   RIGHT SUMMARY CONTENT
+   ========================================================= */
+
+.flame-summary-content {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+}
+
+.flame-summary-card {
+  background:
+    linear-gradient(
+      115deg,
+      #eaffe9,
+      #f4fff1
+    );
+
+  border: 2px solid #b9dfbb;
+  border-radius: 20px;
+
+  color: #21165e;
+}
+
+.flame-aim-card {
+  flex-shrink: 0;
+
+  padding: 16px clamp(22px, 2.5vw, 38px);
+}
+
+.flame-learned-card {
+  flex: 1;
+  min-height: 0;
+
+  margin-top: 12px;
+  padding: 16px clamp(22px, 2.5vw, 38px);
+
+  overflow: hidden;
+}
+
+.flame-conclusion-card {
+  flex-shrink: 0;
+
+  margin-top: 12px;
+  padding: 16px clamp(22px, 2.5vw, 38px);
+}
+
+.flame-summary-card h2 {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.summary-heading-line {
+  width: 76px;
+  height: 5px;
+
+  margin: 8px 0 12px;
+
+  background: #a88cff;
+  border-radius: 999px;
+}
+
+.flame-summary-card p {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin: 0;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.15vw, 20px);
+  line-height: 1.68;
+}
+
+.flame-summary-card ul {
+  display: flex;
+  flex-direction: column;
+
+  gap: clamp(6px, 1.1vh, 13px);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.flame-summary-card li {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 19px);
+  line-height: 1.25;
+}
+
+.summary-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 25px;
+  height: 25px;
+
+  background: #16ad52;
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.flame-summary-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+.flame-summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 190px;
+  min-height: 54px;
+  padding: 10px 24px;
+
+  border-radius: 999px;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.flame-summary-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 20px rgba(65, 36, 145, 0.22);
+}
+
+.flame-summary-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.flame-summary-questions {
+  background: #ffffff;
+  border: 3px solid #4e2a9b;
+
+  color: #4e2a9b;
+}
+
+.flame-summary-finish {
+  gap: 12px;
+
+  background: #4e2a9b;
+  border: 3px solid #4e2a9b;
+
+  color: #ffffff;
+}
+
+.flame-summary-finish span {
+  font-family: Arial, sans-serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 0.5;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .flame-summary-overlay {
+    overflow-y: auto;
+  }
+
+  .flame-summary-container {
+    width: min(90vw, 850px);
+    height: auto;
+    min-height: 90vh;
+
+    overflow: visible;
+
+    padding: 82px 26px 28px;
+  }
+
+  .flame-summary-layout {
+    grid-template-columns: 1fr;
+
+    overflow: visible;
+  }
+
+  .flame-result-card {
+    max-width: 540px;
+    min-height: 500px;
+    margin: 0 auto;
+  }
+
+  .flame-image-wrapper {
+    min-height: 260px;
+  }
+
+  .flame-learned-card {
+    min-height: 280px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .flame-summary-overlay {
+    align-items: flex-start;
+
+    padding: 12px;
+  }
+
+  .flame-summary-container {
+    width: 100%;
+    min-height: auto;
+
+    padding: 70px 16px 20px;
+
+    border-width: 6px;
+    border-radius: 24px;
+  }
+
+  .flame-summary-tab {
+    width: 70vw;
+    min-width: 0;
+    height: 58px;
+
+    border-radius: 0 0 28px 28px;
+
+    font-size: 25px;
+  }
+
+  .flame-summary-side-toggle {
+    right: -48px;
+
+    width: 48px;
+    height: 110px;
+
+    border-radius: 0 16px 16px 0;
+  }
+
+  .flame-summary-side-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .flame-summary-layout {
+    gap: 20px;
+  }
+
+  .flame-result-card-header {
+    min-height: 54px;
+    padding: 10px 16px;
+  }
+
+  .flame-result-card-header h2 {
+    font-size: 21px;
+  }
+
+  .flame-result-card {
+    min-height: 440px;
+  }
+
+  .flame-image-wrapper {
+    min-height: 220px;
+  }
+
+  .flame-salt-label {
+    width: calc(100% - 36px);
+  }
+
+  .flame-salt-label select {
+    font-size: 16px;
+  }
+
+  .flame-result-text {
+    padding: 6px 22px 20px;
+
+    font-size: 16px;
+  }
+
+  .flame-aim-card,
+  .flame-learned-card,
+  .flame-conclusion-card {
+    padding: 20px;
+  }
+
+  .flame-summary-card h2 {
+    font-size: 26px;
+  }
+
+  .flame-summary-card p,
+  .flame-summary-card li {
+    gap: 11px;
+
+    font-size: 16px;
+  }
+
+  .flame-summary-card ul {
+    gap: 13px;
+  }
+
+  .summary-check {
+    width: 24px;
+    height: 24px;
+
+    font-size: 16px;
+  }
+
+  .flame-summary-actions {
+    flex-direction: column-reverse;
+
+    gap: 10px;
+  }
+
+  .flame-summary-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+
+    font-size: 20px;
+  }
+}

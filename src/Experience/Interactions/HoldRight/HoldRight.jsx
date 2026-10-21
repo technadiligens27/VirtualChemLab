@@ -224,8 +224,9 @@ const transformControlsRef = useRef()
     if(selectedLesson ===15 && lessonStep ===6){
       setLessonStep(7)
     }
-    if(selectedLesson ==15.2 && lessonStep==25){
+    if(selectedLesson ==15 && lessonStep==25){
       setLessonStep(26)
+      setSelectedLesson(15.2)
     }
 
 
