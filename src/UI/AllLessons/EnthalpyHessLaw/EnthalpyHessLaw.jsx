@@ -15,6 +15,8 @@ import { ModelContext } from "../../../Contexts/ModelContext/ModelContext";
 import QuestionCard from "../../QuestionCard/QuestionCard";
 import {resetModel} from "../../../Experience/resetModels/resetModels"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
+import ExothermicReactionSummary from "../../Summary/ExothermicReactionSummary/ExothermicReactionSummary";
+import { useResetLesson } from "../../ResetLessonButton/ResetLessonButton";
 
 const EnthalpyHessLaw = () =>{
 
@@ -232,6 +234,8 @@ const {
       mainThermometerRef
     ]
  
+
+ const resetLesson = useResetLesson()   
 
 //-----------------------
 
@@ -523,7 +527,13 @@ const {
           showEnthalyResultOne && <HessReactionOneResults 
           onQuestions={() => {
            setShowQuestionCardNo(8.1);setShowEnthalyResultOne(false)
-          }}/>
+          }}
+          
+          onButtonContinue={()=>{
+            setShowEnthalyResultOne(false)
+          }}
+          
+          />
         }
 
         {
@@ -560,6 +570,7 @@ const {
             submitButtonText="Submit Answer"
             continueButtonText="Continue"
             onContinue={() => {setShowQuestionCardNo(8.2)}}
+            onExit={()=>{setShowQuestionCardNo(null);setLessonStep(44)}}
     />}
 
       {showQuestionCardNo === 8.2 && (
@@ -594,6 +605,8 @@ const {
           onContinue={() => {
             setShowQuestionCardNo(8.3)
           }}
+            onExit={()=>{setShowQuestionCardNo(null);setLessonStep(44)}}
+          
         />
       )}
 
@@ -627,8 +640,12 @@ const {
           submitButtonText="Submit Answer"
           continueButtonText="Continue"
           onContinue={() => {
-            setShowQuestionCardNo(null)
+            setShowQuestionCardNo(null);setLessonStep(44)
           }}
+
+            onExit={()=>{setShowQuestionCardNo(null);setLessonStep(44)}}
+
+
         />
       )}      
 
@@ -1097,8 +1114,20 @@ const {
             />
           )
         }
+
         {
-          lessonStep === 44  && (
+          lessonStep===44 && <ExothermicReactionSummary onQuestions={()=>{setShowQuestionCardNo(8.1);setLessonStep(45)}}
+          onEndLesson={resetLesson}
+          
+          
+          />
+        }
+
+
+
+
+        {
+          lessonStep >= 44  && (
             <DialogBox
               text={
                 <>
@@ -1129,8 +1158,8 @@ const {
             onbtnClick={() => {
             setShowEnthalyResultOne(true)
             }}
-
-            
+            onbtn2Click ={resetLesson}
+            button2Text="End Lesson"
             //  onbtn2Click={() => {
             //         labModels.forEach((modelRef) => {
             //           if (modelRef?.current) {

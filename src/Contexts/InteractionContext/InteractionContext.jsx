@@ -203,35 +203,67 @@ export const InteractionProvider = ({ children }) => {
   const [showPowderInContainer,setShowPowderInContainer] = useState(false);
   const [isAirHoleOpen,setIsAirHoleOpen] = useState(false)
 
-  const resetInteractions = () => {
-  // Empty both hands
-  setSelectedLeftHand(false)
-  setSelectedRightHand(false)
+const resetInteractions = () => {
+  // =======================================================
+  // REFS
+  // =======================================================
+
+  hasSat.current = null
+  gogglesOn.current = false
+  glovesOn.current = false
 
   selectedModelLeft.current = null
   selectedModelRight.current = null
 
-  // Close the fill-beaker UI
+  liquidLeftModel.current = null
+  liquidRightModel.current = null
+
+  // =======================================================
+  // PLAYER / HANDS
+  // =======================================================
+
+  setIsSitting(false)
+
+  setSelectedLeftHand(false)
+  setSelectedRightHand(false)
+
+  setChairStep(0)
+
+  // =======================================================
+  // FILL BEAKER UI
+  // =======================================================
+
   setIsFillBeakerBoxOpen(false)
   setIsFillUpBeaker(false)
   setFillBeakerHand(null)
   setSelectedBeakerBoxHand(null)
 
-  // Reset dragging and object information
+  setFillBeakerLiquid(false)
+  setFillTestubeLiquid(false)
+  setBeakerFillFinished(false)
+  setFillBeakerModel(false)
+
+  // =======================================================
+  // OBJECT INTERACTION
+  // =======================================================
+
   setIsDragging(null)
   setClickedModel(null)
   setIsObjectInfo(false)
 
-  // Reset pouring
+  // =======================================================
+  // POURING
+  // =======================================================
+
   setIsPouringMode(false)
   setIsPouring(false)
-  setPouringModeHand(undefined)
+  setPouringModeHand(null)
 
   setPouredFromLeft(false)
   setPouredFromRight(false)
+
   setPourAmount(null)
 
-  // Reset the liquids
   setRightBeakerFillData({
     name: "",
     color: "",
@@ -244,108 +276,207 @@ export const InteractionProvider = ({ children }) => {
     amount: 0,
   })
 
-  liquidLeftModel.current = null
-  liquidRightModel.current = null
+  // =======================================================
+  // GENERAL REACTION / STIRRING
+  // =======================================================
 
-  // Reset reaction and stirring
   setIsReaction(false)
   setIsStirMode(false)
   setIsStirring(false)
-
-  // Reset litmus mode
   setIsLitmusMode(false)
 
-  // Reset filter and funnel
+  setShowBubbles(false)
+  setIsReactionTimerRunning(false)
+
+  // =======================================================
+  // FILTER / FUNNEL
+  // =======================================================
+
   setIsFilterFolded(false)
   setIsFilterInFunnel(false)
   setIsFunnelMode(false)
 
-  // Reset salt and spoon
+  setIsPouringModeFunnelMode(false)
+  setIsAddFunnelToMode(false)
+
+  // =======================================================
+  // SPOON / SOLIDS
+  // =======================================================
+
   setSpoonHasSalt(false)
-  setIsAddSalt(false);
-  setIsSitting(true);
-  setChairStep(0)
-  setIsDropperPlaced(false);
-  setIsDropperFilled(false);
-  setIsPlacePolysterene(false);
-  setIsPourIntoTestube(false);
-  setIsPotassiumTransferred(false);
-  setIsBalancePlaced(false);
-  setIsWeighTestube(false);
-  setIsBuirettePourMode(false);
-  setIsBuiretteClamped(false);
-  setIsClampInCenter(false);
-  setIsBeakerNearClamp(false);
-  setIsPlaceThermometer(false);
-  setIsPolystereneStirMode(false);
-  setIsPottasiumCarobnateInTestube01(false);
-  setIsHessGuideline(false);
-  setHessGuidelineNumber(false);
-  setShowEnthalyResultOne(false);
-  setShowBubbles(false);
-  setShowPolystereneLidArrow(false);
-  setIsPolystereneCovered(false);
-  setIsPotassiumHydrogenCarbonateInSpoon(false);
-  setFillBeakerLiquid(false);
-  setBeakerFillFinished(false);
-  setFillBeakerModel(null);
-  setFillTestubeLiquid(true);
-  setIsPipetteMode(true);
-  setFillPipette(false);
-  setPipetteDroplet(false);
-  setIsPipetteFilled(false);
+  setIsAddSalt(false)
+
+  setIsPottasiumCarobnateInSpoon(false)
+  setIsPottasiumCarobnateInTestube01(false)
+
+  setIsPotassiumTransferred(false)
+
+  setIsPotassiumHydrogenCarbonateInSpoon(false)
+
+  setIsSulfamicInSpoon(false)
+
+  // =======================================================
+  // DROPPER
+  // =======================================================
+
+  setIsDropperPlaced(false)
+  setIsDropperFilled(false)
+  setPipetteDroplet(false)
+  setPourDroplets(false)
+
+  // =======================================================
+  // POLYSTYRENE / THERMOMETER
+  // =======================================================
+
+  setIsPlacePolysterene(false)
+  setShowPolystereneLidArrow(false)
+  setIsPolystereneCovered(false)
+
+  setIsPlaceThermometer(false)
+  setIsPolystereneStirMode(false)
+  setIsThermometerRisen(false)
+
+  // =======================================================
+  // BALANCE / BURETTE / CLAMP
+  // =======================================================
+
+  setIsBalancePlaced(false)
+  setIsWeighTestube(false)
+
+  setIsBuirettePourMode(false)
+  setIsBuiretteClamped(false)
+
+  setIsClampInCenter(false)
+  setIsClampTestube(false)
+
+  setIsBeakerNearClamp(false)
+
+  // =======================================================
+  // HESS LAW
+  // =======================================================
+
+  setIsHessGuideline(false)
+  setHessGuidelineNumber(false)
+
+  setShowEnthalyResultOne(false)
+  setShowEnthalyResultTwo(false)
+
+  // =======================================================
+  // PIPETTE
+  // =======================================================
+
+  setIsPipetteMode(false)
+  setFillPipette(false)
+  setIsPipetteFilled(false)
+
+  setIsVolumetricPipetteMode(false)
+  setIsVolumetricPipetteFilled(false)
+  setFillVolumetricPipette(false)
+  setPourFromVolumetricPipette(false)
+
+  // =======================================================
+  // HYDROLYSIS LESSON
+  // =======================================================
+
   setTestubesInBeaker({
     tube1: false,
     tube2: false,
     tube3: false,
-    tube4:false,
-    tube5:false,
-    tube6:false
   })
 
-  setIsAddMoreLiquid(false);
-  setIsReactionTimerRunning(false);
-  setShowIodobutanePrecipitate(false);
-  setShouldResetRotation(false);
-  setIsVolumetricPipetteMode(false);
-  setIsVolumetricPipetteFilled(false);
-  setFillVolumetricPipette(false);
-  setPourFromVolumetricPipette(false);
-  setShowBromobutanePrecipitate(false);
-  setShowChlorobutanePrecipitate(false);
-  setIsPhenopthalinePourMode(false);
-  setPourDroplets(false);
-  setIsCleanBeaker(false);
-  setIsSulfamicInSpoon(false);
-  setIsFillToMark(false);
-  setIsPouringModeFunnelMode(false);
-  setShowSulfamicAcidNaOHTitration(false);
-  setShowQuestionCardNo(null);
-  setIsClampTestube(false);
-  setIsInvertCylinder(false);
-  setIsModelCentre(false);
-  setIsPourModeDeliveryTube(false);
-  setIsMolarVolumeReaction(false);
-  setConcialGasAnimationAction(false);
-  setIsPlaceInMantle(false);
-  setIsAddDistillationHead(false);
-  setIsInsertThermometer(false);
-  setIsInsertCondensor(false);
-  setIsFillCondensor(false);
-  setIsMantleTurnedOn(false);
-  setIsAddWarmWater(false);
-  setIsPlaceModelInBeaker(false);
-  setIsChlorideIonReaction(false);
-  setIsModelInHeatingMat(false);
-  setIsDipMode(false);
-  setShowBunsenFlame(false);
-  setShowPowderBox(false);
-  setSelectedPowder(false);
-  setShowPowderInContainer(false);
-  isAirHoleOpen,setIsAirHoleOpen(false)
+  setIsAddMoreLiquid(false)
 
+  setShowIodobutanePrecipitate(false)
+  setShowBromobutanePrecipitate(false)
+  setShowChlorobutanePrecipitate(false)
+
+  setShouldResetRotation(false)
+
+  // =======================================================
+  // TITRATION / SULFAMIC ACID
+  // =======================================================
+
+  setIsPhenopthalinePourMode(false)
+  setShowHCLTitrationReaction(false)
+
+  setIsCleanBeaker(false)
+  setIsFillToMark(null)
+
+  setShowSulfamicAcidNaOHTitration(false)
+
+  // =======================================================
+  // QUESTIONS
+  // =======================================================
+
+  setShowQuestionCardNo(null)
+
+  // =======================================================
+  // MOLAR VOLUME
+  // =======================================================
+
+  setIsInvertCylinder(false)
+  setIsModelCentre(false)
+
+  setIsDeliveryTubeConnected(false)
+  setIsPourModeDeliveryTube(false)
+
+  setIsMolarVolumeReaction(false)
+
+  setDeliveryAnimationActions({
+    deliveryGas01: null,
+    deliveryGas02: null,
+    deliveryGas03: null,
+  })
+
+  setConcialGasAnimationAction({
+    conicalGas01: null,
+    conicalGas02: null,
+    conicalGas03: null,
+  })
+
+  // =======================================================
+  // DISTILLATION
+  // =======================================================
+
+  setDistillationGasAnimationActions({
+    distillationGas01: null,
+    distillationGas02: null,
+    distillationGas03: null,
+  })
+
+  setIsPlaceInMantle(false)
+
+  setIsAddDistillationHead(false)
+  setIsInsertThermometer(false)
+  setIsInsertCondensor(false)
+
+  setIsFillCondensor(false)
+  setIsMantleTurnedOn(false)
+
+  setIsAddWarmWater(false)
+  setIsPlaceModelInBeaker(false)
+
+  // =======================================================
+  // CHLORIDE ION TEST
+  // =======================================================
+
+  setIsChlorideIonReaction(false)
+
+  // =======================================================
+  // FLAME TEST
+  // =======================================================
+
+  setIsModelInHeatingMat(false)
+  setIsDipMode(false)
+
+  setShowBunsenFlame(false)
+
+  setShowPowderBox(false)
+  setSelectedPowder(null)
+  setShowPowderInContainer(false)
+
+  setIsAirHoleOpen(false)
 }
-
   return (
     <InteractionContext.Provider
       value={{

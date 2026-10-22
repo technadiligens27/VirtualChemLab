@@ -29,37 +29,109 @@ import "./ResetLessonButton.css"
 // =====================================================
 
 export const useResetLesson = () => {
-  const {
-    normalBeakerRef,
-    conicalBeakerRef,
-    roundBeakerRef,
-    graduatedBeakerRef,
+ const {
+  chairRef,
 
-    spoonRef,
-    saltRef,
+  gogglesRef,
+  gloveleftRef,
+  gloverightRef,
 
-    redLitmusRef,
-    blueLitmusRef,
+  normalBeakerRef,
+  conicalBeakerRef,
+  conicalBeakerRef02,
+  roundBeakerRef,
+  graduatedBeakerRef,
 
-    testube01Ref,
-    testube02Ref,
-    testube03Ref,
+  spoonRef,
+  saltRef,
+  saltContainerRef,
 
-    filterPaperRef,
-    filterFoldedPaperRef,
+  redLitmusRef,
+  blueLitmusRef,
 
-    funnelRef,
+  testube01Ref,
+  testube02Ref,
+  testube03Ref,
+  testube04Ref,
+  testube05Ref,
+  testube06Ref,
 
-    mainDropperRef,
-    dropperAnimationAction,
+  testube01CapRef,
+  testube03CapRef,
 
-    mainPolystereneRef,
+  filterPaperRef,
+  filterFoldedPaperRef,
+  funnelRef,
 
-    digitalBalanceRef,
+  mainDropperRef,
+  dropperAnimationAction,
 
-    mainBuiretteRef,
-    mainThermometerRef
-  } = useContext(ModelContext)
+  mainPolystereneRef,
+  mainPolysterene2Ref,
+  mainPolystereneLid,
+
+  pottasiumCarbonateContainerRef,
+  potassiumHydrogenCarbonateRef,
+
+  digitalBalanceRef,
+
+  mainBuiretteRef,
+  buretteClampRef,
+  mainThermometerRef,
+
+  kettleRef,
+  pipetteRef,
+
+  iodobutaneBottleRef,
+  bromobutaneBottleRef,
+  chlorobutaneBottleRef,
+
+  volumetricRef,
+  volumetricPipetteRef,
+  volumetricBung,
+  graduatedPipetteRef,
+
+  phenopthalineBottleRef,
+  sulfamicBottleRef,
+  methylBottleRef,
+  naohBottleRef,
+  waterBottleRef,
+
+  boilingTube01Ref,
+  graduatedCylinder100Ref,
+  deliveryTubeBungRef,
+  conicalBungRef,
+
+  seperatingFunnelRef,
+  separatingFunnelBungRef,
+
+  heatingMantleRef,
+  clampHandleRef,
+  distillationHeadRef,
+  condensorRef,
+  heatingMatRef,
+
+  waterInTubeRef,
+  waterOutTubeRef,
+
+  bunsenBurnerRef,
+  gasTubeRef,
+  airHoleRef,
+
+  nichromeWireRef,
+  nichromeWirePowderRef,
+
+  powderContainer,
+  metalSaltRef,
+
+  normalBeakerLiquidRef,
+  conicalBeakerLiquidRef,
+  thermometerLiquidRef,
+  BuretteLiquidRef,
+  naohLiquidRef,
+
+  normalPrecipitateRef,
+} = useContext(ModelContext)
 
   const {
     resetInteractions,
@@ -130,44 +202,106 @@ export const useResetLesson = () => {
   // =====================================================
 
   const resetLesson = () => {
-    const labModels = [
-      normalBeakerRef,
+   const labModels = [
+  chairRef,
 
-      conicalBeakerRef,
+  gogglesRef,
+  gloveleftRef,
+  gloverightRef,
 
-      roundBeakerRef,
+  normalBeakerRef,
+  conicalBeakerRef,
+  conicalBeakerRef02,
+  roundBeakerRef,
+  graduatedBeakerRef,
 
-      graduatedBeakerRef,
+  spoonRef,
+  saltRef,
+  saltContainerRef,
 
-      spoonRef,
+  redLitmusRef,
+  blueLitmusRef,
 
-      saltRef,
+  testube01Ref,
+  testube02Ref,
+  testube03Ref,
+  testube04Ref,
+  testube05Ref,
+  testube06Ref,
 
-      redLitmusRef,
+  testube01CapRef,
+  testube03CapRef,
 
-      blueLitmusRef,
+  filterPaperRef,
+  filterFoldedPaperRef,
+  funnelRef,
 
-      testube01Ref,
+  mainDropperRef,
 
-      testube02Ref,
+  mainPolystereneRef,
+  mainPolysterene2Ref,
+  mainPolystereneLid,
 
-      testube03Ref,
+  pottasiumCarbonateContainerRef,
+  potassiumHydrogenCarbonateRef,
 
-      filterPaperRef,
+  digitalBalanceRef,
 
-      filterFoldedPaperRef,
+  mainBuiretteRef,
+  buretteClampRef,
+  mainThermometerRef,
 
-      funnelRef,
+  kettleRef,
+  pipetteRef,
+  volumetricRef,
+  volumetricPipetteRef,
+  volumetricBung,
+  graduatedPipetteRef,
 
-      mainDropperRef,
+  iodobutaneBottleRef,
+  bromobutaneBottleRef,
+  chlorobutaneBottleRef,
 
-      digitalBalanceRef,
+  phenopthalineBottleRef,
+  sulfamicBottleRef,
+  methylBottleRef,
+  naohBottleRef,
+  waterBottleRef,
 
-      mainPolystereneRef,
+  boilingTube01Ref,
+  graduatedCylinder100Ref,
+  deliveryTubeBungRef,
+  conicalBungRef,
 
-      mainBuiretteRef,
-      mainThermometerRef
-    ]
+  seperatingFunnelRef,
+  separatingFunnelBungRef,
+
+  heatingMantleRef,
+  clampHandleRef,
+  distillationHeadRef,
+  condensorRef,
+  heatingMatRef,
+  bunsenBurnerRef,
+  gasTubeRef,
+
+  waterInTubeRef,
+  waterOutTubeRef,
+
+  nichromeWireRef,
+  nichromeWirePowderRef,
+
+  powderContainer,
+  metalSaltRef,
+  airHoleRef,
+
+  normalBeakerLiquidRef,
+  conicalBeakerLiquidRef,
+  thermometerLiquidRef,
+  BuretteLiquidRef,
+  naohLiquidRef,
+
+  normalPrecipitateRef,
+]
 
     // Reset interaction states
     // such as Litmus Mode,

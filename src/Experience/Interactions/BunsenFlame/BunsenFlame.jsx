@@ -307,21 +307,65 @@ OuterColur = "#FF9500",
     />}
 
     
-   {selectedPowder?.name === 'Lithium Chloride' && selectedLesson==15.2 && lessonStep>=33 &&<ChangeBunsenFlameColor
+{selectedPowder?.name === "Lithium Chloride" &&
+  selectedLesson === 15.2 &&
+  lessonStep >= 33 && (
+    <ChangeBunsenFlameColor
       innerColor="#FF4569"
       outerColor="#DC143C"
       duration={1.5}
-    />}
+    />
+)}
 
-  {selectedPowder?.name === "Sodium Chloride" &&
-    selectedLesson === 15.2 &&
-    lessonStep >= 33 && (
-      <ChangeBunsenFlameColor
-        innerColor="#FFF176"
-        outerColor="#FFD700"
-        duration={1.5}
-      />
-  )}
+{selectedPowder?.name === "Sodium Chloride" &&
+  selectedLesson === 15.2 &&
+  lessonStep >= 33 && (
+    <ChangeBunsenFlameColor
+      innerColor="#FFF176"
+      outerColor="#FFD700"
+      duration={1.5}
+    />
+)}
+
+{selectedPowder?.name === "Potassium Chloride" &&
+  selectedLesson === 15.2 &&
+  lessonStep >= 33 && (
+    <ChangeBunsenFlameColor
+      innerColor="#E6C8FF"
+      outerColor="#B76DDE"
+      duration={1.5}
+    />
+)}
+
+{selectedPowder?.name === "Calcium Chloride" &&
+  selectedLesson === 15.2 &&
+  lessonStep >= 33 && (
+    <ChangeBunsenFlameColor
+      innerColor="#FFB07C"
+      outerColor="#C95136"
+      duration={1.5}
+    />
+)}
+
+{selectedPowder?.name === "Barium Chloride" &&
+  selectedLesson === 15.2 &&
+  lessonStep >= 33 && (
+    <ChangeBunsenFlameColor
+      innerColor="#CFFF88"
+      outerColor="#74B72E"
+      duration={1.5}
+    />
+)}
+
+{selectedPowder?.name === "Copper(II) Chloride" &&
+  selectedLesson === 15.2 &&
+  lessonStep >= 33 && (
+    <ChangeBunsenFlameColor
+      innerColor="#72F5D0"
+      outerColor="#00A89C"
+      duration={1.5}
+    />
+)}
 
     </>
   );

@@ -47,6 +47,9 @@ import AllExplanations from "./AllExplanations/AllExplanations"
 import FlameTest from "./AllLessons/FlameTest/FlameTest"
 import FlameTest02 from "./AllLessons/FlameTest/FlameTest02"
 import FlameTestSummary from "./Summary/FlameTestSummary/FlameTestSummary"
+import ExothermicReactionSummary from "./Summary/ExothermicReactionSummary/ExothermicReactionSummary"
+import HessReactionOneResults from "./HessReactionOneResults/HessReactionOneResults"
+import MolarVolumeSummary from "./Summary/MolarVolumeSummary/MolarVolumeSummary"
 
 const mainContent = [
   {
@@ -785,18 +788,13 @@ useEffect(() => {
         )
        }
         <AllExplanations/>
-        <FlameTestSummary
-            onQuestions={() => {
-      setLessonStep(35);
-    }}
-    onEndLesson={() => {
-      // Replace with your existing lesson reset function
-      handleEndLesson();
-    }}/>
-        
+       {/* <HessReactionOneResults/> */}
+        {/* <ExothermicReactionSummary/>         */}
         {/* {<MolarVolumeResults/>} */}
        {/* {<HessCalculationStep25/>} */}
        {/* <TitreValueRecorded/> */}
+
+       {/* <MolarVolumeSummary/> */}
 
     </>
   )

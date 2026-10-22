@@ -1,0 +1,1003 @@
+/* =========================================================
+   EXOTHERMIC REACTION SUMMARY
+   ========================================================= */
+
+.exothermic-summary-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.exothermic-summary-overlay-open {
+  background: rgba(14, 11, 35, 0.72);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.exothermic-summary-overlay-closed {
+  background: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.exothermic-summary-overlay *,
+.exothermic-summary-overlay *::before,
+.exothermic-summary-overlay *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.exothermic-summary-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(86vw, 1650px);
+  height: min(90vh, 920px);
+  min-height: 0;
+
+  padding: 76px 38px 24px;
+
+  overflow: visible;
+
+  pointer-events: auto;
+
+  background: #ffffff;
+
+  border: 10px solid #ffcb4d;
+  border-radius: 34px;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   TOP TAB
+   ========================================================= */
+
+.exothermic-summary-tab {
+  position: absolute;
+
+  top: -10px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(30vw, 480px);
+  min-width: 280px;
+  height: 70px;
+
+  transform: translateX(-50%);
+
+  border-radius: 0 0 40px 40px;
+
+  background: #ffcb4d;
+
+  color: #2d1979;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   SIDE TOGGLE
+   ========================================================= */
+
+.exothermic-summary-side-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: -60px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 150px;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 0 20px 20px 0;
+
+  background: #ffcb4d;
+
+  cursor: pointer;
+}
+
+.exothermic-summary-side-toggle:hover {
+  background: #f2bb2e;
+}
+
+.exothermic-summary-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.exothermic-summary-layout {
+  display: flex;
+
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+
+  gap: clamp(18px, 2vw, 30px);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT RESULT CARD
+   ========================================================= */
+
+.exothermic-result-card {
+  display: flex;
+  flex: 0 1 31%;
+  flex-direction: column;
+
+  min-width: 220px;
+  min-height: 0;
+
+  overflow: hidden;
+
+  border: 2px solid #ffb36d;
+  border-radius: 20px;
+
+  background: #fff9f4;
+}
+
+.exothermic-result-header {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  min-height: 58px;
+  padding: 10px 22px;
+
+  background: #d85a32;
+
+  color: #ffffff;
+}
+
+.exothermic-result-header h2 {
+  margin: 0;
+
+  font-size: clamp(18px, 1.4vw, 21px);
+  font-weight: 800;
+}
+
+.exothermic-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 auto;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  font-size: 20px;
+}
+
+.exothermic-temperature-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 0;
+
+  gap: clamp(12px, 1.5vw, 24px);
+
+  padding: 18px 14px;
+
+  background: #fff2df;
+}
+
+.exothermic-thermometer-image {
+  display: block;
+
+  width: min(52%, 220px);
+  height: min(100%, 310px);
+
+  min-width: 0;
+
+  object-fit: contain;
+}
+
+.exothermic-temperature-info {
+  display: flex;
+  flex: 1 1 105px;
+  flex-direction: column;
+
+  gap: 5px;
+
+  color: #401b14;
+}
+
+.exothermic-temperature-info span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 700;
+}
+
+.exothermic-temperature-info strong {
+  color: #d92d20;
+
+  font-size: clamp(28px, 3vw, 52px);
+  line-height: 1;
+}
+
+.exothermic-temperature-info p {
+  margin: 0;
+
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.35;
+}
+
+.exothermic-label {
+  width: calc(100% - 54px);
+
+  flex-shrink: 0;
+
+  margin: 12px auto 8px;
+  padding: 10px 18px;
+
+  border-radius: 14px;
+
+  background: #d85a32;
+
+  color: #ffffff;
+
+  font-size: clamp(16px, 1.25vw, 19px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.exothermic-result-text {
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 8px 28px 18px;
+
+  color: #3f1b15;
+
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.35;
+}
+
+.exothermic-result-text strong {
+  color: #d92d20;
+}
+
+.exothermic-equation-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  flex-shrink: 0;
+
+  gap: 7px;
+
+  margin: 0 18px 20px;
+  padding: 16px;
+
+  border: 2px solid #ffc69b;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  color: #54251b;
+
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.exothermic-arrow {
+  color: #d92d20;
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+   ========================================================= */
+
+.exothermic-summary-content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding-right: 9px;
+  padding-bottom: 4px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.exothermic-summary-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.exothermic-summary-content::-webkit-scrollbar-track {
+  border-radius: 999px;
+
+  background: #eee8fa;
+}
+
+.exothermic-summary-content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.exothermic-summary-card {
+  border: 2px solid #b9dfbb;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    115deg,
+    #eaffe9,
+    #f4fff1
+  );
+
+  color: #21165e;
+}
+
+.exothermic-aim-card {
+  flex-shrink: 0;
+
+  padding: 10px 18px;
+}
+
+.exothermic-summary-card h2 {
+  margin: 0;
+
+  color: #21165e;
+
+  font-size: clamp(19px, 1.5vw, 22px);
+  font-weight: 800;
+}
+
+.exothermic-heading-line {
+  width: 70px;
+  height: 5px;
+
+  margin: 8px 0 14px;
+
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+.exothermic-summary-card p {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin: 0;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   LEARNED + OBSERVATIONS
+   ========================================================= */
+
+.exothermic-middle-grid {
+  display: flex;
+  align-items: stretch;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+.exothermic-learned-card {
+  flex: 1.2 1 0;
+
+  padding: 20px 24px;
+}
+
+.exothermic-observation-card {
+  flex: 0.8 1 0;
+
+  padding: 20px 24px;
+}
+
+.exothermic-learned-card ul {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.exothermic-learned-card li {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.35;
+}
+
+.exothermic-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: #16ad52;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.exothermic-observation-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.exothermic-observation-list div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  padding-bottom: 9px;
+
+  border-bottom: 1px solid #cce6cd;
+}
+
+.exothermic-observation-list div:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.exothermic-observation-list strong {
+  color: #3d235e;
+
+  font-size: clamp(14px, 1vw, 15px);
+}
+
+.exothermic-observation-list span {
+  color: #506070;
+
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   CALCULATION
+   ========================================================= */
+
+.exothermic-calculation-card {
+  flex-shrink: 0;
+
+  margin-top: 14px;
+  padding: 20px 26px;
+}
+
+.exothermic-calculation-content {
+  display: flex;
+  align-items: center;
+
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.exothermic-calculation-content > div:first-child {
+  flex: 1 1 0;
+}
+
+.exothermic-formula {
+  flex: 0 0 auto;
+
+  padding: 12px 22px;
+
+  border: 2px solid #ffbd88;
+  border-radius: 14px;
+
+  background: #fff7f0;
+
+  color: #c84b23;
+
+  font-size: clamp(24px, 2vw, 35px);
+  font-weight: 800;
+}
+
+.exothermic-formula-info {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+
+  gap: 7px 14px;
+
+  color: #425466;
+
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.3;
+}
+
+.exothermic-formula-info span {
+  flex: 1 1 170px;
+}
+
+
+/* =========================================================
+   CONCLUSION
+   ========================================================= */
+
+.exothermic-conclusion-card {
+  flex-shrink: 0;
+
+  margin-top: 14px;
+  padding: 20px 26px;
+
+  border-color: #f0b6a7;
+
+  background: linear-gradient(
+    115deg,
+    #fff0eb,
+    #fffaf8
+  );
+}
+
+.exothermic-conclusion-card h2 {
+  color: #9e3522;
+}
+
+.exothermic-conclusion-card .exothermic-heading-line {
+  background: #e96539;
+}
+
+.exothermic-conclusion-card strong {
+  color: #c84b23;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.exothermic-summary-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 18px;
+  padding-bottom: 0px;
+}
+
+.exothermic-summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 170px;
+  min-height: 52px;
+  padding: 10px 22px;
+
+  border-radius: 999px;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.exothermic-summary-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 20px rgba(65, 36, 145, 0.22);
+}
+
+.exothermic-summary-button:active {
+  transform: scale(0.98);
+}
+
+.exothermic-questions-button {
+  border: 3px solid #4e2a9b;
+
+  background: #ffffff;
+
+  color: #4e2a9b;
+}
+
+.exothermic-finish-button {
+  gap: 12px;
+
+  border: 3px solid #4e2a9b;
+
+  background: #4e2a9b;
+
+  color: #ffffff;
+}
+
+.exothermic-finish-button span {
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  line-height: 0.5;
+}
+
+
+/* =========================================================
+   LAPTOP / SMALL DESKTOP
+   ========================================================= */
+
+@media (max-width: 1250px) {
+  .exothermic-summary-container {
+    width: 94vw;
+
+    padding:
+      76px
+      28px
+      24px;
+  }
+
+  .exothermic-result-card {
+    flex-basis: 34%;
+  }
+
+  .exothermic-temperature-area {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .exothermic-thermometer-image {
+    width: min(68%, 190px);
+    height: min(65%, 240px);
+  }
+
+  .exothermic-temperature-info {
+    flex: 0 0 auto;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .exothermic-middle-grid {
+    flex-direction: column;
+  }
+
+  .exothermic-learned-card,
+  .exothermic-observation-card {
+    flex: 0 0 auto;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+  .exothermic-summary-overlay {
+    align-items: flex-start;
+
+    overflow-y: auto;
+  }
+
+  .exothermic-summary-container {
+    width: min(92vw, 760px);
+    height: auto;
+    min-height: 90vh;
+
+    margin: 24px 0;
+
+    padding: 82px 26px 28px;
+  }
+
+  .exothermic-summary-layout {
+    flex-direction: column;
+
+    overflow: visible;
+  }
+
+  .exothermic-result-card {
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-height: 470px;
+    max-width: 560px;
+
+    margin: 0 auto;
+  }
+
+  .exothermic-temperature-area {
+    flex-direction: row;
+
+    min-height: 280px;
+  }
+
+  .exothermic-thermometer-image {
+    width: min(46%, 230px);
+    height: 250px;
+  }
+
+  .exothermic-temperature-info {
+    align-items: flex-start;
+
+    text-align: left;
+  }
+
+  .exothermic-summary-content {
+    overflow: visible;
+
+    padding-right: 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .exothermic-summary-overlay {
+    padding: 12px;
+  }
+
+  .exothermic-summary-container {
+    width: 100%;
+    min-height: auto;
+
+    margin: 16px 0;
+
+    padding: 70px 16px 20px;
+
+    border-width: 6px;
+    border-radius: 24px;
+  }
+
+  .exothermic-summary-tab {
+    width: 70vw;
+    min-width: 0;
+    height: 58px;
+
+    border-radius: 0 0 28px 28px;
+
+    font-size: 24px;
+  }
+
+  .exothermic-summary-side-toggle {
+    right: -48px;
+
+    width: 48px;
+    height: 110px;
+
+    border-radius: 0 16px 16px 0;
+  }
+
+  .exothermic-summary-side-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .exothermic-result-card {
+    min-height: 430px;
+  }
+
+  .exothermic-result-header {
+    padding: 10px 16px;
+  }
+
+  .exothermic-temperature-area {
+    flex-direction: column;
+
+    min-height: 270px;
+
+    gap: 8px;
+  }
+
+  .exothermic-thermometer-image {
+    width: min(56%, 175px);
+    height: 175px;
+  }
+
+  .exothermic-temperature-info {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .exothermic-temperature-info strong {
+    font-size: 34px;
+  }
+
+  .exothermic-label {
+    width: calc(100% - 36px);
+
+    font-size: 17px;
+  }
+
+  .exothermic-result-text {
+    padding: 8px 20px 16px;
+
+    font-size: 15px;
+  }
+
+  .exothermic-equation-box {
+    margin: 0 12px 16px;
+    padding: 13px;
+
+    font-size: 13px;
+  }
+
+  .exothermic-aim-card,
+  .exothermic-learned-card,
+  .exothermic-observation-card,
+  .exothermic-calculation-card,
+  .exothermic-conclusion-card {
+    padding: 20px;
+  }
+
+  .exothermic-summary-card h2 {
+    font-size: 23px;
+  }
+
+  .exothermic-summary-card p,
+  .exothermic-learned-card li {
+    font-size: 15px;
+  }
+
+  .exothermic-calculation-content {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 16px;
+  }
+
+  .exothermic-formula {
+    text-align: center;
+  }
+
+  .exothermic-formula-info {
+    flex-direction: column;
+  }
+
+  .exothermic-formula-info span {
+    flex: 0 0 auto;
+  }
+
+  .exothermic-summary-actions {
+    flex-direction: column-reverse;
+
+    gap: 10px;
+  }
+
+  .exothermic-summary-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 390px) {
+  .exothermic-summary-container {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .exothermic-summary-tab {
+    width: 74vw;
+
+    font-size: 22px;
+  }
+
+  .exothermic-result-header h2 {
+    font-size: 17px;
+  }
+
+  .exothermic-temperature-info span,
+  .exothermic-temperature-info p {
+    font-size: 13px;
+  }
+
+  .exothermic-temperature-info strong {
+    font-size: 29px;
+  }
+
+  .exothermic-aim-card,
+  .exothermic-learned-card,
+  .exothermic-observation-card,
+  .exothermic-calculation-card,
+  .exothermic-conclusion-card {
+    padding: 17px;
+  }
+}

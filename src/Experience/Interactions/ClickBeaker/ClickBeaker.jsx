@@ -5299,10 +5299,7 @@ const disposeCup = () => {
           )
         }
 
-        if (
-          [14.1].includes(selectedLesson) &&
-          [31].includes(lessonStep) 
-        ) {
+        if ([14.1].includes(selectedLesson) && [31].includes(lessonStep)) {
           return (
             <button onClick={placeConicalBung}>
               Add New Bung
@@ -5310,10 +5307,7 @@ const disposeCup = () => {
           )
         }
 
-        if (
-          [11.1, 12.2,,14.2].includes(selectedLesson) &&
-          [51, 68, 83,102,83].includes(lessonStep)
-        ) {
+        if ([11.1, 12.2,,14.2].includes(selectedLesson) &&[51, 68, 83,102,83].includes(lessonStep)) {
           return (
             <button onClick={handleModelPlaceCentre}>
               Place Near Clamp
@@ -5321,10 +5315,7 @@ const disposeCup = () => {
           )
         }
 
-        if (
-           [11.1,12.2].includes(selectedLesson) && [53,70,85].includes(lessonStep)
-          
-        ) {
+        if ([11.1,12.2].includes(selectedLesson) && [53,70,85].includes(lessonStep)) {
           return (
             <button onClick={handlePlaceBeakerRemove}>
               Pick Up
@@ -5332,11 +5323,7 @@ const disposeCup = () => {
           )
         }
 
-        if (
-          [11.1,12.2].includes(selectedLesson)
-          && [54,87].includes(lessonStep)
-         
-        ) {
+        if ([11.1,12.2].includes(selectedLesson) && [54,87].includes(lessonStep)) {
           return (
             <button onClick={handleCleanBeaker}>
               Clean Flask
@@ -5541,7 +5528,7 @@ const disposeCup = () => {
         return(
           <>
             <button onClick={handlePowderBox}>
-              Add Powder
+              Add Metal Salt
             </button>
             <button onClick={keepBackOnTable}>
               Keep Back On Table

@@ -1,5 +1,5 @@
 /* =========================================================
-   Reaction One Results Overlay
+   REACTION ONE RESULTS OVERLAY
    ========================================================= */
 
 .reaction1-results-overlay {
@@ -7,12 +7,13 @@
   inset: 0;
   z-index: 99999;
 
-  width: 100%;
-  height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
 
   pointer-events: none;
 
@@ -22,31 +23,32 @@
 }
 
 .reaction1-results-overlay-open {
-  background-color:
-    rgba(20, 15, 40, 0.25);
+  background-color: rgba(20, 15, 40, 0.25);
 
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter:
-    blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .reaction1-results-overlay-closed {
-  background-color:
-    transparent;
+  background-color: transparent;
 
   backdrop-filter: blur(0);
-  -webkit-backdrop-filter:
-    blur(0);
+  -webkit-backdrop-filter: blur(0);
 }
 
+
+/* =========================================================
+   MAIN PANEL
+   ========================================================= */
 
 .reaction1-results {
   position: relative;
 
   width: min(75vw, 1200px);
-  height: 92vh;
+  height: min(84vh, 760px);
+  min-height: 0;
 
-  padding: 5px;
+  padding: 15px;
 
   border: 10px solid #fdc843;
   border-radius: 16px;
@@ -62,48 +64,66 @@
 .reaction1-results-inner {
   position: relative;
 
-  width: 100%;
-  height: 100%;
-
   display: flex;
   flex-direction: column;
 
-  padding: 58px 25px 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  padding: 58px 25px 20px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
 
   border-radius: 12px;
 
   background-color: #ffffff;
 
   box-sizing: border-box;
-  overflow: hidden;
+}
+
+.reaction1-results-inner::-webkit-scrollbar {
+  width: 8px;
+}
+
+.reaction1-results-inner::-webkit-scrollbar-track {
+  border-radius: 999px;
+
+  background: #f2eef9;
+}
+
+.reaction1-results-inner::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #a88cff;
 }
 
 
 /* =========================================================
-   Top Header
+   TOP HEADER
    ========================================================= */
 
 .reaction1-results-header {
   position: absolute;
+
   top: -10px;
   left: 50%;
-  z-index: 2;
 
-  width: 375px;
-  max-width: 70%;
-  height: 70px;
+  z-index: 3;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius:
-    0 0 35px 35px;
+  width: min(375px, 70%);
+  height: 70px;
+
+  transform: translateX(-50%);
+
+  border-radius: 0 0 35px 35px;
 
   background-color: #fdc843;
-
-  transform:
-    translateX(-50%);
 }
 
 .reaction1-results-header h1 {
@@ -111,17 +131,18 @@
 
   color: #351c7c;
 
-  font-size: 27px;
+  font-size: clamp(20px, 2vw, 27px);
   font-weight: 800;
+  text-align: center;
 }
 
 
 /* =========================================================
-   Results Introduction
+   TITLE
    ========================================================= */
 
 .reaction1-results-title {
-  padding-right: 330px;
+  max-width: calc(100% - 405px);
 }
 
 .reaction1-results-title h1 {
@@ -129,7 +150,7 @@
 
   color: #351c7c;
 
-  font-size: 29px;
+  font-size: clamp(24px, 2.15vw, 29px);
   font-weight: 800;
 }
 
@@ -138,7 +159,7 @@
 
   color: #28233f;
 
-  font-size: 18px;
+  font-size: clamp(16px, 1.4vw, 18px);
   font-weight: 700;
 }
 
@@ -147,151 +168,27 @@
 
   color: #526170;
 
-  font-size: 16px;
+  font-size: clamp(14px, 1.25vw, 16px);
   line-height: 1.5;
 }
 
 
 /* =========================================================
-   Results Table
-   ========================================================= */
-
-.reaction1-results-table {
-  width: 100%;
-
-  margin-top: 20px;
-
-  border: 2px solid #cbbaee;
-  border-radius: 12px;
-
-  overflow: hidden;
-}
-
-.reaction1-results-row {
-  min-height: 48px;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(260px, 2fr)
-    minmax(180px, 1.25fr)
-    minmax(100px, 0.85fr)
-    minmax(70px, 0.6fr);
-
-  border-bottom:
-    1px solid #ded4f2;
-    padding-top: 7.5px;
-    padding-bottom: 7.5px;
-}
-
-.reaction1-results-row:last-child {
-  border-bottom: none;
-}
-
-.reaction1-results-row > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 8px 14px;
-
-  border-right:
-    1px solid #ded4f2;
-
-  color: #425466;
-
-  font-family:
-    "Baloo Thambi 2",
-    sans-serif;
-
-  font-size: 17px;
-  font-weight: 600;
-  text-align: center;
-
-  box-sizing: border-box;
-}
-
-.reaction1-results-row
-  > div:first-child {
-  justify-content: flex-start;
-
-  text-align: left;
-}
-
-.reaction1-results-row
-  > div:last-child {
-  border-right: none;
-}
-
-
-/* =========================================================
-   Table Header
-   ========================================================= */
-
-.reaction1-results-table-header {
-  min-height: 46px;
-
-  background-color: #f4effa;
-}
-
-.reaction1-results-table-header
-  > div {
-  color: #351c7c;
-
-  font-size: 15px;
-  font-weight: 800;
-}
-
-
-/* =========================================================
-   Recorded Values
-   ========================================================= */
-
-.reaction1-results-value {
-  color: #6135bf !important;
-
-  font-size: 17px !important;
-  font-weight: 800 !important;
-}
-
-
-/* =========================================================
-   Final Temperature Change Row
-   ========================================================= */
-
-.reaction1-results-final {
-  background-color: #f4effa;
-}
-
-.reaction1-results-final
-  > div {
-  color: #351c7c;
-
-  font-weight: 800;
-}
-
-.reaction1-results-change {
-  color: #6033c4 !important;
-
-  font-size: 21px !important;
-  font-weight: 900 !important;
-}
-
-
-/* =========================================================
-   Observation Card
+   OBSERVATION CARD
    ========================================================= */
 
 .reaction1-results-observation {
   position: absolute;
+
   top: 50px;
   right: 25px;
 
-  width: 370px;
-
   display: flex;
   align-items: center;
+
+  width: min(370px, 34%);
   gap: 14px;
+  
 
   padding: 12px 16px;
 
@@ -304,18 +201,19 @@
 }
 
 .reaction1-results-info {
-  flex-shrink: 0;
-
-  width: 40px;
-  height: 40px;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 auto;
+
   border-radius: 50%;
 
   background-color: #351c7c;
+
   color: #ffffff;
 
   font-family: serif;
@@ -328,7 +226,7 @@
 
   color: #351c7c;
 
-  font-size: 19px;
+  font-size: clamp(16px, 1.45vw, 19px);
   font-weight: 800;
 }
 
@@ -337,7 +235,7 @@
 
   color: #526170;
 
-  font-size: 16px;
+  font-size: clamp(13px, 1.2vw, 16px);
   line-height: 1.45;
 }
 
@@ -349,98 +247,147 @@
 
 
 /* =========================================================
-   Continue Button
+   RESULTS TABLE
    ========================================================= */
 
-   .reaction1-results-buttons {
+.reaction1-results-table {
+  width: 100%;
+
+  flex-shrink: 0;
+
+  margin-top: 40px;
+
+  overflow: hidden;
+
+  border: 2px solid #cbbaee;
+  border-radius: 12px;
+}
+
+.reaction1-results-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(230px, 2fr)
+    minmax(150px, 1.25fr)
+    minmax(85px, 0.85fr)
+    minmax(60px, 0.6fr);
+
+  min-height: 48px;
+
+  border-bottom: 1px solid #ded4f2;
+}
+
+.reaction1-results-row:last-child {
+  border-bottom: none;
+}
+
+.reaction1-results-row > div {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 
-  gap: 1rem;
+  min-width: 0;
+  padding: 10px 14px;
 
-  margin-top: 0rem;
-}
-.reaction1-results-question-button {
-  background: #ffffff;
+  border-right: 1px solid #ded4f2;
 
-  color: #4c2c96;
+  color: #425466;
 
-  border: 0.15rem solid #4c2c96;
-}
-
-.reaction1-results-question-button:hover {
-  background: #f5efff;
-}
-
-.reaction1-results-button {
-  width: 200px;
-  height: 50px;
-
-  margin-top: 16px;
-
-  border: none;
-  border-radius: 20px;
-
-  background-color: #351c7c;
-  color: #dbe4ec;
-
-  font-size: 17px;
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: clamp(14px, 1.25vw, 17px);
   font-weight: 600;
+  text-align: center;
 
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-
-    border: 1px solid black;
+  overflow-wrap: anywhere;
 }
 
-.reaction1-results-button:hover {
-  background-color: #472592;
+.reaction1-results-row > div:first-child {
+  justify-content: flex-start;
 
-  transform:
-    translateY(-1px);
+  text-align: left;
 }
 
-.reaction1-results-button:active {
-  transform:
-    translateY(0);
+.reaction1-results-row > div:last-child {
+  border-right: none;
 }
 
 
 /* =========================================================
-   Side Toggle Button
+   TABLE HEADER
+   ========================================================= */
+
+.reaction1-results-table-header {
+  min-height: 46px;
+
+  background-color: #f4effa;
+}
+
+.reaction1-results-table-header > div {
+  color: #351c7c;
+
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   VALUES
+   ========================================================= */
+
+.reaction1-results-value {
+  color: #6135bf !important;
+
+  font-size: clamp(15px, 1.3vw, 17px) !important;
+  font-weight: 800 !important;
+}
+
+.reaction1-results-final {
+  background-color: #f4effa;
+}
+
+.reaction1-results-final > div {
+  color: #351c7c;
+
+  font-weight: 800;
+}
+
+.reaction1-results-change {
+  color: #6033c4 !important;
+
+  font-size: clamp(18px, 1.6vw, 21px) !important;
+  font-weight: 900 !important;
+}
+
+
+/* =========================================================
+   SIDE TOGGLE
    ========================================================= */
 
 .reaction1-results-side {
   position: absolute;
+
   top: 50%;
   right: -60px;
-
-  width: 60px;
-  height: 150px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  width: 60px;
+  height: 150px;
+
   padding: 0;
 
+  transform: translateY(-50%);
+
   border: none;
-  border-radius:
-    0 20px 20px 0;
+  border-radius: 0 20px 20px 0;
 
   background-color: #fdc843;
 
   cursor: pointer;
 
-  transform:
-    translateY(-50%);
-
-  transition:
-    background-color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .reaction1-results-side:hover {
@@ -468,5 +415,215 @@
 
 
 /* =========================================================
-   Medium Height Screens
+   LAPTOP / SMALL DESKTOP
    ========================================================= */
+
+@media (max-width: 1200px) {
+  .reaction1-results {
+    width: min(92vw, 1050px);
+  }
+
+  .reaction1-results-title {
+    max-width: calc(100% - 330px);
+  }
+
+  .reaction1-results-observation {
+    width: min(320px, 35%);
+  }
+
+  .reaction1-results-row {
+    grid-template-columns:
+      minmax(190px, 1.8fr)
+      minmax(130px, 1.1fr)
+      minmax(75px, 0.7fr)
+      minmax(55px, 0.45fr);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .reaction1-results-overlay {
+    align-items: flex-start;
+
+    padding: 16px;
+
+    overflow-y: auto;
+  }
+
+  .reaction1-results {
+    width: min(94vw, 760px);
+    height: auto;
+    min-height: 90vh;
+
+    margin: 16px 0;
+  }
+
+  .reaction1-results-inner {
+    height: auto;
+    min-height: calc(90vh - 10px);
+
+    padding: 72px 22px 20px;
+
+    overflow: visible;
+  }
+
+  .reaction1-results-title {
+    max-width: none;
+  }
+
+  .reaction1-results-observation {
+    position: static;
+
+    width: 100%;
+
+    margin-top: 18px;
+    order: 2;
+  }
+
+  .reaction1-results-table {
+    order: 3;
+
+    overflow-x: auto;
+  }
+
+  .reaction1-results-row {
+    min-width: 690px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .reaction1-results-overlay {
+    padding: 10px;
+  }
+
+  .reaction1-results {
+    width: 100%;
+    min-height: calc(100vh - 20px);
+
+    margin: 10px 0;
+
+    border-width: 6px;
+    border-radius: 24px;
+  }
+
+  .reaction1-results-inner {
+    min-height: calc(100vh - 32px);
+
+    padding: 66px 14px 18px;
+
+    border-radius: 18px;
+  }
+
+  .reaction1-results-header {
+    width: min(78vw, 320px);
+    height: 58px;
+
+    border-radius: 0 0 28px 28px;
+  }
+
+  .reaction1-results-header h1 {
+    font-size: 21px;
+  }
+
+  .reaction1-results-side {
+    right: -46px;
+
+    width: 46px;
+    height: 110px;
+
+    border-radius: 0 16px 16px 0;
+  }
+
+  .reaction1-results-side img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .reaction1-results-title h1 {
+    font-size: 23px;
+    line-height: 1.2;
+  }
+
+  .reaction1-results-title h2 {
+    font-size: 16px;
+  }
+
+  .reaction1-results-title p {
+    font-size: 14px;
+  }
+
+  .reaction1-results-observation {
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 14px;
+  }
+
+  .reaction1-results-info {
+    width: 34px;
+    height: 34px;
+
+    font-size: 20px;
+  }
+
+  .reaction1-results-observation h2 {
+    font-size: 17px;
+  }
+
+  .reaction1-results-observation p {
+    font-size: 14px;
+  }
+
+  .reaction1-results-table {
+    margin-top: 16px;
+  }
+
+  .reaction1-results-row {
+    min-width: 610px;
+    min-height: 44px;
+  }
+
+  .reaction1-results-row > div {
+    padding: 9px 10px;
+
+    font-size: 14px;
+  }
+
+  .reaction1-results-table-header > div {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 390px) {
+  .reaction1-results-inner {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .reaction1-results-title h1 {
+    font-size: 21px;
+  }
+
+  .reaction1-results-row {
+    min-width: 570px;
+  }
+
+  .reaction1-results-observation {
+    padding: 12px;
+  }
+}

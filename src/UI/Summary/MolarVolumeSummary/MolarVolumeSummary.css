@@ -1,0 +1,927 @@
+/* =========================================================
+   MOLAR VOLUME SUMMARY
+   ========================================================= */
+
+.molar-summary-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.molar-summary-overlay-open {
+  background: rgba(14, 11, 35, 0.72);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.molar-summary-overlay-closed {
+  background: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.molar-summary-overlay *,
+.molar-summary-overlay *::before,
+.molar-summary-overlay *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.molar-summary-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(86vw, 1650px);
+  height: min(90vh, 920px);
+  min-height: 0;
+
+  padding: 76px 38px 24px;
+
+  overflow: visible;
+
+  pointer-events: auto;
+
+  border: 10px solid #ffcb4d;
+  border-radius: 34px;
+
+  background: #ffffff;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   TOP TAB
+   ========================================================= */
+
+.molar-summary-tab {
+  position: absolute;
+
+  top: -10px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(30vw, 480px);
+  min-width: 280px;
+  height: 70px;
+
+  transform: translateX(-50%);
+
+  border-radius: 0 0 40px 40px;
+
+  background: #ffcb4d;
+
+  color: #2d1979;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   SIDE TOGGLE
+   ========================================================= */
+
+.molar-summary-side-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: -60px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 150px;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 0 20px 20px 0;
+
+  background: #ffcb4d;
+
+  cursor: pointer;
+}
+
+.molar-summary-side-toggle:hover {
+  background: #f2bb2e;
+}
+
+.molar-summary-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.molar-summary-layout {
+  display: flex;
+
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+
+  gap: clamp(18px, 2vw, 30px);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT RESULT CARD
+   ========================================================= */
+
+.molar-result-card {
+  display: flex;
+  flex: 0 1 31%;
+  flex-direction: column;
+
+  min-width: 220px;
+  min-height: 0;
+
+  overflow: hidden;
+
+  border: 2px solid #a78aff;
+  border-radius: 20px;
+
+  background: #fbf9ff;
+}
+
+.molar-result-header {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  min-height: 58px;
+  padding: 10px 22px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+}
+
+.molar-result-header h2 {
+  margin: 0;
+
+  font-size: clamp(18px, 1.4vw, 21px);
+  font-weight: 800;
+}
+
+.molar-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 auto;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  font-size: 19px;
+}
+
+.molar-gas-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 0;
+
+  gap: clamp(12px, 1.5vw, 24px);
+
+  padding: 18px 14px;
+
+  background: #f3efff;
+}
+
+.molar-gas-image {
+  display: block;
+
+  width: min(52%, 220px);
+  height: min(100%, 310px);
+
+  min-width: 0;
+
+  object-fit: contain;
+}
+
+.molar-gas-info {
+  display: flex;
+  flex: 1 1 105px;
+  flex-direction: column;
+
+  gap: 5px;
+
+  color: #351c7c;
+}
+
+.molar-gas-info span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 700;
+}
+
+.molar-gas-info strong {
+  color: #6135bf;
+
+  font-size: clamp(28px, 3vw, 52px);
+  line-height: 1;
+}
+
+.molar-gas-info small {
+  font-size: 0.45em;
+}
+
+.molar-gas-info p {
+  margin: 0;
+
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.35;
+}
+
+.molar-label {
+  width: calc(100% - 54px);
+
+  flex-shrink: 0;
+
+  margin: 12px auto 8px;
+  padding: 10px 18px;
+
+  border-radius: 14px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+
+  font-size: clamp(16px, 1.25vw, 19px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.molar-result-text {
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 8px 28px 18px;
+
+  color: #351c7c;
+
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.35;
+}
+
+.molar-equation-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  flex-shrink: 0;
+
+  gap: 7px;
+
+  margin: 0 18px 20px;
+  padding: 16px;
+
+  border: 2px solid #cbbaee;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  color: #351c7c;
+
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.molar-arrow {
+  color: #6135bf;
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+   ========================================================= */
+
+.molar-summary-content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding-right: 9px;
+  padding-bottom: 4px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.molar-summary-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.molar-summary-content::-webkit-scrollbar-track {
+  border-radius: 999px;
+
+  background: #eee8fa;
+}
+
+.molar-summary-content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+
+/* =========================================================
+   RIGHT SUMMARY CARDS
+   ========================================================= */
+
+.molar-summary-card {
+  border: 2px solid #b9dfbb;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    115deg,
+    #eaffe9,
+    #f4fff1
+  );
+
+  color: #21165e;
+}
+
+.molar-aim-card {
+  flex-shrink: 0;
+
+  padding: 10px 18px;
+}
+
+.molar-summary-card h2 {
+  margin: 0;
+
+  color: #21165e;
+
+  font-size: clamp(19px, 1.5vw, 22px);
+  font-weight: 800;
+}
+
+.molar-heading-line {
+  width: 70px;
+  height: 5px;
+
+  margin: 8px 0 14px;
+
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+.molar-summary-card p {
+  margin: 0;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.5;
+}
+
+.molar-summary-card strong {
+  color: #4e2a9b;
+}
+
+
+/* =========================================================
+   LEARNED + OBSERVATIONS
+   ========================================================= */
+
+.molar-middle-grid {
+  display: flex;
+  align-items: stretch;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+.molar-learned-card {
+  flex: 1.2 1 0;
+
+  padding: 20px 24px;
+}
+
+.molar-observation-card {
+  flex: 0.8 1 0;
+
+  padding: 20px 24px;
+}
+
+.molar-learned-card ul {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.molar-learned-card li {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.35;
+}
+
+.molar-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: #16ad52;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.molar-observation-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.molar-observation-list div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  padding-bottom: 9px;
+
+  border-bottom: 1px solid #cce6cd;
+}
+
+.molar-observation-list div:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.molar-observation-list strong {
+  color: #3d235e;
+
+  font-size: clamp(14px, 1vw, 15px);
+}
+
+.molar-observation-list span {
+  color: #506070;
+
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   CALCULATION
+   ========================================================= */
+
+.molar-calculation-card {
+  flex-shrink: 0;
+
+  margin-top: 14px;
+  padding: 20px 26px;
+}
+
+.molar-calculation-content {
+  display: flex;
+  align-items: center;
+
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.molar-calculation-content > div:first-child {
+  flex: 1 1 0;
+}
+
+.molar-formula {
+  flex: 0 0 auto;
+
+  padding: 12px 22px;
+
+  border: 2px solid #ffbd88;
+  border-radius: 14px;
+
+  background: #fff7f0;
+
+  color: #c84b23;
+
+  font-size: clamp(24px, 2vw, 35px);
+  font-weight: 800;
+}
+
+.molar-formula-info {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+
+  gap: 7px 14px;
+
+  margin-top: 16px;
+
+  color: #425466;
+
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.3;
+}
+
+.molar-formula-info span {
+  flex: 1 1 170px;
+}
+
+
+/* =========================================================
+   CONCLUSION
+   ========================================================= */
+
+.molar-conclusion-card {
+  flex-shrink: 0;
+
+  margin-top: 14px;
+  padding: 20px 26px;
+
+  border-color: #f0b6a7;
+
+  background: linear-gradient(
+    115deg,
+    #fff0eb,
+    #fffaf8
+  );
+}
+
+.molar-conclusion-card h2 {
+  color: #9e3522;
+}
+
+.molar-conclusion-card .molar-heading-line {
+  background: #e96539;
+}
+
+.molar-conclusion-card strong {
+  color: #c84b23;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.molar-summary-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 18px;
+  padding-bottom: 2px;
+}
+
+.molar-summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 170px;
+  min-height: 52px;
+  padding: 10px 22px;
+
+  border-radius: 999px;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.molar-summary-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 20px rgba(65, 36, 145, 0.22);
+}
+
+.molar-summary-button:active {
+  transform: scale(0.98);
+}
+
+.molar-questions-button {
+  border: 3px solid #4e2a9b;
+
+  background: #ffffff;
+
+  color: #4e2a9b;
+}
+
+.molar-finish-button {
+  gap: 12px;
+
+  border: 3px solid #4e2a9b;
+
+  background: #4e2a9b;
+
+  color: #ffffff;
+}
+
+.molar-finish-button span {
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  line-height: 0.5;
+}
+
+
+/* =========================================================
+   LAPTOP / SMALL DESKTOP
+   ========================================================= */
+
+@media (max-width: 1250px) {
+  .molar-summary-container {
+    width: 94vw;
+
+    padding:
+      76px
+      28px
+      24px;
+  }
+
+  .molar-result-card {
+    flex-basis: 34%;
+  }
+
+  .molar-gas-area {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .molar-gas-image {
+    width: min(68%, 190px);
+    height: min(65%, 240px);
+  }
+
+  .molar-gas-info {
+    flex: 0 0 auto;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .molar-middle-grid {
+    flex-direction: column;
+  }
+
+  .molar-learned-card,
+  .molar-observation-card {
+    flex: 0 0 auto;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .molar-summary-overlay {
+    align-items: flex-start;
+
+    overflow-y: auto;
+  }
+
+  .molar-summary-container {
+    width: min(94vw, 700px);
+    height: auto;
+    min-height: 90vh;
+
+    margin: 12px 0;
+
+    overflow: visible;
+  }
+
+  .molar-summary-layout {
+    flex-direction: column;
+
+    overflow: visible;
+  }
+
+  .molar-result-card {
+    width: min(100%, 520px);
+    min-height: 560px;
+    margin: 0 auto;
+  }
+
+  .molar-summary-content {
+    width: 100%;
+    min-height: auto;
+
+    padding-right: 0;
+
+    overflow: visible;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .molar-summary-overlay {
+    padding: 12px;
+  }
+
+  .molar-summary-container {
+    width: 100%;
+    min-height: auto;
+
+    padding: 70px 16px 20px;
+
+    border-width: 6px;
+    border-radius: 24px;
+  }
+
+  .molar-summary-tab {
+    width: 70vw;
+    min-width: 0;
+    height: 58px;
+
+    border-radius: 0 0 28px 28px;
+
+    font-size: 25px;
+  }
+
+  .molar-summary-side-toggle {
+    right: -46px;
+
+    width: 46px;
+    height: 110px;
+
+    border-radius: 0 16px 16px 0;
+  }
+
+  .molar-summary-side-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .molar-result-card {
+    min-height: 500px;
+  }
+
+  .molar-result-header {
+    min-height: 54px;
+    padding: 10px 16px;
+  }
+
+  .molar-result-header h2 {
+    font-size: 19px;
+  }
+
+  .molar-gas-image {
+    width: min(72%, 180px);
+    height: 210px;
+  }
+
+  .molar-gas-info strong {
+    font-size: 42px;
+  }
+
+  .molar-label {
+    width: calc(100% - 36px);
+
+    font-size: 16px;
+  }
+
+  .molar-result-text {
+    padding: 8px 22px 18px;
+
+    font-size: 15px;
+  }
+
+  .molar-equation-box {
+    margin-right: 14px;
+    margin-left: 14px;
+
+    font-size: 12px;
+  }
+
+  .molar-aim-card,
+  .molar-learned-card,
+  .molar-observation-card,
+  .molar-calculation-card,
+  .molar-conclusion-card {
+    padding: 20px;
+  }
+
+  .molar-summary-card h2 {
+    font-size: 23px;
+  }
+
+  .molar-summary-card p,
+  .molar-learned-card li {
+    font-size: 15px;
+  }
+
+  .molar-calculation-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .molar-formula {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .molar-summary-actions {
+    flex-direction: column-reverse;
+  }
+
+  .molar-summary-button {
+    width: 100%;
+    min-width: 0;
+  }
+}

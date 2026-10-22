@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 20px;
+  padding: clamp(12px, 2vw, 24px);
 
   overflow: hidden;
 
@@ -54,11 +54,13 @@
   display: flex;
   flex-direction: column;
 
-  width: 80vw;
-  height: 92vh;
+  width: min(85vw, 1550px);
+  height: min(85vh, 920px);
   min-height: 0;
 
-  padding: 78px 40px 26px;
+  padding: clamp(68px, 6vh, 78px)
+    clamp(24px, 3vw, 40px)
+    clamp(20px, 2vw, 26px);
 
   overflow: visible;
 
@@ -66,7 +68,7 @@
 
   background: #ffffff;
 
-  border: 10px solid #ffcb4d;
+  border: clamp(6px, 0.7vw, 10px) solid #ffcb4d;
   border-radius: 34px;
 
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
@@ -79,7 +81,7 @@
 .flame-summary-tab {
   position: absolute;
 
-  top: -10px;
+  top: -0px;
   left: 50%;
 
   display: flex;
@@ -88,7 +90,7 @@
 
   width: min(30vw, 480px);
   min-width: 280px;
-  height: 70px;
+  height: 60px;
 
   transform: translateX(-50%);
 
@@ -98,7 +100,7 @@
 
   color: #2d1979;
 
-  font-size: 26px;
+  font-size: clamp(22px, 1.8vw, 26px);
   font-weight: 800;
 }
 
@@ -158,8 +160,11 @@
 
 .flame-summary-layout {
   display: grid;
-  grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.35fr);
-  gap: clamp(20px, 2.3vw, 38px);
+  grid-template-columns:
+    minmax(270px, 0.8fr)
+    minmax(0, 1.35fr);
+
+  gap: clamp(18px, 2.3vw, 38px);
 
   flex: 1;
   min-height: 0;
@@ -203,7 +208,7 @@
 .flame-result-card-header h2 {
   margin: 0;
 
-  font-size: 20px;
+  font-size: clamp(17px, 1.45vw, 20px);
   font-weight: 800;
 }
 
@@ -230,7 +235,7 @@
   justify-content: center;
 
   flex: 1;
-  min-height: 120px;
+  min-height: 100px;
 
   padding: 12px;
 
@@ -288,7 +293,7 @@
   color: #ffffff;
 
   font-family: "Baloo Thambi 2", sans-serif;
-  font-size: 17px;
+  font-size: clamp(15px, 1.25vw, 17px);
   font-weight: 800;
 
   cursor: pointer;
@@ -320,7 +325,7 @@
 
   color: #21165e;
 
-  font-size: clamp(15px, 1.25vw, 21px);
+  font-size: clamp(14px, 1.15vw, 19px);
   line-height: 1.35;
 }
 
@@ -377,15 +382,20 @@
 .flame-aim-card {
   flex-shrink: 0;
 
-  padding: 16px clamp(22px, 2.5vw, 38px);
+  padding:
+    clamp(14px, 1.5vw, 16px)
+    clamp(18px, 2.5vw, 38px);
 }
 
 .flame-learned-card {
   flex: 1;
   min-height: 0;
 
-  margin-top: 12px;
-  padding: 16px clamp(22px, 2.5vw, 38px);
+  margin-top: clamp(8px, 1.2vh, 12px);
+
+  padding:
+    clamp(14px, 1.5vw, 16px)
+    clamp(18px, 2.5vw, 38px);
 
   overflow: hidden;
 }
@@ -393,22 +403,25 @@
 .flame-conclusion-card {
   flex-shrink: 0;
 
-  margin-top: 12px;
-  padding: 16px clamp(22px, 2.5vw, 38px);
+  margin-top: clamp(8px, 1.2vh, 12px);
+
+  padding:
+    clamp(14px, 1.5vw, 16px)
+    clamp(18px, 2.5vw, 38px);
 }
 
 .flame-summary-card h2 {
   margin: 0;
 
-  font-size: 18px;
+  font-size: clamp(17px, 1.4vw, 22px);
   font-weight: 800;
 }
 
 .summary-heading-line {
-  width: 76px;
+  width: clamp(55px, 5vw, 76px);
   height: 5px;
 
-  margin: 8px 0 12px;
+  margin: 7px 0 10px;
 
   background: #a88cff;
   border-radius: 999px;
@@ -424,15 +437,15 @@
 
   color: #273044;
 
-  font-size: clamp(14px, 1.15vw, 20px);
-  line-height: 1.68;
+  font-size: clamp(17px, 1vw, 18px);
+  line-height: 1.45;
 }
 
 .flame-summary-card ul {
   display: flex;
   flex-direction: column;
 
-  gap: clamp(6px, 1.1vh, 13px);
+  gap: clamp(5px, 1vh, 12px);
 
   margin: 0;
   padding: 0;
@@ -448,7 +461,7 @@
 
   color: #273044;
 
-  font-size: clamp(14px, 1.1vw, 19px);
+  font-size: clamp(15px, 1vw, 18px);
   line-height: 1.25;
 }
 
@@ -459,8 +472,8 @@
 
   flex: 0 0 auto;
 
-  width: 25px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
 
   background: #16ad52;
   border-radius: 50%;
@@ -484,7 +497,7 @@
 
   gap: 14px;
 
-  margin-top: 14px;
+  margin-top: clamp(10px, 1.5vh, 14px);
 }
 
 .flame-summary-button {
@@ -492,14 +505,14 @@
   align-items: center;
   justify-content: center;
 
-  min-width: 190px;
-  min-height: 54px;
-  padding: 10px 24px;
+  min-width: clamp(150px, 13vw, 190px);
+  min-height: 52px;
+  padding: 10px 22px;
 
   border-radius: 999px;
 
   font-family: "Baloo Thambi 2", sans-serif;
-  font-size: 18px;
+  font-size: clamp(16px, 1.2vw, 18px);
   font-weight: 800;
 
   cursor: pointer;
@@ -538,28 +551,67 @@
 
 .flame-summary-finish span {
   font-family: Arial, sans-serif;
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 400;
   line-height: 0.5;
+}
+
+/* =========================================================
+   LAPTOP / SMALL DESKTOP
+   ========================================================= */
+
+@media (max-width: 1300px) {
+  .flame-summary-container {
+    width: 90vw;
+
+    padding:
+      70px
+      28px
+      22px;
+  }
+
+  .flame-summary-layout {
+    grid-template-columns:
+      minmax(260px, 0.8fr)
+      minmax(0, 1.2fr);
+  }
+
+  .flame-summary-card p {
+    line-height: 1.35;
+  }
+
+  .flame-result-text {
+    padding:
+      6px
+      22px
+      16px;
+  }
 }
 
 /* =========================================================
    TABLET
    ========================================================= */
 
-@media (max-width: 1050px) {
+@media (max-width: 1000px) {
   .flame-summary-overlay {
+    align-items: flex-start;
+
     overflow-y: auto;
   }
 
   .flame-summary-container {
-    width: min(90vw, 850px);
+    width: min(88vw, 720px);
     height: auto;
-    min-height: 90vh;
+    min-height: 0;
+
+    margin: 24px 0;
 
     overflow: visible;
 
-    padding: 82px 26px 28px;
+    padding:
+      82px
+      26px
+      28px;
   }
 
   .flame-summary-layout {
@@ -569,8 +621,9 @@
   }
 
   .flame-result-card {
+    min-height: 490px;
     max-width: 540px;
-    min-height: 500px;
+
     margin: 0 auto;
   }
 
@@ -579,7 +632,20 @@
   }
 
   .flame-learned-card {
-    min-height: 280px;
+    min-height: 260px;
+  }
+
+  .flame-summary-card h2 {
+    font-size: 24px;
+  }
+
+  .flame-summary-card p,
+  .flame-summary-card li {
+    font-size: 17px;
+  }
+
+  .flame-summary-actions {
+    margin-top: 20px;
   }
 }
 
@@ -589,16 +655,18 @@
 
 @media (max-width: 650px) {
   .flame-summary-overlay {
-    align-items: flex-start;
-
     padding: 12px;
   }
 
   .flame-summary-container {
     width: 100%;
-    min-height: auto;
 
-    padding: 70px 16px 20px;
+    margin: 16px 0;
+
+    padding:
+      70px
+      16px
+      20px;
 
     border-width: 6px;
     border-radius: 24px;
@@ -611,7 +679,7 @@
 
     border-radius: 0 0 28px 28px;
 
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .flame-summary-side-toggle {
@@ -632,21 +700,21 @@
     gap: 20px;
   }
 
+  .flame-result-card {
+    min-height: 430px;
+  }
+
   .flame-result-card-header {
     min-height: 54px;
     padding: 10px 16px;
   }
 
   .flame-result-card-header h2 {
-    font-size: 21px;
-  }
-
-  .flame-result-card {
-    min-height: 440px;
+    font-size: 20px;
   }
 
   .flame-image-wrapper {
-    min-height: 220px;
+    min-height: 210px;
   }
 
   .flame-salt-label {
@@ -658,7 +726,10 @@
   }
 
   .flame-result-text {
-    padding: 6px 22px 20px;
+    padding:
+      6px
+      22px
+      20px;
 
     font-size: 16px;
   }
@@ -670,7 +741,7 @@
   }
 
   .flame-summary-card h2 {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .flame-summary-card p,
@@ -702,6 +773,6 @@
     min-width: 0;
     min-height: 54px;
 
-    font-size: 20px;
+    font-size: 19px;
   }
 }

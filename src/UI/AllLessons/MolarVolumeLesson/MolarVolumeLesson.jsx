@@ -17,6 +17,7 @@ import MolarVolumeCalciumCarbonateUsed from "../../../Experience/Interactions/Mo
 import MolarVolumeResults from "../../MolarVolumeResults/MolarVolumeResults";
 import QuestionCard from "../../QuestionCard/QuestionCard";
 import {useResetLesson} from "../../ResetLessonButton/ResetLessonButton.jsx"
+import MolarVolumeSummary from "../../Summary/MolarVolumeSummary/MolarVolumeSummary.jsx";
 
 
 const MolarVolumeLesson = ()=>{
@@ -318,18 +319,22 @@ const MolarVolumeLesson = ()=>{
       {lessonStep===32 && <MolarVolumeCalciumCarbonateUsed onButtonContinue={()=>setLessonStep(33)}/>}
 
 
-      {lessonStep===33 && <MolarVolumeResults/>}
+      {lessonStep ==33 && <MolarVolumeResults onButtonContinue={()=>{setLessonStep(34)}}/>}
 
-      {lessonStep==33 && <DialogBox
+      {lessonStep==34 && <MolarVolumeSummary onQuestions={()=>{setShowQuestionCardNo(13.1)}} onEndLesson={resetLesson}/>}        
+
+      {lessonStep>=33 && <DialogBox
       text={"Core Practical One Finished!"}
-          button1Text = "Questions"
+          button1Text = "Summary"
           button2Text="End Lesson"
           onbtnClick=
           {() => {
-             setShowQuestionCardNo(13.1)
+             setLessonStep(34)
           }}
 
           onbtn2Click={resetLesson}
+          onExit={()=>{setShowQuestionCardNo(null)}}
+
       />}
 
       {
@@ -374,6 +379,9 @@ const MolarVolumeLesson = ()=>{
       onContinue={() => {
         setShowQuestionCardNo(13.2)
       }}
+
+                onExit={()=>{setShowQuestionCardNo(null)}}
+
     />
     )      
       }
@@ -420,6 +428,9 @@ const MolarVolumeLesson = ()=>{
   onContinue={() => {
     setShowQuestionCardNo(13.3)
   }}
+          onExit={()=>{setShowQuestionCardNo(null)}}
+
+
 />)
       }
 
@@ -467,6 +478,9 @@ const MolarVolumeLesson = ()=>{
       onContinue={() => {
         setShowQuestionCardNo(13.4)
       }}
+          onExit={()=>{setShowQuestionCardNo(null)}}
+
+
     />
   )
 }
@@ -515,6 +529,10 @@ const MolarVolumeLesson = ()=>{
       onContinue={() => {
         setShowQuestionCardNo(13.5)
       }}
+
+      onExit={()=>{setShowQuestionCardNo(null)}}
+
+
     />
   )
 }
@@ -561,6 +579,9 @@ const MolarVolumeLesson = ()=>{
       onContinue={() => {
         setShowQuestionCardNo(null)
       }}
+      onExit={()=>{setShowQuestionCardNo(null)}}
+
+
     />
   )
 }

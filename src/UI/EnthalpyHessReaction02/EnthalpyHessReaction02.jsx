@@ -33,6 +33,7 @@ import {
 import HessReactionOneResults from "../HessReactionOneResults/HessReactionOneResults.jsx"
 import SulfamicGuidelines from "../SulfamicGuidelines/SulfamicGuidelines.jsx"
 import HessReactionTwoResults from "../HessReactionTwoResults.jsx/HessReactionTwoResults.jsx"
+import EndothermicReactionSummary from "../Summary/EndothermicReactionSummary/EndothermicReactionSummary.jsx"
 
 
 const EnthalpyHessReaction02 = () => {
@@ -625,7 +626,7 @@ const EnthalpyHessReaction02 = () => {
 
 
       {lessonStep >= 34 &&
-        lessonStep <= 36 && (
+        lessonStep <= 35 && (
           <SulfamicGuidelines
             guidelineData={
               guidelineData[6]
@@ -1052,17 +1053,28 @@ const EnthalpyHessReaction02 = () => {
             )
           }}
 
-          onbtn2Click={() => {
-            resetLesson()
-          }}
-
+          onbtn2Click={
+            resetLesson}
+          
           
         />
       )}
+
         {
-          showEnthalyResultTwo && <HessReactionTwoResults  onQuestions={() => {
-           setShowQuestionCardNo(9.1);setShowEnthalyResultTwo(false)
-          }}/>
+          lessonStep==36 && <EndothermicReactionSummary
+           onQuestions={()=>{
+            setShowQuestionCardNo(9.1)
+          }}
+          
+          onEndLesson={resetLesson}
+          />
+        }
+
+        {
+          showEnthalyResultTwo && <HessReactionTwoResults  onButtonContinue={() => {
+           setShowEnthalyResultTwo(false)
+          }}       
+          />
         }
 
       {/* =====================================================
@@ -1113,6 +1125,10 @@ const EnthalpyHessReaction02 = () => {
               9.2
             )
           }}
+
+           onExit={()=>{setShowQuestionCardNo(null);setLessonStep(36)}}
+
+
         />
       )}
 
@@ -1161,6 +1177,10 @@ const EnthalpyHessReaction02 = () => {
               9.3
             )
           }}
+
+           onExit={()=>{setShowQuestionCardNo(null);setLessonStep(36)}}
+
+
         />
       )}
 
@@ -1207,8 +1227,12 @@ const EnthalpyHessReaction02 = () => {
           onContinue={() => {
             setShowQuestionCardNo(
               null
-            )
+            );setLessonStep(36)
           }}
+
+          onExit={()=>{setShowQuestionCardNo(null);setLessonStep(36)}}
+
+
         />
       )}
 

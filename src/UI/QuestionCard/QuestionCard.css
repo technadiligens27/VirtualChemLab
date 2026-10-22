@@ -88,6 +88,33 @@
 }
 
 
+.question-cross {
+  position: absolute;
+
+  top: 2%;
+  right: 3%;
+
+  width: 35px;
+  height: 35px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.question-cross:hover {
+  transform: scale(1.15);
+
+  filter: brightness(1.1);
+}
+
+.question-cross:active {
+  transform: scale(0.95);
+}
+
+
 /* ==========================================
    TOP TITLE
 ========================================== */

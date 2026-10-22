@@ -186,7 +186,7 @@ const HessReactionOneResults = ({
       >
         <div className="reaction1-results-header">
           <h1>
-            Reaction 01 Results
+           Results
           </h1>
         </div>
 
@@ -212,7 +212,7 @@ const HessReactionOneResults = ({
         <div className="reaction1-results-inner">
           <div className="reaction1-results-title">
             <h1>
-              Results for Reaction 01
+              Results for Reaction 
             </h1>
 
             <h2>
@@ -394,11 +394,11 @@ const HessReactionOneResults = ({
             </div>
           </div>
 
-          <div className="reaction1-results-buttons">
+          <div className="exothermic-summary-actions">
 
-            <button
+            {/* <button
               type="button"
-              className="reaction1-results-button reaction1-results-question-button"
+              className="exothermic-summary-button exothermic-questions-button"
               onClick={() => {
                 if (onQuestions) {
                   onQuestions()
@@ -406,11 +406,11 @@ const HessReactionOneResults = ({
               }}
             >
               Questions
-            </button>
+            </button> */}
 
             <button
               type="button"
-              className="reaction1-results-button"
+              className="exothermic-summary-button exothermic-finish-button"
               onClick={
                 handleContinue
               }

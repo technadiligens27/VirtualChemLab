@@ -212,7 +212,7 @@ const FlameTest = ()=>{
           } 
         />}
 
-      {lessonStep >=18 &&  lessonStep <18.1 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[4]}/>}
+      {lessonStep >=18 &&  lessonStep <= 18.1 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[4]}/>}
 
 
 
@@ -223,7 +223,7 @@ const FlameTest = ()=>{
           } 
         />}
 
-      {lessonStep ==18.1 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[5]}/>}
+      {/* {lessonStep ==18.1 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[5]}/>} */}
 
 
         {lessonStep == 18.1 && <DialogBox text={

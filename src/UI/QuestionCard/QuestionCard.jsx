@@ -25,7 +25,7 @@ const QuestionCard = ({
 
   incorrectMessage =
     "Not quite. The correct answer is highlighted.",
-
+ onExit,
   onContinue,
 }) => {
   const [
@@ -133,6 +133,8 @@ const QuestionCard = ({
         {/* =====================================
             TOP TITLE
         ===================================== */}
+
+        <img onClick={() => {if (onExit) {onExit()}}} className ='question-cross' src='./cross.png'/>
 
         <div className="question-card-top-title">
 

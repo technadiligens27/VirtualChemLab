@@ -7,7 +7,7 @@ const AllExplanationLesson15 = ()=>{
     const {lessonStep,setIsExplanationOpen,isExplanationOpen} = useContext(MainGuidelineContext);
 
     useEffect(()=>{
-        if([7,10,13,15,17,20,28,33].includes(lessonStep)){
+        if([7,10,13,15,17,18.1,20,28,33].includes(lessonStep)){
             setIsExplanationOpen(true)
         }
     },[lessonStep])
@@ -79,7 +79,7 @@ const AllExplanationLesson15 = ()=>{
                 }
             top="30%"
             left="25%"
-            height="270px"
+            height="230px"
             width="420px"
             />}
 
@@ -94,6 +94,21 @@ const AllExplanationLesson15 = ()=>{
             height="220px"
             width="420px"
             />}
+
+
+
+           {lessonStep==18.1 && <Explanations
+            text={
+                <>
+We will now open the <strong>air hole</strong> so that more <strong>oxygen</strong> mixes with the gas, producing a <strong>hot blue flame</strong> for an accurate flame test.
+                </>
+                }
+            top="30%"
+            left="15%"
+            height="220px"
+            width="420px"
+            />}
+
 
 
            {lessonStep==20 && <Explanations

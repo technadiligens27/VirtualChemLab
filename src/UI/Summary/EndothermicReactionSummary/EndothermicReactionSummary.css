@@ -1,0 +1,1003 @@
+/* =========================================================
+   ENDOTHERMIC REACTION SUMMARY
+   ========================================================= */
+
+.endothermic-summary-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.endothermic-summary-overlay-open {
+  background: rgba(14, 11, 35, 0.72);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.endothermic-summary-overlay-closed {
+  background: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.endothermic-summary-overlay *,
+.endothermic-summary-overlay *::before,
+.endothermic-summary-overlay *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.endothermic-summary-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(86vw, 1650px);
+  height: min(90vh, 920px);
+  min-height: 0;
+
+  padding: 76px 38px 24px;
+
+  overflow: visible;
+
+  pointer-events: auto;
+
+  border: 10px solid #ffcb4d;
+  border-radius: 34px;
+
+  background: #ffffff;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   TOP TAB
+   ========================================================= */
+
+.endothermic-summary-tab {
+  position: absolute;
+
+  top: -10px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(30vw, 480px);
+  min-width: 280px;
+  height: 70px;
+
+  transform: translateX(-50%);
+
+  border-radius: 0 0 40px 40px;
+
+  background: #ffcb4d;
+
+  color: #2d1979;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   SIDE TOGGLE
+   ========================================================= */
+
+.endothermic-summary-side-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: -60px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 150px;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 0 20px 20px 0;
+
+  background: #ffcb4d;
+
+  cursor: pointer;
+}
+
+.endothermic-summary-side-toggle:hover {
+  background: #f2bb2e;
+}
+
+.endothermic-summary-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.endothermic-summary-layout {
+  display: flex;
+
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+
+  gap: clamp(18px, 2vw, 30px);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT RESULT CARD — BLUE ENDOTHERMIC COLOURS
+   ========================================================= */
+
+.endothermic-result-card {
+  display: flex;
+  flex: 0 1 31%;
+  flex-direction: column;
+
+  min-width: 220px;
+  min-height: 0;
+
+  overflow: hidden;
+
+  border: 2px solid #8bcce8;
+  border-radius: 20px;
+
+  background: #f4fbff;
+}
+
+.endothermic-result-header {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  min-height: 58px;
+  padding: 10px 22px;
+
+  background: #337ebd;
+
+  color: #ffffff;
+}
+
+.endothermic-result-header h2 {
+  margin: 0;
+
+  font-size: clamp(18px, 1.4vw, 21px);
+  font-weight: 800;
+}
+
+.endothermic-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 auto;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  font-size: 19px;
+}
+
+.endothermic-temperature-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 0;
+
+  gap: clamp(12px, 1.5vw, 24px);
+
+  padding: 18px 14px;
+
+  background: #eaf8ff;
+}
+
+.endothermic-thermometer-image {
+  display: block;
+
+  width: min(52%, 220px);
+  height: min(100%, 310px);
+
+  min-width: 0;
+
+  object-fit: contain;
+}
+
+.endothermic-temperature-info {
+  display: flex;
+  flex: 1 1 105px;
+  flex-direction: column;
+
+  gap: 5px;
+
+  color: #173b74;
+}
+
+.endothermic-temperature-info span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 700;
+}
+
+.endothermic-temperature-info strong {
+  color: #2671b3;
+
+  font-size: clamp(28px, 3vw, 52px);
+  line-height: 1;
+}
+
+.endothermic-temperature-info p {
+  margin: 0;
+
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.35;
+}
+
+.endothermic-label {
+  width: calc(100% - 54px);
+
+  flex-shrink: 0;
+
+  margin: 12px auto 8px;
+  padding: 10px 18px;
+
+  border-radius: 14px;
+
+  background: #337ebd;
+
+  color: #ffffff;
+
+  font-size: clamp(16px, 1.25vw, 19px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.endothermic-result-text {
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 8px 28px 18px;
+
+  color: #173b74;
+
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.35;
+}
+
+.endothermic-result-text strong {
+  color: #2671b3;
+}
+
+.endothermic-equation-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  flex-shrink: 0;
+
+  gap: 7px;
+
+  margin: 0 18px 20px;
+  padding: 16px;
+
+  border: 2px solid #a8d8ee;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  color: #173b74;
+
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.endothermic-arrow {
+  color: #2671b3;
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+   ========================================================= */
+
+.endothermic-summary-content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding-right: 9px;
+  padding-bottom: 4px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.endothermic-summary-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.endothermic-summary-content::-webkit-scrollbar-track {
+  border-radius: 999px;
+
+  background: #eee8fa;
+}
+
+.endothermic-summary-content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+
+/* =========================================================
+   RIGHT SUMMARY CARDS — SAME AS EXOTHERMIC
+   ========================================================= */
+
+.endothermic-summary-card {
+  border: 2px solid #b9dfbb;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    115deg,
+    #eaffe9,
+    #f4fff1
+  );
+
+  color: #21165e;
+}
+
+.endothermic-aim-card {
+  flex-shrink: 0;
+
+  padding: 10px 18px;
+}
+
+.endothermic-summary-card h2 {
+  margin: 0;
+
+  color: #21165e;
+
+  font-size: clamp(19px, 1.5vw, 22px);
+  font-weight: 800;
+}
+
+.endothermic-heading-line {
+  width: 70px;
+  height: 5px;
+
+  margin: 8px 0 14px;
+
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+.endothermic-summary-card p {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin: 0;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   LEARNED + OBSERVATIONS
+   ========================================================= */
+
+.endothermic-middle-grid {
+  display: flex;
+  align-items: stretch;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+.endothermic-learned-card {
+  flex: 1.2 1 0;
+
+  padding: 20px 24px;
+}
+
+.endothermic-observation-card {
+  flex: 0.8 1 0;
+
+  padding: 20px 24px;
+}
+
+.endothermic-learned-card ul {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.endothermic-learned-card li {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.35;
+}
+
+.endothermic-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: #16ad52;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.endothermic-observation-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.endothermic-observation-list div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  padding-bottom: 9px;
+
+  border-bottom: 1px solid #cce6cd;
+}
+
+.endothermic-observation-list div:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.endothermic-observation-list strong {
+  color: #3d235e;
+
+  font-size: clamp(14px, 1vw, 15px);
+}
+
+.endothermic-observation-list span {
+  color: #506070;
+
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   CALCULATION
+   ========================================================= */
+
+.endothermic-calculation-card {
+  flex-shrink: 0;
+
+  margin-top: 14px;
+  padding: 20px 26px;
+}
+
+.endothermic-calculation-content {
+  display: flex;
+  align-items: center;
+
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.endothermic-calculation-content > div:first-child {
+  flex: 1 1 0;
+}
+
+.endothermic-formula {
+  flex: 0 0 auto;
+
+  padding: 12px 22px;
+
+  border: 2px solid #ffbd88;
+  border-radius: 14px;
+
+  background: #fff7f0;
+
+  color: #c84b23;
+
+  font-size: clamp(24px, 2vw, 35px);
+  font-weight: 800;
+}
+
+.endothermic-formula-info {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+
+  gap: 7px 14px;
+
+  color: #425466;
+
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.3;
+}
+
+.endothermic-formula-info span {
+  flex: 1 1 170px;
+}
+
+
+/* =========================================================
+   CONCLUSION
+   ========================================================= */
+
+.endothermic-conclusion-card {
+  flex-shrink: 0;
+
+  margin-top: 14px;
+  padding: 20px 26px;
+
+  border-color: #f0b6a7;
+
+  background: linear-gradient(
+    115deg,
+    #fff0eb,
+    #fffaf8
+  );
+}
+
+.endothermic-conclusion-card h2 {
+  color: #9e3522;
+}
+
+.endothermic-conclusion-card .endothermic-heading-line {
+  background: #e96539;
+}
+
+.endothermic-conclusion-card strong {
+  color: #c84b23;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.endothermic-summary-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+
+  margin-top: 18px;
+  padding-bottom: 2px;
+}
+
+.endothermic-summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 170px;
+  min-height: 52px;
+  padding: 10px 22px;
+
+  border-radius: 999px;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.endothermic-summary-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 20px rgba(65, 36, 145, 0.22);
+}
+
+.endothermic-summary-button:active {
+  transform: scale(0.98);
+}
+
+.endothermic-questions-button {
+  border: 3px solid #4e2a9b;
+
+  background: #ffffff;
+
+  color: #4e2a9b;
+}
+
+.endothermic-finish-button {
+  gap: 12px;
+
+  border: 3px solid #4e2a9b;
+
+  background: #4e2a9b;
+
+  color: #ffffff;
+}
+
+.endothermic-finish-button span {
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  line-height: 0.5;
+}
+
+
+/* =========================================================
+   LAPTOP / SMALL DESKTOP
+   ========================================================= */
+
+@media (max-width: 1250px) {
+  .endothermic-summary-container {
+    width: 94vw;
+
+    padding:
+      76px
+      28px
+      24px;
+  }
+
+  .endothermic-result-card {
+    flex-basis: 34%;
+  }
+
+  .endothermic-temperature-area {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .endothermic-thermometer-image {
+    width: min(68%, 190px);
+    height: min(65%, 240px);
+  }
+
+  .endothermic-temperature-info {
+    flex: 0 0 auto;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .endothermic-middle-grid {
+    flex-direction: column;
+  }
+
+  .endothermic-learned-card,
+  .endothermic-observation-card {
+    flex: 0 0 auto;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+  .endothermic-summary-overlay {
+    align-items: flex-start;
+
+    overflow-y: auto;
+  }
+
+  .endothermic-summary-container {
+    width: min(92vw, 760px);
+    height: auto;
+    min-height: 90vh;
+
+    margin: 24px 0;
+
+    padding: 82px 26px 28px;
+  }
+
+  .endothermic-summary-layout {
+    flex-direction: column;
+
+    overflow: visible;
+  }
+
+  .endothermic-result-card {
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-height: 470px;
+    max-width: 560px;
+
+    margin: 0 auto;
+  }
+
+  .endothermic-temperature-area {
+    flex-direction: row;
+
+    min-height: 280px;
+  }
+
+  .endothermic-thermometer-image {
+    width: min(46%, 230px);
+    height: 250px;
+  }
+
+  .endothermic-temperature-info {
+    align-items: flex-start;
+
+    text-align: left;
+  }
+
+  .endothermic-summary-content {
+    overflow: visible;
+
+    padding-right: 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .endothermic-summary-overlay {
+    padding: 12px;
+  }
+
+  .endothermic-summary-container {
+    width: 100%;
+    min-height: auto;
+
+    margin: 16px 0;
+
+    padding: 70px 16px 20px;
+
+    border-width: 6px;
+    border-radius: 24px;
+  }
+
+  .endothermic-summary-tab {
+    width: 70vw;
+    min-width: 0;
+    height: 58px;
+
+    border-radius: 0 0 28px 28px;
+
+    font-size: 24px;
+  }
+
+  .endothermic-summary-side-toggle {
+    right: -48px;
+
+    width: 48px;
+    height: 110px;
+
+    border-radius: 0 16px 16px 0;
+  }
+
+  .endothermic-summary-side-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .endothermic-result-card {
+    min-height: 430px;
+  }
+
+  .endothermic-result-header {
+    padding: 10px 16px;
+  }
+
+  .endothermic-temperature-area {
+    flex-direction: column;
+
+    min-height: 270px;
+
+    gap: 8px;
+  }
+
+  .endothermic-thermometer-image {
+    width: min(56%, 175px);
+    height: 175px;
+  }
+
+  .endothermic-temperature-info {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .endothermic-temperature-info strong {
+    font-size: 34px;
+  }
+
+  .endothermic-label {
+    width: calc(100% - 36px);
+
+    font-size: 17px;
+  }
+
+  .endothermic-result-text {
+    padding: 8px 20px 16px;
+
+    font-size: 15px;
+  }
+
+  .endothermic-equation-box {
+    margin: 0 12px 16px;
+    padding: 13px;
+
+    font-size: 13px;
+  }
+
+  .endothermic-aim-card,
+  .endothermic-learned-card,
+  .endothermic-observation-card,
+  .endothermic-calculation-card,
+  .endothermic-conclusion-card {
+    padding: 20px;
+  }
+
+  .endothermic-summary-card h2 {
+    font-size: 23px;
+  }
+
+  .endothermic-summary-card p,
+  .endothermic-learned-card li {
+    font-size: 15px;
+  }
+
+  .endothermic-calculation-content {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 16px;
+  }
+
+  .endothermic-formula {
+    text-align: center;
+  }
+
+  .endothermic-formula-info {
+    flex-direction: column;
+  }
+
+  .endothermic-formula-info span {
+    flex: 0 0 auto;
+  }
+
+  .endothermic-summary-actions {
+    flex-direction: column-reverse;
+
+    gap: 10px;
+  }
+
+  .endothermic-summary-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 390px) {
+  .endothermic-summary-container {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .endothermic-summary-tab {
+    width: 74vw;
+
+    font-size: 22px;
+  }
+
+  .endothermic-result-header h2 {
+    font-size: 17px;
+  }
+
+  .endothermic-temperature-info span,
+  .endothermic-temperature-info p {
+    font-size: 13px;
+  }
+
+  .endothermic-temperature-info strong {
+    font-size: 29px;
+  }
+
+  .endothermic-aim-card,
+  .endothermic-learned-card,
+  .endothermic-observation-card,
+  .endothermic-calculation-card,
+  .endothermic-conclusion-card {
+    padding: 17px;
+  }
+}
