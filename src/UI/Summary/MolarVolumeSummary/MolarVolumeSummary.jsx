@@ -19,7 +19,7 @@ const MolarVolumeSummary = ({
 
   onQuestions,
   onEndLesson,
-
+  onResult,
   autoSlide = true,
 }) => {
   const summaryRef = useRef(null)
@@ -192,6 +192,15 @@ const MolarVolumeSummary = ({
       false,
       () => {
         onQuestions?.()
+      }
+    )
+  }
+
+  const handleResult = () => {
+    animateSummary(
+      false,
+      () => {
+        onResult?.()
       }
     )
   }
@@ -522,6 +531,15 @@ const MolarVolumeSummary = ({
             </div>
 
             <div className="molar-summary-actions">
+
+              <button
+                type="button"
+                className="molar-summary-button molar-finish-button molar-result-button"
+                onClick={handleResult}
+              >
+                Results
+              </button>
+
               <button
                 type="button"
                 className="molar-summary-button molar-questions-button"

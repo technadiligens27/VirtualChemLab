@@ -1,78 +1,81 @@
 import {
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react"
 
-import { gsap } from "gsap"
+import {
+  gsap,
+} from "gsap"
+
+
 
 import "./MolarVolumeResults.css"
+import { InteractionContext } from "../../Contexts/InteractionContext/InteractionContext"
+
+const resultSets = [
+  [
+    { trial: 1, mass: "0.05", volume: "12.0" },
+    { trial: 2, mass: "0.10", volume: "24.0" },
+    { trial: 3, mass: "0.15", volume: "36.0" },
+    { trial: 4, mass: "0.20", volume: "48.0" },
+    { trial: 5, mass: "0.25", volume: "60.0" },
+    { trial: 6, mass: "0.30", volume: "72.0" },
+    { trial: 7, mass: "0.35", volume: "84.0" },
+  ],
+
+  [
+    { trial: 1, mass: "0.05", volume: "11.9" },
+    { trial: 2, mass: "0.10", volume: "23.8" },
+    { trial: 3, mass: "0.15", volume: "35.7" },
+    { trial: 4, mass: "0.20", volume: "47.6" },
+    { trial: 5, mass: "0.25", volume: "59.5" },
+    { trial: 6, mass: "0.30", volume: "71.4" },
+    { trial: 7, mass: "0.35", volume: "83.3" },
+  ],
+
+  [
+    { trial: 1, mass: "0.05", volume: "12.1" },
+    { trial: 2, mass: "0.10", volume: "24.2" },
+    { trial: 3, mass: "0.15", volume: "36.2" },
+    { trial: 4, mass: "0.20", volume: "48.3" },
+    { trial: 5, mass: "0.25", volume: "60.4" },
+    { trial: 6, mass: "0.30", volume: "72.5" },
+    { trial: 7, mass: "0.35", volume: "84.6" },
+  ],
+]
 
 const MolarVolumeResults = ({
   onButtonContinue,
-
   autoFillDelay = 1000,
+  onButtonResult
 }) => {
+  const {
+    molarVolumeResultsState,
+    setMolarVolumeResultsState,
+  } = useContext(InteractionContext)
+
   const panelRef = useRef(null)
   const arrowRef = useRef(null)
-  const isPanelOpenRef = useRef(true)
 
-  const autoFillTimeoutRef =
-    useRef(null)
+  const isPanelOpenRef = useRef(true)
+  const autoFillTimeoutRef = useRef(null)
 
   const [
     isPanelOpen,
     setIsPanelOpen,
   ] = useState(true)
 
-  const [
+  const {
+    resultSetIndex,
     visibleResultCount,
-    setVisibleResultCount,
-  ] = useState(1)
-
-  const [
     isAutoSimulating,
-    setIsAutoSimulating,
-  ] = useState(false)
+  } = molarVolumeResultsState
 
-  const results = [
-    {
-      trial: 1,
-      mass: "0.05",
-      volume: "12",
-    },
-    {
-      trial: 2,
-      mass: "0.10",
-      volume: "24",
-    },
-    {
-      trial: 3,
-      mass: "0.15",
-      volume: "36",
-    },
-    {
-      trial: 4,
-      mass: "0.20",
-      volume: "48",
-    },
-    {
-      trial: 5,
-      mass: "0.25",
-      volume: "60",
-    },
-    {
-      trial: 6,
-      mass: "0.30",
-      volume: "72",
-    },
-    {
-      trial: 7,
-      mass: "0.35",
-      volume: "84",
-    },
-  ]
+  const results =
+    resultSets[resultSetIndex]
 
   const visibleResults =
     results.slice(
@@ -81,7 +84,7 @@ const MolarVolumeResults = ({
     )
 
   const isSimulationComplete =
-    visibleResultCount ===
+    visibleResultCount >=
     results.length
 
   const getClosedPosition = () => {
@@ -98,6 +101,10 @@ const MolarVolumeResults = ({
     )
   }
 
+  // =========================================================
+  // INITIAL PANEL ANIMATION
+  // =========================================================
+
   useLayoutEffect(() => {
     const panel =
       panelRef.current
@@ -105,18 +112,12 @@ const MolarVolumeResults = ({
     const arrow =
       arrowRef.current
 
-    if (
-      !panel ||
-      !arrow
-    ) {
+    if (!panel || !arrow) {
       return
     }
 
     gsap.set(panel, {
-      x: -(
-        window.innerWidth / 2 +
-        panel.offsetWidth / 2
-      ),
+      x: getClosedPosition(),
     })
 
     gsap.set(arrow, {
@@ -125,36 +126,25 @@ const MolarVolumeResults = ({
 
     gsap.to(panel, {
       x: 0,
-
       duration: 0.8,
       delay: 0.2,
-
-      ease:
-        "power3.inOut",
+      ease: "power3.inOut",
     })
 
     gsap.to(arrow, {
       rotation: 180,
-
       duration: 0.8,
       delay: 0.2,
-
-      ease:
-        "power3.inOut",
+      ease: "power3.inOut",
     })
 
     const handleResize = () => {
-      if (
-        isPanelOpenRef.current
-      ) {
+      if (isPanelOpenRef.current) {
         return
       }
 
       gsap.set(panel, {
-        x: -(
-          window.innerWidth / 2 +
-          panel.offsetWidth / 2
-        ),
+        x: getClosedPosition(),
       })
     }
 
@@ -169,32 +159,19 @@ const MolarVolumeResults = ({
         handleResize
       )
 
-      gsap.killTweensOf(
-        panel
-      )
-
-      gsap.killTweensOf(
-        arrow
-      )
+      gsap.killTweensOf(panel)
+      gsap.killTweensOf(arrow)
     }
   }, [])
 
-  useEffect(() => {
-    return () => {
-      if (
-        autoFillTimeoutRef.current
-      ) {
-        clearTimeout(
-          autoFillTimeoutRef.current
-        )
-      }
-    }
-  }, [])
+  // =========================================================
+  // AUTO SIMULATION
+  // Continues even when this component remounts because
+  // its state is stored in InteractionContext.
+  // =========================================================
 
   useEffect(() => {
-    if (
-      !isAutoSimulating
-    ) {
+    if (!isAutoSimulating) {
       return
     }
 
@@ -202,8 +179,11 @@ const MolarVolumeResults = ({
       visibleResultCount >=
       results.length
     ) {
-      setIsAutoSimulating(
-        false
+      setMolarVolumeResultsState(
+        (previous) => ({
+          ...previous,
+          isAutoSimulating: false,
+        })
       )
 
       return
@@ -211,19 +191,21 @@ const MolarVolumeResults = ({
 
     autoFillTimeoutRef.current =
       setTimeout(() => {
-        setVisibleResultCount(
-          (currentCount) =>
-            Math.min(
-              currentCount + 1,
-              results.length
-            )
+        setMolarVolumeResultsState(
+          (previous) => ({
+            ...previous,
+
+            visibleResultCount:
+              Math.min(
+                previous.visibleResultCount + 1,
+                results.length
+              ),
+          })
         )
       }, autoFillDelay)
 
     return () => {
-      if (
-        autoFillTimeoutRef.current
-      ) {
+      if (autoFillTimeoutRef.current) {
         clearTimeout(
           autoFillTimeoutRef.current
         )
@@ -232,9 +214,24 @@ const MolarVolumeResults = ({
   }, [
     isAutoSimulating,
     visibleResultCount,
-    autoFillDelay,
     results.length,
+    autoFillDelay,
+    setMolarVolumeResultsState,
   ])
+
+  useEffect(() => {
+    return () => {
+      if (autoFillTimeoutRef.current) {
+        clearTimeout(
+          autoFillTimeoutRef.current
+        )
+      }
+    }
+  }, [])
+
+  // =========================================================
+  // PANEL OPEN / CLOSE
+  // =========================================================
 
   const animatePanel = (
     shouldOpen,
@@ -246,10 +243,7 @@ const MolarVolumeResults = ({
     const arrow =
       arrowRef.current
 
-    if (
-      !panel ||
-      !arrow
-    ) {
+    if (!panel || !arrow) {
       return
     }
 
@@ -260,13 +254,8 @@ const MolarVolumeResults = ({
       shouldOpen
     )
 
-    gsap.killTweensOf(
-      panel
-    )
-
-    gsap.killTweensOf(
-      arrow
-    )
+    gsap.killTweensOf(panel)
+    gsap.killTweensOf(arrow)
 
     gsap.to(panel, {
       x: shouldOpen
@@ -274,9 +263,7 @@ const MolarVolumeResults = ({
         : getClosedPosition(),
 
       duration: 0.8,
-
-      ease:
-        "power3.inOut",
+      ease: "power3.inOut",
 
       onComplete:
         onAnimationComplete,
@@ -289,9 +276,7 @@ const MolarVolumeResults = ({
           : 0,
 
       duration: 0.8,
-
-      ease:
-        "power3.inOut",
+      ease: "power3.inOut",
     })
   }
 
@@ -301,16 +286,38 @@ const MolarVolumeResults = ({
     )
   }
 
+  // =========================================================
+  // AUTO SIMULATE / SIMULATE AGAIN
+  // =========================================================
+
   const handleAutoSimulate = () => {
-    if (
-      isAutoSimulating ||
-      isSimulationComplete
-    ) {
+    if (isAutoSimulating) {
       return
     }
 
-    setIsAutoSimulating(
-      true
+    // Start a fresh data set after the previous
+    // seven trials have completed.
+    if (isSimulationComplete) {
+      setMolarVolumeResultsState(
+        (previous) => ({
+          resultSetIndex:
+            (previous.resultSetIndex + 1) %
+            resultSets.length,
+
+          visibleResultCount: 1,
+
+          isAutoSimulating: true,
+        })
+      )
+
+      return
+    }
+
+    setMolarVolumeResultsState(
+      (previous) => ({
+        ...previous,
+        isAutoSimulating: true,
+      })
     )
   }
 
@@ -318,52 +325,43 @@ const MolarVolumeResults = ({
     animatePanel(
       false,
       () => {
-        if (
-          onButtonContinue
-        ) {
-          onButtonContinue()
-        }
+        onButtonContinue?.()
       }
     )
   }
 
+
+
   return (
     <div
-      className={`Molar-results-overlay ${
-        isPanelOpen
-          ? "Molar-results-overlay-open"
-          : "Molar-results-overlay-closed"
-      }`}
+      className={`
+        Molar-results-overlay
+        ${
+          isPanelOpen
+            ? "Molar-results-overlay-open"
+            : "Molar-results-overlay-closed"
+        }
+      `}
     >
       <div
-        className="Molar-results-wrapper"
         ref={panelRef}
+        className="Molar-results-wrapper"
       >
-        {/* ==========================================
-            TITLE
-        ========================================== */}
-
         <div className="Molar-results-label">
           <h1>
             Experiment Results
           </h1>
         </div>
 
-        {/* ==========================================
-            SIDE BUTTON
-        ========================================== */}
-
         <button
+          type="button"
           className="Molar-results-side-container"
-          onClick={
-            handlePanelToggle
-          }
+          onClick={handlePanelToggle}
           aria-label={
             isPanelOpen
               ? "Close results panel"
               : "Open results panel"
           }
-          type="button"
         >
           <img
             ref={arrowRef}
@@ -372,16 +370,7 @@ const MolarVolumeResults = ({
           />
         </button>
 
-        {/* ==========================================
-            INNER
-        ========================================== */}
-
         <div className="Molar-results-inner">
-
-          {/* ==========================================
-              HEADING
-          ========================================== */}
-
           <div className="Molar-results-heading">
             <div>
               <p>
@@ -406,10 +395,6 @@ const MolarVolumeResults = ({
             </div>
           </div>
 
-          {/* ==========================================
-              INFORMATION
-          ========================================== */}
-
           <div className="Molar-results-info">
             <span className="Molar-results-info-icon">
               i
@@ -421,10 +406,6 @@ const MolarVolumeResults = ({
               record the remaining six trials.
             </p>
           </div>
-
-          {/* ==========================================
-              RESULTS TABLE
-          ========================================== */}
 
           <div className="Molar-results-table-container">
             <table className="Molar-results-table">
@@ -456,16 +437,12 @@ const MolarVolumeResults = ({
                 {visibleResults.map(
                   (result) => (
                     <tr
-                      key={
-                        result.trial
-                      }
+                      key={result.trial}
                       className="Molar-results-new-row"
                     >
                       <td>
                         <span className="Molar-results-trial-number">
-                          {
-                            result.trial
-                          }
+                          {result.trial}
                         </span>
                       </td>
 
@@ -482,10 +459,6 @@ const MolarVolumeResults = ({
               </tbody>
             </table>
           </div>
-
-          {/* ==========================================
-              FOOTER
-          ========================================== */}
 
           <div className="Molar-results-footer">
             <div className="Molar-results-next-step">
@@ -504,29 +477,22 @@ const MolarVolumeResults = ({
 
             <div className="Molar-results-actions">
               <button
-                className="Molar-results-auto-button"
-                onClick={
-                  handleAutoSimulate
-                }
-                disabled={
-                  isAutoSimulating ||
-                  isSimulationComplete
-                }
                 type="button"
+                className="Molar-results-auto-button"
+                onClick={handleAutoSimulate}
+                disabled={isAutoSimulating}
               >
                 {isAutoSimulating
                   ? "Simulating..."
                   : isSimulationComplete
-                    ? "Simulation Complete"
+                    ? "Simulate Again"
                     : "Auto Simulate"}
               </button>
 
               <button
-                className="Molar-results-continue-button"
-                onClick={
-                  handleContinue
-                }
                 type="button"
+                className="Molar-results-continue-button"
+                onClick={handleContinue}
               >
                 Summary
               </button>

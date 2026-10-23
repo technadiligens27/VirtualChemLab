@@ -35,7 +35,7 @@ const SulfamicAcidResult = ({
   // SHOW / HIDE
   // ==========================================
 
-  showExperimentalData = true,
+  showExperimentalData = false,
 
 
   // ==========================================

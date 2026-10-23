@@ -44,8 +44,8 @@ const ChlorinationLesson05 = ()=>{
     }
 
     if(seperatingFunnelRef.current){
-        seperatingFunnelRef.current.visible = true
-        separatingFunnelBungRef.current.visible = true
+        seperatingFunnelRef.current.visible = false
+        separatingFunnelBungRef.current.visible = false
     }
 
     if (gogglesRef?.current) {

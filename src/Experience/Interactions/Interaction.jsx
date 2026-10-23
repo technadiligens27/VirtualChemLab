@@ -156,7 +156,7 @@ useEffect(() => {
       <AllArrows/>
       <AllModeFocusModes/>
 
-      
+      {/* {selectedLeftHand?.name==="main-testube-02" && <ChlorideIonReaction modelRef={testube02Ref}/>} */}
         
       {isAddSalt && <AddSaltToSpoon/>}      
       {isPottasiumCarobnateInSpoon && <AddPottasiumCarobnateToSpoon/>}

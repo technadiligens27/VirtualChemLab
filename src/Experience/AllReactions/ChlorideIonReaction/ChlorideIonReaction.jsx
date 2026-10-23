@@ -9,95 +9,110 @@ import {
 
 import * as THREE from "three"
 
-
 const ChlorideIonReaction = ({
   modelRef,
 
-  // Delay before the whole reaction starts
   startDelay = 0,
 
-  // How far above the final level
-  // the powder starts
+  // Distance above the final settled level.
   startHeight = 0.8,
 
-  // Final Y level where powder settles
+  // Base final powder level relative to modelRef.
   finalYLevel = -1.25,
 
-  // Small random difference in final height
-  finalHeightRandomness = 0.3,
+  // Maximum total variation between powder heights.
+  // Example: 0.2 creates offsets from -0.1 to +0.1.
+  // Set to 0 for a perfectly flat powder surface.
+  finalHeightRandomness = 0.2,
 
   fallSpeed = 0.1,
 
   powderColor = "#ffffff",
+
   endOpacity = 0.8,
 
   powderScale = 1,
 
-  // Random delay for each powder particle
   randomDelay = 4,
 
   sidewaysAmount = 0,
 }) => {
-  const powdersRef =
+  const powderParticlesRef =
     useRef([])
 
   const elapsedTimeRef =
     useRef(0)
 
-  console.log("Chloride Ion Reaction")
-  // =========================================
-  // INITIALIZE
-  // =========================================
+  // =========================================================
+  // SET OBJECT WORLD POSITION
+  // =========================================================
+
+  const setObjectWorldPosition = (
+    object,
+    worldPosition
+  ) => {
+    if (!object?.parent) {
+      return
+    }
+
+    const localPosition =
+      object.parent.worldToLocal(
+        worldPosition.clone()
+      )
+
+    object.position.copy(
+      localPosition
+    )
+  }
+
+  // =========================================================
+  // INITIALIZE POWDER PARTICLES
+  // =========================================================
 
   useEffect(() => {
     const model =
       modelRef?.current
 
-    if (!model) return
+    if (!model) {
+      return
+    }
 
+    model.updateMatrixWorld(
+      true
+    )
 
-    const powders = []
+    // Convert the model-local finalYLevel
+    // to the shared world Y level.
+    const baseFinalWorldPoint =
+      new THREE.Vector3(
+        0,
+        finalYLevel,
+        0
+      )
 
+    model.localToWorld(
+      baseFinalWorldPoint
+    )
+
+    const baseFinalWorldY =
+      baseFinalWorldPoint.y
+
+    const powderParticles = []
 
     model.traverse((child) => {
-      const name =
+      const childName =
         child.name?.toLowerCase() || ""
-
 
       if (
         !child.isMesh ||
-        !name.includes("powder")
+        !childName.includes("powder")
       ) {
         return
       }
 
-
-      // =========================================
-      // MATERIAL
-      // =========================================
-
-      if (child.material) {
-        child.material =
-          child.material.clone()
-
-        child.material.transparent =
-          true
-
-        child.material.opacity =
-          0
-
-        child.material.color.set(
-          powderColor
-        )
-
-        child.material.needsUpdate =
-          true
-      }
-
-
-      // =========================================
-      // ORIGINAL VALUES
-      // =========================================
+      // =============================================
+      // SAVE ORIGINAL STATE
+      // =============================================
 
       const originalPosition =
         child.position.clone()
@@ -105,40 +120,46 @@ const ChlorideIonReaction = ({
       const originalScale =
         child.scale.clone()
 
+      const originalMaterial =
+        child.material
 
-      // =========================================
-      // RANDOM FINAL HEIGHT
-      // =========================================
+      // =============================================
+      // CLONE MATERIALS
+      // =============================================
 
-      const randomFinalOffset =
-        (
-          Math.random() -
-          0.5
-        ) *
-        finalHeightRandomness
+      const sourceMaterials =
+        Array.isArray(originalMaterial)
+          ? originalMaterial
+          : [originalMaterial]
 
+      const clonedMaterials =
+        sourceMaterials.map((material) => {
+          const clonedMaterial =
+            material.clone()
 
-      const targetY =
-        finalYLevel +
-        randomFinalOffset
+          clonedMaterial.transparent =
+            true
 
+          clonedMaterial.opacity =
+            0
 
-      // =========================================
-      // START POSITION
-      // =========================================
+          if (clonedMaterial.color) {
+            clonedMaterial.color.set(
+              powderColor
+            )
+          }
 
-      const startY =
-        targetY +
-        startHeight
+          clonedMaterial.needsUpdate =
+            true
 
+          return clonedMaterial
+        })
 
-      child.position.y =
-        startY
-
-
-      // =========================================
-      // SCALE
-      // =========================================
+      child.material = Array.isArray(
+        originalMaterial
+      )
+        ? clonedMaterials
+        : clonedMaterials[0]
 
       child.scale.set(
         originalScale.x *
@@ -151,19 +172,78 @@ const ChlorideIonReaction = ({
           powderScale
       )
 
+      child.visible =
+        true
 
-      // =========================================
-      // RANDOM DELAY
-      // =========================================
+      child.updateMatrixWorld(
+        true
+      )
 
-      const delay =
-        Math.random() *
-        randomDelay
+      // =============================================
+      // FIND ACTUAL POWDER MESH BOTTOM
+      // =============================================
 
+      const powderBounds =
+        new THREE.Box3().setFromObject(
+          child
+        )
 
-      // =========================================
-      // RANDOM SIDEWAYS POSITION
-      // =========================================
+      const currentBottomWorldY =
+        powderBounds.min.y
+
+      // =============================================
+      // RANDOM FINAL HEIGHT
+      //
+      // Every powder settles near finalYLevel,
+      // with a small natural variation.
+      // =============================================
+
+      const randomFinalHeightOffset =
+        (
+          Math.random() -
+          0.5
+        ) *
+        finalHeightRandomness
+
+      const particleFinalWorldY =
+        baseFinalWorldY +
+        randomFinalHeightOffset
+
+      const particleStartWorldY =
+        particleFinalWorldY +
+        startHeight
+
+      // =============================================
+      // MOVE THE VISUAL MESH BOTTOM TO START LEVEL
+      // =============================================
+
+      const moveToStartAmount =
+        particleStartWorldY -
+        currentBottomWorldY
+
+      const currentWorldPosition =
+        child.getWorldPosition(
+          new THREE.Vector3()
+        )
+
+      const startWorldPosition =
+        currentWorldPosition.clone()
+
+      startWorldPosition.y +=
+        moveToStartAmount
+
+      setObjectWorldPosition(
+        child,
+        startWorldPosition
+      )
+
+      child.updateMatrixWorld(
+        true
+      )
+
+      // =============================================
+      // RANDOM X / Z SETTLING MOVEMENT
+      // =============================================
 
       const randomX =
         (
@@ -172,7 +252,6 @@ const ChlorideIonReaction = ({
         ) *
         sidewaysAmount
 
-
       const randomZ =
         (
           Math.random() -
@@ -180,45 +259,48 @@ const ChlorideIonReaction = ({
         ) *
         sidewaysAmount
 
+      child.visible =
+        false
 
-      powders.push({
+      powderParticles.push({
         object: child,
 
         originalPosition,
         originalScale,
+        originalMaterial,
 
-        startPosition:
-          child.position.clone(),
+        startWorldPosition,
 
-        targetY,
+        startBottomWorldY:
+          particleStartWorldY,
 
-        delay,
+        finalBottomWorldY:
+          particleFinalWorldY,
 
         randomX,
         randomZ,
+
+        delay:
+          Math.random() *
+          randomDelay,
 
         progress: 0,
       })
     })
 
-
-    powdersRef.current =
-      powders
+    powderParticlesRef.current =
+      powderParticles
 
     elapsedTimeRef.current =
       0
 
-
-    // =========================================
-    // CLEANUP
-    // =========================================
-
     return () => {
-      powders.forEach(
+      powderParticles.forEach(
         ({
           object,
           originalPosition,
           originalScale,
+          originalMaterial,
         }) => {
           object.position.copy(
             originalPosition
@@ -228,12 +310,11 @@ const ChlorideIonReaction = ({
             originalScale
           )
 
-          if (
-            object.material
-          ) {
-            object.material.opacity =
-              endOpacity
-          }
+          object.material =
+            originalMaterial
+
+          object.visible =
+            true
 
           object.updateMatrixWorld(
             true
@@ -241,9 +322,7 @@ const ChlorideIonReaction = ({
         }
       )
 
-
-      powdersRef.current =
-        []
+      powderParticlesRef.current = []
     }
   }, [
     modelRef,
@@ -251,25 +330,18 @@ const ChlorideIonReaction = ({
     finalYLevel,
     finalHeightRandomness,
     powderColor,
-    endOpacity,
     powderScale,
     randomDelay,
     sidewaysAmount,
   ])
 
-
-  // =========================================
-  // FALL ANIMATION
-  // =========================================
+  // =========================================================
+  // ANIMATE PARTICLES
+  // =========================================================
 
   useFrame((_, delta) => {
     elapsedTimeRef.current +=
       delta
-
-
-    // =========================================
-    // GLOBAL START DELAY
-    // =========================================
 
     if (
       elapsedTimeRef.current <
@@ -278,106 +350,91 @@ const ChlorideIonReaction = ({
       return
     }
 
-
     const reactionTime =
       elapsedTimeRef.current -
       startDelay
 
-
-    powdersRef.current.forEach(
-      (powder) => {
+    powderParticlesRef.current.forEach(
+      (particle) => {
         const {
           object,
-          startPosition,
-          targetY,
-          delay,
+          startWorldPosition,
+          startBottomWorldY,
+          finalBottomWorldY,
           randomX,
           randomZ,
-        } = powder
+          delay,
+        } = particle
 
-
-        // =========================================
-        // RANDOM PARTICLE DELAY
-        // =========================================
-
-        if (
-          reactionTime <
-          delay
-        ) {
+        if (reactionTime < delay) {
           return
         }
 
-
-        // =========================================
-        // PROGRESS
-        // =========================================
-
-        powder.progress +=
-          delta *
-          fallSpeed
-
+        particle.progress +=
+          delta * fallSpeed
 
         const progress =
           THREE.MathUtils.clamp(
-            powder.progress,
+            particle.progress,
             0,
             1
           )
 
-
-        // =========================================
-        // FALL TO COMMON FINAL LEVEL
-        // =========================================
-
-        object.position.y =
+        const currentBottomWorldY =
           THREE.MathUtils.lerp(
-            startPosition.y,
-            targetY,
+            startBottomWorldY,
+            finalBottomWorldY,
             progress
           )
 
+        const worldYMovement =
+          currentBottomWorldY -
+          startBottomWorldY
 
-        // =========================================
-        // SMALL RANDOM SIDEWAYS MOVEMENT
-        // =========================================
+        const targetWorldPosition =
+          startWorldPosition.clone()
 
-        object.position.x =
-          THREE.MathUtils.lerp(
-            startPosition.x,
-            startPosition.x +
-              randomX,
-            progress
+        targetWorldPosition.y +=
+          worldYMovement
+
+        targetWorldPosition.x +=
+          randomX * progress
+
+        targetWorldPosition.z +=
+          randomZ * progress
+
+        setObjectWorldPosition(
+          object,
+          targetWorldPosition
+        )
+
+        const materials =
+          Array.isArray(
+            object.material
           )
+            ? object.material
+            : [object.material]
 
+        materials.forEach(
+          (material) => {
+            if (!material) {
+              return
+            }
 
-        object.position.z =
-          THREE.MathUtils.lerp(
-            startPosition.z,
-            startPosition.z +
-              randomZ,
-            progress
-          )
+            material.opacity =
+              THREE.MathUtils.lerp(
+                0,
+                endOpacity,
+                progress
+              )
 
-
-        // =========================================
-        // FADE IN
-        // =========================================
-
-        if (
-          object.material
-        ) {
-          object.material.opacity =
-            THREE.MathUtils.lerp(
-              0,
-              endOpacity,
-              progress
-            )
-        }
-
+            material.needsUpdate =
+              true
+          }
+        )
 
         object.visible =
           true
-
 
         object.updateMatrixWorld(
           true
@@ -385,7 +442,6 @@ const ChlorideIonReaction = ({
       }
     )
   })
-
 
   return null
 }

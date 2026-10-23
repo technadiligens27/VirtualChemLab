@@ -10,6 +10,7 @@ import TitreValueRecorded from "../../../Experience/Interactions/TitreValueRecor
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
 import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
 import {useResetLesson} from "../../../UI/ResetLessonButton/ResetLessonButton.jsx"
+import SulfamicSummary from "../../Summary/SulfamicSummary/SulfamicSummary.jsx"
 
 
 const SulfamicAcidNaOHTitration03 = () => {
@@ -27,7 +28,8 @@ const SulfamicAcidNaOHTitration03 = () => {
     lessonStep,
     selectedLesson,
     setSafetyStep,
-    setLessonStep
+    setLessonStep,
+    showSummary,setShowSummary,setShowResult,showResult
   } = useContext(MainGuidelineContext)
 
   const {
@@ -41,6 +43,11 @@ const SulfamicAcidNaOHTitration03 = () => {
     naohBottleRef,waterBottleRef
   } = useContext(ModelContext)
 
+  useEffect(()=>{
+    if(lessonStep==104){
+      setShowResult(true)
+    }
+  },[lessonStep])
 
   useEffect(()=>{
     digitalBalanceRef.current.visible=false
@@ -889,7 +896,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       )}
 
 
-      {lessonStep === 104 && (
+      {showResult && (
         <SulfamicAcidResult/>
       )}
 
@@ -900,19 +907,24 @@ const SulfamicAcidNaOHTitration03 = () => {
               Titration complete — <strong>lesson finished!</strong>
             </>
           }
-           button1Text="Questions"
+           button1Text="Summary"
 
                   button2Text="End Lesson"
 
                   onbtnClick={() => {
-                    setShowQuestionCardNo(12.1)
+                    setShowSummary(true);setShowResult(false)
                   }}
 
-                  onbtn2Click={() => {
-                    resetLesson()
-                  }}
+                  onbtn2Click={
+                    resetLesson
+                  }
         />
       )}
+      
+      {showSummary && <SulfamicSummary 
+        onResult={()=>{setShowResult(true);setShowSummary(false)}}
+        onQuestions={()=>{setShowQuestionCardNo(12.1);setShowSummary(false)}}
+      />}
 
       {showQuestionCardNo === 12.1 && (
         <QuestionCard
@@ -952,6 +964,7 @@ const SulfamicAcidNaOHTitration03 = () => {
           submitButtonText="Submit Answer"
 
           continueButtonText="Continue"
+                onExit={()=>{setShowQuestionCardNo(null)}}
 
           onContinue={() => {
             setShowQuestionCardNo(12.2)
@@ -996,6 +1009,7 @@ const SulfamicAcidNaOHTitration03 = () => {
     submitButtonText="Submit Answer"
 
     continueButtonText="Continue"
+                onExit={()=>{setShowQuestionCardNo(null)}}
 
     onContinue={() => {
       setShowQuestionCardNo(12.3)
@@ -1041,6 +1055,7 @@ const SulfamicAcidNaOHTitration03 = () => {
     submitButtonText="Submit Answer"
 
     continueButtonText="Continue"
+                onExit={()=>{setShowQuestionCardNo(null)}}
 
     onContinue={() => {
       setShowQuestionCardNo(12.4)

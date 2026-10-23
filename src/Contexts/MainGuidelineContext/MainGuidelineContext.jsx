@@ -79,6 +79,9 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showBunsenBurnerArrow,setShowBunsenBurnerArrow] = useState(false);
   const [showNichromeWireArrow,setShowNichromeWireArrow] = useState(false);
 
+  const [showSummary,setShowSummary] = useState(false);
+  const [showResult,setShowResult] = useState(false)
+
 
 
   const resetLessonGuidelines = () => {
@@ -113,7 +116,9 @@ export const MainGuidelineProvider = ({ children }) => {
     setIsTutorialMode(true);
     setShowTestube01Arrow(false);
     setShowDropperArrow(false);
-    setshowBromobutaneArrow(false)
+    setshowBromobutaneArrow(false);
+    setShowSummary(false);
+    setShowResult(false)
     // Restart interaction components
     
   }
@@ -266,7 +271,13 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowBunsenBurnerArrow,
 
         showNichromeWireArrow,
-        setShowNichromeWireArrow
+        setShowNichromeWireArrow,
+
+        showSummary,
+        setShowSummary,
+
+        setShowResult,
+        showResult
 
 
       }}

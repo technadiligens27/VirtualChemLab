@@ -23,7 +23,7 @@ import MolarVolumeSummary from "../../Summary/MolarVolumeSummary/MolarVolumeSumm
 const MolarVolumeLesson = ()=>{
 
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
-    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
+    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,showSummary,setShowSummary} = useContext(MainGuidelineContext);
     const {graduatedBeakerRef} = useContext(ModelContext)
 
     const resetLesson = useResetLesson()
@@ -321,16 +321,16 @@ const MolarVolumeLesson = ()=>{
 
       {lessonStep ==33 && <MolarVolumeResults onButtonContinue={()=>{setLessonStep(34)}}/>}
 
-      {lessonStep==34 && <MolarVolumeSummary onQuestions={()=>{setShowQuestionCardNo(13.1)}} onEndLesson={resetLesson}/>}        
+      {lessonStep==34 && <MolarVolumeSummary onResult={()=>{setLessonStep(33)}} onQuestions={()=>{setShowQuestionCardNo(13.1)}} onEndLesson={resetLesson}/>}        
 
       {lessonStep>=33 && <DialogBox
       text={"Core Practical One Finished!"}
-          button1Text = "Summary"
+          // button1Text = "Summary"
           button2Text="End Lesson"
-          onbtnClick=
-          {() => {
-             setLessonStep(34)
-          }}
+          // onbtnClick=
+          // {() => {
+          //    setLessonStep(34)
+          // }}
 
           onbtn2Click={resetLesson}
           onExit={()=>{setShowQuestionCardNo(null)}}

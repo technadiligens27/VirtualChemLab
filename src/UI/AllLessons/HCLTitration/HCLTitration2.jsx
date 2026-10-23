@@ -14,6 +14,7 @@ import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx"
 import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx";
 import {useResetLesson} from "../../../UI/ResetLessonButton/ResetLessonButton.jsx"
+import HCLTitrationSummary from "../../Summary/HCLTitrationSummary/HCLTitrationSummary.jsx"
 
 const HCLTitration2 = () => {
   const {
@@ -25,7 +26,7 @@ const HCLTitration2 = () => {
   const {
     lessonStep,
     selectedLesson,
-    setSafetyStep,
+    setSafetyStep,setLessonStep,setShowSummary,showSummary,setShowResult,showResult
   } = useContext(MainGuidelineContext)
 
   const {
@@ -38,7 +39,11 @@ const HCLTitration2 = () => {
     volumetricRef,
   } = useContext(ModelContext)
 
-  
+  useEffect(()=>{
+    if(lessonStep==71){
+      setShowResult(true)
+    }
+  },[lessonStep])
 
   const guidelineData = [
   {
@@ -998,7 +1003,7 @@ const resetLesson = useResetLesson()
        
        } */}
 
-      {lessonStep === 70 && (
+      {lessonStep == 70 && (
         <DialogBox
           text={
             <>
@@ -1008,29 +1013,31 @@ const resetLesson = useResetLesson()
         />
       )}
 
-      {lessonStep === 71 && (
+      {showSummary && <HCLTitrationSummary onResult={()=>{setShowResult(true);setShowSummary(false)}} onEndLesson={resetLesson} onQuestions={()=>{setShowQuestionCardNo(11.1);setShowSummary(false)}}/>}
+
+      {lessonStep >= 71 && (
         <DialogBox
                   text={
                     "Reaction  is complete. Review the Results."
                   }
-                  button1Text="Questions"
+                  button1Text="Summary"
 
                   button2Text="End Lesson"
 
                   onbtnClick={() => {
-                    setShowQuestionCardNo(11.1)
+                    setShowSummary(true);setShowResult(false)
                   }}
 
-                  onbtn2Click={() => {
-                    resetLesson()
-                  }}
+                  onbtn2Click={
+                    resetLesson
+                  }
 
                   
                 />
       )}
 
 
-      {lessonStep === 71 && (
+      {(showResult) && (
         <SulfamicAcidResult
             // sulfamicAcidMass={2.5}
             volumetricFlaskVolume={250}
@@ -1049,6 +1056,8 @@ const resetLesson = useResetLesson()
             // imageSrc="./buretteTitre.png"
           />
       )}
+
+
 
         {showQuestionCardNo === 11.1 && (
           <QuestionCard
@@ -1092,6 +1101,8 @@ const resetLesson = useResetLesson()
             onContinue={() => {
               setShowQuestionCardNo(11.2)
             }}
+
+            onExit={()=>{setShowQuestionCardNo(null)}}
           />
         )}
 
@@ -1137,6 +1148,9 @@ const resetLesson = useResetLesson()
     onContinue={() => {
       setShowQuestionCardNo(11.3)
     }}
+    onExit={()=>{setShowQuestionCardNo(null)}}
+
+
   />
 )}
 
@@ -1180,8 +1194,11 @@ const resetLesson = useResetLesson()
     continueButtonText="Continue"
 
     onContinue={() => {
-      setShowQuestionCardNo(11.4)
+     setShowQuestionCardNo(null)
     }}
+    onExit={()=>{setShowQuestionCardNo(null)}}
+
+
   />
 )}
     </>

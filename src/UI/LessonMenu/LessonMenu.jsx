@@ -142,14 +142,14 @@ const LessonMenu = () => {
 //       divider: "purple",
 //     },
 
-//     {
-//       id: 12.2,
-//       name: "Sulfamic Acid–NaOH Titration",
-//       imgPath: "./AlkaliTest.png",
-//       text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-//       number: 12.2,
-//       divider: "purple",
-//     },
+    // {
+    //   id: 12.2,
+    //   name: "Sulfamic Acid–NaOH Titration",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+    //   number: 12.2,
+    //   divider: "purple",
+    // },
 
 {
   id: 13,
@@ -194,14 +194,14 @@ const LessonMenu = () => {
 //   divider: "purple",
 // },
 
-// {
-//   id: 14.4,
-//   name: "Chlorination of 2-methylpropan-2-ol",
-//   imgPath: "./AlkaliTest.png",
-//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-//   number: 14.4,
-//   divider: "purple",
-// },
+{
+  id: 14.4,
+  name: "Chlorination of 2-methylpropan-2-ol",
+  imgPath: "./AlkaliTest.png",
+  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+  number: 14.4,
+  divider: "purple",
+},
 
 {
   id: 15,
@@ -211,14 +211,14 @@ const LessonMenu = () => {
   number: 6,
   divider: "purple",
 },
-{
-  id: 15.2,
-  name: "Flame Test 02",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 6,
-  divider: "purple",
-},
+// {
+//   id: 15.2,
+//   name: "Flame Test 02",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 6,
+//   divider: "purple",
+// },
   ]
 
   const lessonsPerPage = 3

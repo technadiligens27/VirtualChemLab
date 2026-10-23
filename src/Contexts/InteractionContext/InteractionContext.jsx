@@ -201,14 +201,21 @@ export const InteractionProvider = ({ children }) => {
   const [selectedPowder,setSelectedPowder] = useState(null);
 
   const [showPowderInContainer,setShowPowderInContainer] = useState(false);
-  const [isAirHoleOpen,setIsAirHoleOpen] = useState(false)
+  const [isAirHoleOpen,setIsAirHoleOpen] = useState(false);
+
+const [molarVolumeResultsState,setMolarVolumeResultsState] = useState({
+  resultSetIndex: 0,
+  visibleResultCount: 1,
+  isAutoSimulating: false,
+})  
 
 const resetInteractions = () => {
   // =======================================================
   // REFS
   // =======================================================
 
-  hasSat.current = null
+  hasSat.current = true
+
   gogglesOn.current = false
   glovesOn.current = false
 
@@ -222,13 +229,12 @@ const resetInteractions = () => {
   // PLAYER / HANDS
   // =======================================================
 
-  setIsSitting(false)
+  setIsSitting(true)
 
   setSelectedLeftHand(false)
   setSelectedRightHand(false)
 
-  setChairStep(0)
-
+setChairStep(0)
   // =======================================================
   // FILL BEAKER UI
   // =======================================================
@@ -474,8 +480,14 @@ const resetInteractions = () => {
   setShowPowderBox(false)
   setSelectedPowder(null)
   setShowPowderInContainer(false)
+  setIsAirHoleOpen(false);
+  setMolarVolumeResultsState({
+  resultSetIndex: 0,
+  visibleResultCount: 1,
+  isAutoSimulating: false,
+})
 
-  setIsAirHoleOpen(false)
+  
 }
   return (
     <InteractionContext.Provider
@@ -582,7 +594,7 @@ const resetInteractions = () => {
         isModelInHeatingMat,setIsModelInHeatingMat,
         setIsDipMode,isDipMode,showBunsenFlame,setShowBunsenFlame,
         showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer,
-        isAirHoleOpen,setIsAirHoleOpen
+        isAirHoleOpen,setIsAirHoleOpen,molarVolumeResultsState,setMolarVolumeResultsState
       }}
     >
       {children}

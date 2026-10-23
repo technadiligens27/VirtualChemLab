@@ -50,6 +50,8 @@ import FlameTestSummary from "./Summary/FlameTestSummary/FlameTestSummary"
 import ExothermicReactionSummary from "./Summary/ExothermicReactionSummary/ExothermicReactionSummary"
 import HessReactionOneResults from "./HessReactionOneResults/HessReactionOneResults"
 import MolarVolumeSummary from "./Summary/MolarVolumeSummary/MolarVolumeSummary"
+import HCLTitrationSummary from "./Summary/HCLTitrationSummary/HCLTitrationSummary"
+import SulfamicSummary from "./Summary/SulfamicSummary/SulfamicSummary"
 
 const mainContent = [
   {
@@ -788,6 +790,8 @@ useEffect(() => {
         )
        }
         <AllExplanations/>
+        {/* {<SulfamicSummary/>} */}
+        {/* <HCLTitrationSummary/> */}
        {/* <HessReactionOneResults/> */}
         {/* <ExothermicReactionSummary/>         */}
         {/* {<MolarVolumeResults/>} */}

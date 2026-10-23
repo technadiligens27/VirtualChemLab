@@ -1988,6 +1988,11 @@ const ClickObject = () => {
 
     const objectName = selectedItem.name
 
+    if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
+      setSelectedObject(null)
+      return
+    }
+
     if(selectedLesson !==15 &&  objectName==="nichrome-wire"){
       setSelectedObject(null)
       return
@@ -1998,10 +2003,7 @@ const ClickObject = () => {
       return
     }
 
-    if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
-      setSelectedObject(null)
-      return
-    }
+
 
     if([11,11.1].includes(selectedLesson)){
       if(lessonStep==15 && objectName==="volumetric-flask"){
@@ -2362,8 +2364,8 @@ const clickableObjects = selectableObjects
 
     }
 
-    if([14,14.1,14.3].includes(selectedLesson)){
-      if(![3,26,34,44,62,85,94,110,115,127,133].includes(lessonStep)){
+    if([14,14.1,14.3,14.4].includes(selectedLesson)){
+      if(![3,26,34,44,62,85,94,110,115,127,133,141,147].includes(lessonStep)){
         setShowErrorMsgNo(12)
         return false 
       }  
@@ -2400,6 +2402,16 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(12)
         return false         
       }  
+
+      if([141].includes(lessonStep) && selectedObject.name !=="main-normal-beaker"){
+        setShowErrorMsgNo(12)
+        return false         
+      }  
+
+      if([147].includes(lessonStep) && selectedObject.name !=="main-dropper"){
+        setShowErrorMsgNo(12)
+        return false         
+      } 
 
     }
 
