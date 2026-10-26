@@ -1,0 +1,620 @@
+.apparatus-overview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  background: rgba(15, 10, 38, 0.5);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  font-family: "Baloo Thambi 2", sans-serif;
+}
+
+.apparatus-overview-overlay *,
+.apparatus-overview-overlay *::before,
+.apparatus-overview-overlay *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.apparatus-overview-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(88vw, 1550px);
+  height: min(88vh, 900px);
+
+  padding: 84px 55px 28px;
+
+  overflow: hidden;
+
+  background: #fffdfa;
+
+  border: 9px solid #ffc948;
+  border-radius: 30px;
+
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   TOP TITLE
+========================================================= */
+
+.apparatus-overview-title-tab {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(42vw, 560px);
+  min-width: 300px;
+  height: 76px;
+
+  padding: 8px 28px 14px;
+
+  background: #ffc948;
+
+  border-radius: 0 0 34px 34px;
+
+  transform: translateX(-50%);
+}
+
+.apparatus-overview-title-tab h1 {
+  margin: 0;
+
+  color: #321d88;
+
+  font-size: clamp(27px, 2.3vw, 42px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.apparatus-overview-subtitle {
+  flex-shrink: 0;
+
+  margin: 0 0 22px;
+
+  color: #5d5190;
+
+  font-size: clamp(16px, 1.25vw, 22px);
+  font-weight: 700;
+  text-align: center;
+}
+
+
+/* =========================================================
+   CONTENT / GRID
+========================================================= */
+
+.apparatus-overview-content {
+  position: relative;
+
+  flex: 1;
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+.apparatus-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 22px;
+
+  width: 100%;
+  height: 100%;
+}
+
+.apparatus-slide-out-left {
+  animation:
+    apparatus-page-out-left
+    0.3s
+    ease-in
+    forwards;
+}
+
+.apparatus-slide-out-right {
+  animation:
+    apparatus-page-out-right
+    0.3s
+    ease-in
+    forwards;
+}
+
+.apparatus-slide-in-left {
+  animation:
+    apparatus-page-in-left
+    0.35s
+    ease-out
+    forwards;
+}
+
+.apparatus-slide-in-right {
+  animation:
+    apparatus-page-in-right
+    0.35s
+    ease-out
+    forwards;
+}
+
+@keyframes apparatus-page-out-left {
+  to {
+    opacity: 0;
+    transform: translateX(-110%);
+  }
+}
+
+@keyframes apparatus-page-out-right {
+  to {
+    opacity: 0;
+    transform: translateX(110%);
+  }
+}
+
+@keyframes apparatus-page-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-110%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes apparatus-page-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(110%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================================
+   APPARATUS CARD
+========================================================= */
+
+.apparatus-overview-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 22px 18px 18px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa 0%,
+      #fff8e8 100%
+    );
+
+  border: 2px solid #ffbd2f;
+  border-radius: 24px;
+
+  box-shadow:
+    0 10px 22px rgba(71, 42, 140, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.apparatus-overview-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 17px 28px rgba(71, 42, 140, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+}
+
+.apparatus-overview-card-placeholder {
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+.apparatus-overview-number {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  z-index: 1;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  background: #ffdf82;
+
+  border: 2px solid #ffbb2c;
+  border-radius: 50%;
+
+  color: #351e8b;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.apparatus-overview-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 110px;
+
+  width: 100%;
+
+  margin-top: 26px;
+  padding: 6px 12px;
+}
+
+.apparatus-overview-image-container img {
+  display: block;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 8px 10px
+      rgba(42, 43, 100, 0.18)
+    );
+}
+
+.apparatus-overview-description {
+  min-height: 70px;
+
+  margin: 8px 0 14px;
+
+  color: #57516d;
+
+  font-size: clamp(14px, 1vw, 18px);
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.apparatus-overview-button {
+  width: 100%;
+  min-height: 52px;
+
+  padding: 10px 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7852d7,
+      #5d36c4
+    );
+
+  border: none;
+  border-radius: 14px;
+
+  box-shadow: 0 7px 14px rgba(92, 53, 194, 0.22);
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: clamp(16px, 1.15vw, 20px);
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.apparatus-overview-button:hover {
+  filter: brightness(1.08);
+
+  transform: translateY(-2px);
+}
+
+.apparatus-overview-button:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   PAGE ARROWS
+========================================================= */
+
+.apparatus-arrow-button {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 90px;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+
+  transition: transform 0.2s ease;
+}
+
+.apparatus-arrow-button:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+.apparatus-arrow-button img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.apparatus-arrow-left {
+  left: -5px;
+}
+
+.apparatus-arrow-right {
+  right: -5px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.apparatus-overview-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-shrink: 0;
+
+  width: 100%;
+
+  margin-top: 22px;
+}
+
+.apparatus-overview-status {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 9px 20px;
+
+  background: #f7f1ff;
+
+  border: 2px solid #d8c4ff;
+  border-radius: 999px;
+
+  color: #4d2aa1;
+
+  font-size: clamp(14px, 1vw, 18px);
+}
+
+.apparatus-overview-page-count {
+  padding-left: 10px;
+
+  border-left: 1px solid #c8b3f7;
+
+  font-size: 0.9em;
+}
+
+.apparatus-overview-continue-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-width: 190px;
+  min-height: 55px;
+
+  padding: 10px 25px;
+
+  background:white;
+  border: 2px solid #5d36c4;
+  border-radius: 15px;
+
+  box-shadow: 0 8px 16px rgba(92, 53, 194, 0.22);
+
+  color: #5d36c4;
+
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.apparatus-overview-continue-button:hover {
+  filter: brightness(1.08);
+
+  transform: translateY(-3px);
+}
+
+.apparatus-overview-continue-button:active {
+  transform: scale(0.98);
+}
+
+.apparatus-overview-continue-button span {
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+  line-height: 0.5;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .apparatus-overview-overlay {
+    align-items: flex-start;
+
+    overflow-y: auto;
+  }
+
+  .apparatus-overview-container {
+    width: min(95vw, 850px);
+    height: auto;
+    min-height: 88vh;
+
+    padding: 82px 30px 28px;
+  }
+
+  .apparatus-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+
+  .apparatus-overview-card {
+    min-height: 360px;
+  }
+
+  .apparatus-overview-image-container {
+    flex: initial;
+
+    height: 190px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 620px) {
+  .apparatus-overview-overlay {
+    padding: 10px;
+  }
+
+  .apparatus-overview-container {
+    width: 100%;
+    min-height: auto;
+
+    padding: 76px 16px 24px;
+
+    border-width: 6px;
+    border-radius: 22px;
+  }
+
+  .apparatus-overview-title-tab {
+    width: 80vw;
+    min-width: 0;
+    height: 58px;
+
+    border-radius: 0 0 26px 26px;
+  }
+
+  .apparatus-overview-title-tab h1 {
+    font-size: 25px;
+  }
+
+  .apparatus-overview-subtitle {
+    margin-bottom: 20px;
+
+    font-size: 16px;
+  }
+
+  .apparatus-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apparatus-overview-card {
+    min-height: 350px;
+  }
+
+  .apparatus-overview-image-container {
+    height: 185px;
+  }
+
+  .apparatus-overview-description {
+    min-height: auto;
+
+    font-size: 16px;
+  }
+
+  .apparatus-arrow-button {
+    width: 48px;
+    height: 72px;
+  }
+
+  .apparatus-arrow-left {
+    left: -10px;
+  }
+
+  .apparatus-arrow-right {
+    right: -10px;
+  }
+
+  .apparatus-overview-footer {
+    flex-direction: column;
+
+    gap: 13px;
+  }
+
+  .apparatus-overview-status,
+  .apparatus-overview-continue-button {
+    width: 100%;
+  }
+
+  .apparatus-overview-status {
+    justify-content: center;
+  }
+}

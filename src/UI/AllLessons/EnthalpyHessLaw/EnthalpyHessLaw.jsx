@@ -17,6 +17,7 @@ import {resetModel} from "../../../Experience/resetModels/resetModels"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
 import ExothermicReactionSummary from "../../Summary/ExothermicReactionSummary/ExothermicReactionSummary";
 import { useResetLesson } from "../../ResetLessonButton/ResetLessonButton";
+import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview";
 
 const EnthalpyHessLaw = () =>{
 
@@ -24,7 +25,7 @@ const EnthalpyHessLaw = () =>{
     showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo,
   showQuestionCardNo,setShowQuestionCardNo} = useContext(InteractionContext)
     
-  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSelectedLesson} = useContext(MainGuidelineContext);
+  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSelectedLesson,setShowApparatus,showApparatus} = useContext(MainGuidelineContext);
 
 const {
   normalBeakerRef,
@@ -413,17 +414,149 @@ const {
 />
         } */}
 
-
-
-
         {
-         lessonStep===1 && <EnthalpyLessonOverview
+         lessonStep===1 && !showApparatus && <EnthalpyLessonOverview
           reactionData={enthalpyReactionData[0]}
           onStartLesson={() => {
-            setLessonStep(2)
+            setShowApparatus(true)
           }}
         />
         }
+
+        {
+          showApparatus &&  <ApparatusOverview
+          title="Apparatus Overview"
+          onContinue={()=>{setShowApparatus(false);setLessonStep(2)}}
+          apparatusItems={[
+            {
+              id: "polystyrene-cup",
+
+              name: "Polystyrene cup",
+
+              modelName:
+                "mainPolystyrene",
+
+              imagePath:
+                "./polysterene-cup.png",
+
+              description:
+                "Used to reduce heat loss to the surroundings, allowing accurate measurement of temperature changes during exothermic reactions.",
+            },
+
+            {
+              id: "glass-beaker",
+
+              name: "Glass Beaker",
+
+              modelName:
+                "main-normal-beaker",
+
+              imagePath:
+                "./main-normal-beaker.png",
+
+              description:
+              "Used to support the polystyrene cup, providing stability during the exothermic reaction.",
+            },
+
+          {
+            id: "thermometer",
+
+            name: "Thermometer",
+
+            modelName:
+              "mainThermometer",
+
+            imagePath:
+              "./thermometer.png",
+
+            description:
+              "Used to measure temperature changes during exothermic reactions.",
+          },
+
+        {
+          id: "burette",
+
+          name: "Burette",
+
+          modelName:
+            "burette",
+
+          imagePath:
+            "./burette.png",
+
+          description:
+            "Used to accurately measure and deliver controlled volumes of liquid during titration.",
+        },
+
+        {
+          id: "burette-stand-clamp",
+
+          name: "Burette Stand and Clamp",
+
+          modelName:
+            "burette-stand-clamp",
+
+          imagePath:
+            "./burette-stand-clamp.png",
+
+          description:
+            "Used to hold the burette securely in a vertical position during titration.",
+        },
+
+        {
+          id: "test-tube",
+
+          name: "Test Tube",
+
+          modelName:
+            "test-tube",
+
+          imagePath:
+            "./testube-apparatus.png",
+
+          description:
+            "Used to hold small amounts of chemicals during experiments.",
+        },
+
+        {
+          id: "mass-balance",
+
+          name: "Mass Balance",
+
+          modelName:
+            "mass-balance",
+
+          imagePath:
+            "./weighTestube.png",
+
+          description:
+            "Used to accurately measure the mass of chemicals used in reactions.",
+        },
+
+        {
+          id: "spatula",
+
+          name: "Spatula",
+
+          modelName:
+            "spatula",
+
+          imagePath:
+            "./spatula.png",
+
+          description:
+            "Used to transfer small amounts of solid chemicals or powders.",
+        },
+          ]}
+          onSelectApparatus={(apparatus) => {
+            console.log(
+              "Selected apparatus:",
+              apparatus.modelName
+            )
+          }}
+        /> 
+        }
+
 
       <HessLiveDataPanel
         reactionNumber={1}

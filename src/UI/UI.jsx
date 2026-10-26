@@ -52,6 +52,8 @@ import HessReactionOneResults from "./HessReactionOneResults/HessReactionOneResu
 import MolarVolumeSummary from "./Summary/MolarVolumeSummary/MolarVolumeSummary"
 import HCLTitrationSummary from "./Summary/HCLTitrationSummary/HCLTitrationSummary"
 import SulfamicSummary from "./Summary/SulfamicSummary/SulfamicSummary"
+import ChlorinationSummary from "./Summary/ChlorinationSummary/ChlorinationSummary"
+import ApparatusOverview from "./ApparatusOverview/ApparatusOverview"
 
 const mainContent = [
   {
@@ -790,6 +792,93 @@ useEffect(() => {
         )
        }
         <AllExplanations/>
+
+        {/* <ApparatusOverview
+          title="Apparatus Overview"
+          apparatusItems={[
+            {
+              id: "round-bottom-flask",
+
+              name: "Round-bottom Flask",
+
+              modelName:
+                "round-bottom-flask",
+
+              imagePath:
+                "./round-bottom-flask.png",
+
+              description:
+                "Used to heat liquids evenly during chemical reactions and distillation.",
+            },
+
+            {
+              id: "volumetric-flask",
+
+              name: "Volumetric Flask",
+
+              modelName:
+                "volumetric-flask",
+
+              imagePath:
+                "./volumetric-flask.png",
+
+              description:
+                "Used to prepare an accurate volume of a solution.",
+            },
+
+            {
+              id: "conical-flask",
+
+              name: "Conical Flask",
+
+              modelName:
+                "conical-flask",
+
+              imagePath:
+                "./conical-flask.png",
+
+              description:
+                "Used for mixing liquids without spilling during reactions.",
+            },
+
+            {
+              id: "measuring-cylinder",
+
+              name: "Measuring Cylinder",
+
+              modelName:
+                "measuring-cylinder",
+
+              imagePath:
+                "./measuring-cylinder.png",
+
+              description:
+                "Used to measure the volume of liquids.",
+            },
+
+            {
+              id: "burette",
+
+              name: "Burette",
+
+              modelName:
+                "burette",
+
+              imagePath:
+                "./burette.png",
+
+              description:
+                "Used to add precise volumes of liquid during titration.",
+            },
+          ]}
+          onSelectApparatus={(apparatus) => {
+            console.log(
+              "Selected apparatus:",
+              apparatus.modelName
+            )
+          }}
+        />      */}
+                {/* <ChlorinationSummary/> */}
         {/* {<SulfamicSummary/>} */}
         {/* <HCLTitrationSummary/> */}
        {/* <HessReactionOneResults/> */}

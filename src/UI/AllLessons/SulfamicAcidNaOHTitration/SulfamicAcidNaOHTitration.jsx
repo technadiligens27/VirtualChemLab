@@ -18,6 +18,7 @@ import SulfamicAcidNaOHTitration02 from "./SulfamicAcidNaOHTitration02.jsx"
 
 import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction.jsx"
 import SulfamicTitrationLiveDataPanel from "./SulfamicTitrationLiveDataPanel/SulfamicTitrationLiveDataPanel.jsx"
+import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview.jsx"
 
 const SulfamicAcidNaOHTitration = () => {
   const {
@@ -33,7 +34,7 @@ const SulfamicAcidNaOHTitration = () => {
     lessonStep,
     selectedLesson,
     setLessonStep,
-    setShowNormalBeakerArrow,
+    setShowNormalBeakerArrow,setShowApparatus,showApparatus
   } = useContext(
     MainGuidelineContext
   )
@@ -62,16 +63,230 @@ const SulfamicAcidNaOHTitration = () => {
           LESSON OVERVIEW
       ===================================================== */}
 
-      {lessonStep === 1 && (
+      {lessonStep === 1 && !showApparatus && (
         <EnthalpyLessonOverview
           reactionData={
             sulfamicAcidNaOHTitrationReactionData[0]
           }
           onStartLesson={() =>
-            setLessonStep(2)
+            setShowApparatus(true)
           }
         />
       )}
+
+      {
+        showApparatus && (
+          <ApparatusOverview
+            title="Apparatus Overview"
+            onContinue={() => {
+              setShowApparatus(false)
+              setLessonStep(2)
+            }}
+            apparatusItems={[
+              {
+                id: "digital-balance",
+
+                name: "Digital Balance",
+
+                modelName:
+                  "digital-balance",
+
+                imagePath:
+                  "./digital-balance.png",
+
+                description:
+                  "Used to accurately measure the mass of sulfamic acid.",
+              },
+
+              {
+                id: "test-tube",
+
+                name: "Test Tube",
+
+                modelName:
+                  "main-testube-01",
+
+                imagePath:
+                  "./testube-apparatus.png",
+
+                description:
+                  "Used to hold sulfamic acid while it is weighed.",
+              },
+
+              {
+                id: "spatula",
+
+                name: "Spatula",
+
+                modelName:
+                  "main-spoon",
+
+                imagePath:
+                  "./spatula.png",
+
+                description:
+                  "Used to transfer sulfamic acid powder into the test tube.",
+              },
+
+              {
+                id: "sulfamic-acid",
+
+                name: "Sulfamic Acid",
+
+                modelName:
+                  "sulfamic-bottle",
+
+                imagePath:
+                  "./sulfamic-acid.png",
+
+                description:
+                  "Used to prepare a standard acid solution for titration.",
+              },
+
+              {
+                id: "glass-beaker",
+
+                name: "Glass Beaker",
+
+                modelName:
+                  "main-normal-beaker",
+
+                imagePath:
+                  "./main-normal-beaker.png",
+
+                description:
+                  "Used to dissolve sulfamic acid in distilled water.",
+              },
+
+              {
+                id: "water-bottle",
+
+                name: "Distilled Water",
+
+                modelName:
+                  "water-bottle",
+
+                imagePath:
+                  "./water-bottle.png",
+
+                description:
+                  "Used to dissolve the sulfamic acid and make the solution up to the mark.",
+              },
+
+              {
+                id: "volumetric-flask",
+
+                name: "Volumetric Flask",
+
+                modelName:
+                  "volumetric-flask",
+
+                imagePath:
+                  "./volumetric-flask.png",
+
+                description:
+                  "Used to prepare exactly 250 cm³ of standard sulfamic acid solution.",
+              },
+
+              {
+                id: "funnel",
+
+                name: "Funnel",
+
+                modelName:
+                  "main-funnel",
+
+                imagePath:
+                  "./funnel.png",
+
+                description:
+                  "Used to transfer solution into the volumetric flask and burette without spilling.",
+              },
+
+              {
+                id: "volumetric-pipette",
+
+                name: "Volumetric Pipette",
+
+                modelName:
+                  "volumetric-pipette",
+
+                imagePath:
+                  "./volumetric-pipette.png",
+
+                description:
+                  "Used to measure exactly 25.0 cm³ of sodium hydroxide.",
+              },
+
+              {
+                id: "conical-flask",
+
+                name: "Conical Flask",
+
+                modelName:
+                  "main-conical-beaker",
+
+                imagePath:
+                  "./conical-flask.png",
+
+                description:
+                  "Used to hold sodium hydroxide during the titration.",
+              },
+
+              {
+                id: "methyl-orange",
+
+                name: "Methyl Orange",
+
+                modelName:
+                  "methyl-orange-bottle",
+
+                imagePath:
+                  "./methyl-orange.png",
+
+                description:
+                  "Used as the indicator to show the titration endpoint.",
+              },
+
+              {
+                id: "burette",
+
+                name: "Burette",
+
+                modelName:
+                  "burette",
+
+                imagePath:
+                  "./burette.png",
+
+                description:
+                  "Used to accurately deliver sulfamic acid during titration.",
+              },
+
+              {
+                id: "burette-stand-clamp",
+
+                name: "Burette Stand and Clamp",
+
+                modelName:
+                  "burette-stand-clamp",
+
+                imagePath:
+                  "./burette-stand-clamp.png",
+
+                description:
+                  "Used to hold the burette upright and securely during titration.",
+              },
+            ]}
+            onSelectApparatus={(apparatus) => {
+              console.log(
+                "Selected apparatus:",
+                apparatus.modelName
+              )
+            }}
+          />
+        )
+      }
 
       {/* =====================================================
           SAFETY

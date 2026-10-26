@@ -80,7 +80,9 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showNichromeWireArrow,setShowNichromeWireArrow] = useState(false);
 
   const [showSummary,setShowSummary] = useState(false);
-  const [showResult,setShowResult] = useState(false)
+  const [showResult,setShowResult] = useState(false);
+
+  const [showApparatus,setShowApparatus] = useState(false)
 
 
 
@@ -118,7 +120,8 @@ export const MainGuidelineProvider = ({ children }) => {
     setShowDropperArrow(false);
     setshowBromobutaneArrow(false);
     setShowSummary(false);
-    setShowResult(false)
+    setShowResult(false);
+    setShowApparatus(false)
     // Restart interaction components
     
   }
@@ -277,7 +280,10 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowSummary,
 
         setShowResult,
-        showResult
+        showResult,
+
+        showApparatus,
+        setShowApparatus
 
 
       }}

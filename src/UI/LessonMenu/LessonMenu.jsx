@@ -194,14 +194,14 @@ const LessonMenu = () => {
 //   divider: "purple",
 // },
 
-{
-  id: 14.4,
-  name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14.4,
-  divider: "purple",
-},
+// {
+//   id: 14.4,
+//   name: "Chlorination of 2-methylpropan-2-ol",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 14.4,
+//   divider: "purple",
+// },
 
 {
   id: 15,
@@ -338,6 +338,7 @@ const startLesson = (lessonId) => {
               className="arrow-right"
               onClick={() => changePage(page + 1)}
             >
+
               <img
                 src="./right-arrow.png"
                 alt="Next lessons"

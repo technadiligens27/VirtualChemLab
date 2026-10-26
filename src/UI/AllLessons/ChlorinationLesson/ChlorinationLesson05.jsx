@@ -6,6 +6,9 @@ import DialogBox from "../../AllDialogBox/DialogBox/DialogBox"
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines"
 import {chlorinationGuidelineData} from "../../Data/chlorinationLessonData/chlorinationLessonData.jsx"
 import ChlorinationLiveDataPanel from "./ChlorinationLiveDataPanel/ChlorinationLiveDataPanel.jsx"
+import { useResetLesson } from "../../ResetLessonButton/ResetLessonButton.jsx"
+import ChlorinationSummary from "../../Summary/ChlorinationSummary/ChlorinationSummary.jsx"
+import QuestionCard from "../../QuestionCard/QuestionCard.jsx"
 
 const ChlorinationLesson05 = ()=>{
 
@@ -16,11 +19,15 @@ const ChlorinationLesson05 = ()=>{
     testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef
   } = useContext(ModelContext)    
     
-  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
+  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep,showSummary,setShowSummary,} = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
-    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced
+    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,showQuestionCardNo,setShowQuestionCardNo
   } = useContext(InteractionContext)
+
+
+  const resetLesson = useResetLesson()
+
 
   useEffect(()=>{
     if(selectedLesson!==14.4)return
@@ -331,7 +338,7 @@ const ChlorinationLesson05 = ()=>{
         />}
 
 
-        {lessonStep >=154  && (<SulfamicGuidelines  guidelineData={chlorinationGuidelineData[26]}/>)}
+        {lessonStep >=154 && lessonStep <158 && (<SulfamicGuidelines  guidelineData={chlorinationGuidelineData[26]}/>)}
 
 
 
@@ -367,7 +374,275 @@ const ChlorinationLesson05 = ()=>{
            Lesson Finished!!
           </>
           } 
+          button1Text  = "Summary"
+          button2Text="End Lesson"
+
+          onbtnClick={()=>setShowSummary(true)}
+          onbtn2Click={resetLesson}
+
+
         />} 
+
+        {showSummary && <ChlorinationSummary 
+        onQuestions={()=>{setShowQuestionCardNo(14.1);setShowSummary(false)}}
+        onEndLesson={resetLesson}
+          
+          />}
+
+   {
+  showQuestionCardNo === 14.1 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Chlorination of 2-methylpropan-2-ol"
+
+      questionNumber={1}
+
+      question="What is the purpose of adding anhydrous calcium chloride to the reaction mixture?"
+
+      answers={[
+        {
+          id: "A",
+          text: "To move unreacted alcohol into the aqueous layer",
+        },
+        {
+          id: "B",
+          text: "To produce carbon dioxide gas",
+        },
+        {
+          id: "C",
+          text: "To increase the boiling point of the product",
+        },
+        {
+          id: "D",
+          text: "To turn the product blue",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about why unreacted 2-methylpropan-2-ol should be removed from the organic product."
+
+      correctMessage="Correct! Calcium chloride helps remove unreacted alcohol by moving it into the aqueous layer."
+
+      incorrectMessage="Incorrect. Anhydrous calcium chloride helps remove unreacted alcohol from the crude organic product."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(14.2)
+      }}
+
+      onExit={() => {
+        setShowQuestionCardNo(null)
+      }}
+    />
+  )
+}
+
+{
+  showQuestionCardNo === 14.2 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Chlorination of 2-methylpropan-2-ol"
+
+      questionNumber={2}
+
+      question="Which layer in the separating funnel contains the crude 2-chloro-2-methylpropane product?"
+
+      answers={[
+        {
+          id: "A",
+          text: "The upper organic layer",
+        },
+        {
+          id: "B",
+          text: "The lower aqueous layer",
+        },
+        {
+          id: "C",
+          text: "Both layers contain pure product",
+        },
+        {
+          id: "D",
+          text: "The solid layer at the bottom",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about the density of the organic product compared with the aqueous layer."
+
+      correctMessage="Correct! The crude 2-chloro-2-methylpropane is the upper organic layer."
+
+      incorrectMessage="Incorrect. The organic product is less dense than the aqueous layer, so it forms the upper layer."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(14.3)
+      }}
+
+      onExit={() => {
+        setShowQuestionCardNo(null)
+      }}
+    />
+  )
+}
+
+{
+  showQuestionCardNo === 14.3 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Chlorination of 2-methylpropan-2-ol"
+
+      questionNumber={3}
+
+      question="Why is sodium hydrogencarbonate solution used to wash the organic layer?"
+
+      answers={[
+        {
+          id: "A",
+          text: "To remove remaining hydrochloric acid",
+        },
+        {
+          id: "B",
+          text: "To dry the organic product completely",
+        },
+        {
+          id: "C",
+          text: "To increase the mass of the product",
+        },
+        {
+          id: "D",
+          text: "To turn the product into an alkene",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about which acidic reactant may still be mixed with the crude product."
+
+      correctMessage="Correct! Sodium hydrogencarbonate neutralises and removes remaining hydrochloric acid."
+
+      incorrectMessage="Incorrect. Sodium hydrogencarbonate is used to wash away remaining hydrochloric acid."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(14.4)
+      }}
+
+      onExit={() => {
+        setShowQuestionCardNo(null)
+      }}
+    />
+  )
+}
+
+{
+  showQuestionCardNo === 14.4 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Chlorination of 2-methylpropan-2-ol"
+
+      questionNumber={4}
+
+      question="Why must the separating funnel be vented frequently during the sodium hydrogencarbonate wash?"
+
+      answers={[
+        {
+          id: "A",
+          text: "Carbon dioxide gas is produced and pressure builds up",
+        },
+        {
+          id: "B",
+          text: "The organic liquid needs oxygen",
+        },
+        {
+          id: "C",
+          text: "The product evaporates immediately",
+        },
+        {
+          id: "D",
+          text: "The funnel must be cooled down",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about the gas formed when an acid reacts with a hydrogencarbonate."
+
+      correctMessage="Correct! Carbon dioxide is produced during the wash, so pressure must be released safely."
+
+      incorrectMessage="Incorrect. The sodium hydrogencarbonate wash produces carbon dioxide gas, causing pressure to build up."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Continue"
+
+      onContinue={() => {
+        setShowQuestionCardNo(14.5)
+      }}
+
+      onExit={() => {
+        setShowQuestionCardNo(null)
+      }}
+    />
+  )
+}
+
+{
+  showQuestionCardNo === 14.5 && (
+    <QuestionCard
+      questionSetTitle="Question Set — Chlorination of 2-methylpropan-2-ol"
+
+      questionNumber={5}
+
+      question="Why is only the fraction distilling between 50°C and 52°C collected?"
+
+      answers={[
+        {
+          id: "A",
+          text: "This is the boiling range of relatively pure 2-chloro-2-methylpropane",
+        },
+        {
+          id: "B",
+          text: "This temperature freezes the product",
+        },
+        {
+          id: "C",
+          text: "This temperature produces silver chloride",
+        },
+        {
+          id: "D",
+          text: "This temperature removes all water instantly",
+        },
+      ]}
+
+      correctAnswer="A"
+
+      hintText="Think about how boiling temperature helps identify and purify a liquid."
+
+      correctMessage="Correct! A boiling range of 50–52°C indicates relatively pure 2-chloro-2-methylpropane."
+
+      incorrectMessage="Incorrect. The 50–52°C fraction is collected because it is the boiling range of relatively pure 2-chloro-2-methylpropane."
+
+      submitButtonText="Submit Answer"
+
+      continueButtonText="Finish"
+
+      onContinue={() => {
+        setShowQuestionCardNo(null)
+      }}
+
+      onExit={() => {
+        setShowQuestionCardNo(null)
+      }}
+    />
+  )
+}
 
 
     {[14,14.1,14.2,14.3,14.4].includes(selectedLesson) && (
