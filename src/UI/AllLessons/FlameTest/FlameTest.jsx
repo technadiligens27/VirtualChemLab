@@ -9,6 +9,7 @@ import { flameTestData,flameTestGuidelineData } from "../../Data/flameTestData/f
 import SafetyScreen from "../../SafetyScreen/SafetyScreen"
 import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction"
 import FlameTest02 from "./FlameTest02"
+import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview"
 
 const FlameTest = ()=>{
 
@@ -20,7 +21,7 @@ const FlameTest = ()=>{
      airHoleRef
   } = useContext(ModelContext)    
     
-  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep } = useContext(MainGuidelineContext)
+  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep,showApparatus,setShowApparatus } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
     setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setShowBunsenFlame
@@ -67,15 +68,111 @@ const FlameTest = ()=>{
 
  
        {
-         lessonStep===1 && <EnthalpyLessonOverview
+         lessonStep===1 && !showApparatus && <EnthalpyLessonOverview
           reactionData={ flameTestData [0]}
           onStartLesson={() => {
-            setLessonStep(2)
+            setShowApparatus(true)
           }}
         />
         }
 
-        {lessonStep === 2 && (
+{
+  showApparatus && (
+    <ApparatusOverview
+      title="Apparatus Overview"
+      onContinue={() => {
+        setShowApparatus(false)
+        setLessonStep(3)
+      }}
+      apparatusItems={[
+
+
+        {
+          id: "bunsen-burner",
+
+          name: "Bunsen Burner",
+
+          modelName:
+            "bunsen-burner",
+
+          imagePath:
+            "./lightBunsenBurner.png",
+
+          description:
+            "Used to produce a blue flame for heating the metal salts.",
+        },
+
+        {
+          id: "nichrome-wire",
+
+          name: "Nichrome Wire Loop",
+
+          modelName:
+            "nichrome-wire",
+
+          imagePath:
+            "./nichrome-wire.png",
+
+          description:
+            "Used to hold the metal salt sample in the flame.",
+        },
+
+          {
+            id: "heating-mat",
+
+            name: "Heatproof Mat",
+
+            modelName:
+              "heating-mat",
+
+            imagePath:
+              "./heating-mat.png",
+
+            description:
+              "Used to provide a heat-resistant surface beneath the Bunsen burner.",
+          },
+        {
+          id: "metal-salt-container",
+
+          name: "Metal Salt Container",
+
+          modelName:
+            "metal-salt-container",
+
+          imagePath:
+            "./metal-salt-container.png",
+
+          description:
+            "Contains the metal salt powders used for flame tests.",
+        },
+        {
+          id: "metal-salt-container",
+
+          name: "Glass Beaker",
+
+          modelName:
+            "metal-salt-container",
+
+          imagePath:
+            "./main-normal-beaker.png",
+
+          description:
+            "Contains the metal salt powders used for flame tests.",
+        },
+      ]}
+      onSelectApparatus={(apparatus) => {
+        console.log(
+          "Selected apparatus:",
+          apparatus.modelName
+        )
+      }}
+    />
+  )
+}
+
+
+
+        {/* {lessonStep === 2 && (
         <SafetyScreen
           safetyData={
             safetyInstructionData
@@ -93,7 +190,7 @@ const FlameTest = ()=>{
             )
           }
         />
-      )}
+      )} */}
 
       {lessonStep >=3 && lessonStep <5 && <SulfamicGuidelines guidelineData={flameTestGuidelineData[0]}/>}
 

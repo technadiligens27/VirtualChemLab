@@ -11,6 +11,7 @@ import HCLTitration2 from "./HCLTitration2.jsx";
 import HessGuidelines from "../../HessGuidelines/HessGuidelines.jsx";
 import HCLTitrationLiveDataPanel from "../../HCLTitrationLiveDataPanel/HCLTitrationLiveDataPanel.jsx";
 import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines.jsx";
+import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview.jsx";
 
 const HCLTitration = ()=>{
 
@@ -18,7 +19,7 @@ const HCLTitration = ()=>{
   const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber,
     showEnthalyResultOne,setShowEnthalyResultOne,setIsVolumetricPipetteFilled} = useContext(InteractionContext)
     
-  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
+  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setShowApparatus,showApparatus} = useContext(MainGuidelineContext);
   const {digitalBalanceRef,kettleRef,chlorobutaneBottleRef,mainDropperRef} = useContext(ModelContext)  
     
 const guidelineData = [
@@ -447,20 +448,174 @@ const guidelineData = [
           />
 
 
-            {lessonStep === 1 && (
+            {lessonStep === 1 && !showApparatus && (
               <EnthalpyLessonOverview
                 reactionData={hclTitrationReactionData[0]}
-                onStartLesson={() => setLessonStep(2)}
+                onStartLesson={() => {setShowApparatus(true)}}
               />
             )}
 
-            {lessonStep === 2 && (
+            {
+              showApparatus && (
+                <ApparatusOverview
+                  title="Apparatus Overview"
+                  onContinue={() => {
+                    setShowApparatus(false)
+                    setLessonStep(3)
+                  }}
+                  apparatusItems={[
+                    {
+                      id: "volumetric-flask",
+
+                      name: "250 cm³ Volumetric Flask",
+
+                      modelName:
+                        "volumetric-flask",
+
+                      imagePath:
+                        "./volumetricFlask.png",
+
+                      description:
+                        "Used to prepare a solution to an exact final volume.",
+                    },
+
+                    {
+                      id: "volumetric-pipette",
+
+                      name: "25 cm³ Volumetric Pipette",
+
+                      modelName:
+                        "volumetric-pipette",
+
+                      imagePath:
+                        "./volumetric-pipette.png",
+
+                      description:
+                        "Used to accurately measure 25.0 cm³ of solution.",
+                    },
+
+
+                    {
+                      id: "conical-flask",
+
+                      name: "250 cm³ Conical Flask",
+
+                      modelName:
+                        "main-conical-beaker",
+
+                      imagePath:
+                        "./conical-flask.png",
+
+                      description:
+                        "Used to hold and swirl the solution during titration.",
+                    },
+
+                    {
+                      id: "burette",
+
+                      name: "Burette",
+
+                      modelName:
+                        "burette",
+
+                      imagePath:
+                        "./burette.png",
+
+                      description:
+                        "Used to accurately deliver measured volumes of solution during titration.",
+                    },
+
+                    {
+                      id: "burette-clamp",
+
+                      name: "Burette Clamp",
+
+                      modelName:
+                        "burette-clamp",
+
+                      imagePath:
+                        "./burette-stand-clamp.png",
+
+                      description:
+                        "Used to hold the burette securely on the stand.",
+                    },
+
+                    {
+                      id: "funnel",
+
+                      name: "Funnel",
+
+                      modelName:
+                        "main-funnel",
+
+                      imagePath:
+                        "./funnel.png",
+
+                      description:
+                        "Used to transfer liquid into the burette without spilling.",
+                    },
+
+                    {
+                      id: "beaker",
+
+                      name: "100 cm³ Beaker",
+
+                      modelName:
+                        "main-normal-beaker",
+
+                      imagePath:
+                        "./main-normal-beaker.png",
+
+                      description:
+                        "Used to hold solutions before they are measured or transferred.",
+                    },
+
+                    {
+                      id: "wash-bottle",
+
+                      name: "Distilled Water Bottle",
+
+                      modelName:
+                        "water-bottle",
+
+                      imagePath:
+                        "./water-bottle.png",
+
+                      description:
+                        "Used to rinse apparatus with distilled water.",
+                    },
+
+                    {
+                      id: "phenolphthalein",
+
+                      name: "Phenolphthalein Indicator",
+
+                      modelName:
+                        "phenolphthalein-bottle",
+
+                      imagePath:
+                        "./phenolphthalein-bottle.png",
+
+                      description:
+                        "Used to indicate the endpoint of the titration by changing colour.",
+                    },
+                  ]}
+                  onSelectApparatus={(apparatus) => {
+                    console.log(
+                      "Selected apparatus:",
+                      apparatus.modelName
+                    )
+                  }}
+                />
+              )
+            }
+            {/* {lessonStep === 2 && (
               <SafetyScreen
                 safetyData={safetyInstructionData}
                 onContinue={() => setLessonStep((previous) => previous + 1)}
                 onBack={() => setLessonStep((previous) => previous - 1)}
               />
-            )}
+            )} */}
 
             {lessonStep >2 && lessonStep <6 && <SulfamicGuidelines guidelineData={guidelineData[0]}/>}
 

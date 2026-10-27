@@ -21,12 +21,13 @@ import {chlorinationGuidelineData,chlorinationReactionData } from "../../Data/ch
 import SulfamicAcidResult from "../../SulfamicAcidResult/SulfamicAcidResult.jsx";
 import ChlorinationLesson02 from "./ChlorinationLesson02.jsx";
 import ChlorinationLiveDataPanel from "./ChlorinationLiveDataPanel/ChlorinationLiveDataPanel.jsx";
+import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview.jsx";
 
 
 const ChlorinationLesson = ()=>{
 
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
-    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow} = useContext(MainGuidelineContext);
+    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setShowApparatus,showApparatus} = useContext(MainGuidelineContext);
     const {graduatedBeakerRef,conicalBeakerRef02,conicalBeakerRef,seperatingFunnelRef,volumetricRef,heatingMantleRef,
       pipetteRef,roundBeakerRef,volumetricPipetteRef,mainBuiretteRef,digitalBalanceRef
     } = useContext(ModelContext)
@@ -85,15 +86,276 @@ const ChlorinationLesson = ()=>{
        <>
 
        {
-         lessonStep===1 && <EnthalpyLessonOverview
+         lessonStep===1 &&!showApparatus  && <EnthalpyLessonOverview
           reactionData={chlorinationReactionData [0]}
           onStartLesson={() => {
-            setLessonStep(2)
+            setShowApparatus(true)
           }}
         />
         }
 
-        {lessonStep === 2 && (
+
+        {
+      showApparatus && (
+    <ApparatusOverview
+      title="Apparatus Overview"
+      onContinue={() => {
+        setShowApparatus(false)
+        setLessonStep(3)
+      }}
+      apparatusItems={[
+        {
+          id: "conical-flask-bung",
+
+          name: "Conical Flask",
+
+          modelName:
+            "main-conical-beaker",
+
+          imagePath:
+            "./conical-flask.png",
+
+          description:
+            "Used to hold the reaction mixture securely.",
+        },
+
+        {
+          id: "separating-funnel",
+
+          name: "Separating Funnel",
+
+          modelName:
+            "separating-funnel",
+
+          imagePath:
+            "./separating-funnel.png",
+
+          description:
+            "Used to separate immiscible liquid layers.",
+        },
+
+        {
+          id: "discard-beaker",
+
+          name: "250 cm³ Beaker",
+
+          modelName:
+            "main-normal-beaker",
+
+          imagePath:
+            "./main-normal-beaker.png",
+
+          description:
+            "Used to collect discarded liquid during separation.",
+        },
+
+        {
+          id: "filter-funnel",
+
+          name: "Filter Funnel",
+
+          modelName:
+            "main-funnel",
+
+          imagePath:
+            "./funnel.png",
+
+          description:
+            "Used to transfer or filter liquids safely.",
+        },
+
+        {
+          id: "measuring-cylinder-100",
+
+          name: "Measuring Cylinder",
+
+          modelName:
+            "measuring-cylinder-100",
+
+          imagePath:
+            "./measuring-cylinder-100.png",
+
+          description:
+            "Used to measure larger volumes of liquid.",
+        },
+
+
+        {
+          id: "round-bottomed-flask",
+
+          name: "50 cm³ Round-Bottomed Flask",
+
+          modelName:
+            "round-bottomed-flask",
+
+          imagePath:
+            "./round-bottomed-flask.png",
+
+          description:
+            "Used to heat the liquid during distillation.",
+        },
+
+        {
+          id: "distillation-head",
+
+          name: "Distillation Head",
+
+          modelName:
+            "distillation-head",
+
+          imagePath:
+            "./distillation-head.png",
+
+          description:
+            "Used to connect the flask, thermometer and condenser.",
+        },
+
+        {
+          id: "condenser",
+
+          name: "Condenser",
+
+          modelName:
+            "condenser",
+
+          imagePath:
+            "./condenser.png",
+
+          description:
+            "Used to cool vapour and condense it into liquid.",
+        },
+
+        {
+          id: "thermometer",
+
+          name: "Thermometer",
+
+          modelName:
+            "main-thermometer",
+
+          imagePath:
+            "./thermometer.png",
+
+          description:
+            "Used to monitor the temperature during distillation.",
+        },
+
+        {
+          id: "retort-stand-clamps",
+
+          name: "Retort Stand and Clamps",
+
+          modelName:
+            "burette-stand-clamps",
+
+          imagePath:
+            "./burette-stand-clamp.png",
+
+          description:
+            "Used to support apparatus securely during distillation.",
+        },
+
+        {
+          id: "heating-mantle",
+
+          name: "Heating Mantle",
+
+          modelName:
+            "heating-mantle",
+
+          imagePath:
+            "./heating-mantle.png",
+
+          description:
+            "Used to heat the round-bottomed flask evenly.",
+        },
+
+        {
+          id: "spatula",
+
+          name: "Spatula",
+
+          modelName:
+            "spatula",
+
+          imagePath:
+            "./spatula.png",
+
+          description:
+            "Used to transfer small amounts of solid chemicals.",
+        },
+
+        {
+          id: "test-tubes",
+
+          name: "Test Tubes",
+
+          modelName:
+            "test-tubes",
+
+          imagePath:
+            "./testube-apparatus.png",
+
+          description:
+            "Used to hold small liquid samples for testing.",
+        },
+
+        {
+          id: "droppers",
+
+          name: "Droppers",
+
+          modelName:
+            "main-dropper",
+
+          imagePath:
+            "./dropper.png",
+
+          description:
+            "Used to add liquids drop by drop.",
+        },
+
+        {
+          id: "graduated-pipette",
+
+          name: "Graduated Pipette",
+
+          modelName:
+            "graduated-pipette",
+
+          imagePath:
+            "./graduated-pipette.png",
+
+          description:
+            "Used to measure and transfer variable liquid volumes.",
+        },
+
+        {
+          id: "warm-water-bath",
+
+          name: "Warm-Water Bath Beaker",
+
+          modelName:
+            "warm-water-bath",
+
+          imagePath:
+            "./water-bath.png",
+
+          description:
+            "Used to gently warm a sample in a water bath.",
+        },
+      ]}
+      onSelectApparatus={(apparatus) => {
+        console.log(
+          "Selected apparatus:",
+          apparatus.modelName
+        )
+      }}
+    />
+  )
+}
+
+        {/* {lessonStep === 2 && (
         <SafetyScreen
           safetyData={
             safetyInstructionData
@@ -111,7 +373,7 @@ const ChlorinationLesson = ()=>{
             )
           }
         />
-      )}
+      )} */}
 
 
 

@@ -18,12 +18,15 @@ import MolarVolumeResults from "../../MolarVolumeResults/MolarVolumeResults";
 import QuestionCard from "../../QuestionCard/QuestionCard";
 import {useResetLesson} from "../../ResetLessonButton/ResetLessonButton.jsx"
 import MolarVolumeSummary from "../../Summary/MolarVolumeSummary/MolarVolumeSummary.jsx";
+import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview.jsx";
 
 
 const MolarVolumeLesson = ()=>{
 
     const {isFillBeakerBoxOpen,setShowQuestionCardNo,showQuestionCardNo} = useContext(InteractionContext)
-    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,showSummary,setShowSummary} = useContext(MainGuidelineContext);
+    const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,showSummary,setShowSummary
+      ,setShowApparatus,showApparatus
+    } = useContext(MainGuidelineContext);
     const {graduatedBeakerRef} = useContext(ModelContext)
 
     const resetLesson = useResetLesson()
@@ -31,15 +34,198 @@ const MolarVolumeLesson = ()=>{
  return(
        <>
        {
-         lessonStep===1 && <EnthalpyLessonOverview
+         lessonStep===1 && !showApparatus && <EnthalpyLessonOverview
           reactionData={molarVolumeReactionData[0]}
           onStartLesson={() => {
-            setLessonStep(2)
+            setShowApparatus(true)
           }}
         />
         }
 
-        {lessonStep === 2 && (
+        {
+          showApparatus && (
+            <ApparatusOverview
+              title="Apparatus Overview"
+              onContinue={() => {
+                setShowApparatus(false)
+                setLessonStep(3)
+              }}
+              apparatusItems={[
+                // {
+                //   id: "safety-goggles",
+
+                //   name: "Safety Goggles",
+
+                //   modelName:
+                //     "goggles",
+
+                //   imagePath:
+                //     "./safety-goggles.png",
+
+                //   description:
+                //     "Used to protect the eyes during the experiment.",
+                // },
+
+                {
+                  id: "boiling-tube",
+
+                  name: "Boiling Tube",
+
+                  modelName:
+                    "boiling-tube",
+
+                  imagePath:
+                    "./boiling-tube.png",
+
+                  description:
+                    "Used to contain ethanoic acid and calcium carbonate during the reaction.",
+                },
+
+                {
+                  id: "retort-stand-clamp",
+
+                  name: "Retort Stand and Clamp",
+
+                  modelName:
+                    "retort-stand-clamp",
+
+                  imagePath:
+                    "./burette-stand-clamp.png",
+
+                  description:
+                    "Used to hold the boiling tube securely upright.",
+                },
+
+                {
+                  id: "bung-delivery-tube",
+
+                  name: "Bung and Delivery Tube",
+
+                  modelName:
+                    "delivery-tube-bung",
+
+                  imagePath:
+                    "./bung-delivery-tube.png",
+
+                  description:
+                    "Used to direct carbon dioxide into the measuring cylinder.",
+                },
+
+                {
+                  id: "water-bath",
+
+                  name: "Water Bath (Glass Beaker)",
+
+                  modelName:
+                    "water-bath",
+
+                  imagePath:
+                    "./water-bath.png",
+
+                  description:
+                    "Used to hold water for collecting carbon dioxide gas.",
+                },
+
+                {
+                  id: "measuring-cylinder-100",
+
+                  name: "100 cm³ Measuring Cylinder",
+
+                  modelName:
+                    "measuring-cylinder-100",
+
+                  imagePath:
+                    "./measuring-cylinder-100.png",
+
+                  description:
+                    "Used to collect and measure the volume of carbon dioxide.",
+                },
+
+                {
+                  id: "measuring-cylinder-50",
+
+                  name: "50 cm³ Measuring Cylinder",
+
+                  modelName:
+                    "measuring-cylinder-50",
+
+                  imagePath:
+                    "./measuring-cylinder-50.png",
+
+                  description:
+                    "Used to measure 30 cm³ of ethanoic acid.",
+                },
+
+                {
+                  id: "test-tube",
+
+                  name: "Test Tube",
+
+                  modelName:
+                    "test-tube",
+
+                  imagePath:
+                    "./testube-apparatus.png",
+
+                  description:
+                    "Used to hold calcium carbonate before it is added to the acid.",
+                },
+
+                {
+                  id: "digital-balance",
+
+                  name: "Digital Mass Balance",
+
+                  modelName:
+                    "digital-balance",
+
+                  imagePath:
+                    "./weighTestube.png",
+
+                  description:
+                    "Used to measure the mass of calcium carbonate transferred.",
+                },
+
+                {
+                  id: "calcium-carbonate-container",
+
+                  name: "Calcium Carbonate Container",
+
+                  modelName:
+                    "calcium-carbonate-container",
+
+                  imagePath:
+                    "./calcium-carbonate-container.png",
+
+                  description:
+                    "Contains powdered calcium carbonate for the reaction.",
+                },
+
+                {
+                  id: "ethanoic-acid-container",
+
+                  name: "Ethanoic Acid Container",
+
+                  modelName:
+                    "ethanoic-acid-container",
+
+                  imagePath:
+                    "./ethanoic-acid-container.png",
+
+                  description:
+                    "Contains ethanoic acid used to produce carbon dioxide.",
+                },
+              ]}
+              onSelectApparatus={(apparatus) => {
+                console.log(
+                  "Selected apparatus:",
+                  apparatus.modelName
+                )
+              }}
+            />
+          )
+        }
+        {/* {lessonStep === 2 && (
         <SafetyScreen
           safetyData={
             safetyInstructionData
@@ -57,7 +243,7 @@ const MolarVolumeLesson = ()=>{
             )
           }
         />
-      )}
+      )} */}
 
       {lessonStep>=3 && lessonStep<4 && (<SulfamicGuidelines guidelineData={molarVolumeGuidelineData[0]}/>)}
 

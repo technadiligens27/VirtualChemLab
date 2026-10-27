@@ -80,174 +80,9 @@ const SulfamicAcidNaOHTitration = () => {
             title="Apparatus Overview"
             onContinue={() => {
               setShowApparatus(false)
-              setLessonStep(2)
+              setLessonStep(3)
             }}
             apparatusItems={[
-              {
-                id: "digital-balance",
-
-                name: "Digital Balance",
-
-                modelName:
-                  "digital-balance",
-
-                imagePath:
-                  "./digital-balance.png",
-
-                description:
-                  "Used to accurately measure the mass of sulfamic acid.",
-              },
-
-              {
-                id: "test-tube",
-
-                name: "Test Tube",
-
-                modelName:
-                  "main-testube-01",
-
-                imagePath:
-                  "./testube-apparatus.png",
-
-                description:
-                  "Used to hold sulfamic acid while it is weighed.",
-              },
-
-              {
-                id: "spatula",
-
-                name: "Spatula",
-
-                modelName:
-                  "main-spoon",
-
-                imagePath:
-                  "./spatula.png",
-
-                description:
-                  "Used to transfer sulfamic acid powder into the test tube.",
-              },
-
-              {
-                id: "sulfamic-acid",
-
-                name: "Sulfamic Acid",
-
-                modelName:
-                  "sulfamic-bottle",
-
-                imagePath:
-                  "./sulfamic-acid.png",
-
-                description:
-                  "Used to prepare a standard acid solution for titration.",
-              },
-
-              {
-                id: "glass-beaker",
-
-                name: "Glass Beaker",
-
-                modelName:
-                  "main-normal-beaker",
-
-                imagePath:
-                  "./main-normal-beaker.png",
-
-                description:
-                  "Used to dissolve sulfamic acid in distilled water.",
-              },
-
-              {
-                id: "water-bottle",
-
-                name: "Distilled Water",
-
-                modelName:
-                  "water-bottle",
-
-                imagePath:
-                  "./water-bottle.png",
-
-                description:
-                  "Used to dissolve the sulfamic acid and make the solution up to the mark.",
-              },
-
-              {
-                id: "volumetric-flask",
-
-                name: "Volumetric Flask",
-
-                modelName:
-                  "volumetric-flask",
-
-                imagePath:
-                  "./volumetric-flask.png",
-
-                description:
-                  "Used to prepare exactly 250 cm³ of standard sulfamic acid solution.",
-              },
-
-              {
-                id: "funnel",
-
-                name: "Funnel",
-
-                modelName:
-                  "main-funnel",
-
-                imagePath:
-                  "./funnel.png",
-
-                description:
-                  "Used to transfer solution into the volumetric flask and burette without spilling.",
-              },
-
-              {
-                id: "volumetric-pipette",
-
-                name: "Volumetric Pipette",
-
-                modelName:
-                  "volumetric-pipette",
-
-                imagePath:
-                  "./volumetric-pipette.png",
-
-                description:
-                  "Used to measure exactly 25.0 cm³ of sodium hydroxide.",
-              },
-
-              {
-                id: "conical-flask",
-
-                name: "Conical Flask",
-
-                modelName:
-                  "main-conical-beaker",
-
-                imagePath:
-                  "./conical-flask.png",
-
-                description:
-                  "Used to hold sodium hydroxide during the titration.",
-              },
-
-              {
-                id: "methyl-orange",
-
-                name: "Methyl Orange",
-
-                modelName:
-                  "methyl-orange-bottle",
-
-                imagePath:
-                  "./methyl-orange.png",
-
-                description:
-                  "Used as the indicator to show the titration endpoint.",
-              },
-
               {
                 id: "burette",
 
@@ -260,7 +95,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "./burette.png",
 
                 description:
-                  "Used to accurately deliver sulfamic acid during titration.",
+                  "Used to accurately deliver measured volumes of solution during titration.",
               },
 
               {
@@ -275,7 +110,160 @@ const SulfamicAcidNaOHTitration = () => {
                   "./burette-stand-clamp.png",
 
                 description:
-                  "Used to hold the burette upright and securely during titration.",
+                  "Used to hold the burette securely in a vertical position.",
+              },
+
+              {
+                id: "conical-flask",
+
+                name: "250 cm³ Conical Flask",
+
+                modelName:
+                  "main-conical-beaker",
+
+                imagePath:
+                  "./conical-flask.png",
+
+                description:
+                  "Used to hold and swirl the solution during titration.",
+              },
+
+              {
+                id: "volumetric-pipette",
+
+                name: "25 cm³ Volumetric Pipette",
+
+                modelName:
+                  "volumetric-pipette",
+
+                imagePath:
+                  "./volumetric-pipette.png",
+
+                description:
+                  "Used to accurately measure 25.0 cm³ of solution.",
+              },
+
+
+
+              {
+                id: "beaker",
+
+                name: "250 cm³ Beaker",
+
+                modelName:
+                  "main-normal-beaker",
+
+                imagePath:
+                  "./main-normal-beaker.png",
+
+                description:
+                  "Used to dissolve and hold solutions before transfer.",
+              },
+
+              {
+                id: "volumetric-flask",
+
+                name: "250 cm³ Volumetric Flask",
+
+                modelName:
+                  "volumetric-flask",
+
+                imagePath:
+                  "./volumetricFlask.png",
+
+                description:
+                  "Used to prepare a solution to an exact final volume.",
+              },
+
+              {
+                id: "funnel",
+
+                name: "Funnel",
+
+                modelName:
+                  "main-funnel",
+
+                imagePath:
+                  "./funnel.png",
+
+                description:
+                  "Used to transfer solution without spilling.",
+              },
+
+              {
+                id: "test-tube",
+
+                name: "Test Tube",
+
+                modelName:
+                  "test-tube",
+
+                imagePath:
+                  "./testube-apparatus.png",
+
+                description:
+                  "Used to hold sulfamic acid while it is weighed.",
+              },
+
+              {
+                id: "mass-balance",
+
+                name: "Mass Balance",
+
+                modelName:
+                  "mass-balance",
+
+                imagePath:
+                  "./weighTestube.png",
+
+                description:
+                  "Used to accurately measure the mass of sulfamic acid.",
+              },
+
+              {
+                id: "spatula",
+
+                name: "Spatula",
+
+                modelName:
+                  "spatula",
+
+                imagePath:
+                  "./spatula.png",
+
+                description:
+                  "Used to transfer sulfamic acid powder into the test tube.",
+              },
+
+
+              {
+                id: "wash-bottle",
+
+                name: "Distilled Water Bottle",
+
+                modelName:
+                  "water-bottle",
+
+                imagePath:
+                  "./water-bottle.png",
+
+                description:
+                  "Used to rinse apparatus and make the solution up to the mark.",
+              },
+
+              {
+                id: "methyl-orange",
+
+                name: "Methyl Orange Dropper",
+
+                modelName:
+                  "methyl-orange-bottle",
+
+                imagePath:
+                  "./methyl-orange-bottle.png",
+
+                description:
+                  "Used to add methyl orange indicator to the conical flask.",
               },
             ]}
             onSelectApparatus={(apparatus) => {

@@ -59,10 +59,6 @@ const ApparatusOverview = ({
     apparatusPerPage -
     visibleApparatus.length
 
-  // =========================================================
-  // SLIDE IN FROM LEFT WHEN MOUNTED
-  // =========================================================
-
   useLayoutEffect(() => {
     const overview =
       overviewRef.current
@@ -241,41 +237,43 @@ const ApparatusOverview = ({
           </div>
 
           {page > 0 && (
-            <button
-              type="button"
+            <div
               className="
-                apparatus-arrow-button
+                arrow-left
                 apparatus-arrow-left
               "
               onClick={() =>
                 changePage(page - 1)
               }
+              role="button"
+              tabIndex={0}
               aria-label="Previous apparatus"
             >
               <img
                 src="./left-arrow.png"
                 alt=""
               />
-            </button>
+            </div>
           )}
 
           {page < totalPages - 1 && (
-            <button
-              type="button"
+            <div
               className="
-                apparatus-arrow-button
+                arrow-right
                 apparatus-arrow-right
               "
               onClick={() =>
                 changePage(page + 1)
               }
+              role="button"
+              tabIndex={0}
               aria-label="Next apparatus"
             >
               <img
                 src="./right-arrow.png"
                 alt=""
               />
-            </button>
+            </div>
           )}
         </div>
 
@@ -300,7 +298,6 @@ const ApparatusOverview = ({
             }}
           >
             Continue
-
           </button>
         </div>
       </section>
