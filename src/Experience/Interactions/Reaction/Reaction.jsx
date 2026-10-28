@@ -595,7 +595,7 @@ const Reaction = ({ hand }) => {
       conicalFillProgressRef.current >= 1 &&
       !finishLoggedRef.current
     ) {
-      setShowErrorMsgNo(10)
+      setShowErrorMsgNo(1)
       finishLoggedRef.current = true
 
       return true
@@ -640,7 +640,7 @@ const Reaction = ({ hand }) => {
       liquidMesh.scale.y >= maxScaleY &&
       !finishLoggedRef.current
     ) {
-      setShowErrorMsgNo(10)
+      setShowErrorMsgNo(1)
       finishLoggedRef.current = true
 
       return true
@@ -712,7 +712,7 @@ const Reaction = ({ hand }) => {
       resetReactions()
       clearReactionRefs()
 
-      setShowErrorMsgNo(8)
+      setShowErrorMsgNo(1)
 
       return
     }

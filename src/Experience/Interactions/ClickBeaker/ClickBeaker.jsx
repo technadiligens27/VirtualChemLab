@@ -2366,50 +2366,50 @@ const clickableObjects = selectableObjects
 
     if([14,14.1,14.3,14.4].includes(selectedLesson)){
       if(![3,26,34,44,62,85,94,110,115,127,133,141,147].includes(lessonStep)){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false 
       }  
       
       if([34].includes(lessonStep) && selectedObject.name !=="separating-funnel"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }    
 
 
       if([133].includes(lessonStep) && selectedObject.name !=="graduated-pipette"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }
 
       if([3,44,62].includes(lessonStep) && selectedObject.name !=="main-graduated-cylinder"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }
       if([26].includes(lessonStep) && selectedObject.name !=="main-spoon"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }       
       if([110].includes(lessonStep) && selectedObject.name !=="main-testube-01"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       } 
      
       if([115].includes(lessonStep) && selectedObject.name !=="main-dropper"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }
       if([127].includes(lessonStep) && selectedObject.name !=="main-graduated-cylinder"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }  
 
       if([141].includes(lessonStep) && selectedObject.name !=="main-normal-beaker"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       }  
 
       if([147].includes(lessonStep) && selectedObject.name !=="main-dropper"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false         
       } 
 
@@ -2423,15 +2423,15 @@ const clickableObjects = selectableObjects
         return false     
       }  
       if(lessonStep==3.1 && selectedObject.name !=="main-graduated-cylinder"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false 
       }
       if(lessonStep==5 && selectedObject.name !=="main-normal-beaker"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false 
       }
       if(lessonStep==16 && selectedObject.name !=="main-spoon"){
-        setShowErrorMsgNo(12)
+        setShowErrorMsgNo(1)
         return false 
       }
 
@@ -2965,7 +2965,7 @@ const toggleFunnelMode = () => {
     }
 
   if ( isTutorialMode && selectedLesson === 1 && lessonStep === 7) {
-    setShowErrorMsgNo(4)
+    setShowErrorMsgNo(1)
     setSelectedObject(null)
     return
   }
@@ -2993,7 +2993,7 @@ const toggleFunnelMode = () => {
 
       if (isLitmusMode) {
         if (lessonStep === 8) {
-          setShowErrorMsgNo(4)
+          setShowErrorMsgNo(1)
           return
         }
 
@@ -3086,7 +3086,7 @@ const toggleFunnelMode = () => {
 
 
     if (!isAllowedStep || !isAllowedObject) {
-      setShowErrorMsgNo(4)
+      setShowErrorMsgNo(1)
       setSelectedObject(null)
       return
     }
@@ -3328,7 +3328,7 @@ const handleClampBurette = () => {
       return
     }
 
-    setShowErrorMsgNo(4)
+    setShowErrorMsgNo(1)
     setSelectedObject(null)
   }
 
@@ -3459,7 +3459,7 @@ const addSaltToSpoon = () => {
     selectedLeftHand?.name !== "main-spoon" && selectedRightHand?.name !== "main-spoon"){
       console.log("selectedLeftHand:", selectedLeftHand)
       console.log("selectedRightHand:", selectedRightHand)
-      setShowErrorMsgNo(13)
+      setShowErrorMsgNo(1)
       return
   }  
   setIsAddSalt(true)
@@ -3488,7 +3488,7 @@ const handlePlacePolysterene = () => {
   }
   
 
-  setShowErrorMsgNo(4)
+  setShowErrorMsgNo(1)
   setSelectedObject(null)
 }
 
@@ -3507,7 +3507,7 @@ const handlePlacePolysterene = () => {
       return
     }
 
-    setShowErrorMsgNo(12)
+    setShowErrorMsgNo(1)
     setSelectedObject(null)
   }
 
@@ -3523,7 +3523,7 @@ const handlePlacePolysterene = () => {
       lessonStep !== 14 &&
       lessonStep !== 10
     ) {
-      setShowErrorMsgNo(12)
+      setShowErrorMsgNo(1)
       setSelectedObject(null)
       return
     }

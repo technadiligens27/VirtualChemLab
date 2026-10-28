@@ -417,7 +417,7 @@ const PouringLiquid = ({
       if (
         !noLiquidLoggedRef.current
       ) {
-        setShowErrorMsgNo(9)
+        setShowErrorMsgNo(1)
 
         noLiquidLoggedRef.current =
           true

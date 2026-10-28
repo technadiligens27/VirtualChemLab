@@ -628,28 +628,108 @@ useEffect(() => {
   if (hasSavedModelsRef.current) return
 
   const labModels = [
+    chairRef,
+
+    gogglesRef,
+    gloveleftRef,
+    gloverightRef,
+
     normalBeakerRef,
     conicalBeakerRef,
+    conicalBeakerRef02,
     roundBeakerRef,
     graduatedBeakerRef,
+
+    normalBeakerLiquidRef,
+    conicalBeakerLiquidRef,
+    thermometerLiquidRef,
+    BuretteLiquidRef,
+    naohLiquidRef,
+
     spoonRef,
     saltRef,
+    saltContainerRef,
+
     redLitmusRef,
     blueLitmusRef,
+
     testube01Ref,
     testube02Ref,
     testube03Ref,
+    testube04Ref,
+    testube05Ref,
+    testube06Ref,
+
+    testube01CapRef,
+    testube03CapRef,
+
     filterPaperRef,
     filterFoldedPaperRef,
     funnelRef,
+
     mainDropperRef,
+
     mainPolystereneRef,
-    digitalBalanceRef,
-    mainBuiretteRef,
-    thermometerLiquidRef,
+    mainPolysterene2Ref,
     mainPolystereneLid,
+
+    pottasiumCarbonateContainerRef,
+    potassiumHydrogenCarbonateRef,
+
+    digitalBalanceRef,
+
+    mainBuiretteRef,
+    buretteClampRef,
     mainThermometerRef,
-    graduatedCylinder100Ref
+
+    kettleRef,
+    pipetteRef,
+
+    iodobutaneBottleRef,
+    bromobutaneBottleRef,
+    chlorobutaneBottleRef,
+
+    volumetricRef,
+    volumetricPipetteRef,
+    volumetricBung,
+
+    phenopthalineBottleRef,
+    sulfamicBottleRef,
+    methylBottleRef,
+    naohBottleRef,
+    waterBottleRef,
+
+    boilingTube01Ref,
+    graduatedCylinder100Ref,
+    deliveryTubeBungRef,
+    conicalBungRef,
+
+    seperatingFunnelRef,
+    separatingFunnelBungRef,
+
+    heatingMantleRef,
+    clampHandleRef,
+    distillationHeadRef,
+    condensorRef,
+    heatingMantleSurfaceRef,
+    heatingMatRef,
+
+    waterInTubeRef,
+    waterOutTubeRef,
+
+    graduatedPipetteRef,
+
+    bunsenBurnerRef,
+    gasTubeRef,
+    airHoleRef,
+
+    nichromeWireRef,
+    nichromeWirePowderRef,
+
+    powderContainer,
+    metalSaltRef,
+
+    normalPrecipitateRef,
   ]
 
   labModels.forEach((modelRef) => {

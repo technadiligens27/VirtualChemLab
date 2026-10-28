@@ -8,25 +8,31 @@ const MolarReactionCylinder = ({
   // ==========================================
   // LIQUID
   // ==========================================
-  liquidOffsetY = 0.6,
-  liquidScaleDecrease = 0.12,
-  startDelay = 3000,
-  decreaseSpeed = 0.5,
+  liquidOffsetY = 1.2,
+  liquidScaleDecrease = 0.32,
+  startDelay = 4000,
+  decreaseSpeed = 0.2,
 
   // ==========================================
   // GAS BUBBLES
   // ==========================================
   bubbleRiseHeight = 3.5,
-  bubbleRiseSpeed = 0.3,
+  bubbleRiseSpeed = 0.2,
   bubbleRandomness = 2500,
+
   bubbleLoop = false,
-  bubbleLoopDelay =4000,
+  bubbleLoopDelay = 5000,
+
+  // Total times each bubble rises.
+  loopTimes = 3,
 }) => {
   useEffect(() => {
     const model =
       modelRef?.current
 
-    if (!model) return
+    if (!model) {
+      return
+    }
 
     let liquidChild = null
 
@@ -40,132 +46,105 @@ const MolarReactionCylinder = ({
       const childName =
         child.name?.toLowerCase() || ""
 
-      // ------------------------------------------
-      // LIQUID
-      // ------------------------------------------
-
       if (
         childName.includes("liquid")
       ) {
         liquidChild = child
       }
 
-      // ------------------------------------------
-      // BUBBLES
-      // ------------------------------------------
-
       if (
         childName.includes("bubble")
       ) {
-        child.visible = true
-
-        child.traverse(
-          (bubbleChild) => {
-            bubbleChild.visible =
-              true
-          }
-        )
-
-        bubbleChildren.push(
-          child
-        )
+        bubbleChildren.push(child)
       }
     })
 
     // ==========================================
-    // SAVE ORIGINAL BUBBLE POSITIONS + MATERIALS
+    // SAVE BUBBLE STATES + CLONE MATERIALS
     // ==========================================
 
     const bubbleOriginalStates =
-      bubbleChildren.map(
-        (bubble) => {
-          const materialStates = []
+      bubbleChildren.map((bubble) => {
+        const materialStates = []
 
-          bubble.traverse(
-            (bubbleChild) => {
-              if (
-                !bubbleChild.material
-              ) {
-                return
-              }
+        bubble.traverse((bubbleChild) => {
+          if (!bubbleChild.material) {
+            return
+          }
 
-              if (
-                Array.isArray(
-                  bubbleChild.material
-                )
-              ) {
-                bubbleChild.material =
-                  bubbleChild.material.map(
-                    (
-                      material
-                    ) => {
-                      const clonedMaterial =
-                        material.clone()
+          if (
+            Array.isArray(
+              bubbleChild.material
+            )
+          ) {
+            bubbleChild.material =
+              bubbleChild.material.map(
+                (material) => {
+                  const clonedMaterial =
+                    material.clone()
 
-                      clonedMaterial.transparent =
-                        true
+                  clonedMaterial.transparent =
+                    true
 
-                      clonedMaterial.opacity =
-                        material.opacity ?? 1
+                  clonedMaterial.opacity =
+                    material.opacity ?? 1
 
-                      materialStates.push(
-                        {
-                          material:
-                            clonedMaterial,
-
-                          originalOpacity:
-                            material.opacity ??
-                            1,
-                        }
-                      )
-
-                      return clonedMaterial
-                    }
-                  )
-              } else {
-                const originalMaterial =
-                  bubbleChild.material
-
-                const clonedMaterial =
-                  originalMaterial.clone()
-
-                clonedMaterial.transparent =
-                  true
-
-                clonedMaterial.opacity =
-                  originalMaterial.opacity ??
-                  1
-
-                bubbleChild.material =
-                  clonedMaterial
-
-                materialStates.push(
-                  {
-                    material:
-                      clonedMaterial,
+                  materialStates.push({
+                    material: clonedMaterial,
 
                     originalOpacity:
-                      originalMaterial.opacity ??
-                      1,
-                  }
-                )
-              }
-            }
-          )
+                      material.opacity ?? 1,
+                  })
 
-          return {
-            bubble,
-            originalY:
-              bubble.position.y,
-            materialStates,
+                  return clonedMaterial
+                }
+              )
+          } else {
+            const originalMaterial =
+              bubbleChild.material
+
+            const clonedMaterial =
+              originalMaterial.clone()
+
+            clonedMaterial.transparent =
+              true
+
+            clonedMaterial.opacity =
+              originalMaterial.opacity ?? 1
+
+            bubbleChild.material =
+              clonedMaterial
+
+            materialStates.push({
+              material: clonedMaterial,
+
+              originalOpacity:
+                originalMaterial.opacity ?? 1,
+            })
           }
+        })
+
+        // Hide bubbles immediately.
+        // They only become visible after
+        // their individual delay is complete.
+        bubble.visible = false
+
+        bubble.traverse((bubbleChild) => {
+          bubbleChild.visible = false
+        })
+
+        return {
+          bubble,
+
+          originalY:
+            bubble.position.y,
+
+          materialStates,
         }
-      )
+      })
 
     const bubbleTimeouts = []
-
-    const bubbleAnimationFrames =
-      []
+    const bubbleAnimationFrames = []
 
     // ==========================================
     // LIQUID ANIMATION
@@ -207,9 +186,7 @@ const MolarReactionCylinder = ({
           const animateLiquid = (
             time
           ) => {
-            if (
-              lastTime === null
-            ) {
+            if (lastTime === null) {
               lastTime = time
             }
 
@@ -219,10 +196,6 @@ const MolarReactionCylinder = ({
 
             lastTime = time
 
-            // ======================================
-            // REDUCE LIQUID SCALE Y
-            // ======================================
-
             if (
               liquidChild.scale.y >
               targetScaleY
@@ -231,14 +204,9 @@ const MolarReactionCylinder = ({
                 Math.max(
                   targetScaleY,
                   liquidChild.scale.y -
-                    decreaseSpeed *
-                      delta
+                    decreaseSpeed * delta
                 )
             }
-
-            // ======================================
-            // MOVE LIQUID ON Y
-            // ======================================
 
             const positionDifference =
               targetPositionY -
@@ -277,10 +245,6 @@ const MolarReactionCylinder = ({
                   targetPositionY
               }
             }
-
-            // ======================================
-            // CHECK COMPLETION
-            // ======================================
 
             const scaleComplete =
               liquidChild.scale.y <=
@@ -334,147 +298,177 @@ const MolarReactionCylinder = ({
         const staggerDelay =
           index * 50
 
-        const bubbleTimeout =
-          setTimeout(() => {
-            let lastTime = null
+        let completedLoops = 0
+        let lastBubbleTime = null
 
-            const animateBubble = (
-              time
-            ) => {
-              if (
-                lastTime === null
-              ) {
-                lastTime = time
-              }
+        // ----------------------------------------
+        // HIDE BUBBLE
+        // ----------------------------------------
 
-              const delta =
-                (time - lastTime) /
-                1000
+        const hideBubble = () => {
+          bubble.visible = false
 
-              lastTime = time
-
-              // ==================================
-              // MOVE BUBBLE UP
-              // ==================================
-
-              bubble.position.y -=
-                bubbleRiseSpeed *
-                delta
-
-              // ==================================
-              // CALCULATE PROGRESS
-              // ==================================
-
-              const travelledDistance =
-                originalY -
-                bubble.position.y
-
-              const progress =
-                Math.min(
-                  1,
-                  Math.max(
-                    0,
-                    travelledDistance /
-                      bubbleRiseHeight
-                  )
-                )
-
-              // ==================================
-              // FADE OUT AS IT RISES
-              // ==================================
-
-              const opacity =
-                1 - progress
-
-              materialStates.forEach(
-                ({
-                  material,
-                }) => {
-                  material.opacity =
-                    opacity
-                }
-              )
-
-              // ==================================
-              // REACHED TOP
-              // ==================================
-
-              if (
-                bubble.position.y <=
-                targetY
-              ) {
-                bubble.position.y =
-                  targetY
-
-                materialStates.forEach(
-                  ({
-                    material,
-                  }) => {
-                    material.opacity =
-                      0
-                  }
-                )
-
-                // ------------------------------
-                // LOOP
-                // ------------------------------
-
-                if (bubbleLoop) {
-                  const restartTimeout =
-                    setTimeout(() => {
-                      bubble.position.y =
-                        originalY
-
-                      materialStates.forEach(
-                        ({
-                          material,
-                          originalOpacity,
-                        }) => {
-                          material.opacity =
-                            originalOpacity
-                        }
-                      )
-
-                      lastTime = null
-
-                      const restartFrame =
-                        requestAnimationFrame(
-                          animateBubble
-                        )
-
-                      bubbleAnimationFrames.push(
-                        restartFrame
-                      )
-                    },
-                    bubbleLoopDelay
-                  )
-
-                  bubbleTimeouts.push(
-                    restartTimeout
-                  )
-                }
-
-                return
-              }
-
-              const frame =
-                requestAnimationFrame(
-                  animateBubble
-                )
-
-              bubbleAnimationFrames.push(
-                frame
-              )
+          bubble.traverse(
+            (bubbleChild) => {
+              bubbleChild.visible = false
             }
+          )
+
+          materialStates.forEach(
+            ({
+              material,
+            }) => {
+              material.opacity = 0
+            }
+          )
+        }
+
+        // ----------------------------------------
+        // RESET + SHOW BUBBLE
+        // Called only when its delay finishes.
+        // ----------------------------------------
+
+        const showBubble = () => {
+          bubble.position.y = originalY
+
+          bubble.visible = true
+
+          bubble.traverse(
+            (bubbleChild) => {
+              bubbleChild.visible = true
+            }
+          )
+
+          materialStates.forEach(
+            ({
+              material,
+              originalOpacity,
+            }) => {
+              material.opacity =
+                originalOpacity
+            }
+          )
+        }
+
+        // ----------------------------------------
+        // ANIMATE ONE RISE
+        // ----------------------------------------
+
+        const animateBubble = (
+          time
+        ) => {
+          if (
+            lastBubbleTime === null
+          ) {
+            lastBubbleTime = time
+          }
+
+          const delta =
+            (time - lastBubbleTime) /
+            1000
+
+          lastBubbleTime = time
+
+          bubble.position.y -=
+            bubbleRiseSpeed * delta
+
+          const travelledDistance =
+            originalY -
+            bubble.position.y
+
+          const progress =
+            Math.min(
+              1,
+              Math.max(
+                0,
+                travelledDistance /
+                  bubbleRiseHeight
+              )
+            )
+
+          const opacity =
+            1 - progress
+
+          materialStates.forEach(
+            ({
+              material,
+            }) => {
+              material.opacity = opacity
+            }
+          )
+
+          // --------------------------------------
+          // BUBBLE REACHED TOP
+          // --------------------------------------
+
+          if (
+            bubble.position.y <=
+            targetY
+          ) {
+            bubble.position.y = targetY
+
+            completedLoops += 1
+
+            hideBubble()
+
+            // Stop after requested loop count.
+            if (
+              !bubbleLoop ||
+              completedLoops >= loopTimes
+            ) {
+              return
+            }
+
+            // Wait while hidden before
+            // showing the next loop.
+            const restartTimeout =
+              setTimeout(() => {
+                showBubble()
+
+                lastBubbleTime = null
+
+                const restartFrame =
+                  requestAnimationFrame(
+                    animateBubble
+                  )
+
+                bubbleAnimationFrames.push(
+                  restartFrame
+                )
+              }, bubbleLoopDelay)
+
+            bubbleTimeouts.push(
+              restartTimeout
+            )
+
+            return
+          }
+
+          const frame =
+            requestAnimationFrame(
+              animateBubble
+            )
+
+          bubbleAnimationFrames.push(frame)
+        }
+
+        // ----------------------------------------
+        // INITIAL DELAY
+        // Bubble stays invisible here.
+        // ----------------------------------------
+
+        const initialTimeout =
+          setTimeout(() => {
+            showBubble()
+
+            lastBubbleTime = null
 
             const frame =
               requestAnimationFrame(
                 animateBubble
               )
 
-            bubbleAnimationFrames.push(
-              frame
-            )
+            bubbleAnimationFrames.push(frame)
           },
           startDelay +
             randomDelay +
@@ -482,7 +476,7 @@ const MolarReactionCylinder = ({
         )
 
         bubbleTimeouts.push(
-          bubbleTimeout
+          initialTimeout
         )
       }
     )
@@ -493,14 +487,10 @@ const MolarReactionCylinder = ({
 
     return () => {
       if (liquidTimeout) {
-        clearTimeout(
-          liquidTimeout
-        )
+        clearTimeout(liquidTimeout)
       }
 
-      if (
-        liquidAnimationFrame
-      ) {
+      if (liquidAnimationFrame) {
         cancelAnimationFrame(
           liquidAnimationFrame
         )
@@ -508,8 +498,7 @@ const MolarReactionCylinder = ({
 
       if (
         liquidChild &&
-        originalLiquidScaleY !==
-          null
+        originalLiquidScaleY !== null
       ) {
         liquidChild.scale.y =
           originalLiquidScaleY
@@ -517,8 +506,7 @@ const MolarReactionCylinder = ({
 
       if (
         liquidChild &&
-        originalLiquidPositionY !==
-          null
+        originalLiquidPositionY !== null
       ) {
         liquidChild.position.y =
           originalLiquidPositionY
@@ -532,9 +520,7 @@ const MolarReactionCylinder = ({
 
       bubbleAnimationFrames.forEach(
         (frame) => {
-          cancelAnimationFrame(
-            frame
-          )
+          cancelAnimationFrame(frame)
         }
       )
 
@@ -544,10 +530,15 @@ const MolarReactionCylinder = ({
           originalY,
           materialStates,
         }) => {
-          bubble.position.y =
-            originalY
+          bubble.position.y = originalY
 
           bubble.visible = false
+
+          bubble.traverse(
+            (bubbleChild) => {
+              bubbleChild.visible = false
+            }
+          )
 
           materialStates.forEach(
             ({
@@ -556,13 +547,6 @@ const MolarReactionCylinder = ({
             }) => {
               material.opacity =
                 originalOpacity
-            }
-          )
-
-          bubble.traverse(
-            (bubbleChild) => {
-              bubbleChild.visible =
-                false
             }
           )
         }
@@ -581,6 +565,7 @@ const MolarReactionCylinder = ({
     bubbleRandomness,
     bubbleLoop,
     bubbleLoopDelay,
+    loopTimes,
   ])
 
   return null

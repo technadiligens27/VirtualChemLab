@@ -91,7 +91,7 @@ useEffect(() => {
   checkedLiquidOnStartRef.current = true
 
   if (!canUseLitmusTest()) {
-    setShowErrorMsgNo(11)
+    setShowErrorMsgNo(1)
     setColorChangeAcid(false)
     setColorChangeBase(false)
   }
@@ -146,7 +146,7 @@ useEffect(() => {
       e.stopPropagation()
 
       if (!canUseLitmusTest()) {
-        setShowErrorMsgNo(11)
+        setShowErrorMsgNo(1)
         setColorChangeAcid(false)
         setColorChangeBase(false)
         return
