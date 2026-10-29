@@ -174,24 +174,24 @@ const ChlorinationLesson05 = ()=>{
     separatingFunnel.updateMatrixWorld(true)
   }, [selectedLesson,lessonStep,seperatingFunnelRef,seperatingFunnelOriginalStateRef])
 
-  useEffect(() => {
-  if (
-    selectedLesson === 14.4 &&
-    lessonStep === 144
-  ) {
-    const timer = setTimeout(() => {
-      setLessonStep(145)
-    }, 3000)
+//   useEffect(() => {
+//   if (
+//     selectedLesson === 14.4 &&
+//     lessonStep === 144
+//   ) {
+//     const timer = setTimeout(() => {
+//       setLessonStep(145)
+//     }, 3000)
 
-    return () => {
-      clearTimeout(timer)
-    }
-  }
-}, [
-  selectedLesson,
-  lessonStep,
-  setLessonStep,
-])
+//     return () => {
+//       clearTimeout(timer)
+//     }
+//   }
+// }, [
+//   selectedLesson,
+//   lessonStep,
+//   setLessonStep,
+// ])
 
 
     return(

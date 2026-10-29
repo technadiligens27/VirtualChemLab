@@ -339,6 +339,14 @@ const PhenopthalinePourDroplets = ({
         setLessonStep(80)
       }
 
+      if (
+        selectedLesson === 12.2 &&
+        lessonStep === 100.3
+      ) {
+        setLessonStep(100.4)
+      }
+
+
       setPourDroplets(false)
     }
   })

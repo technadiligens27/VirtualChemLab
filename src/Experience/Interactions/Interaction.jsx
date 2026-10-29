@@ -81,6 +81,7 @@ import PlaceModelNearModel from "./PlaceModelNearModel/PlaceModelNearModel";
 import PowderBox from "../../UI/PowderBox/PowderBox";
 import ShowPowderInEmptyContainer from "./showPowderInEmptyContainer/showPowderInEmptyContainer";
 import OpenAirHole from "./OpenAirHole/OpenAirHole";
+import ReactionTimer from "../../UI/ReactionTimer/ReactionTimer";
 
 const Interaction = () => {
   const {
@@ -688,6 +689,7 @@ useEffect(() => {
       {[15,15.2].includes(Number(selectedLesson)) && [19,20,32].includes(lessonStep) && <MoveModelByScrolling modelRef={nichromeWireRef} distance={3.5} speed={0.5}/>}
 
       {showPowderInContainer && <ShowPowderInEmptyContainer/>}
+
 
       {/* {selectedLesson==15 && lessonStep===18.1 && <OpenAirHole/>} */}
 

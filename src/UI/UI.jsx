@@ -419,7 +419,8 @@ const UI = () => {
     setShowMethylArrow(
       (selectedLesson===12.2 && lessonStep==77) ||
       (selectedLesson===11.1 && lessonStep===45) ||
-      (selectedLesson == 11.1 && lessonStep==58)
+      (selectedLesson == 11.1 && lessonStep==58) ||
+      (selectedLesson==12.2 && lessonStep==100.1)
     )
   },[selectedLesson,lessonStep])
 
@@ -792,6 +793,9 @@ useEffect(() => {
         )
        }
         <AllExplanations/>
+
+              {selectedLesson==14.4 && [144].includes(lessonStep) && <ReactionTimer right={'30%'} isRunning={true} onSkip={()=>{setLessonStep(145)}}/>}
+
 
         {/* <ApparatusOverview
           title="Apparatus Overview"

@@ -833,6 +833,7 @@ const ClickObject = () => {
         88,
         95,
         100,
+        100.5
       ].includes(lessonStep)
     ) {
       setShowErrorMsgNo(1)
@@ -911,12 +912,7 @@ const ClickObject = () => {
   }
 
   if (selectedLesson === 13) {
-    if (
-      ![
-        3.7,
-        21,
-      ].includes(lessonStep)
-    ) {
+    if (![3.7,21].includes(lessonStep)) {
       setShowErrorMsgNo(1)
       return
     }
@@ -1137,6 +1133,7 @@ const ClickObject = () => {
       88: "main-Conical-Flask",
       95: "NaOH-bottle",
       100: "volumetric-pipette",
+      100.5 :  "methyl-dropper-bottle"
     },
 
     // =========================
@@ -1422,6 +1419,14 @@ const ClickObject = () => {
     setLessonStep(10)
   }
 
+  if (
+    selectedLesson === 12.2&&
+    lessonStep === 100.5 &&
+    handData.name === "methyl-dropper-bottle"
+  ) {
+    setLessonStep(101)
+  }
+
   // =====================================================
   // SPECIAL HAND CONDITION
   // =====================================================
@@ -1480,7 +1485,7 @@ const ClickObject = () => {
     selectedLesson === 12.2 &&
     lessonStep === 100
   ) {
-    setLessonStep(101)
+    setLessonStep(100.1)
   }
 
   if (
@@ -2542,7 +2547,7 @@ const clickableObjects = selectableObjects
     }
 
     if([12,12.1,12.2].includes(selectedLesson)){
-      if(![3,15,52,66,77,90].includes(lessonStep)){
+      if(![3,15,52,66,77,90,100.1].includes(lessonStep)){
         setShowErrorMsgNo(1)
         return
       }
@@ -2560,11 +2565,14 @@ const clickableObjects = selectableObjects
         setShowErrorMsgNo(1)
         return
       }
-      if([77].includes(lessonStep) && objectName !=="methyl-dropper-bottle"){
+      if([77].includes(lessonStep) && objectName !== "methyl-dropper-bottle"){
         setShowErrorMsgNo(1)
         return
       }       
-      
+      if([100.1].includes(lessonStep) && objectName !== "methyl-dropper-bottle"){
+        setShowErrorMsgNo(1)
+        return
+      }         
 
     }
 
@@ -4919,7 +4927,8 @@ const disposeCup = () => {
       const isValid =
         (selectedLesson === 11.1 && lessonStep === 48) ||
         (selectedLesson === 11.1 && lessonStep === 61) ||
-        (selectedLesson === 12.2 && lessonStep === 80)
+        (selectedLesson === 12.2 && lessonStep === 80) ||
+        (selectedLesson ==12.2 && lessonStep ==100.4)
 
       if (!isValid) {
         setShowErrorMsgNo(1)
@@ -4949,12 +4958,20 @@ const disposeCup = () => {
         setLessonStep(81)
       }
 
+      if (
+        selectedLesson === 12.2 &&
+        lessonStep === 100.4
+      ) {
+        setLessonStep(100.5)
+      }
+
+
       setSelectedObject(null)
     }
 
   const handlePhenopthalinePourMode = ()=>{
 
-    if(selectedLesson==12.2 && ![78,80].includes(lessonStep)){
+    if(selectedLesson==12.2 && ![78,80,100.2].includes(lessonStep)){
       setShowErrorMsgNo(1)
       return
     }

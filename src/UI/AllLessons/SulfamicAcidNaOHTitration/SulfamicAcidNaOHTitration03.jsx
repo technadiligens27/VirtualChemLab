@@ -863,6 +863,70 @@ const SulfamicAcidNaOHTitration03 = () => {
         />
       )}
 
+      {
+        lessonStep ===100.1 && 
+         (<DialogBox
+          text={
+            <>
+              Click the <strong>Methyl Orange Bottle</strong>, then select{" "}
+              <strong>Left Hand</strong>.
+            </>
+          }
+        />)
+      }
+
+      {
+        lessonStep ===100.2 && 
+         (<DialogBox
+          text={
+            <>
+              Click the <strong>Dropper</strong>, then select{" "}
+              <strong>Pour Mode</strong>.
+            </>
+          }
+        />)
+      }
+
+
+      {
+        lessonStep ===100.3 && 
+         (<DialogBox
+          text={
+            <>
+              <strong>Scroll Down </strong> to Squeeze the bottle so we can add <strong>Methyl Orange</strong>
+
+            </>
+          }
+        />)
+      }
+
+      {
+        lessonStep ===100.4 && 
+         (<DialogBox
+          text={
+            <>
+              Click the <strong>Dropper</strong>, then select{" "}
+              <strong>Exit Pour Mode</strong>.
+            </>
+          }
+        />)
+      }
+
+
+      {
+        lessonStep ===100.5 && 
+         (<DialogBox
+          text={
+            <>
+              Click the <strong>Dropper</strong>, then select{" "}
+              <strong>Keep Back On Table</strong>.
+            </>
+          }
+        />)
+      }
+
+
+
       {lessonStep === 101 && (
         <DialogBox
           text={
@@ -924,6 +988,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       {showSummary && <SulfamicSummary 
         onResult={()=>{setShowResult(true);setShowSummary(false)}}
         onQuestions={()=>{setShowQuestionCardNo(12.1);setShowSummary(false)}}
+        onEndLesson={resetLesson}
       />}
 
       {showQuestionCardNo === 12.1 && (

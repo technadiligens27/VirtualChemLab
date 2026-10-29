@@ -318,7 +318,14 @@ const HoldLeft = ({ modeldata }) => {
     if(selectedLesson===12.2 && lessonStep ===90){
       setLessonStep(91)
     }
-  },[selectedLesson,lessonStep])   
+  },[selectedLesson,lessonStep])
+  
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep ===100.1){
+      setLessonStep(100.2)
+    }
+  },[selectedLesson,lessonStep])     
+
 
   useEffect(()=>{
     if(selectedLesson===15 && lessonStep ===9){
