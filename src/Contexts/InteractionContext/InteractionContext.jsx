@@ -203,11 +203,13 @@ export const InteractionProvider = ({ children }) => {
   const [showPowderInContainer,setShowPowderInContainer] = useState(false);
   const [isAirHoleOpen,setIsAirHoleOpen] = useState(false);
 
-const [molarVolumeResultsState,setMolarVolumeResultsState] = useState({
-  resultSetIndex: 0,
-  visibleResultCount: 1,
-  isAutoSimulating: false,
-})  
+  const [molarVolumeResultsState,setMolarVolumeResultsState] = useState({
+    resultSetIndex: 0,
+    visibleResultCount: 1,
+    isAutoSimulating: false,
+  });
+
+  const [selectedObjectName,setSelectedObjectName] = useState("Click An Object")
 
 const resetInteractions = () => {
   // =======================================================
@@ -466,7 +468,9 @@ setChairStep(0)
   // CHLORIDE ION TEST
   // =======================================================
 
-  setIsChlorideIonReaction(false)
+  setIsChlorideIonReaction(false);
+
+  setSelectedObjectName(false)
 
   // =======================================================
   // FLAME TEST
@@ -594,7 +598,8 @@ setChairStep(0)
         isModelInHeatingMat,setIsModelInHeatingMat,
         setIsDipMode,isDipMode,showBunsenFlame,setShowBunsenFlame,
         showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer,
-        isAirHoleOpen,setIsAirHoleOpen,molarVolumeResultsState,setMolarVolumeResultsState
+        isAirHoleOpen,setIsAirHoleOpen,molarVolumeResultsState,setMolarVolumeResultsState,
+        selectedObjectName,setSelectedObjectName
       }}
     >
       {children}

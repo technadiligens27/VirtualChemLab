@@ -1,0 +1,38 @@
+.selected-object-button {
+
+  position: absolute;
+  width: 230px;
+  height: 75px;
+  top: -0.5%;
+  left: 3.0%;
+  z-index: 9999;
+  background: #fcfcea;
+  line-height: 130%;  
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+
+  box-shadow:
+    0 7px 16px
+    rgba(92, 53, 194, 0.24);
+
+  color: black;
+  border: 5px solid #FFBE08;
+
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.selected-object-button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-3px);
+}
+
+.selected-object-button:active {
+  transform: translateY(0) scale(0.97);
+}

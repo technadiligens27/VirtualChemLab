@@ -56,7 +56,7 @@ const ClickObject = () => {
     isClampTestube,setIsClampTestube,setIsModelCentre,isDeliveryTubeConnected,setIsDeliveryTubeConnected,
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,setIsAddFunnelToMode,isAddFunnelToMode,
     setIsPlaceInMantle,setIsAddDistillationHead,isAddWarmWater,setIsAddWarmWater,isPlaceModelInBeaker,setIsPlaceModelInBeaker,
-    isModelInHeatingMat,setIsModelInHeatingMat,setIsDipMode,setShowBunsenFlame,setIsAirHoleOpen
+    isModelInHeatingMat,setIsModelInHeatingMat,setIsDipMode,setShowBunsenFlame,setIsAirHoleOpen,selectedObjectName,setSelectedObjectName
   } = useContext(InteractionContext)
 
   const {
@@ -577,6 +577,10 @@ const ClickObject = () => {
   setIsBeakerNearClamp(true);
   setSelectedObject(null);
 }
+
+  useEffect(()=>{
+    setSelectedObjectName(selectedObject?.name)
+  },[selectedObject])
 
   const handlePlaceBeakerRemove = ()=>{
     if(selectedLesson==9 && lessonStep!==25){
@@ -1893,6 +1897,8 @@ const ClickObject = () => {
       isHolding: true,
       hand,
     })
+
+    setSelectedObjectName(handData.name)
   }
 
   const selectTableObject = (selectedItem) => {
@@ -1992,16 +1998,16 @@ const ClickObject = () => {
     }
 
     const objectName = selectedItem.name
-
+    if(![15,15.2].includes(selectedLesson) &&  objectName==="nichrome-wire"){
+      setSelectedObject(null)
+      return
+    }
     if(selectedLesson==13 && lessonStep==17 && objectName==="mainBuretteClamp"){
       setSelectedObject(null)
       return
     }
 
-    if(selectedLesson !==15 &&  objectName==="nichrome-wire"){
-      setSelectedObject(null)
-      return
-    }
+
 
     if(selectedLesson ===15 && ["volumetric-pipette","pipette"].includes(objectName)){
       setSelectedObject(null)
@@ -2214,7 +2220,8 @@ const clickableObjects = selectableObjects
     selectableObjects,
     selectedLeftHand,
     selectedRightHand,
-    safetyStep
+    safetyStep,
+    selectedLesson,lessonStep
   ])
 
   const validateRightHandPick = (objectName) => {

@@ -57,6 +57,11 @@ const {
   mainBuiretteRef,
 
   mainThermometerRef,
+  nichromeWireRef,
+  heatingMantleRef,
+  heatingMatRef,
+  kettleRef,
+  seperatingFunnelRef
 } = useContext(ModelContext)
 
   const Enthalpy = [
@@ -196,45 +201,6 @@ const {
       "43",  
   },
 ]
-   const labModels = [
-      normalBeakerRef,
-
-      conicalBeakerRef,
-
-      roundBeakerRef,
-
-      graduatedBeakerRef,
-
-      spoonRef,
-
-      saltRef,
-
-      redLitmusRef,
-
-      blueLitmusRef,
-
-      testube01Ref,
-
-      testube02Ref,
-
-      testube03Ref,
-
-      filterPaperRef,
-
-      filterFoldedPaperRef,
-
-      funnelRef,
-
-      mainDropperRef,
-
-      digitalBalanceRef,
-
-      mainPolystereneRef,
-
-      mainBuiretteRef,
-      mainThermometerRef
-    ]
- 
 
  const resetLesson = useResetLesson()   
 
@@ -381,7 +347,27 @@ const {
     if(mainDropperRef.current){
       mainDropperRef.current.visible = false
     }
-  },[mainDropperRef])
+
+    if(nichromeWireRef.current){
+      nichromeWireRef.current.visible = false
+    }
+
+    if(heatingMatRef.current){
+      heatingMatRef.current.visible = false
+    }
+    if(heatingMantleRef.current){
+      heatingMantleRef.current.visible = false
+    }
+
+    if(kettleRef.current){
+      kettleRef.current.visible = false
+    }
+
+    if(seperatingFunnelRef.current){
+      seperatingFunnelRef.current.visible = false
+    }
+
+  },[])
 
 
 

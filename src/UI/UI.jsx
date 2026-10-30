@@ -54,6 +54,7 @@ import HCLTitrationSummary from "./Summary/HCLTitrationSummary/HCLTitrationSumma
 import SulfamicSummary from "./Summary/SulfamicSummary/SulfamicSummary"
 import ChlorinationSummary from "./Summary/ChlorinationSummary/ChlorinationSummary"
 import ApparatusOverview from "./ApparatusOverview/ApparatusOverview"
+import SelectedObjectButton from "./SelectedObjectButton/SelectedObjectButton"
 
 const mainContent = [
   {
@@ -796,6 +797,7 @@ useEffect(() => {
 
               {selectedLesson==14.4 && [144].includes(lessonStep) && <ReactionTimer right={'30%'} isRunning={true} onSkip={()=>{setLessonStep(145)}}/>}
 
+     {!isExplanationOpen && <SelectedObjectButton/> }   
 
         {/* <ApparatusOverview
           title="Apparatus Overview"

@@ -88,8 +88,8 @@
 }
 
 .lesson-btn img {
-    max-width: 80%;
-    max-height: 130px;
+    max-width: 70%;
+    max-height: 100px;
     object-fit: contain;
 }
 
@@ -110,7 +110,14 @@
     border-color: blue;
 }
 
+.red{
+    border-color: rgb(255, 49, 49);
+}
 
+.coral-orange{
+        border-color: #FF6B3D;
+
+}
 .lesson-name {
     font-family: "Montserrat", sans-serif;
     font-weight: bold;

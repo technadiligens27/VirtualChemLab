@@ -84,20 +84,20 @@ const LessonMenu = () => {
 
     {
       id: 8,
-      name: "Exothermic Reaction Using Hess’s Law",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 1,
-      divider: "purple",
+      name: "Exothermic Reaction",
+      imgPath: "./ExothermicIcon.png",
+      text: "Measure temperature change and calculate the enthalpy change of an exothermic reaction.",
+      divider: "red",
+      number : 1
     },
 
     {
       id: 9,
       name: "Endothermic Reaction",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 8,
-      divider: "purple",
+      imgPath: "./EndothermicIcon.png",
+      text: "Measure temperature change and calculate the enthalpy change of an endothermic reaction.",
+      number: 2,
+      divider: "blue",
     },
 
     // {
@@ -107,14 +107,14 @@ const LessonMenu = () => {
     //   text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
     //   number: 10,
     //   divider: "purple",
-    // },
+    // }, 
 
     {
       id: 11,
-      name: "HCl Titration",
-      imgPath: "./AlkaliTest.png",
-      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-      number: 2,
+      name: "Hydrochloric Acid Titration",
+      imgPath: "./HclTitrationIcon.png",
+      text: "Use titration to find the concentration of hydrochloric acid using sodium hydroxide.",
+      number: 3,
       divider: "purple",
     },  
     // {
@@ -128,9 +128,9 @@ const LessonMenu = () => {
     {
       id: 12,
       name: "Sulfamic Acid–NaOH Titration",
-      imgPath: "./AlkaliTest.png",
-      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-      number: 3,
+      imgPath: "./sulfamicTitrationIcon.png",
+      text: "Use titration to find the concentration of sodium hydroxide using sulfamic acid.",
+      number: 4,
       divider: "purple",
     },
 //     {
@@ -142,31 +142,31 @@ const LessonMenu = () => {
 //       divider: "purple",
 //     },
 
-    {
-      id: 12.2,
-      name: "Sulfamic Acid–NaOH Titration",
-      imgPath: "./AlkaliTest.png",
-      text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
-      number: 12.2,
-      divider: "purple",
-    },
+    // {
+    //   id: 12.2,
+    //   name: "Sulfamic Acid–NaOH Titration",
+    //   imgPath: "./sulfamicTitrationIcon.png",
+    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+    //   number: 12.2,
+    //   divider: "purple",
+    // },
 
 {
   id: 13,
   name: "Molar Volume of a Gas",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 4,
-  divider: "purple",
+  imgPath: "./molarVolumeIcon.png",
+text: "Determine carbon dioxide molar volume by reacting calcium carbonate with ethanoic acid.",
+  divider: "green",
+  number:5
 },
 
 {
   id: 14,
   name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 5,
-  divider: "purple",
+  imgPath: "./chlorinationIcon.png",
+  text: "Prepare and purify 2-chloro-2-methylpropane using a separating funnel and distillation.",
+    number: 6,
+  divider: "coral-orange",
 },
 
 // {
@@ -194,22 +194,22 @@ const LessonMenu = () => {
 //   divider: "purple",
 // },
 
-{
-  id: 14.4,
-  name: "Chlorination of 2-methylpropan-2-ol",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 14.4,
-  divider: "purple",
-},
+// {
+//   id: 14.4,
+//   name: "Chlorination of 2-methylpropan-2-ol",
+//   imgPath: "./AlkaliTest.png",
+//   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+//   number: 14.4,
+//   divider: "purple",
+// },
 
 {
   id: 15,
   name: "Flame Test",
-  imgPath: "./AlkaliTest.png",
-  text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
-  number: 6,
-  divider: "purple",
+  imgPath: "./flameTestIcon.png",
+text: "Heat metal salts in a Bunsen flame and identify metal ions by their characteristic flame colours.",
+  divider: "red",
+  number: 7
 },
 // {
 //   id: 15.2,
