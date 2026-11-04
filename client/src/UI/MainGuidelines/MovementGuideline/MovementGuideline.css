@@ -1,0 +1,33 @@
+.guideline-inner-container-row{
+    background-color: #F9F9E7;
+    position: relative;
+    
+}
+
+.arrow-img-container{
+    padding: 0%;
+    margin: 0%;
+    width: 60%;
+    margin-left: 10px;
+}
+.arrow-img-container img{
+    min-height: 70%;
+    min-width: 110%;
+}
+
+.movement-content{
+    font-size: 28px;
+    text-align: left;
+}
+
+.movement-guidelines-btn-container{
+    /* border: 1px solid black; */
+    width: 83%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.back-btn{
+    font-size: 20px;
+}

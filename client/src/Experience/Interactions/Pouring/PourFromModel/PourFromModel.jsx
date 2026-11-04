@@ -1,0 +1,1371 @@
+import {
+  useContext,
+  useEffect,
+  useRef,
+} from "react"
+
+import {
+  useFrame,
+} from "@react-three/fiber"
+
+import * as THREE from "three"
+
+import {
+  MainGuidelineContext,
+} from "../../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import {
+  InteractionContext,
+} from "../../../../Contexts/InteractionContext/InteractionContext"
+
+
+const PourFromModel = ({
+  modelRef,
+  otherModelRef,
+
+  isPouring = false,
+
+  pourScale = 1,
+  speed = 5,
+
+  modelLiquidEndScale = 0,
+  otherLiquidEndScale = 1,
+
+  otherLiquidOpacity = 0.35,
+  otherLiquidColor = "#DCEFF7",
+
+  liquidSpeed = 0.25,
+}) => {
+
+  const {selectedLesson,lessonStep,setLessonStep,setSelectedLesson} = useContext(MainGuidelineContext)
+
+  const {setSelectedRightHand} = useContext(InteractionContext)
+
+  // ============================================
+  // REFS
+  // ============================================
+
+  const pourMeshRef =useRef(null)
+
+  const sourceLiquidsRef =useRef([])
+
+  const receivingLiquidsRef =useRef([])
+
+  const progressRef =useRef(0)
+
+  const finishedRef =useRef(false)
+
+  const isSourceSeparatingFunnelRef =useRef(false)
+
+  const isReceivingSeparatingFunnelRef =useRef(false)
+
+  const isSourceConicalFlask02Ref =useRef(false)
+
+  const isReceivingRoundBottomFlaskRef =useRef(false)
+
+  // ============================================
+  // HELPERS
+  // ============================================
+
+  const normalizeName = (
+    name
+  ) =>
+    (
+      name?.toLowerCase() || ""
+    ).replace(
+      /[-_\s]/g,
+      ""
+    )
+
+  const modelContainsName = (
+    model,
+    expectedName
+  ) => {
+    const normalizedExpectedName =
+      normalizeName(
+        expectedName
+      )
+
+    if (
+      normalizeName(
+        model?.name
+      ) ===
+      normalizedExpectedName
+    ) {
+      return true
+    }
+
+    let found = false
+
+    model?.traverse(
+      (child) => {
+        if (
+          normalizeName(
+            child.name
+          ) ===
+          normalizedExpectedName
+        ) {
+          found = true
+        }
+      }
+    )
+
+    return found
+  }
+
+  const checkIsSeparatingFunnel = (
+    model
+  ) => {
+    let found = false
+
+    model?.traverse(
+      (child) => {
+        const name =
+          normalizeName(
+            child.name
+          )
+
+        if (
+          name.includes(
+            "separatingfunnel"
+          ) ||
+          name.includes(
+            "sepratingfunnel"
+          )
+        ) {
+          found = true
+        }
+      }
+    )
+
+    return found
+  }
+
+  const checkIsConicalFlask02 = (
+    model
+  ) =>
+    modelContainsName(
+      model,
+      "main-Conical-Flask-02"
+    )
+
+  const checkIsRoundBottomFlask = (
+    model
+  ) =>
+    modelContainsName(
+      model,
+      "main-Round-bottom-flask"
+    )
+
+  // ============================================
+  // INITIALIZE
+  // ============================================
+
+  useEffect(() => {
+    const sourceModel =
+      modelRef?.current
+
+    const receivingModel =
+      otherModelRef?.current
+
+    if (!sourceModel) {
+      console.error(
+        "[PourFromModel] Source model is missing."
+      )
+
+      return
+    }
+
+    if (!receivingModel) {
+      console.error(
+        "[PourFromModel] Receiving model is missing."
+      )
+
+      return
+    }
+
+    sourceModel.updateMatrixWorld(
+      true
+    )
+
+    receivingModel.updateMatrixWorld(
+      true
+    )
+
+    const sourceLiquids = []
+
+    const receivingLiquids = []
+
+    const foundSourceLiquids =
+      new Set()
+
+    const foundReceivingLiquids =
+      new Set()
+
+    const preparedReceivingMeshes =
+      new Set()
+
+    // ==========================================
+    // IDENTIFY MODELS
+    // ==========================================
+
+    isSourceSeparatingFunnelRef.current =
+      checkIsSeparatingFunnel(
+        sourceModel
+      )
+
+    isReceivingSeparatingFunnelRef.current =
+      checkIsSeparatingFunnel(
+        receivingModel
+      )
+
+    isSourceConicalFlask02Ref.current =
+      checkIsConicalFlask02(
+        sourceModel
+      )
+
+    isReceivingRoundBottomFlaskRef.current =
+      checkIsRoundBottomFlask(
+        receivingModel
+      )
+
+    // ==========================================
+    // FIND SOURCE POUR MESH DIRECTLY
+    // ==========================================
+
+    let foundPourMesh = null
+
+    sourceModel.traverse(
+      (child) => {
+        if (
+          foundPourMesh
+        ) {
+          return
+        }
+
+        const name =
+          child.name
+            ?.toLowerCase() ||
+          ""
+
+        if (
+          child.isMesh &&
+          name.includes(
+            "pour"
+          )
+        ) {
+          foundPourMesh = {
+            object:
+              child,
+
+            originalScale:
+              child.scale.clone(),
+
+            originalVisible:
+              child.visible,
+
+            originalFrustumCulled:
+              child.frustumCulled,
+          }
+        }
+      }
+    )
+
+    pourMeshRef.current =
+      foundPourMesh
+
+    // ==========================================
+    // FIND SOURCE LIQUIDS
+    // ==========================================
+
+    sourceModel.traverse(
+      (child) => {
+        const name =
+          child.name
+            ?.toLowerCase() ||
+          ""
+
+        const normalizedName =
+          normalizeName(
+            child.name
+          )
+
+        const isConicalUpper =
+          normalizedName.includes(
+            "conicalflask02liquidupper"
+          )
+
+        const isConicalBottom =
+          normalizedName.includes(
+            "conicalflask02liquidbottom"
+          )
+
+        const isConicalLiquid =
+          isConicalUpper ||
+          isConicalBottom
+
+        const isNormalLiquid =
+          name.includes(
+            "liquid"
+          ) &&
+          !name.includes(
+            "pour"
+          )
+
+        const shouldIncludeLiquid =
+          isSourceConicalFlask02Ref
+            .current
+            ? isConicalLiquid
+            : isNormalLiquid
+
+        if (
+          !shouldIncludeLiquid ||
+          foundSourceLiquids.has(
+            child
+          )
+        ) {
+          return
+        }
+
+        foundSourceLiquids.add(
+          child
+        )
+
+        sourceLiquids.push({
+          object:
+            child,
+
+          originalScale:
+            child.scale.clone(),
+
+          originalVisible:
+            child.visible,
+
+          startScaleX:
+            child.scale.x,
+
+          startScaleY:
+            child.scale.y,
+
+          startScaleZ:
+            child.scale.z,
+
+          isConicalLiquid,
+        })
+      }
+    )
+
+    // ==========================================
+    // FIND RECEIVING LIQUIDS
+    // ==========================================
+
+    receivingModel.traverse(
+      (child) => {
+        const name =
+          child.name
+            ?.toLowerCase() ||
+          ""
+
+        if (
+          !name.includes(
+            "liquid"
+          ) ||
+          name.includes(
+            "pour"
+          ) ||
+          foundReceivingLiquids.has(
+            child
+          )
+        ) {
+          return
+        }
+
+        foundReceivingLiquids.add(
+          child
+        )
+
+        const liquidMeshes = []
+
+        child.traverse(
+          (
+            liquidChild
+          ) => {
+            if (
+              !liquidChild.isMesh
+            ) {
+              return
+            }
+
+            if (
+              preparedReceivingMeshes.has(
+                liquidChild
+              )
+            ) {
+              return
+            }
+
+            preparedReceivingMeshes.add(
+              liquidChild
+            )
+
+            const originalMaterial =
+              liquidChild.material
+
+            const originalMaterials =
+              Array.isArray(
+                originalMaterial
+              )
+                ? originalMaterial
+                : [
+                    originalMaterial,
+                  ]
+
+            const clonedMaterials =
+              originalMaterials.map(
+                (
+                  material
+                ) => {
+                  if (
+                    !material
+                  ) {
+                    return null
+                  }
+
+                  const clonedMaterial =
+                    material.clone()
+
+                  clonedMaterial.transparent =
+                    true
+
+                  clonedMaterial.needsUpdate =
+                    true
+
+                  return clonedMaterial
+                }
+              )
+
+            liquidChild.material =
+              Array.isArray(
+                originalMaterial
+              )
+                ? clonedMaterials
+                : clonedMaterials[0]
+
+            liquidMeshes.push({
+              object:
+                liquidChild,
+
+              originalVisible:
+                liquidChild.visible,
+
+              originalFrustumCulled:
+                liquidChild
+                  .frustumCulled,
+
+              originalMaterial,
+
+              clonedMaterials,
+
+              startOpacities:
+                clonedMaterials.map(
+                  (
+                    material
+                  ) =>
+                    material
+                      ?.opacity ??
+                    1
+                ),
+
+              startColors:
+                clonedMaterials.map(
+                  (
+                    material
+                  ) =>
+                    material
+                      ?.color
+                      ? material
+                          .color
+                          .clone()
+                      : null
+                ),
+            })
+          }
+        )
+
+        receivingLiquids.push({
+          object:
+            child,
+
+          originalScale:
+            child.scale.clone(),
+
+          originalVisible:
+            child.visible,
+
+          startScaleX:
+            child.scale.x,
+
+          startScaleY:
+            child.scale.y,
+
+          startScaleZ:
+            child.scale.z,
+
+          liquidMeshes,
+        })
+      }
+    )
+
+    // ==========================================
+    // STORE LIQUID REFS
+    // ==========================================
+
+    sourceLiquidsRef.current =
+      sourceLiquids
+
+    receivingLiquidsRef.current =
+      receivingLiquids
+
+    progressRef.current =
+      0
+
+    finishedRef.current =
+      false
+
+    // ==========================================
+    // INITIAL POUR STREAM
+    // ==========================================
+
+    if (
+      pourMeshRef.current
+    ) {
+      const {
+        object,
+      } =
+        pourMeshRef.current
+
+      object.visible =
+        false
+
+      object.frustumCulled =
+        false
+
+      object.scale.y =
+        0
+
+      object.updateMatrix()
+
+      object.updateMatrixWorld(
+        true
+      )
+    } else {
+      console.error(
+        "[PourFromModel] No pour mesh found.",
+        sourceModel.name
+      )
+    }
+
+    if (
+      sourceLiquids.length ===
+      0
+    ) {
+      console.error(
+        "[PourFromModel] No source liquid found."
+      )
+    }
+
+    if (
+      receivingLiquids.length ===
+      0
+    ) {
+      console.error(
+        "[PourFromModel] No receiving liquid found."
+      )
+    }
+
+    // ==========================================
+    // CLEANUP
+    // ==========================================
+
+    return () => {
+      const transferOccurred =
+        progressRef.current >
+        0
+
+      // ========================================
+      // RESTORE POUR STREAM
+      // ========================================
+
+      if (
+        pourMeshRef.current
+      ) {
+        const {
+          object,
+          originalScale,
+          originalVisible,
+          originalFrustumCulled,
+        } =
+          pourMeshRef.current
+
+        object.scale.copy(
+          originalScale
+        )
+
+        object.visible =
+          originalVisible
+
+        object.frustumCulled =
+          originalFrustumCulled
+
+        object.updateMatrixWorld(
+          true
+        )
+      }
+
+      // ========================================
+      // SOURCE FINAL STATE
+      // ========================================
+
+      sourceLiquids.forEach(
+        (
+          item
+        ) => {
+          if (
+            transferOccurred
+          ) {
+            if (
+              isSourceSeparatingFunnelRef
+                .current
+            ) {
+              item.object.scale.set(
+                modelLiquidEndScale,
+                modelLiquidEndScale,
+                modelLiquidEndScale
+              )
+            } else {
+              item.object.scale.y =
+                modelLiquidEndScale
+            }
+
+            item.object.visible =
+              modelLiquidEndScale >
+              0.001
+          } else {
+            item.object.scale.copy(
+              item.originalScale
+            )
+
+            item.object.visible =
+              item.originalVisible
+          }
+
+          item.object.updateMatrixWorld(
+            true
+          )
+        }
+      )
+
+      // ========================================
+      // RECEIVER FINAL STATE
+      // ========================================
+
+      receivingLiquids.forEach(
+        (
+          item
+        ) => {
+          if (
+            transferOccurred
+          ) {
+            item.object.visible =
+              true
+
+            item.liquidMeshes.forEach(
+              (
+                meshItem
+              ) => {
+                meshItem.object.visible =
+                  true
+
+                meshItem.object.frustumCulled =
+                  false
+              }
+            )
+          } else {
+            item.object.scale.copy(
+              item.originalScale
+            )
+
+            item.object.visible =
+              item.originalVisible
+
+            item.liquidMeshes.forEach(
+              (
+                meshItem
+              ) => {
+                meshItem.object.material =
+                  meshItem.originalMaterial
+
+                meshItem.object.visible =
+                  meshItem.originalVisible
+
+                meshItem.object.frustumCulled =
+                  meshItem.originalFrustumCulled
+
+                meshItem
+                  .clonedMaterials
+                  .forEach(
+                    (
+                      material
+                    ) => {
+                      material?.dispose()
+                    }
+                  )
+              }
+            )
+          }
+
+          item.object.updateMatrixWorld(
+            true
+          )
+        }
+      )
+
+      pourMeshRef.current =
+        null
+
+      sourceLiquidsRef.current =
+        []
+
+      receivingLiquidsRef.current =
+        []
+
+      progressRef.current =
+        0
+
+      finishedRef.current =
+        false
+
+      isSourceSeparatingFunnelRef.current =
+        false
+
+      isReceivingSeparatingFunnelRef.current =
+        false
+
+      isSourceConicalFlask02Ref.current =
+        false
+
+      isReceivingRoundBottomFlaskRef.current =
+        false
+    }
+  }, [
+    modelRef,
+    otherModelRef,
+    modelLiquidEndScale,
+  ])
+
+  // ============================================
+  // ANIMATION
+  // ============================================
+
+  useFrame(
+    (
+      _,
+      delta
+    ) => {
+      const transferIsActive =
+        Boolean(
+          isPouring
+        ) &&
+        !finishedRef.current
+
+      // ========================================
+      // TRANSFER PROGRESS
+      // ========================================
+
+      if (
+        transferIsActive
+      ) {
+        progressRef.current =
+          Math.min(
+            progressRef.current +
+              liquidSpeed *
+                delta,
+
+            1
+          )
+
+        if (
+          progressRef.current >=
+          1
+        ) {
+          progressRef.current =
+            1
+
+          finishedRef.current =
+            true
+
+          // ====================================
+          // LESSON STEPS
+          // ====================================
+
+          if (
+            selectedLesson ===
+              14.1 &&
+            lessonStep ===
+              38
+          ) {
+            setLessonStep(
+              39
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.1 &&
+            lessonStep ===
+              43
+          ) {
+            setLessonStep(
+              44
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.1 &&
+            lessonStep ===
+              49
+          ) {
+            setLessonStep(
+              50
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.1 &&
+            lessonStep ===
+              61
+          ) {
+            setLessonStep(
+              62
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.2 &&
+            lessonStep ===
+              67
+          ) {
+            setLessonStep(
+              68
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.2 &&
+            lessonStep ===
+              81
+          ) {
+            setLessonStep(
+              82
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.2 &&
+            lessonStep ===
+              84
+          ) {
+            setLessonStep(
+              85
+            )
+
+            setSelectedLesson(
+              14.3
+            )
+
+            setSelectedRightHand(
+              null
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.3 &&
+            lessonStep ===
+              96
+          ) {
+            setLessonStep(
+              97
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.3 &&
+            lessonStep ===
+              112
+          ) {
+            setLessonStep(
+              113
+            )
+          }
+
+          if (
+            selectedLesson ===
+              14.3 &&
+            lessonStep ===
+              131
+          ) {
+            setLessonStep(
+              132
+            )
+          }
+
+          if (
+            selectedLesson ===
+              11 &&
+            lessonStep ===
+              21
+          ) {
+            setLessonStep(
+              23
+            )
+          }
+          if (
+            selectedLesson ===
+              12.1 &&
+            lessonStep ===
+              28
+          ) {
+            setLessonStep(
+              30
+            )
+          }
+
+          if (
+            selectedLesson ===
+              12.1 &&
+            lessonStep ===
+              34
+          ) {
+            setLessonStep(
+              36
+            )
+          }
+
+          if (
+            selectedLesson ===
+              12.1 &&
+            lessonStep ===
+              40
+          ) {
+            setLessonStep(
+              42
+            )
+          }          
+          if (
+            selectedLesson ===
+              12.2 &&
+            lessonStep ===
+              57
+          ) {
+            setLessonStep(
+              59
+            )
+          }
+
+          if (selectedLesson ===15 && lessonStep ===11) {
+            setLessonStep(12)
+          }
+
+          if (selectedLesson ===10 && lessonStep ===6) {
+            setLessonStep(8)
+          }
+
+          if (selectedLesson ===10 && lessonStep ===23) {
+            setLessonStep(25)
+          }
+          if (selectedLesson ===10 && lessonStep ===30) {
+            setLessonStep(32)
+          }
+        }
+      }
+
+      const progress =
+        progressRef.current
+
+      const finalSourceScale =
+        Math.max(
+          0,
+          modelLiquidEndScale
+        )
+
+      const finalOpacity =
+        THREE.MathUtils.clamp(
+          otherLiquidOpacity,
+          0,
+          1
+        )
+
+      const finalLiquidColor =
+        new THREE.Color(
+          otherLiquidColor
+        )
+
+      // ========================================
+      // DECREASE SOURCE LIQUID
+      // ========================================
+
+      sourceLiquidsRef.current.forEach(
+        ({
+          object,
+
+          startScaleX,
+          startScaleY,
+          startScaleZ,
+
+          isConicalLiquid,
+        }) => {
+          if (
+            isSourceConicalFlask02Ref
+              .current &&
+            isConicalLiquid
+          ) {
+            object.scale.y =
+              THREE.MathUtils.lerp(
+                startScaleY,
+                finalSourceScale,
+                progress
+              )
+          } else if (
+            isSourceSeparatingFunnelRef
+              .current
+          ) {
+            object.scale.x =
+              THREE.MathUtils.lerp(
+                startScaleX,
+                finalSourceScale,
+                progress
+              )
+
+            object.scale.y =
+              THREE.MathUtils.lerp(
+                startScaleY,
+                finalSourceScale,
+                progress
+              )
+
+            object.scale.z =
+              THREE.MathUtils.lerp(
+                startScaleZ,
+                finalSourceScale,
+                progress
+              )
+          } else {
+            object.scale.y =
+              THREE.MathUtils.lerp(
+                startScaleY,
+                finalSourceScale,
+                progress
+              )
+          }
+
+          if (
+            isSourceSeparatingFunnelRef
+              .current
+          ) {
+            object.visible =
+              Math.abs(
+                object.scale.x
+              ) >
+                0.001 ||
+              Math.abs(
+                object.scale.y
+              ) >
+                0.001 ||
+              Math.abs(
+                object.scale.z
+              ) >
+                0.001
+          } else {
+            object.visible =
+              Math.abs(
+                object.scale.y
+              ) >
+              0.001
+          }
+
+          if (
+            !object.visible
+          ) {
+            if (
+              isSourceSeparatingFunnelRef
+                .current
+            ) {
+              object.scale.set(
+                0,
+                0,
+                0
+              )
+            } else {
+              object.scale.y =
+                0
+            }
+          }
+
+          object.updateMatrixWorld(
+            true
+          )
+        }
+      )
+
+      // ========================================
+      // INCREASE RECEIVING LIQUID
+      // ========================================
+
+      receivingLiquidsRef.current.forEach(
+        ({
+          object,
+
+          startScaleX,
+          startScaleY,
+          startScaleZ,
+
+          liquidMeshes,
+        }) => {
+          if (
+            progress <=
+            0
+          ) {
+            return
+          }
+
+          const scaleAllAxes =
+            isReceivingSeparatingFunnelRef
+              .current ||
+            isReceivingRoundBottomFlaskRef
+              .current
+
+          if (
+            scaleAllAxes
+          ) {
+            object.scale.x =
+              THREE.MathUtils.lerp(
+                startScaleX,
+                otherLiquidEndScale,
+                progress
+              )
+
+            object.scale.y =
+              THREE.MathUtils.lerp(
+                startScaleY,
+                otherLiquidEndScale,
+                progress
+              )
+
+            object.scale.z =
+              THREE.MathUtils.lerp(
+                startScaleZ,
+                otherLiquidEndScale,
+                progress
+              )
+          } else {
+            object.scale.y =
+              THREE.MathUtils.lerp(
+                startScaleY,
+                otherLiquidEndScale,
+                progress
+              )
+          }
+
+          if (
+            scaleAllAxes
+          ) {
+            object.visible =
+              Math.abs(
+                object.scale.x
+              ) >
+                0.001 ||
+              Math.abs(
+                object.scale.y
+              ) >
+                0.001 ||
+              Math.abs(
+                object.scale.z
+              ) >
+                0.001
+          } else {
+            object.visible =
+              Math.abs(
+                object.scale.y
+              ) >
+              0.001
+          }
+
+          liquidMeshes.forEach(
+            ({
+              object:
+                liquidMesh,
+
+              clonedMaterials,
+
+              startOpacities,
+              startColors,
+            }) => {
+              liquidMesh.visible =
+                true
+
+              liquidMesh.frustumCulled =
+                false
+
+              let currentParent =
+                liquidMesh.parent
+
+              while (
+                currentParent &&
+                currentParent !==
+                  otherModelRef
+                    ?.current
+              ) {
+                currentParent.visible =
+                  true
+
+                currentParent =
+                  currentParent.parent
+              }
+
+              clonedMaterials.forEach(
+                (
+                  material,
+                  index
+                ) => {
+                  if (
+                    !material
+                  ) {
+                    return
+                  }
+
+                  material.transparent =
+                    true
+
+                  material.opacity =
+                    THREE.MathUtils.lerp(
+                      startOpacities[
+                        index
+                      ],
+                      finalOpacity,
+                      progress
+                    )
+
+                  material.depthWrite =
+                    material.opacity >=
+                    1
+
+                  const startColor =
+                    startColors[
+                      index
+                    ]
+
+                  if (
+                    material.color &&
+                    startColor
+                  ) {
+                    material.color
+                      .lerpColors(
+                        startColor,
+                        finalLiquidColor,
+                        progress
+                      )
+                  }
+
+                  material.needsUpdate =
+                    true
+                }
+              )
+            }
+          )
+
+          object.updateMatrix()
+
+          object.updateMatrixWorld(
+            true
+          )
+        }
+      )
+
+      // ========================================
+      // POUR STREAM
+      // ========================================
+
+      const showPourStream =
+        Boolean(
+          isPouring
+        ) &&
+        !finishedRef.current
+
+      const pourData =
+        pourMeshRef.current
+
+      if (
+        pourData?.object
+      ) {
+        const object =
+          pourData.object
+
+        if (
+          showPourStream
+        ) {
+          object.visible =
+            true
+
+          object.frustumCulled =
+            false
+
+          object.scale.y =
+            Math.min(
+              object.scale.y +
+                delta *
+                  speed,
+
+              pourScale
+            )
+        } else {
+          object.scale.y =
+            Math.max(
+              object.scale.y -
+                delta *
+                  speed,
+
+              0
+            )
+
+          if (
+            object.scale.y <=
+            0
+          ) {
+            object.scale.y =
+              0
+
+            object.visible =
+              false
+          }
+        }
+
+        object.updateMatrix()
+
+        object.updateMatrixWorld(
+          true
+        )
+      }
+    }
+  )
+
+  return null
+}
+
+export default PourFromModel

@@ -1,0 +1,90 @@
+import { useContext } from "react"
+import { ModelContext } from "../../Contexts/ModelContext/ModelContext"
+import { MainGuidelineContext } from "../../Contexts/MainGuidelineContext/MainGuidelineContext";
+import ArrowGuides from "../ArrowGuides/ArrowGuides";
+
+const AllArrows=()=>{
+
+
+    const {arrowNormalBeakerRef,arrowChairRef,arrowGogglesRef,arrowLeftGloveRef,
+        arrowRightGloveRef,arrowRedLitmusRef,conicalBeakerRef,arrowConicalFlaskRef,
+        arrowSpoonRef,arrowSaltContainerRef,mainDropperRef,arrowDropperRef, arrowTestube01Ref,
+        arrowPolystereneRef,arrowPottasiumCarbonateRef,arrowBalanceRef,arrowBuretteClampRef,
+        arrowBuirette,arrowThermometerRef,arrowVolumetricPipette,arrowVolumetricRef,arrowFunnelRef
+        ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef,
+        arrowBoilingTube01Ref,arrowMeasuringCylnder,arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,
+        arrowSeparatingFunnelRef,arrowHeatingMantleRef,arrowCondensorRef,arrowGraduatedPipette,arrowTestube02Ref,arrowBunsenBurner,
+        arrowNichromeWireRef,arrowKettleRef,arrowHeatingMatRef
+    } = useContext(ModelContext);
+
+    const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
+        showRightGloveArrow,showRedLitmusArrow,setShowRedLitmusArrow,isMainGuideline,
+        showConicalArrow,setShowArrowConicalArrow,showSpoonArrow,
+        showSaltContainerArrow,setShowSaltContainerArrow,showTestube01Arrow,
+        showDropperArrow,setShowDropperArrow,isTutorialMode,showPolystereneArrow,
+        setShowPottasiumCarbonateArrow,showPottasiumCarbonateArrow,showBalanceArrow,showBuretteArrow,
+        showThermometerArrow,setShowThermometerArrow,showVolumetricArrow,showVolumetricFlaskArrow,
+        showFunnelArrow, setShowFunnelArrow,showNaOHBBottleArrowRef,showSulfamicArrow,setShowSulfamicArrow,
+        setShowNaOHBBottleArrowRef,showMethyArrow,showBuretteClampArrow,showPotassiumHydrogenCarbonateArrow,setShowPotassiumHydrogenCarbonateArrow,
+        showBoilingTube01Ref,showMeasuringCylinderArrow,showMeasuringCylinder50Arrow,showKettleArrow,
+        setShowMeasuringCylinder50Arrow,showTestube03Arrow,setShowTestube03Arrow,showHeatingMantleArrow,
+        setShowMeasuringCylinderArrow,showBromobutaneArrow,setshowBromobutaneArrow,showSeparatingFunnelArrow,setShowSeparatingFunnel
+        ,showCondensorArrow,showTestube02Arrow,setShowTestube02Arrow,showGraduatedPippeteArrow,setShowGraduatedPippeteArrow,
+        showHeatingMatArrow,showBunsenBurnerArrow,setShowBunsenBurnerArrow,showNichromeWireArrow,setShowNichromeWireArrow
+    } = useContext(MainGuidelineContext)
+
+    if(!isTutorialMode){
+        return (
+            <>
+             {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}
+            </>
+        )
+    }
+
+    return(
+        <>
+        {showArrrowChair && <ArrowGuides arrowRef={arrowChairRef} speed={2.5} height={3} showStatus={showArrrowChair}/>}     
+        {showNormalBeakerArrow && <ArrowGuides arrowRef={arrowNormalBeakerRef} speed={2.5} height={0.5} showStatus={showNormalBeakerArrow}/>};
+        {showConicalArrow && <ArrowGuides arrowRef={arrowConicalFlaskRef} speed={2.5} height={0.5} showStatus={showConicalArrow}/> }
+        {showGogglesArrow && <ArrowGuides arrowRef={arrowGogglesRef} speed={2.5} height={0.5} showStatus={showGogglesArrow}/> }
+        {showLeftGloveArrow && <ArrowGuides arrowRef={arrowLeftGloveRef} speed={2.5} height={0.5} showStatus={showLeftGloveArrow}/> }
+        {showRightGloveArrow && <ArrowGuides arrowRef={arrowRightGloveRef} speed={2.5} height={0.5} showStatus={showRightGloveArrow}/> }
+        {showRedLitmusArrow && <ArrowGuides arrowRef={arrowRedLitmusRef} speed={2.5} height={0.5} showStatus={showRedLitmusArrow}/>}
+        {showSpoonArrow && <ArrowGuides arrowRef={arrowSpoonRef} speed={2.5} height={0.5} showStatus={showSpoonArrow}/>}
+        {showSaltContainerArrow && <ArrowGuides arrowRef={arrowSaltContainerRef} speed={2.5} height={0.5} showStatus={showSaltContainerArrow}/>}
+        {showTestube01Arrow &&  <ArrowGuides arrowRef={arrowTestube01Ref} speed={2.5} height={0.5} showStatus={showTestube01Arrow}/> }
+        {showDropperArrow &&  <ArrowGuides arrowRef={arrowDropperRef} speed={2.5} height={0.5} showStatus={showDropperArrow}/> }
+        {showPolystereneArrow && <ArrowGuides arrowRef={arrowPolystereneRef} speed={2.5} height={0.5} showStatus={showPolystereneArrow}/>}
+        {showPottasiumCarbonateArrow && <ArrowGuides arrowRef={arrowPottasiumCarbonateRef} speed={2.5} height={0.5} showStatus={showPottasiumCarbonateArrow}/>}
+        {showBalanceArrow && <ArrowGuides arrowRef={arrowBalanceRef} speed={2.5} height={0.5} showStatus={showBalanceArrow}/>}
+        {showBuretteArrow && <ArrowGuides arrowRef={arrowBuirette} speed={2.5} height={0.5} showStatus={showBuretteArrow}/>}
+        {showThermometerArrow && <ArrowGuides arrowRef={arrowThermometerRef} speed={2.5} height={0.5} showStatus={showThermometerArrow}/>}
+        {showVolumetricArrow && <ArrowGuides arrowRef={arrowVolumetricPipette} speed={2.5} height={0.5} showStatus={showVolumetricArrow}/>}
+        {showVolumetricFlaskArrow && <ArrowGuides arrowRef={arrowVolumetricRef} speed={2.5} height={0.5} showStatus={showVolumetricFlaskArrow}/>}
+        {showFunnelArrow && <ArrowGuides arrowRef={arrowFunnelRef} speed={2.5} height={0.5} showStatus={showFunnelArrow}/>}
+        {showNaOHBBottleArrowRef && <ArrowGuides arrowRef={arrowNaohBottleRef} speed={2.5} height={0.5} showStatus={showNaOHBBottleArrowRef}/>}
+        {showSulfamicArrow && <ArrowGuides arrowRef={arrowSulfamicRef} speed={2.5} height={0.5} showStatus={showSulfamicArrow}/>}
+        {showMethyArrow && <ArrowGuides arrowRef={arrowMethylBottleRef} speed={2.5} height={0.5} showStatus={showMethyArrow}/>}
+        {showBuretteClampArrow && <ArrowGuides arrowRef={arrowBuretteClampRef} speed={2.5} height={0.5} showStatus={showBuretteClampArrow}/>}
+        {showPotassiumHydrogenCarbonateArrow && <ArrowGuides arrowRef={arrowPotassiumHydrogenCarbonateRef} speed={2.5} height={0.5} showStatus={showPotassiumHydrogenCarbonateArrow}/>}
+        {showBoilingTube01Ref && <ArrowGuides arrowRef={arrowBoilingTube01Ref} speed={2.5} height={0.5} showStatus={showBoilingTube01Ref}/>}
+        {showMeasuringCylinderArrow && <ArrowGuides arrowRef={arrowMeasuringCylnder} speed={2.5} height={0.5} showStatus={showMeasuringCylinderArrow}/>}
+        {showMeasuringCylinder50Arrow && <ArrowGuides arrowRef={arrowMeasuringCylnder50} speed={2.5} height={0.5} showStatus={showMeasuringCylinder50Arrow}/>}
+        {showTestube03Arrow && <ArrowGuides arrowRef={arrowTestube03Ref} speed={2.5} height={0.5} showStatus={showTestube03Arrow}/>}
+        {showBromobutaneArrow && <ArrowGuides arrowRef={arrowBromobutanRef} speed={2.5} height={0.5} showStatus={showBromobutaneArrow}/>}
+        {showSeparatingFunnelArrow && <ArrowGuides arrowRef={arrowSeparatingFunnelRef} speed={2.5} height={0.5} showStatus={showSeparatingFunnelArrow}/>}
+        {showHeatingMantleArrow && <ArrowGuides arrowRef={arrowHeatingMantleRef} speed={2.5} height={0.5} showStatus={showHeatingMantleArrow}/>}
+        {showCondensorArrow && <ArrowGuides arrowRef={arrowCondensorRef} speed={2.5} height={0.5} showStatus={showCondensorArrow}/>}
+        {/* {showTestube03Arrow && <ArrowGuides arrowRef={arrowTestube03Ref} speed={2.5} height={0.5} showStatus={showTestube02Arrow}/>} */}
+        {showGraduatedPippeteArrow && <ArrowGuides arrowRef={arrowGraduatedPipette} speed={2.5} height={0.5} showStatus={arrowGraduatedPipette}/>}
+        {showTestube02Arrow && <ArrowGuides arrowRef={arrowTestube02Ref} speed={2.5} height={0.5} showStatus={showTestube02Arrow}/>}
+        {showHeatingMatArrow && <ArrowGuides arrowRef={arrowHeatingMatRef} speed={2.5} height={0.5} showStatus={showHeatingMatArrow}/>}
+        {showBunsenBurnerArrow && <ArrowGuides arrowRef={arrowBunsenBurner} speed={2.5} height={0.5} showStatus={showBunsenBurnerArrow}/>}
+        {showNichromeWireArrow && <ArrowGuides arrowRef={arrowNichromeWireRef} speed={2.5} height={0.5} showStatus={showNichromeWireArrow}/>}
+        {showKettleArrow && <ArrowGuides arrowRef={arrowKettleRef} speed={2.5} height={0.5} showStatus={showKettleArrow}/>}
+
+        </>
+    )
+}
+
+export default AllArrows

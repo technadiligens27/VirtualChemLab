@@ -1,0 +1,675 @@
+/* =========================================================
+   Results Sheet Overlay
+   ========================================================= */
+
+.results-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.results-sheet-overlay-open {
+  background-color:
+    rgba(20, 15, 40, 0.25);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.results-sheet-overlay-closed {
+  background-color: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+
+/* =========================================================
+   Main Results Sheet
+   ========================================================= */
+
+.results-sheet-panel {
+  position: relative;
+
+  width: min(75vw, 1200px);
+  height: 90vh;
+
+  padding: 18px;
+
+  border: 10px solid #fdc843;
+  border-radius: 16px;
+
+  background-color: #fcf8f3;
+
+  box-sizing: border-box;
+
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.results-sheet-inner {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 58px 25px 22px;
+
+  border-radius: 12px;
+
+  background-color: #ffffff;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   Top Header
+   ========================================================= */
+
+.results-sheet-header {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  z-index: 2;
+
+  width: 375px;
+  max-width: 70%;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius:
+    0 0 35px 35px;
+
+  background-color: #fdc843;
+
+  transform:
+    translateX(-50%);
+}
+
+.results-sheet-header h1 {
+  margin: 0;
+
+  color: #351c7c;
+
+  font-size: 27px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   Results Introduction
+   ========================================================= */
+
+.results-sheet-title {
+  padding-right: 330px;
+}
+
+.results-sheet-title h1 {
+  margin: 0 0 6px;
+
+  color: #351c7c;
+
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.results-sheet-title h2 {
+  margin: 0 0 6px;
+
+  color: #28233f;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.results-sheet-title p {
+  margin: 0;
+
+  color: #526170;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   Results Table
+   ========================================================= */
+
+.results-sheet-table {
+  width: 100%;
+
+  margin-top: 20px;
+
+  border: 2px solid #cbbaee;
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.results-sheet-row {
+  min-height: 48px;
+
+  display: grid;
+
+  /*
+    Five-column layout for titration results.
+    This still works for other result sheets,
+    but you can override per lesson if needed.
+  */
+  grid-template-columns:
+    minmax(150px, 1.4fr)
+    minmax(120px, 1fr)
+    minmax(120px, 1fr)
+    minmax(110px, 0.9fr)
+    minmax(110px, 0.9fr);
+
+  border-bottom:
+    1px solid #ded4f2;
+
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
+}
+
+.results-sheet-row:last-child {
+  border-bottom: none;
+}
+
+.results-sheet-row > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border-right:
+    1px solid #ded4f2;
+
+  color: #425466;
+
+  font-family:
+    "Baloo Thambi 2",
+    sans-serif;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.results-sheet-row
+  > div:first-child {
+  justify-content: flex-start;
+
+  text-align: left;
+}
+
+.results-sheet-row
+  > div:last-child {
+  border-right: none;
+}
+
+
+/* =========================================================
+   Table Header
+   ========================================================= */
+
+.results-sheet-table-header {
+  min-height: 46px;
+
+  background-color: #f4effa;
+}
+
+.results-sheet-table-header
+  > div {
+  color: #351c7c;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   Recorded Values
+   ========================================================= */
+
+.results-sheet-value {
+  color: #6135bf !important;
+
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+
+.results-sheet-check {
+  color: #351c7c !important;
+
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+
+
+/* =========================================================
+   Final Highlight Row
+   ========================================================= */
+
+.results-sheet-final {
+  background-color: #f4effa;
+}
+
+.results-sheet-final
+  > div {
+  color: #351c7c;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   Calculation Section
+   ========================================================= */
+
+.results-sheet-calculation {
+  width: 100%;
+
+  margin-top: 18px;
+
+  padding: 16px 20px;
+
+  border: 2px solid #cbbaee;
+  border-radius: 12px;
+
+  background-color: #f9f6ff;
+
+  box-sizing: border-box;
+}
+
+.results-sheet-calculation h2 {
+  margin: 0 0 10px;
+
+  color: #351c7c;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.results-sheet-formula {
+  margin-bottom: 8px;
+
+  color: #425466;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.results-sheet-working {
+  margin-bottom: 10px;
+
+  color: #526170;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.results-sheet-answer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 170px;
+
+  padding: 9px 18px;
+
+  border-radius: 10px;
+
+  background-color: #351c7c;
+
+  color: #ffffff;
+
+  font-size: 21px;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   Observation Card
+   ========================================================= */
+
+.results-sheet-observation {
+  position: absolute;
+
+  top: 50px;
+  right: 25px;
+
+  width: 370px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 12px 16px;
+
+  border: 2px solid #cbbaee;
+  border-radius: 12px;
+
+  background-color: #f9f6ff;
+
+  box-sizing: border-box;
+}
+
+.results-sheet-info {
+  flex-shrink: 0;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #351c7c;
+  color: #ffffff;
+
+  font-family: serif;
+
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.results-sheet-observation h2 {
+  margin: 0 0 3px;
+
+  color: #351c7c;
+
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.results-sheet-observation p {
+  margin: 0;
+
+  color: #526170;
+
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.results-sheet-observation strong {
+  color: #6333bf;
+
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   Continue Button
+   ========================================================= */
+
+.results-sheet-button {
+  flex-shrink: 0;
+
+  width: 200px;
+  height: 50px;
+
+  margin-top: 16px;
+
+  border: none;
+  border-radius: 20px;
+
+  background-color: #351c7c;
+  color: #dbe4ec;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.results-sheet-button:hover {
+  background-color: #472592;
+
+  transform:
+    translateY(-1px);
+}
+
+.results-sheet-button:active {
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================================
+   Side Toggle Button
+   ========================================================= */
+
+.results-sheet-side {
+  position: absolute;
+
+  top: 50%;
+  right: -60px;
+
+  width: 60px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  border-radius:
+    0 20px 20px 0;
+
+  background-color: #fdc843;
+
+  cursor: pointer;
+
+  transform:
+    translateY(-50%);
+
+  transition:
+    background-color 0.2s ease;
+}
+
+.results-sheet-side:hover {
+  background-color: #f2bb2e;
+}
+
+.results-sheet-side:active {
+  background-color: #e7ac16;
+}
+
+.results-sheet-side img {
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  will-change: transform;
+}
+
+.results-sheet-overlay-closed
+  .results-sheet-side {
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   Scrollbar
+   ========================================================= */
+
+.results-sheet-inner::-webkit-scrollbar {
+  width: 7px;
+}
+
+.results-sheet-inner::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.results-sheet-inner::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background-color: #cbbaee;
+}
+
+
+/* =========================================================
+   Medium Width Screens
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .results-sheet-panel {
+    width: 82vw;
+  }
+
+  .results-sheet-title {
+    padding-right: 290px;
+  }
+
+  .results-sheet-observation {
+    width: 320px;
+  }
+
+  .results-sheet-row {
+    grid-template-columns:
+      minmax(130px, 1.4fr)
+      minmax(100px, 1fr)
+      minmax(100px, 1fr)
+      minmax(90px, 0.9fr)
+      minmax(90px, 0.9fr);
+  }
+
+  .results-sheet-row > div {
+    padding: 7px 10px;
+
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   Smaller Screens
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .results-sheet-panel {
+    width: 88vw;
+    height: 90vh;
+  }
+
+  .results-sheet-inner {
+    padding:
+      65px 18px 20px;
+  }
+
+  .results-sheet-title {
+    padding-right: 0;
+
+    margin-bottom: 145px;
+  }
+
+  .results-sheet-observation {
+    top: 165px;
+    left: 18px;
+    right: auto;
+
+    width: calc(100% - 36px);
+  }
+
+  .results-sheet-table {
+    overflow-x: auto;
+  }
+
+  .results-sheet-row {
+    min-width: 720px;
+  }
+}
+
+
+/* =========================================================
+   Medium Height Screens
+   ========================================================= */
+
+@media (max-height: 800px) {
+  .results-sheet-panel {
+    height: 94vh;
+  }
+
+  .results-sheet-inner {
+    padding-top: 52px;
+  }
+
+  .results-sheet-header {
+    height: 62px;
+  }
+
+  .results-sheet-header h1 {
+    font-size: 24px;
+  }
+
+  .results-sheet-title h1 {
+    font-size: 25px;
+  }
+
+  .results-sheet-title p {
+    font-size: 14px;
+  }
+
+  .results-sheet-row {
+    min-height: 42px;
+
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .results-sheet-row > div {
+    padding: 6px 10px;
+
+    font-size: 15px;
+  }
+
+  .results-sheet-calculation {
+    margin-top: 12px;
+
+    padding: 12px 16px;
+  }
+
+  .results-sheet-button {
+    height: 44px;
+
+    margin-top: 12px;
+  }
+}

@@ -1,0 +1,807 @@
+/* =========================================================
+   SULFAMIC ACID SUMMARY
+   ========================================================= */
+
+.sulfamic-summary-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  background: transparent;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+
+  transition:
+    background-color 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.sulfamic-summary-overlay *,
+.sulfamic-summary-overlay *::before,
+.sulfamic-summary-overlay *::after {
+  box-sizing: border-box;
+}
+
+.sulfamic-summary-overlay-open {
+  background: rgba(14, 11, 35, 0.6);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.sulfamic-summary-overlay-closed {
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.sulfamic-summary-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(92vw, 1500px);
+  height: min(88vh, 890px);
+
+  padding: 76px 30px 26px;
+
+  overflow: hidden;
+
+  border: 9px solid #ffcb4d;
+  border-radius: 30px;
+
+  background: #ffffff;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   TOP TAB
+   ========================================================= */
+
+.sulfamic-summary-tab {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(30vw, 430px);
+  min-width: 260px;
+  height: 67px;
+
+  transform: translateX(-50%);
+
+  border-radius: 0 0 38px 38px;
+
+  background: #ffcb4d;
+
+  color: #2d1979;
+
+  font-size: clamp(24px, 2vw, 34px);
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   SIDE TOGGLE
+   ========================================================= */
+
+.sulfamic-summary-side-toggle {
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 145px;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 0 20px 20px 0;
+
+  background: #ffcb4d;
+
+  cursor: pointer;
+}
+
+.sulfamic-summary-side-toggle:hover {
+  background: #f0b52d;
+}
+
+.sulfamic-summary-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.sulfamic-summary-layout {
+  display: grid;
+  grid-template-columns: minmax(285px, 0.78fr) minmax(0, 1.45fr);
+  gap: clamp(20px, 2.2vw, 36px);
+
+  flex: 1;
+  min-height: 0;
+}
+
+
+/* =========================================================
+   LEFT RESULT CARD
+   ========================================================= */
+
+.sulfamic-result-card {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  border: 2px solid #a78aff;
+  border-radius: 18px;
+
+  background: #fbf9ff;
+}
+
+.sulfamic-result-header {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 13px;
+
+  min-height: 59px;
+  padding: 11px 21px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+}
+
+.sulfamic-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 31px;
+  height: 31px;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  font-size: 16px;
+}
+
+.sulfamic-result-header h2 {
+  margin: 0;
+
+  font-size: clamp(18px, 1.45vw, 25px);
+  font-weight: 800;
+}
+
+.sulfamic-image-area {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 145px;
+
+  padding: 14px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #faf7ff 63%,
+      #f0ebff 100%
+    );
+}
+
+.sulfamic-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.sulfamic-titre-display {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  padding: 9px 13px;
+
+  border: 2px solid #dbcfff;
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #351c7c;
+}
+
+.sulfamic-titre-display span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sulfamic-titre-display strong {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.sulfamic-titre-display small {
+  font-size: 13px;
+}
+
+.sulfamic-titre-display p {
+  margin: 0;
+
+  color: #59657b;
+
+  font-size: 11px;
+}
+
+.sulfamic-label {
+  flex-shrink: 0;
+
+  width: calc(100% - 50px);
+  min-height: 45px;
+  margin: 11px auto 8px;
+  padding: 9px 18px;
+
+  border-radius: 13px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+
+  font-size: clamp(15px, 1.25vw, 21px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.sulfamic-result-text {
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 5px 25px 12px;
+
+  color: #21165e;
+
+  font-size: clamp(13px, 1.05vw, 17px);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.sulfamic-mass-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding: 0 20px 11px;
+}
+
+.sulfamic-mass-grid div {
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px;
+
+  border: 1px solid #d8cbfb;
+  border-radius: 10px;
+
+  background: #f7f4ff;
+
+  color: #351c7c;
+
+  text-align: center;
+}
+
+.sulfamic-mass-grid span {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sulfamic-mass-grid strong {
+  margin-top: 3px;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.sulfamic-mass-grid .sulfamic-mass-final {
+  grid-column: 1 / -1;
+
+  border-color: #b995ff;
+
+  background: #eee6ff;
+}
+
+.sulfamic-equation-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  flex-shrink: 0;
+
+  margin: 0 15px 15px;
+  padding: 9px;
+
+  border: 1px solid #d5c6f6;
+  border-radius: 11px;
+
+  background: #f3effd;
+
+  color: #351c7c;
+
+  font-size: clamp(10px, 0.9vw, 14px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.sulfamic-arrow {
+  margin: 0 4px;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+   ========================================================= */
+
+.sulfamic-summary-content {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow-y: auto;
+
+  padding-right: 5px;
+}
+
+.sulfamic-summary-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.sulfamic-summary-content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #c8b9f1;
+}
+
+.sulfamic-summary-card {
+  border: 2px solid #b9dfbb;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      115deg,
+      #eaffe9,
+      #f4fff1
+    );
+
+  color: #21165e;
+}
+
+.sulfamic-aim-card {
+  flex-shrink: 0;
+
+  padding: clamp(18px, 1.8vw, 25px) clamp(20px, 2.3vw, 35px);
+}
+
+.sulfamic-summary-card h2 {
+  margin: 0;
+
+  font-size: clamp(21px, 1.8vw, 30px);
+  font-weight: 800;
+}
+
+.sulfamic-heading-line {
+  width: 76px;
+  height: 5px;
+
+  margin: 8px 0 14px;
+
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+.sulfamic-summary-card p {
+  margin: 0;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.45;
+}
+
+.sulfamic-aim-card p {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 13px;
+}
+
+.sulfamic-middle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(250px, 0.95fr);
+  gap: 16px;
+
+  flex-shrink: 0;
+
+  margin-top: 16px;
+}
+
+.sulfamic-learned-card,
+.sulfamic-observation-card {
+  padding: clamp(18px, 1.8vw, 26px);
+}
+
+.sulfamic-summary-card ul {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.sulfamic-summary-card li {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  color: #273044;
+
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.35;
+}
+
+.sulfamic-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 25px;
+  height: 25px;
+
+  border-radius: 50%;
+
+  background: #16ad52;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.sulfamic-observation-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.sulfamic-observation-list div {
+  display: flex;
+  flex-direction: column;
+
+  padding: 9px 11px;
+
+  border-left: 4px solid #a88cff;
+  border-radius: 0 9px 9px 0;
+
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.sulfamic-observation-list strong {
+  color: #351c7c;
+
+  font-size: clamp(13px, 1vw, 16px);
+}
+
+.sulfamic-observation-list span {
+  margin-top: 2px;
+
+  color: #4f5a6d;
+
+  font-size: clamp(12px, 0.9vw, 14px);
+  line-height: 1.3;
+}
+
+.sulfamic-conclusion-card {
+  flex-shrink: 0;
+
+  margin-top: 16px;
+  padding: clamp(18px, 1.8vw, 25px) clamp(20px, 2.3vw, 35px);
+}
+
+.sulfamic-conclusion-card strong {
+  color: #351c7c;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.sulfamic-summary-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+
+.sulfamic-summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 145px;
+  min-height: 49px;
+  padding: 10px 21px;
+
+  border-radius: 999px;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: clamp(15px, 1.15vw, 19px);
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.sulfamic-summary-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 17px rgba(65, 36, 145, 0.22);
+}
+
+.sulfamic-summary-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.sulfamic-result-button,
+.sulfamic-questions-button {
+  border: 3px solid #4e2a9b;
+
+  background: #ffffff;
+
+  color: #4e2a9b;
+}
+
+.sulfamic-result-button:hover,
+.sulfamic-questions-button:hover {
+  background: #f5efff;
+}
+
+.sulfamic-finish-button {
+  gap: 10px;
+
+  border: 3px solid #4e2a9b;
+
+  background: #4e2a9b;
+
+  color: #ffffff;
+}
+
+.sulfamic-finish-button span {
+  font-family: Arial, sans-serif;
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 0.5;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .sulfamic-summary-overlay {
+    align-items: flex-start;
+
+    overflow-y: auto;
+  }
+
+  .sulfamic-summary-container {
+    width: min(94vw, 820px);
+    height: auto;
+    min-height: 90vh;
+
+    margin: 20px 0;
+
+    overflow: visible;
+  }
+
+  .sulfamic-summary-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sulfamic-result-card {
+    min-height: 560px;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  .sulfamic-image-area {
+    min-height: 285px;
+  }
+
+  .sulfamic-summary-content {
+    overflow: visible;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .sulfamic-summary-overlay {
+    padding: 10px;
+  }
+
+  .sulfamic-summary-container {
+    width: 100%;
+    min-height: auto;
+
+    padding: 66px 14px 18px;
+
+    border-width: 6px;
+    border-radius: 22px;
+  }
+
+  .sulfamic-summary-tab {
+    width: 68vw;
+    min-width: 0;
+    height: 56px;
+
+    border-radius: 0 0 28px 28px;
+
+    font-size: 24px;
+  }
+
+  .sulfamic-summary-side-toggle {
+    right: -42px;
+
+    width: 42px;
+    height: 104px;
+
+    border-radius: 0 14px 14px 0;
+  }
+
+  .sulfamic-summary-side-toggle img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sulfamic-result-card {
+    min-height: 510px;
+  }
+
+  .sulfamic-result-header h2 {
+    font-size: 20px;
+  }
+
+  .sulfamic-image-area {
+    min-height: 225px;
+  }
+
+  .sulfamic-titre-display {
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .sulfamic-label {
+    width: calc(100% - 34px);
+
+    font-size: 16px;
+  }
+
+  .sulfamic-result-text {
+    padding: 5px 18px 12px;
+
+    font-size: 14px;
+  }
+
+  .sulfamic-middle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sulfamic-aim-card,
+  .sulfamic-learned-card,
+  .sulfamic-observation-card,
+  .sulfamic-conclusion-card {
+    padding: 19px;
+  }
+
+  .sulfamic-summary-card h2 {
+    font-size: 25px;
+  }
+
+  .sulfamic-summary-card p,
+  .sulfamic-summary-card li {
+    font-size: 15px;
+  }
+
+  .sulfamic-summary-actions {
+    flex-direction: column-reverse;
+  }
+
+  .sulfamic-summary-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 53px;
+
+    font-size: 18px;
+  }
+}

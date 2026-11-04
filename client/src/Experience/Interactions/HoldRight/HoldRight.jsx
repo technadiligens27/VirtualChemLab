@@ -1,0 +1,778 @@
+import { useContext, useEffect, useRef } from "react"
+import { useFrame, useThree } from "@react-three/fiber"
+import * as THREE from "three"
+
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
+
+import PouringMode from "../PouringMode/PouringMode"
+import FillUpBeaker from "../FillUpBeaker/FillUpBeaker"
+import StirMode from "../StirMode/StirMode"
+import LitmusMode from "../LitmusMode/LitmusMode"
+import FoldFilter from "../FoldFilter/FoldFilter"
+import PlaceFilterFunnel from "../PlaceFilterFunnel/PlaceFilterFunnel"
+import FunnelMode from "../FunnelMode/FunnelMode"
+import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import LiquidLabels from "../../../UI/LiquidLabels/LiquidLabels"
+import { TransformControls } from "@react-three/drei"
+import DropperPlaced from "../DropperPlaced/DropperPlaced"
+import DropperScrollAnimation from "../DropperScrollAnimation/DropperScrollAnimation"
+import { ReactionContext } from "../../../Contexts/ReactionContext/ReactionContext"
+import PlacePolysterene from "../PlacePolysterene/PlacePolysterene"
+import PourIntoTestubeFromSpoon from "../PourIntoTestubeFromSpoon/PourIntoTestubeFromSpoon"
+import PipetteRubberAnimation from "../PipetteRubberAnimation/PipetteRubberAnimation"
+import VolumetricPipetteMode from "../VolumetricPipetteMode/VolumetricPipetteMode"
+import VolumetricRubberAnimation from "../VolumetricRubberAnimation/VolumetricRubberAnimation"
+import InvertModel from "../InvertModel/InvertModel"
+import ReleaseGasBubbles from "../../ReleaseGasBubbles/ReleaseGasBubbles"
+const HoldRight = ({ modeldata }) => {
+  const {
+    isFillUpBeaker,
+    fillBeakerHand,
+
+    selectedRightHand,
+    selectedLeftHand,
+
+    isStirMode,
+    isLitmusMode,
+
+    leftBeakerFillData,
+
+    isFilterFolded,
+    isFilterInFunnel,
+
+    isFunnelMode,
+    selectedModelRight,isDropperPlaced,
+    isDropperFilled, 
+    setIsPlacePolysterene,isPlacePolysterene,isPourIntoTestube,
+    isPottasiumCarobnateInSpoon,isPouringMode,isVolumetricPipetteMode
+  } = useContext(InteractionContext)
+
+  const {
+    filterFoldedPaperRef,
+    filterPaperRef,
+    funnelRef,graduatedPipetteRef,
+    spoonRef,volumetricRef,seperatingFunnelRef
+  } = useContext(ModelContext)
+
+  const {lessonStep,isMainGuideline,setLessonStep,selectedLesson,isTutorialMode,
+    setSelectedLesson
+  } = useContext(MainGuidelineContext)
+
+  const {isReactionRef} = useContext(ReactionContext)
+
+
+  const { camera, gl, scene } = useThree()
+const transformControlsRef = useRef()
+  useEffect(()=>{
+    selectedModelRight.current = modeldata.ref.current
+  },[])
+
+  const defaultOffsetRef = useRef(new THREE.Vector3(4.5, -0.5, -5))
+  const rotationZRef = useRef(0)
+
+  const raycasterRef = useRef(new THREE.Raycaster())
+  const mouseRef = useRef(new THREE.Vector2())
+
+  const isDraggingRef = useRef(false)
+  const previousMouseRef = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const canvas = gl.domElement
+
+    const handleMouseDown = (e) => {
+      if (!modeldata?.ref?.current) return
+
+      const rect = canvas.getBoundingClientRect()
+
+      mouseRef.current.x =
+        ((e.clientX - rect.left) / rect.width) * 2 - 1
+
+      mouseRef.current.y =
+        -((e.clientY - rect.top) / rect.height) * 2 + 1
+
+      raycasterRef.current.setFromCamera(mouseRef.current, camera)
+
+      const hits = raycasterRef.current.intersectObject(
+        modeldata.ref.current,
+        true
+      )
+
+      if (hits.length === 0) return
+
+      isDraggingRef.current = true
+      previousMouseRef.current = { x: e.clientX, y: e.clientY }
+    }
+
+    const handleWheel = (e) => {
+      // When Funnel Mode is active, wheel should only control FunnelMode Y height
+      if (isFunnelMode) return
+      if(selectedRightHand) return
+
+      e.preventDefault()
+
+      const maxRotation = Math.PI / 5
+
+      if (e.deltaY > 0) {
+        rotationZRef.current = Math.min(
+          rotationZRef.current + 0.15,
+          maxRotation
+        )
+      } else {
+        rotationZRef.current = Math.max(
+          rotationZRef.current - 0.15,
+          -maxRotation
+        )
+      }
+    }
+
+    canvas.addEventListener("mousedown", handleMouseDown)
+    window.addEventListener("wheel", handleWheel, {
+      passive: false,
+    })
+
+    return () => {
+      canvas.removeEventListener("mousedown", handleMouseDown)
+      window.removeEventListener("wheel", handleWheel)
+    }
+  }, [camera, gl, modeldata, isFunnelMode, selectedRightHand])
+
+  useEffect(() => {
+    if (!modeldata?.ref?.current) return
+
+    if (!scene.children.includes(camera)) {
+      scene.add(camera)
+    }
+
+    const object = modeldata.ref.current
+
+    camera.add(object)
+
+    object.position.copy(defaultOffsetRef.current)
+    object.rotation.set(0, 0, 0)
+    
+      if (object.name === "main-normal-beaker") {
+        object.rotation.y = Math.PI // 180 degrees
+        object.scale.set(0.8, 0.8, 0.8);
+      }
+    else if (object.name === "main-spoon") {
+      object.rotation.set(
+        -1.4285088984579244,
+        -0.30110700753116976,
+        -1.0212733683935664
+      )
+      object.scale.set(1, 1, 1);
+      object.position.x =3.5
+    } else if (
+      object.name === "main-red-litmus" ||
+      object.name === "main-blue-litmus"
+    ) {
+      object.rotation.x = Math.PI / 2
+      object.scale.set(1.5, 1.5, 1.5)
+    } else if (
+      object.name === "main-testube-01" ||
+      object.name === "main-testube-02" ||
+      object.name === "main-testube-03" ||
+      object.name === "main-testube-04" ||
+      object.name === "main-testube-05" ||
+      object.name === "main-testube-06"    
+    ) {
+      object.scale.set(1.5, 1.5, 1.5)
+    } else if (object.name === "main-filter-paper") {
+      object.scale.set(1.3, 1.3, 1.3)
+      object.rotation.x = Math.PI / 3
+      object.rotation.z = -2
+    }else if (object.name === "main-graduated-cylinder") {
+      object.scale.set(1, 1.2, 1)
+      // object.rotation.x = Math.PI / 3
+      // object.rotation.z = -2
+    }else if(object.name === "main-buirette"){
+      object.scale.set(0.9, 0.9, 0.9);
+      object.position.y+=1
+      
+    }else if(object.name === "pipette"){
+      object.scale.set(1.1, 1.8, 1.1);
+      
+    }else if(object.name === "mainThermometer"){
+      object.scale.set(1.3, 1.3, 1.3);
+      
+    }else if(object.name === "kettle"){
+      object.scale.set(0.75, 0.75, 0.75);
+      
+    }else if(object.name === "graduated-pipette"){
+      object.scale.set(0.8, 0.8, 0.8);
+
+    }else if(object.name === "volumetric-flask"){
+      object.scale.set(1, 1, 1);
+
+    }else if(object.name === "metal-salt-container"){
+      object.scale.set(0.8, 0.8, 0.8);
+    } 
+    
+    else {
+      object.scale.set(1, 1, 1)
+    }
+
+    object.visible = true
+    object.frustumCulled = false
+  }, [camera, scene, modeldata])
+
+ 
+  const isLitmus = (name) => name?.toLowerCase().includes("litmus");
+
+  useEffect(()=>{
+    if(selectedLesson ===15 && lessonStep ===6){
+      setLessonStep(7)
+    }
+    if(selectedLesson ==15 && lessonStep==25){
+      setLessonStep(26)
+      setSelectedLesson(15.2)
+    }
+
+
+  },[lessonStep,selectedLesson])    
+
+  useEffect(()=>{
+    if(selectedLesson ===14.1 && lessonStep ===62){
+      setLessonStep(63)
+    }
+  },[lessonStep,selectedLesson])  
+  useEffect(()=>{
+    if(selectedLesson ===14.1 && lessonStep ===44){
+      setLessonStep(45)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(selectedLesson ===13 && lessonStep ===3.1){
+      setLessonStep(3.2)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(selectedLesson ===13 && lessonStep ===5){
+      setLessonStep(6)
+    }
+  },[lessonStep,selectedLesson])
+  
+  useEffect(()=>{
+    if(selectedLesson ===13 && lessonStep ===16){
+      setLessonStep(17)
+    }
+  },[lessonStep,selectedLesson])  
+    
+  
+  useEffect(()=>{
+    if(selectedLesson ===8 && lessonStep ===5){
+      setLessonStep(6)
+    }
+  },[lessonStep,selectedLesson])
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===30){
+      setLessonStep(31)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===32){
+      setLessonStep(34)
+    }
+  },[selectedLesson,lessonStep,])
+
+
+  useEffect(()=>{
+    if(selectedLesson ===8 && lessonStep ===21){
+      setLessonStep(22)
+    }
+  },[lessonStep,selectedLesson])
+
+  useEffect(()=>{
+    if(selectedLesson===8 && lessonStep ===9){
+      setLessonStep(10)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===4){
+      setLessonStep(5)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===12 && lessonStep ===7){
+      setLessonStep(8)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===12.1 && lessonStep ===22){
+      setLessonStep(23)
+    }
+  },[selectedLesson,lessonStep])  
+
+  useEffect(()=>{
+    if(selectedLesson===12.1 && lessonStep ===26){
+      setLessonStep(27)
+    }
+  },[selectedLesson,lessonStep])  
+
+    
+  // General step change
+
+  // useEffect(()=>{
+  //   if(lessonStep===6 && isMainGuideline && selectedLesson !==8 && selectedLesson !==10){
+  //     setLessonStep(7)
+  //   }
+  // },[lessonStep,isMainGuideline])
+
+  useEffect(()=>{
+    if(lessonStep===4 && selectedLesson===8 && isTutorialMode){
+      setLessonStep(5)
+    }
+  },[lessonStep,isMainGuideline])
+
+  useEffect(()=>{
+    if(lessonStep===3 && selectedLesson===9 ){
+      setLessonStep(4)
+    }
+  },[lessonStep,isMainGuideline])
+
+  useEffect(()=>{
+    if(lessonStep===7 && selectedLesson===9 ){
+      setLessonStep(8)
+    }
+  },[lessonStep,isMainGuideline]) 
+
+  useEffect(()=>{
+    if(lessonStep===110 && selectedLesson===14.3 ){
+      setLessonStep(111)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(lessonStep===94 && selectedLesson===14.3 ){
+      setLessonStep(95)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(lessonStep===34 && selectedLesson===14.1 ){
+      setLessonStep(35)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===26 && selectedLesson===14.1 ){
+      setLessonStep(27)
+    }
+  },[lessonStep,selectedLesson])  
+  useEffect(()=>{
+    if(lessonStep===19 && selectedLesson===9 ){
+      setLessonStep(20)
+    }
+  },[lessonStep,selectedLesson])  
+
+  useEffect(()=>{
+    if(lessonStep===28 && selectedLesson===9 ){
+      setLessonStep(29)
+    }
+  },[lessonStep,selectedLesson])
+  
+   useEffect(()=>{
+    if(lessonStep===3 && selectedLesson===14 ){
+      setLessonStep(4)
+    }
+  },[lessonStep,selectedLesson]) 
+  useEffect(()=>{
+    if(lessonStep===30 && selectedLesson===9 ){
+      setLessonStep(31)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===12 && selectedLesson===10 ){
+      setLessonStep(13)
+    }
+  },[lessonStep,selectedLesson])     
+
+  useEffect(()=>{
+    if(lessonStep===19 && selectedLesson===10 ){
+      setLessonStep(20)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===42 && selectedLesson===10 ){
+      setLessonStep(43)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===76 && selectedLesson===10 ){
+      setLessonStep(77)
+    }
+  },[lessonStep,selectedLesson]) 
+
+  useEffect(()=>{
+    if(lessonStep===84 && selectedLesson===10 ){
+      setLessonStep(85)
+    }
+  },[lessonStep,selectedLesson])   
+
+  useEffect(()=>{
+    if(lessonStep===86 && selectedLesson===10 ){
+      console.log("87")
+      setLessonStep(87)
+    }
+  },[lessonStep,selectedLesson])
+  
+  useEffect(()=>{
+    if(lessonStep===92 && selectedLesson===10 ){
+      setLessonStep(93)
+    }
+  },[lessonStep,selectedLesson]) 
+  
+  useEffect(()=>{
+    if(lessonStep===96 && selectedLesson===10 ){
+      setLessonStep(97)
+    }
+  },[lessonStep,selectedLesson]) 
+  
+    useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===102){
+      setLessonStep(103)
+    }
+  },[selectedLesson,lessonStep])
+  
+  
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep ===104){
+      setLessonStep(105)
+    }
+  },[selectedLesson,lessonStep])   
+
+   useEffect(()=>{
+    if(selectedLesson===11 && lessonStep ===3){
+      setLessonStep(4)
+    }
+  },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===11 && lessonStep===12){
+      setLessonStep(13)
+    }
+  },[selectedLesson,lessonStep])
+
+  useEffect(()=>{
+    if(selectedLesson===11 && lessonStep===40){
+      setLessonStep(41)
+    }
+  },[selectedLesson,lessonStep])
+  
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===53){
+      setLessonStep(54)
+    }
+  },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===55){
+      setLessonStep(56)
+    }
+  },[selectedLesson,lessonStep]) 
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===63){
+      setLessonStep(66)
+    }
+  },[selectedLesson,lessonStep])   
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===72){
+      setLessonStep(73)
+    }
+  },[selectedLesson,lessonStep])  
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===89){
+      setLessonStep(90)
+    }
+  },[selectedLesson,lessonStep])    
+
+  useEffect(()=>{
+    if(selectedLesson===12.2 && lessonStep===96){
+      setLessonStep(97)
+    }
+  },[selectedLesson,lessonStep])    
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep===85){
+      setLessonStep(86)
+    }
+  },[selectedLesson,lessonStep])   
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==115){
+      setLessonStep(116)
+    }
+  },[selectedLesson,lessonStep]) 
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==127){
+      setLessonStep(128)
+    }
+  },[selectedLesson,lessonStep]) 
+  
+  useEffect(()=>{
+    if(selectedLesson===14.3 && lessonStep==133){
+      setLessonStep(134)
+      setSelectedLesson(14.4)
+    }
+    if(selectedLesson ==14.4 && lessonStep==141){
+      setLessonStep(142)
+    }
+    if(selectedLesson ==14.4 && lessonStep==147){
+      setLessonStep(148)
+    }
+
+
+
+
+  },[selectedLesson,lessonStep])  
+
+  useEffect(() => {
+  const handleKeyDown = (event) => {
+    if (event.code === "KeyP") {
+
+      if(selectedLesson==12 && lessonStep==18){
+        setLessonStep(19)
+      }
+
+      if(selectedLesson==12.2 && lessonStep==56){
+        setLessonStep(57)
+      }
+
+      if(selectedLesson==12.1 && lessonStep==27){
+        setLessonStep(28)
+      }
+
+      if(selectedLesson==12.1 && lessonStep==33){
+        setLessonStep(34)
+      }
+
+      if(selectedLesson==12.1 && lessonStep==39){
+        setLessonStep(40)
+      }
+
+      if(selectedLesson==14.3 && lessonStep==95){
+        setLessonStep(96)
+      }
+
+      if(selectedLesson ==14.3 && lessonStep==111){
+        setLessonStep(112)
+      }
+      if(selectedLesson ==14.3 && lessonStep==130){
+        setLessonStep(131)
+      }
+
+      if(selectedLesson===11 && lessonStep === 20){
+        setLessonStep(21)
+      }
+      if(selectedLesson===15 && lessonStep === 10){
+        setLessonStep(11)
+      }
+
+      if(selectedLesson===10 && lessonStep === 5){
+        setLessonStep(6)
+      }
+ 
+      if(selectedLesson===10 && lessonStep === 22){
+        setLessonStep(23)
+      }
+      if(selectedLesson===10 && lessonStep === 29){
+        setLessonStep(30)
+      }
+    }
+  }
+
+  window.addEventListener(
+    "keydown",
+    handleKeyDown
+  )
+
+  return () => {
+    window.removeEventListener(
+      "keydown",
+      handleKeyDown
+    )
+  }
+},[selectedLesson,lessonStep,setLessonStep])
+
+  return (
+    <>
+      {isFillUpBeaker && fillBeakerHand === "right" && selectedRightHand && (
+        <FillUpBeaker
+          beakerRef={selectedRightHand.ref}
+          hand="right"
+        />
+      )}
+
+      {!isStirMode &&
+        selectedLeftHand &&
+        selectedRightHand && 
+        !isFunnelMode &&  ![14.3,11,12,12.1,12.2,14.4,15,10].includes(selectedLesson) &&
+        
+        (
+          <PouringMode hand="right" />
+      )}
+
+      
+         
+
+      {isStirMode &&
+        selectedRightHand?.name === "main-spoon" &&
+        selectedLeftHand && (
+          <StirMode
+            spoonRef={selectedRightHand.ref}
+            beakerRef={selectedLeftHand.ref}
+            hand="right"
+          />
+      )}
+
+      {isLitmusMode &&
+        selectedLeftHand &&
+        selectedRightHand &&
+        isLitmus(selectedRightHand.name) && (
+          <LitmusMode
+            litmusRef={selectedRightHand.ref}
+            beakerRef={selectedLeftHand.ref}
+            hand="right"
+            beakerFillData={leftBeakerFillData}
+          />
+        )}
+
+      {isFilterFolded && (
+        <FoldFilter
+          filterPaperRef={filterPaperRef}
+          filterFoldedPaperRef={filterFoldedPaperRef}
+        />
+      )}
+
+      {isFilterInFunnel &&
+        selectedRightHand?.name === "main-folded-paper" &&
+        selectedLeftHand?.name === "main-funnel" && (
+          <PlaceFilterFunnel
+            foldedFilterRef={filterFoldedPaperRef}
+            funnelRef={funnelRef}
+            hand="right"
+          />
+        )}
+
+      
+
+      {
+        isDropperPlaced && <DropperPlaced hand='right' beakerRef={selectedLeftHand.ref}/>
+      }
+
+      {(selectedRightHand?.name === "main-dropper" || isDropperPlaced) && <DropperScrollAnimation hand={'right'}/>}
+
+
+      {isPlacePolysterene && selectedRightHand?.name === "mainPolysterene" && ( <PlacePolysterene hand="right" beakerRef={selectedLeftHand.ref} polystereneRef={selectedRightHand.ref}/>)}
+
+
+      { isPourIntoTestube && 
+        selectedLeftHand?.name === "main-testube-01" && (
+          <PourIntoTestubeFromSpoon
+            testubeRef={selectedLeftHand.ref}
+            spoonRef={spoonRef}
+            hand="right"
+            heightOffset={0.6}
+            xOffset={0.7}
+          />
+        )
+      }
+
+      { isPourIntoTestube && 
+        selectedLeftHand?.name === "main-Conical-Flask-02" && (
+          <PourIntoTestubeFromSpoon
+            testubeRef={selectedLeftHand.ref}
+            spoonRef={spoonRef}
+            hand="right"
+            heightOffset={0.6}
+            xOffset={0.7}
+          />
+        )
+      }      
+
+
+      { isPourIntoTestube && 
+        selectedLeftHand?.name === "main-testube-03" && (
+          <PourIntoTestubeFromSpoon
+            testubeRef={selectedLeftHand.ref}
+            spoonRef={spoonRef}
+            hand="right"
+            heightOffset={0.6}
+            xOffset={0.8}
+          />
+        )
+      }      
+
+      {
+        selectedRightHand.name==='pipette' && <PipetteRubberAnimation/>
+      }  
+
+      {
+        selectedRightHand.name==='graduated-pipette' && <PipetteRubberAnimation modelRef={graduatedPipetteRef}/>
+      }  
+      {
+        selectedRightHand?.name === 'volumetric-pipette' && <VolumetricRubberAnimation/>
+      }
+      {
+       selectedLesson===11 && ([24,25,26,27,28,29].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask' && !isVolumetricPipetteMode && <InvertModel modelRef={volumetricRef}/>
+      }
+
+      {
+       selectedLesson===12.1 && ([44,45,46,47,48,49].includes(lessonStep)) && selectedRightHand?.name === 'volumetric-flask'  && <InvertModel modelRef={volumetricRef}/>
+      }
+
+      {selectedLesson==14.1 && lessonStep ==53.1 && <ReleaseGasBubbles 
+      sidewaysMovement={0.1} 
+      loopTimes={2}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+       
+       />}
+
+      {selectedLesson==14.1 && lessonStep ==56.1 && <ReleaseGasBubbles 
+      loopTimes={1}
+       bubblePercentage={70}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+      sidewaysMovement={0.1}
+      />}
+      {selectedLesson==14.2 && lessonStep ==73 && <ReleaseGasBubbles 
+      loopTimes={1}
+       bubblePercentage={60}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+      sidewaysMovement={0.1}
+      />}
+
+      {selectedLesson==14.2 && lessonStep ==77 && <ReleaseGasBubbles 
+      loopTimes={1}
+       bubblePercentage={40}
+       modelRef={seperatingFunnelRef}
+       minimumSpeed={0.5}
+      maximumSpeed={0.8}
+      sidewaysMovement={0.1}
+      />}
+
+
+  </>
+  )
+}
+
+export default HoldRight

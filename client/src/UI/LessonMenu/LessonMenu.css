@@ -1,0 +1,441 @@
+.lesson-container {
+    width: 70%;
+    height: 70%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #F0C13F;
+
+    border-radius: 42.61px;
+}
+
+.lesson-inner-container {
+    position: relative;
+
+    width: 95%;
+    height: 75%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    margin-bottom: 25px;
+    padding: 0;
+
+    background-color: #FCF5E0;
+
+    border-radius: 33.91px;
+
+    /* Hides lessons while sliding outside */
+    overflow: hidden;
+}
+
+.select-lesson-container {
+    margin: auto;
+
+    padding: 0 0 0 20px;
+}
+
+.select-lesson-container h1 {
+    height: 70px;
+
+    margin: 0;
+    padding: 0;
+
+    color: white;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 55px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.select-lesson-container p {
+    margin: 0;
+    padding: 0;
+
+    color: white;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.lesson-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    will-change: transform, opacity;
+}
+
+.lesson-btn {
+    position: relative;
+
+    width: 280px;
+    height: 350px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    padding: 10px;
+
+    overflow: hidden;
+
+    background-color: #FEFEFE;
+
+    border: 3px solid #D2D0D0;
+    border-radius: 35.33px;
+
+    cursor: pointer;
+
+    gap: 10px;
+
+    transition: 0.25s ease;
+
+    /* Stops cards from becoming smaller */
+    flex-shrink: 0;
+}
+
+.lesson-btn:hover {
+    background-color: #f3e9d3;
+
+    border-color: #FFCC40;
+
+    transform: translateY(-6px);
+}
+
+.lesson-btn img {
+    max-width: 70%;
+    max-height: 100px;
+
+    object-fit: contain;
+}
+
+.divider {
+    width: 100px;
+
+    margin-top: -10px;
+
+    border: 2px solid #FFB80C;
+}
+
+.green {
+    border-color: #32B458;
+}
+
+.purple {
+    border-color: #7A3FBF;
+}
+
+.blue {
+    border-color: blue;
+}
+
+.red {
+    border-color: rgb(255, 49, 49);
+}
+
+.yellow {
+    border-color: #F0B90B;
+}
+
+.coral-orange {
+    border-color: #FF6B3D;
+}
+
+.lesson-name {
+    margin: 10px 0 6px;
+
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.lesson-text {
+    margin: 8px 4px 0;
+
+    font-size: 16px;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.number-container {
+    position: absolute;
+
+    top: 3%;
+    left: 5%;
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #F0C13F;
+
+    border-radius: 50%;
+}
+
+.number {
+    margin: auto;
+
+    color: white;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* =========================================================
+   DIFFICULTY BARS
+========================================================= */
+
+.lesson-difficulty {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+
+    padding-top:10px;
+}
+
+.lesson-difficulty-name {
+    color: #675980;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.lesson-difficulty-bars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+}
+
+.lesson-difficulty-bar {
+    width: 22px;
+    height: 6px;
+
+    background: #E7E1EF;
+
+    border-radius: 30px;
+}
+
+.lesson-difficulty-easy
+.lesson-difficulty-bar-filled {
+    background: #32B458;
+}
+
+.lesson-difficulty-medium
+.lesson-difficulty-bar-filled {
+    background: #2384E8;
+}
+
+.lesson-difficulty-hard
+.lesson-difficulty-bar-filled {
+    background: #F0A51A;
+}
+
+/* =========================================================
+   LOCKED LESSON OVERLAY
+========================================================= */
+/* 
+.lesson-btn-locked {
+    cursor: not-allowed;
+} */
+
+.lesson-btn-locked:hover {
+    background-color: #FEFEFE;
+
+    border-color: #D2D0D0;
+
+    transform: none;
+}
+
+.lesson-lock-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        #333232;
+
+    opacity: 0.6;    
+
+    backdrop-filter: blur(1.5px);
+
+    z-index: 3;
+}
+
+.lesson-lock-overlay img {
+    width: 52px;
+    height: 52px;
+
+    max-width: none;
+    max-height: none;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 5px 8px
+            rgba(48, 25, 108, 0.24)
+        );
+}
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.arrow-left,
+.arrow-right {
+    position: absolute;
+
+    z-index: 5;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #BCBCBC;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.arrow-left {
+    left: 2%;
+}
+
+.arrow-right {
+    right: 2%;
+}
+
+.arrow-left img,
+.arrow-right img {
+    width: 40%;
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
+    background-color: #FFCC40;
+
+    transform: scale(1.1);
+}
+
+/* Moving to the next page */
+
+.slide-out-left {
+    pointer-events: none;
+
+    animation: slideOutLeft 0.3s ease forwards;
+}
+
+.slide-in-right {
+    pointer-events: none;
+
+    animation: slideInRight 0.35s ease forwards;
+}
+
+/* Moving to the previous page */
+
+.slide-out-right {
+    pointer-events: none;
+
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+.slide-in-left {
+    pointer-events: none;
+
+    animation: slideInLeft 0.35s ease forwards;
+}
+
+@keyframes slideOutLeft {
+    from {
+        opacity: 1;
+
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+
+        transform: translateX(-150px);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+
+        transform: translateX(150px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+
+        transform: translateX(150px);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+
+        transform: translateX(-150px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateX(0);
+    }
+}

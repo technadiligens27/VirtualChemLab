@@ -1,0 +1,1378 @@
+import {
+  useContext,
+  useEffect,
+} from "react"
+
+import {
+  InteractionContext,
+} from "../../Contexts/InteractionContext/InteractionContext"
+
+import {
+  MainGuidelineContext,
+} from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+import EnthalpyLessonOverview from "../EnthalpyLessonOverview.jsx/EnthalpyLessonOverview"
+import DialogBox from "../AllDialogBox/DialogBox/DialogBox"
+import HessLiveDataPanel from "../HessLiveDataPanel/HessLiveDataPanel"
+import HessGuidelines from "../HessGuidelines/HessGuidelines"
+import HessStartingTemperature from "../HessStartingTemperature/HessStartingTemperature"
+
+import {
+  enthalpyReactionData,
+} from "../Data/enthalpyReactionData/enthalpyReactionData"
+
+import QuestionCard from "../QuestionCard/QuestionCard"
+
+import {
+  useResetLesson,
+} from "../../UI/ResetLessonButton/ResetLessonButton.jsx"
+
+import {
+  ModelContext,
+} from "../../Contexts/ModelContext/ModelContext.jsx"
+import HessReactionOneResults from "../HessReactionOneResults/HessReactionOneResults.jsx"
+import SulfamicGuidelines from "../SulfamicGuidelines/SulfamicGuidelines.jsx"
+import HessReactionTwoResults from "../HessReactionTwoResults.jsx/HessReactionTwoResults.jsx"
+import EndothermicReactionSummary from "../Summary/EndothermicReactionSummary/EndothermicReactionSummary.jsx"
+import ApparatusOverview from "../ApparatusOverview/ApparatusOverview.jsx"
+
+
+const EnthalpyHessReaction02 = () => {
+  const {
+    isFillBeakerBoxOpen,
+
+    hessGuidelineNumber,
+    setHessGuidelineNumber,
+
+    showEnthalyResultTwo,
+    setShowEnthalyResultTwo,
+
+    setIsPotassiumTransferred,
+
+    selectedRightHand,
+    selectedLeftHand,
+
+    setSelectedRightHand,
+    setSelectedLeftHand,
+
+    setIsWeighTestube,
+
+    setIsPotassiumHydrogenCarbonateInSpoon,
+
+    setIsBuiretteClamped,
+
+    setIsPottasiumCarobnateInTestube01,
+
+    setIsPottasiumCarobnateInSpoon,
+
+    setIsBalancePlaced,
+
+    setIsClampInCenter,
+
+    setShowQuestionCardNo,
+    showQuestionCardNo,
+  } = useContext(
+    InteractionContext
+  )
+
+
+  const {
+    buretteOriginalStateRef,
+    mainBuiretteRef,
+  } = useContext(
+    ModelContext
+  )
+
+
+  const {
+    lessonStep,
+    selectedLesson,
+    setLessonStep,
+    setShowNormalBeakerArrow,setShowApparatus,showApparatus
+  } = useContext(
+    MainGuidelineContext
+  )
+
+
+  // =====================================================
+  // CLEAR OLD REACTION STATES
+  // =====================================================
+
+  // useEffect(() => {
+  //   setSelectedRightHand(null)
+
+  //   setSelectedLeftHand(null)
+
+  //   setIsPotassiumHydrogenCarbonateInSpoon(
+  //     false
+  //   )
+
+  //   setIsWeighTestube(
+  //     false
+  //   )
+
+  //   setIsPotassiumTransferred(
+  //     false
+  //   )
+
+  //   setIsPottasiumCarobnateInTestube01(
+  //     false
+  //   )
+
+  //   setIsPottasiumCarobnateInSpoon(
+  //     false
+  //   )
+
+  //   setIsBalancePlaced(
+  //     false
+  //   )
+
+  //   setIsBuiretteClamped(
+  //     false
+  //   )
+
+  //   setIsClampInCenter(
+  //     false
+  //   )
+  // }, [selectedLesson,lessonStep])
+
+
+  // =====================================================
+  // RESTORE BURETTE AFTER HANDS ARE CLEARED
+  // =====================================================
+
+  useEffect(() => {
+    if (
+      selectedLeftHand ||
+      selectedRightHand
+    ) {
+      return
+    }
+
+    const burette =
+      mainBuiretteRef.current
+
+    const original =
+      buretteOriginalStateRef.current
+
+    if (
+      !burette ||
+      !original
+    ) {
+      return
+    }
+
+    const frameId =
+      requestAnimationFrame(
+        () => {
+          // ==========================================
+          // RESTORE ORIGINAL PARENT
+          // ==========================================
+
+          if (
+            original.parent &&
+            burette.parent !==
+              original.parent
+          ) {
+            original.parent.add(
+              burette
+            )
+          }
+
+
+          // ==========================================
+          // RESTORE ORIGINAL POSITION
+          // ==========================================
+
+          burette.position.copy(
+            original.position
+          )
+
+
+          // ==========================================
+          // RESTORE ORIGINAL ROTATION
+          // ==========================================
+
+          burette.quaternion.copy(
+            original.quaternion
+          )
+
+
+          // ==========================================
+          // RESTORE ORIGINAL SCALE
+          // ==========================================
+
+          burette.scale.copy(
+            original.scale
+          )
+
+
+          burette.updateMatrix()
+
+          burette.updateMatrixWorld(
+            true
+          )
+
+
+          console.log(
+            "Burette restored to original position:",
+            burette.position
+          )
+        }
+      )
+
+
+    return () => {
+      cancelAnimationFrame(
+        frameId
+      )
+    }
+  }, [
+    selectedLeftHand,
+    selectedRightHand,
+  ])
+
+
+  // =====================================================
+  // GUIDELINE DATA
+  // =====================================================
+
+  const resetLesson =
+    useResetLesson()
+
+
+  const guidelineData = [
+    {
+      id: 1,
+
+      title:
+        "Prepare the Polystyrene Cup",
+
+      description:
+        "Place the polystyrene cup inside the normal beaker. The beaker supports the lightweight cup and helps keep it stable while the temperature change is measured.",
+
+      implementationSteps: [
+        "Pick up the normal beaker.",
+        "Pick up the polystyrene cup with the other hand.",
+        "Place the polystyrene cup inside the normal beaker.",
+        "Make sure the cup is positioned upright in the centre.",
+        "Keep the top of the polystyrene cup open for adding the reactants.",
+      ],
+
+      image:
+        "./polystyreneCupInBeaker.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+
+    {
+      id: 2,
+
+      title:
+        "Prepare the Potassium Hydrogencarbonate",
+
+      description:
+        "Transfer potassium hydrogencarbonate into a test tube so that its mass can be measured before it is added to the hydrochloric acid. The potassium hydrogencarbonate will react with the acid and produce the temperature change required for the Hess’s Law calculation.",
+
+      implementationSteps: [
+        "Pick up an empty test tube.",
+        "Pick up the spatula with the other hand.",
+        "Use the spatula to collect potassium hydrogencarbonate.",
+        "Carefully transfer the potassium hydrogencarbonate from the spatula into the test tube.",
+      ],
+
+      image:
+        "./TestubePottasiumAdd.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+
+    {
+      id: 3,
+
+      title:
+        "Weigh Test Tube and Potassium Hydrogencarbonate",
+
+      description:
+        "Measure and record the combined mass of the test tube and potassium hydrogencarbonate. This measurement will later be used to determine the exact mass of potassium hydrogencarbonate added to the hydrochloric acid.",
+
+      implementationSteps: [
+        "Place the digital balance in the centre of the workspace.",
+        "Place the test tube on the centre of the balance.",
+        "Wait until the balance reading becomes stable.",
+        "Record the combined mass of the test tube and potassium hydrogencarbonate.",
+        "Return the test tube to the table after recording the mass.",
+      ],
+
+      image:
+        "./weighTestube.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+
+    {
+      id: 4,
+
+      title:
+        "Add HCl Acid to the Polystyrene Cup",
+
+      description:
+        "Fill the burette with hydrochloric acid, secure it vertically in the clamp, and position the normal beaker containing the polystyrene cup beneath the burette. Deliver 30 cm³ of hydrochloric acid into the polystyrene cup.",
+
+      implementationSteps: [
+        "Add 30 cm³ hydrochloric acid to the burette and clamp it.",
+        "Position the normal beaker containing the polystyrene cup beneath the burette.",
+        "Open the burette tap gradually.",
+        "Close the burette tap when the HCl acid has been delivered into the cup.",
+      ],
+
+      image:
+        "./BuretteHCLPour.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+
+    {
+      id: 5,
+
+      title:
+        "Measure the Starting Temperature",
+
+      description:
+        "Place the thermometer in the hydrochloric acid and allow the reading to become stable before adding the potassium hydrogencarbonate. This gives the initial temperature for the reaction.",
+
+      implementationSteps: [
+        "Place the thermometer through the opening in the cover.",
+        "Make sure the thermometer bulb is immersed in the hydrochloric acid.",
+        "Do not allow the thermometer to touch the bottom or sides of the cup.",
+        "Wait until the temperature reading becomes stable.",
+        "Record the starting temperature of the hydrochloric acid.",
+      ],
+
+      image:
+        "./beakerWithThermometer.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+
+    {
+      id: 6,
+
+      title:
+        "Add Potassium Hydrogencarbonate and Measure the Temperature Change",
+
+      description:
+      "Add potassium hydrogencarbonate to the hydrochloric acid while stirring. Observe the temperature drop and record the lowest stable temperature reached.",
+      implementationSteps: [
+        "Add the potassium hydrogencarbonate gradually to the HCL acid.",
+        "Stir the mixture continuously while adding the potassium hydrogencarbonate.",
+        "Observe the thermometer as the temperature decreases.",
+        "Wait until the temperature reaches its lowest stable value.",
+        "Record the lowest temperature reached.",
+      ],
+
+      image:
+        "./addPotassiumCarbonateAndStir.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+
+    {
+      id: 7,
+
+      title:
+        "Reweigh the Empty Test Tube",
+
+      description:
+        "Reweigh the test tube after transferring the potassium hydrogencarbonate. The difference between the initial and final test tube masses gives the actual mass of potassium hydrogencarbonate used in the reaction.",
+
+      implementationSteps: [
+        "Place the digital balance back in the centre of the workspace.",
+        "Place the emptied test tube on the balance.",
+        "Wait until the balance reading becomes stable.",
+        "Record the mass of the test tube after emptying.",
+        "Use the two mass readings to determine the mass of potassium hydrogencarbonate transferred.",
+      ],
+
+      image:
+        "./weighEmptyTestTube.png",
+
+      onButtonContinue: () => {
+        setHessGuidelineNumber(
+          false
+        )
+      },
+    },
+  ]
+
+
+  // =====================================================
+  // START REACTION 2
+  // =====================================================
+
+  useEffect(() => {
+    setLessonStep(
+      1
+    )
+  }, [])
+
+
+  return (
+    <>
+
+      {/* =====================================================
+          LESSON OVERVIEW
+      ===================================================== */}
+
+      {lessonStep === 1 && !showApparatus && (
+        <EnthalpyLessonOverview
+          reactionData={
+            enthalpyReactionData[1]
+          }
+          onStartLesson={() => {
+            setShowApparatus(
+              true
+            )
+          }}
+        />
+      )}
+
+       {
+          showApparatus &&  <ApparatusOverview
+          title="Apparatus Overview"
+          onContinue={()=>{setShowApparatus(false);setLessonStep(2)}}
+          apparatusItems={[
+            {
+              id: "polystyrene-cup",
+
+              name: "Polystyrene cup",
+
+              modelName:
+                "mainPolystyrene",
+
+              imagePath:
+                "./polysterene-cup.png",
+
+              description:
+                "Used to reduce heat loss to the surroundings, allowing accurate measurement of temperature changes during exothermic reactions.",
+            },
+
+            {
+              id: "glass-beaker",
+
+              name: "Glass Beaker",
+
+              modelName:
+                "main-normal-beaker",
+
+              imagePath:
+                "./main-normal-beaker.png",
+
+              description:
+              "Used to support the polystyrene cup, providing stability during the exothermic reaction.",
+            },
+
+          {
+            id: "thermometer",
+
+            name: "Thermometer",
+
+            modelName:
+              "mainThermometer",
+
+            imagePath:
+              "./thermometer.png",
+
+            description:
+              "Used to measure temperature changes during exothermic reactions.",
+          },
+
+        {
+          id: "burette",
+
+          name: "Burette",
+
+          modelName:
+            "burette",
+
+          imagePath:
+            "./burette.png",
+
+          description:
+            "Used to accurately measure and deliver controlled volumes of liquid during titration.",
+        },
+
+        {
+          id: "burette-stand-clamp",
+
+          name: "Burette Stand and Clamp",
+
+          modelName:
+            "burette-stand-clamp",
+
+          imagePath:
+            "./burette-stand-clamp.png",
+
+          description:
+            "Used to hold the burette securely in a vertical position during titration.",
+        },
+
+        {
+          id: "test-tube",
+
+          name: "Test Tube",
+
+          modelName:
+            "test-tube",
+
+          imagePath:
+            "./testube-apparatus.png",
+
+          description:
+            "Used to hold small amounts of chemicals during experiments.",
+        },
+
+        {
+          id: "mass-balance",
+
+          name: "Mass Balance",
+
+          modelName:
+            "mass-balance",
+
+          imagePath:
+            "./weighTestube.png",
+
+          description:
+            "Used to accurately measure the mass of chemicals used in reactions.",
+        },
+
+        {
+          id: "spatula",
+
+          name: "Spatula",
+
+          modelName:
+            "spatula",
+
+          imagePath:
+            "./spatula.png",
+
+          description:
+            "Used to transfer small amounts of solid chemicals or powders.",
+        },
+          ]}
+          onSelectApparatus={(apparatus) => {
+            console.log(
+              "Selected apparatus:",
+              apparatus.modelName
+            )
+          }}
+        /> 
+        }  
+
+
+      {/* =====================================================
+          HESS LIVE DATA PANEL
+      ===================================================== */}
+
+      <HessLiveDataPanel
+        reactionNumber={2}
+
+        volumeOfSolution={
+          lessonStep >= 25
+            ? 30
+            : null
+        }
+
+        solutionDensity={
+          lessonStep >= 25
+            ? 1
+            : null
+        }
+
+        startingTemperature={
+          lessonStep >= 30
+            ? 22.0
+            : null
+        }
+
+        currentTemperature={
+          lessonStep >= 33
+            ? 18.5
+            : lessonStep >= 30
+              ? 22.0
+              : null
+        }
+
+        highestTemperature={
+          lessonStep >= 33
+            ? 18.5
+            : null
+        }
+
+        massWithPowder={
+          lessonStep >= 14
+            ? 25.67
+            : null
+        }
+
+        massAfterEmptying={
+          lessonStep >= 35.5
+            ? 21.72
+            : null
+        }
+
+        selectedLesson={
+          selectedLesson
+        }
+
+        lessonStep={
+          lessonStep
+        }
+
+        autoDelay={3000}
+
+        autoShowConditions={[
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep: 14,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep: 25,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep: 30,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep: 33,
+          },
+
+          {
+            selectedLesson:
+              selectedLesson,
+
+            lessonStep: 35.5,
+          },
+        ]}
+      />
+
+
+      {/* =====================================================
+          HESS GUIDELINES
+      ===================================================== */}
+
+      {lessonStep >= 2 &&
+        lessonStep <= 5 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[0]
+            }
+          />
+        )}
+
+
+      {lessonStep >= 6 &&
+        lessonStep <= 11 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[1]
+            }
+          />
+        )}
+
+
+      {lessonStep >= 12 &&
+        lessonStep <= 15 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[2]
+            }
+          />
+        )}
+
+
+      {lessonStep >= 16 &&
+        lessonStep <= 25 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[3]
+            }
+          />
+        )}
+
+
+      {lessonStep >= 26 &&
+        lessonStep <= 29 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[4]
+            }
+          />
+        )}
+
+
+      {lessonStep >= 30 &&
+        lessonStep <= 33 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[5]
+            }
+          />
+        )}
+
+
+      {lessonStep >= 34 &&
+        lessonStep <= 35 && (
+          <SulfamicGuidelines
+            guidelineData={
+              guidelineData[6]
+            }
+          />
+        )}
+
+
+      {/* =====================================================
+          LESSON STEPS
+      ===================================================== */}
+
+
+        {
+          lessonStep === 2 && (
+            <DialogBox
+              text={
+                <>
+                  Click the <strong>Beaker</strong> and select the <strong>Left Hand</strong> option to pick it up.
+                </>
+              }
+            />
+          )
+        }
+
+        {
+          lessonStep === 3 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Polystyrene Cup</strong> and select the <strong>Right Hand</strong> option to pick it up.
+                </>
+              }
+            />
+          )
+        }
+
+
+        {
+          lessonStep === 4 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Polystyrene Cup</strong> and select <strong>Place in Beaker</strong> 
+                </>
+              }
+            />
+          )
+        }
+
+        {
+          lessonStep === 5 && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker </strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+            />
+          )
+        }
+
+
+
+      {lessonStep === 6 && (
+        <DialogBox
+          text={
+            <>
+           Click the <strong>Test Tube</strong> and select the <strong>Left Hand</strong> option          
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 7 && (
+        <DialogBox
+          text={
+            <>
+                Click the <strong>Spatula</strong> and select the <strong>Right Hand</strong> option.
+
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 8 && (
+        <DialogBox
+          text={
+            <>
+            Click the <strong>potassium hydrogencarbonate container</strong> and select <strong>Potassium Hydrogencarbonate</strong>.
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 9 && (
+        <DialogBox
+          text={
+            <>
+           Click the <strong>Held Spatula</strong> and select <strong>Pour into Test Tube</strong>
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 10 && (
+        <DialogBox
+          text={
+            <>
+                <strong>Scroll Down Continously</strong> to <strong>Pour</strong>
+
+            </>
+          }
+        />
+      )}
+
+        {
+          lessonStep === 11  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Held Spatula</strong> and <strong>Disable Pour Mode</strong>
+                </>
+              }
+            />
+          )
+        } 
+
+        {
+          lessonStep === 12  && (
+            <DialogBox
+              text={
+                <>
+                Click the <strong>Digital Balance</strong> and select <strong>Place Balance</strong>
+                </>
+              }
+            />
+          )
+        } 
+
+
+      {lessonStep === 13 && (
+        <DialogBox
+          text={
+             <>
+             Click the <strong>Held Test Tube</strong> and select <strong>Weigh Test Tube</strong>
+             </>
+           }
+        />
+      )}
+
+
+      {lessonStep === 14 && (
+        <DialogBox
+          text={
+                <>
+                Click the <strong>Held Spatula</strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 15 && (
+        <DialogBox
+         text={
+                <>
+                Click the <strong>Weighed Test Tube</strong> and select <strong>Keep Back on Table</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 16 && (
+        <DialogBox
+          text={
+                <>
+                Click the <strong>Burette</strong> and select the <strong>Left Hand</strong> 
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 17 && (
+        <DialogBox
+          text={
+                <>
+                Click the <strong>Held Burette</strong> and select <strong>Add Liquid</strong>
+                </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 18 && (
+        <DialogBox
+          text={
+                <>
+                Add <strong>30 cm³ of Hydrochloric acid</strong> to the Burette 
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 19 && (
+        <DialogBox
+         text={
+                <>
+                Click the <strong>Beaker</strong> and select the <strong>Right Hand</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 20 && (
+        <DialogBox
+          text={
+                <>
+                Click the <strong>Digital Balance</strong> and select <strong>Remove Balance</strong>
+                </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 21 && (
+        <DialogBox
+          text={
+                <>
+                Click the <strong>Burette</strong> and select <strong>Clamp Burette</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 22 && (
+        <DialogBox
+              text={
+                <>
+                Click the <strong>Burette</strong> and select <strong>Place in Centre</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 23 && (
+        <DialogBox
+              text={
+                <>
+                Click the <strong>Held Beaker</strong> and select <strong>Place Beaker</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 24 && (
+        <DialogBox
+              text={
+                <>
+                <strong>Scroll Down</strong> to <strong>Pour Hydrochloric acid</strong> from the <strong>Burette</strong> into the <strong>Polystyrene cup</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 25 && (
+        <DialogBox
+              text={
+                <>
+                Now click the <strong>Beaker</strong> and select <strong>Pick Up</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 26 && (
+        <DialogBox
+                text={
+                <>
+                Click the <strong> Held Beaker</strong> and select <strong>Cover Cup</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 27 && (
+        <DialogBox
+              text={
+                <>
+                Click the <strong>Burette Clamp</strong> and select <strong>Remove from Centre</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 28 && (
+        <DialogBox
+          text={
+                <>
+                Click the <strong>Thermometer</strong> and select the <strong>Right Hand</strong>
+                </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 29 && (
+        <>
+          {/* <HessStartingTemperature /> */}
+
+          <DialogBox
+              text={
+                <>
+                Click the <strong>Held Thermometer</strong> and select <strong>Place Thermometer</strong>
+                </>
+              }
+          />
+        </>
+      )}
+
+
+      {lessonStep === 30 && (
+        <DialogBox
+          text={
+                <>
+                Pick up the <strong>Test Tube</strong> to the <strong>Right Hand</strong>
+                </> 
+                }
+        />
+      )}
+
+
+      {lessonStep === 31 && (
+        <DialogBox
+          text={
+                <>
+                <strong>Press P again</strong> to <strong>Enter Pouring Mode</strong>
+                </>
+              }
+        />
+      )}
+
+
+      {lessonStep === 32 && (
+        <DialogBox
+          text={
+            <>
+            <strong>Scroll Down Continuously</strong> to stir the mixture and gradually pour the <strong>potassium hydrogencarbonate</strong> from the test tube.
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 33 && (
+        <DialogBox
+          text={
+            <>
+            <strong>Press P again</strong> to <strong>Exit Pouring Mode</strong>
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 34 && (
+        <DialogBox
+          text={
+            "Place the digital balance again to reweigh the emptied test tube."
+          }
+        />
+      )}
+
+
+      {lessonStep === 35 && (
+        <DialogBox
+          text={
+            <>
+                Click the <strong>Held Test Tube</strong> and select <strong>Weigh Test Tube</strong>.
+
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 35.5 && (
+        <DialogBox
+          text={
+            <>
+            Click the <strong>Held Beaker</strong>  and select <strong>Remove Thermometer</strong>
+            </>
+          }
+        />
+      )}
+
+
+      {lessonStep === 36 && (
+        <DialogBox
+          text={
+            "Reaction 2 is complete. Review the recorded temperature and mass values."
+          }
+
+          button2Text="End Lesson"
+
+          onbtnClick={() => {
+            setShowEnthalyResultTwo(
+              true
+            )
+          }}
+
+          onbtn2Click={
+            resetLesson}
+          
+          
+        />
+      )}
+
+        {
+          lessonStep==36 && <EndothermicReactionSummary
+           onQuestions={()=>{
+            setShowQuestionCardNo(9.1)
+          }}
+          
+          onEndLesson={resetLesson}
+          />
+        }
+
+        {
+          showEnthalyResultTwo && <HessReactionTwoResults  onButtonContinue={() => {
+           setShowEnthalyResultTwo(false)
+          }}       
+          />
+        }
+
+      {/* =====================================================
+          QUESTIONS
+      ===================================================== */}
+
+      {showQuestionCardNo === 9.1 && (
+        <QuestionCard
+          questionSetTitle="Question Set 1 — After Reaction 1: Potassium carbonate"
+
+          questionNumber={1}
+
+          question="What happened to the temperature when potassium carbonate was added to hydrochloric acid?"
+
+          answers={[
+            {
+              id: "A",
+              text: "Increased",
+            },
+            {
+              id: "B",
+              text: "Decreased",
+            },
+            {
+              id: "C",
+              text: "Stayed constant",
+            },
+            {
+              id: "D",
+              text: "Increased then immediately became 0°C",
+            },
+          ]}
+
+          correctAnswer="A"
+
+          hintText="Choose the most appropriate answer."
+
+          correctMessage="Correct! The temperature increased."
+
+          incorrectMessage="Incorrect. The temperature increased during Reaction 1."
+
+          submitButtonText="Submit Answer"
+
+          continueButtonText="Continue"
+
+          onContinue={() => {
+            setShowQuestionCardNo(
+              9.2
+            )
+          }}
+
+           onExit={()=>{setShowQuestionCardNo(null);setLessonStep(36)}}
+
+
+        />
+      )}
+
+
+      {showQuestionCardNo === 9.2 && (
+        <QuestionCard
+          questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
+
+          questionNumber={5}
+
+          question="The temperature decreases during Reaction 2. What does this mean?"
+
+          answers={[
+            {
+              id: "A",
+              text: "Heat is released",
+            },
+            {
+              id: "B",
+              text: "Heat is absorbed",
+            },
+            {
+              id: "C",
+              text: "No energy is transferred",
+            },
+            {
+              id: "D",
+              text: "The thermometer is incorrect",
+            },
+          ]}
+
+          correctAnswer="B"
+
+          hintText="Think about what a decrease in temperature means."
+
+          correctMessage="Correct! Heat is absorbed during Reaction 2."
+
+          incorrectMessage="Incorrect. A decrease in temperature means heat is absorbed from the surroundings."
+
+          submitButtonText="Submit Answer"
+
+          continueButtonText="Continue"
+
+          onContinue={() => {
+            setShowQuestionCardNo(
+              9.3
+            )
+          }}
+
+           onExit={()=>{setShowQuestionCardNo(null);setLessonStep(36)}}
+
+
+        />
+      )}
+
+
+      {showQuestionCardNo === 9.3 && (
+        <QuestionCard
+          questionSetTitle="Question Set 2 — After Reaction 2: Potassium hydrogencarbonate"
+
+          questionNumber={6}
+
+          question="What volume of hydrochloric acid is used for each reaction?"
+
+          answers={[
+            {
+              id: "A",
+              text: "10 cm³",
+            },
+            {
+              id: "B",
+              text: "20 cm³",
+            },
+            {
+              id: "C",
+              text: "25 cm³",
+            },
+            {
+              id: "D",
+              text: "30 cm³",
+            },
+          ]}
+
+          correctAnswer="D"
+
+          hintText="Recall the volume of hydrochloric acid measured into the polystyrene cup."
+
+          correctMessage="Correct! 30 cm³ of hydrochloric acid is used for each reaction."
+
+          incorrectMessage="Incorrect. The correct volume is 30 cm³."
+
+          submitButtonText="Submit Answer"
+
+          continueButtonText="Continue"
+
+          onContinue={() => {
+            setShowQuestionCardNo(
+              null
+            );setLessonStep(36)
+          }}
+
+          onExit={()=>{setShowQuestionCardNo(null);setLessonStep(36)}}
+
+
+        />
+      )}
+
+    </>
+  )
+}
+
+export default EnthalpyHessReaction02

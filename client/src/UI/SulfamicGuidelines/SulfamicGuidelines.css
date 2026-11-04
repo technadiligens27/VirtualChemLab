@@ -1,0 +1,608 @@
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+
+.sulfamic-guidelines-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100dvh;
+
+  pointer-events: none;
+
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+.sulfamic-overlay-open {
+  background-color: rgba(20, 15, 40, 0.25);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.sulfamic-overlay-closed {
+  background-color: transparent;
+
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+
+/* =========================================================
+   MAIN PANEL
+   ========================================================= */
+
+.sulfamic-guideline {
+  position: relative;
+
+  width: min(70vw, 1120px);
+
+  /*
+    IMPORTANT:
+    Let content decide the normal height.
+    Only limit it when it becomes too tall.
+  */
+  height: auto;
+  min-height: 0;
+  max-height: calc(100dvh - 40px);
+
+  padding: 30px 18px 18px;
+
+  box-sizing: border-box;
+
+  background-color: #fcf8f3;
+
+  border: 10px solid #fdc843;
+  border-radius: 16px;
+
+
+  pointer-events: auto;
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   PANEL CONTENT
+   ========================================================= */
+
+.sulfamic-guideline-inner {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(260px, 0.8fr);
+
+  min-width: 0;
+  min-height: 0;
+
+  /*
+    This gives large content a proper boundary.
+  */
+  max-height: calc(100dvh - 96px);
+
+  background-color: #ffffff;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT CONTENT AREA
+   ========================================================= */
+
+.sulfamic-guideline-left {
+  display: flex;
+  flex: 1 1 60%;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 35px 20px 20px;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+}
+
+
+/* =========================================================
+   TITLE AND DESCRIPTION
+   ========================================================= */
+
+
+.sulfamic-title-container h1 {
+  margin: 0 0 14px;
+
+  font-size: clamp(24px, 2vw, 32px);
+  line-height: 1.25;
+  
+  color: #351c7c;
+}
+
+.sulfamic-description {
+  margin: 0 0 24px;
+
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.6;
+
+  color: #526170;
+}
+
+
+/* =========================================================
+   IMPLEMENTATION STEPS
+   ========================================================= */
+
+.sulfamic-steps-container {
+  flex-shrink: 0;
+
+  width: 100%;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+
+  background-color: #f4effa;
+
+  border: 2px solid #cbbaee;
+  border-radius: 12px;
+}
+
+.sulfamic-steps-container:has(
+  .sulfamic-inner-steps:empty
+) {
+  display: none;
+}
+
+.sulfamic-steps-header {
+  margin-bottom: 18px;
+}
+
+.sulfamic-steps-header h1 {
+  margin: 0;
+
+  font-size: clamp(18px, 1.5vw, 21px);
+
+  color: #351c7c;
+}
+
+.sulfamic-inner-steps {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.sulfamic-step {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.sulfamic-step img {
+  width: 23px;
+  height: 23px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+}
+
+.sulfamic-step p {
+  margin: 0;
+
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.5;
+
+  color: #425466;
+}
+
+
+/* =========================================================
+   CONTINUE BUTTON
+   ========================================================= */
+.sulfamic-continue-button-container{
+  margin-top:auto;
+  padding-top: 20px;
+  
+}
+.sulfamic-continue-button {
+  flex-shrink: 0;
+
+  width: min(200px, 100%);
+  min-height: 50px;
+
+
+  border: none;
+  border-radius: 20px;
+
+  background-color: #351c7c;
+
+  color: #dbe4ec;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.sulfamic-continue-button:hover {
+  background-color: #432495;
+}
+
+.sulfamic-continue-button:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   RIGHT IMAGE AREA
+   ========================================================= */
+
+.sulfamic-guideline-right {
+  display: flex;
+  flex: 1 1 40%;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.sulfamic-guideline-right:has(
+  .sulfamic-image-container:empty
+) {
+  display: none;
+}
+
+.sulfamic-guideline-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.sulfamic-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+.sulfamic-image-container img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   TOP LABEL
+   ========================================================= */
+
+.sulfamic-guideline-header {
+  position: absolute;
+
+  top: -10px;
+  left: 35px;
+
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 48px;
+
+  padding: 0 24px;
+
+  background-color: #fdc843;
+
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.sulfamic-guideline-header h1 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #351c7c;
+}
+
+
+/* =========================================================
+   OPEN / CLOSE SIDE BUTTON
+   ========================================================= */
+
+.sulfamic-side-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: -60px;
+
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 150px;
+
+  padding: 0;
+
+  border: none;
+
+  background-color: #fdc843;
+
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  cursor: pointer;
+}
+
+.sulfamic-side-toggle:hover {
+  background-color: #f2bb2e;
+}
+
+.sulfamic-side-toggle:active {
+  background-color: #e7ac16;
+}
+
+.sulfamic-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  pointer-events: none;
+
+  object-fit: contain;
+  will-change: transform;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+  .sulfamic-guideline {
+    width: 84vw;
+    height: min(82dvh, 760px);
+  }
+
+  .sulfamic-guideline-left {
+    flex-basis: 58%;
+  }
+
+  .sulfamic-guideline-right {
+    flex-basis: 42%;
+
+    padding: 18px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .sulfamic-guideline {
+    width: 88vw;
+    height: 84dvh;
+
+    padding: 12px;
+    padding-top: 28px;
+
+    border-width: 7px;
+    border-radius: 14px;
+  }
+
+  .sulfamic-guideline-inner {
+    flex-direction: column;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .sulfamic-guideline-left {
+    flex: 0 0 auto;
+
+    padding: 30px 16px 16px;
+
+    overflow: visible;
+  }
+
+  .sulfamic-guideline-right {
+    flex: 0 0 auto;
+
+    width: 100%;
+    height: 230px;
+    min-height: 230px;
+
+    padding: 14px;
+  }
+
+  .sulfamic-title-container h1 {
+    font-size: 25px;
+  }
+
+  .sulfamic-description {
+    margin-bottom: 18px;
+
+    font-size: 15px;
+  }
+
+  .sulfamic-steps-container {
+    padding: 16px;
+  }
+
+  .sulfamic-step {
+    gap: 9px;
+  }
+
+  .sulfamic-step img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sulfamic-step p {
+    font-size: 14px;
+  }
+
+  .sulfamic-continue-button {
+    width: 100%;
+    min-height: 48px;
+
+    margin-top: 16px;
+  }
+
+  .sulfamic-guideline-header {
+    top: -7px;
+    left: 20px;
+
+    height: 40px;
+
+    padding: 0 18px;
+  }
+
+  .sulfamic-guideline-header h1 {
+    font-size: 16px;
+  }
+
+  .sulfamic-side-toggle {
+    right: -48px;
+
+    width: 48px;
+    height: 105px;
+
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+
+  .sulfamic-side-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .sulfamic-guideline {
+    width: 87vw;
+    height: 86dvh;
+  }
+
+  .sulfamic-guideline-left {
+    padding: 28px 12px 14px;
+  }
+
+  .sulfamic-title-container h1 {
+    font-size: 22px;
+  }
+
+  .sulfamic-description {
+    font-size: 14px;
+  }
+
+  .sulfamic-steps-container {
+    padding: 13px;
+  }
+
+  .sulfamic-steps-header {
+    margin-bottom: 12px;
+  }
+
+  .sulfamic-steps-header h1 {
+    font-size: 18px;
+  }
+
+  .sulfamic-guideline-right {
+    height: 190px;
+    min-height: 190px;
+  }
+}
+
+
+/* =========================================================
+   SHORT DESKTOP SCREENS
+   ========================================================= */
+
+@media (max-height: 650px) and (min-width: 701px) {
+  .sulfamic-guideline {
+    height: 86dvh;
+  }
+
+  .sulfamic-guideline-left {
+    padding-top: 28px;
+  }
+
+  .sulfamic-description {
+    margin-bottom: 14px;
+  }
+
+  .sulfamic-steps-container {
+    padding: 16px;
+  }
+
+  .sulfamic-continue-button {
+    min-height: 44px;
+
+    margin-top: 14px;
+  }
+}

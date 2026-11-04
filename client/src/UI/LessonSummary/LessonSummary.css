@@ -1,0 +1,752 @@
+.lesson-summary-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.42);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+}
+
+/* MAIN CONTAINER */
+
+.lesson-summary-container {
+  width: 1200px;
+  height: 760px;
+
+  background-color: #fdfbf5;
+
+  border: 8px solid #fdc843;
+  border-radius: 30px;
+
+  position: relative;
+
+  padding: 85px 38px 75px 38px;
+
+  box-sizing: border-box;
+
+  font-family: "Baloo Bhai 2", sans-serif;
+
+  overflow: hidden;
+}
+
+/* HEADER */
+
+.summary-header-container {
+  width: 390px;
+  height: 68px;
+
+  background-color: #fdc843;
+
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+}
+
+.summary-header-container img {
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+}
+
+.summary-header-container h1 {
+  margin: 0;
+
+  color: #161616;
+
+  font-size: 31px;
+  line-height: 1;
+}
+
+/* CLOSE BUTTON */
+
+.summary-close-btn {
+  width: 48px;
+  height: 48px;
+
+  background-color: #ffffff;
+
+  color: #f1ad00;
+
+  border: none;
+  border-radius: 50%;
+
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.summary-close-btn:hover {
+  background-color: #fff5d8;
+
+  transform: scale(1.08);
+}
+
+/* LESSON INTRO */
+
+.summary-lesson-intro {
+  width: 58%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 22px;
+
+  margin-bottom: 20px;
+}
+
+.summary-lesson-icon {
+  width: 110px;
+  height: 110px;
+
+  border: 3px dotted #5e37bb;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.summary-lesson-icon img {
+  width: 82px;
+  height: 82px;
+
+  object-fit: contain;
+}
+
+.summary-lesson-intro-content {
+  width: 100%;
+}
+
+.summary-lesson-intro-content h1 {
+  margin: 0 0 8px 0;
+
+  color: #4c2ba5;
+
+  font-size: 29px;
+  line-height: 1.2;
+}
+
+.summary-lesson-intro-content p {
+  margin: 0;
+
+  color: #333333;
+
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+/* MAIN CONTENT */
+
+.summary-main-content {
+  width: 100%;
+  height: calc(100% - 125px);
+
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  gap: 28px;
+}
+
+.summary-left-column {
+  width: 58%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.summary-right-column {
+  width: 42%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* GENERAL CARD */
+
+.summary-card {
+  width: 100%;
+
+  background-color: #ffffff;
+
+  border: 2px solid #ebe5da;
+  border-radius: 20px;
+
+  padding: 18px 22px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 4px 12px rgba(45, 35, 20, 0.06);
+}
+
+.summary-card-title {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+.summary-card-title img {
+  width: 34px;
+  height: 34px;
+
+  object-fit: contain;
+}
+
+.summary-card-title h2 {
+  margin: 0;
+
+  color: #4c2ba5;
+
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.green-title h2 {
+  color: #23953d;
+}
+
+/* WHAT HAPPENED */
+
+.what-happened-card {
+  flex: 1;
+
+  min-height: 350px;
+}
+
+.what-happened-description {
+  margin: 0 0 12px 0;
+
+  color: #2f2f2f;
+
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* STEPS */
+
+.summary-steps-container {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 10px;
+}
+
+.summary-step-wrapper {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-step {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-step-image {
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-step-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.summary-step-description {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 8px;
+}
+
+.summary-step-number {
+  width: 25px;
+  height: 25px;
+
+  background-color: #fdbd19;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.summary-step-description p {
+  width: 115px;
+
+  margin: 0;
+
+  color: #333333;
+
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.summary-step-arrow {
+  color: #4f25b4;
+
+  font-family: Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+
+  margin: 0 3px;
+
+  transform: translateY(-20px);
+}
+
+/* KEY TAKEAWAYS */
+
+.key-takeaways-card {
+  flex: 1;
+}
+
+.takeaways-list {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.takeaway-item {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #e9e3d8;
+
+  box-sizing: border-box;
+}
+
+.takeaway-item:last-child {
+  border-bottom: none;
+}
+
+.takeaway-check {
+  width: 23px;
+  height: 23px;
+
+  background-color: #58b94f;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.takeaway-item p {
+  margin: 0;
+
+  color: #383838;
+
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* MATERIALS USED */
+
+.materials-used-card {
+  min-height: 185px;
+}
+
+.materials-used-list {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 8px;
+}
+
+.material-used-item {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-align: center;
+}
+
+.material-used-item img {
+  width: 65px;
+  height: 70px;
+
+  object-fit: contain;
+}
+
+.material-used-item p {
+  margin: 5px 0 0 0;
+
+  color: #292929;
+
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+/* BOTTOM CARDS */
+
+.summary-bottom-card {
+  width: 100%;
+  min-height: 105px;
+
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 14px 20px;
+
+  box-sizing: border-box;
+}
+
+.summary-bottom-icon {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.summary-bottom-icon img {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+}
+
+.summary-bottom-content {
+  width: 100%;
+}
+
+.summary-bottom-content h2 {
+  margin: 0 0 5px 0;
+
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.summary-bottom-content p {
+  margin: 0;
+
+  color: #343434;
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* CONCLUSION */
+
+.conclusion-card {
+  background-color: #fffdf7;
+
+  border: 2px solid #f4d47a;
+}
+
+.conclusion-icon {
+  border: 2px solid #f6c432;
+}
+
+.conclusion-card h2 {
+  color: #eba900;
+}
+
+/* WHAT'S NEXT */
+
+.whats-next-card {
+  background-color: #f7faee;
+
+  border: 2px solid #d5e7b7;
+}
+
+.whats-next-icon {
+  border: 2px solid #c4df9a;
+}
+
+.whats-next-card h2 {
+  color: #54a936;
+}
+
+/* BACK BUTTON */
+
+.summary-back-btn-container {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+
+  transform: translateX(-50%);
+}
+
+.summary-back-btn-container button {
+  min-width: 285px;
+  height: 47px;
+
+  background-color: #fdbd19;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+
+  box-shadow: 0 4px 0 #dc9b00;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.summary-back-btn-container button:hover {
+  background-color: #f5ad00;
+
+  transform: translateY(-2px);
+}
+
+.summary-back-btn-container button:active {
+  box-shadow: 0 2px 0 #dc9b00;
+
+  transform: translateY(2px);
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 1250px) {
+  .lesson-summary-container {
+    width: 94vw;
+    height: 92vh;
+  }
+
+  .summary-step-image {
+    width: 125px;
+    height: 125px;
+  }
+
+  .summary-step-description p {
+    width: 100px;
+
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .lesson-summary-container {
+    height: 92vh;
+
+    padding-top: 90px;
+    padding-bottom: 80px;
+
+    overflow-y: auto;
+  }
+
+  .summary-lesson-intro {
+    width: 100%;
+  }
+
+  .summary-main-content {
+    height: auto;
+
+    flex-direction: column;
+  }
+
+  .summary-left-column,
+  .summary-right-column {
+    width: 100%;
+    height: auto;
+  }
+
+  .summary-back-btn-container {
+    position: sticky;
+    bottom: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .lesson-summary-container {
+    width: 96vw;
+
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .summary-header-container {
+    width: 280px;
+    height: 62px;
+  }
+
+  .summary-header-container h1 {
+    font-size: 24px;
+  }
+
+  .summary-header-container img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .summary-lesson-intro {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .summary-lesson-intro-content h1 {
+    font-size: 25px;
+  }
+
+  .summary-steps-container {
+    flex-direction: column;
+  }
+
+  .summary-step-wrapper {
+    width: 100%;
+
+    flex-direction: column;
+  }
+
+  .summary-step-arrow {
+    transform: rotate(90deg);
+
+    margin: 5px 0;
+  }
+
+  .summary-step-description p {
+    width: auto;
+    max-width: 220px;
+  }
+
+  .materials-used-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .material-used-item {
+    min-width: 85px;
+    max-width: 100px;
+  }
+
+  .summary-bottom-card {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .summary-back-btn-container button {
+    min-width: 240px;
+
+    font-size: 17px;
+  }
+}

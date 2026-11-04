@@ -1,0 +1,567 @@
+import {
+  useContext,
+  useEffect,
+  useState,
+} from "react"
+
+import "./LessonMenu.css"
+
+import {
+  MainGuidelineContext,
+} from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
+
+const LessonMenu = () => {
+  const {
+    setIsMainGuideline,
+    setSelectedLesson,
+    setIsLessonStart,
+    setShowLessonMenu,
+    setLessonStep,
+    setSelectedMainGuideline,
+    showLessonMenu,
+  } = useContext(
+    MainGuidelineContext
+  )
+
+  useEffect(() => {
+    setShowLessonMenu(true)
+  }, [
+    showLessonMenu,
+  ])
+
+  const [
+    page,
+    setPage,
+  ] = useState(0)
+
+  const [
+    animationClass,
+    setAnimationClass,
+  ] = useState("")
+
+  const [
+    isAnimating,
+    setIsAnimating,
+  ] = useState(false)
+
+  const lessons = [
+    // {
+    //   id: 1,
+    //   name: "Salt Dissolving in Water",
+    //   imgPath: "./SaltDissolve.png",
+    //   text: "Mix salt into water to see how crystals break down and form a clear solution.",
+    //   number: 1,
+    //   divider: "",
+    // },
+
+    //         {
+    //   id: 5,
+    //   name: "Copper Sulfate Precipitation",
+    //   imgPath: "./CopperSulphateTest.png",
+    //   text: "Combine two solutions and observe the formation of a solid precipitate.",
+    //   number: 2,
+    //   divider: "blue",
+    // },
+
+    // {
+    //   id: 2,
+    //   name: "Acid Indicator Test",
+    //   imgPath: "./IndicatorSolution.png",
+    //   text: "Add a testing solution or paper to an acid and observe the color change to confirm its presence.",
+    //   number: 3,
+    //   divider: "purple",
+    // },
+
+    // {
+    //   id: 6,
+    //   name: "Acid Base Neutralization",
+    //   imgPath: "./AcidBaseLesson.png",
+    //   text: "Combine an acid and a base to create a neutral reaction, forming salt and water.",
+    //   number: 4,
+    //   divider: "green",
+    // },
+
+    // {
+    //   id: 4,
+    //   name: "Starch-Iodine Test",
+    //   imgPath: "./StarchIodine.png",
+    //   text: "Add iodine solution to a sample and observe the color change when starch is present.",
+    //   number: 5,
+    //   divider: "blue",
+    // },
+
+    // {
+    //   id: 7,
+    //   name: "Protein Identification",
+    //   imgPath: "./ProteinTest.png",
+    //   text: "Add Biuret reagent to a protein sample and observe the purple color change.",
+    //   number: 6,
+    //   divider: "purple",
+    // },
+
+    //     {
+    //   id: 3,
+    //   name: "Alkali Indicator Test",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Use an indicator to test an alkali and observe the resulting color change.",
+    //   number: 7,
+    //   divider: "purple",
+    // },
+
+    {
+      id: 8,
+
+      name: "Exothermic Reaction",
+
+      imgPath: "./ExothermicIcon.png",
+
+      text:
+        "Measure temperature change and calculate the enthalpy change of an exothermic reaction.",
+
+      divider: "red",
+
+      number: 1,
+
+      difficulty: "Medium",
+
+      difficultyLevel: 3,
+
+      difficultyClass: "medium",
+    },
+
+
+    {
+      id: 15,
+
+      name: "Flame Test",
+
+      imgPath: "./flameTestIcon.png",
+
+      text:
+        "Heat metal salts in a Bunsen flame and identify metal ions by their characteristic flame colours.",
+
+      divider: "yellow",
+
+      number: 2,
+
+      difficulty: "Easy",
+
+      difficultyLevel: 2,
+
+      difficultyClass: "easy",
+    },
+    {
+      id: 9,
+
+      name: "Endothermic Reaction",
+
+      imgPath: "./EndothermicIcon.png",
+
+      text:
+        "Measure temperature change and calculate the enthalpy change of an endothermic reaction.",
+
+      number: 3,
+
+      divider: "blue",
+
+      difficulty: "Medium",
+
+      difficultyLevel: 3,
+
+      difficultyClass: "medium",
+    },
+
+
+
+
+    {
+      id: 10,
+      name: "Rates of Hydrolysis of Halogenoalkanes",
+      imgPath: "./AlkaliTest.png",
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+      number: 10,
+      divider: "purple",
+    },
+
+    {
+      id: 11,
+
+      name: "Hydrochloric Acid Titration",
+
+      imgPath: "./HclTitrationIcon.png",
+
+      text:
+        "Use titration to find the concentration of hydrochloric acid using sodium hydroxide.",
+
+      number: 4,
+
+      divider: "purple",
+
+      difficulty: "Hard",
+
+      difficultyLevel: 4,
+
+      difficultyClass: "hard",
+    },
+
+    // {
+    //   id: 11.1,
+    //   name: "HCl Titration Part 2",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+    //   number: 11.1,
+    //   divider: "purple",
+    // },
+
+    {
+      id: 12,
+
+      name: "Sulfamic Acid–NaOH Titration",
+
+      imgPath: "./sulfamicTitrationIcon.png",
+
+      text:
+        "Use titration to find the concentration of sodium hydroxide using sulfamic acid.",
+
+      number: 5,
+
+      divider: "purple",
+
+      difficulty: "Hard",
+
+      difficultyLevel: 4,
+
+      difficultyClass: "hard",
+    },
+
+    //     {
+    //       id: 12.1,
+    //       name: "Sulfamic Acid–NaOH Titration",
+    //       imgPath: "./AlkaliTest.png",
+    //       text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+    //       number: 12.1,
+    //       divider: "purple",
+    //     },
+
+    // {
+    //   id: 12.2,
+    //   name: "Sulfamic Acid–NaOH Titration",
+    //   imgPath: "./sulfamicTitrationIcon.png",
+    //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
+    //   number: 12.2,
+    //   divider: "purple",
+    // },
+
+    {
+      id: 13,
+
+      name: "Molar Volume of a Gas",
+
+      imgPath: "./molarVolumeIcon.png",
+
+      text:
+        "Determine carbon dioxide molar volume by reacting calcium carbonate with ethanoic acid.",
+
+      divider: "green",
+
+      number: 6,
+
+      difficulty: "Hard",
+
+      difficultyLevel: 4,
+
+      difficultyClass: "hard",
+    },
+
+    {
+      id: 14,
+
+      name:
+        "Chlorination of 2-methylpropan-2-ol",
+
+      imgPath: "./chlorinationIcon.png",
+
+      text:
+        "Prepare and purify 2-chloro-2-methylpropane using a separating funnel and distillation.",
+
+      number: 7,
+
+      divider: "coral-orange",
+
+      difficulty: "Hard",
+
+      difficultyLevel: 4,
+
+      difficultyClass: "hard",
+    },
+
+    // {
+    //   id: 14.1,
+    //   name: "Chlorination of 2-methylpropan-2-ol",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+    //   number: 14.1,
+    //   divider: "purple",
+    // },
+
+    // {
+    //   id: 14.2,
+    //   name: "Chlorination of 2-methylpropan-2-ol",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+    //   number: 14.2,
+    //   divider: "purple",
+    // },
+
+    // {
+    //   id: 14.3,
+    //   name: "Chlorination of 2-methylpropan-2-ol",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+    //   number: 14.3,
+    //   divider: "purple",
+    // },
+
+    // {
+    //   id: 14.4,
+    //   name: "Chlorination of 2-methylpropan-2-ol",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+    //   number: 14.4,
+    //   divider: "purple",
+    // },
+
+
+    // {
+    //   id: 15.2,
+    //   name: "Flame Test 02",
+    //   imgPath: "./AlkaliTest.png",
+    //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
+    //   number: 6,
+    //   divider: "purple",
+    // },
+  ]
+
+  const lessonsPerPage = 3
+
+  const totalPages = Math.ceil(
+    lessons.length /
+      lessonsPerPage
+  )
+
+  const visibleLessons = lessons.slice(
+    page * lessonsPerPage,
+    page * lessonsPerPage +
+      lessonsPerPage
+  )
+
+  useEffect(() => {
+    setIsMainGuideline(true)
+  }, [
+    setIsMainGuideline,
+  ])
+
+  const startLesson = (
+    lessonId
+  ) => {
+    setSelectedLesson(lessonId)
+
+    setIsLessonStart(true)
+
+    setShowLessonMenu(false)
+
+    setSelectedMainGuideline(null)
+
+    if (lessonId === 11.1) {
+      setLessonStep(45)
+    } else {
+      setLessonStep(1)
+    }
+  }
+
+  const changePage = (
+    newPage
+  ) => {
+    if (
+      isAnimating ||
+      newPage < 0 ||
+      newPage >= totalPages ||
+      newPage === page
+    ) {
+      return
+    }
+
+    const goingForward =
+      newPage > page
+
+    setIsAnimating(true)
+
+    setAnimationClass(
+      goingForward
+        ? "slide-out-left"
+        : "slide-out-right"
+    )
+
+    setTimeout(() => {
+      setPage(newPage)
+
+      setAnimationClass(
+        goingForward
+          ? "slide-in-right"
+          : "slide-in-left"
+      )
+
+      setTimeout(() => {
+        setAnimationClass("")
+
+        setIsAnimating(false)
+      }, 350)
+    }, 300)
+  }
+
+  return (
+    <div className="main-guidelines">
+      <div className="lesson-container">
+        <div className="select-lesson-container">
+          <h1>
+            SELECT A LESSON
+          </h1>
+
+          <p>
+            Select a lesson from the given list
+            and follow the steps accordingly
+          </p>
+        </div>
+
+        <div className="lesson-inner-container">
+          <div
+            className={`
+              lesson-btn-container
+              ${animationClass}
+            `}
+          >
+            {visibleLessons.map(
+              (lesson) => {
+                const isLessonLocked = ![8,15,,14,10].includes(lesson.id)
+
+                return (
+                  <div
+                    className={`
+                      lesson-btn
+                      ${
+                        isLessonLocked
+                          ? "lesson-btn-locked"
+                          : ""
+                      }
+                    `}
+                    key={lesson.id}
+                    onClick={() => {
+                      if (!isLessonLocked) {
+                        startLesson(lesson.id)
+                      }
+                    }}
+                  >
+                    <div className="number-container">
+                      <p className="number">
+                        {lesson.number}
+                      </p>
+                    </div>
+
+                    <img
+                      src={lesson.imgPath}
+                      alt={lesson.name}
+                    />
+
+                    <p className="lesson-name">
+                      {lesson.name}
+                    </p>
+
+                    <div
+                      className={`
+                        divider
+                        ${lesson.divider}
+                      `}
+                    />
+
+                    <p className="lesson-text">
+                      {lesson.text}
+                    </p>
+
+                    <div
+                      className={`
+                        lesson-difficulty
+                        lesson-difficulty-${lesson.difficultyClass}
+                      `}
+                    >
+                      <span className="lesson-difficulty-name">
+                        {lesson.difficulty}
+                      </span>
+
+                      <div className="lesson-difficulty-bars">
+                        {[1, 2, 3, 4].map(
+                          (barNumber) => (
+                            <span
+                              key={barNumber}
+                              className={`
+                                lesson-difficulty-bar
+                                ${
+                                  barNumber <=
+                                  lesson.difficultyLevel
+                                    ? "lesson-difficulty-bar-filled"
+                                    : ""
+                                }
+                              `}
+                            />
+                          )
+                        )}
+                      </div>
+                    </div>
+
+                    {isLessonLocked && (
+                      <div className="lesson-lock-overlay">
+                        <img
+                          src="./lock.png"
+                          alt="Lesson locked"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+            )}
+          </div>
+
+          {page > 0 && (
+            <div
+              className="arrow-left"
+              onClick={() =>
+                changePage(page - 1)
+              }
+            >
+              <img
+                src="./left-arrow.png"
+                alt="Previous lessons"
+              />
+            </div>
+          )}
+
+          {page < totalPages - 1 && (
+            <div
+              className="arrow-right"
+              onClick={() =>
+                changePage(page + 1)
+              }
+            >
+              <img
+                src="./right-arrow.png"
+                alt="Next lessons"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default LessonMenu

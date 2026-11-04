@@ -1,0 +1,88 @@
+{
+  "hash": "d8fc7a85",
+  "configHash": "f899fdfb",
+  "lockfileHash": "b591c7dd",
+  "browserHash": "f0cc6789",
+  "optimized": {
+    "@react-three/drei": {
+      "src": "../../node_modules/@react-three/drei/index.js",
+      "file": "@react-three_drei.js",
+      "fileHash": "c016801e",
+      "needsInterop": false
+    },
+    "@react-three/fiber": {
+      "src": "../../node_modules/@react-three/fiber/dist/react-three-fiber.esm.js",
+      "file": "@react-three_fiber.js",
+      "fileHash": "796c44ca",
+      "needsInterop": false
+    },
+    "gsap": {
+      "src": "../../node_modules/gsap/index.js",
+      "file": "gsap.js",
+      "fileHash": "70b2bef4",
+      "needsInterop": false
+    },
+    "r3f-perf": {
+      "src": "../../node_modules/r3f-perf/dist/index.mjs",
+      "file": "r3f-perf.js",
+      "fileHash": "464a44a0",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "4d754b26",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "3cd3fe02",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "7506ded9",
+      "needsInterop": true
+    },
+    "three": {
+      "src": "../../node_modules/three/build/three.module.js",
+      "file": "three.js",
+      "fileHash": "f3d960cc",
+      "needsInterop": false
+    },
+    "three/tsl": {
+      "src": "../../node_modules/three/build/three.tsl.js",
+      "file": "three_tsl.js",
+      "fileHash": "8b678e3a",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-B-1-B7_t": {
+      "file": "chunk-B-1-B7_t.js",
+      "isDynamicEntry": false
+    },
+    "client-SG0MEPYV": {
+      "file": "client-SG0MEPYV.js",
+      "isDynamicEntry": false
+    },
+    "react-three-fiber.esm-DjCFVs63": {
+      "file": "react-three-fiber.esm-DjCFVs63.js",
+      "isDynamicEntry": false
+    },
+    "three.core-DVx0lc9k": {
+      "file": "three.core-DVx0lc9k.js",
+      "isDynamicEntry": false
+    },
+    "troika-three-text.esm-BczU4jAQ": {
+      "file": "troika-three-text.esm-BczU4jAQ.js",
+      "isDynamicEntry": false
+    },
+    "vision_bundle-CIcccGj7": {
+      "file": "vision_bundle-CIcccGj7.js",
+      "isDynamicEntry": true
+    }
+  }
+}

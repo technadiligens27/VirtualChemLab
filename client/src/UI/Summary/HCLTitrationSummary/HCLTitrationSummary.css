@@ -1,0 +1,799 @@
+/* =========================================================
+   HYDROCHLORIC ACID TITRATION SUMMARY
+   ========================================================= */
+
+.hcl-summary-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  background: transparent;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+
+  transition:
+    background-color 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.hcl-summary-overlay *,
+.hcl-summary-overlay *::before,
+.hcl-summary-overlay *::after {
+  box-sizing: border-box;
+}
+
+.hcl-summary-overlay-open {
+  background: rgba(14, 11, 35, 0.6);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.hcl-summary-overlay-closed {
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.hcl-summary-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(92vw, 1500px);
+  height: min(88vh, 890px);
+
+  padding: 76px 30px 26px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 9px solid #ffcb4d;
+  border-radius: 30px;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   TOP TAB
+   ========================================================= */
+
+.hcl-summary-tab {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(30vw, 430px);
+  min-width: 260px;
+  height: 67px;
+
+  transform: translateX(-50%);
+
+  border-radius: 0 0 38px 38px;
+
+  background: #ffcb4d;
+
+  color: #2d1979;
+
+  font-size: clamp(24px, 2vw, 34px);
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   SIDE TOGGLE
+   ========================================================= */
+
+.hcl-summary-side-toggle {
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 145px;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+  border-radius: 0 20px 20px 0;
+
+  background: #ffcb4d;
+
+  cursor: pointer;
+}
+
+.hcl-summary-side-toggle:hover {
+  background: #f0b52d;
+}
+
+.hcl-summary-side-toggle img {
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE LAYOUT
+   ========================================================= */
+
+.hcl-summary-layout {
+  display: grid;
+  grid-template-columns: minmax(285px, 0.78fr) minmax(0, 1.45fr);
+  gap: clamp(20px, 2.2vw, 36px);
+
+  flex: 1;
+  min-height: 0;
+}
+
+
+/* =========================================================
+   LEFT RESULT CARD
+   ========================================================= */
+
+.hcl-result-card {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  border: 2px solid #a78aff;
+  border-radius: 18px;
+
+  background: #fbf9ff;
+}
+
+.hcl-result-header {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 13px;
+
+  min-height: 59px;
+  padding: 11px 21px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+}
+
+.hcl-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 31px;
+  height: 31px;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  font-size: 16px;
+}
+
+.hcl-result-header h2 {
+  margin: 0;
+
+  font-size: clamp(18px, 1.45vw, 25px);
+  font-weight: 800;
+}
+
+.hcl-titration-image-area {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+  min-height: 150px;
+
+  padding: 14px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #faf7ff 63%,
+      #f0ebff 100%
+    );
+}
+
+.hcl-titration-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.hcl-titre-display {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  padding: 9px 13px;
+
+  border: 2px solid #dbcfff;
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #351c7c;
+}
+
+.hcl-titre-display span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hcl-titre-display strong {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.hcl-titre-display small {
+  font-size: 13px;
+}
+
+.hcl-titre-display p {
+  margin: 0;
+
+  color: #59657b;
+
+  font-size: 11px;
+}
+
+.hcl-label {
+  flex-shrink: 0;
+
+  width: calc(100% - 50px);
+  min-height: 45px;
+  margin: 11px auto 8px;
+  padding: 9px 18px;
+
+  border-radius: 13px;
+
+  background: #6242b3;
+
+  color: #ffffff;
+
+  font-size: clamp(15px, 1.25vw, 21px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.hcl-result-text {
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 5px 25px 12px;
+
+  color: #21165e;
+
+  font-size: clamp(13px, 1.05vw, 17px);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.hcl-reading-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding: 0 20px 11px;
+}
+
+.hcl-reading-grid div {
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px;
+
+  border: 1px solid #d8cbfb;
+  border-radius: 10px;
+
+  background: #f7f4ff;
+
+  color: #351c7c;
+
+  text-align: center;
+}
+
+.hcl-reading-grid span {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hcl-reading-grid strong {
+  margin-top: 3px;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.hcl-equation-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  flex-shrink: 0;
+
+  margin: 0 15px 15px;
+  padding: 9px;
+
+  border: 1px solid #d5c6f6;
+  border-radius: 11px;
+
+  background: #f3effd;
+
+  color: #351c7c;
+
+  font-size: clamp(11px, 0.95vw, 15px);
+  font-weight: 800;
+  text-align: center;
+}
+
+.hcl-arrow {
+  margin: 0 4px;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   RIGHT SUMMARY CONTENT
+   ========================================================= */
+
+.hcl-summary-content {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow-y: auto;
+
+  padding-right: 5px;
+}
+
+.hcl-summary-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.hcl-summary-content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #c8b9f1;
+}
+
+.hcl-summary-card {
+  border: 2px solid #b9dfbb;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      115deg,
+      #eaffe9,
+      #f4fff1
+    );
+
+  color: #21165e;
+}
+
+.hcl-aim-card {
+  flex-shrink: 0;
+
+  padding: clamp(18px, 1.8vw, 25px) clamp(20px, 2.3vw, 35px);
+}
+
+.hcl-summary-card h2 {
+  margin: 0;
+
+  font-size: clamp(21px, 1.8vw, 30px);
+  font-weight: 800;
+}
+
+.hcl-heading-line {
+  width: 76px;
+  height: 5px;
+
+  margin: 8px 0 14px;
+
+  border-radius: 999px;
+
+  background: #a88cff;
+}
+
+.hcl-summary-card p {
+  margin: 0;
+
+  color: #273044;
+
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.45;
+}
+
+.hcl-aim-card p {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 13px;
+}
+
+.hcl-middle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(250px, 0.95fr);
+  gap: 16px;
+
+  flex-shrink: 0;
+
+  margin-top: 16px;
+}
+
+.hcl-learned-card,
+.hcl-observation-card {
+  padding: clamp(18px, 1.8vw, 26px);
+}
+
+.hcl-summary-card ul {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.hcl-summary-card li {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  color: #273044;
+
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.35;
+}
+
+.hcl-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 25px;
+  height: 25px;
+
+  border-radius: 50%;
+
+  background: #16ad52;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.hcl-observation-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.hcl-observation-list div {
+  display: flex;
+  flex-direction: column;
+
+  padding: 9px 11px;
+
+  border-left: 4px solid #a88cff;
+  border-radius: 0 9px 9px 0;
+
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.hcl-observation-list strong {
+  color: #351c7c;
+
+  font-size: clamp(13px, 1vw, 16px);
+}
+
+.hcl-observation-list span {
+  margin-top: 2px;
+
+  color: #4f5a6d;
+
+  font-size: clamp(12px, 0.9vw, 14px);
+  line-height: 1.3;
+}
+
+.hcl-conclusion-card {
+  flex-shrink: 0;
+
+  margin-top: 16px;
+  padding: clamp(18px, 1.8vw, 25px) clamp(20px, 2.3vw, 35px);
+}
+
+.hcl-conclusion-card strong {
+  color: #351c7c;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.hcl-summary-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+
+  margin-top: 16px;
+  padding-bottom: 15px;
+}
+
+.hcl-summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 145px;
+  min-height: 49px;
+  padding: 10px 21px;
+
+  border-radius: 999px;
+
+  font-family: "Baloo Thambi 2", sans-serif;
+  font-size: clamp(15px, 1.15vw, 19px);
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.hcl-summary-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 17px rgba(65, 36, 145, 0.22);
+}
+
+.hcl-summary-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.hcl-result-button,
+.hcl-questions-button {
+  border: 3px solid #4e2a9b;
+
+  background: #ffffff;
+
+  color: #4e2a9b;
+}
+
+.hcl-result-button:hover,
+.hcl-questions-button:hover {
+  background: #f5efff;
+}
+
+.hcl-finish-button {
+  gap: 10px;
+
+  border: 3px solid #4e2a9b;
+
+  background: #4e2a9b;
+
+  color: #ffffff;
+}
+
+.hcl-finish-button span {
+  font-family: Arial, sans-serif;
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 0.5;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .hcl-summary-overlay {
+    align-items: flex-start;
+
+    overflow-y: auto;
+  }
+
+  .hcl-summary-container {
+    width: min(94vw, 820px);
+    height: auto;
+    min-height: 90vh;
+
+    margin: 20px 0;
+
+    overflow: visible;
+  }
+
+  .hcl-summary-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hcl-result-card {
+    min-height: 540px;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  .hcl-titration-image-area {
+    min-height: 285px;
+  }
+
+  .hcl-summary-content {
+    overflow: visible;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .hcl-summary-overlay {
+    padding: 10px;
+  }
+
+  .hcl-summary-container {
+    width: 100%;
+    min-height: auto;
+
+    padding: 66px 14px 18px;
+
+    border-width: 6px;
+    border-radius: 22px;
+  }
+
+  .hcl-summary-tab {
+    width: 68vw;
+    min-width: 0;
+    height: 56px;
+
+    border-radius: 0 0 28px 28px;
+
+    font-size: 24px;
+  }
+
+  .hcl-summary-side-toggle {
+    right: -42px;
+
+    width: 42px;
+    height: 104px;
+
+    border-radius: 0 14px 14px 0;
+  }
+
+  .hcl-summary-side-toggle img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hcl-result-card {
+    min-height: 480px;
+  }
+
+  .hcl-result-header h2 {
+    font-size: 20px;
+  }
+
+  .hcl-titration-image-area {
+    min-height: 225px;
+  }
+
+  .hcl-titre-display {
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .hcl-label {
+    width: calc(100% - 34px);
+
+    font-size: 16px;
+  }
+
+  .hcl-result-text {
+    padding: 5px 18px 12px;
+
+    font-size: 14px;
+  }
+
+  .hcl-middle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hcl-aim-card,
+  .hcl-learned-card,
+  .hcl-observation-card,
+  .hcl-conclusion-card {
+    padding: 19px;
+  }
+
+  .hcl-summary-card h2 {
+    font-size: 25px;
+  }
+
+  .hcl-summary-card p,
+  .hcl-summary-card li {
+    font-size: 15px;
+  }
+
+  .hcl-summary-actions {
+    flex-direction: column-reverse;
+  }
+
+  .hcl-summary-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 53px;
+
+    font-size: 18px;
+  }
+}
