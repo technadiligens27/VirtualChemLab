@@ -69,7 +69,7 @@ const PouringMode02 = ({
   const {selectedLeftHand,selectedRightHand,isPottasiumCarobnateInTestube01} = useContext(InteractionContext)
 
   const {conicalBeakerRef02,graduatedBeakerRef,roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,
-    volumetricRef,normalBeakerRef,mainBuiretteRef,kettleRef} = useContext(
+    volumetricRef,normalBeakerRef,mainBuiretteRef,kettleRef,testube03Ref} = useContext(
     ModelContext
   )
 
@@ -765,7 +765,7 @@ const PouringMode02 = ({
           />
         )}
 
-      {selectedLesson==10 && lessonStep===23 &&selectedLeftHand?.name ===
+      {selectedLesson==10 && lessonStep===23 && selectedLeftHand?.name ===
         "main-testube-01" &&
         selectedRightHand?.name ===
           "main-graduated-cylinder" && (
@@ -785,7 +785,30 @@ const PouringMode02 = ({
             liquidSpeed={0.25}
             
           />
-        )}        
+        )}  
+
+      {selectedLesson==10 && lessonStep===36 && selectedLeftHand?.name ===
+        "main-testube-03" &&
+        selectedRightHand?.name ===
+          "main-graduated-cylinder" && (
+          <PourFromModel
+            isPouring={isPouring}
+            modelRef={
+               graduatedBeakerRef
+            }
+            otherModelRef={
+              testube03Ref
+            }
+            modelLiquidEndScale={0}
+            otherLiquidEndScale={68.5576}
+            otherLiquidColor = {"#f3f4f6"}
+            speed={10}
+            pourScale = {1}
+            liquidSpeed={0.25}
+            
+          />
+        )}         
+
         
     </>
   )

@@ -993,6 +993,11 @@ const PourFromModel = ({
           if (selectedLesson ===10 && lessonStep ===30) {
             setLessonStep(32)
           }
+
+          if (selectedLesson ===10 && lessonStep ===36) {
+            setLessonStep(39)
+          }
+
         }
       }
 

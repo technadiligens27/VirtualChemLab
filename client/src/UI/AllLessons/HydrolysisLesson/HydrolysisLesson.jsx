@@ -251,7 +251,7 @@ useEffect(() => {
             text={
               <>
                 Click the held <strong>Measuring Cylinder</strong>{" "}
-                and select <strong>Add Liquid</strong>.
+                and select <strong>Add Ethanol 5cm³</strong>.
               </>
             }
           />
@@ -299,21 +299,107 @@ useEffect(() => {
             }
           />
         )}
+      {lessonStep === 33 && (
+          <DialogBox
+            text={
+              <>
+                Click the labelled <strong>Chlorobutane Test Tube</strong>{" "}
+                and select the <strong>Left Hand</strong>
+              </>
+            }
+          />
+        )}
+        {lessonStep === 34 && (
+          <DialogBox
+            text={
+              <>
+                Click the held <strong>Measuring Cylinder</strong>{" "}
+                and select <strong>Add Ethanol 5cm³</strong>.
+              </>
+            }
+          />
+        )} 
+        
+        {lessonStep === 35 && (
+          <DialogBox
+            text={
+              <>
+                Press <strong>P</strong> to enter{" "}
+                <strong>Pouring Mode</strong>.
+              </>
+            }
+          />
+        )}
+        
+        
+        {lessonStep === 36 && (
+          <DialogBox
+            text={
+              <>
+               <strong> Scroll Down</strong> to pour.
+              </>
+            }
+          />
+        )}
 
-        {lessonStep === 33 && <DialogBox text={'Take the last Testube labelled (chlorobutane)'}/>}
-        {lessonStep === 34 && <DialogBox text={'Click Measuring Cylinder and select Add Liquid'}/>}
-        {lessonStep === 35 && <DialogBox text={'Take 5cm3 of Ethanol again'}/>}
-        {lessonStep === 36 && <DialogBox text={'Press P to enter Pour Mode'}/>}
-        {lessonStep === 37 && <DialogBox text={'Scroll down to Pour'}/>}
-        {lessonStep === 38 && <DialogBox text={'Press P to exit Pour Mode'}/>}
-        {lessonStep === 39 && <DialogBox text={'Keep Measuring Cylinder Back on Table'}/>}
-        {lessonStep === 40 && <DialogBox text={'Keep Testube On Table'}/>}
+
+        {lessonStep === 39 && (
+          <DialogBox
+            text={
+              <>
+                Click the held <strong>Measuring Cylinder</strong>{" "}
+                and select <strong>Keep Back on Table</strong>.
+              </>
+            }
+          />
+        )}
+
+
+        {lessonStep === 40 && (
+          <DialogBox
+            text={
+              <>
+                Click the <strong>Held Test Tube</strong> and
+                select <strong>Keep Back on Table</strong>.
+              </>
+            }
+          />
+        )}
 
         {lessonStep >=41 && lessonStep <74 && <SulfamicGuidelines guidelineData={guidelineData[3]}/>}
 
-        {lessonStep === 41 && <DialogBox text={'Select Iodobutane Bottle to Left hand'}/>}
-        {lessonStep === 42 && <DialogBox text={'Select Pipette To Right Hand'}/>}
-        {lessonStep === 43 && <DialogBox text={'Scroll Down to Squeeze Pipette'}/>}
+        {lessonStep === 41 && (
+          <DialogBox
+            text={
+              <>
+                Click the <strong>Iodobutane bottle</strong> and
+                select the <strong>Left Hand</strong> option.
+              </>
+            }
+          />
+        )}
+
+        {lessonStep === 42 && (
+          <DialogBox
+            text={
+              <>
+                Click the <strong>pipette</strong> and select
+                the <strong>Right Hand</strong> option.
+              </>
+            }
+          />
+        )}
+
+        {lessonStep === 43 && (
+          <DialogBox
+            text={
+              <>
+                <strong>Scroll Down</strong> to squeeze the{" "}
+                <strong>Pipette</strong>.
+              </>
+            }
+          />
+        )}
         {lessonStep === 44 && <DialogBox text={'Click Pipette Again And select Take Liquid'}/>}
         {lessonStep === 45 && <DialogBox text={'Scroll Upwards to take Liquid'}/>}
         {lessonStep === 46 && <DialogBox text={'CLick Pipette and select Exit Pipette Mode'}/>}

@@ -96,7 +96,7 @@ const Interaction = () => {
     isPourModeDeliveryTube,setIsPourModeDeliveryTube,isMolarVolumeReaction,isAddFunnelToMode,isPotassiumTransferred,isPlaceInMantle,
     isAddDistillationHead,isInsertThermometer,isInsertCondensor,isFillCondensor,setIsFillCondensor,isMantleTurnedOn,isDropperPlaced,
     isAddWarmWater,isPlaceModelInBeaker,isChlorideIonReaction,isExplanationOpen,setIsExplanationOpen,isModelInHeatingMat,isDipMode,
-    showBunsenFlame,showPowderBox,showPowderInContainer,isAirHoleOpen,setIsAirHoleOpen
+    showBunsenFlame,showPowderBox,showPowderInContainer,isAddLiquid
   } = useContext(InteractionContext);
 
   const {testube01Ref,testube02Ref,digitalBalanceRef,normalBeakerRef,mainPolystereneRef,iodobutaneBottleRef,
@@ -694,7 +694,7 @@ useEffect(() => {
         />
       }  
       {
-        selectedLesson===10 && [23,30].includes(lessonStep) && <PouringMode02
+        selectedLesson===10 && [23,30,36].includes(lessonStep) && <PouringMode02
           pourModelRef = {graduatedBeakerRef}
           receiveModelRef = {lessonStep==23 ? testube01Ref : lessonStep ==30 ? testube02Ref : testube03Ref}
           hand={"right"} 
@@ -738,6 +738,7 @@ useEffect(() => {
 
       {showPowderInContainer && <ShowPowderInEmptyContainer/>}
 
+      {isAddLiquid && <FillConicalBeaker modelRef={graduatedBeakerRef} amount={0.105068} color="#f3f4f6" opacity={0.38}/>}  
 
       {/* {selectedLesson==15 && lessonStep===18.1 && <OpenAirHole/>} */}
 

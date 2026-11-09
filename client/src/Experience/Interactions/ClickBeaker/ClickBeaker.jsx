@@ -102,7 +102,7 @@ const ClickObject = () => {
     useContext(MainGuidelineContext)
 
  const {isBalancePlaced,setIsBalancePlaced,isBuiretteClamped,setIsBuiretteClamped,setIsInvertCylinder,setIsInsertThermometer,
-  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor,setIsMantleTurnedOn,setShowPowderBox} = useContext(InteractionContext)  
+  isBeakerNearClamp,setIsBeakerNearClamp,setIsInsertCondensor,setIsMantleTurnedOn,setShowPowderBox,setIsAddLiquid} = useContext(InteractionContext)  
 
   const { camera, gl, scene } = useThree()
 
@@ -5420,9 +5420,43 @@ const disposeCup = () => {
     setSelectedObject(null)
   }
 
+
+  useEffect(()=>{
+    if(selectedLesson===10 && lessonStep==30){
+      setIsAddLiquid(false)
+    }
+  },[selectedLesson,lessonStep])
+
+
+  const handleAddLiquidToModel = ()=>{
+
+    const isAllowed = (selectedLesson==10 && [27,34].includes(lessonStep))
+    if(!isAllowed){
+      return
+    }
+
+    if(selectedLesson==10 && lessonStep==27){
+      setLessonStep(29)
+    }
+    if(selectedLesson==10 && lessonStep==34){
+      setLessonStep(35)
+    }
+    setIsAddLiquid(true)
+  }
+
+
   const renderMeasuringCylinderHeldButtons =()=>{   
 
     if(selectedObject?.name==="main-graduated-cylinder"){
+
+    if(selectedLesson==10 && [27,34].includes(lessonStep)){
+      return(
+      <button onClick={handleAddLiquidToModel} >
+        Add Ethanol 5cm³
+      </button>   
+      )
+   
+    }  
 
     if([14.2].includes(selectedLesson) && [68].includes(lessonStep)){
             return(

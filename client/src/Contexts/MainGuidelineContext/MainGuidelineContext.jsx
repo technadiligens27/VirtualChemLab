@@ -85,6 +85,9 @@ export const MainGuidelineProvider = ({ children }) => {
   const [showApparatus,setShowApparatus] = useState(false);
   const [showKettleArrow,setShowKettleArow] = useState(false);
 
+  const [showIodobutaneArrow,setShowIodobutaneArrow] = useState(false);
+  const [showPipetteArrow,setShowPipetteArrow] = useState(false)
+
 
 
   const resetLessonGuidelines = () => {
@@ -123,7 +126,9 @@ export const MainGuidelineProvider = ({ children }) => {
     setShowSummary(false);
     setShowResult(false);
     setShowApparatus(false);
-    setShowKettleArow(false)
+    setShowKettleArow(false);
+    setShowIodobutaneArrow(false);
+    setShowPipetteArrow(false)
     // Restart interaction components
     
   }
@@ -288,7 +293,15 @@ export const MainGuidelineProvider = ({ children }) => {
         setShowApparatus,
 
         showKettleArrow,
-        setShowKettleArow
+        setShowKettleArow,
+
+        showIodobutaneArrow,
+        setShowIodobutaneArrow,
+
+        showPipetteArrow,
+        setShowPipetteArrow
+
+
 
 
       }}

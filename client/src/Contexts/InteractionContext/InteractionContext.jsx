@@ -211,7 +211,9 @@ export const InteractionProvider = ({ children }) => {
 
   const [selectedObjectName,setSelectedObjectName] = useState("Click An Object");
 
-  const [showFeedBackForm,setShowFeedBackForm] = useState(false)
+  const [showFeedBackForm,setShowFeedBackForm] = useState(false);
+
+  const [isAddLiquid,setIsAddLiquid] = useState(false)
 
 const [feedbackAnswers,setFeedbackAnswers] = useState({
   selectedLesson : null,
@@ -505,7 +507,7 @@ setChairStep(0)
   visibleResultCount: 1,
   isAutoSimulating: false,
 })
-
+setIsAddLiquid(false)
 setFeedbackAnswers(false)
   
 }
@@ -616,7 +618,7 @@ setFeedbackAnswers(false)
         showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer,
         isAirHoleOpen,setIsAirHoleOpen,molarVolumeResultsState,setMolarVolumeResultsState,
         selectedObjectName,setSelectedObjectName,feedbackAnswers,setFeedbackAnswers,
-        showFeedBackForm,setShowFeedBackForm
+        showFeedBackForm,setShowFeedBackForm,isAddLiquid,setIsAddLiquid
       }}
     >
       {children}

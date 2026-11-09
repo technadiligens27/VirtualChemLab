@@ -57,6 +57,7 @@ import SelectedObjectButton from "./SelectedObjectButton/SelectedObjectButton"
 import FeedbackForm from "./FeedbackForm/FeedbackForm"
 import axios from "axios"
 import HydrolysisLesson from "./AllLessons/HydrolysisLesson/HydrolysisLesson"
+import FillBeakerBox from "../Experience/Interactions/FillBeakerBox/FillBeakerBox"
 
 
 const mainContent = [
@@ -156,7 +157,8 @@ const UI = () => {
     setShowCondensorArrow,showTestube02Arrow,
     setShowTestube02Arrow,setShowGraduatedPippeteArrow,isExplanationOpen,setIsExplanationOpen,
     setShowHeatingMatArow,showBunsenBurnerArrow,setShowBunsenBurnerArrow,showNichromeWireArrow,
-        setShowNichromeWireArrow,setLessonStep,showErrorMsgNo,setShowKettleArow
+        setShowNichromeWireArrow,setLessonStep,showErrorMsgNo,setShowKettleArow,
+        setShowIodobutaneArrow,setShowPipetteArrow
     
   } = useContext(MainGuidelineContext)
 
@@ -170,6 +172,21 @@ const UI = () => {
   } = useContext(InteractionContext)
 
   // ------------------------ Lesson 08 -------------
+
+
+  useEffect(()=>{
+    setShowPipetteArrow(
+      (selectedLesson==10 && lessonStep==42)
+    )
+  },[selectedLesson,lessonStep])
+
+
+  useEffect(()=>{
+    setShowIodobutaneArrow(
+      (selectedLesson==10 && lessonStep==41)
+    )
+  },[selectedLesson,lessonStep])
+
 
   useEffect(()=>{
     setShowKettleArow(
@@ -350,7 +367,8 @@ const UI = () => {
 
   useEffect(()=>{
     setShowTestube03Arrow(
-      (selectedLesson==13 && lessonStep==15)
+      (selectedLesson==13 && lessonStep==15) ||
+      (selectedLesson == 10 && lessonStep==33)
     )
   },[selectedLesson,lessonStep])
 
@@ -378,9 +396,9 @@ const UI = () => {
         {
           message:
             "A guest user clicked Sign In As Guest.",
-
-          signedInAt:
-            new Date().toISOString(),
+        },
+        {
+          withCredentials: true,
         }
       )
 
@@ -391,23 +409,23 @@ const UI = () => {
 
       return true
     } catch (error) {
-      console.log(error)
       console.error(
         error.response?.data?.message ||
-        "Could not contact the server."
+          "Could not contact the server."
       )
 
       return false
     }
-  }
+}
+
 
   const startTutorial = async () => {
-    const didSignIn =
-      await handleSignIn()
+    // const didSignIn =
+    //   await handleSignIn()
 
-    if (!didSignIn) {
-      return
-    }
+    // if (!didSignIn) {
+    //   return
+    // }
 
     setIsMainGuideline(true)
 
@@ -500,9 +518,9 @@ useEffect(() => {
     (selectedLesson ===9 && lessonStep===6) ||
     (selectedLesson === 9 && lessonStep === 30) ||
     (selectedLesson == 14.3 && lessonStep === 110) ||
-    (selectedLesson==10 && lessonStep == 21)
+    (selectedLesson==10 && lessonStep == 21) 
   )
-}, [selectedLesson, lessonStep, hessGuidelineNumber])
+}, [selectedLesson, lessonStep])
 
 useEffect(()=>{
   setShowThermometerArrow(
@@ -849,6 +867,8 @@ useEffect(() => {
               {selectedLesson==14.4 && [144].includes(lessonStep) && <ReactionTimer right={'30%'} isRunning={true} onSkip={()=>{setLessonStep(145)}}/>}
 
      {!isExplanationOpen && showErrorMsgNo ==0 && <SelectedObjectButton/> }   
+
+     {/* <FillBeakerBox/> */}
 
         {/* <ApparatusOverview
           title="Apparatus Overview"

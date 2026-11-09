@@ -13,73 +13,78 @@ import "./FillUpBeaker.css"
 
 import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 import { MainGuidelineContext } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { ModelContext } from "../../../Contexts/ModelContext/ModelContext"
 
-const FillUpBeaker = ({
-  beakerRef,
-  hand,
-}) => {
-  const {
-    leftBeakerFillData,
-    rightBeakerFillData,
-    setIsFillUpBeaker,
-  } = useContext(InteractionContext)
+const FillUpBeaker = ({beakerRef,hand}) => {
 
-  const {
-    lessonStep,
-    setLessonStep,
-    selectedLesson,
-    setSelectedLesson
-  } = useContext(MainGuidelineContext)
+  const {leftBeakerFillData,rightBeakerFillData,setIsFillUpBeaker} = useContext(InteractionContext)
+  const {meniscusMeasuringCylinder50Ref,meniscusMeasuringCylinder100Ref,meniscusBuretteRef} = useContext(ModelContext)
+  const {lessonStep,setLessonStep,selectedLesson,setSelectedLesson} = useContext(MainGuidelineContext)
 
-  const fillData =
-    hand === "left"
-      ? leftBeakerFillData
-      : rightBeakerFillData
-
+  const fillData = hand === "left" ? leftBeakerFillData : rightBeakerFillData
   const liquidMeshesRef = useRef([])
 
   const amountRef = useRef(0)
   const speedRef = useRef(1)
 
-  const fillCompletedRef =
-    useRef(false)
+  const fillCompletedRef = useRef(false)
+  const isRoundBottomFlaskRef = useRef(false)
+  const startXScaleRef = useRef(1)
+  const targetXScaleRef = useRef(1)
+  const labelGroupRef = useRef(null)
 
-  const isRoundBottomFlaskRef =
-    useRef(false)
+  const labelPositionRef = useRef(new THREE.Vector3())
+  const [showLabel,setShowLabel] = useState(false)
 
-  const startXScaleRef =
-    useRef(1)
+  const selectedLiquidColorRef = useRef("#ffffff")
 
-  const targetXScaleRef =
-    useRef(1)
-
-  const labelGroupRef =
-    useRef(null)
-
-  const labelPositionRef =
-    useRef(
-      new THREE.Vector3()
-    )
-
-  const [
-    showLabel,
-    setShowLabel,
-  ] = useState(false)
 
   // ==========================================
   // RESET COMPLETION
   // ==========================================
 
   useEffect(() => {
-    if (
-      lessonStep === 5 ||
-      lessonStep === 8 ||
-      lessonStep === 9
-    ) {
-      fillCompletedRef.current =
-        false
+    if (lessonStep === 5 ||lessonStep === 8 || lessonStep === 9) {
+      fillCompletedRef.current = false
     }
   }, [lessonStep])
+
+useEffect(() => {
+  const meniscusRefs = [ meniscusMeasuringCylinder50Ref, meniscusMeasuringCylinder100Ref, meniscusBuretteRef]
+  const liquidColor = fillData?.color || "#ffffff"
+
+  meniscusRefs.forEach((meniscusRef) => {
+    const meniscus = meniscusRef.current
+
+    if (!meniscus) {
+      return
+    }
+
+    meniscus.traverse((child) => {
+      if (!child.isMesh) {
+        return
+      }
+
+      const materials = Array.isArray(
+        child.material
+      )
+        ? child.material
+        : [child.material]
+
+      materials.forEach((material) => {
+        if (!material) {
+          return
+        }
+
+        material.color?.set(liquidColor)
+        material.transparent = true
+        material.opacity = 0.4
+        material.depthWrite = false
+        material.needsUpdate = true
+      })
+    })
+  })
+}, [fillData?.color,meniscusMeasuringCylinder50Ref,meniscusMeasuringCylinder100Ref])
 
   // ==========================================
   // FIND LIQUID + PREPARE FILL
@@ -89,6 +94,8 @@ const FillUpBeaker = ({
     if (!beakerRef?.current) return
     if (!fillData?.amount) return
 
+
+    selectedLiquidColorRef.current = fillData.color || "#ffffff"
     liquidMeshesRef.current = []
 
     fillCompletedRef.current =
@@ -116,21 +123,12 @@ const FillUpBeaker = ({
     const isMethylPropane = 
       liquidName.includes("2-methylpropan-2-ol") 
 
+    const isAqueousSodiumHydroxide =  liquidName.includes("graduated-pipette")
 
-    const isAqueousSodiumHydroxide = 
-      liquidName.includes("graduated-pipette")
+    const isEthanol = liquidName.includes("ethanol") ||liquidName.includes("c2h5oh")
+    
+    const isSodiumHydrogencarbonate = liquidName.includes("sodium hydrogencarbonate")
 
-    const isEthanol =
-      liquidName.includes(
-        "ethanol"
-      ) ||
-      liquidName.includes(
-        "c2h5oh"
-      )
-   const isSodiumHydrogencarbonate =
-      liquidName.includes(
-        "sodium hydrogencarbonate"
-      ) 
     const isEthanoicAcid =
         liquidName.includes(
           "ethanoic acid"
@@ -196,6 +194,8 @@ const FillUpBeaker = ({
       }
     )
 
+
+
     // ========================================
     // CHECK LIQUID
     // ========================================
@@ -250,25 +250,15 @@ const FillUpBeaker = ({
       // ======================================
 
       if (isEthanol || isEthanoicAcid || isSodiumHydrogencarbonate) {
-        clonedMaterial.color?.set(
-          "#f5fbff"
-        )
 
-        clonedMaterial.transparent =
-          true
+        clonedMaterial.color?.set("#f5fbff")
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0.38
+        clonedMaterial.depthWrite = false
 
-        clonedMaterial.opacity =
-          0.38
 
-        clonedMaterial.depthWrite =
-          false
-
-        if (
-          "roughness" in
-          clonedMaterial
-        ) {
-          clonedMaterial.roughness =
-            0.1
+        if ("roughness" in clonedMaterial) {
+          clonedMaterial.roughness = 0.1
         }
 
         if (
@@ -301,14 +291,10 @@ const FillUpBeaker = ({
       // ======================================
 
       else if (isWater|| isMethylPropane) {
-        clonedMaterial.transparent =
-          true
 
-        clonedMaterial.opacity =
-          0.2
-
-        clonedMaterial.depthWrite =
-          false
+        clonedMaterial.transparent = true
+        clonedMaterial.opacity = 0.2
+        clonedMaterial.depthWrite = false
 
         if (
           "roughness" in
@@ -331,6 +317,8 @@ const FillUpBeaker = ({
         clonedMaterial.transparent = true
         clonedMaterial.opacity = 0.25
         clonedMaterial.depthWrite = false
+
+
 
         if ("roughness" in clonedMaterial) {
           clonedMaterial.roughness = 0.1
@@ -357,8 +345,15 @@ const FillUpBeaker = ({
       }
       if (lowerBeakerName.includes("main-buirette")) {
         clonedMaterial.transparent = true
-        clonedMaterial.opacity = 0.6
+        clonedMaterial.opacity = 0.25
         clonedMaterial.depthWrite = false
+                if ("roughness" in clonedMaterial) {
+          clonedMaterial.roughness = 0.1
+        }
+
+        if ("metalness" in clonedMaterial) {
+          clonedMaterial.metalness = 0
+        }
       }
       clonedMaterial.needsUpdate =
         true
@@ -497,19 +492,17 @@ const FillUpBeaker = ({
 // 100 cm³ GRADUATED CYLINDER
 // ========================================
 
-else if (
-  lowerBeakerName.includes("main-graduated-cylinder-100")
-) {
-  if (
-    selectedLesson === 13 &&
-    selectedAmount === 100
-  ) {
-    amountRef.current = 0.92
-    speedRef.current = 0.4
-  } else {
-    amountRef.current =
-      0.6
+else if (lowerBeakerName.includes("main-graduated-cylinder-100")) {
+    meniscusMeasuringCylinder100Ref.current.visible = true
 
+  if (selectedLesson === 13 && selectedAmount === 100) {
+    meniscusMeasuringCylinder100Ref.current.scale.y = 0.94773
+    amountRef.current = 1.03469
+    speedRef.current = 0.4
+
+  } else {
+    meniscusMeasuringCylinder100Ref.current.scale.y = 1.27394
+    amountRef.current = 0.628844
     speedRef.current = 1
   }
 }
@@ -518,34 +511,45 @@ else if (
 // NORMAL GRADUATED CYLINDER
 // ========================================
 
-else if (
-  lowerBeakerName === "main-graduated-cylinder" 
-) {
+else if (lowerBeakerName === "main-graduated-cylinder" ) {
+
+  meniscusMeasuringCylinder50Ref.current.visible = true
+
   if(selectedLesson===13 && selectedAmount===30){
-    amountRef.current = 0.506804
+    meniscusMeasuringCylinder50Ref.current.scale.y = 1.33375
+    amountRef.current = 0.6152
     speedRef.current = 0.45
   }
   else if(selectedLesson===14 && selectedAmount===35){
-    amountRef.current = 0.586715
-    speedRef.current = 0.47
+    meniscusMeasuringCylinder50Ref.current.scale.y = 0.849129
+    amountRef.current = 0.705204
+    speedRef.current = 0.45
   }  
   else if(selectedLesson===14 && selectedAmount===10){
-    amountRef.current = 0.184711
-    speedRef.current = 0.25
+  meniscusMeasuringCylinder50Ref.current.scale.y = 2.52986
+  amountRef.current = 0.233986
+  speedRef.current = 0.106699
   }
   else if(selectedLesson===14.1 && selectedAmount===20){
-    amountRef.current = 0.345348
+    meniscusMeasuringCylinder50Ref.current.scale.y = 1.48157  
+    amountRef.current = 0.427967
     speedRef.current = 0.25
   }
   else if([14.3,10].includes(selectedLesson) && selectedAmount===5){
-    amountRef.current = 0.103131
+    meniscusMeasuringCylinder50Ref.current.scale.y = 3.80104
+    amountRef.current = 0.136529
     speedRef.current = 0.106699
   }
-  else{
-  amountRef.current =
-    selectedAmount * 1.1
+  else if(selectedAmount==20){
+    meniscusMeasuringCylinder50Ref.current.scale.y = 1.48157  
+    amountRef.current = 0.427967
+    speedRef.current = 0.25
+  }
 
+  else{
+  amountRef.current = selectedAmount * 1.1
   speedRef.current = 20
+
   }
 
 }
@@ -554,8 +558,12 @@ else if (
     // ========================================
 
     else if (lowerBeakerName.includes("main-buirette")) {
+
+      meniscusBuretteRef.current.visible = true
+
       if(selectedAmount===30){
-        amountRef.current = 0.648391
+        meniscusBuretteRef.current.scale.y = 1.53599
+        amountRef.current = 0.622851
         speedRef.current = 0.4
       }else{
         amountRef.current = selectedAmount / 63

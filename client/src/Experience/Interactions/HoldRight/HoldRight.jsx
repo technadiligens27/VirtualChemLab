@@ -592,6 +592,10 @@ const transformControlsRef = useRef()
       if(selectedLesson===10 && lessonStep === 29){
         setLessonStep(30)
       }
+      if(selectedLesson===10 && lessonStep === 35){
+        setLessonStep(36)
+      }
+
     }
   }
 

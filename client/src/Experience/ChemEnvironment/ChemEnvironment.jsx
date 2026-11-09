@@ -32,7 +32,8 @@ const ChemEnvironment = () => {
          testube02OriginalStateRef,graduatedPipetteOriginalStateRef,seperatingFunnelOriginalStateRef,arrowHeatingMatRef,heatingMatRef,
          bunsenBurnerRef,arrowBunsenBurner,gasTubeRef,arrowNichromeWireRef,nichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef,
          airHoleRef,frontWallRef,bottomWallRef,leftWallRef,rightWallRef,backWallRef,topWallRef,
-         labelIodobutaneRef,labelBromobutaneRef,labelChlorobutaneRef
+         labelIodobutaneRef,labelBromobutaneRef,labelChlorobutaneRef,arrowIodobutaneRef,arrowPipetteRef,meniscusMeasuringCylinder50Ref,
+         meniscusMeasuringCylinder100Ref,meniscusBuretteRef
          
   } = useContext(ModelContext);
 
@@ -392,6 +393,15 @@ const hideVerticalObjects=(root)=>{
     filterFoldedPaperRef.current = scene.getObjectByName('main-folded-paper')
     filterFoldedPaperRef.current.visible = false;
 
+    meniscusMeasuringCylinder50Ref.current = scene.getObjectByName("meniscus-measuring-cylinder-50");
+    meniscusMeasuringCylinder50Ref.current.visible = false;
+
+    meniscusMeasuringCylinder100Ref.current = scene.getObjectByName("meniscus-measuring-100");
+    meniscusMeasuringCylinder100Ref.current.visible = false
+
+    meniscusBuretteRef.current = scene.getObjectByName("burette-meniscus");
+    meniscusBuretteRef.current.visible = false
+
     funnelRef.current = scene.getObjectByName('main-funnel');
     powderContainer.current = scene.getObjectByName("metal-salt-container");
     powderContainer.current.visible = false
@@ -627,6 +637,12 @@ if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
 
       arrowNichromeWireRef.current = scene.getObjectByName("arrow-nichrome-wire");
       arrowNichromeWireRef.current.visible = false
+
+      arrowIodobutaneRef.current = scene.getObjectByName('arrow-iodobutane')
+      arrowIodobutaneRef.current.visible = false
+
+      arrowPipetteRef.current = scene.getObjectByName('arrow-pipette')
+      arrowPipetteRef.current.visible = false
   }, [scene])
 
 

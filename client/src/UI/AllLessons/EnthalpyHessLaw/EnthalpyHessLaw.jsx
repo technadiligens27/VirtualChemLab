@@ -1238,7 +1238,7 @@ const {
 
         {
           lessonStep===44 && <ExothermicReactionSummary onQuestions={()=>{setShowQuestionCardNo(8.1);setLessonStep(45)}}
-          onEndLesson={()=>{resetLesson();setShowFeedBackForm(true)}}
+          onEndLesson={()=>{setShowFeedBackForm(true)}}
           
           
           />
@@ -1280,7 +1280,6 @@ const {
             setShowEnthalyResultOne(true)
             }}
             onbtn2Click={() => {
-              resetLesson() 
               setShowFeedBackForm(true)
             }}
             button2Text="End Lesson"

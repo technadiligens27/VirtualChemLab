@@ -14,7 +14,7 @@ const AllArrows=()=>{
         ,arrowNaohBottleRef,arrowSulfamicRef,arrowMethylBottleRef,arrowPotassiumHydrogenCarbonateRef,
         arrowBoilingTube01Ref,arrowMeasuringCylnder,arrowMeasuringCylnder50,arrowTestube03Ref,arrowBromobutanRef,
         arrowSeparatingFunnelRef,arrowHeatingMantleRef,arrowCondensorRef,arrowGraduatedPipette,arrowTestube02Ref,arrowBunsenBurner,
-        arrowNichromeWireRef,arrowKettleRef,arrowHeatingMatRef
+        arrowNichromeWireRef,arrowKettleRef,arrowHeatingMatRef,arrowIodobutaneRef,arrowPipetteRef
     } = useContext(ModelContext);
 
     const {showArrrowChair,showNormalBeakerArrow,showGogglesArrow,showLeftGloveArrow,
@@ -30,7 +30,8 @@ const AllArrows=()=>{
         setShowMeasuringCylinder50Arrow,showTestube03Arrow,setShowTestube03Arrow,showHeatingMantleArrow,
         setShowMeasuringCylinderArrow,showBromobutaneArrow,setshowBromobutaneArrow,showSeparatingFunnelArrow,setShowSeparatingFunnel
         ,showCondensorArrow,showTestube02Arrow,setShowTestube02Arrow,showGraduatedPippeteArrow,setShowGraduatedPippeteArrow,
-        showHeatingMatArrow,showBunsenBurnerArrow,setShowBunsenBurnerArrow,showNichromeWireArrow,setShowNichromeWireArrow
+        showHeatingMatArrow,showBunsenBurnerArrow,setShowBunsenBurnerArrow,showNichromeWireArrow,showIodobutaneArrow,
+        showPipetteArrow
     } = useContext(MainGuidelineContext)
 
     if(!isTutorialMode){
@@ -82,6 +83,8 @@ const AllArrows=()=>{
         {showBunsenBurnerArrow && <ArrowGuides arrowRef={arrowBunsenBurner} speed={2.5} height={0.5} showStatus={showBunsenBurnerArrow}/>}
         {showNichromeWireArrow && <ArrowGuides arrowRef={arrowNichromeWireRef} speed={2.5} height={0.5} showStatus={showNichromeWireArrow}/>}
         {showKettleArrow && <ArrowGuides arrowRef={arrowKettleRef} speed={2.5} height={0.5} showStatus={showKettleArrow}/>}
+        {showIodobutaneArrow && <ArrowGuides arrowRef={arrowIodobutaneRef} speed={2.5} height={0.5} showStatus={showIodobutaneArrow}/>}
+        {showPipetteArrow && <ArrowGuides arrowRef={arrowPipetteRef} speed={2.5} height={0.5} showStatus={showPipetteArrow}/>}
 
         </>
     )

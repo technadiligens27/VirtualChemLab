@@ -1,6 +1,9 @@
 import {
   useContext,
+  useState,
 } from "react"
+
+import axios from "axios"
 
 import "./FeedbackForm.css"
 
@@ -12,6 +15,10 @@ import {
   MainGuidelineContext,
 } from "../../Contexts/MainGuidelineContext/MainGuidelineContext"
 
+import {
+  useResetLesson,
+} from "../ResetLessonButton/ResetLessonButton"
+
 const FeedbackForm = ({
   title = "Help Us Improve",
 
@@ -22,6 +29,7 @@ const FeedbackForm = ({
   const {
     feedbackAnswers,
     setFeedbackAnswers,
+    setShowFeedBackForm,
   } = useContext(
     InteractionContext
   )
@@ -31,6 +39,14 @@ const FeedbackForm = ({
   } = useContext(
     MainGuidelineContext
   )
+
+  const resetLesson =
+    useResetLesson()
+
+  const [
+    isSubmitting,
+    setIsSubmitting,
+  ] = useState(false)
 
   const feedbackQuestions = [
     {
@@ -84,8 +100,6 @@ const FeedbackForm = ({
       (previousAnswers) => ({
         ...previousAnswers,
 
-        selectedLesson,
-
         [questionId]: answer,
       })
     )
@@ -98,36 +112,83 @@ const FeedbackForm = ({
       (previousAnswers) => ({
         ...previousAnswers,
 
-        selectedLesson,
-
         comments: event.target.value,
       })
     )
   }
 
-  const handleSubmit = (
+  const finishFeedback = (
+    completedFeedback
+  ) => {
+    onSubmit?.(completedFeedback)
+
+    setFeedbackAnswers({})
+
+    setShowFeedBackForm(false)
+
+    resetLesson()
+  }
+
+  const handleSkip = () => {
+    onSkip?.()
+
+    setFeedbackAnswers({})
+
+    setShowFeedBackForm(false)
+
+    resetLesson()
+  }
+
+  const handleSubmit = async (
     event
   ) => {
     event.preventDefault()
 
-    const completedFeedback = {
-      ...feedbackAnswers,
+    const answers = {}
 
+    feedbackQuestions.forEach(
+      (feedbackQuestion) => {
+        answers[feedbackQuestion.id] =
+          feedbackAnswers?.[
+            feedbackQuestion.id
+          ] || ""
+      }
+    )
+
+    const completedFeedback = {
       selectedLesson,
+
+      answers,
+
+      comments:
+        feedbackAnswers?.comments || "",
     }
 
-    setFeedbackAnswers(
-      completedFeedback
-    )
+    try {
+      setIsSubmitting(true)
 
-    console.log(
-      "Feedback submitted:",
-      completedFeedback
-    )
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/feedback`,
+        completedFeedback,
+        {
+          withCredentials: true,
+        }
+      )
 
-    onSubmit?.(
-      completedFeedback
-    )
+      console.log(
+        "Feedback saved:",
+        response.data
+      )
+
+      finishFeedback(completedFeedback)
+    } catch (error) {
+      console.error(
+        error.response?.data?.message ||
+          "Could not submit feedback."
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -234,12 +295,8 @@ const FeedbackForm = ({
                 value={
                   feedbackAnswers?.comments || ""
                 }
-                onChange={
-                  handleCommentChange
-                }
-                placeholder="
-                  Write your feedback here...
-                "
+                onChange={handleCommentChange}
+                placeholder="Write your feedback here..."
                 maxLength={500}
               />
 
@@ -257,9 +314,7 @@ const FeedbackForm = ({
             <button
               type="button"
               className="feedback-skip-button"
-              onClick={() => {
-                onSkip?.()
-              }}
+              onClick={handleSkip}
             >
               Skip for now
             </button>
@@ -267,8 +322,11 @@ const FeedbackForm = ({
             <button
               type="submit"
               className="feedback-submit-button"
+              disabled={isSubmitting}
             >
-              Send Feedback
+              {isSubmitting
+                ? "Sending..."
+                : "Send Feedback"}
 
               <span>
                 ›

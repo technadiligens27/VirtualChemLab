@@ -74,7 +74,11 @@ export const ModelProvider = ({ children }) => {
   const powderContainer = useRef(null);
   const metalSaltRef = useRef(null);
   const nichromeWirePowderRef = useRef(null);
-  const airHoleRef = useRef(null)
+  const airHoleRef = useRef(null);
+
+  const meniscusMeasuringCylinder50Ref = useRef(null)
+  const meniscusMeasuringCylinder100Ref = useRef(null)
+  const meniscusBuretteRef = useRef(null)
 
   const normalBeakerLiquidRef = useRef(null);
   const conicalBeakerLiquidRef = useRef(null);
@@ -130,6 +134,8 @@ export const ModelProvider = ({ children }) => {
   const arrowHeatingMatRef = useRef(null);
   const arrowBunsenBurner = useRef(null);
   const arrowNichromeWireRef = useRef(null);
+  const arrowIodobutaneRef = useRef(null);
+  const arrowPipetteRef = useRef(null)
 
 
   const tableConicalPos = useRef(null)
@@ -220,7 +226,8 @@ export const ModelProvider = ({ children }) => {
         arrowBunsenBurner,gasTubeRef,nichromeWireRef,
         arrowNichromeWireRef,powderContainer,metalSaltRef,nichromeWirePowderRef,
         airHoleRef,frontWallRef,bottomWallRef,leftWallRef,rightWallRef,backWallRef,topWallRef,
-        labelIodobutaneRef,labelBromobutaneRef,labelChlorobutaneRef
+        labelIodobutaneRef,labelBromobutaneRef,labelChlorobutaneRef,arrowIodobutaneRef,arrowPipetteRef,
+        meniscusMeasuringCylinder50Ref,meniscusMeasuringCylinder100Ref,meniscusBuretteRef
       }}
     >
       {children}
