@@ -62,7 +62,7 @@ const HCLTitration2 = () => {
       "Prepare to measure the hydrochloric acid accurately.",
     ],
 
-    image: "./BeakerHcl.png",
+    image: "./BeakerHcl.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -86,7 +86,7 @@ const HCLTitration2 = () => {
       "Exit Pipette Mode.",
     ],
 
-    image: "./measureHCLWithPipette.png",
+    image: "./measureHCLWithPipette.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -110,7 +110,7 @@ const HCLTitration2 = () => {
       "Exit Pipette Mode when the pipette is empty.",
     ],
 
-    image: "./transferHCLToVolumetricFlask.png",
+    image: "./transferHCLToVolumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -134,7 +134,7 @@ const HCLTitration2 = () => {
       "Place the beaker back on the table.",
     ],
 
-    image: "./diluteHCL.png",
+    image: "./diluteHCL.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -158,7 +158,7 @@ const HCLTitration2 = () => {
       "Make sure the solution is thoroughly mixed.",
     ],
 
-    image: "./mixVolumetricFlask.png",
+    image: "./mixVolumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -181,7 +181,7 @@ const HCLTitration2 = () => {
       "Make sure the burette is positioned vertically.",
     ],
 
-    image: "./prepareBuretteNaOH.png",
+    image: "./prepareBuretteNaOH.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -206,7 +206,7 @@ const HCLTitration2 = () => {
       "Return the pipette to the table.",
     ],
 
-    image: "./prepareConicalFlaskHCL.png",
+    image: "./prepareConicalFlaskHCL.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -228,7 +228,7 @@ const HCLTitration2 = () => {
       "Return the phenolphthalein bottle to the table.",
     ],
 
-    image: "./addPhenolphthalein.png",
+    image: "./addPhenolphthalein.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -251,7 +251,7 @@ const HCLTitration2 = () => {
       "Remove the conical flask from beneath the burette.",
     ],
 
-    image: "./roughTitration.png",
+    image: "./roughTitration.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -274,7 +274,7 @@ const HCLTitration2 = () => {
       "Prepare the flask for another titration.",
     ],
 
-    image: "./cleanConicalFlask.png",
+    image: "./cleanConicalFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -298,7 +298,7 @@ const HCLTitration2 = () => {
       "Return the dropper bottle to the table.",
     ],
 
-    image: "./addPhenolphthalein.png",
+    image: "./addPhenolphthalein.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -322,7 +322,7 @@ const HCLTitration2 = () => {
       "Place the burette and clamp back in the centre.",
     ],
 
-    image: "./prepareBuretteNaOH.png",
+    image: "./prepareBuretteNaOH.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -345,7 +345,7 @@ const HCLTitration2 = () => {
       "Stop adding sodium hydroxide immediately.",
     ],
 
-    image: "./roughTitration.png",
+    image: "./roughTitration.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -368,7 +368,7 @@ const HCLTitration2 = () => {
       "Repeat the titration if another concordant result is required.",
     ],
 
-    image: "./titrationResults.png",
+    image: "./titrationResults.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -804,7 +804,7 @@ const resetLesson = useResetLesson()
 
       {/* {lessonStep === 53 && (<TitreValueRecorded
        titreValue ={24.8}
-       imageSrc={'./buretteTitre03.png'}
+       imageSrc={'./buretteTitre03.webp'}
        initialReading = {5.2}
        finalReading ={ 30.0}
        explanationText="The titre is the volume of sodium hydroxide delivered from the burette during the titration."
@@ -995,7 +995,7 @@ const resetLesson = useResetLesson()
 
       {/* {lessonStep === 70 && (<TitreValueRecorded
         titreValue ={24.7}
-        imageSrc={'./buretteTitre04.png'}
+        imageSrc={'./buretteTitre04.webp'}
         initialReading = {5.3}
         finalReading ={ 30.0}
         explanationText="The titre is the volume of sodium hydroxide delivered from the burette during the titration."
@@ -1053,7 +1053,7 @@ const resetLesson = useResetLesson()
             // concentrationLabelText="Concentration of HCl"
             // molesSulfamicAcidLabelText="Moles of HCl"
             // sulfamicAcidConcentrationLabelText="HCl concentration"
-            // imageSrc="./buretteTitre.png"
+            // imageSrc="./buretteTitre.webp"
           />
       )}
 

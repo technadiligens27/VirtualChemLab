@@ -223,7 +223,7 @@ const MolarVolumeReduced = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>
@@ -347,7 +347,7 @@ const MolarVolumeReduced = ({
           <div className="molar-volume-reduced-right">
 
             <img
-              src="./measuringCylinderGas.png"
+              src="./measuringCylinderGas.webp"
               alt="Carbon dioxide collected in an inverted measuring cylinder"
             />
 

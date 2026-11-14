@@ -125,7 +125,7 @@ export const chlorinationGuidelineData = [
       "Return the measuring cylinder to the table.",
     ],
 
-    image: "./measureMethylpropanol.png",
+    image: "./measureMethylpropanol.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -148,7 +148,7 @@ export const chlorinationGuidelineData = [
       "Pour the complete 35 cm³ into the same conical flask.",
     ],
 
-    image: "./measureHydrochloricAcid.png",
+    image: "./measureHydrochloricAcid.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -169,7 +169,7 @@ export const chlorinationGuidelineData = [
       "Return the flask to the table.",
     ],
 
-    image: "./swirlReactionMixture.png",
+    image: "./swirlReactionMixture.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -190,7 +190,7 @@ export const chlorinationGuidelineData = [
       "Gently swirl its contents.",
     ],
 
-    image: "./fitConicalFlaskBung.png",
+    image: "./fitConicalFlaskBung.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -211,7 +211,7 @@ export const chlorinationGuidelineData = [
       "Allow the accumulated pressure to escape.",
     ],
 
-    image: "./releaseFlaskPressure.png",
+    image: "./releaseFlaskPressure.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -234,7 +234,7 @@ export const chlorinationGuidelineData = [
       "Allow the mixture to settle into two liquid layers.",
     ],
 
-    image: "./continueReactionMixing.png",
+    image: "./continueReactionMixing.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -256,7 +256,7 @@ export const chlorinationGuidelineData = [
       "Gently swirl until the calcium chloride dissolves.",
     ],
 
-    image: "./addCalciumChloride.png",
+    image: "./addCalciumChloride.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -280,7 +280,7 @@ export const chlorinationGuidelineData = [
       "Replace the separating-funnel bung.",
     ],
 
-    image: "./transferToSeparatingFunnel.png",
+    image: "./transferToSeparatingFunnel.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -302,7 +302,7 @@ export const chlorinationGuidelineData = [
       "Identify the aqueous liquid as the lower layer.",
     ],
 
-    image: "./settleLiquidLayers.png",
+    image: "./settleLiquidLayers.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -325,7 +325,7 @@ export const chlorinationGuidelineData = [
       "Keep the upper organic layer in the funnel.",
     ],
 
-    image: "./removeLowerAqueousLayer.png",
+    image: "./removeLowerAqueousLayer.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -347,7 +347,7 @@ export const chlorinationGuidelineData = [
       "Observe carbon dioxide bubbles forming.",
     ],
 
-    image: "./addSodiumHydrogencarbonate.png",
+    image: "./addSodiumHydrogencarbonate.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -371,7 +371,7 @@ export const chlorinationGuidelineData = [
       "Repeat until the bubbling becomes less intense.",
     ],
 
-    image: "./releaseCarbonDioxidePressure.png",
+    image: "./releaseCarbonDioxidePressure.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -395,7 +395,7 @@ export const chlorinationGuidelineData = [
       "Close the tap when the boundary reaches it.",
     ],
 
-    image: "./removeLowerAqueousLayer.png",
+    image: "./removeLowerAqueousLayer.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -419,7 +419,7 @@ export const chlorinationGuidelineData = [
       "Continue until the bubbling becomes less intense.",
     ],
 
-    image: "./addSodiumHydrogencarbonate.png",
+    image: "./addSodiumHydrogencarbonate.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -443,7 +443,7 @@ export const chlorinationGuidelineData = [
       "Close the tap before the organic layer escapes.",
     ],
 
-    image: "./removeLowerAqueousLayer.png",
+    image: "./removeLowerAqueousLayer.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -464,7 +464,7 @@ export const chlorinationGuidelineData = [
       "Close the tap when the transfer is complete.",
     ],
 
-    image: "./transferOrganicProduct.png",
+    image: "./transferOrganicProduct.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -490,7 +490,7 @@ export const chlorinationGuidelineData = [
       "Swirl occasionally until the liquid becomes clear.",
     ],
 
-    image: "./addCalciumChloride.png",
+    image: "./addCalciumChloride.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -512,7 +512,7 @@ export const chlorinationGuidelineData = [
       "Return the conical flask to the table.",
     ],
 
-    image: "./decantDriedLiquid.png",
+    image: "./decantDriedLiquid.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -535,7 +535,7 @@ export const chlorinationGuidelineData = [
       "Check that every connection is secure.",
     ],
 
-    image: "./assembleDistillationApparatus.png",
+    image: "./assembleDistillationApparatus.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -557,7 +557,7 @@ export const chlorinationGuidelineData = [
       "Watch the condensed liquid drip into the receiver.",
     ],
 
-    image: "./assembleDistillationApparatus.png",
+    image: "./assembleDistillationApparatus.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -579,7 +579,7 @@ export const chlorinationGuidelineData = [
       "Turn off the heat.",
     ],
 
-    image: "./collectCorrectFraction.png",
+    image: "./collectCorrectFraction.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -601,7 +601,7 @@ export const chlorinationGuidelineData = [
       "Place the sample tube on the table.",
     ],
 
-    image: "./storePurifiedProduct.png",
+    image: "./storePurifiedProduct.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -622,7 +622,7 @@ export const chlorinationGuidelineData = [
       "Return the product container to the table.",
     ],
 
-    image: "./prepareProductSample.png",
+    image: "./prepareProductSample.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -644,7 +644,7 @@ export const chlorinationGuidelineData = [
       "Gently mix the contents.",
     ],
 
-    image: "./measureEthanoicAcid.png",
+    image: "./measureEthanoicAcid.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -666,7 +666,7 @@ export const chlorinationGuidelineData = [
       "Remove the test tube from the water bath.",
     ],
 
-    image: "./warmProductSample.png",
+    image: "./warmProductSample.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -687,7 +687,7 @@ export const chlorinationGuidelineData = [
       "Gently mix the solution.",
     ],
 
-    image: "./acidifyProductMixture.png",
+    image: "./acidifyProductMixture.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -709,7 +709,7 @@ export const chlorinationGuidelineData = [
       "Confirm the presence of chlorine in the prepared product.",
     ],
 
-    image: "./testForChlorideIons.png",
+    image: "./testForChlorideIons.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

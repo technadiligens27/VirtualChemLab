@@ -389,7 +389,7 @@
   min-width: 150px;
   min-height: 54px;
 
-  padding: 10px 25px;
+  padding: 7px 25px;
 
   border-radius: 16px;
 
@@ -437,9 +437,9 @@
 
   color: white;
 
-  box-shadow:
+  /* box-shadow:
     0 10px 20px
-      rgba(75, 34, 165, 0.25);
+      rgba(75, 34, 165, 0.25); */
 }
 
 .feedback-submit-button span {
@@ -448,9 +448,9 @@
 }
 
 .feedback-submit-button:hover {
-  box-shadow:
+  /* box-shadow:
     0 13px 25px
-      rgba(75, 34, 165, 0.35);
+      rgba(75, 34, 165, 0.35); */
 
   transform: translateY(-3px);
 }

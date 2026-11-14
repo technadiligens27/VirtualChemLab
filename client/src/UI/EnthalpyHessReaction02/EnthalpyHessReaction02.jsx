@@ -70,7 +70,7 @@ const EnthalpyHessReaction02 = () => {
     setIsClampInCenter,
 
     setShowQuestionCardNo,
-    showQuestionCardNo,
+    showQuestionCardNo,setShowFeedBackForm
   } = useContext(
     InteractionContext
   )
@@ -88,7 +88,8 @@ const EnthalpyHessReaction02 = () => {
     lessonStep,
     selectedLesson,
     setLessonStep,
-    setShowNormalBeakerArrow,setShowApparatus,showApparatus
+    setShowNormalBeakerArrow,setShowApparatus,showApparatus,
+    setIsExplanationOpen
   } = useContext(
     MainGuidelineContext
   )
@@ -140,6 +141,12 @@ const EnthalpyHessReaction02 = () => {
   // =====================================================
   // RESTORE BURETTE AFTER HANDS ARE CLEARED
   // =====================================================
+
+  useEffect(()=>{
+    setIsExplanationOpen(
+                false
+              )
+  },[])
 
   useEffect(() => {
     if (
@@ -260,7 +267,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./polystyreneCupInBeaker.png",
+        "./polystyreneCupInBeaker.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -286,7 +293,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./TestubePottasiumAdd.png",
+        "./TestubePottasiumAdd.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -313,7 +320,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./weighTestube.png",
+        "./weighTestube.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -339,7 +346,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./BuretteHCLPour.png",
+        "./BuretteHCLPour.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -366,7 +373,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./beakerWithThermometer.png",
+        "./beakerWithThermometer.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -392,7 +399,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./addPotassiumCarbonateAndStir.png",
+        "./addPotassiumCarbonateAndStir.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -419,7 +426,7 @@ const EnthalpyHessReaction02 = () => {
       ],
 
       image:
-        "./weighEmptyTestTube.png",
+        "./weighEmptyTestTube.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(
@@ -475,7 +482,7 @@ const EnthalpyHessReaction02 = () => {
                 "mainPolystyrene",
 
               imagePath:
-                "./polysterene-cup.png",
+                "./polysterene-cup.webp",
 
               description:
                 "Used to reduce heat loss to the surroundings, allowing accurate measurement of temperature changes during exothermic reactions.",
@@ -490,7 +497,7 @@ const EnthalpyHessReaction02 = () => {
                 "main-normal-beaker",
 
               imagePath:
-                "./main-normal-beaker.png",
+                "./main-normal-beaker.webp",
 
               description:
               "Used to support the polystyrene cup, providing stability during the exothermic reaction.",
@@ -505,7 +512,7 @@ const EnthalpyHessReaction02 = () => {
               "mainThermometer",
 
             imagePath:
-              "./thermometer.png",
+              "./thermometer.webp",
 
             description:
               "Used to measure temperature changes during exothermic reactions.",
@@ -520,7 +527,7 @@ const EnthalpyHessReaction02 = () => {
             "burette",
 
           imagePath:
-            "./burette.png",
+            "./burette.webp",
 
           description:
             "Used to accurately measure and deliver controlled volumes of liquid during titration.",
@@ -535,7 +542,7 @@ const EnthalpyHessReaction02 = () => {
             "burette-stand-clamp",
 
           imagePath:
-            "./burette-stand-clamp.png",
+            "./burette-stand-clamp.webp",
 
           description:
             "Used to hold the burette securely in a vertical position during titration.",
@@ -550,7 +557,7 @@ const EnthalpyHessReaction02 = () => {
             "test-tube",
 
           imagePath:
-            "./testube-apparatus.png",
+            "./testube-apparatus.webp",
 
           description:
             "Used to hold small amounts of chemicals during experiments.",
@@ -565,7 +572,7 @@ const EnthalpyHessReaction02 = () => {
             "mass-balance",
 
           imagePath:
-            "./weighTestube.png",
+            "./weighTestube.webp",
 
           description:
             "Used to accurately measure the mass of chemicals used in reactions.",
@@ -580,7 +587,7 @@ const EnthalpyHessReaction02 = () => {
             "spatula",
 
           imagePath:
-            "./spatula.png",
+            "./spatula.webp",
 
           description:
             "Used to transfer small amounts of solid chemicals or powders.",
@@ -1189,7 +1196,8 @@ const EnthalpyHessReaction02 = () => {
           }}
 
           onbtn2Click={
-            resetLesson}
+            ()=>setShowFeedBackForm(true)
+          }
           
           
         />
@@ -1201,7 +1209,7 @@ const EnthalpyHessReaction02 = () => {
             setShowQuestionCardNo(9.1)
           }}
           
-          onEndLesson={resetLesson}
+          onEndLesson={()=>setShowFeedBackForm(true)}
           />
         }
 

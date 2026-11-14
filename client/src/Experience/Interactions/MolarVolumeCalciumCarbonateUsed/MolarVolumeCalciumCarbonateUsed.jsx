@@ -225,7 +225,7 @@ const MolarVolumeCalciumCarbonateUsed = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>
@@ -365,7 +365,7 @@ const MolarVolumeCalciumCarbonateUsed = ({
           <div className="molar-caco3-right">
 
             <img
-              src="./calciumCarbonateUsed.png"
+              src="./calciumCarbonateUsed.webp"
               alt="Test tube being weighed on a digital balance"
             />
 

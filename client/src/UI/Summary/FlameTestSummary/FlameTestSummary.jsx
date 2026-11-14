@@ -15,42 +15,42 @@ const flameTestResults = [
     id: "lithium-chloride",
     name: "Lithium Chloride",
     colour: "crimson-red",
-    image: "./lithium-chloride-flame.png",
+    image: "./lithium-chloride-flame.webp",
     className: "crimson-text",
   },
   {
     id: "sodium-chloride",
     name: "Sodium Chloride",
     colour: "yellow-orange",
-    image: "./sodium-chloride-flame.png",
+    image: "./sodium-chloride-flame.webp",
     className: "yellow-text",
   },
   {
     id: "potassium-chloride",
     name: "Potassium Chloride",
     colour: "lilac",
-    image: "./potassium-chloride-flame.png",
+    image: "./potassium-chloride-flame.webp",
     className: "lilac-text",
   },
   {
     id: "calcium-chloride",
     name: "Calcium Chloride",
     colour: "brick-red",
-    image: "./calcium-chloride-flame.png",
+    image: "./calcium-chloride-flame.webp",
     className: "brick-red-text",
   },
   {
     id: "copper-chloride",
     name: "Copper Chloride",
     colour: "blue-green",
-    image: "./copper-chloride-flame.png",
+    image: "./copper-chloride-flame.webp",
     className: "blue-green-text",
   },
   {
     id: "barium-chloride",
     name: "Barium Chloride",
     colour: "apple-green",
-    image: "./barium-chloride-flame.png",
+    image: "./barium-chloride-flame.webp",
     className: "apple-green-text",
   },
 ]
@@ -284,7 +284,7 @@ const FlameTestSummary = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

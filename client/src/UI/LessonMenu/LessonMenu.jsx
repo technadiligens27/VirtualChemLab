@@ -48,7 +48,7 @@ const LessonMenu = () => {
     // {
     //   id: 1,
     //   name: "Salt Dissolving in Water",
-    //   imgPath: "./SaltDissolve.png",
+    //   imgPath: "./SaltDissolve.webp",
     //   text: "Mix salt into water to see how crystals break down and form a clear solution.",
     //   number: 1,
     //   divider: "",
@@ -57,7 +57,7 @@ const LessonMenu = () => {
     //         {
     //   id: 5,
     //   name: "Copper Sulfate Precipitation",
-    //   imgPath: "./CopperSulphateTest.png",
+    //   imgPath: "./CopperSulphateTest.webp",
     //   text: "Combine two solutions and observe the formation of a solid precipitate.",
     //   number: 2,
     //   divider: "blue",
@@ -66,7 +66,7 @@ const LessonMenu = () => {
     // {
     //   id: 2,
     //   name: "Acid Indicator Test",
-    //   imgPath: "./IndicatorSolution.png",
+    //   imgPath: "./IndicatorSolution.webp",
     //   text: "Add a testing solution or paper to an acid and observe the color change to confirm its presence.",
     //   number: 3,
     //   divider: "purple",
@@ -75,7 +75,7 @@ const LessonMenu = () => {
     // {
     //   id: 6,
     //   name: "Acid Base Neutralization",
-    //   imgPath: "./AcidBaseLesson.png",
+    //   imgPath: "./AcidBaseLesson.webp",
     //   text: "Combine an acid and a base to create a neutral reaction, forming salt and water.",
     //   number: 4,
     //   divider: "green",
@@ -84,7 +84,7 @@ const LessonMenu = () => {
     // {
     //   id: 4,
     //   name: "Starch-Iodine Test",
-    //   imgPath: "./StarchIodine.png",
+    //   imgPath: "./StarchIodine.webp",
     //   text: "Add iodine solution to a sample and observe the color change when starch is present.",
     //   number: 5,
     //   divider: "blue",
@@ -93,7 +93,7 @@ const LessonMenu = () => {
     // {
     //   id: 7,
     //   name: "Protein Identification",
-    //   imgPath: "./ProteinTest.png",
+    //   imgPath: "./ProteinTest.webp",
     //   text: "Add Biuret reagent to a protein sample and observe the purple color change.",
     //   number: 6,
     //   divider: "purple",
@@ -102,7 +102,7 @@ const LessonMenu = () => {
     //     {
     //   id: 3,
     //   name: "Alkali Indicator Test",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Use an indicator to test an alkali and observe the resulting color change.",
     //   number: 7,
     //   divider: "purple",
@@ -113,7 +113,7 @@ const LessonMenu = () => {
 
       name: "Exothermic Reaction",
 
-      imgPath: "./ExothermicIcon.png",
+      imgPath: "./ExothermicIcon.webp",
 
       text:
         "Measure temperature change and calculate the enthalpy change of an exothermic reaction.",
@@ -135,7 +135,7 @@ const LessonMenu = () => {
 
       name: "Flame Test",
 
-      imgPath: "./flameTestIcon.png",
+      imgPath: "./flameTestIcon.webp",
 
       text:
         "Heat metal salts in a Bunsen flame and identify metal ions by their characteristic flame colours.",
@@ -155,7 +155,7 @@ const LessonMenu = () => {
 
       name: "Endothermic Reaction",
 
-      imgPath: "./EndothermicIcon.png",
+      imgPath: "./EndothermicIcon.webp",
 
       text:
         "Measure temperature change and calculate the enthalpy change of an endothermic reaction.",
@@ -174,21 +174,13 @@ const LessonMenu = () => {
 
 
 
-    {
-      id: 10,
-      name: "Rates of Hydrolysis of Halogenoalkanes",
-      imgPath: "./AlkaliTest.png",
-      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
-      number: 10,
-      divider: "purple",
-    },
 
     {
       id: 11,
 
       name: "Hydrochloric Acid Titration",
 
-      imgPath: "./HclTitrationIcon.png",
+      imgPath: "./HclTitrationIcon.webp",
 
       text:
         "Use titration to find the concentration of hydrochloric acid using sodium hydroxide.",
@@ -207,7 +199,7 @@ const LessonMenu = () => {
     // {
     //   id: 11.1,
     //   name: "HCl Titration Part 2",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
     //   number: 11.1,
     //   divider: "purple",
@@ -218,8 +210,7 @@ const LessonMenu = () => {
 
       name: "Sulfamic Acid–NaOH Titration",
 
-      imgPath: "./sulfamicTitrationIcon.png",
-
+      imgPath: "./sulfamicTitrationIcon.webp",
       text:
         "Use titration to find the concentration of sodium hydroxide using sulfamic acid.",
 
@@ -237,7 +228,7 @@ const LessonMenu = () => {
     //     {
     //       id: 12.1,
     //       name: "Sulfamic Acid–NaOH Titration",
-    //       imgPath: "./AlkaliTest.png",
+    //       imgPath: "./AlkaliTest.webp",
     //       text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
     //       number: 12.1,
     //       divider: "purple",
@@ -246,7 +237,7 @@ const LessonMenu = () => {
     // {
     //   id: 12.2,
     //   name: "Sulfamic Acid–NaOH Titration",
-    //   imgPath: "./sulfamicTitrationIcon.png",
+    //   imgPath: "./sulfamicTitrationIcon.webp",
     //   text: "Determine the concentration of unknown hydrochloric acid by titration against standardised sodium hydroxide.",
     //   number: 12.2,
     //   divider: "purple",
@@ -257,7 +248,7 @@ const LessonMenu = () => {
 
       name: "Molar Volume of a Gas",
 
-      imgPath: "./molarVolumeIcon.png",
+      imgPath: "./molarVolumeIcon.webp",
 
       text:
         "Determine carbon dioxide molar volume by reacting calcium carbonate with ethanoic acid.",
@@ -279,7 +270,7 @@ const LessonMenu = () => {
       name:
         "Chlorination of 2-methylpropan-2-ol",
 
-      imgPath: "./chlorinationIcon.png",
+      imgPath: "./chlorinationIcon.webp",
 
       text:
         "Prepare and purify 2-chloro-2-methylpropane using a separating funnel and distillation.",
@@ -298,7 +289,7 @@ const LessonMenu = () => {
     // {
     //   id: 14.1,
     //   name: "Chlorination of 2-methylpropan-2-ol",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
     //   number: 14.1,
     //   divider: "purple",
@@ -307,7 +298,7 @@ const LessonMenu = () => {
     // {
     //   id: 14.2,
     //   name: "Chlorination of 2-methylpropan-2-ol",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
     //   number: 14.2,
     //   divider: "purple",
@@ -316,7 +307,7 @@ const LessonMenu = () => {
     // {
     //   id: 14.3,
     //   name: "Chlorination of 2-methylpropan-2-ol",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
     //   number: 14.3,
     //   divider: "purple",
@@ -325,7 +316,7 @@ const LessonMenu = () => {
     // {
     //   id: 14.4,
     //   name: "Chlorination of 2-methylpropan-2-ol",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
     //   number: 14.4,
     //   divider: "purple",
@@ -335,11 +326,21 @@ const LessonMenu = () => {
     // {
     //   id: 15.2,
     //   name: "Flame Test 02",
-    //   imgPath: "./AlkaliTest.png",
+    //   imgPath: "./AlkaliTest.webp",
     //   text: "Determine the molar volume of carbon dioxide by reacting calcium carbonate with ethanoic acid and measuring the volume of gas produced.",
     //   number: 6,
     //   divider: "purple",
     // },
+
+    
+    {
+      id: 10,
+      name: "Rates of Hydrolysis of Halogenoalkanes",
+      imgPath: "./AlkaliTest.webp",
+      text: "Measure temperature changes in two reactions, calculate their molar enthalpy changes.",
+      number: 8,
+      divider: "purple",
+    },
   ]
 
   const lessonsPerPage = 3
@@ -442,7 +443,7 @@ const LessonMenu = () => {
           >
             {visibleLessons.map(
               (lesson) => {
-                const isLessonLocked = ![8,15,,14,10].includes(lesson.id)
+                const isLessonLocked = ![8,15,9].includes(lesson.id)
 
                 return (
                   <div
@@ -520,7 +521,7 @@ const LessonMenu = () => {
                     {isLessonLocked && (
                       <div className="lesson-lock-overlay">
                         <img
-                          src="./lock.png"
+                          src="./lock.webp"
                           alt="Lesson locked"
                         />
                       </div>
@@ -539,7 +540,7 @@ const LessonMenu = () => {
               }
             >
               <img
-                src="./left-arrow.png"
+                src="./left-arrow.webp"
                 alt="Previous lessons"
               />
             </div>
@@ -553,7 +554,7 @@ const LessonMenu = () => {
               }
             >
               <img
-                src="./right-arrow.png"
+                src="./right-arrow.webp"
                 alt="Next lessons"
               />
             </div>

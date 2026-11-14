@@ -78,7 +78,7 @@ useEffect(() => {
 
         material.color?.set(liquidColor)
         material.transparent = true
-        material.opacity = 0.4
+        material.opacity = 0.6
         material.depthWrite = false
         material.needsUpdate = true
       })
@@ -497,12 +497,12 @@ else if (lowerBeakerName.includes("main-graduated-cylinder-100")) {
 
   if (selectedLesson === 13 && selectedAmount === 100) {
     meniscusMeasuringCylinder100Ref.current.scale.y = 0.94773
-    amountRef.current = 1.03469
+    amountRef.current = 1.01899
     speedRef.current = 0.4
-
+  
   } else {
-    meniscusMeasuringCylinder100Ref.current.scale.y = 1.27394
-    amountRef.current = 0.628844
+    meniscusMeasuringCylinder100Ref.current.scale.y = 0.94773
+    amountRef.current = 1.01899
     speedRef.current = 1
   }
 }

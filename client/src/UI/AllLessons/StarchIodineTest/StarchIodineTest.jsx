@@ -61,26 +61,26 @@ const StarchIodineTest = ()=>{
     lessonImages: [
       {
         id: 1,
-        imgPath: "./starch-beaker.png",
+        imgPath: "./starch-beaker.webp",
         label: "Starch Solution",
         alt: "Beaker containing starch solution",
       },
       {
         id: 2,
-        imgPath: "./conical-iodine.png",
+        imgPath: "./conical-iodine.webp",
         label: "Iodine Solution",
         alt: "Conical flask containing iodine solution",
       },
       {
         id: 3,
-        imgPath: "./blueBlackBeaker.png",
+        imgPath: "./blueBlackBeaker.webp",
         label: "Positive Result",
         alt: "Blue-black solution showing a positive starch test",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "A blue-black colour change confirms that starch is present in the solution.",
@@ -88,7 +88,7 @@ const StarchIodineTest = ()=>{
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Understand how iodine is used to test for starch",
@@ -100,7 +100,7 @@ const StarchIodineTest = ()=>{
 
     materials: {
       title: "Materials",
-      imgPath: "./StarchTest.png",
+      imgPath: "./StarchTest.webp",
       alt: "Starch test materials",
       items: [
         "Normal beaker",
@@ -112,7 +112,7 @@ const StarchIodineTest = ()=>{
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Add 50 mL of starch solution to the normal beaker",
@@ -131,7 +131,7 @@ const StarchIodineTest = ()=>{
             {/* {lessonStep===1 && 
                 <LessonGuide
                 title={"Lesson Overview"} 
-                icon={'./StarchIodine.png'}
+                icon={'./StarchIodine.webp'}
                 text={StarchIodineTest[0].step1} 
                 subTitle={"Starch Iodine Test"}
                 onButton1={() => setLessonStep(2)}/>
@@ -147,7 +147,7 @@ const StarchIodineTest = ()=>{
             {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}  
-                icon={'./StarchIodine.png'}              
+                icon={'./StarchIodine.webp'}              
                 text={StarchIodineTest[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
             />} 

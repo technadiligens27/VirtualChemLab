@@ -134,7 +134,7 @@ const QuestionCard = ({
             TOP TITLE
         ===================================== */}
 
-        <img onClick={() => {if (onExit) {onExit()}}} className ='question-cross' src='./cross.png'/>
+        <img onClick={() => {if (onExit) {onExit()}}} className ='question-cross' src='./cross.webp'/>
 
         <div className="question-card-top-title">
 

@@ -294,7 +294,7 @@ const HessGuidelines = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>
@@ -345,7 +345,7 @@ const HessGuidelines = ({
                         key={index}
                       >
                         <img
-                          src="./blue-tick.png"
+                          src="./blue-tick.webp"
                           alt=""
                         />
 

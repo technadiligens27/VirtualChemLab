@@ -92,7 +92,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "burette",
 
                 imagePath:
-                  "./burette.png",
+                  "./burette.webp",
 
                 description:
                   "Used to accurately deliver measured volumes of solution during titration.",
@@ -107,7 +107,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "burette-stand-clamp",
 
                 imagePath:
-                  "./burette-stand-clamp.png",
+                  "./burette-stand-clamp.webp",
 
                 description:
                   "Used to hold the burette securely in a vertical position.",
@@ -122,7 +122,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "main-conical-beaker",
 
                 imagePath:
-                  "./conical-flask.png",
+                  "./conical-flask.webp",
 
                 description:
                   "Used to hold and swirl the solution during titration.",
@@ -137,7 +137,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "volumetric-pipette",
 
                 imagePath:
-                  "./volumetric-pipette.png",
+                  "./volumetric-pipette.webp",
 
                 description:
                   "Used to accurately measure 25.0 cm³ of solution.",
@@ -154,7 +154,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "main-normal-beaker",
 
                 imagePath:
-                  "./main-normal-beaker.png",
+                  "./main-normal-beaker.webp",
 
                 description:
                   "Used to dissolve and hold solutions before transfer.",
@@ -169,7 +169,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "volumetric-flask",
 
                 imagePath:
-                  "./volumetricFlask.png",
+                  "./volumetricFlask.webp",
 
                 description:
                   "Used to prepare a solution to an exact final volume.",
@@ -184,7 +184,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "main-funnel",
 
                 imagePath:
-                  "./funnel.png",
+                  "./funnel.webp",
 
                 description:
                   "Used to transfer solution without spilling.",
@@ -199,7 +199,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "test-tube",
 
                 imagePath:
-                  "./testube-apparatus.png",
+                  "./testube-apparatus.webp",
 
                 description:
                   "Used to hold sulfamic acid while it is weighed.",
@@ -214,7 +214,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "mass-balance",
 
                 imagePath:
-                  "./weighTestube.png",
+                  "./weighTestube.webp",
 
                 description:
                   "Used to accurately measure the mass of sulfamic acid.",
@@ -229,7 +229,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "spatula",
 
                 imagePath:
-                  "./spatula.png",
+                  "./spatula.webp",
 
                 description:
                   "Used to transfer sulfamic acid powder into the test tube.",
@@ -245,7 +245,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "water-bottle",
 
                 imagePath:
-                  "./water-bottle.png",
+                  "./water-bottle.webp",
 
                 description:
                   "Used to rinse apparatus and make the solution up to the mark.",
@@ -260,7 +260,7 @@ const SulfamicAcidNaOHTitration = () => {
                   "methyl-orange-bottle",
 
                 imagePath:
-                  "./methyl-orange-bottle.png",
+                  "./methyl-orange-bottle.webp",
 
                 description:
                   "Used to add methyl orange indicator to the conical flask.",

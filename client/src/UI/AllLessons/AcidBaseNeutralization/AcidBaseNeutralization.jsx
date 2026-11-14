@@ -62,26 +62,26 @@ const lessonDetailsData = [
     lessonImages: [
       {
         id: 1,
-        imgPath: "./BeakerHcl.png",
+        imgPath: "./BeakerHcl.webp",
         label: "HCL Acid",
         alt: "Beaker containing hydrochloric acid",
       },
       {
         id: 2,
-        imgPath: "./ConicalSodiumGydroxide.png",
+        imgPath: "./ConicalSodiumGydroxide.webp",
         label: "NaOH",
         alt: "Conical flask containing sodium hydroxide solution",
       },
       {
         id: 3,
-        imgPath: "./BeakerNeutral.png",
+        imgPath: "./BeakerNeutral.webp",
         label: "Neutral",
         alt: "Beaker containing the neutral salt and water solution",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "During neutralization, an acid and a base react to form salt and water.",
@@ -89,7 +89,7 @@ const lessonDetailsData = [
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Understand the process of neutralization",
@@ -100,7 +100,7 @@ const lessonDetailsData = [
 
     materials: {
       title: "Materials",
-      imgPath: "./AcidBaseLesson.png",
+      imgPath: "./AcidBaseLesson.webp",
       alt: "Acid-base neutralization materials",
       items: [
         "Normal beaker",
@@ -112,7 +112,7 @@ const lessonDetailsData = [
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Add 50 mL of hydrochloric acid to beaker",
@@ -132,7 +132,7 @@ const lessonDetailsData = [
         {/* {lessonStep===1 && 
             <LessonGuide
                title={"Lesson Overview"} 
-               icon={'./AcidBase.png'}
+               icon={'./AcidBase.webp'}
                text={AcidBaseNeutralization[0].step1} 
                onButton1={() => setLessonStep(2)}/>
         } */}
@@ -148,7 +148,7 @@ const lessonDetailsData = [
         {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}  
-                icon={'./AcidBase.png'}              
+                icon={'./AcidBase.webp'}              
                 text={AcidBaseNeutralization[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />}  

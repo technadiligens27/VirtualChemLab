@@ -60,26 +60,26 @@ const AcidInidicatorTest = ()=>{
     lessonImages: [
       {
         id: 1,
-        imgPath: "./BeakerHcl.png",
+        imgPath: "./BeakerHcl.webp",
         label: "HCL Acid",
         alt: "Beaker containing hydrochloric acid",
       },
       {
         id: 2,
-        imgPath: "./conicalUniversalSolution.png",
+        imgPath: "./conicalUniversalSolution.webp",
         label: "Universal",
         alt: "Conical flask containing universal indicator solution",
       },
       {
         id: 3,
-        imgPath: "./BeakerRed.png",
+        imgPath: "./BeakerRed.webp",
         label: "Acidic Result",
         alt: "Red solution showing an acidic result",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "A red or orange-red colour indicates that the solution is acidic.",
@@ -87,7 +87,7 @@ const AcidInidicatorTest = ()=>{
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Understand how a universal indicator identifies acids",
@@ -98,7 +98,7 @@ const AcidInidicatorTest = ()=>{
 
     materials: {
       title: "Materials",
-      imgPath: "./AcidIndicatorTest.png",
+      imgPath: "./AcidIndicatorTest.webp",
       alt: "Acid indicator test materials",
       items: [
         "Normal beaker",
@@ -110,7 +110,7 @@ const AcidInidicatorTest = ()=>{
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Add 50 mL of hydrochloric acid to the normal beaker",
@@ -142,7 +142,7 @@ const AcidInidicatorTest = ()=>{
                  title={"Lesson Overview"} 
                  subTitle={"Acid Indicator Test"}
                 text={AcidIndicatorTest[0].step1} 
-                icon={'./acidIndicator.png'}
+                icon={'./acidIndicator.webp'}
                 onButton1={() => setLessonStep(2)}/>
             }  */}
 
@@ -155,7 +155,7 @@ const AcidInidicatorTest = ()=>{
            {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}
-                icon={'./acidIndicator.png'}
+                icon={'./acidIndicator.webp'}
                 subTitle={"Acid Indicator Test"}               
                 text={AcidIndicatorTest[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}

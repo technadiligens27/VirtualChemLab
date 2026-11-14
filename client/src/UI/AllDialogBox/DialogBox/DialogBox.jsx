@@ -47,7 +47,7 @@ const DialogBox = ({
       <div className="dialog-box-inner">
         <div className="dialog-icon-container">
           <img
-            src="./info.png"
+            src="./info.webp"
             alt="Information"
           />
         </div>

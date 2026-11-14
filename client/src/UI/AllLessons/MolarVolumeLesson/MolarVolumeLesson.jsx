@@ -60,7 +60,7 @@ const MolarVolumeLesson = ()=>{
                 //     "goggles",
 
                 //   imagePath:
-                //     "./safety-goggles.png",
+                //     "./safety-goggles.webp",
 
                 //   description:
                 //     "Used to protect the eyes during the experiment.",
@@ -75,7 +75,7 @@ const MolarVolumeLesson = ()=>{
                     "boiling-tube",
 
                   imagePath:
-                    "./boiling-tube.png",
+                    "./boiling-tube.webp",
 
                   description:
                     "Used to contain ethanoic acid and calcium carbonate during the reaction.",
@@ -90,7 +90,7 @@ const MolarVolumeLesson = ()=>{
                     "retort-stand-clamp",
 
                   imagePath:
-                    "./burette-stand-clamp.png",
+                    "./burette-stand-clamp.webp",
 
                   description:
                     "Used to hold the boiling tube securely upright.",
@@ -105,7 +105,7 @@ const MolarVolumeLesson = ()=>{
                     "delivery-tube-bung",
 
                   imagePath:
-                    "./bung-delivery-tube.png",
+                    "./bung-delivery-tube.webp",
 
                   description:
                     "Used to direct carbon dioxide into the measuring cylinder.",
@@ -120,7 +120,7 @@ const MolarVolumeLesson = ()=>{
                     "water-bath",
 
                   imagePath:
-                    "./water-bath.png",
+                    "./water-bath.webp",
 
                   description:
                     "Used to hold water for collecting carbon dioxide gas.",
@@ -135,7 +135,7 @@ const MolarVolumeLesson = ()=>{
                     "measuring-cylinder-100",
 
                   imagePath:
-                    "./measuring-cylinder-100.png",
+                    "./measuring-cylinder-100.webp",
 
                   description:
                     "Used to collect and measure the volume of carbon dioxide.",
@@ -150,7 +150,7 @@ const MolarVolumeLesson = ()=>{
                     "measuring-cylinder-50",
 
                   imagePath:
-                    "./measuring-cylinder-50.png",
+                    "./measuring-cylinder-50.webp",
 
                   description:
                     "Used to measure 30 cm³ of ethanoic acid.",
@@ -165,7 +165,7 @@ const MolarVolumeLesson = ()=>{
                     "test-tube",
 
                   imagePath:
-                    "./testube-apparatus.png",
+                    "./testube-apparatus.webp",
 
                   description:
                     "Used to hold calcium carbonate before it is added to the acid.",
@@ -180,7 +180,7 @@ const MolarVolumeLesson = ()=>{
                     "digital-balance",
 
                   imagePath:
-                    "./weighTestube.png",
+                    "./weighTestube.webp",
 
                   description:
                     "Used to measure the mass of calcium carbonate transferred.",
@@ -195,7 +195,7 @@ const MolarVolumeLesson = ()=>{
                     "calcium-carbonate-container",
 
                   imagePath:
-                    "./calcium-carbonate-container.png",
+                    "./calcium-carbonate-container.webp",
 
                   description:
                     "Contains powdered calcium carbonate for the reaction.",
@@ -210,7 +210,7 @@ const MolarVolumeLesson = ()=>{
                     "ethanoic-acid-container",
 
                   imagePath:
-                    "./ethanoic-acid-container.png",
+                    "./ethanoic-acid-container.webp",
 
                   description:
                     "Contains ethanoic acid used to produce carbon dioxide.",

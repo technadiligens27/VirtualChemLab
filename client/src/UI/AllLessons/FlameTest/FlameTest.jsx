@@ -21,11 +21,18 @@ const FlameTest = ()=>{
      airHoleRef
   } = useContext(ModelContext)    
     
-  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep,showApparatus,setShowApparatus } = useContext(MainGuidelineContext)
+  const { selectedLesson,setLessonStep,setSafetyStep,lessonStep,showApparatus,setShowApparatus,
+     setIsExplanationOpen
+   } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
     setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setShowBunsenFlame
-  } = useContext(InteractionContext)
+  } = useContext(InteractionContext);
+
+
+  useEffect(()=>{
+     setIsExplanationOpen(false)
+  },[])
 
     useEffect(()=>{
     if(pipetteRef.current){
@@ -96,7 +103,7 @@ const FlameTest = ()=>{
             "bunsen-burner",
 
           imagePath:
-            "./lightBunsenBurner.png",
+            "./lightBunsenBurner.webp",
 
           description:
             "Used to produce a blue flame for heating the metal salts.",
@@ -111,7 +118,7 @@ const FlameTest = ()=>{
             "nichrome-wire",
 
           imagePath:
-            "./nichrome-wire.png",
+            "./nichrome-wire.webp",
 
           description:
             "Used to hold the metal salt sample in the flame.",
@@ -126,7 +133,7 @@ const FlameTest = ()=>{
               "heating-mat",
 
             imagePath:
-              "./heating-mat.png",
+              "./heating-mat.webp",
 
             description:
               "Used to provide a heat-resistant surface beneath the Bunsen burner.",
@@ -140,7 +147,7 @@ const FlameTest = ()=>{
             "metal-salt-container",
 
           imagePath:
-            "./metal-salt-container.png",
+            "./metal-salt-container.webp",
 
           description:
             "Contains the metal salt powders used for flame tests.",
@@ -154,7 +161,7 @@ const FlameTest = ()=>{
             "metal-salt-container",
 
           imagePath:
-            "./main-normal-beaker.png",
+            "./main-normal-beaker.webp",
 
           description:
             "Contains the metal salt powders used for flame tests.",
@@ -379,7 +386,7 @@ const FlameTest = ()=>{
 
         {lessonStep == 25 && <DialogBox text={
           <>
-         Click the <strong>Empty Container</strong> and <strong>Pick Up</strong>
+         Click the <strong>Empty Container</strong> and <strong>Pick It Up</strong>
           </>
           } 
         />}

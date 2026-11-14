@@ -15,7 +15,7 @@ const LessonGuide = ({title,text,onButton1,subTitle,icon})=>{
                 </div>
                 <div className='lesson-guide-inner-container'>
                     <div className='lesson-overview-img'>
-                        <img src='./saltLesson.png' src={icon}/>
+                        <img  src={icon}/>
                     </div>
                     <div className='lesson-overview-sub-heading'>
                         <h1>{subTitle}</h1>

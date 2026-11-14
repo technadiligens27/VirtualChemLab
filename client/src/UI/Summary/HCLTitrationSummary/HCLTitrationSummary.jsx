@@ -16,7 +16,7 @@ const HCLTitrationSummary = ({
   meanTitre = 24.75,
 
   titrationImage =
-    "./roughTitration.png",
+    "./roughTitration.webp",
 
   onQuestions,
   onEndLesson,
@@ -239,7 +239,7 @@ const HCLTitrationSummary = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

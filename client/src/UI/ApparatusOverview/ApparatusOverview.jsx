@@ -250,7 +250,7 @@ const ApparatusOverview = ({
               aria-label="Previous apparatus"
             >
               <img
-                src="./left-arrow.png"
+                src="./left-arrow.webp"
                 alt=""
               />
             </div>
@@ -270,7 +270,7 @@ const ApparatusOverview = ({
               aria-label="Next apparatus"
             >
               <img
-                src="./right-arrow.png"
+                src="./right-arrow.webp"
                 alt=""
               />
             </div>

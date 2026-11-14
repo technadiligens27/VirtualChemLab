@@ -22,14 +22,19 @@ const FlameTest02 = ()=>{
     nichromeWireRef,nichromeWirePowderRef,metalSaltRef,airHoleRef,bunsenBurnerRef
   } = useContext(ModelContext)    
     
-  const {selectedLesson,setLessonStep,setSafetyStep,lessonStep,setSelectedLesson} = useContext(MainGuidelineContext)
+  const {selectedLesson,setLessonStep,setSafetyStep,lessonStep,setSelectedLesson, setIsExplanationOpen} = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
     setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setIsModelInHeatingMat,setShowBunsenFlame,setShowPowderInContainer,
-    setShowQuestionCardNo,showQuestionCardNo
+    setShowQuestionCardNo,showQuestionCardNo,setShowFeedBackForm
   } = useContext(InteractionContext)
 
   const resetLesson = useResetLesson()
+
+
+    useEffect(()=>{
+       setIsExplanationOpen(false)
+    },[])
 
     useEffect(()=>{
     if(pipetteRef.current){
@@ -185,7 +190,7 @@ const FlameTest02 = ()=>{
         {
           lessonStep === 34 &&         <FlameTestSummary
           onQuestions= {() => {setShowQuestionCardNo(15.1)}}
-          onEndLesson={resetLesson}/>
+          onEndLesson={()=>setShowFeedBackForm(true)}/>
         }
 
         {

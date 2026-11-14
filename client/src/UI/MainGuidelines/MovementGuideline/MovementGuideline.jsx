@@ -18,7 +18,7 @@ const MovementGuideline = ({
     button1,
     button2,
     info,
-    MainImg='./Arrow.png',
+    MainImg='./Arrow.webp',
   } = mainContent
 
 

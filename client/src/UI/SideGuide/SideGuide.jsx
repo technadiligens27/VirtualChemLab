@@ -2,24 +2,24 @@ import "./SideGuide.css"
 
 const controls = [
   {
-    icon: "./ArrowMovement.png",
+    icon: "./ArrowMovement.webp",
     text: "Look Around",
     className: "look-guide",
   },
   {
-    icon: "./w-icon.png",
+    icon: "./w-icon.webp",
     text: "Move Forward",
   },
   {
-    icon: "./A-icon.png",
+    icon: "./A-icon.webp",
     text: "Move Left",
   },
   {
-    icon: "./D-icon.png",
+    icon: "./D-icon.webp",
     text: "Move Right",
   },
   {
-    icon: "./S-icon.png",
+    icon: "./S-icon.webp",
     text: "Move Back",
   },
 ]

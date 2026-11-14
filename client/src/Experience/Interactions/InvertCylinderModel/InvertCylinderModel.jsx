@@ -27,6 +27,7 @@ const InvertCylinderModel = ({
   const {
     graduatedCylinder100Ref,
     normalBeakerRef,
+    meniscusMeasuringCylinder100Ref
   } = useContext(ModelContext)
 
   const {
@@ -56,6 +57,7 @@ const InvertCylinderModel = ({
       lessonStep === 11
     ) {
       setLessonStep(12)
+      meniscusMeasuringCylinder100Ref.current.visible=false
     }
   }, [
     selectedLesson,

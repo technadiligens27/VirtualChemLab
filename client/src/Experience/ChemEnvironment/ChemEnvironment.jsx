@@ -629,8 +629,8 @@ if (graduatedPipetteRef.current && !graduatedPipetteOriginalStateRef.current) {
       arrowGraduatedPipette.current = scene.getObjectByName("graduated-pipette-arrow")
       arrowGraduatedPipette.current.visible = false;
 
-      arrowHeatingMantleRef.current = scene.getObjectByName("heating-mat-arrow");
-      arrowHeatingMantleRef.current.visible = false
+      arrowHeatingMatRef.current = scene.getObjectByName("heating-mat-arrow");
+      arrowHeatingMatRef.current.visible = false
 
       arrowBunsenBurner.current = scene.getObjectByName("bunsen-burner-arrow");
       arrowBunsenBurner.current.visible = false

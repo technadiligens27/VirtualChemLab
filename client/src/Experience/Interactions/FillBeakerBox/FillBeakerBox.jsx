@@ -25,57 +25,57 @@ const FillBeakerBox = () => {
   const [selectedAmount, setSelectedAmount] = useState("")
 
 // const acids = [
-//   // { name: "Salt (NaCl)", color: "#F5F5F5",imgPath:'./water.png' },
-//   { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-//   { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.png' },
-//   { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
-//   { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.png' },
-//   { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
-//   { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.png' },
-//   { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
-//   { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
-//   { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.png' },
+//   // { name: "Salt (NaCl)", color: "#F5F5F5",imgPath:'./water.webp' },
+//   { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.webp' },
+//   { name: "Universal indicator", color: "#4ade80",imgPath:'./IndicatorSolution.webp' },
+//   { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.webp' },
+//   { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Protein.webp' },
+//   { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.webp' },
+//   { name: "Iodine solution", color: "#92400e",imgPath:'./Iodine.webp' },
+//   { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.webp' }, 
+//   { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.webp' },
+//   { name: "Biuret Reagent", color: "#2F80ED",imgPath:'./Buirette.webp' },
 // ]
 
   const getAcids = ()=>{
     if(selectedLesson ===10){
       return [
-        { name: "Water (H2O)", color: "#0073a0", imgPath: "./water.png" },
-        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.png" },
-        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc", imgPath: "./Hcl.png" },
-        { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe", imgPath: "./Protein.png" },
-        { name: "Starch solution", color: "#e5e7eb", imgPath: "./Hcl.png" },
-        { name: "Iodine solution", color: "#92400e", imgPath: "./Iodine.png" },
-        { name: "Copper Sulfate (CuSO4)", color: "#2563eb", imgPath: "./water.png" },
-        // { name: "Protein Sample", color: "#F5F1D8", imgPath: "./Protein.png" },
-        { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./Hcl.png" },
+        { name: "Water (H2O)", color: "#0073a0", imgPath: "./water.webp" },
+        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Ethanol.webp" },
+        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc", imgPath: "./Hcl.webp" },
+        { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe", imgPath: "./Protein.webp" },
+        { name: "Starch solution", color: "#e5e7eb", imgPath: "./Hcl.webp" },
+        { name: "Iodine solution", color: "#92400e", imgPath: "./Iodine.webp" },
+        { name: "Copper Sulfate (CuSO4)", color: "#2563eb", imgPath: "./water.webp" },
+        // { name: "Protein Sample", color: "#F5F1D8", imgPath: "./Protein.webp" },
+        { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./Hcl.webp" },
       ]
     }
     if([14,14.1,14.2,14.3,14.4].includes(selectedLesson)){
       return [
-        { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-        { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./Hcl.png " },
-        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.png' },
-        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
-        { name: "Nitric Acid (HNO3)", color: "#f8fafc", imgPath: "./Hcl.png" },,
-        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Hcl.png" },
-        // { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
-        { name: "Aqueous sodium hydroxide", color: "#f8fafc",imgPath:'./Protein.png' },
-        { name: "Sodium Hydrogencarbonate", color: "#EAF7FF", imgPath: "./Hcl.png" },
+        { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.webp' },
+        { name: "Silver Nitrate (AgNO3)", color: "#f8fafc", imgPath: "./Hcl.webp " },
+        { name: "2-methylpropan-2-ol", color: "#f8fafc",imgPath:'./Hcl.webp' },
+        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.webp' },
+        { name: "Nitric Acid (HNO3)", color: "#f8fafc", imgPath: "./Hcl.webp" },,
+        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Hcl.webp" },
+        // { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.webp' }, 
+        { name: "Aqueous sodium hydroxide", color: "#f8fafc",imgPath:'./Protein.webp' },
+        { name: "Sodium Hydrogencarbonate", color: "#EAF7FF", imgPath: "./Hcl.webp" },
       ]
     }
     
     else{
       return [
-        { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.png' },
-        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./Hcl.png" }, 
-        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.png' },
-        { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Hcl.png' },
-        { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.png' },
-        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Hcl.png" },
-        // { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.png' }, 
-        { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.png' },
-        { name: "Sodium Hydrogencarbonate", color: "#EAF7FF", imgPath: "./Hcl.png" },
+        { name: "Water (H2O)", color: "#0073a0",imgPath:'./water.webp' },
+        { name: "Ethanoic Acid (CH3COOH)", color: "#f8fafc", imgPath: "./Hcl.webp" }, 
+        { name: "Hydrochloric Acid (HCl)", color: "#f8fafc",imgPath:'./Hcl.webp' },
+        { name: "Sodium Hydroxide (NaOH)", color: "#e0f2fe",imgPath:'./Hcl.webp' },
+        { name: "Starch solution", color: "#e5e7eb",imgPath:'./starch.webp' },
+        { name: "Ethanol (C2H5OH)", color: "#f3f4f6", imgPath: "./Hcl.webp" },
+        // { name: "Copper Sulfate (CuSO4)", color: "#2563eb",imgPath:'./CuSo4.webp' }, 
+        { name: "Protein Sample", color: "#F5F1D8",imgPath:'./Protein.webp' },
+        { name: "Sodium Hydrogencarbonate", color: "#EAF7FF", imgPath: "./Hcl.webp" },
       ]
     }
   }

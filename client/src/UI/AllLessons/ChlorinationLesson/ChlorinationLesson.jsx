@@ -113,7 +113,7 @@ const ChlorinationLesson = ()=>{
             "main-conical-beaker",
 
           imagePath:
-            "./conical-flask.png",
+            "./conical-flask.webp",
 
           description:
             "Used to hold the reaction mixture securely.",
@@ -128,7 +128,7 @@ const ChlorinationLesson = ()=>{
             "separating-funnel",
 
           imagePath:
-            "./separating-funnel.png",
+            "./separating-funnel.webp",
 
           description:
             "Used to separate immiscible liquid layers.",
@@ -143,7 +143,7 @@ const ChlorinationLesson = ()=>{
             "main-normal-beaker",
 
           imagePath:
-            "./main-normal-beaker.png",
+            "./main-normal-beaker.webp",
 
           description:
             "Used to collect discarded liquid during separation.",
@@ -158,7 +158,7 @@ const ChlorinationLesson = ()=>{
             "main-funnel",
 
           imagePath:
-            "./funnel.png",
+            "./funnel.webp",
 
           description:
             "Used to transfer or filter liquids safely.",
@@ -173,7 +173,7 @@ const ChlorinationLesson = ()=>{
             "measuring-cylinder-100",
 
           imagePath:
-            "./measuring-cylinder-100.png",
+            "./measuring-cylinder-100.webp",
 
           description:
             "Used to measure larger volumes of liquid.",
@@ -189,7 +189,7 @@ const ChlorinationLesson = ()=>{
             "round-bottomed-flask",
 
           imagePath:
-            "./round-bottomed-flask.png",
+            "./round-bottomed-flask.webp",
 
           description:
             "Used to heat the liquid during distillation.",
@@ -204,7 +204,7 @@ const ChlorinationLesson = ()=>{
             "distillation-head",
 
           imagePath:
-            "./distillation-head.png",
+            "./distillation-head.webp",
 
           description:
             "Used to connect the flask, thermometer and condenser.",
@@ -219,7 +219,7 @@ const ChlorinationLesson = ()=>{
             "condenser",
 
           imagePath:
-            "./condenser.png",
+            "./condenser.webp",
 
           description:
             "Used to cool vapour and condense it into liquid.",
@@ -234,7 +234,7 @@ const ChlorinationLesson = ()=>{
             "main-thermometer",
 
           imagePath:
-            "./thermometer.png",
+            "./thermometer.webp",
 
           description:
             "Used to monitor the temperature during distillation.",
@@ -249,7 +249,7 @@ const ChlorinationLesson = ()=>{
             "burette-stand-clamps",
 
           imagePath:
-            "./burette-stand-clamp.png",
+            "./burette-stand-clamp.webp",
 
           description:
             "Used to support apparatus securely during distillation.",
@@ -264,7 +264,7 @@ const ChlorinationLesson = ()=>{
             "heating-mantle",
 
           imagePath:
-            "./heating-mantle.png",
+            "./heating-mantle.webp",
 
           description:
             "Used to heat the round-bottomed flask evenly.",
@@ -279,7 +279,7 @@ const ChlorinationLesson = ()=>{
             "spatula",
 
           imagePath:
-            "./spatula.png",
+            "./spatula.webp",
 
           description:
             "Used to transfer small amounts of solid chemicals.",
@@ -294,7 +294,7 @@ const ChlorinationLesson = ()=>{
             "test-tubes",
 
           imagePath:
-            "./testube-apparatus.png",
+            "./testube-apparatus.webp",
 
           description:
             "Used to hold small liquid samples for testing.",
@@ -309,7 +309,7 @@ const ChlorinationLesson = ()=>{
             "main-dropper",
 
           imagePath:
-            "./dropper.png",
+            "./dropper.webp",
 
           description:
             "Used to add liquids drop by drop.",
@@ -324,7 +324,7 @@ const ChlorinationLesson = ()=>{
             "graduated-pipette",
 
           imagePath:
-            "./graduated-pipette.png",
+            "./graduated-pipette.webp",
 
           description:
             "Used to measure and transfer variable liquid volumes.",
@@ -339,7 +339,7 @@ const ChlorinationLesson = ()=>{
             "warm-water-bath",
 
           imagePath:
-            "./water-bath.png",
+            "./water-bath.webp",
 
           description:
             "Used to gently warm a sample in a water bath.",

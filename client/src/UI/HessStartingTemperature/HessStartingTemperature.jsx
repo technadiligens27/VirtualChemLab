@@ -170,7 +170,7 @@ const HessStartingTemperature = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>
@@ -235,7 +235,7 @@ const HessStartingTemperature = ({
 
           <div className="hess-temperature-right">
             <img
-              src="./beakerWithThermometer.png"
+              src="./beakerWithThermometer.webp"
               alt="Thermometer inside a polystyrene cup"
             />
 

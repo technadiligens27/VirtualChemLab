@@ -135,7 +135,7 @@ export const molarVolumeGuidelineData = [
       "Return the measuring cylinder to the table.",
     ],
 
-    image: "./measureEthanoicAcid.png",
+    image: "./measureEthanoicAcid.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -159,7 +159,7 @@ export const molarVolumeGuidelineData = [
       "Place the delivery tube under the cylinder.",
     ],
 
-    image: "./molarVolumeSetup.png",
+    image: "./molarVolumeSetup.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -183,7 +183,7 @@ export const molarVolumeGuidelineData = [
       "Return the calcium carbonate container to the table.",
     ],
 
-    image: "./TestubePottasiumAdd.png",
+    image: "./TestubePottasiumAdd.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -206,7 +206,7 @@ export const molarVolumeGuidelineData = [
       "Remove the test tube from the balance.",
     ],
 
-    image: "./weighTestube.png",
+    image: "./weighTestube.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -230,7 +230,7 @@ export const molarVolumeGuidelineData = [
       "Make sure the apparatus is sealed securely.",
     ],
 
-    image: "./addCalciumCarbonate.png",
+    image: "./addCalciumCarbonate.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -254,7 +254,7 @@ export const molarVolumeGuidelineData = [
       "Wait until the bubbling stops.",
     ],
 
-    image: "./collectCarbonDioxide.png",
+    image: "./collectCarbonDioxide.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -276,7 +276,7 @@ export const molarVolumeGuidelineData = [
       "Save the value to the results table.",
     ],
 
-    image: "./recordCO2Volume.png",
+    image: "./recordCO2Volume.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -299,7 +299,7 @@ export const molarVolumeGuidelineData = [
       "Calculate the mass of calcium carbonate actually transferred.",
     ],
 
-    image: "./reweighTestTube.png",
+    image: "./reweighTestTube.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -328,7 +328,7 @@ export const molarVolumeGuidelineData = [
       "Repeat until all required trials have been completed.",
     ],
 
-    image: "./repeatMolarVolumeTrial.png",
+    image: "./repeatMolarVolumeTrial.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -353,7 +353,7 @@ export const molarVolumeGuidelineData = [
       "Calculate the volume of one mole of carbon dioxide in dm³.",
     ],
 
-    image: "./molarVolumeGraph.png",
+    image: "./molarVolumeGraph.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

@@ -74,11 +74,11 @@ const mainContent = [
       </>
     ),
     button1: "Sign In As Guest",
-    button2:"Free Roam",
+    // button2:"Free Roam",
     info:
-      "Select Sign In As Guest to continue with the tutorial",
-    mainImg: "./chem-icon.png",
-    infoImg: "./info.png",
+      "Select Sign In As Guest to continue with the Session",
+    mainImg: "./chem-icon.webp",
+    infoImg: "./info.webp",
     layout: "column",
   },
 
@@ -95,7 +95,7 @@ const mainContent = [
     ),
     button1: "Continue",
     layout: "column",
-    mainImg: "./benderArrow.png",
+    mainImg: "./benderArrow.webp",
   },
 
   {
@@ -110,7 +110,7 @@ const mainContent = [
     ),
     button1: "Continue",
     layout: "row",
-    infoImg: "./Arrow.png",
+    infoImg: "./Arrow.webp",
   },
 
   {
@@ -420,12 +420,12 @@ const UI = () => {
 
 
   const startTutorial = async () => {
-    // const didSignIn =
-    //   await handleSignIn()
+    const didSignIn =
+      await handleSignIn()
 
-    // if (!didSignIn) {
-    //   return
-    // }
+    if (!didSignIn) {
+      return
+    }
 
     setIsMainGuideline(true)
 
@@ -882,7 +882,7 @@ useEffect(() => {
                 "round-bottom-flask",
 
               imagePath:
-                "./round-bottom-flask.png",
+                "./round-bottom-flask.webp",
 
               description:
                 "Used to heat liquids evenly during chemical reactions and distillation.",
@@ -897,7 +897,7 @@ useEffect(() => {
                 "volumetric-flask",
 
               imagePath:
-                "./volumetric-flask.png",
+                "./volumetric-flask.webp",
 
               description:
                 "Used to prepare an accurate volume of a solution.",
@@ -912,7 +912,7 @@ useEffect(() => {
                 "conical-flask",
 
               imagePath:
-                "./conical-flask.png",
+                "./conical-flask.webp",
 
               description:
                 "Used for mixing liquids without spilling during reactions.",
@@ -927,7 +927,7 @@ useEffect(() => {
                 "measuring-cylinder",
 
               imagePath:
-                "./measuring-cylinder.png",
+                "./measuring-cylinder.webp",
 
               description:
                 "Used to measure the volume of liquids.",
@@ -942,7 +942,7 @@ useEffect(() => {
                 "burette",
 
               imagePath:
-                "./burette.png",
+                "./burette.webp",
 
               description:
                 "Used to add precise volumes of liquid during titration.",
@@ -967,6 +967,8 @@ useEffect(() => {
        {/* <MolarVolumeSummary/> */}
 
        {showFeedBackForm && <FeedbackForm onSkip={()=>{setShowFeedBackForm(false)}} onSubmit={()=>{setShowFeedBackForm(false)}}/>}
+       {/* {<FeedbackForm/>}  */}
+
 
     </>
   )

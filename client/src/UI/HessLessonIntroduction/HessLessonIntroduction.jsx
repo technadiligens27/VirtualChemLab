@@ -164,7 +164,7 @@ const HessLessonIntroduction = ({
   ? "Close lesson introduction"
   : "Open lesson introduction"}
         >
-          <img ref={arrowRef} src="./side-arrow.png" alt=""/>
+          <img ref={arrowRef} src="./side-arrow.webp" alt=""/>
         </button>
 
         <div className="hess-introduction-inner">

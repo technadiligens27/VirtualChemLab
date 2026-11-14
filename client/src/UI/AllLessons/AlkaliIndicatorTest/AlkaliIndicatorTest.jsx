@@ -57,26 +57,26 @@ const lessonDetailsData = [
     lessonImages: [
       {
         id: 1,
-        imgPath: "./BeakerHcl.png",
+        imgPath: "./BeakerHcl.webp",
         label: "Sodium Hydroxide",
         alt: "Beaker containing sodium hydroxide solution",
       },
       {
         id: 2,
-        imgPath: "./redLitmus.png",
+        imgPath: "./redLitmus.webp",
         label: "Red Litmus Paper",
         alt: "Red litmus paper before testing",
       },
       {
         id: 3,
-        imgPath: "./blurLitmus.png",
+        imgPath: "./blurLitmus.webp",
         label: "Alkaline Result",
         alt: "Litmus paper turned blue after testing an alkali",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "Red litmus paper turns blue when it comes into contact with an alkaline solution.",
@@ -84,7 +84,7 @@ const lessonDetailsData = [
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Understand how litmus paper identifies alkalis",
@@ -96,7 +96,7 @@ const lessonDetailsData = [
 
     materials: {
       title: "Materials",
-      imgPath: "./AlkaliLesson.png",
+      imgPath: "./AlkaliLesson.webp",
       alt: "Alkali indicator test materials",
       items: [
         "Normal beaker",
@@ -107,7 +107,7 @@ const lessonDetailsData = [
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Add 50 mL of sodium hydroxide to the normal beaker",
@@ -125,7 +125,7 @@ const lessonDetailsData = [
             {/* {lessonStep===1 && 
                 <LessonGuide
                 title={"Lesson Overview"} 
-                icon={'./AlkaliTest.png'}
+                icon={'./AlkaliTest.webp'}
                 text={AlkaliIndicatorTest[0].step1} 
                 onButton1={() => setLessonStep(2)}/>
             }        */}
@@ -142,7 +142,7 @@ const lessonDetailsData = [
             {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}  
-                icon={'./AlkaliTest.png'}              
+                icon={'./AlkaliTest.webp'}              
                 text={AlkaliIndicatorTest[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />} 

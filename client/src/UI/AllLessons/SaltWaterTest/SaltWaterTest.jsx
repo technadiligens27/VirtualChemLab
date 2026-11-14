@@ -56,26 +56,26 @@ const SaltWaterTestSteps = [
     lessonImages: [
       {
         id: 1,
-        imgPath: "./beakerWithWater.png",
+        imgPath: "./beakerWithWater.webp",
         label: "Water",
         alt: "Beaker containing water",
       },
       {
         id: 2,
-        imgPath: "./beaker+Spoon.png",
+        imgPath: "./beaker+Spoon.webp",
         label: "Salt",
         alt: "Beaker and spoon containing salt",
       },
       {
         id: 3,
-        imgPath: "./beakerWithWater.png",
+        imgPath: "./beakerWithWater.webp",
         label: "Salt Solution",
         alt: "Beaker containing salt solution",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "Salt disappears because its particles break apart and spread evenly throughout the water.",
@@ -83,7 +83,7 @@ const SaltWaterTestSteps = [
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Observe the dissolving process",
@@ -95,7 +95,7 @@ const SaltWaterTestSteps = [
 
     materials: {
       title: "Materials",
-      imgPath: "./AlkaliLesson.png",
+      imgPath: "./AlkaliLesson.webp",
       alt: "Materials icon",
       items: [
         "Beaker",
@@ -107,7 +107,7 @@ const SaltWaterTestSteps = [
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Take a beaker and add 50 ml of water",
@@ -128,7 +128,7 @@ const SaltWaterTestSteps = [
                title={"Lesson Overview"} 
                subTitle={'Salt Dissolving In Water'}
                text={SaltWaterTestSteps[0].step1} 
-               icon={'./saltLesson.png'}
+               icon={'./saltLesson.webp'}
                onButton1={() => setLessonStep(2)}/>
         } */}
 
@@ -141,7 +141,7 @@ const SaltWaterTestSteps = [
                 <LessonGuide 
                 title={"Lets Start"}      
                 subTitle={'Pick Up Normal Beaker'}    
-                icon={'./saltLesson.png'}      
+                icon={'./saltLesson.webp'}      
                 text={SaltWaterTestSteps[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />}  

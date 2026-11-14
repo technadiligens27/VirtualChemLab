@@ -14,7 +14,7 @@ const EndothermicReactionSummary = ({
   temperatureChange = "-7.0 °C",
 
   thermometerImage =
-    "./beakerWithThermometer.png",
+    "./beakerWithThermometer.webp",
 
   onQuestions,
   onEndLesson,
@@ -228,7 +228,7 @@ const EndothermicReactionSummary = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

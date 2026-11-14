@@ -318,7 +318,7 @@ const HessReactionTwoResults = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

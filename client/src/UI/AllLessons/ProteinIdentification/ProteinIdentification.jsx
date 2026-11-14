@@ -74,26 +74,26 @@ const lessonDetailsData = [
     lessonImages: [
       {
         id: 1,
-        imgPath: "./testube-protein.png",
+        imgPath: "./testube-protein.webp",
         label: "Protein Sample",
         alt: "Test tube containing a protein sample",
       },
       {
         id: 2,
-        imgPath: "./dropper-buirette.png",
+        imgPath: "./dropper-buirette.webp",
         label: "Biuret Reagent",
         alt: "Dropper containing Biuret reagent",
       },
       {
         id: 3,
-        imgPath: "./positiveBuirette.png",
+        imgPath: "./positiveBuirette.webp",
         label: "Positive Result",
         alt: "Purple solution showing a positive Biuret test",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "A purple colour change indicates that protein is present in the sample.",
@@ -101,7 +101,7 @@ const lessonDetailsData = [
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Understand how Biuret test identifies proteins",
@@ -113,7 +113,7 @@ const lessonDetailsData = [
 
     materials: {
       title: "Materials",
-      imgPath: "./ProteinTest.png",
+      imgPath: "./ProteinTest.webp",
       alt: "Protein test materials",
       items: [
         "Test tube",
@@ -125,7 +125,7 @@ const lessonDetailsData = [
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Add Biuret reagent to the test tube",
@@ -147,7 +147,7 @@ const lessonDetailsData = [
                 <LessonGuide
                  title={"Lesson Overview"} 
                 text={ProteinIdentificationTest[0].step1} 
-                icon={'./ProteinTest.png'}
+                icon={'./ProteinTest.webp'}
                 onButton1={() => setLessonStep(2)}/>
             }  */}
 
@@ -163,7 +163,7 @@ const lessonDetailsData = [
            {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}   
-                icon={'./ProteinTest.png'}             
+                icon={'./ProteinTest.webp'}             
                 text={ProteinIdentificationTest[0].step2}
                 onButton1={() =>{ setLessonStep(3)}}
             />} 

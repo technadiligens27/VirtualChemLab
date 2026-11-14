@@ -12,7 +12,7 @@ import "./ChlorinationSummary.css"
 
 const ChlorinationSummary = ({
   productImage =
-    "./assembleDistillationApparatus.png",
+    "./assembleDistillationApparatus.webp",
 
   onQuestions,
   onEndLesson,
@@ -230,7 +230,7 @@ const ChlorinationSummary = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

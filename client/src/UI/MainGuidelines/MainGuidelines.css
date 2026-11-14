@@ -1,159 +1,362 @@
 .main-guidelines {
-  width: 100vw;
-  height: 100vh;
-
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+
+  z-index: 999;
+
+  width: 100vw;
+  min-height: 100dvh;
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow-y: auto;
+
+  background: rgba(0, 0, 0, 0.25);
 
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 999;
+  box-sizing: border-box;
 }
 
 .guideline-container {
-  width: 60%;
-  min-height: 60%;
-  background-color: aliceblue;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #FECC43 0%, #D6AD3B 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: min(60%, 1000px);
+  min-height: 60vh;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   padding-bottom: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #FECC43 0%,
+      #D6AD3B 100%
+    );
+
+  border-radius: 30px;
+
+  box-sizing: border-box;
+}
+
+.main-guidelines-title {
+  width: 100%;
+
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.main-guidelines-title h1 {
+  margin: 10px 0;
+
+  color: #FFFFFF;
+
+  font-size: clamp(28px, 3vw, 45px);
+  text-align: left;
 }
 
 .guideline-inner-container {
-  background-color: #F9F9E7;
   width: 95%;
   height: 80%;
-  border-radius: 22px;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
+  padding: 20px;
 
-  /* box-shadow: inset 0 7px 35px rgba(88, 57, 57, 0.45); */
+  background-color: #F9F9E7;
+
+  border-radius: 22px;
+
+  box-sizing: border-box;
 }
 
-.guideline-description{
-  padding: 0px 40px;
-  font-size: 23px;
-  text-align: center;
-  line-height: 160%;
-  margin: 0%;
+.guideline-image-container {
+  width: 90%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.main-guidelines-btn-container{
+.guideline-image-container img {
+  width: min(20%, 180px);
+  max-width: 100%;
+
+  object-fit: contain;
+}
+
+.guideline-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
+}
+
+.guideline-description {
+  margin: 0;
+  padding: 0 40px;
+
+  font-size: clamp(16px, 1.6vw, 23px);
+  line-height: 160%;
+  text-align: center;
+}
+
+.main-guidelines-btn-container {
+  width: 100%;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
-  /* padding:10px 0px; */
-  gap: 5px;
 
+  gap: 10px;
+
+  padding-top: 20px;
 }
 
 .main-guidelines-btn {
-  width: 200px;
-  height: 45px;
-  background-color: #4f7f93;
+  width: min(200px, 42%);
+  min-height: 45px;
+
+  padding: 10px 16px;
+
   color: white;
-  font-size: 22px;
+
+  background-color: #4f7f93;
+
   border: none;
   border-radius: 10px;
+
   cursor: pointer;
-  transition: background-color 0.1s ease, transform 0.2s ease;
+
+  font-size: clamp(15px, 1.5vw, 22px);
+
+  transition:
+    background-color 0.1s ease,
+    transform 0.2s ease;
 }
 
 .main-guidelines-btn:hover {
   background-color: #245970;
+
   transform: translateY(-2px);
 }
 
-
-.main-guidelines-title{
-  margin-right: auto;
-  padding-left: 20px;
-}
-
-
-.main-guidelines-title h1{
-  color: #FFFFFF;
-}
-
-.guideline-image-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-}
-
-.guideline-image-container img{
-  width: 20%;
-}
-
-.guide-info{
+.guide-info {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  padding-top: 10px}
-.guide-info-img-container{
-  height: 100%;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding-top: 10px;
+}
+
+.guide-info-img-container {
   display: flex;
   align-items: center;
   justify-content: center;
- 
 }
 
-.guide-info-img-container img{
+.guide-info-img-container img {
+  width: 30px;
   min-width: 30px;
-
+  max-width: 35px;
 }
 
-.guide-info p{
+.guide-info p {
+  margin: 0;
+  padding: 0;
+
+  font-size: clamp(13px, 1.2vw, 16px);
   text-align: left;
-  padding: 0%;
 }
 
-.highlight{
+.highlight {
   font-weight: bold;
 }
 
+/* =========================================================
+   ROW LAYOUT
+========================================================= */
+
 .guideline-inner-container-row {
   flex-direction: row;
-  justify-content: center;
   align-items: stretch;
+  justify-content: center;
+
   gap: 20px;
+
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .guideline-inner-container-row .guideline-image-container {
   width: 35%;
+
   flex-shrink: 0;
 }
 
 .guideline-inner-container-row .guideline-image-container img {
-  width: 60%;
+  width: min(60%, 260px);
 }
 
-.guideline-content-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .guideline-container {
+    width: 82%;
+    min-height: 58vh;
+  }
+
+  .guideline-inner-container {
+    padding: 18px;
+  }
+
+  .guideline-description {
+    padding: 0 25px;
+  }
+
+  .guideline-inner-container-row .guideline-image-container {
+    width: 38%;
+  }
+
+  .guideline-inner-container-row .guideline-image-container img {
+    width: 75%;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .main-guidelines {
+    align-items: flex-start;
+
+    padding: 14px;
+  }
+
+  .guideline-container {
+    width: 100%;
+    min-height: auto;
+
+    margin: auto 0;
+
+    border-radius: 24px;
+  }
+
+  .main-guidelines-title {
+    padding: 0 16px;
+  }
+
+  .main-guidelines-title h1 {
+    margin: 14px 0 10px;
+
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .guideline-inner-container {
+    width: 94%;
+    height: auto;
+
+    min-height: 420px;
+
+    padding: 22px 15px;
+
+    border-radius: 18px;
+  }
+
+  .guideline-inner-container-row {
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 14px;
+  }
+
+  .guideline-image-container,
+  .guideline-inner-container-row .guideline-image-container {
+    width: 100%;
+  }
+
+  .guideline-image-container img,
+  .guideline-inner-container-row .guideline-image-container img {
+    width: min(150px, 45vw);
+    max-height: 130px;
+  }
+
+  .guideline-description {
+    padding: 0 8px;
+
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  .main-guidelines-btn-container {
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding-top: 18px;
+  }
+
+  .main-guidelines-btn {
+    width: min(280px, 100%);
+    min-height: 46px;
+
+    font-size: 17px;
+  }
+
+  .guide-info {
+    align-items: flex-start;
+
+    padding: 14px 5px 0;
+  }
+
+  .guide-info p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .main-guidelines {
+    padding: 10px;
+  }
+
+  .main-guidelines-title h1 {
+    font-size: 24px;
+  }
+
+  .guideline-inner-container {
+    padding: 18px 12px;
+  }
+
+  .guideline-description {
+    font-size: 14px;
+  }
+
+  .main-guidelines-btn {
+    font-size: 15px;
+  }
 }

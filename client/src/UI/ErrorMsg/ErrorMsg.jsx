@@ -24,7 +24,7 @@ const ErrorMsg = ({ text }) => {
   return (
     <div className="error-msg">
       <div className="error-icon-container">
-        <img src={'./cross.png'}/>
+        <img src={'./cross.webp'}/>
       </div>
       <div className="error-content-container">
         <p className="try-again">Try Again</p>

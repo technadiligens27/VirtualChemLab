@@ -26,7 +26,7 @@ const SulfamicAcidResult = ({
 
   trialTwo = 24.75,
 
-  imageSrc = "./buretteTitre.png",
+  imageSrc = "./buretteTitre.webp",
 
   onButtonContinue,
 
@@ -503,7 +503,7 @@ const SulfamicAcidResult = ({
 
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
 

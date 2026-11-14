@@ -71,7 +71,7 @@ const Explanations = ({
                 false
               )
             }}
-            src="./cross.png"
+            src="./cross.webp"
             alt="Close"
           />
         </div>

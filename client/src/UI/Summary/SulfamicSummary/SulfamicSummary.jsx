@@ -19,7 +19,7 @@ const SulfamicSummary = ({
   trialTwo = 24.75,
 
   titrationImage =
-    "./sulfamicRoughTitration.png",
+    "./sulfamicRoughTitration.webp",
 
   onQuestions,
   onEndLesson,
@@ -249,7 +249,7 @@ const SulfamicSummary = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

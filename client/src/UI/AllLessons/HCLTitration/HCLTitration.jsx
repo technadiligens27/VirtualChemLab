@@ -39,7 +39,7 @@ const guidelineData = [
       "Prepare to measure the hydrochloric acid accurately.",
     ],
 
-    image: "./BeakerHcl.png",
+    image: "./BeakerHcl.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -63,7 +63,7 @@ const guidelineData = [
       "Exit Pipette Mode.",
     ],
 
-    image: "./measureHCLWithPipette.png",
+    image: "./measureHCLWithPipette.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -87,7 +87,7 @@ const guidelineData = [
       "Exit Pipette Mode when the pipette is empty.",
     ],
 
-    image: "./transferHCLToVolumetricFlask.png",
+    image: "./transferHCLToVolumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -111,7 +111,7 @@ const guidelineData = [
       "Place the beaker back on the table.",
     ],
 
-    image: "./transferSulfamicToVolumetricFlask.png",
+    image: "./transferSulfamicToVolumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -135,7 +135,7 @@ const guidelineData = [
       "Make sure the solution is thoroughly mixed.",
     ],
 
-    image: "./mixVolumetricFlask.png",
+    image: "./mixVolumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -158,7 +158,7 @@ const guidelineData = [
       "Make sure the burette is positioned vertically.",
     ],
 
-    image: "./prepareBuretteNaOH.png",
+    image: "./prepareBuretteNaOH.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -182,7 +182,7 @@ const guidelineData = [
       "Return the pipette to the table.",
     ],
 
-    image: "./transferNaOHToConicalFlask.png",
+    image: "./transferNaOHToConicalFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -204,7 +204,7 @@ const guidelineData = [
       "Return the phenolphthalein bottle to the table.",
     ],
 
-    image: "./addPhenolphthalein.png",
+    image: "./addPhenolphthalein.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -228,7 +228,7 @@ const guidelineData = [
       ".1 from beneath the burette.",
     ],
 
-    image: "./roughTitration.png",
+    image: "./roughTitration.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -251,7 +251,7 @@ const guidelineData = [
       "Prepare the flask for another titration.",
     ],
 
-    image: "./cleanConicalFlask.png",
+    image: "./cleanConicalFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -275,7 +275,7 @@ const guidelineData = [
       "Return the dropper bottle to the table.",
     ],
 
-    image: "./addPhenolphthaleinTrial.png",
+    image: "./addPhenolphthaleinTrial.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -299,7 +299,7 @@ const guidelineData = [
       "Place the burette and clamp back in the centre.",
     ],
 
-    image: "./refillBurette.png",
+    image: "./refillBurette.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -324,7 +324,7 @@ const guidelineData = [
       "Remove the conical flask.",
     ],
 
-    image: "./accurateTitration.png",
+    image: "./accurateTitration.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -347,7 +347,7 @@ const guidelineData = [
       "Repeat the titration if another concordant result is required.",
     ],
 
-    image: "./titrationResults.png",
+    image: "./titrationResults.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -473,7 +473,7 @@ const guidelineData = [
                         "volumetric-flask",
 
                       imagePath:
-                        "./volumetricFlask.png",
+                        "./volumetricFlask.webp",
 
                       description:
                         "Used to prepare a solution to an exact final volume.",
@@ -488,7 +488,7 @@ const guidelineData = [
                         "volumetric-pipette",
 
                       imagePath:
-                        "./volumetric-pipette.png",
+                        "./volumetric-pipette.webp",
 
                       description:
                         "Used to accurately measure 25.0 cm³ of solution.",
@@ -504,7 +504,7 @@ const guidelineData = [
                         "main-conical-beaker",
 
                       imagePath:
-                        "./conical-flask.png",
+                        "./conical-flask.webp",
 
                       description:
                         "Used to hold and swirl the solution during titration.",
@@ -519,7 +519,7 @@ const guidelineData = [
                         "burette",
 
                       imagePath:
-                        "./burette.png",
+                        "./burette.webp",
 
                       description:
                         "Used to accurately deliver measured volumes of solution during titration.",
@@ -534,7 +534,7 @@ const guidelineData = [
                         "burette-clamp",
 
                       imagePath:
-                        "./burette-stand-clamp.png",
+                        "./burette-stand-clamp.webp",
 
                       description:
                         "Used to hold the burette securely on the stand.",
@@ -549,7 +549,7 @@ const guidelineData = [
                         "main-funnel",
 
                       imagePath:
-                        "./funnel.png",
+                        "./funnel.webp",
 
                       description:
                         "Used to transfer liquid into the burette without spilling.",
@@ -564,7 +564,7 @@ const guidelineData = [
                         "main-normal-beaker",
 
                       imagePath:
-                        "./main-normal-beaker.png",
+                        "./main-normal-beaker.webp",
 
                       description:
                         "Used to hold solutions before they are measured or transferred.",
@@ -579,7 +579,7 @@ const guidelineData = [
                         "water-bottle",
 
                       imagePath:
-                        "./water-bottle.png",
+                        "./water-bottle.webp",
 
                       description:
                         "Used to rinse apparatus with distilled water.",
@@ -594,7 +594,7 @@ const guidelineData = [
                         "phenolphthalein-bottle",
 
                       imagePath:
-                        "./phenolphthalein-bottle.png",
+                        "./phenolphthalein-bottle.webp",
 
                       description:
                         "Used to indicate the endpoint of the titration by changing colour.",

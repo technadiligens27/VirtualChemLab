@@ -155,7 +155,7 @@ export const guidelineData = [
       "Keep the prepared water bath on the table.",
     ],
 
-    image: "./water-bath.png",
+    image: "./water-bath.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -180,7 +180,7 @@ export const guidelineData = [
       "Make sure each test tube can be clearly identified.",
     ],
 
-    image: "./labelHalogenoalkaneTestTubes.png",
+    image: "./labelHalogenoalkaneTestTubes.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -203,7 +203,7 @@ export const guidelineData = [
       "Return the measuring cylinder to the table.",
     ],
 
-    image: "./addEthanolToTestTubes.png",
+    image: "./addEthanolToTestTubes.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -226,7 +226,7 @@ export const guidelineData = [
       "Return the pipette and chemical bottles to the table.",
     ],
 
-    image: "./addHalogenoalkanes.png",
+    image: "./addHalogenoalkanes.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -249,7 +249,7 @@ export const guidelineData = [
       "Check that all three test tubes are properly sealed.",
     ],
 
-    image: "./bungTestTubes.png",
+    image: "./bungTestTubes.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -273,7 +273,7 @@ export const guidelineData = [
       "Allow the mixtures to warm.",
     ],
 
-    image: "./testTubesInWaterBath.png",
+    image: "./testTubesInWaterBath.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -296,7 +296,7 @@ export const guidelineData = [
       "Keep the three silver nitrate portions ready for the reactions.",
     ],
 
-    image: "./prepareSilverNitrate.png",
+    image: "./prepareSilverNitrate.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -321,7 +321,7 @@ export const guidelineData = [
       "Repeat the same procedure for the remaining halogenoalkanes.",
     ],
 
-    image: "./startHydrolysisReaction.png",
+    image: "./startHydrolysisReaction.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -343,7 +343,7 @@ export const guidelineData = [
       "Record the reaction time.",
     ],
 
-    image: "./compareHydrolysisResults.png",
+    image: "./compareHydrolysisResults.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -365,7 +365,7 @@ export const guidelineData = [
       "Record the reaction time.",
     ],
 
-    image: "./compareHydrolysisResults.png",
+    image: "./compareHydrolysisResults.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -387,7 +387,7 @@ export const guidelineData = [
       "Record the reaction time.",
     ],
 
-    image: "./compareHydrolysisResults.png",
+    image: "./compareHydrolysisResults.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

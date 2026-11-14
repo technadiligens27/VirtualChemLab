@@ -98,7 +98,7 @@ export const flameTestGuidelineData = [
     "Make sure the burner is upright and the air hole is closed.",
   ],
 
-  image: "./placeBunsenBurner.png",
+  image: "./placeBunsenBurner.webp",
 
   onButtonContinue: () => {
     setHessGuidelineNumber(false)
@@ -119,7 +119,7 @@ export const flameTestGuidelineData = [
       "Keep the gas supply turned off.",
     ],
 
-    image: "./connectGasTube.png",
+    image: "./connectGasTube.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -143,7 +143,7 @@ export const flameTestGuidelineData = [
       "Return the beaker to the table.",
     ],
 
-    image: "./prepareHydrochloricAcid.png",
+    image: "./prepareHydrochloricAcid.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -164,7 +164,7 @@ export const flameTestGuidelineData = [
       "Remove the wire loop from the acid.",
     ],
 
-    image: "./cleanNichromeWire.png",
+    image: "./cleanNichromeWire.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -187,7 +187,7 @@ export const flameTestGuidelineData = [
       "Return the lighter to the table.",
     ],
 
-    image: "./lightBunsenBurner.png",
+    image: "./lightBunsenBurner.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -208,7 +208,7 @@ export const flameTestGuidelineData = [
       "Adjust until a steady blue flame is produced.",
     ],
 
-    image: "./adjustBunsenFlame.png",
+    image: "./adjustBunsenFlame.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -232,7 +232,7 @@ export const flameTestGuidelineData = [
       "Allow the wire loop to cool.",
     ],
 
-    image: "./heatNichromeWire.png",
+    image: "./heatNichromeWire.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -253,7 +253,7 @@ export const flameTestGuidelineData = [
       "Prepare to collect a small sample using the wire loop.",
     ],
 
-    image: "./selectMetalSalt.png",
+    image: "./selectMetalSalt.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -275,7 +275,7 @@ export const flameTestGuidelineData = [
       "Observe the salt particles sticking to the wire loop.",
     ],
 
-    image: "./collectMetalSalt.png",
+    image: "./collectMetalSalt.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -297,7 +297,7 @@ export const flameTestGuidelineData = [
       "Remove the wire loop from the flame.",
     ],
 
-    image: "./performFlameTest.png",
+    image: "./performFlameTest.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -319,7 +319,7 @@ export const flameTestGuidelineData = [
       "Record the result.",
     ],
 
-    image: "./recordFlameColour.png",
+    image: "./recordFlameColour.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -344,7 +344,7 @@ export const flameTestGuidelineData = [
       "Repeat for the remaining metal salts.",
     ],
 
-    image: "./repeatFlameTest.png",
+    image: "./repeatFlameTest.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -368,7 +368,7 @@ export const flameTestGuidelineData = [
       "Choose the metal ion that matches the observation.",
     ],
 
-    image: "./identifyUnknownMetal.png",
+    image: "./identifyUnknownMetal.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -390,7 +390,7 @@ export const flameTestGuidelineData = [
       "Allow the equipment to cool.",
     ],
 
-    image: "./turnOffBunsenBurner.png",
+    image: "./turnOffBunsenBurner.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -412,7 +412,7 @@ export const flameTestGuidelineData = [
       "Complete the experiment.",
     ],
 
-    image: "./flameTestResults.png",
+    image: "./flameTestResults.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

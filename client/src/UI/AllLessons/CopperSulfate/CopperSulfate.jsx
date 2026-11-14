@@ -63,26 +63,26 @@ const CopperSulfate = () =>{
     lessonImages: [
       {
         id: 1,
-        imgPath: "./BeakerCopperSulphate.png",
+        imgPath: "./BeakerCopperSulphate.webp",
         label: "Copper Sulfate",
         alt: "Beaker containing blue copper sulfate solution",
       },
       {
         id: 2,
-        imgPath: "./ConicalSodiumGydroxide.png",
+        imgPath: "./ConicalSodiumGydroxide.webp",
         label: "Sodium Hydroxide",
         alt: "Conical flask containing sodium hydroxide solution",
       },
       {
         id: 3,
-        imgPath: "./LightBluePrexipitate.png",
+        imgPath: "./LightBluePrexipitate.webp",
         label: "Light Blue Precipitate",
         alt: "Light blue copper hydroxide precipitate inside a beaker",
       },
     ],
 
     hint: {
-      imgPath: "./light-bulb.png",
+      imgPath: "./light-bulb.webp",
       alt: "Light bulb",
       text:
         "The light blue solid forms because copper hydroxide is insoluble in water.",
@@ -90,7 +90,7 @@ const CopperSulfate = () =>{
 
     objectives: {
       title: "Objectives",
-      imgPath: "./objective.png",
+      imgPath: "./objective.webp",
       alt: "Objectives icon",
       items: [
         "Understand how a precipitate forms",
@@ -101,7 +101,7 @@ const CopperSulfate = () =>{
 
     materials: {
       title: "Materials",
-      imgPath: "./CopperSulfateLesson.png",
+      imgPath: "./CopperSulfateLesson.webp",
       alt: "Copper sulfate precipitation materials",
       items: [
         "Normal beaker",
@@ -113,7 +113,7 @@ const CopperSulfate = () =>{
 
     procedure: {
       title: "Procedure",
-      imgPath: "./procedure.png",
+      imgPath: "./procedure.webp",
       alt: "Procedure icon",
       items: [
         "Add 50 mL of copper sulfate to beaker",
@@ -135,7 +135,7 @@ const CopperSulfate = () =>{
         {/* {lessonStep===1 && 
             <LessonGuide
                title={"Lesson Overview"} 
-               icon={'./CopperSulphateTest.png'}
+               icon={'./CopperSulphateTest.webp'}
                text={CopperSulfatePrecipitate[0].step1} 
                onButton1={() => setLessonStep(2)}/>
         } */}
@@ -152,7 +152,7 @@ const CopperSulfate = () =>{
         {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}    
-                 icon={'./CopperSulphateTest.png'}            
+                 icon={'./CopperSulphateTest.webp'}            
                 text={CopperSulfatePrecipitate[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />}  

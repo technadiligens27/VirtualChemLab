@@ -34,7 +34,7 @@ const LessonSummary = ({
         {headerTitle && (
           <div className="summary-header-container">
             <img
-              src="./clipboard-icon.png"
+              src="./clipboard-icon.webp"
               alt="Lesson summary"
             />
 

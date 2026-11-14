@@ -649,7 +649,7 @@ const SulfamicAcidNaOHTitration03 = () => {
         />
       )}
 
-      {/* {lessonStep===85 && (<TitreValueRecorded imageSrc={'./buretteTitre01.png'}/>)} */}
+      {/* {lessonStep===85 && (<TitreValueRecorded imageSrc={'./buretteTitre01.webp'}/>)} */}
 
       {lessonStep === 85 && (
         <DialogBox
@@ -829,7 +829,7 @@ const SulfamicAcidNaOHTitration03 = () => {
       )}
 
 
-      {/* {lessonStep===99 && (<TitreValueRecorded titreValue ={24.7} imageSrc={'./buretteTitre02.png'}/>)} */}
+      {/* {lessonStep===99 && (<TitreValueRecorded titreValue ={24.7} imageSrc={'./buretteTitre02.webp'}/>)} */}
 
       {lessonStep === 99 && (
         <DialogBox

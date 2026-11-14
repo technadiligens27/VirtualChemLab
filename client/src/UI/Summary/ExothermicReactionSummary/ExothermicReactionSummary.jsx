@@ -14,7 +14,7 @@ const ExothermicReactionSummary = ({
   temperatureChange = "+9.5 °C",
 
   thermometerImage =
-    "./beakerWithThermometer.png",
+    "./beakerWithThermometer.webp",
 
   onQuestions,
   onEndLesson,
@@ -228,7 +228,7 @@ const ExothermicReactionSummary = ({
         >
           <img
             ref={arrowRef}
-            src="./side-arrow.png"
+            src="./side-arrow.webp"
             alt=""
           />
         </button>

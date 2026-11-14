@@ -159,7 +159,7 @@ export const guidelineData = [
       "Remove the test tube from the balance.",
     ],
 
-    image: "./weighEmptyTestTube.png",
+    image: "./weighEmptyTestTube.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -183,7 +183,7 @@ export const guidelineData = [
       "Return the spatula and test tube to the table.",
     ],
 
-    image: "./weighTestube.png",
+    image: "./weighTestube.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -207,7 +207,7 @@ export const guidelineData = [
       "Return the empty test tube to the table.",
     ],
 
-    image: "./beakerSpoon.png",
+    image: "./beakerSpoon.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -230,7 +230,7 @@ export const guidelineData = [
       "Return the spatula to the table.",
     ],
 
-    image: "./stirSulfamicAcid.png",
+    image: "./stirSulfamicAcid.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -252,7 +252,7 @@ export const guidelineData = [
       "Exit Pour Mode.",
     ],
 
-    image: "./transferSulfamicToVolumetricFlask.png",
+    image: "./transferSulfamicToVolumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -276,7 +276,7 @@ export const guidelineData = [
       "Transfer the second set of washings into the volumetric flask.",
     ],
 
-    image: "./transferSulfamicToVolumetricFlask.png",
+    image: "./transferSulfamicToVolumetricFlask.webp",
 
     // onButtonContinue: () => {
     //   setHessGuidelineNumber(false)
@@ -298,7 +298,7 @@ export const guidelineData = [
       "Make sure the final liquid level is at the calibration line.",
     ],
 
-    image: "./volumetricFlask.png",
+    image: "./volumetricFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -321,7 +321,7 @@ export const guidelineData = [
       "Make sure the solution is thoroughly mixed.",
     ],
 
-    image: "./volumetricFlaskWithBungInvert.png",
+    image: "./volumetricFlaskWithBungInvert.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -345,7 +345,7 @@ export const guidelineData = [
       "Return the funnel to the table.",
     ],
 
-    image: "./prepareSulfamicBurette.png",
+    image: "./prepareSulfamicBurette.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -369,7 +369,7 @@ export const guidelineData = [
       "Return the sodium hydroxide bottle to the table.",
     ],
 
-    image: "./measureNaOHWithPipette.png",
+    image: "./measureNaOHWithPipette.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -392,7 +392,7 @@ export const guidelineData = [
       "Return the volumetric pipette to the table.",
     ],
 
-    image: "./transferNaOHToConicalFlask.png",
+    image: "./transferNaOHToConicalFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -414,7 +414,7 @@ export const guidelineData = [
       "Return the methyl orange bottle to the table.",
     ],
 
-    image: "./addMethylOrange.png",
+    image: "./addMethylOrange.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -439,7 +439,7 @@ export const guidelineData = [
       "Remove the clamp from the centre.",
     ],
 
-    image: "./sulfamicRoughTitration.png",
+    image: "./sulfamicRoughTitration.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -463,7 +463,7 @@ export const guidelineData = [
       "Draw a fresh portion of sodium hydroxide into the pipette.",
     ],
 
-    image: "./prepareFreshNaOH.png",
+    image: "./prepareFreshNaOH.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -486,7 +486,7 @@ export const guidelineData = [
       "Return the volumetric pipette to the table.",
     ],
 
-    image: "./transferNaOHToConicalFlask.png",
+    image: "./transferNaOHToConicalFlask.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)
@@ -510,7 +510,7 @@ export const guidelineData = [
       "Record the titre.",
     ],
 
-    image: "./sulfamicAccurateTitration.png",
+    image: "./sulfamicAccurateTitration.webp",
 
     onButtonContinue: () => {
       setHessGuidelineNumber(false)

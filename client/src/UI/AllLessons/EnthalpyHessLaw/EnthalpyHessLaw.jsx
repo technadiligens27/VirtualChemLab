@@ -25,7 +25,7 @@ const EnthalpyHessLaw = () =>{
     showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo,
   showQuestionCardNo,setShowQuestionCardNo,setShowFeedBackForm} = useContext(InteractionContext)
     
-  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSelectedLesson,setShowApparatus,showApparatus,
+  const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSelectedLesson,setShowApparatus,showApparatus, setIsExplanationOpen
     
   } = useContext(MainGuidelineContext);
 
@@ -225,7 +225,7 @@ const {
         "Keep the top of the polystyrene cup open for adding the reactants.",
       ],
 
-      image: "./polystyreneCupInBeaker.png",
+      image: "./polystyreneCupInBeaker.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -249,7 +249,7 @@ const {
         "Carefully transfer the potassium carbonate from the spatula into the test tube.",
       ],
 
-      image: "./TestubePottasiumAdd.png",
+      image: "./TestubePottasiumAdd.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -272,7 +272,7 @@ const {
         "Record the initial temperature of the hydrochloric acid.",
       ],
 
-      image: "./beakerWithThermometer.png",
+      image: "./beakerWithThermometer.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -294,7 +294,7 @@ const {
         "Record the combined mass of the test tube and potassium carbonate.",
       ],
 
-      image: "./weighTestube.png",
+      image: "./weighTestube.webp",
 
       onButtonContinue: () => {
         setHessGuidelineNumber(false)
@@ -316,7 +316,7 @@ const {
     "Close the burette tap when the required volume has been delivered.",
   ],
 
-  image: "./BuretteHCLPour.png",
+  image: "./BuretteHCLPour.webp",
 
   onButtonContinue: () => {
     setHessGuidelineNumber(false)
@@ -337,7 +337,7 @@ const {
     "Wait until the temperature reaches its highest value ",
   ],
 
-  image: "./addPotassiumCarbonateAndStir.png",
+  image: "./addPotassiumCarbonateAndStir.webp",
 
   onButtonContinue: () => {
     setHessGuidelineNumber(false)
@@ -371,7 +371,11 @@ const {
 
   // },[])
 
-
+  useEffect(()=>{
+    setIsExplanationOpen(
+                false
+              )
+  },[])
 
     return(
         <>
@@ -379,7 +383,7 @@ const {
         {/* {lessonStep===1 && 
             <LessonGuide
                title={"Lesson Overview"} 
-               icon={'./CopperSulphateTest.png'}
+               icon={'./CopperSulphateTest.webp'}
                text={CopperSulfatePrecipitate[0].step1} 
                onButton1={() => setLessonStep(2)}/>
         } */}
@@ -425,7 +429,7 @@ const {
                 "mainPolystyrene",
 
               imagePath:
-                "./polysterene-cup.png",
+                "./polysterene-cup.webp",
 
               description:
                 "Used to reduce heat loss to the surroundings, allowing accurate measurement of temperature changes during exothermic reactions.",
@@ -440,7 +444,7 @@ const {
                 "main-normal-beaker",
 
               imagePath:
-                "./main-normal-beaker.png",
+                "./main-normal-beaker.webp",
 
               description:
               "Used to support the polystyrene cup, providing stability during the exothermic reaction.",
@@ -455,7 +459,7 @@ const {
               "mainThermometer",
 
             imagePath:
-              "./thermometer.png",
+              "./thermometer.webp",
 
             description:
               "Used to measure temperature changes during exothermic reactions.",
@@ -470,7 +474,7 @@ const {
             "burette",
 
           imagePath:
-            "./burette.png",
+            "./burette.webp",
 
           description:
             "Used to accurately measure and deliver controlled volumes of liquid during titration.",
@@ -485,7 +489,7 @@ const {
             "burette-stand-clamp",
 
           imagePath:
-            "./burette-stand-clamp.png",
+            "./burette-stand-clamp.webp",
 
           description:
             "Used to hold the burette securely in a vertical position during titration.",
@@ -500,7 +504,7 @@ const {
             "test-tube",
 
           imagePath:
-            "./testube-apparatus.png",
+            "./testube-apparatus.webp",
 
           description:
             "Used to hold small amounts of chemicals during experiments.",
@@ -515,7 +519,7 @@ const {
             "mass-balance",
 
           imagePath:
-            "./weighTestube.png",
+            "./weighTestube.webp",
 
           description:
             "Used to accurately measure the mass of chemicals used in reactions.",
@@ -530,7 +534,7 @@ const {
             "spatula",
 
           imagePath:
-            "./spatula.png",
+            "./spatula.webp",
 
           description:
             "Used to transfer small amounts of solid chemicals or powders.",
@@ -773,7 +777,7 @@ const {
         {/* {lessonStep===2 && 
                 <LessonGuide 
                 title={"Lesson Overview"}    
-                 icon={'./CopperSulphateTest.png'}            
+                 icon={'./CopperSulphateTest.webp'}            
                 text={Enthalpy[0].step2}
                 onButton1={() =>{ setLessonStep(3);setShowNormalBeakerArrow(true)}}
         />}   */}
