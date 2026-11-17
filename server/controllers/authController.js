@@ -1,5 +1,5 @@
 const User = require(
-  "../models/User"
+  "../Models/User"
 )
 
 const guestSignIn = async (
