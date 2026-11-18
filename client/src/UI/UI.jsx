@@ -58,6 +58,7 @@ import FeedbackForm from "./FeedbackForm/FeedbackForm"
 import axios from "axios"
 import HydrolysisLesson from "./AllLessons/HydrolysisLesson/HydrolysisLesson"
 import FillBeakerBox from "../Experience/Interactions/FillBeakerBox/FillBeakerBox"
+import Loader01 from "./Loader01/Loader01"
 
 
 const mainContent = [
@@ -969,7 +970,7 @@ useEffect(() => {
        {showFeedBackForm && <FeedbackForm onSkip={()=>{setShowFeedBackForm(false)}} onSubmit={()=>{setShowFeedBackForm(false)}}/>}
        {/* {<FeedbackForm/>}  */}
 
-
+  {/* <Loader01/> */}
     </>
   )
 }
