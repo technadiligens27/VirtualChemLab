@@ -1,45 +1,25 @@
 
-import { useContext } from 'react'
-import './App.css'
-import FillBeakerBox from './Experience/Interactions/FillBeakerBox/FillBeakerBox'
-import MainExperience from './Experience/MainExperience/MainExperience'
-import { InteractionContext } from './Contexts/InteractionContext/InteractionContext'
-import UI from './UI/UI'
-import PowderBox from './UI/PowderBox/PowderBox'
-import { useProgress } from '@react-three/drei'
-import Loader01 from './UI/Loader01/Loader01'
+import { lazy, Suspense } from "react";
+
+import "./App.css";
+
+import MobileNotice from "./MobileNotice/MobileNotice";
+import useIsMobile from "./useIsMobile/useIsMobile.jsx";
+
+const DesktopApp = lazy(() => import("./DesktopApp/DesktopApp.jsx"));
 
 function App() {
+  const isMobile = useIsMobile();
 
-  const {isFillBeakerBoxOpen,showPowderBox} = useContext(InteractionContext)
-  const {active,progress} = useProgress();
-
-  const isLoading = (active || progress < 100)
+  if (isMobile) {
+    return <MobileNotice />;
+  }
 
   return (
-    <>
-  {isLoading && <Loader01 />}
-
-    <div className={isLoading ? "experience-loading" : "experience-loaded"}>
-          <MainExperience/>
-    </div>
-
-      {!isLoading && (
-        <>
-          <UI />
-
-          {isFillBeakerBoxOpen && (
-            <FillBeakerBox />
-          )}
-
-          {showPowderBox && (
-            <PowderBox />
-          )}
-        </>
-      )}
-    </>
-
-  )
+    <Suspense fallback={null}>
+      <DesktopApp />
+    </Suspense>
+  );
 }
 
-export default App
+export default App;
