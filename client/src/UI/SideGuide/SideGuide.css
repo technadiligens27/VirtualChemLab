@@ -1,128 +1,376 @@
 .side-guide-container {
-  position: fixed;
-  top: 50%;
-  left: 18px;
-  transform: translateY(-50%);
-  z-index: 9999;
+    position: fixed;
+    top: 50%;
+    left: 18px;
 
-  width: 300px;
-  padding: 18px;
+    width: 300px;
+    max-height: calc(100dvh - 32px);
 
-  background-color: rgba(252, 252, 234, 0.96);
-  border: 4px solid #f7c741;
-  border-radius: 24px;
+    padding: 18px;
 
-  box-shadow: 0 10px 25px rgba(45, 38, 15, 0.18);
-  box-sizing: border-box;
+    overflow-y: auto;
+
+    background-color: rgba(252, 252, 234, 0.96);
+
+    border: 4px solid #f7c741;
+    border-radius: 24px;
+
+    box-shadow: 0 10px 25px rgba(45, 38, 15, 0.18);
+
+    box-sizing: border-box;
+
+    transform: translateY(-50%);
+
+    z-index: 9999;
 }
 
 .side-guide-title {
-  margin: 0 0 12px;
+    margin: 0 0 12px;
 
-  color: #245970;
-  font-family: "Baloo Bhai 2", sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  text-align: center;
+    color: #245970;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
 }
 
 .side-guide-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
 }
 
 .side-guide {
-  min-height: 58px;
+    min-height: 58px;
 
-  display: flex;
-  align-items: center;
-  gap: 13px;
+    display: flex;
+    align-items: center;
 
-  padding: 6px 10px;
+    gap: 13px;
 
-  /* background-color: rgba(255, 255, 255, 0.7); */
-  border: 2px solid transparent;
-  border-radius: 16px;
+    padding: 6px 10px;
 
-  box-sizing: border-box;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+    border: 2px solid transparent;
+    border-radius: 16px;
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
 }
 
 .side-guide:hover {
-  transform: translateX(4px);
-  background-color: #fff7d9;
-  border-color: #f7c741;
+    background-color: #fff7d9;
+
+    border-color: #f7c741;
+
+    transform: translateX(4px);
 }
 
 .side-guide-icon {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
+    width: 48px;
+    height: 48px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .side-guide-icon img {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
+    width: 52px;
+    height: 52px;
+
+    object-fit: contain;
 }
 
 .side-guide p {
-  margin: 0;
+    margin: 0;
 
-  color: #242424;
-  font-family: "Baloo Bhai 2", sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.15;
+    color: #242424;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.15;
 }
 
 .look-guide .side-guide-icon {
-  width: 55px;
-  height: 55px;
-  margin-left: -4px;
+    width: 55px;
+    height: 55px;
+
+    margin-left: -4px;
 }
 
 .look-guide .side-guide-icon img {
-  width: 65px;
-  height: 65px;
+    width: 65px;
+    height: 65px;
 }
 
-@media (max-width: 700px) {
-  .side-guide-container {
-    left: 10px;
-    width: 185px;
-    padding: 13px;
-  }
+/* ==========================================
+   LAPTOP / SMALL DESKTOP
+========================================== */
 
-  .side-guide-title {
-    font-size: 20px;
-  }
+@media screen and (max-width: 1200px) {
+    .side-guide-container {
+        left: 14px;
 
-  .side-guide {
-    min-height: 50px;
-    gap: 9px;
-    padding: 5px 7px;
-  }
+        width: 260px;
 
-  .side-guide-icon {
-    width: 40px;
-    height: 40px;
-  }
+        padding: 16px;
+    }
 
-  .side-guide-icon img {
-    width: 36px;
-    height: 36px;
-  }
+    .side-guide-title {
+        font-size: 22px;
+    }
 
-  .side-guide p {
-    font-size: 14px;
-  }
+    .side-guide {
+        min-height: 54px;
+
+        gap: 11px;
+    }
+
+    .side-guide p {
+        font-size: 16px;
+    }
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media screen and (max-width: 900px) {
+    .side-guide-container {
+        left: 12px;
+
+        width: 220px;
+
+        padding: 14px;
+
+        border-width: 3px;
+        border-radius: 20px;
+    }
+
+    .side-guide-title {
+        margin-bottom: 9px;
+
+        font-size: 20px;
+    }
+
+    .side-guide-list {
+        gap: 6px;
+    }
+
+    .side-guide {
+        min-height: 49px;
+
+        gap: 8px;
+
+        padding: 5px 7px;
+
+        border-radius: 13px;
+    }
+
+    .side-guide-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .side-guide-icon img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .side-guide p {
+        font-size: 14px;
+    }
+
+    .look-guide .side-guide-icon {
+        width: 44px;
+        height: 44px;
+
+        margin-left: -3px;
+    }
+
+    .look-guide .side-guide-icon img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* ==========================================
+   MOBILE / SMALL SCREENS
+   Shows controls at the bottom of the screen.
+========================================== */
+
+@media screen and (max-width: 650px) {
+    .side-guide-container {
+        top: auto;
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+
+        width: auto;
+        max-height: 42dvh;
+
+        padding: 12px;
+
+        border-width: 3px;
+        border-radius: 18px;
+
+        transform: none;
+    }
+
+    .side-guide-title {
+        margin-bottom: 8px;
+
+        font-size: 19px;
+    }
+
+    .side-guide-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 6px;
+    }
+
+    .side-guide {
+        min-height: 44px;
+
+        gap: 6px;
+
+        padding: 4px 6px;
+
+        border-radius: 11px;
+    }
+
+    .side-guide:hover {
+        transform: none;
+    }
+
+    .side-guide-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .side-guide-icon img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .side-guide p {
+        font-size: 12px;
+        line-height: 1.05;
+    }
+
+    .look-guide .side-guide-icon {
+        width: 37px;
+        height: 37px;
+
+        margin-left: -2px;
+    }
+
+    .look-guide .side-guide-icon img {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* ==========================================
+   VERY SMALL MOBILE
+========================================== */
+
+@media screen and (max-width: 380px) {
+    .side-guide-container {
+        bottom: 6px;
+        right: 6px;
+        left: 6px;
+
+        max-height: 45dvh;
+
+        padding: 9px;
+
+        border-radius: 15px;
+    }
+
+    .side-guide-title {
+        font-size: 17px;
+    }
+
+    .side-guide-list {
+        gap: 4px;
+    }
+
+    .side-guide {
+        min-height: 40px;
+
+        padding: 3px 4px;
+    }
+
+    .side-guide-icon {
+        width: 29px;
+        height: 29px;
+    }
+
+    .side-guide-icon img {
+        width: 31px;
+        height: 31px;
+    }
+
+    .side-guide p {
+        font-size: 11px;
+    }
+
+    .look-guide .side-guide-icon,
+    .look-guide .side-guide-icon img {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+/* ==========================================
+   SHORT LAPTOP HEIGHTS
+========================================== */
+
+@media screen and (max-height: 650px) and (min-width: 651px) {
+    .side-guide-container {
+        max-height: calc(100dvh - 20px);
+
+        padding: 12px;
+    }
+
+    .side-guide-title {
+        margin-bottom: 6px;
+
+        font-size: 19px;
+    }
+
+    .side-guide-list {
+        gap: 4px;
+    }
+
+    .side-guide {
+        min-height: 43px;
+
+        padding: 3px 6px;
+    }
+
+    .side-guide-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .side-guide-icon img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .side-guide p {
+        font-size: 13px;
+    }
 }

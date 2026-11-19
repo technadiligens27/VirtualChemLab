@@ -60,7 +60,7 @@
 
   flex-direction: column;
 
-  overflow: hidden;
+  overflow: auto;
 
   border:
     0.45rem solid
@@ -220,7 +220,7 @@
 
   flex-direction: column;
 
-  overflow: hidden;
+  overflow: auto;
 
   padding:
     clamp(0.8rem, 2.4vh, 2.4rem)
@@ -391,7 +391,7 @@
 
   gap: clamp(0.4rem, 1.4vh, 1rem);
 
-  overflow: hidden;
+  overflow: auto;
 }
 
 

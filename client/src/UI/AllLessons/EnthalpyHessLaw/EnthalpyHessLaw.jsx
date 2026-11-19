@@ -550,7 +550,7 @@ const {
         }
 
 
-      <HessLiveDataPanel
+    {lessonStep !==44  &&  <HessLiveDataPanel
         reactionNumber={1}
 
         volumeOfSolution={
@@ -623,7 +623,7 @@ const {
             lessonStep: 40,
           },
         ]}
-      />
+      />}
 
 
         {(lessonStep >= 2 && lessonStep <= 7 ) && ( <SulfamicGuidelines guidelineData={guidelineData[0]}/>)}

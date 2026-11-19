@@ -595,19 +595,15 @@
 @media (max-width: 1000px) {
   .flame-summary-overlay {
     align-items: flex-start;
-
-    overflow-y: auto;
+    overflow:visible ;
   }
 
   .flame-summary-container {
     width: min(88vw, 720px);
-    height: auto;
+    overflow-y: auto;
     min-height: 0;
-
+    overflow:visible;
     margin: 24px 0;
-
-    overflow: visible;
-
     padding:
       82px
       26px
@@ -617,18 +613,17 @@
   .flame-summary-layout {
     grid-template-columns: 1fr;
 
-    overflow: visible;
+    overflow-y: auto;
   }
 
   .flame-result-card {
-    min-height: 490px;
-    max-width: 540px;
-
+    min-height: 290px;
+    max-width: 300px;
     margin: 0 auto;
   }
 
   .flame-image-wrapper {
-    min-height: 260px;
+    min-height: 160px;
   }
 
   .flame-learned-card {

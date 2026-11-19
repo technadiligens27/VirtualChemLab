@@ -1,5 +1,7 @@
+
 import {
   useContext,
+  useEffect,
   useState,
 } from "react"
 
@@ -21,6 +23,12 @@ const Explanations = ({
 
   width = "350px",
   height = "300px",
+
+  // Compact screen parameters (<= 1024px)
+  compactTop = null,
+  compactLeft = null,
+  compactWidth = null,
+  compactHeight = null,
 }) => {
   const {
     setIsExplanationOpen,
@@ -33,14 +41,62 @@ const Explanations = ({
     setCurrentPage,
   ] = useState(1)
 
+  const [
+    isCompactScreen,
+    setIsCompactScreen,
+  ] = useState(
+    () => window.innerWidth <= 1024
+  )
+
+
+  // =================================
+  // SCREEN RESIZE
+  // =================================
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompactScreen(
+        window.innerWidth <= 1024
+      )
+    }
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    )
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        handleResize
+      )
+    }
+  }, [])
+
+
+  // =================================
+  // POSITION
+  // =================================
 
   const positionStyle = {
-    top,
+    top: isCompactScreen && compactTop !== null
+      ? compactTop
+      : top,
+
     right,
     bottom,
-    left,
-    width,
-    height,
+
+    left: isCompactScreen && compactLeft !== null
+      ? compactLeft
+      : left,
+
+    width: isCompactScreen && compactWidth !== null
+      ? compactWidth
+      : width,
+
+    height: isCompactScreen && compactHeight !== null
+      ? compactHeight
+      : height,
   }
 
 

@@ -1,6 +1,9 @@
 .lesson-container {
-    width: min(1100px, 70%);
-    height: min(70%, 700px);
+    width: 70%;
+
+    height: min(75dvh, 700px);
+    min-height: 540px;
+    max-height: calc(100dvh - 30px);
 
     display: flex;
     flex-direction: column;
@@ -8,30 +11,34 @@
     justify-content: center;
 
     background: #F0C13F;
-        padding: 5px;
+    padding: 5px;
 
     border-radius: 42.61px;
+
+    box-sizing: border-box;
 }
 
 .lesson-inner-container {
     position: relative;
 
     width: 95%;
-    height: 75%;
+    height: calc(100% - 125px);
+    min-height: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     margin: 0 0 25px;
-    padding: 0;
+    padding: 20px;
 
     background-color: #FCF5E0;
 
     border-radius: 33.91px;
 
-    /* Hides lessons while sliding outside */
     overflow: hidden;
+
+    box-sizing: border-box;
 }
 
 .select-lesson-container {
@@ -350,9 +357,10 @@
 
 @media (max-width: 1100px) {
     .lesson-container {
-        width: 92%;
-        height: 75%;
-        padding: 5px;
+        width: 97%;
+
+        height: min(78dvh, 680px);
+        min-height: 520px;
     }
 
     .lesson-inner-container {

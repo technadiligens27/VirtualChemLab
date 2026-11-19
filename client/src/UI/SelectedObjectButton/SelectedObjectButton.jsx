@@ -96,10 +96,10 @@ const SelectedObjectButton = ({
     "main-dropper":
       "Dropper",
 
-    mainPolystyrene:
+    mainPolysterene:
       "Polystyrene Cup",
 
-    mainPolysterene2:
+   mainPolysterene2:
       "Polystyrene Cup",
 
     "polysterene-cup-lid":

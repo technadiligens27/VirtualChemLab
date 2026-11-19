@@ -1,5 +1,5 @@
 import { useGLTF } from '@react-three/drei'
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ModelContext } from '../../Contexts/ModelContext/ModelContext';
 import ChairSlide from '../Interactions/ChairSlide/ChairSlide';
 import { saveModelStartState } from "../resetModels/resetModels.jsx"
@@ -42,7 +42,7 @@ const ChemEnvironment = () => {
   const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}VirtualChemLab.glb`)
   const { actions, names } = useAnimations(animations, scene)
 
-
+  const [isCompactScreen, setIsCompactScreen] = useState(() => window.innerWidth <= 1024)
 
   const hidePourObjects = (objectRef) => {
   if (!objectRef.current) return
@@ -770,7 +770,7 @@ useEffect(() => {
     <>
       <primitive
         object={scene}
-        scale={0.5}
+        scale={isCompactScreen? 0.42: 0.5}
         position={[0, 0, 0]}
       />
 

@@ -1,7 +1,10 @@
+/* ================================= */
+/* MAIN PANEL */
+/* ================================= */
+
 .hess-live-data-panel {
   position: fixed;
   top: 49%;
-  right: 1.8rem;
   right: -2.3%;
 
   z-index: 99998;
@@ -11,7 +14,7 @@
     31vw
   );
 
-  max-height: 96vh;
+  max-height: 96dvh;
 
   transform: translateY(-50%);
 
@@ -30,24 +33,65 @@
     "Nunito",
     sans-serif;
 
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+
   overflow: visible;
 }
 
+/* ================================= */
+/* INNER CONTAINER */
+/* ================================= */
+
 .hess-live-data-inner {
   width: 100%;
-  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
 
   border-radius: 1.2rem;
 
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color:
+    #d2b7f5
+    transparent;
+
+  overscroll-behavior: contain;
 }
+
+.hess-live-data-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hess-live-data-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hess-live-data-inner::-webkit-scrollbar-thumb {
+  background-color: #d2b7f5;
+  border-radius: 10px;
+}
+
+.hess-live-data-inner::-webkit-scrollbar-thumb:hover {
+  background-color: #a985e4;
+}
+
+/* ================================= */
+/* HEADER */
+/* ================================= */
 
 .hess-live-data-header {
   position: relative;
 
   min-height: 5rem;
 
-
+  flex-shrink: 0;
 
   display: flex;
   flex-direction: column;
@@ -62,29 +106,6 @@
 
   text-align: center;
 }
-
-/* .hess-live-data-header::after {
-  content: "";
-
-  position: absolute;
-  bottom: -1.3rem;
-  left: 50%;
-
-  width: 68%;
-  height: 2.2rem;
-
-  transform: translateX(-50%);
-
-  border-radius:
-    0
-    0
-    2rem
-    2rem;
-
-  background-color: #ffc84d;
-
-  z-index: -1;
-} */
 
 .hess-live-data-header h1 {
   margin: 0;
@@ -117,12 +138,22 @@
   letter-spacing: 0.12rem;
 }
 
+/* ================================= */
+/* CONTENT */
+/* ================================= */
+
 .hess-live-data-content {
   padding:
     1.55rem
     1.4rem
     0.75rem;
+
+  flex-shrink: 0;
 }
+
+/* ================================= */
+/* SECTIONS */
+/* ================================= */
 
 .hess-live-data-section {
   width: 100%;
@@ -154,6 +185,10 @@
   letter-spacing: 0.035rem;
 }
 
+/* ================================= */
+/* SECTION DOT */
+/* ================================= */
+
 .hess-live-data-dot {
   width: 0.75rem;
   height: 0.75rem;
@@ -172,6 +207,10 @@
       rgba(139, 102, 223, 0.1);
 }
 
+/* ================================= */
+/* DIVIDER */
+/* ================================= */
+
 .hess-live-data-divider {
   width: 100%;
   height: 1px;
@@ -181,6 +220,10 @@
   background-color:
     rgba(120, 91, 191, 0.22);
 }
+
+/* ================================= */
+/* DATA ROW */
+/* ================================= */
 
 .hess-live-data-row {
   width: 100%;
@@ -200,11 +243,17 @@
 
   border-bottom: 1px dashed
     rgba(100, 110, 137, 0.17);
+
+  box-sizing: border-box;
 }
 
 .hess-live-data-row:last-child {
   border-bottom: none;
 }
+
+/* ================================= */
+/* DATA LABELS */
+/* ================================= */
 
 .hess-live-data-label {
   min-width: 0;
@@ -216,9 +265,9 @@
   color: #526078;
 
   font-size: clamp(
-    0.96rem,
+    0.9rem,
     0.85vw,
-    0.9rem
+    0.96rem
   );
 
   font-weight: 700;
@@ -243,6 +292,10 @@
   font-size: 0.68em;
 }
 
+/* ================================= */
+/* DATA VALUES */
+/* ================================= */
+
 .hess-live-data-value {
   min-width: 6.6rem;
 
@@ -255,6 +308,8 @@
   background-color: #f7f4fb;
 
   text-align: right;
+
+  box-sizing: border-box;
 }
 
 .hess-live-data-value p {
@@ -263,7 +318,6 @@
   color: #38227f;
 
   font-size: 17px;
-
   font-weight: 900;
 
   white-space: nowrap;
@@ -281,6 +335,10 @@
   color: #159447;
 }
 
+/* ================================= */
+/* FOOTER */
+/* ================================= */
+
 .hess-live-data-footer {
   margin:
     0
@@ -294,6 +352,8 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
+
+  flex-shrink: 0;
 
   border: 1px solid
     rgba(128, 91, 218, 0.32);
@@ -331,6 +391,10 @@
   font-size: 0.85rem;
   font-weight: 900;
 }
+
+/* ================================= */
+/* TOGGLE BUTTON */
+/* ================================= */
 
 .hess-live-data-toggle {
   position: absolute;
@@ -397,6 +461,10 @@
   line-height: 1;
 }
 
+/* ================================= */
+/* PENDING VALUES */
+/* ================================= */
+
 .hess-live-data-value-pending {
   min-width: 5.8rem;
 
@@ -414,12 +482,14 @@
   white-space: nowrap;
 }
 
-@media (
-  max-width: 1100px
-) {
+/* ================================= */
+/* COMPACT SCREENS */
+/* ================================= */
+
+@media (max-width: 1100px) {
   .hess-live-data-panel {
     width: 22rem;
-    right: 1rem;
+    right: 0.4rem;
   }
 
   .hess-live-data-content {
@@ -435,13 +505,24 @@
       1.15rem
       1rem;
   }
+
+.hess-live-data-toggle{
+  left: -18%;
 }
 
-@media (
-  max-height: 760px
-) {
+}
+
+/* ================================= */
+/* SHORT SCREENS */
+/* ================================= */
+
+@media (max-height: 760px) {
   .hess-live-data-panel {
     width: 21rem;
+
+    max-height: calc(100dvh - 20px);
+
+    top: 50%;
 
     transform:
       translateY(-50%)
@@ -449,5 +530,69 @@
 
     transform-origin:
       right center;
+  }
+
+  .hess-live-data-inner {
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+/* ================================= */
+/* VERY SHORT SCREENS */
+/* ================================= */
+
+@media (max-height: 600px) {
+  .hess-live-data-panel {
+    max-height: calc(100dvh - 16px);
+
+    top: 50%;
+
+    transform:
+      translateY(-50%)
+      scale(0.82);
+
+    transform-origin:
+      right center;
+  }
+
+  .hess-live-data-header {
+    min-height: 4rem;
+  }
+
+  .hess-live-data-content {
+    padding:
+      1rem
+      1rem
+      0.5rem;
+  }
+
+  .hess-live-data-row {
+    min-height: 2.7rem;
+  }
+
+  .hess-live-data-footer {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* ================================= */
+/* EXTREMELY SHORT SCREENS */
+/* ================================= */
+
+@media (max-height: 450px) {
+  .hess-live-data-panel {
+    max-height: calc(100dvh - 12px);
+
+    transform:
+      translateY(-50%)
+      scale(0.75);
+  }
+
+  .hess-live-data-inner {
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }

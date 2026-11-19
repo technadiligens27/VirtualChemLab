@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(() =>
-    window.matchMedia("(max-width: 968px)").matches
+    window.matchMedia("(max-width: 873px)").matches
   );
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(
-      "(max-width: 968px)"
+      "(max-width: 873px)"
     );
 
     const handleChange = (event) => {

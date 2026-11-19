@@ -767,23 +767,20 @@
   .endothermic-summary-overlay {
     align-items: flex-start;
 
-    overflow-y: auto;
   }
 
   .endothermic-summary-container {
     width: min(92vw, 760px);
-    height: auto;
     min-height: 90vh;
-
+    overflow-x: visible;
     margin: 24px 0;
-
     padding: 82px 26px 28px;
   }
 
   .endothermic-summary-layout {
     flex-direction: column;
 
-    overflow: visible;
+    overflow: auto;
   }
 
   .endothermic-result-card {

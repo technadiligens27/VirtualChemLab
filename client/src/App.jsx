@@ -5,6 +5,7 @@ import "./App.css";
 
 import MobileNotice from "./MobileNotice/MobileNotice";
 import useIsMobile from "./useIsMobile/useIsMobile.jsx";
+import Loader01 from "./UI/Loader01/Loader01.jsx";
 
 const DesktopApp = lazy(() => import("./DesktopApp/DesktopApp.jsx"));
 
@@ -16,7 +17,7 @@ function App() {
   }
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<Loader01/>}>
       <DesktopApp />
     </Suspense>
   );

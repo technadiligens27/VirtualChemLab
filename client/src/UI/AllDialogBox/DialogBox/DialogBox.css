@@ -1,183 +1,340 @@
 .dialog-box-container {
-  position: fixed;
-  top: 5px;
-  left: 50%;
-  z-index: 9;
+    position: fixed;
+    top: 10px;
+    left: 50%;
 
-  width: fit-content;
-  min-width: 380px;
-  max-width: 700px;
-  min-height: 84px;
+    z-index: 9;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+    width: fit-content;
+    min-width: 380px;
+    max-width: min(700px, calc(100vw - 40px));
+    min-height: 84px;
 
-  padding: 10px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  background-color: #fcfcea;
-  border: 5px solid #f7c741;
-  border-radius: 40px;
+    gap: 10px;
 
-  box-shadow:
-    0 8px 20px
-    rgba(80, 65, 20, 0.18);
+    padding: 10px 24px;
 
-  box-sizing: border-box;
+    background-color: #fcfcea;
 
-  transform: translateX(-50%);
+    border: 5px solid #f7c741;
+    border-radius: 40px;
 
-  transition:
-    filter 0.25s ease,
-    opacity 0.25s ease;
+    box-shadow:
+        0 8px 20px
+        rgba(80, 65, 20, 0.18);
+
+    box-sizing: border-box;
+
+    transform: translateX(-50%);
+
+    transition:
+        filter 0.25s ease,
+        opacity 0.25s ease;
 }
 
-/* Higher z-index when fill beaker box is open */
 .dialog-z-index {
-  z-index: 999;
+    z-index: 999;
 }
 
-/* Blur dialog when explanation is open */
 .dialog-box-blurred {
-  filter: blur(4px);
-  opacity: 0.55;
+    filter: blur(4px);
 
-  pointer-events: none;
+    opacity: 0.55;
+
+    pointer-events: none;
 }
 
 .dialog-box-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
 }
 
 .dialog-icon-container {
-  width: 42px;
-  height: 42px;
-  flex-shrink: 0;
+    width: 42px;
+    height: 42px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex-shrink: 0;
 
-  background-color: #f7c741;
-  border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #f7c741;
+
+    border-radius: 50%;
 }
 
 .dialog-icon-container img {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 
-  object-fit: contain;
+    object-fit: contain;
 }
 
 .dialog-box-text {
-  margin: 0;
+    margin: 0;
 
-  color: #343434;
+    color: #343434;
 
-  font-family:
-    "Baloo Bhai 2",
-    sans-serif;
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+}
 
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.3;
-  text-align: center;
+.result-dialog-btn-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
 }
 
 .result-btn,
 .question-btn,
 .dialog-third-btn {
-  min-width: 130px;
-  height: 40px;
+    min-width: 130px;
+    height: 40px;
 
-  padding: 0 24px;
+    padding: 0 24px;
 
-  border: none;
-  border-radius: 16px;
+    color: #ffffff;
 
-  color: #ffffff;
+    border: none;
+    border-radius: 16px;
 
-  font-family:
-    "Baloo Bhai 2",
-    sans-serif;
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
 
-  font-size: 16px;
-  font-weight: 600;
+    cursor: pointer;
 
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.result-btn {
-  background-color: #351c7c;
+.result-btn,
+.dialog-third-btn {
+    background-color: #351c7c;
 }
 
-.result-btn:hover {
-  background-color: #472592;
-  transform: translateY(-1px);
+.result-btn:hover,
+.dialog-third-btn:hover {
+    background-color: #472592;
+
+    transform: translateY(-1px);
 }
 
-.result-btn:active {
-  transform: translateY(0);
+.result-btn:active,
+.dialog-third-btn:active {
+    transform: translateY(0);
 }
 
 .question-btn {
-  background-color: red;
-  color: white;
+    color: #ffffff;
+    background-color: #e53935;
 }
 
-.dialog-third-btn {
-  background-color: #351c7c;
+.question-btn:hover {
+    background-color: #c62828;
+
+    transform: translateY(-1px);
 }
 
-.result-dialog-btn-container {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+.question-btn:active {
+    transform: translateY(0);
 }
 
-@media (max-width: 600px) {
-  .dialog-box-container {
-    width: calc(100% - 30px);
-    min-width: 0;
+/* ==========================================
+   SMALL LAPTOP / TABLET
+========================================== */
 
-    padding: 10px 16px;
+@media screen and (max-width: 1000px) {
+    .dialog-box-container {
+        top: 8px;
 
-    border-width: 4px;
-  }
+        max-width: min(620px, calc(100vw - 32px));
 
-  .dialog-box-inner {
-    gap: 7px;
-  }
+        padding: 10px 20px;
 
-  .dialog-icon-container {
-    width: 36px;
-    height: 36px;
-  }
+        border-width: 4px;
+        border-radius: 30px;
+    }
 
-  .dialog-icon-container img {
-    width: 21px;
-    height: 21px;
-  }
+    .dialog-box-text {
+        font-size: 16px;
+    }
 
-  .dialog-box-text {
-    font-size: 15px;
-  }
+    .result-btn,
+    .question-btn,
+    .dialog-third-btn {
+        min-width: 120px;
+        height: 38px;
 
-  .result-btn,
-  .question-btn,
-  .dialog-third-btn {
-    min-width: 115px;
-    height: 36px;
+        padding: 0 20px;
 
-    font-size: 14px;
-  }
+        font-size: 15px;
+    }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media screen and (max-width: 600px) {
+    .dialog-box-container {
+        top: 8px;
+        left: 50%;
+
+        width: calc(100vw - 24px);
+        min-width: 0;
+        max-width: none;
+
+        gap: 9px;
+
+        padding: 10px 14px;
+
+        border-width: 3px;
+        border-radius: 24px;
+    }
+
+    .dialog-box-inner {
+        width: 100%;
+
+        gap: 7px;
+    }
+
+    .dialog-icon-container {
+        width: 36px;
+        height: 36px;
+    }
+
+    .dialog-icon-container img {
+        width: 21px;
+        height: 21px;
+    }
+
+    .dialog-box-text {
+        font-size: 14px;
+        line-height: 1.25;
+    }
+
+    .result-dialog-btn-container {
+        width: 100%;
+
+        gap: 7px;
+    }
+
+    .result-btn,
+    .question-btn,
+    .dialog-third-btn {
+        flex: 1;
+
+        min-width: 105px;
+        height: 36px;
+
+        padding: 0 10px;
+
+        border-radius: 12px;
+
+        font-size: 13px;
+    }
+}
+
+/* ==========================================
+   VERY SMALL MOBILE
+========================================== */
+
+@media screen and (max-width: 380px) {
+    .dialog-box-container {
+        top: 5px;
+
+        width: calc(100vw - 16px);
+
+        padding: 8px 10px;
+
+        border-radius: 18px;
+    }
+
+    .dialog-icon-container {
+        width: 31px;
+        height: 31px;
+    }
+
+    .dialog-icon-container img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .dialog-box-text {
+        font-size: 12px;
+    }
+
+    .result-dialog-btn-container {
+        gap: 5px;
+    }
+
+    .result-btn,
+    .question-btn,
+    .dialog-third-btn {
+        min-width: 0;
+        height: 33px;
+
+        padding: 0 7px;
+
+        border-radius: 10px;
+
+        font-size: 11px;
+    }
+}
+
+/* ==========================================
+   SHORT SCREENS
+========================================== */
+
+@media screen and (max-height: 600px) {
+    .dialog-box-container {
+        top: 4px;
+
+        gap: 5px;
+
+        padding: 6px 16px;
+
+        border-radius: 22px;
+    }
+
+    .dialog-icon-container {
+        width: 32px;
+        height: 32px;
+    }
+
+    .dialog-icon-container img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .dialog-box-text {
+        font-size: 14px;
+    }
+
+    .result-btn,
+    .question-btn,
+    .dialog-third-btn {
+        height: 32px;
+
+        font-size: 13px;
+    }
 }

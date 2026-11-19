@@ -197,3 +197,36 @@
   width: 40%;
   margin-bottom: 10px;
 }
+
+
+@media screen and (max-height:720px) {
+/*   
+  .fill-dialog-content{
+    padding-top: 50px;
+  } */
+
+  .fill-dialog-content{
+    border: 1px solid red;
+    height: 55vh;
+    overflow: auto;
+  }
+  .option-btn{
+    font-size: 16px;
+  }
+
+.fill-title-container{
+  display: none;
+}
+
+.fill-dialog-section{
+  padding-top: 50px;
+}
+
+.fill-amount-title-container{
+  display: none;
+}
+.confirm-btn{
+  margin-top: 10px;
+  padding: 10px;
+}
+}

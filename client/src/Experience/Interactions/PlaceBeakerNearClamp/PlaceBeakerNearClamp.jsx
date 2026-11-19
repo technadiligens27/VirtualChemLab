@@ -1,7 +1,9 @@
+
 import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 import * as THREE from "three"
 
@@ -16,12 +18,33 @@ const PlaceBeakerNearClamp = ({
   heightOffset = 0,
   xOffset = 0,
   scaleOffset = 1,
+
+  // Compact screen parameters (<= 1024px)
+  compactHeightOffset = -3,
+  compactXOffset = xOffset,
+  compactScaleOffset = 0.45,
 }) => {
   const { buretteClampRef,mainBuiretteRef} =useContext(ModelContext);
   const {isBuiretteClamped,isClampInCenter} = useContext(InteractionContext)
 
   console.log("Place Beaker")
-    
+
+  const [isCompactScreen, setIsCompactScreen] = useState(
+    () => window.innerWidth <= 1024
+  )
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompactScreen(window.innerWidth <= 1024)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
   const {
     lessonStep,
     selectedLesson,
@@ -43,7 +66,7 @@ const PlaceBeakerNearClamp = ({
     setLessonStep,
   ])
 
-    useEffect(() => {
+  useEffect(() => {
     if (
       lessonStep === 23 &&
       selectedLesson === 9
@@ -67,7 +90,8 @@ const PlaceBeakerNearClamp = ({
     lessonStep,
     selectedLesson,
     setLessonStep,
-  ])  
+  ])
+
   useEffect(() => {
     if (
       lessonStep === 68 &&
@@ -79,7 +103,7 @@ const PlaceBeakerNearClamp = ({
     lessonStep,
     selectedLesson,
     setLessonStep,
-  ])  
+  ])
 
   useEffect(() => {
     if (
@@ -92,7 +116,7 @@ const PlaceBeakerNearClamp = ({
     lessonStep,
     selectedLesson,
     setLessonStep,
-  ])  
+  ])
 
   useEffect(() => {
     if (
@@ -107,7 +131,7 @@ const PlaceBeakerNearClamp = ({
     setLessonStep,
   ])
 
-    useEffect(() => {
+  useEffect(() => {
     if (
       lessonStep === 102 &&
       selectedLesson === 12.2
@@ -118,7 +142,7 @@ const PlaceBeakerNearClamp = ({
     lessonStep,
     selectedLesson,
     setLessonStep,
-  ]) 
+  ])
 
   useEffect(() => {
     const beaker = beakerRef?.current
@@ -164,13 +188,21 @@ const PlaceBeakerNearClamp = ({
     beaker.position.copy(worldPosition)
 
     // Move left or right
-    beaker.position.x += xOffset
+    beaker.position.x += isCompactScreen
+      ? compactXOffset
+      : xOffset
 
     // Move up or down
-    beaker.position.y += heightOffset
+    beaker.position.y += isCompactScreen
+      ? compactHeightOffset
+      : heightOffset
 
     // Change scale
-    beaker.scale.setScalar(scaleOffset)
+    beaker.scale.setScalar(
+      isCompactScreen
+        ? compactScaleOffset
+        : scaleOffset
+    )
 
     beaker.updateMatrixWorld(true)
 
@@ -202,26 +234,28 @@ const PlaceBeakerNearClamp = ({
     heightOffset,
     xOffset,
     scaleOffset,
+    isCompactScreen,
+    compactHeightOffset,
+    compactXOffset,
+    compactScaleOffset,
   ])
 
   return (
     <>
-      { [11.1,11].includes(selectedLesson) && beakerRef?.current?.name==='main-Conical-Flask' && 
-      <BuiretteTitrationFlow 
+      { [11.1,11].includes(selectedLesson) && beakerRef?.current?.name==='main-Conical-Flask' &&
+      <BuiretteTitrationFlow
       modelRef={mainBuiretteRef}/>}
-      
-      { [12.2].includes(selectedLesson) && [84,103].includes(lessonStep) && beakerRef?.current?.name==='main-Conical-Flask' && 
-        <BuiretteTitrationFlow 
-            modelRef={mainBuiretteRef} 
+
+      { [12.2].includes(selectedLesson) && [84,103].includes(lessonStep) && beakerRef?.current?.name==='main-Conical-Flask' &&
+        <BuiretteTitrationFlow
+            modelRef={mainBuiretteRef}
             liquidDecreaseAmount={ lessonStep ===103 ? 0.494 : 0.496}
             totalTime={3}
         />
       }
 
-
-      
       {beakerRef?.current?.name==='main-normal-beaker' && isBuiretteClamped && isClampInCenter && <PourFromBurette/> }
-      
+
     </>
   )
 }

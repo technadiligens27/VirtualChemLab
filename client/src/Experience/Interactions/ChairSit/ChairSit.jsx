@@ -11,6 +11,7 @@ const ChairSit = () => {
   const { chairRef  } = useContext(ModelContext)
   const { hasSat,setIsSitting,setChairStep } = useContext(InteractionContext);
   const {setSafetyStep,safetyStep} = useContext(MainGuidelineContext)
+  const [isCompactScreen, setIsCompactScreen] = useState(() => window.innerWidth <= 1024)
 
   const { camera } = useThree()
 
@@ -20,6 +21,18 @@ const ChairSit = () => {
 
   const beforeSitPosition = useRef(new THREE.Vector3())
   const beforeSitRotation = useRef(new THREE.Euler())
+
+  useEffect(() => {
+  const handleResize = () => {
+    setIsCompactScreen(window.innerWidth <= 1024);
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, []);
 
   useFrame(() => {
     if (!chairRef.current) return
@@ -43,18 +56,28 @@ const ChairSit = () => {
         beforeSitRotation.current.copy(camera.rotation)
 
         gsap.to(camera.position, {
-          x: chairPosition.current.x,
-          y: chairPosition.current.y - 4,
-          z: chairPosition.current.z,
-          duration: 1.5,
-          ease: 'power2.inOut',
-          onComplete: () => {
-            hasSat.current = true
-            setIsSitting(true)
-            setChairStep(0);
-            setSafetyStep(1)
-          }
-        })
+            x: chairPosition.current.x,
+            y: isCompactScreen
+              ? chairPosition.current.y - 16
+              : chairPosition.current.y - 4,
+            z: chairPosition.current.z,
+
+            duration: 1.5,
+            ease: "power2.inOut",
+
+            onUpdate: () => {
+              console.log("Camera Y:", camera.position.y);
+            },
+
+            onComplete: () => {
+              console.log("Final Camera Y:", camera.position.y);
+
+              hasSat.current = true;
+              setIsSitting(true);
+              setChairStep(0);
+              setSafetyStep(1);
+            },
+          });
 
         gsap.to(camera.rotation, {
           x: 0,
@@ -92,7 +115,7 @@ const ChairSit = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [show, camera, setIsSitting])
+  }, [show, camera, setIsSitting, isCompactScreen,  setChairStep, setSafetyStep])
 
   if (!show) return null
 

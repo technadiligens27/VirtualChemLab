@@ -44,6 +44,7 @@ const AllExplanationLesson09 = ()=>{
             left="45%"
             height="310px"
             width="400px"
+            compactLeft={"25%"}
             />}
 
            {lessonStep==9 && <Explanations
@@ -154,6 +155,8 @@ const AllExplanationLesson09 = ()=>{
             left="50%"
             height="225px"
             width="420px"
+                        compactLeft="25%"
+
             />}   
 
           {lessonStep==32 && <Explanations
@@ -191,6 +194,8 @@ const AllExplanationLesson09 = ()=>{
             left="28%"
             height="265px"
             width="420px"
+                        compactTop={"20%"}
+
             />}            
 
           {lessonStep==36 && <Explanations
@@ -203,6 +208,8 @@ const AllExplanationLesson09 = ()=>{
             left="48%"
             height="200px"
             width="420px"
+                        compactLeft="30%"
+
             />} 
         </>
     )                

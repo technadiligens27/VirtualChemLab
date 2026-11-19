@@ -718,7 +718,9 @@ useEffect(() => {
 
       {[15.2].includes(selectedLesson)  && selectedLeftHand?.name=="nichrome-wire" && selectedRightHand?.name ==="metal-salt-container"  && 
       isDipMode && <DipMode dipModelScale={0.8} recieveModelScale={0.8} yOffset={4} xOffset={0.95}
-       DipmodelRef={nichromeWireRef} recieveModelRef={powderContainer}  recieveModelYOffset={-0.8}/> }
+       DipmodelRef={nichromeWireRef} recieveModelRef={powderContainer}  recieveModelYOffset={-0.8}
+       compactXOffset={0.7} compactYOffset={3.7}
+       /> }
 
 
 

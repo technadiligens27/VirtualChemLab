@@ -1,611 +1,740 @@
+/* =========================================================
+   OVERLAY
+========================================================= */
+
 .apparatus-overview-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
+    position: fixed;
+    inset: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    z-index: 9999;
 
-  padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  overflow: hidden;
+    width: 100%;
+    min-height: 100dvh;
 
-  background: rgba(15, 10, 38, 0.5);
+    padding: 20px;
 
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
+    overflow: auto;
 
-  font-family: "Baloo Thambi 2", sans-serif;
+    background: rgba(15, 10, 38, 0.5);
+
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+
+    font-family: "Baloo Thambi 2", sans-serif;
+
+    box-sizing: border-box;
 }
 
 .apparatus-overview-overlay *,
 .apparatus-overview-overlay *::before,
 .apparatus-overview-overlay *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
-
 
 /* =========================================================
    MAIN CONTAINER
 ========================================================= */
 
 .apparatus-overview-container {
-  position: relative;
+    position: relative;
 
-  display: flex;
-  flex-direction: column;
+    width: min(88vw, 1550px);
+    height: min(88dvh, 900px);
+    max-height: calc(100dvh - 40px);
 
-  width: min(88vw, 1550px);
-  height: min(88vh, 900px);
+    display: flex;
+    flex-direction: column;
 
-  padding: 84px 55px 28px;
+    padding: 74px 25px 10px;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  background: #fffdfa;
+    background: #fffdfa;
 
-  border: 9px solid #ffc948;
-  border-radius: 30px;
+    border: 9px solid #ffc948;
+    border-radius: 30px;
 
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
 
-  will-change: transform;
+    will-change: transform;
+
+    box-sizing: border-box;
 }
-
 
 /* =========================================================
    TOP TITLE
 ========================================================= */
 
 .apparatus-overview-title-tab {
-  position: absolute;
-  top: -9px;
-  left: 50%;
+    position: absolute;
+    top: -9px;
+    left: 50%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: min(42vw, 560px);
+    min-width: 300px;
+    height: 76px;
 
-  width: min(42vw, 560px);
-  min-width: 300px;
-  height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  padding: 8px 28px 14px;
+    padding: 8px 28px 14px;
 
-  background: #ffc948;
+    background: #ffc948;
 
-  border-radius: 0 0 34px 34px;
+    border-radius: 0 0 34px 34px;
 
-  transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .apparatus-overview-title-tab h1 {
-  margin: 0;
+    margin: 0;
 
-  color: #321d88;
+    color: #321d88;
 
-  font-size: clamp(27px, 2.3vw, 42px);
-  font-weight: 800;
-  text-align: center;
+    font-size: clamp(27px, 2.3vw, 42px);
+    font-weight: 800;
+    text-align: center;
 }
 
 .apparatus-overview-subtitle {
-  flex-shrink: 0;
+    flex-shrink: 0;
 
-  margin: 0 0 22px;
+    margin: 0 0 12px;
 
-  color: #5d5190;
+    color: #5d5190;
 
-  font-size: clamp(16px, 1.25vw, 22px);
-  font-weight: 700;
-  text-align: center;
+    font-size: clamp(16px, 1.25vw, 22px);
+    font-weight: 700;
+    text-align: center;
 }
 
-
 /* =========================================================
-   CONTENT / GRID
+   CONTENT / SCROLL AREA
 ========================================================= */
 
 .apparatus-overview-content {
-  position: relative;
+    position: relative;
 
-  flex: 1;
-  min-height: 0;
+    flex: 1;
+    min-height: 0;
+    padding: 4px 6px;
 
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #7852d7 transparent;
+}
+
+.apparatus-overview-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.apparatus-overview-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.apparatus-overview-content::-webkit-scrollbar-thumb {
+    background: #7852d7;
+
+    border-radius: 20px;
 }
 
 .apparatus-overview-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    min-height: 100%;
 
-  gap: 22px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
-  width: 100%;
-  height: 100%;
+    gap: 22px;
 }
 
+/* =========================================================
+   PAGE ANIMATIONS
+========================================================= */
+
 .apparatus-slide-out-left {
-  animation:
-    apparatus-page-out-left
-    0.3s
-    ease-in
-    forwards;
+    animation: apparatus-page-out-left 0.3s ease-in forwards;
 }
 
 .apparatus-slide-out-right {
-  animation:
-    apparatus-page-out-right
-    0.3s
-    ease-in
-    forwards;
+    animation: apparatus-page-out-right 0.3s ease-in forwards;
 }
 
 .apparatus-slide-in-left {
-  animation:
-    apparatus-page-in-left
-    0.35s
-    ease-out
-    forwards;
+    animation: apparatus-page-in-left 0.35s ease-out forwards;
 }
 
 .apparatus-slide-in-right {
-  animation:
-    apparatus-page-in-right
-    0.35s
-    ease-out
-    forwards;
+    animation: apparatus-page-in-right 0.35s ease-out forwards;
 }
 
 @keyframes apparatus-page-out-left {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
 
-  to {
-    opacity: 0;
-    transform: translateX(-150px);
-  }
+    to {
+        opacity: 0;
+        transform: translateX(-150px);
+    }
 }
 
 @keyframes apparatus-page-out-right {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
 
-  to {
-    opacity: 0;
-    transform: translateX(150px);
-  }
+    to {
+        opacity: 0;
+        transform: translateX(150px);
+    }
 }
 
 @keyframes apparatus-page-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-150px);
-  }
+    from {
+        opacity: 0;
+        transform: translateX(-150px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes apparatus-page-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(150px);
-  }
+    from {
+        opacity: 0;
+        transform: translateX(150px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
-
 
 /* =========================================================
    APPARATUS CARD
 ========================================================= */
 
 .apparatus-overview-card {
-  position: relative;
+    position: relative;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    min-width: 0;
+    min-height: 0;
 
-  min-width: 0;
-  min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  padding: 22px 18px 18px;
+    padding: 2px 18px 18px;
 
-
-  background:
-    linear-gradient(
-      145deg,
-      #fffefa 0%,
-      #fff8e8 100%
+    background: linear-gradient(
+        145deg,
+        #fffefa 0%,
+        #fff8e8 100%
     );
 
-  border: 2px solid #ffbd2f;
-  border-radius: 24px;
+    border: 2px solid #ffbd2f;
+    border-radius: 24px;
 
-  box-shadow:
-    0 10px 22px rgba(71, 42, 140, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+    /* box-shadow:
+        0 10px 22px rgba(71, 42, 140, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.75); */
 
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-/* .apparatus-overview-card:hover {
-  transform: translateY(-5px);
-
-  box-shadow:
-    0 17px 28px rgba(71, 42, 140, 0.18),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.75);
-} */
-
 .apparatus-overview-card-placeholder {
-  visibility: hidden;
+    visibility: hidden;
 
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .apparatus-overview-number {
-  position: absolute;
-  top: 14px;
-  left: 14px;
+    position: absolute;
+    top: 14px;
+    left: 14px;
 
-  z-index: 1;
+    z-index: 1;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+    width: 42px;
+    height: 42px;
 
-  width: 42px;
-  height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-  background: #ffdf82;
+    color: #351e8b;
 
-  border: 2px solid #ffbb2c;
-  border-radius: 50%;
+    font-size: 21px;
+    font-weight: 800;
 
-  color: #351e8b;
+    background: #ffdf82;
 
-  font-size: 21px;
-  font-weight: 800;
+    border: 2px solid #ffbb2c;
+    border-radius: 50%;
 }
 
 .apparatus-overview-image-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    min-height: 110px;
 
-  flex: 1;
-  min-height: 110px;
+    flex: 1;
 
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  margin-top: 26px;
-  padding: 6px 12px;
+    margin-top: 5px;
+    padding: 6px 0px;
 }
 
 .apparatus-overview-image-container img {
-  display: block;
+    display: block;
 
-  max-width: 100%;
-  max-height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 85%;
+    max-height: 85%;
 
-  width: auto;
-  height: auto;
+    object-fit: contain;
 
-  object-fit: contain;
-
-  filter:
-    drop-shadow(
-      0 8px 10px
-      rgba(42, 43, 100, 0.18)
+    filter: drop-shadow(
+        0 8px 10px rgba(42, 43, 100, 0.18)
     );
 }
 
 .apparatus-overview-description {
-  min-height: 70px;
+    min-height: 70px;
 
-  margin: 8px 0 14px;
+    margin: 1px 0 1px;
 
-  color: #57516d;
+    color: #57516d;
 
-  font-size: clamp(14px, 1vw, 18px);
-  font-weight: 600;
-  line-height: 1.35;
-  text-align: center;
+    font-size: clamp(14px, 1vw, 18px);
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
 }
 
 .apparatus-overview-button {
-  width: 100%;
-  min-height: 52px;
+    width: 100%;
+    min-height: 42px;
 
-  padding: 10px 14px;
+    padding: 7px 14px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #7852d7,
-      #5d36c4
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: clamp(16px, 1.15vw, 20px);
+    font-weight: 800;
+    margin-top: 5px;
+    cursor: pointer;
+
+    background: linear-gradient(
+        135deg,
+        #7852d7,
+        #5d36c4
     );
 
-  border: none;
-  border-radius: 14px;
+    border: none;
+    border-radius: 14px;
 
-  box-shadow: 0 7px 14px rgba(92, 53, 194, 0.22);
+    box-shadow: 0 7px 14px rgba(92, 53, 194, 0.22);
 
-  color: #ffffff;
-
-  font-family: inherit;
-  font-size: clamp(16px, 1.15vw, 20px);
-  font-weight: 800;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease;
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
 }
 
 .apparatus-overview-button:hover {
-  filter: brightness(1.08);
+    filter: brightness(1.08);
 
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
 .apparatus-overview-button:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
 
-
 /* =========================================================
-   ARROWS — SAME AS LESSON MENU
+   PAGE ARROWS
 ========================================================= */
 
 .apparatus-overview-content .arrow-left,
 .apparatus-overview-content .arrow-right {
-  position: absolute;
+    position: absolute;
+    top: 50%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    z-index: 5;
 
-  width: 40px;
-  height: 40px;
+    width: 40px;
+    height: 40px;
 
-  background-color: #bcbcbc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  border-radius: 50%;
+    cursor: pointer;
 
-  cursor: pointer;
-  z-index: 5;
+    background-color: #bcbcbc;
 
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+    border-radius: 50%;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .apparatus-overview-content .arrow-left {
-  left: -4%;
-  top: 50%;
+    left: 0.5%;
 
-  transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .apparatus-overview-content .arrow-right {
-  right: -4%;
-  top: 50%;
+    right: 0.5%;
 
-  transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .apparatus-overview-content .arrow-left img,
 .apparatus-overview-content .arrow-right img {
-  width: 40%;
+    width: 40%;
 }
 
 .apparatus-overview-content .arrow-left:hover,
 .apparatus-overview-content .arrow-right:hover {
-  background-color: #ffcc40;
+    background-color: #ffcc40;
 
-  transform: translateY(-50%) scale(1.1);
+    transform: translateY(-50%) scale(1.1);
 }
-
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 .apparatus-overview-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    width: 100%;
 
-  flex-shrink: 0;
+    flex-shrink: 0;
 
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  margin-top: 22px;
+    gap: 18px;
+
+    margin-top: 22px;
 }
 
 .apparatus-overview-status {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  gap: 10px;
+    gap: 10px;
 
-  padding: 9px 20px;
+    padding: 9px 20px;
 
-  background: #f7f1ff;
+    color: #4d2aa1;
 
-  border: 2px solid #d8c4ff;
-  border-radius: 999px;
+    font-size: clamp(14px, 1vw, 18px);
 
-  color: #4d2aa1;
+    background: #f7f1ff;
 
-  font-size: clamp(14px, 1vw, 18px);
+    border: 2px solid #d8c4ff;
+    border-radius: 999px;
 }
 
 .apparatus-overview-page-count {
-  padding-left: 10px;
+    padding-left: 10px;
 
-  border-left: 1px solid #c8b3f7;
+    font-size: 0.9em;
 
-  font-size: 0.9em;
+    border-left: 1px solid #c8b3f7;
 }
 
 .apparatus-overview-continue-button {
-  min-width: 190px;
-  min-height: 55px;
+    min-width: 190px;
+    min-height: 55px;
 
-  padding: 10px 25px;
+    padding: 10px 25px;
 
-  background:white;
-  border: none;
-  border-radius: 15px;
+    color: #5d36c4;
 
-  box-shadow: 0 8px 16px rgba(92, 53, 194, 0.22);
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 800;
 
-  color: #5d36c4;
+    cursor: pointer;
 
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 800;
+    background: #ffffff;
 
-  cursor: pointer;
+    border: 2px solid #5d36c4;
+    border-radius: 15px;
 
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease;
+    box-shadow: 0 8px 16px rgba(92, 53, 194, 0.22);
 
-  border: 2px solid #5d36c4;  
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
 }
 
 .apparatus-overview-continue-button:hover {
-  filter: brightness(1.08);
+    filter: brightness(1.08);
 
-  transform: translateY(-3px);
+    transform: translateY(-3px);
 }
 
 .apparatus-overview-continue-button:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
-
 
 /* =========================================================
    TABLET
 ========================================================= */
 
-@media (max-width: 1050px) {
-  .apparatus-overview-overlay {
-    align-items: flex-start;
+@media screen and (max-width: 1050px) {
+    .apparatus-overview-overlay {
+        padding: 16px;        overflow: hidden;
 
-    overflow-y: auto;
-  }
+    }
 
-  .apparatus-overview-container {
-    width: min(95vw, 850px);
-    height: auto;
-    min-height: 88vh;
+    .apparatus-overview-container {
+        width: min(95vw, 850px);
+        height: 95vh;
+        max-height: calc(100dvh - 32px);
+        overflow: hidden;
 
-    padding: 82px 30px 28px;
-  }
+        padding: 82px 30px 28px;
+    }
 
-  .apparatus-overview-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    .apparatus-overview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        overflow: hidden;
+    }
 
-    gap: 20px;
-  }
+    .apparatus-overview-card {
+        min-height: 340px;        overflow: hidden;
 
-  .apparatus-overview-card {
-    min-height: 360px;
-  }
+    }
 
-  .apparatus-overview-image-container {
-    flex: initial;
+    .apparatus-overview-image-container {
+        height: 175px;
+        min-height: 175px;
 
-    height: 190px;
-  }
+        flex: initial;        overflow: hidden;
+
+    }
 }
 
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media screen and (max-width: 768px) {
+    .apparatus-overview-overlay {
+        padding: 10px;
+    }
+
+    .apparatus-overview-container {
+        width: 96vw;
+        height: min(95dvh, 760px);
+        max-height: calc(100dvh - 20px);
+
+        padding: 72px 20px 20px;
+
+        border-width: 6px;
+        border-radius: 22px;
+    }
+
+    .apparatus-overview-title-tab {
+        width: min(78vw, 430px);
+        min-width: 0;
+        height: 60px;
+
+        border-radius: 0 0 28px 28px;
+    }
+
+    .apparatus-overview-title-tab h1 {
+        font-size: 25px;
+    }
+
+    .apparatus-overview-subtitle {
+        margin-bottom: 14px;
+
+        font-size: 15px;
+    }
+
+    .apparatus-overview-content {
+        padding: 4px 6px;
+    }
+
+    .apparatus-overview-grid {
+        gap: 14px;
+    }
+
+    .apparatus-overview-card {
+        min-height: 290px;
+
+        padding: 16px 12px 14px;
+
+        border-radius: 18px;
+    }
+
+    .apparatus-overview-number {
+        top: 10px;
+        left: 10px;
+
+        width: 33px;
+        height: 33px;
+
+        font-size: 16px;
+    }
+
+    .apparatus-overview-image-container {
+        height: 130px;
+        min-height: 130px;
+
+        margin-top: 20px;
+    }
+
+    .apparatus-overview-description {
+        min-height: 55px;
+
+        margin: 6px 0 10px;
+
+        font-size: 14px;
+    }
+
+    .apparatus-overview-button {
+        min-height: 43px;
+
+        padding: 8px 10px;
+
+        font-size: 14px;
+
+        border-radius: 11px;
+    }
+
+    .apparatus-overview-content .arrow-left,
+    .apparatus-overview-content .arrow-right {
+        width: 34px;
+        height: 34px;
+    }
+
+    .apparatus-overview-content .arrow-left {
+        left: -2px;
+    }
+
+    .apparatus-overview-content .arrow-right {
+        right: -2px;
+    }
+
+    .apparatus-overview-footer {
+        gap: 12px;
+
+        margin-top: 14px;
+    }
+
+    .apparatus-overview-status {
+        padding: 7px 13px;
+
+        font-size: 13px;
+    }
+
+    .apparatus-overview-continue-button {
+        min-width: 150px;
+        min-height: 46px;
+
+        padding: 8px 18px;
+
+        font-size: 15px;
+    }
+}
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media (max-width: 620px) {
-  .apparatus-overview-overlay {
-    padding: 10px;
-  }
+@media screen and (max-width: 620px) {
+    .apparatus-overview-container {
+        padding: 70px 16px 18px;
+    }
 
-  .apparatus-overview-container {
-    width: 100%;
-    min-height: auto;
+    .apparatus-overview-title-tab {
+        width: 80vw;
+        height: 56px;
+    }
 
-    padding: 76px 16px 24px;
+    .apparatus-overview-title-tab h1 {
+        font-size: 22px;
+    }
 
-    border-width: 6px;
-    border-radius: 22px;
-  }
+    .apparatus-overview-subtitle {
+        font-size: 14px;
+    }
 
-  .apparatus-overview-title-tab {
-    width: 80vw;
-    min-width: 0;
-    height: 58px;
+    .apparatus-overview-grid {
+        grid-template-columns: 1fr;
+    }
 
-    border-radius: 0 0 26px 26px;
-  }
+    .apparatus-overview-card {
+        min-height: 280px;
+    }
 
-  .apparatus-overview-title-tab h1 {
-    font-size: 25px;
-  }
+    .apparatus-overview-image-container {
+        height: 125px;
+        min-height: 125px;
+    }
 
-  .apparatus-overview-subtitle {
-    margin-bottom: 20px;
+    .apparatus-overview-footer {
+        flex-direction: column;
 
-    font-size: 16px;
-  }
+        align-items: stretch;
+    }
 
-  .apparatus-overview-grid {
-    grid-template-columns: 1fr;
-  }
+    .apparatus-overview-status,
+    .apparatus-overview-continue-button {
+        width: 100%;
+    }
 
-  .apparatus-overview-card {
-    min-height: 350px;
-  }
+    .apparatus-overview-status {
+        justify-content: center;
+    }
+}
 
-  .apparatus-overview-image-container {
-    height: 185px;
-  }
+/* =========================================================
+   SHORT HEIGHT SCREENS
+========================================================= */
 
-  .apparatus-overview-description {
-    min-height: auto;
+@media screen and (max-height: 700px) {
+    .apparatus-overview-container {
+        height: calc(100dvh - 20px);
 
-    font-size: 16px;
-  }
+        padding-top: 68px;
+        padding-bottom: 18px;
+    }
 
-  .apparatus-overview-footer {
-    flex-direction: column;
+    .apparatus-overview-subtitle {
+        margin-bottom: 12px;
+    }
 
-    gap: 13px;
-  }
-
-  .apparatus-overview-status,
-  .apparatus-overview-continue-button {
-    width: 100%;
-  }
-
-  .apparatus-overview-status {
-    justify-content: center;
-  }
+    .apparatus-overview-footer {
+        margin-top: 12px;
+    }
 }

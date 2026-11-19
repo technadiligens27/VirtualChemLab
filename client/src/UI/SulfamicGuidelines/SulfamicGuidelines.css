@@ -606,3 +606,145 @@
     margin-top: 14px;
   }
 }
+
+
+/* =====================================
+   HEIGHT RESPONSIVE GUIDELINE PANEL
+===================================== */
+
+.sulfamic-guideline {
+    max-height: calc(100dvh - 32px);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: visible;
+}
+
+/* The header stays visible.
+   The content below it becomes scrollable if needed. */
+.sulfamic-guideline-inner {
+    flex: 1;
+    min-height: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #4f7f93 transparent;
+}
+
+.sulfamic-guideline-inner::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sulfamic-guideline-inner::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sulfamic-guideline-inner::-webkit-scrollbar-thumb {
+    background-color: #4f7f93;
+    border-radius: 20px;
+}
+
+/* =====================================
+   SHORT LAPTOP SCREENS
+===================================== */
+
+@media screen and (max-height: 800px) {
+    .sulfamic-guideline {
+        max-height: calc(100dvh - 20px);
+    }
+
+    .sulfamic-guideline-inner {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .sulfamic-title-container h1 {
+        font-size: clamp(25px, 2.5vw, 36px);
+    }
+
+    .sulfamic-description {
+        font-size: clamp(14px, 1.2vw, 17px);
+        line-height: 1.4;
+    }
+
+    .sulfamic-step {
+        gap: 10px;
+    }
+
+    .sulfamic-step p {
+        font-size: clamp(13px, 1.1vw, 16px);
+        line-height: 1.35;
+    }
+
+    .sulfamic-image-container img {
+        max-height: 320px;
+        object-fit: contain;
+    }
+}
+
+/* =====================================
+   VERY SHORT SCREENS
+===================================== */
+
+@media screen and (max-height: 650px) {
+    .sulfamic-guideline {
+        max-height: calc(100dvh - 12px);
+    }
+
+    .sulfamic-guideline-header {
+        min-height: 42px;
+    }
+
+    .sulfamic-guideline-header h1 {
+        font-size: 20px;
+    }
+
+    .sulfamic-guideline-inner {
+        gap: 18px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .sulfamic-title-container h1 {
+        font-size: 25px;
+    }
+
+    .sulfamic-description {
+        margin-top: 8px;
+        margin-bottom: 10px;
+    }
+
+    .sulfamic-steps-container {
+        margin-top: 10px;
+    }
+
+    .sulfamic-steps-header h1 {
+        font-size: 21px;
+    }
+
+    .sulfamic-inner-steps {
+        gap: 8px;
+    }
+
+    .sulfamic-step img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .sulfamic-continue-button-container {
+        margin-top: 12px;
+    }
+
+    .sulfamic-continue-button {
+        min-height: 42px;
+        padding: 8px 26px;
+        font-size: 16px;
+    }
+
+    .sulfamic-image-container img {
+        max-height: 240px;
+    }
+}

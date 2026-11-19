@@ -100,13 +100,17 @@ const AllExplanationLesson15 = ()=>{
            {lessonStep==18.1 && <Explanations
             text={
                 <>
-We will now open the <strong>air hole</strong> so that more <strong>oxygen</strong> mixes with the gas, producing a <strong>hot blue flame</strong> for an accurate flame test.
+                We will now open the <strong>air hole</strong> so that more <strong>oxygen</strong> mixes with the gas, producing a <strong>hot blue flame</strong> for an accurate flame test.
                 </>
                 }
             top="30%"
             left="15%"
             height="220px"
             width="420px"
+            compactTop={"10%"}
+            compactLeft={"8%"}
+            compactWidth={"350px"}
+            compactHeight={"270px"}
             />}
 
 
@@ -133,6 +137,7 @@ We will now open the <strong>air hole</strong> so that more <strong>oxygen</stro
             left="40%"
             height="220px"
             width="420px"
+            compactLeft={"25%"}
             />}
 
 

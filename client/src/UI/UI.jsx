@@ -59,6 +59,7 @@ import axios from "axios"
 import HydrolysisLesson from "./AllLessons/HydrolysisLesson/HydrolysisLesson"
 import FillBeakerBox from "../Experience/Interactions/FillBeakerBox/FillBeakerBox"
 import Loader01 from "./Loader01/Loader01"
+import EndothermicReactionSummary from "./Summary/EndothermicReactionSummary/EndothermicReactionSummary"
 
 
 const mainContent = [
@@ -75,7 +76,7 @@ const mainContent = [
       </>
     ),
     button1: "Sign In As Guest",
-    // button2:"Free Roam",
+    button2:"Free Roam",
     info:
       "Select Sign In As Guest to continue with the Session",
     mainImg: "./chem-icon.webp",
@@ -327,7 +328,7 @@ const UI = () => {
 
   useEffect(()=>{
     setShowBalanceArrow(
-      ([14,22].includes(lessonStep) && selectedLesson === 8) ||
+      ([14].includes(lessonStep) && selectedLesson === 8) ||
       ([4].includes(lessonStep) && selectedLesson ===12) ||
       (selectedLesson===9 && [12,20].includes(lessonStep)) ||
       (selectedLesson===13 && [22].includes(lessonStep))
@@ -856,6 +857,8 @@ useEffect(() => {
        {
         selectedLesson == 15.2 && (<FlameTest02/>)
        }
+
+       {/* <EndothermicReactionSummary/> */}
 
        {safetyStep === 4 &&
         isLessonStart &&

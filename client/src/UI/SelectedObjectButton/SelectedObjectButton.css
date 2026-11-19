@@ -1,38 +1,119 @@
 .selected-object-button {
+    position: absolute;
+    top: 0;
+    left: 3%;
 
-  position: absolute;
-  width: 230px;
-  height: 75px;
-  top: -0.5%;
-  left: 3.0%;
-  z-index: 9999;
-  background: #fcfcea;
-  line-height: 130%;  
-  border-bottom-right-radius: 14px;
-  border-bottom-left-radius: 14px;
+    z-index: 9999;
 
-  box-shadow:
-    0 7px 16px
-    rgba(92, 53, 194, 0.24);
+    width: clamp(180px, 18vw, 230px);
+    min-height: 62px;
 
-  color: black;
-  border: 5px solid #FFBE08;
+    padding: 8px 16px;
 
-  font-family: "Baloo Bhai 2", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+    color: #000000;
 
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    filter 0.2s ease;
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: clamp(14px, 1.35vw, 18px);
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+
+    cursor: pointer;
+
+    background: #fcfcea;
+
+    border: 5px solid #ffbe08;
+    border-top: none;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+
+    box-shadow: 0 7px 16px rgba(92, 53, 194, 0.24);
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
 }
 
 .selected-object-button:hover {
-  filter: brightness(1.1);
-  transform: translateY(-3px);
+    filter: brightness(1.1);
+
+    transform: translateY(-3px);
 }
 
 .selected-object-button:active {
-  transform: translateY(0) scale(0.97);
+    transform: translateY(0) scale(0.97);
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media screen and (max-width: 1024px) {
+    .selected-object-button {
+        left: -0.5%;
+
+        width: clamp(140px, 24vw, 180px);
+        min-height: 58px;
+
+        padding: 7px 13px;
+
+        border-width: 4px;
+        border-top: none;
+
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+}
+
+/* =====================================
+   SMALL TABLET
+===================================== */
+
+@media screen and (max-width: 784px) {
+    .selected-object-button {
+        width: clamp(155px, 29vw, 190px);
+        min-height: 52px;
+
+        padding: 6px 10px;
+
+        font-size: clamp(13px, 1.8vw, 16px);
+
+        border-width: 3px;
+        border-top: none;
+    }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media screen and (max-width: 600px) {
+    .selected-object-button {
+        left: 50%;
+
+        width: min(220px, 70vw);
+        min-height: 46px;
+
+        padding: 6px 12px;
+
+        font-size: 14px;
+
+        border-width: 3px;
+        border-top: none;
+
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+
+        transform: translateX(-50%);
+    }
+
+    .selected-object-button:hover {
+        transform: translateX(-50%) translateY(-3px);
+    }
+
+    .selected-object-button:active {
+        transform: translateX(-50%) scale(0.97);
+    }
 }

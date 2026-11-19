@@ -2,6 +2,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 
 import {
@@ -19,8 +20,21 @@ const DipMode = ({
   DipmodelRef,
   recieveModelRef,
 
+  // =========================================
+  // DEFAULT OFFSETS
+  // Screens above 1024px
+  // =========================================
+
   xOffset = 0,
   yOffset = 0,
+
+  // =========================================
+  // COMPACT OFFSETS
+  // Screens 1024px and below
+  // =========================================
+
+  compactXOffset = 1,
+  compactYOffset = 2,
 
   recieveModelYOffset = 0,
 
@@ -43,6 +57,53 @@ const DipMode = ({
   const {
     gl,
   } = useThree()
+
+  // =========================================
+  // COMPACT SCREEN CHECK
+  // =========================================
+
+  const [
+    isCompactScreen,
+    setIsCompactScreen,
+  ] = useState(() => {
+    if (typeof window === "undefined") {
+      return false
+    }
+
+    return window.innerWidth <= 1024
+  })
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsCompactScreen(
+        window.innerWidth <= 1024
+      )
+    }
+
+    checkScreenSize()
+
+    window.addEventListener(
+      "resize",
+      checkScreenSize
+    )
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        checkScreenSize
+      )
+    }
+  }, [])
+
+  const finalXOffset =
+    isCompactScreen
+      ? compactXOffset
+      : xOffset
+
+  const finalYOffset =
+    isCompactScreen
+      ? compactYOffset
+      : yOffset
 
   // =========================================
   // KEEP CURRENT LESSON / STEP UPDATED
@@ -243,16 +304,6 @@ const DipMode = ({
     // =======================================
 
     return () => {
-      // Add more conditions here if needed.
-      // const shouldSkipRestore =
-      //   latestLessonRef.current === 15.2 &&
-      //   latestLessonStepRef.current === 31
-
-      // // Do not restore either model at this step.
-      // if (shouldSkipRestore) {
-      //   return
-      // }
-
       const restore = (
         model,
         original
@@ -536,10 +587,10 @@ const DipMode = ({
     )
 
     targetLocalPosition.current.x +=
-      xOffset
+      finalXOffset
 
     targetLocalPosition.current.y +=
-      yOffset
+      finalYOffset
 
     dipModel.parent.getWorldQuaternion(
       parentQuaternionRef.current

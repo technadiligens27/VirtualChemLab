@@ -25,7 +25,10 @@
 
 .guideline-container {
   width: min(60%, 1000px);
-  min-height: 60vh;
+
+  height: auto;
+  min-height: clamp(440px, 60dvh, 680px);
+  max-height: calc(100dvh - 40px);
 
   display: flex;
   flex-direction: column;
@@ -33,6 +36,8 @@
   justify-content: center;
 
   padding-bottom: 10px;
+
+  overflow-y: auto;
 
   background:
     linear-gradient(
@@ -42,6 +47,26 @@
     );
 
   border-radius: 30px;
+
+  box-sizing: border-box;
+}
+
+.guideline-inner-container {
+  width: 95%;
+
+  height: auto;
+  min-height: clamp(350px, 48dvh, 560px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background-color: #F9F9E7;
+
+  border-radius: 22px;
 
   box-sizing: border-box;
 }
@@ -58,26 +83,8 @@
 
   color: #FFFFFF;
 
-  font-size: clamp(28px, 3vw, 45px);
+  font-size: clamp(23px, 3vw, 45px);
   text-align: left;
-}
-
-.guideline-inner-container {
-  width: 95%;
-  height: 80%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-
-  background-color: #F9F9E7;
-
-  border-radius: 22px;
-
-  box-sizing: border-box;
 }
 
 .guideline-image-container {
@@ -107,8 +114,7 @@
 .guideline-description {
   margin: 0;
   padding: 0 40px;
-
-  font-size: clamp(16px, 1.6vw, 23px);
+  font-size: 26px;
   line-height: 160%;
   text-align: center;
 }
@@ -228,7 +234,7 @@
   }
 
   .guideline-description {
-    padding: 0 25px;
+    padding: 0 15px;
   }
 
   .guideline-inner-container-row .guideline-image-container {
@@ -237,6 +243,9 @@
 
   .guideline-inner-container-row .guideline-image-container img {
     width: 75%;
+  }
+  .main-guidelines-btn{
+    font-size: 20px;
   }
 }
 

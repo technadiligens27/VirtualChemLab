@@ -2,6 +2,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react"
 
 import {
@@ -30,6 +31,10 @@ const PourIntoTestubeFromSpoon = ({
 
   xOffset = 0.2,
 
+  compactXOffset = -0.15,
+
+  compactYOffset =  0.3,
+
   // Final powder opacity from 0 to 1.
   powderEndOpacity = 1,
 }) => {
@@ -54,6 +59,23 @@ const PourIntoTestubeFromSpoon = ({
   } = useContext(
     InteractionContext
   )
+
+
+  const [isCompactScreen, setIsCompactScreen] = useState(
+    () => window.innerWidth <= 1024
+  )
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompactScreen(window.innerWidth <= 1024)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
 
   // =====================================================
@@ -667,6 +689,11 @@ const PourIntoTestubeFromSpoon = ({
         ? xOffset
         : -xOffset
 
+    if (isCompactScreen) {
+      targetPosition.x += compactXOffset
+      targetPosition.y += compactYOffset
+    }
+
 
     const localTargetPosition =
       spoonParent.worldToLocal(
@@ -892,6 +919,12 @@ const PourIntoTestubeFromSpoon = ({
     heightOffset,
 
     xOffset,
+
+    compactXOffset,
+
+    compactYOffset,
+
+    isCompactScreen,
 
     finalPowderOpacity,
 

@@ -6,7 +6,7 @@ import {
 import {
   useContext,
   useEffect,
-  useRef,
+  useRef,useState
 } from "react"
 
 import * as THREE from "three"
@@ -38,6 +38,8 @@ const PlayerController = ({
     InteractionContext
   )
 
+
+
   const keys = useRef({
     forward: false,
     backward: false,
@@ -60,9 +62,26 @@ const PlayerController = ({
   const nextPositionRef =
     useRef(new THREE.Vector3())
 
+  const [isCompactScreen, setIsCompactScreen] = useState(
+    () => window.innerWidth <= 1024
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompactScreen(window.innerWidth <= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);    
+
   // =========================================================
   // CHECK IF PLAYER WOULD HIT A BLOCKED MODEL
   // =========================================================
+
 
   const doesPlayerHitBlockedModel = (
     nextPosition
@@ -184,8 +203,7 @@ const PlayerController = ({
   useFrame((_, delta) => {
     // Keep seated user in chair position.
     if (hasSat.current) {
-      camera.position.y =
-        playerSittingHeight
+      camera.position.y = isCompactScreen ? 7.5: playerSittingHeight
 
       return
     }
@@ -250,8 +268,7 @@ const PlayerController = ({
 
     // Keep player on floor when not moving.
     if (movement.lengthSq() === 0) {
-      camera.position.y =
-        playerStandingHeight
+      camera.position.y = isCompactScreen ? 9:  playerStandingHeight
 
       return
     }
@@ -306,8 +323,7 @@ const PlayerController = ({
     }
 
     // Keep player at walking height.
-    camera.position.y =
-      playerStandingHeight
+    camera.position.y = isCompactScreen ? 9:  playerStandingHeight
   })
 
   return null

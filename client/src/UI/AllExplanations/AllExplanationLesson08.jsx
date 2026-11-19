@@ -45,6 +45,7 @@ const AllExplanationLesson08 = ()=>{
             left="45%"
             height="270px"
             width="380px"
+            compactLeft="25%"
             />}
 
            {lessonStep==11 && <Explanations
@@ -57,6 +58,7 @@ const AllExplanationLesson08 = ()=>{
             left="45%"
             height="225px"
             width="380px"
+            compactLeft="25%"
             />}
 
            {lessonStep==15 && <Explanations
@@ -69,6 +71,8 @@ const AllExplanationLesson08 = ()=>{
             left="65%"
             height="190px"
             width="380px"
+            compactLeft={"35%"}
+            compactTop={"30%"}
             />}
 
            {lessonStep==17 && <Explanations
@@ -81,6 +85,8 @@ const AllExplanationLesson08 = ()=>{
             left="18%"
             height="190px"
             width="380px"
+          compactLeft={"35%"}
+            compactTop={"30%"}            
             />}
 
            {lessonStep==19 && <Explanations
@@ -118,6 +124,8 @@ const AllExplanationLesson08 = ()=>{
             left="28%"
             height="185px"
             width="420px"
+            compactLeft={"20%"}
+            compactTop={"15%"}
             />} 
 
 
@@ -148,6 +156,8 @@ const AllExplanationLesson08 = ()=>{
             left="48%"
             height="235px"
             width="420px"
+                        compactLeft="25%"
+
             />}  
 
            {lessonStep==35 && <Explanations
@@ -164,12 +174,11 @@ const AllExplanationLesson08 = ()=>{
            {lessonStep==36 && <Explanations
             text={
                 <>
-                Small <strong>carbon dioxide bubbles</strong> form, a quiet fizzing sound plays, and the <strong>thermometer reading</strong> gradually rises.    
-                </>
+                Small <strong>carbon dioxide bubbles</strong> begin to form, accompanied by a gentle fizzing sound, while the <strong>thermometer reading</strong> increases.                </>
             }
             top="28%"
             left="48%"
-            height="235px"
+            height="245px"
             width="420px"
             />} 
 
@@ -185,6 +194,7 @@ const AllExplanationLesson08 = ()=>{
             left="15%"
             height="260px"
             width="420px"
+            compactTop={"20%"}
             />} 
             
           {lessonStep==42 && <Explanations
@@ -198,6 +208,7 @@ const AllExplanationLesson08 = ()=>{
             left="48%"
             height="200px"
             width="420px"
+            compactLeft="30%"
             />} 
         </>
     )                
