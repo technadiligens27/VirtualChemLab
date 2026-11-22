@@ -134,7 +134,7 @@ export const useResetLesson = () => {
 } = useContext(ModelContext)
 
   const {
-    resetInteractions,
+    resetInteractions,showConfirmAnotherLesson,setShowConfirmAnotherLesson
   } = useContext(
     InteractionContext
   )
@@ -359,10 +359,16 @@ export const useResetLesson = () => {
 
 const ResetLessonButton = () => {
   const resetLesson = useResetLesson()
+
+    const {
+    resetInteractions,showConfirmAnotherLesson,setShowConfirmAnotherLesson
+  } = useContext(
+    InteractionContext
+  )
   return (
     <button
       className="reset-btn"
-      onClick={resetLesson}
+      onClick={()=>{setShowConfirmAnotherLesson(true)}}
     >
       Choose Another Lesson
     </button>

@@ -60,6 +60,8 @@ import HydrolysisLesson from "./AllLessons/HydrolysisLesson/HydrolysisLesson"
 import FillBeakerBox from "../Experience/Interactions/FillBeakerBox/FillBeakerBox"
 import Loader01 from "./Loader01/Loader01"
 import EndothermicReactionSummary from "./Summary/EndothermicReactionSummary/EndothermicReactionSummary"
+import HessLiveDataPanel from "./HessLiveDataPanel/HessLiveDataPanel"
+import ConfirmResetLesson from "./ConfirmResetLesson/ConfirmResetLesson"
 
 
 const mainContent = [
@@ -169,7 +171,8 @@ const UI = () => {
     clickedModel,
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
-    setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo,showFeedBackForm,setShowFeedBackForm
+    setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo,showFeedBackForm,setShowFeedBackForm,
+    showConfirmAnotherLesson
     
   } = useContext(InteractionContext)
 
@@ -618,34 +621,32 @@ useEffect(() => {
     Tutorial mode
   */
   return (
-    <>
-
-    
+    <>    
     {/* <LessonDetails/> */}
     {/* <LessonSummary summaryData={saltDissolvingSummary}/> */}
     {!isSitting && selectedMainGuideline===5 && <SideGuide/>}
 
     {isLessonStart && safetyStep===4 && <ResetLessonButton/>}
     
-      {selectedMainGuideline === 2 && (
-        <MainGuidelines
-          mainContent={mainContent[1]}
-          onButton1Click={() =>
-            setSelectedMainGuideline(3)
-          }
-        />
-      )}
+    {selectedMainGuideline === 2 && (
+      <MainGuidelines
+        mainContent={mainContent[1]}
+        onButton1Click={() =>
+          setSelectedMainGuideline(3)
+        }
+      />
+    )}
 
-      {selectedMainGuideline === 3 && (
-        <MovementGuideline
-          mainContent={mainContent[2]}
-          onButton1Click={() =>
-            setSelectedMainGuideline(4)
-          }
-        />
-      )}
+    {selectedMainGuideline === 3 && (
+      <MovementGuideline
+        mainContent={mainContent[2]}
+        onButton1Click={() =>
+          setSelectedMainGuideline(4)
+        }
+      />
+    )}
 
-      {/* {selectedMainGuideline === 4 && (
+    {/* {selectedMainGuideline === 4 && (
         <MainGuidelines
           mainContent={mainContent[3]}
           onButton1Click={() => {
@@ -969,11 +970,11 @@ useEffect(() => {
        {/* <TitreValueRecorded/> */}
 
        {/* <MolarVolumeSummary/> */}
-
+        {showConfirmAnotherLesson && <ConfirmResetLesson/>}
        {showFeedBackForm && <FeedbackForm onSkip={()=>{setShowFeedBackForm(false)}} onSubmit={()=>{setShowFeedBackForm(false)}}/>}
-       {/* {<FeedbackForm/>}  */}
+      {/* {<FeedbackForm/>}  */}
+      {/* <Loader01/> */}
 
-  {/* <Loader01/> */}
     </>
   )
 }

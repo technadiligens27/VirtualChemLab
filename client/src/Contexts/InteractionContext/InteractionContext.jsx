@@ -226,6 +226,8 @@ const [feedbackAnswers,setFeedbackAnswers] = useState({
   comments: "",
 })  
 
+  const [showConfirmAnotherLesson,setShowConfirmAnotherLesson] = useState(false)
+
 
 
 const resetInteractions = () => {
@@ -509,6 +511,7 @@ setChairStep(0)
 })
 setIsAddLiquid(false)
 setFeedbackAnswers(false)
+setShowConfirmAnotherLesson(false)
   
 }
   return (
@@ -618,7 +621,8 @@ setFeedbackAnswers(false)
         showPowderBox,setShowPowderBox,selectedPowder,setSelectedPowder,showPowderInContainer,setShowPowderInContainer,
         isAirHoleOpen,setIsAirHoleOpen,molarVolumeResultsState,setMolarVolumeResultsState,
         selectedObjectName,setSelectedObjectName,feedbackAnswers,setFeedbackAnswers,
-        showFeedBackForm,setShowFeedBackForm,isAddLiquid,setIsAddLiquid
+        showFeedBackForm,setShowFeedBackForm,isAddLiquid,setIsAddLiquid,
+        showConfirmAnotherLesson,setShowConfirmAnotherLesson
       }}
     >
       {children}

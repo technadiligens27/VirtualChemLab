@@ -489,7 +489,7 @@
 @media (max-width: 1100px) {
   .hess-live-data-panel {
     width: 22rem;
-    right: 0.4rem;
+    right: -2.3%;
   }
 
   .hess-live-data-content {

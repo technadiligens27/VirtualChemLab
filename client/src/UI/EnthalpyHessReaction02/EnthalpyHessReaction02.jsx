@@ -607,7 +607,7 @@ const EnthalpyHessReaction02 = () => {
           HESS LIVE DATA PANEL
       ===================================================== */}
 
-      <HessLiveDataPanel
+      {/* <HessLiveDataPanel
         reactionNumber={2}
 
         volumeOfSolution={
@@ -700,7 +700,7 @@ const EnthalpyHessReaction02 = () => {
             lessonStep: 35.5,
           },
         ]}
-      />
+      /> */}
 
 
       {/* =====================================================
