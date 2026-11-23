@@ -443,7 +443,9 @@ const FlameTest02 = ()=>{
               }}
 
               onContinue={() => {
-                setLessonStep(34)
+                setLessonStep(34);
+                setShowQuestionCardNo(null)
+
                 
               }}
             />
