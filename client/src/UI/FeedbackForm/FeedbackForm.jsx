@@ -29,7 +29,7 @@ const FeedbackForm = ({
   const {
     feedbackAnswers,
     setFeedbackAnswers,
-    setShowFeedBackForm,
+    setShowFeedBackForm,setShowError,
   } = useContext(
     InteractionContext
   )
@@ -181,14 +181,15 @@ const FeedbackForm = ({
       )
 
       finishFeedback(completedFeedback)
-    } catch (error) {
-      console.error(
-        error.response?.data?.message ||
-          "Could not submit feedback."
-      )
-    } finally {
-      setIsSubmitting(false)
-    }
+      } catch (error) {
+        console.error(
+          error.response?.data?.message || "Could not submit feedback."
+        )
+
+        setShowError(true)
+      } finally {
+        setIsSubmitting(false)
+      }
   }
 
   return (

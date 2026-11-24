@@ -62,7 +62,7 @@ import Loader01 from "./Loader01/Loader01"
 import EndothermicReactionSummary from "./Summary/EndothermicReactionSummary/EndothermicReactionSummary"
 import HessLiveDataPanel from "./HessLiveDataPanel/HessLiveDataPanel"
 import ConfirmResetLesson from "./ConfirmResetLesson/ConfirmResetLesson"
-
+import ErrorBox from "./ErrorBox/ErrorBox";
 
 const mainContent = [
   {
@@ -172,7 +172,7 @@ const UI = () => {
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
     setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo,showFeedBackForm,setShowFeedBackForm,
-    showConfirmAnotherLesson
+    showConfirmAnotherLesson,setShowError,showError
     
   } = useContext(InteractionContext)
 
@@ -399,29 +399,24 @@ const UI = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/auth/guest-signin`,
         {
-          message:
-            "A guest user clicked Sign In As Guest.",
+          message: "A guest user clicked Sign In As Guest.",
         },
         {
           withCredentials: true,
         }
       )
 
-      console.log(
-        "Backend response:",
-        response.data
-      )
-
+      console.log("Backend response:", response.data)
       return true
     } catch (error) {
       console.error(
-        error.response?.data?.message ||
-          "Could not contact the server."
+        error.response?.data?.message || "Could not contact the server."
       )
 
+      setShowError(true)
       return false
     }
-}
+  }
 
 
   const startTutorial = async () => {
@@ -569,18 +564,20 @@ useEffect(() => {
   */
 
   if (isTutorialMode === null) {
-    return (
-      <>
-        {selectedMainGuideline === 1 && (
-          <MainGuidelines
-            mainContent={mainContent[0]}
-            onButton1Click={startTutorial}
-            onButton2Click={startFreeRoam}
-            
-          />
-        )}
-      </>
-    )
+  return (
+    <>
+      {selectedMainGuideline === 1 && (
+        <MainGuidelines
+          mainContent={mainContent[0]}
+          onButton1Click={startTutorial}
+          onButton2Click={startFreeRoam}
+        />
+      )}
+
+      {showError && <ErrorBox />}
+    </>
+  )
+
   }
 
   /*
@@ -974,6 +971,7 @@ useEffect(() => {
        {showFeedBackForm && <FeedbackForm onSkip={()=>{setShowFeedBackForm(false)}} onSubmit={()=>{setShowFeedBackForm(false)}}/>}
       {/* {<FeedbackForm/>}  */}
       {/* <Loader01/> */}
+      {showError && <ErrorBox />}
 
     </>
   )
