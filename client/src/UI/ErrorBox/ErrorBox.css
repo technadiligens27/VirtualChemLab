@@ -1,0 +1,125 @@
+.lesson-error-box {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+
+  width: min(520px, calc(100% - 40px));
+  min-height: 150px;
+  max-height: calc(100dvh - 24px);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  background-color: #fcfcea;
+  border: 5px solid #f7c741;
+  border-radius: 40px;
+  box-shadow: 0 8px 20px rgba(80, 65, 20, 0.18);
+
+  font-family: "Baloo Bhai 2", sans-serif;
+}
+
+.lesson-error-box[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: 10px;
+}
+
+.lesson-error-box::backdrop {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.lesson-error-box__text {
+  width: 100%;
+  color: #343434;
+  font-size: 16px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.lesson-error-box__title {
+  margin: 0 0 2px;
+  font-size: 1.125em;
+  font-weight: 700;
+}
+
+.lesson-error-box__message {
+  margin: 0;
+  font-weight: 500;
+}
+
+.lesson-error-box__email {
+  color: #351c7c;
+  font-weight: 600;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.lesson-error-box__button {
+  flex-shrink: 0;
+  min-width: 130px;
+  min-height: 40px;
+  padding: 0 24px;
+
+  color: #ffffff;
+  background-color: #351c7c;
+  border: 0;
+  border-radius: 16px;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.lesson-error-box__button:hover {
+  background-color: #472592;
+  transform: translateY(-1px);
+}
+
+.lesson-error-box__button:active {
+  transform: translateY(0);
+}
+
+.lesson-error-box__button:focus-visible,
+.lesson-error-box__email:focus-visible {
+  outline: 2px solid #351c7c;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1000px) {
+  .lesson-error-box {
+    padding: 16px 20px;
+    border-width: 4px;
+    border-radius: 30px;
+  }
+
+  .lesson-error-box__text,
+  .lesson-error-box__button {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .lesson-error-box {
+    width: min(380px, calc(100% - 24px));
+    padding: 14px;
+    border-width: 3px;
+    border-radius: 24px;
+  }
+
+  .lesson-error-box__text {
+    font-size: 14px;
+  }
+
+  .lesson-error-box__button {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+}
