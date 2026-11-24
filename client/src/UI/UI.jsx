@@ -78,7 +78,7 @@ const mainContent = [
       </>
     ),
     button1: "Sign In As Guest",
-    button2:"Free Roam",
+    // button2:"Free Roam",
     info:
       "Select Sign In As Guest to continue with the Session",
     mainImg: "./chem-icon.webp",
