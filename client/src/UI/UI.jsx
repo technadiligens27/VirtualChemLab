@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import MainGuidelines from "./MainGuidelines/MainGuidelines"
 import { MainGuidelineContext } from "../Contexts/MainGuidelineContext/MainGuidelineContext"
 import LessonMenu from "./LessonMenu/LessonMenu"
@@ -65,6 +65,7 @@ import ConfirmResetLesson from "./ConfirmResetLesson/ConfirmResetLesson"
 import ErrorBox from "./ErrorBox/ErrorBox";
 import useIsMobile from "../useIsMobile/useIsMobile"
 import MobileDialogBox from "./MobileDialogBox/MobileDialogBox"
+import Loader02 from "./Loader02/Loader02"
 
 const mainContent = [
   {
@@ -180,6 +181,7 @@ const UI = () => {
 
     const isMobile = useIsMobile();
 
+  const [isSigningIn, setIsSigningIn] = useState(false)
 
 
   // ------------------------ Lesson 08 -------------
@@ -426,18 +428,32 @@ const UI = () => {
 
 
   const startTutorial = async () => {
-    const didSignIn =
-      await handleSignIn()
 
-    if (!didSignIn) {
-      return
+    if (isSigningIn) return
+
+    try {
+
+      setIsSigningIn(true)
+
+      const didSignIn =
+        await handleSignIn()
+
+      if (!didSignIn) {
+        return
+      }
+
+      setIsMainGuideline(true)
+
+      setSelectedMainGuideline(2)
+
+      setIsTutorialMode(true)
+
+    } finally {
+
+      setIsSigningIn(false)
+
     }
 
-    setIsMainGuideline(true)
-
-    setSelectedMainGuideline(2)
-
-    setIsTutorialMode(true)
   }
 
   const startFreeRoam = () => {
@@ -570,21 +586,34 @@ useEffect(() => {
   */
 
   if (isTutorialMode === null) {
+
   return (
     <>
-      {selectedMainGuideline === 1 && (
-        <MainGuidelines
-          mainContent={mainContent[0]}
-          onButton1Click={startTutorial}
-          onButton2Click={startFreeRoam}
-        />
+
+      {isSigningIn ? (
+
+        <Loader02/>
+
+      ) : (
+
+        selectedMainGuideline === 1 && (
+
+          <MainGuidelines
+            mainContent={mainContent[0]}
+            onButton1Click={startTutorial}
+            onButton2Click={startFreeRoam}
+          />
+
+        )
+
       )}
 
       {showError && <ErrorBox />}
+
     </>
   )
 
-  }
+}
 
   /*
     Free-roam mode

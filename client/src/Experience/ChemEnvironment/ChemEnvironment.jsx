@@ -770,7 +770,7 @@ useEffect(() => {
     <>
       <primitive
         object={scene}
-        scale={isCompactScreen? 0.42: 0.5}
+        scale={isCompactScreen? 0.44: 0.5}
         position={[0, 0, 0]}
       />
 
