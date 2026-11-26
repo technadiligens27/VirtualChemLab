@@ -22,6 +22,8 @@ const StirModePolysterene = ({
 
   const {
     setShowBubbles,
+    isTouchDevice,
+    isPouring,
   } = useContext(
     InteractionContext
   )
@@ -60,24 +62,25 @@ const StirModePolysterene = ({
   ])
 
   // ==========================================
-  // SCROLL / STIR DETECTION
+  // DESKTOP SCROLL / STIR DETECTION
   // ==========================================
 
   useEffect(() => {
+
     angleRef.current = 0
 
     hasCompletedRotationRef.current =
       false
 
+    if (isTouchDevice) return
+
     const handleWheel = (event) => {
-      if (
-        event.deltaY <= 0
-      ) {
+
+      if (event.deltaY <= 0) {
         return
       }
 
-      isStirringRef.current =
-        true
+      isStirringRef.current = true
 
       clearTimeout(
         stopTimerRef.current
@@ -85,8 +88,9 @@ const StirModePolysterene = ({
 
       stopTimerRef.current =
         setTimeout(() => {
-          isStirringRef.current =
-            false
+
+          isStirringRef.current = false
+
         }, 150)
     }
 
@@ -99,6 +103,7 @@ const StirModePolysterene = ({
     )
 
     return () => {
+
       window.removeEventListener(
         "wheel",
         handleWheel
@@ -108,30 +113,43 @@ const StirModePolysterene = ({
         stopTimerRef.current
       )
 
-      isStirringRef.current =
-        false
+      isStirringRef.current = false
 
       angleRef.current = 0
 
       hasCompletedRotationRef.current =
         false
     }
-  }, [])
+
+  }, [
+    isTouchDevice,
+  ])
 
   // ==========================================
   // STIR PROGRESS
   // ==========================================
 
   useFrame((_, delta) => {
-    if (
-      !isStirringRef.current
-    ) {
+
+    // ========================================
+    // DESKTOP OR MOBILE STIRRING
+    // ========================================
+
+    const isCurrentlyStirring =
+      isTouchDevice
+        ? isPouring
+        : isStirringRef.current
+
+    if (!isCurrentlyStirring) {
+      return
+    }
+
+    if (hasCompletedRotationRef.current) {
       return
     }
 
     angleRef.current +=
-      stirSpeed *
-      delta
+      stirSpeed * delta
 
     const oneFullRotation =
       Math.PI * 2
@@ -142,9 +160,9 @@ const StirModePolysterene = ({
 
     if (
       angleRef.current >=
-        oneFullRotation &&
-      !hasCompletedRotationRef.current
+      oneFullRotation
     ) {
+
       hasCompletedRotationRef.current =
         true
 
@@ -154,6 +172,7 @@ const StirModePolysterene = ({
         "✅ Stirring complete - bubbles shown"
       )
     }
+
   })
 
   return null

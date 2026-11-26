@@ -1257,15 +1257,14 @@ const EnthalpyHessLaw = () =>{
         selectedLesson === 8 &&
         lessonStep === 36 &&
         pouringModeHand && (
-
           <MobileDialogBox
             button1Text="Exit Pouring Mode"
             onbtnClick={() => {
               setMobilePouringModeHand(pouringModeHand)
             }}
           />
-
       )}
+
         {
           lessonStep === 37  && (
             <DialogBox

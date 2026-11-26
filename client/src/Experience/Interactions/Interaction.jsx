@@ -247,6 +247,7 @@ useEffect(() => {
        {selectedLesson ===9 && lessonStep===32 && <FillThermometer amount={0.406325}/>} 
 
        {showBubbles && <ReleaseGasBubbles modelRef={mainPolystereneRef}/>}  
+       
        {isPolystereneCovered && <CoverPolysterene/>}
 
        {isPolystereneStirMode && (selectedLeftHand?.name === 'main-normal-beaker' ||  selectedRightHand?.name === 'main-normal-beaker')

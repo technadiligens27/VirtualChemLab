@@ -10,6 +10,7 @@ import SafetyScreen from "../../SafetyScreen/SafetyScreen"
 import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstruction"
 import FlameTest02 from "./FlameTest02"
 import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview"
+import MobileDialogBox from "../../MobileDialogBox/MobileDialogBox"
 
 const FlameTest = ()=>{
 
@@ -26,7 +27,8 @@ const FlameTest = ()=>{
    } = useContext(MainGuidelineContext)
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
-    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setShowBunsenFlame
+    setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setShowBunsenFlame,isTouchDevice,setIsTouchDevice,
+    pouringModeHand,setMobilePouringModeHand,setMobilePour
   } = useContext(InteractionContext);
 
 
@@ -56,6 +58,11 @@ const FlameTest = ()=>{
       }
     },[lessonStep])
 
+    // useEffect(()=>{
+    //   if(lessonStep==10){
+    //     setShowMobilePourButton(true)
+    //   }
+    // },[lessonStep])
 
     // useEffect(()=>{
     //   if(selectedLesson==15  && lessonStep==21){
@@ -256,12 +263,29 @@ const FlameTest = ()=>{
           } 
         />}
 
-        {lessonStep == 10 && <DialogBox text={
+        {lessonStep == 10 && !isTouchDevice && <DialogBox text={
           <>
           Press <strong>P</strong> to <strong>Enter Pour Mode</strong>
           </>
           } 
         />}
+
+        {lessonStep == 10 && isTouchDevice && <DialogBox text={
+          <>
+          Click <strong>Pour Mode</strong> to <strong>Enter Pour Mode</strong>
+          </>
+          } 
+        />} 
+
+        {isTouchDevice &&
+            lessonStep === 10 && (
+              <MobileDialogBox
+                button1Text="Pour Mode"
+                onbtnClick={() => {
+                  setLessonStep(11)
+                }}
+              />
+          )}          
 
         {lessonStep == 11 && <DialogBox text={
           <>
