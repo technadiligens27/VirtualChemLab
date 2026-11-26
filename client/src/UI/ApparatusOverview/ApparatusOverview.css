@@ -3,7 +3,7 @@
 ========================================================= */
 
 .apparatus-overview-overlay {
-    position: fixed;
+    position: absolute;
     inset: 0;
 
     z-index: 9999;
@@ -13,11 +13,11 @@
     justify-content: center;
 
     width: 100%;
-    min-height: 100dvh;
+    height: 100%;
 
     padding: 20px;
 
-    overflow: auto;
+    overflow: hidden;
 
     background: rgba(15, 10, 38, 0.5);
 
@@ -35,6 +35,7 @@
     box-sizing: border-box;
 }
 
+
 /* =========================================================
    MAIN CONTAINER
 ========================================================= */
@@ -42,9 +43,10 @@
 .apparatus-overview-container {
     position: relative;
 
-    width: min(88vw, 1550px);
-    height: min(88dvh, 900px);
-    max-height: calc(100dvh - 40px);
+    width: min(88cqw, 1550px);
+    height: min(88cqh, 900px);
+
+    max-height: calc(100cqh - 40px);
 
     display: flex;
     flex-direction: column;
@@ -65,17 +67,20 @@
     box-sizing: border-box;
 }
 
+
 /* =========================================================
    TOP TITLE
 ========================================================= */
 
 .apparatus-overview-title-tab {
     position: absolute;
+
     top: -9px;
     left: 50%;
 
-    width: min(42vw, 560px);
-    min-width: 300px;
+    width: min(42cqw, 560px);
+    min-width: min(300px, 70cqw);
+
     height: 76px;
 
     display: flex;
@@ -96,8 +101,9 @@
 
     color: #321d88;
 
-    font-size: clamp(27px, 2.3vw, 42px);
+    font-size: clamp(27px, 2.3cqw, 42px);
     font-weight: 800;
+
     text-align: center;
 }
 
@@ -108,10 +114,12 @@
 
     color: #5d5190;
 
-    font-size: clamp(16px, 1.25vw, 22px);
+    font-size: clamp(16px, 1.25cqw, 22px);
     font-weight: 700;
+
     text-align: center;
 }
+
 
 /* =========================================================
    CONTENT / SCROLL AREA
@@ -122,17 +130,20 @@
 
     flex: 1;
     min-height: 0;
-    padding: 4px 6px;
+
+    padding: 4px 42px;
 
     overflow-x: hidden;
     overflow-y: auto;
+
+    overscroll-behavior: contain;
 
     scrollbar-width: thin;
     scrollbar-color: #7852d7 transparent;
 }
 
 .apparatus-overview-content::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .apparatus-overview-content::-webkit-scrollbar-track {
@@ -145,83 +156,24 @@
     border-radius: 20px;
 }
 
+
+/* =========================================================
+   APPARATUS CARD CONTAINER
+========================================================= */
+
 .apparatus-overview-grid {
     width: 100%;
     min-height: 100%;
 
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: flex;
+    flex-direction: row;
+
+    align-items: stretch;
+    justify-content: center;
 
     gap: 22px;
 }
 
-/* =========================================================
-   PAGE ANIMATIONS
-========================================================= */
-
-.apparatus-slide-out-left {
-    animation: apparatus-page-out-left 0.3s ease-in forwards;
-}
-
-.apparatus-slide-out-right {
-    animation: apparatus-page-out-right 0.3s ease-in forwards;
-}
-
-.apparatus-slide-in-left {
-    animation: apparatus-page-in-left 0.35s ease-out forwards;
-}
-
-.apparatus-slide-in-right {
-    animation: apparatus-page-in-right 0.35s ease-out forwards;
-}
-
-@keyframes apparatus-page-out-left {
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    to {
-        opacity: 0;
-        transform: translateX(-150px);
-    }
-}
-
-@keyframes apparatus-page-out-right {
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    to {
-        opacity: 0;
-        transform: translateX(150px);
-    }
-}
-
-@keyframes apparatus-page-in-left {
-    from {
-        opacity: 0;
-        transform: translateX(-150px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes apparatus-page-in-right {
-    from {
-        opacity: 0;
-        transform: translateX(150px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
 
 /* =========================================================
    APPARATUS CARD
@@ -229,6 +181,8 @@
 
 .apparatus-overview-card {
     position: relative;
+
+    flex: 1 1 0;
 
     min-width: 0;
     min-height: 0;
@@ -248,10 +202,6 @@
     border: 2px solid #ffbd2f;
     border-radius: 24px;
 
-    /* box-shadow:
-        0 10px 22px rgba(71, 42, 140, 0.1),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.75); */
-
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -263,8 +213,14 @@
     pointer-events: none;
 }
 
+
+/* =========================================================
+   APPARATUS NUMBER
+========================================================= */
+
 .apparatus-overview-number {
     position: absolute;
+
     top: 14px;
     left: 14px;
 
@@ -288,18 +244,28 @@
     border-radius: 50%;
 }
 
+
+/* =========================================================
+   APPARATUS IMAGE
+========================================================= */
+
 .apparatus-overview-image-container {
     width: 100%;
+
+    height: clamp(110px, 28cqh, 320px);
     min-height: 110px;
 
-    flex: 1;
+    flex: 1 0 auto;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     margin-top: 5px;
-    padding: 6px 0px;
+
+    padding: 6px 0;
+
+    overflow: hidden;
 }
 
 .apparatus-overview-image-container img {
@@ -307,6 +273,7 @@
 
     width: auto;
     height: auto;
+
     max-width: 85%;
     max-height: 85%;
 
@@ -317,31 +284,54 @@
     );
 }
 
+
+/* =========================================================
+   APPARATUS DESCRIPTION
+========================================================= */
+
 .apparatus-overview-description {
     min-height: 70px;
 
-    margin: 1px 0 1px;
+    margin: 1px 0;
 
     color: #57516d;
 
-    font-size: clamp(14px, 1vw, 18px);
+    font-size: clamp(14px, 1cqw, 18px);
     font-weight: 600;
+
     line-height: 1.35;
     text-align: center;
+
+    overflow-wrap: anywhere;
 }
+
+
+/* =========================================================
+   APPARATUS SELECTION BUTTON
+========================================================= */
 
 .apparatus-overview-button {
     width: 100%;
+
     min-height: 42px;
 
+    flex-shrink: 0;
+
     padding: 7px 14px;
+
+    margin-top: auto;
 
     color: #ffffff;
 
     font-family: inherit;
-    font-size: clamp(16px, 1.15vw, 20px);
+    font-size: clamp(16px, 1.15cqw, 20px);
     font-weight: 800;
-    margin-top: 5px;
+
+    line-height: 1.2;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+
     cursor: pointer;
 
     background: linear-gradient(
@@ -353,7 +343,13 @@
     border: none;
     border-radius: 14px;
 
-    box-shadow: 0 7px 14px rgba(92, 53, 194, 0.22);
+    box-shadow:
+        0 7px 14px
+        rgba(92, 53, 194, 0.22);
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
 
     transition:
         transform 0.18s ease,
@@ -370,6 +366,7 @@
     transform: scale(0.98);
 }
 
+
 /* =========================================================
    PAGE ARROWS
 ========================================================= */
@@ -377,12 +374,13 @@
 .apparatus-overview-content .arrow-left,
 .apparatus-overview-content .arrow-right {
     position: absolute;
+
     top: 50%;
 
     z-index: 5;
 
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
 
     display: flex;
     align-items: center;
@@ -394,19 +392,21 @@
 
     border-radius: 50%;
 
+    touch-action: manipulation;
+
     transition:
         background-color 0.2s ease,
         transform 0.2s ease;
 }
 
 .apparatus-overview-content .arrow-left {
-    left: 0.5%;
+    left: 2px;
 
     transform: translateY(-50%);
 }
 
 .apparatus-overview-content .arrow-right {
-    right: 0.5%;
+    right: 2px;
 
     transform: translateY(-50%);
 }
@@ -422,6 +422,7 @@
 
     transform: translateY(-50%) scale(1.1);
 }
+
 
 /* =========================================================
    FOOTER
@@ -445,13 +446,15 @@
     display: flex;
     align-items: center;
 
+    flex-wrap: wrap;
+
     gap: 10px;
 
     padding: 9px 20px;
 
     color: #4d2aa1;
 
-    font-size: clamp(14px, 1vw, 18px);
+    font-size: clamp(14px, 1cqw, 18px);
 
     background: #f7f1ff;
 
@@ -467,9 +470,16 @@
     border-left: 1px solid #c8b3f7;
 }
 
+
+/* =========================================================
+   CONTINUE BUTTON
+========================================================= */
+
 .apparatus-overview-continue-button {
     min-width: 190px;
     min-height: 55px;
+
+    flex-shrink: 0;
 
     padding: 10px 25px;
 
@@ -486,7 +496,13 @@
     border: 2px solid #5d36c4;
     border-radius: 15px;
 
-    box-shadow: 0 8px 16px rgba(92, 53, 194, 0.22);
+    box-shadow:
+        0 8px 16px
+        rgba(92, 53, 194, 0.22);
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
 
     transition:
         transform 0.18s ease,
@@ -503,71 +519,106 @@
     transform: scale(0.98);
 }
 
+
 /* =========================================================
-   TABLET
+   SMALL LAPTOP / LARGE TABLET
 ========================================================= */
 
-@media screen and (max-width: 1050px) {
-    .apparatus-overview-overlay {
-        padding: 16px;        overflow: hidden;
+@container lab (max-width: 1200px) {
 
+    .apparatus-overview-overlay {
+        padding: 14px;
     }
 
     .apparatus-overview-container {
-        width: min(95vw, 850px);
-        height: 95vh;
-        max-height: calc(100dvh - 32px);
-        overflow: hidden;
+        width: 94cqw;
+        height: 93cqh;
 
-        padding: 82px 30px 28px;
+        max-height: calc(100cqh - 28px);
+
+        padding: 65px 20px 15px;
+
+        border-width: 7px;
+        border-radius: 26px;
+    }
+
+    .apparatus-overview-title-tab {
+        top: -7px;
+
+        height: 65px;
+
+        border-radius: 0 0 28px 28px;
+    }
+
+    .apparatus-overview-title-tab h1 {
+        font-size: 30px;
+    }
+
+    .apparatus-overview-subtitle {
+        font-size: 18px;
     }
 
     .apparatus-overview-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px;
-        overflow: hidden;
+        gap: 16px;
     }
 
     .apparatus-overview-card {
-        min-height: 340px;        overflow: hidden;
+        padding: 8px 12px 12px;
 
+        border-radius: 20px;
     }
 
     .apparatus-overview-image-container {
-        height: 175px;
-        min-height: 175px;
-
-        flex: initial;        overflow: hidden;
-
+        height: clamp(100px, 26cqh, 260px);
+        min-height: 100px;
     }
+
+    .apparatus-overview-description {
+        font-size: 14px;
+
+        min-height: 60px;
+    }
+
+    .apparatus-overview-button {
+        font-size: 15px;
+    }
+
+    .apparatus-overview-footer {
+        margin-top: 16px;
+    }
+
 }
 
+
 /* =========================================================
-   SMALL TABLET
+   TABLET LANDSCAPE / SHORT LAPTOP
 ========================================================= */
 
-@media screen and (max-width: 768px) {
+@container lab (max-width: 1024px)
+or (max-height: 650px) {
+
     .apparatus-overview-overlay {
         padding: 10px;
     }
 
     .apparatus-overview-container {
-        width: 96vw;
-        height: min(95dvh, 760px);
-        max-height: calc(100dvh - 20px);
+        width: 95cqw;
+        height: 95cqh;
 
-        padding: 72px 20px 20px;
+        max-height: calc(100cqh - 20px);
+
+        padding: 52px 16px 12px;
 
         border-width: 6px;
-        border-radius: 22px;
+        border-radius: 24px;
     }
 
     .apparatus-overview-title-tab {
-        width: min(78vw, 430px);
-        min-width: 0;
-        height: 60px;
+        top: -6px;
 
-        border-radius: 0 0 28px 28px;
+        height: 52px;
+
+        padding: 5px 15px 8px;
     }
 
     .apparatus-overview-title-tab h1 {
@@ -575,166 +626,644 @@
     }
 
     .apparatus-overview-subtitle {
-        margin-bottom: 14px;
+        margin-bottom: 8px;
 
         font-size: 15px;
     }
 
     .apparatus-overview-content {
-        padding: 4px 6px;
+        padding: 4px 35px;
     }
 
     .apparatus-overview-grid {
-        gap: 14px;
+        gap: 12px;
     }
 
     .apparatus-overview-card {
-        min-height: 290px;
-
-        padding: 16px 12px 14px;
+        padding: 6px 10px 10px;
 
         border-radius: 18px;
     }
 
     .apparatus-overview-number {
-        top: 10px;
-        left: 10px;
+        top: 8px;
+        left: 8px;
 
-        width: 33px;
-        height: 33px;
+        width: 32px;
+        height: 32px;
 
         font-size: 16px;
     }
 
     .apparatus-overview-image-container {
-        height: 130px;
-        min-height: 130px;
+        height: clamp(85px, 24cqh, 200px);
+        min-height: 85px;
 
-        margin-top: 20px;
+        margin-top: 12px;
     }
 
     .apparatus-overview-description {
-        min-height: 55px;
+        min-height: 50px;
 
-        margin: 6px 0 10px;
-
-        font-size: 14px;
+        font-size: 13px;
+        line-height: 1.3;
     }
 
     .apparatus-overview-button {
-        min-height: 43px;
+        min-height: 40px;
 
-        padding: 8px 10px;
+        padding: 6px 10px;
 
         font-size: 14px;
 
-        border-radius: 11px;
+        border-radius: 12px;
     }
 
     .apparatus-overview-content .arrow-left,
     .apparatus-overview-content .arrow-right {
-        width: 34px;
-        height: 34px;
-    }
-
-    .apparatus-overview-content .arrow-left {
-        left: -2px;
-    }
-
-    .apparatus-overview-content .arrow-right {
-        right: -2px;
+        width: 30px;
+        height: 30px;
     }
 
     .apparatus-overview-footer {
         gap: 12px;
 
-        margin-top: 14px;
+        margin-top: 10px;
     }
 
     .apparatus-overview-status {
-        padding: 7px 13px;
+        padding: 6px 13px;
 
         font-size: 13px;
     }
 
     .apparatus-overview-continue-button {
-        min-width: 150px;
-        min-height: 46px;
+        min-width: 145px;
+        min-height: 44px;
 
-        padding: 8px 18px;
+        padding: 6px 18px;
 
         font-size: 15px;
     }
+
 }
 
+
 /* =========================================================
-   MOBILE
+   MOBILE LANDSCAPE
 ========================================================= */
 
-@media screen and (max-width: 620px) {
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
+    .apparatus-overview-overlay {
+        padding: 5px;
+    }
+
     .apparatus-overview-container {
-        padding: 70px 16px 18px;
+        width: 96cqw;
+        height: 96cqh;
+
+        max-height: calc(100cqh - 10px);
+
+        padding: 35px 10px 8px;
+
+        border-width: 5px;
+        border-radius: 18px;
     }
 
     .apparatus-overview-title-tab {
-        width: 80vw;
-        height: 56px;
+        top: -5px;
+
+        width: min(320px, 45cqw);
+        min-width: 0;
+
+        height: 35px;
+
+        padding: 3px 12px 5px;
+
+        border-radius: 0 0 20px 20px;
     }
 
     .apparatus-overview-title-tab h1 {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .apparatus-overview-subtitle {
-        font-size: 14px;
+        margin-bottom: 6px;
+
+        font-size: 12px;
+
+        line-height: 1.2;
+    }
+
+    .apparatus-overview-content {
+        padding: 3px 28px;
     }
 
     .apparatus-overview-grid {
-        grid-template-columns: 1fr;
+        gap: 8px;
     }
 
     .apparatus-overview-card {
-        min-height: 280px;
+        padding: 5px 7px 8px;
+
+        border-radius: 14px;
+    }
+
+    .apparatus-overview-number {
+        top: 5px;
+        left: 5px;
+
+        width: 24px;
+        height: 24px;
+
+        font-size: 13px;
     }
 
     .apparatus-overview-image-container {
-        height: 125px;
-        min-height: 125px;
+        height: clamp(55px, 24cqh, 110px);
+        min-height: 55px;
+
+        margin-top: 8px;
+
+        padding: 3px 0;
+    }
+
+    .apparatus-overview-image-container img {
+        max-width: 80%;
+        max-height: 90%;
+    }
+
+    .apparatus-overview-description {
+        min-height: 0;
+
+        margin: 3px 0 6px;
+
+        font-size: 11px;
+
+        line-height: 1.25;
+    }
+
+    .apparatus-overview-button {
+        min-height: 40px;
+
+        padding: 4px 7px;
+
+        font-size: 12px;
+
+        border-radius: 10px;
+    }
+
+    .apparatus-overview-content .arrow-left,
+    .apparatus-overview-content .arrow-right {
+        width: 24px;
+        height: 24px;
+    }
+
+    .apparatus-overview-footer {
+        gap: 8px;
+
+        margin-top: 8px;
+    }
+
+    .apparatus-overview-status {
+        gap: 6px;
+
+        padding: 4px 10px;
+
+        font-size: 11px;
+    }
+
+    .apparatus-overview-page-count {
+        padding-left: 6px;
+    }
+
+    .apparatus-overview-continue-button {
+        min-width: 110px;
+        min-height: 40px;
+
+        padding: 4px 14px;
+
+        font-size: 13px;
+
+        border-radius: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE LANDSCAPE
+========================================================= */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .apparatus-overview-container {
+        width: 97cqw;
+        height: 97cqh;
+
+        padding: 30px 7px 6px;
+
+        border-width: 4px;
+        border-radius: 15px;
+    }
+
+    .apparatus-overview-title-tab {
+        top: -4px;
+
+        height: 30px;
+
+        border-radius: 0 0 16px 16px;
+    }
+
+    .apparatus-overview-title-tab h1 {
+        font-size: 17px;
+    }
+
+    .apparatus-overview-subtitle {
+        margin-bottom: 4px;
+
+        font-size: 11px;
+    }
+
+    .apparatus-overview-content {
+        padding: 2px 25px;
+    }
+
+    .apparatus-overview-grid {
+        gap: 5px;
+    }
+
+    .apparatus-overview-card {
+        padding: 4px 5px 6px;
+
+        border-radius: 11px;
+    }
+
+    .apparatus-overview-number {
+        top: 4px;
+        left: 4px;
+
+        width: 20px;
+        height: 20px;
+
+        font-size: 11px;
+    }
+
+    .apparatus-overview-image-container {
+        height: clamp(45px, 22cqh, 85px);
+        min-height: 45px;
+
+        margin-top: 5px;
+    }
+
+    .apparatus-overview-description {
+        margin: 2px 0 4px;
+
+        font-size: 10px;
+
+        line-height: 1.2;
+    }
+
+    .apparatus-overview-button {
+        min-height: 36px;
+
+        padding: 4px 5px;
+
+        font-size: 11px;
+
+        border-radius: 8px;
+    }
+
+    .apparatus-overview-content .arrow-left,
+    .apparatus-overview-content .arrow-right {
+        width: 21px;
+        height: 21px;
+    }
+
+    .apparatus-overview-footer {
+        margin-top: 5px;
+
+        gap: 6px;
+    }
+
+    .apparatus-overview-status {
+        padding: 3px 8px;
+
+        font-size: 10px;
+    }
+
+    .apparatus-overview-continue-button {
+        min-width: 95px;
+        min-height: 36px;
+
+        padding: 3px 10px;
+
+        font-size: 12px;
+
+        border-radius: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE LANDSCAPE
+========================================================= */
+
+@container lab (max-width: 550px)
+or (max-height: 280px) {
+
+    .apparatus-overview-container {
+        padding: 26px 5px 5px;
+
+        border-width: 3px;
+        border-radius: 12px;
+    }
+
+    .apparatus-overview-title-tab {
+        top: -3px;
+
+        height: 26px;
+    }
+
+    .apparatus-overview-title-tab h1 {
+        font-size: 15px;
+    }
+
+    .apparatus-overview-subtitle {
+        font-size: 10px;
+    }
+
+    .apparatus-overview-content {
+        padding: 2px 22px;
+    }
+
+    .apparatus-overview-grid {
+        gap: 4px;
+    }
+
+    .apparatus-overview-card {
+        padding: 3px 4px 5px;
+
+        border-radius: 9px;
+    }
+
+    .apparatus-overview-number {
+        width: 17px;
+        height: 17px;
+
+        font-size: 10px;
+    }
+
+    .apparatus-overview-image-container {
+        height: clamp(40px, 20cqh, 65px);
+        min-height: 40px;
+    }
+
+    .apparatus-overview-description {
+        font-size: 9px;
+    }
+
+    .apparatus-overview-button {
+        min-height: 34px;
+
+        padding: 3px 4px;
+
+        font-size: 10px;
+    }
+
+    .apparatus-overview-content .arrow-left,
+    .apparatus-overview-content .arrow-right {
+        width: 18px;
+        height: 18px;
+    }
+
+    .apparatus-overview-status {
+        font-size: 9px;
+    }
+
+    .apparatus-overview-continue-button {
+        min-width: 80px;
+        min-height: 34px;
+
+        font-size: 11px;
+    }
+
+}
+
+
+/* =========================================================
+   ACTUAL PORTRAIT CONTAINER — FALLBACK
+========================================================= */
+
+@container lab (orientation: portrait) {
+
+    .apparatus-overview-container {
+        width: 95cqw;
+        height: 95cqh;
+
+        padding: 45px 10px 10px;
+    }
+
+    .apparatus-overview-title-tab {
+        width: 75%;
+        height: 42px;
+    }
+
+    .apparatus-overview-title-tab h1 {
+        font-size: 20px;
+    }
+
+    .apparatus-overview-subtitle {
+        font-size: 13px;
+    }
+
+    .apparatus-overview-grid {
+        flex-wrap: wrap;
+
+        align-content: flex-start;
+
+        gap: 10px;
+    }
+
+    .apparatus-overview-card {
+        flex: 0 0 calc((100% - 10px) / 2);
+
+        min-height: 210px;
+
+        padding: 8px;
+    }
+
+    .apparatus-overview-image-container {
+        height: 95px;
+        min-height: 95px;
+
+        flex: initial;
+    }
+
+    .apparatus-overview-description {
+        font-size: 12px;
+    }
+
+    .apparatus-overview-button {
+        min-height: 44px;
+
+        font-size: 12px;
     }
 
     .apparatus-overview-footer {
         flex-direction: column;
 
         align-items: stretch;
-    }
 
-    .apparatus-overview-status,
-    .apparatus-overview-continue-button {
-        width: 100%;
+        gap: 6px;
     }
 
     .apparatus-overview-status {
         justify-content: center;
+
+        font-size: 12px;
     }
+
+    .apparatus-overview-continue-button {
+        width: 100%;
+        min-height: 44px;
+    }
+
 }
 
+
 /* =========================================================
-   SHORT HEIGHT SCREENS
+   TOUCHSCREEN BUTTON EFFECTS
 ========================================================= */
 
-@media screen and (max-height: 700px) {
-    .apparatus-overview-container {
-        height: calc(100dvh - 20px);
+@media (pointer: coarse) {
 
-        padding-top: 68px;
-        padding-bottom: 18px;
+    .apparatus-overview-button,
+    .apparatus-overview-continue-button {
+        min-height: 34px;
     }
 
-    .apparatus-overview-subtitle {
-        margin-bottom: 12px;
+    .apparatus-overview-button:hover,
+    .apparatus-overview-continue-button:hover {
+        filter: none;
+
+        transform: none;
     }
 
-    .apparatus-overview-footer {
-        margin-top: 12px;
+    .apparatus-overview-button:active,
+    .apparatus-overview-continue-button:active {
+        transform: scale(0.95);
     }
+
+    .apparatus-overview-content .arrow-left:hover,
+    .apparatus-overview-content .arrow-right:hover {
+        background-color: #bcbcbc;
+
+        transform: translateY(-50%);
+    }
+
+    .apparatus-overview-content .arrow-left:active,
+    .apparatus-overview-content .arrow-right:active {
+        background-color: #ffcc40;
+
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    .apparatus-overview-content {
+        touch-action: pan-y;
+    }
+
+}
+
+
+/* =========================================================
+   PAGE ANIMATIONS
+========================================================= */
+
+.apparatus-slide-out-left {
+    pointer-events: none;
+
+    animation: apparatus-page-out-left 0.3s ease-in forwards;
+}
+
+.apparatus-slide-out-right {
+    pointer-events: none;
+
+    animation: apparatus-page-out-right 0.3s ease-in forwards;
+}
+
+.apparatus-slide-in-left {
+    pointer-events: none;
+
+    animation: apparatus-page-in-left 0.35s ease-out forwards;
+}
+
+.apparatus-slide-in-right {
+    pointer-events: none;
+
+    animation: apparatus-page-in-right 0.35s ease-out forwards;
+}
+
+
+@keyframes apparatus-page-out-left {
+
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-150px);
+    }
+
+}
+
+
+@keyframes apparatus-page-out-right {
+
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(150px);
+    }
+
+}
+
+
+@keyframes apparatus-page-in-left {
+
+    from {
+        opacity: 0;
+        transform: translateX(-150px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+
+@keyframes apparatus-page-in-right {
+
+    from {
+        opacity: 0;
+        transform: translateX(150px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
 }

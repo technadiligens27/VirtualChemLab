@@ -1,8 +1,8 @@
-
 import {
   useContext,
-  useEffect,
+  useLayoutEffect,
   useState,
+  useRef,
 } from "react"
 
 import {
@@ -13,6 +13,7 @@ import "./Explanations.css"
 
 
 const Explanations = ({
+
   text = "",
   text02 = "",
 
@@ -21,20 +22,21 @@ const Explanations = ({
   bottom = null,
   left = null,
 
-  width = "350px",
-  height = "300px",
-
-  // Compact screen parameters (<= 1024px)
+  // Compact screen positioning
   compactTop = null,
   compactLeft = null,
-  compactWidth = null,
-  compactHeight = null,
+
 }) => {
+
   const {
     setIsExplanationOpen,
   } = useContext(
     MainGuidelineContext
   )
+
+  const explanationRef = useRef(null)
+
+  const paragraphRef = useRef(null)
 
   const [
     currentPage,
@@ -50,14 +52,39 @@ const Explanations = ({
 
 
   // =================================
-  // SCREEN RESIZE
+  // LAB CONTAINER RESIZE
   // =================================
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsCompactScreen(
-        window.innerWidth <= 1024
+  useLayoutEffect(() => {
+
+    const labContainer =
+      explanationRef.current?.closest(
+        ".lab-view"
       )
+
+    const handleResize = () => {
+
+      const labWidth =
+        labContainer?.clientWidth ??
+        window.innerWidth
+
+      setIsCompactScreen(
+        labWidth <= 1024
+      )
+
+    }
+
+    handleResize()
+
+    const resizeObserver =
+      new ResizeObserver(handleResize)
+
+    if (labContainer) {
+
+      resizeObserver.observe(
+        labContainer
+      )
+
     }
 
     window.addEventListener(
@@ -66,12 +93,32 @@ const Explanations = ({
     )
 
     return () => {
+
+      resizeObserver.disconnect()
+
       window.removeEventListener(
         "resize",
         handleResize
       )
+
     }
+
   }, [])
+
+
+  // =================================
+  // RESET SCROLL WHEN PAGE CHANGES
+  // =================================
+
+  useLayoutEffect(() => {
+
+    if (paragraphRef.current) {
+
+      paragraphRef.current.scrollTop = 0
+
+    }
+
+  }, [currentPage])
 
 
   // =================================
@@ -79,26 +126,29 @@ const Explanations = ({
   // =================================
 
   const positionStyle = {
-    top: isCompactScreen && compactTop !== null
-      ? compactTop
-      : top,
+
+    top:
+      isCompactScreen &&
+      compactTop !== null
+        ? compactTop
+        : top,
 
     right,
+
     bottom,
 
-    left: isCompactScreen && compactLeft !== null
-      ? compactLeft
-      : left,
+    left:
+      isCompactScreen &&
+      compactLeft !== null
+        ? compactLeft
+        : left,
 
-    width: isCompactScreen && compactWidth !== null
-      ? compactWidth
-      : width,
-
-    height: isCompactScreen && compactHeight !== null
-      ? compactHeight
-      : height,
   }
 
+
+  // =================================
+  // CHECK SECOND PAGE
+  // =================================
 
   const hasText02 =
     text02 !== null &&
@@ -106,96 +156,139 @@ const Explanations = ({
     text02 !== ""
 
 
+  // =================================
+  // CLOSE EXPLANATION
+  // =================================
+
+  const handleClose = () => {
+
+    setIsExplanationOpen(false)
+
+  }
+
+
+  // =================================
+  // RENDER
+  // =================================
+
   return (
-    <div className="explanation-outer-container">
+
+    <div
+      ref={explanationRef}
+      className="explanation-outer-container"
+    >
+
       <div
         className="explanation-container"
         style={positionStyle}
       >
-        {/* ========================= */}
-        {/* HEADER */}
-        {/* ========================= */}
+
+        {/* =================================
+            HEADER
+        ================================= */}
 
         <div className="explanation-header">
+
           <h1>
             Explanation
           </h1>
 
           <img
-            onClick={() => {
-              setIsExplanationOpen(
-                false
-              )
-            }}
+            onClick={handleClose}
             src="./cross.webp"
             alt="Close"
           />
+
         </div>
 
 
-        {/* ========================= */}
-        {/* TEXT */}
-        {/* ========================= */}
+        {/* =================================
+            TEXT AREA
+        ================================= */}
 
-        <div className="explanation-paragraph-container">
+        <div
+          ref={paragraphRef}
+          className="explanation-paragraph-container"
+        >
+
           {currentPage === 1 && (
+
             <div
               key="text01"
               className="explanation-paragraph"
             >
+
               <p>
                 {text}
               </p>
+
             </div>
+
           )}
 
 
           {currentPage === 2 && (
+
             <div
               key="text02"
-              className="explanation-paragraph explanation-slide-in"
+              className="
+                explanation-paragraph
+                explanation-slide-in
+              "
             >
+
               <p>
                 {text02}
               </p>
+
             </div>
+
           )}
+
         </div>
 
 
-        {/* ========================= */}
-        {/* BUTTONS */}
-        {/* ========================= */}
+        {/* =================================
+            BUTTONS
+        ================================= */}
 
         <div className="explanation-btn-container">
+
           <button
-            onClick={() => {
-              setIsExplanationOpen(
-                false
-              )
-            }}
+            type="button"
+            onClick={handleClose}
           >
+
             Continue
+
           </button>
 
 
           {hasText02 &&
             currentPage === 1 && (
+
               <button
+                type="button"
                 onClick={() => {
-                  setCurrentPage(
-                    2
-                  )
+
+                  setCurrentPage(2)
+
                 }}
               >
+
                 Next
+
               </button>
+
             )}
+
         </div>
+
       </div>
+
     </div>
+
   )
 }
-
 
 export default Explanations

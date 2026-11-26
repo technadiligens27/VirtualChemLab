@@ -1,67 +1,379 @@
+/* =====================================
+   ERROR MESSAGE CONTAINER
+===================================== */
+
 .error-msg {
-  position: fixed;
-  top: 2%;
-  left: 13.5%;
-  transform: translateX(-50%);
-  z-index: 9999;
+    position: absolute;
 
-  min-width: 20%;
-  height: 100px;
+    top: 2%;
+    left: 13.5%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+    transform: translateX(-50%);
 
-  border-radius: 21px;
+    z-index: 9999;
 
-  background: #FFFFFF;
-  color: white;
-  font-weight: 600;
-  padding-left: 5px;
-  padding-right: 10px;
-}
+    width: fit-content;
 
-.error-icon-container{
-  background-color: #FF6060;
-  min-width: 25%;
-  height: 90%;
-  border-radius: 16.87px;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    min-width: 20cqw;
+    max-width: min(400px, 90cqw);
 
-.error-icon-container img{
-  width: 80%;
-}
+    height: auto;
+    min-height: 100px;
 
+    display: flex;
+    flex-direction: row;
 
-.error-content-container{
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-  margin-right: auto;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    gap: 12px;
+
+    padding: 5px 10px 5px 5px;
+
+    background: #FFFFFF;
+
+    color: white;
+    font-weight: 600;
+
+    border-radius: 21px;
+
+    box-sizing: border-box;
 }
 
 
-.try-again{
-  font-size: 24px;
-  font-weight: 700;
-    margin: 0%;
+/* =====================================
+   ERROR ICON CONTAINER
+===================================== */
 
+.error-icon-container {
+    background-color: #FF6060;
+
+    width: 80px;
+
+    flex-shrink: 0;
+
+    border-radius: 16.87px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.error-icon-container img {
+    width: 80%;
+    max-width: 60px;
+
+    object-fit: contain;
+}
+
+
+/* =====================================
+   ERROR CONTENT
+===================================== */
+
+.error-content-container {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 5px 0;
+}
+
+
+.error-content-container p {
+    color: black;
+}
+
+
+/* =====================================
+   TRY AGAIN TITLE
+===================================== */
+
+.try-again {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+/* =====================================
+   ERROR TEXT
+===================================== */
+
+.error-text {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =====================================
+   SMALL LAPTOP / LARGE TABLET
+===================================== */
+
+@container lab (max-width: 1200px) {
+
+    .error-msg {
+        min-width: 230px;
+        max-width: 350px;
+
+        min-height: 90px;
+
+        gap: 10px;
+
+        border-radius: 18px;
+    }
+
+    .error-icon-container {
+        width: 70px;
+
+        border-radius: 14px;
+    }
+
+    .try-again {
+        font-size: 22px;
+    }
+
+    .error-text {
+        font-size: 15px;
+    }
 
 }
 
-.error-content-container p{
-  color: black;
+
+/* =====================================
+   TABLET LANDSCAPE / SHORT LAPTOP
+===================================== */
+
+@container lab (max-width: 1024px)
+or (max-height: 650px) {
+
+    .error-msg {
+        top: 2cqh;
+        left: 2cqw;
+
+        transform: none;
+
+        min-width: 210px;
+        max-width: min(320px, 90cqw);
+
+        min-height: 75px;
+
+        padding: 4px 8px 4px 4px;
+
+        gap: 9px;
+
+        border-radius: 15px;
+    }
+
+    .error-icon-container {
+        width: 58px;
+
+        border-radius: 11px;
+    }
+
+    .error-icon-container img {
+        width: 75%;
+    }
+
+    .try-again {
+        font-size: 19px;
+    }
+
+    .error-text {
+        font-size: 14px;
+    }
 
 }
 
-.error-text{
-  margin: 0%;
-  font-weight: 400;
+
+/* =====================================
+   MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
+    .error-msg {
+        top: 2cqh;
+        left: 2cqw;
+
+        min-width: 180px;
+        max-width: min(280px, 90cqw);
+
+        min-height: 58px;
+
+        gap: 7px;
+
+        padding: 4px 8px 4px 4px;
+
+        border-radius: 12px;
+    }
+
+    .error-icon-container {
+        width: 45px;
+
+        border-radius: 9px;
+    }
+
+    .error-icon-container img {
+        width: 75%;
+    }
+
+    .error-content-container {
+        padding: 3px 0;
+    }
+
+    .try-again {
+        font-size: 16px;
+    }
+
+    .error-text {
+        font-size: 12px;
+
+        line-height: 1.3;
+    }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .error-msg {
+        top: 2cqh;
+        left: 1.5cqw;
+
+        min-width: 150px;
+        max-width: min(240px, 90cqw);
+
+        min-height: 48px;
+
+        gap: 6px;
+
+        padding: 3px 6px 3px 3px;
+
+        border-radius: 10px;
+    }
+
+    .error-icon-container {
+        width: 36px;
+
+        border-radius: 7px;
+    }
+
+    .try-again {
+        font-size: 14px;
+    }
+
+    .error-text {
+        font-size: 11px;
+    }
+
+}
+
+
+/* =====================================
+   EXTRA SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 550px)
+or (max-height: 280px) {
+
+    .error-msg {
+        top: 1.5cqh;
+        left: 1cqw;
+
+        min-width: 130px;
+        max-width: min(200px, 90cqw);
+
+        min-height: 40px;
+
+        gap: 5px;
+
+        padding: 3px 5px 3px 3px;
+
+        border-radius: 8px;
+    }
+
+    .error-icon-container {
+        width: 30px;
+
+        border-radius: 6px;
+    }
+
+    .error-content-container {
+        padding: 2px 0;
+    }
+
+    .try-again {
+        font-size: 12px;
+    }
+
+    .error-text {
+        font-size: 10px;
+
+        line-height: 1.25;
+    }
+
+}
+
+
+/* =====================================
+   ACTUAL PORTRAIT CONTAINER — FALLBACK
+===================================== */
+
+@container lab (orientation: portrait) {
+
+    .error-msg {
+        top: 2cqh;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        min-width: min(200px, 90cqw);
+        max-width: 90cqw;
+
+        min-height: 65px;
+
+        gap: 8px;
+
+        padding: 5px;
+
+        border-radius: 14px;
+    }
+
+    .error-icon-container {
+        width: 50px;
+
+        border-radius: 10px;
+    }
+
+    .try-again {
+        font-size: 18px;
+    }
+
+    .error-text {
+        font-size: 13px;
+    }
+
 }

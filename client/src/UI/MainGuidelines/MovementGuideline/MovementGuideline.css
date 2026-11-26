@@ -1,33 +1,364 @@
-.guideline-inner-container-row{
-    background-color: #F9F9E7;
-    position: relative;
-    
+/* =========================================
+   DESKTOP
+========================================= */
+
+.movement-guideline .guideline-inner-container-row {
+  position: relative;
+
+  background-color: #F9F9E7;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: center;
+  align-content: safe center;
+
+  gap: 20px;
+  padding: 20px;
 }
 
-.arrow-img-container{
-    padding: 0%;
-    margin: 0%;
-    width: 60%;
-    margin-left: 10px;
-}
-.arrow-img-container img{
-    min-height: 70%;
-    min-width: 110%;
+.movement-guideline .arrow-img-container {
+  width: 42%;
+  height: auto;
+
+  flex: 0 0 42%;
+  min-width: 0;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.movement-content{
-    font-size: 28px;
-    text-align: left;
+.movement-guideline .arrow-img-container img {
+  width: 100%;
+  height: auto;
+
+  min-width: 0;
+  min-height: 0;
+
+  max-width: 100%;
+  max-height: 45cqh;
+
+  object-fit: contain;
 }
 
-.movement-guidelines-btn-container{
-    /* border: 1px solid black; */
-    width: 83%;
+.movement-guideline .guideline-content-container {
+  width: auto;
+
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.movement-guideline .movement-content {
+  font-size: 28px;
+  line-height: 160%;
+
+  text-align: left;
+
+  padding: 0;
+  margin: 0;
+
+  overflow-wrap: anywhere;
+}
+
+.movement-guideline .movement-guidelines-btn-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.movement-guideline .guide-info {
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.movement-guideline .back-btn {
+  font-size: 20px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@container lab (width > 844px)
+and (width <= 1200px)
+and (height > 450px) {
+
+  .movement-guideline .guideline-inner-container-row {
     display: flex;
+    flex-direction: row;
+
     align-items: center;
-    justify-content: left;
+    justify-content: center;
+
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .movement-guideline .arrow-img-container {
+    width: 42%;
+    height: auto;
+
+    flex: 0 0 42%;
+  }
+
+  .movement-guideline .arrow-img-container img {
+    width: 100%;
+    height: auto;
+
+    max-height: 40cqh;
+  }
+
+  .movement-guideline .movement-content {
+    font-size: 22px;
+    line-height: 150%;
+
+    text-align: left;
+    padding: 0;
+  }
+
+  .movement-guideline .movement-guidelines-btn-container {
+    width: 100%;
+
+    gap: 10px;
+    padding-top: 15px;
+  }
+
+  .movement-guideline .back-btn {
+    font-size: 18px;
+  }
 }
 
-.back-btn{
+
+/* =========================================
+   MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 844px)
+or (max-height: 450px) {
+
+    
+
+  .movement-guideline .guideline-inner-container-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    padding: 10px;
+
+    overflow-y: auto;
+  }
+
+  .movement-guideline .arrow-img-container {
+    width: 42%;
+    height: auto;
+
+    flex: 0 0 42%;
+
+    padding: 0;
+    margin: 0;
+  }
+
+  .movement-guideline .arrow-img-container img {
+    width: 100%;
+    height: auto;
+
+    min-width: 0;
+    min-height: 0;
+
+    max-width: 100%;
+    max-height: 45cqh;
+
+    object-fit: contain;
+  }
+
+  .movement-guideline .guideline-content-container {
+    width: auto;
+    
+    flex: 1;
+    min-width: 0;
+
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .movement-guideline .movement-content {
+    font-size: 17px;
+    line-height: 150%;
+
+    text-align: left;
+    padding: 0;
+  }
+
+
+
+  .movement-guideline .movement-guidelines-btn-container {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  .movement-guideline .main-guidelines-btn {
+    min-height: 20px;
+
+    padding: 5px;
+
     font-size: 20px;
+  }
+
+  .movement-guideline .back-btn {
+    font-size: 22px;
+  }
+  
+}
+
+
+/* =========================================
+   SMALL MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+  .movement-guideline .guideline-inner-container-row {
+    display: flex;
+    flex-direction: row;
+
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .movement-guideline .arrow-img-container {
+    width: 38%;
+    height: auto;
+
+    flex: 0 0 38%;
+  }
+
+  .movement-guideline .arrow-img-container img {
+    width: 100%;
+    height: auto;
+
+    max-height: 40cqh;
+  }
+
+  .movement-guideline .movement-content {
+    font-size: 14px;
+    line-height: 140%;
+
+    text-align: left;
+    padding: 0;
+  }
+
+  .movement-guideline .movement-guidelines-btn-container {
+    gap: 6px;
+    padding-top: 8px;
+  }
+
+  .movement-guideline .main-guidelines-btn {
+    min-height: 20px;
+
+    padding: 4px;
+
+    font-size: 14px;
+  }
+
+  .movement-guideline .back-btn {
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================
+   EXTRA SMALL SCREENS
+========================================= */
+
+@container lab (max-width: 520px) {
+
+  .movement-guideline .guideline-inner-container-row {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    align-items: center;
+
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .movement-guideline .arrow-img-container {
+    width: 100%;
+    height: auto;
+
+    flex: 0 0 auto;
+  }
+
+  .movement-guideline .arrow-img-container img {
+    width: 40%;
+    height: auto;
+
+    max-height: 20cqh;
+  }
+
+  .movement-guideline .guideline-content-container {
+    width: 100%;
+
+    flex: 0 0 auto;
+
+    align-items: center;
+  }
+
+  .movement-guideline .movement-content {
+    font-size: 13px;
+    line-height: 140%;
+
+    text-align: center;
+  }
+
+  .movement-guideline .movement-guidelines-btn-container {
+    justify-content: center;
+
+    gap: 5px;
+    padding-top: 5px;
+  }
+
+  .movement-guideline .guide-info {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .movement-guideline .main-guidelines-btn {
+    font-size: 13px;
+  }
+
+  .movement-guideline .back-btn {
+    font-size: 13px;
+  }
 }

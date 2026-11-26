@@ -1,232 +1,994 @@
+/* =====================================
+   OVERLAY
+===================================== */
+
 .fill-dialog-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    inset: 0;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100%;
 
-  z-index: 99;
+    background: rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 99;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
 }
+
+
+/* =====================================
+   MAIN DIALOG
+===================================== */
 
 .fill-dialog {
-  width: 750px;
-  max-width: 90vw;
-  height: 80vh;
-  background: #FFD768;
-  border-radius: 55px;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    width: 750px;
+    max-width: 90cqw;
+
+    height: 80cqh;
+    max-height: 94cqh;
+
+    background: #FFD768;
+
+    border-radius: 55px;
+
+    padding: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.25);
+
+    box-sizing: border-box;
 }
+
 
 .fill-dialog h3 {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
 
+    margin-bottom: 20px;
 }
+
+
+/* =====================================
+   INNER CONTENT
+===================================== */
 
 .fill-dialog-content {
-  display: flex;
-  flex-direction: column;
-  background-color: #FFFFFF;
-  border-radius: 40px;
-  justify-content: center;
-  align-items: center;
-  min-height: 98%;
-  
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: safe center;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+
+    padding: 15px 10px;
+
+    background-color: #FFFFFF;
+
+    border-radius: 40px;
+
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #FFD768 transparent;
 }
 
-.fill-dialog-content h3{
-    font-family: 'Baloo Bhai 2',sans-serif;
+
+.fill-dialog-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.fill-dialog-content::-webkit-scrollbar-thumb {
+    background-color: #FFD768;
+
+    border-radius: 10px;
+}
+
+
+.fill-dialog-content h3 {
+    font-family: "Baloo Bhai 2", sans-serif;
+
     font-size: 25px;
 }
 
-.fill-dialog-section {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+
+/* =====================================
+   SELECT CHEMICAL TITLE
+===================================== */
+
+.fill-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    width: 100%;
+
+    gap: 10px;
+
+    margin: 0;
+
+    padding: 0 0 0 70px;
+
+    box-sizing: border-box;
 }
 
-.option-btn img{
-  width: 15%;
+
+.fill-title-container h3 {
+    margin: 0 0 12px;
 }
+
+
+.fill-divider {
+    width: 200px;
+    height: 0;
+
+    max-width: 40%;
+}
+
+
+/* =====================================
+   CHEMICAL SELECTION
+===================================== */
+
+.fill-dialog-section {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    flex-shrink: 0;
+
+    width: 100%;
+
+    gap: 10px;
+}
+
 
 .fill-dialog-section h3 {
-  margin-bottom: 12px;
-  font-family: 'Baloo Bhai 2',sans-serif;
+    margin-bottom: 12px;
+
+    font-family: "Baloo Bhai 2", sans-serif;
 }
 
-.option-btn {
-  width: 40%;
-  height: 55px;
-  font-size: 18px;
-  /* margin-bottom: 10px; */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: left;
-  gap: 5px;
-  border: 3px solid #CCCCCC;
-  border-radius: 18px;
 
-  background: white;
-  cursor: pointer;
-  transition: 0.2s;
-  margin-bottom: 5px;
+/* =====================================
+   OPTION BUTTONS
+===================================== */
+
+.fill-dialog .option-btn {
+    width: 40%;
+
+    min-width: 0;
+
+    height: auto;
+    min-height: 55px;
+
+    padding: 5px 10px;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 5px;
+
+    margin-bottom: 5px;
+
+    font-size: 18px;
+
+    line-height: 1.3;
+    text-align: left;
+
+    overflow-wrap: anywhere;
+
+    border: 3px solid #CCCCCC;
+    border-radius: 18px;
+
+    background: white;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.option-btn:hover {
-  background: #f5f5f5;
+
+.fill-dialog .option-btn img {
+    width: 15%;
+    max-height: 40px;
+
+    flex-shrink: 0;
+
+    object-fit: contain;
 }
 
-.option-btn.selected {
-  background: #2563eb;
-  color: white;
-  border-color: #2563eb;
+
+.fill-dialog .option-btn:hover {
+    background: #f5f5f5;
 }
+
+
+.fill-dialog .option-btn:active {
+    transform: scale(0.97);
+}
+
+
+.fill-dialog .option-btn.selected {
+    background: #2563eb;
+
+    color: white;
+
+    border-color: #2563eb;
+}
+
+
+/* =====================================
+   AMOUNT SELECTION CONTAINER
+===================================== */
+
+.fill-amount-container {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 90%;
+
+    margin: 15px 0 0;
+
+    padding: 15px 0;
+
+    background-color: #FFF9E8;
+
+    border: 1px solid #B0ACA0;
+    border-radius: 25px;
+
+    box-sizing: border-box;
+}
+
+
+/* =====================================
+   AMOUNT TITLE
+===================================== */
+
+.fill-amount-title-container {
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0 0 0 60px;
+
+    box-sizing: border-box;
+}
+
+
+.fill-amount-title-container h3 {
+    margin: 0;
+
+    padding: 0;
+}
+
+
+/* =====================================
+   AMOUNT BUTTON CONTAINER
+===================================== */
+
+.amount-btn-container {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    width: 90%;
+
+    gap: 10px;
+}
+
+
+.fill-dialog .amount-btn {
+    flex: 1 1 0;
+
+    width: auto;
+    min-width: 60px;
+
+    justify-content: center;
+
+    white-space: nowrap;
+
+    margin-bottom: 0;
+}
+
+
+/* =====================================
+   AMOUNT SLIDER
+===================================== */
+
+.amount-slider-container {
+    width: 100%;
+}
+
+
+.amount-slider {
+    width: 100%;
+}
+
+
+/* =====================================
+   SELECTION INFORMATION
+===================================== */
 
 .selection-info {
-  margin-top: 20px;
-  padding: 12px;
+    margin-top: 20px;
 
-  background: #f8f8f8;
-  border-radius: 8px;
-}
+    padding: 12px;
 
-.confirm-btn {
-  width: 100%;
-  margin-top: 20px;
-  padding: 14px;
+    background: #f8f8f8;
 
-  border: none;
-  border-radius: 8px;
-
-  background: #16a34a;
-  color: white;
-
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.confirm-btn:hover:not(:disabled) {
-  background: #15803d;
-}
-
-.confirm-btn:disabled {
-  background: #bdbdbd;
-  cursor: not-allowed;
-}
-
-.fill-divider{
-  width: 200px;
-  height: 0px;
-}
-
-.fill-title-container{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: 35px;
-  gap:10px;
-  margin: 0;
-  padding: 0%;
-  margin-right: auto;
-  padding-left: 70px;
-}
-
-.fill-amount-container{
-  background-color: #FFF9E8;
-  border-radius: 25px;
-  border: 1px solid #B0ACA0;
-   background-color: #FFF9E8;
-  width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0%;
-  padding: 15px 0px;
-    margin-top: 15px;
-
-}
-
-.amount-slider-container{
-  width: 100%;
-}
-.amount-slider{
-  width: 100%;
-}
-
-.amount-btn-container{
-  gap: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-}
-
-.amount-btn{
-  width: 25%;
-}
-
-.fill-amount-title-container{
-  padding: 0%;
-  margin: 0%;
-  padding-left: 35px;
-  margin-right: auto;
-  padding-left: 60px;
-}
-
-.fill-amount-title-container h3{
-  margin: 0%;
-  padding: 0%;
-}
-
-.confirm-btn{
-  width: 40%;
-  margin-bottom: 10px;
+    border-radius: 8px;
 }
 
 
-@media screen and (max-height:720px) {
-/*   
-  .fill-dialog-content{
-    padding-top: 50px;
-  } */
+/* =====================================
+   CONFIRM BUTTON
+===================================== */
 
-  .fill-dialog-content{
-    border: 1px solid red;
-    height: 55vh;
-    overflow: auto;
-  }
-  .option-btn{
+.fill-dialog .confirm-btn {
+    width: 40%;
+
+    flex-shrink: 0;
+
+    min-height: 45px;
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    padding: 10px 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #16a34a;
+
+    color: white;
+
     font-size: 16px;
-  }
 
-.fill-title-container{
-  display: none;
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.fill-dialog-section{
-  padding-top: 50px;
+
+.fill-dialog .confirm-btn:hover:not(:disabled) {
+    background: #15803d;
 }
 
-.fill-amount-title-container{
-  display: none;
+
+.fill-dialog .confirm-btn:active:not(:disabled) {
+    transform: scale(0.97);
 }
-.confirm-btn{
-  margin-top: 10px;
-  padding: 10px;
+
+
+.fill-dialog .confirm-btn:disabled {
+    background: #bdbdbd;
+
+    cursor: not-allowed;
 }
+
+
+/* =====================================
+   SMALL LAPTOP / LARGE TABLET
+===================================== */
+
+@container lab (max-width: 1200px) {
+
+    .fill-dialog {
+        width: min(750px, 90cqw);
+
+        height: 85cqh;
+
+        padding: 20px;
+
+        border-radius: 45px;
+    }
+
+    .fill-dialog-content {
+        border-radius: 32px;
+    }
+
+    .fill-dialog-content h3 {
+        font-size: 23px;
+    }
+
+    .fill-dialog .option-btn {
+        min-height: 50px;
+
+        font-size: 16px;
+
+        border-radius: 15px;
+    }
+
+    .fill-title-container {
+        padding-left: 55px;
+    }
+
+    .fill-amount-title-container {
+        padding-left: 45px;
+    }
+
+}
+
+
+/* =====================================
+   TABLET LANDSCAPE / SHORT LAPTOP
+===================================== */
+
+@container lab (max-width: 1024px)
+or (max-height: 650px) {
+
+    .fill-dialog {
+        width: min(700px, 92cqw);
+
+        height: 90cqh;
+
+        padding: 16px;
+
+        border-radius: 35px;
+    }
+
+    .fill-dialog-content {
+        padding: 12px 8px;
+
+        border-radius: 26px;
+    }
+
+    .fill-dialog-content h3 {
+        font-size: 21px;
+    }
+
+    .fill-title-container {
+        padding-left: 40px;
+    }
+
+    .fill-title-container h3 {
+        margin-bottom: 8px;
+    }
+
+    .fill-dialog-section {
+        gap: 8px;
+    }
+
+    .fill-dialog .option-btn {
+        width: 43%;
+
+        min-height: 42px;
+
+        padding: 4px 8px;
+
+        margin-bottom: 2px;
+
+        font-size: 15px;
+
+        border-width: 2px;
+        border-radius: 12px;
+    }
+
+    .fill-dialog .option-btn img {
+        max-height: 30px;
+    }
+
+    .fill-amount-container {
+        margin-top: 10px;
+
+        padding: 10px 0;
+
+        border-radius: 18px;
+    }
+
+    .fill-amount-title-container {
+        padding-left: 35px;
+    }
+
+    .amount-btn-container {
+        gap: 7px;
+    }
+
+    .fill-dialog .amount-btn {
+        width: auto;
+
+        min-width: 50px;
+
+        min-height: 38px;
+    }
+
+    .fill-dialog .confirm-btn {
+        min-height: 40px;
+
+        margin-top: 12px;
+        margin-bottom: 4px;
+
+        padding: 8px 12px;
+
+        font-size: 15px;
+    }
+
+}
+
+
+/* =====================================
+   MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
+    .fill-dialog {
+        width: min(650px, 85cqw);
+
+        height: 92cqh;
+
+        padding: 9px;
+
+        border-radius: 25px;
+    }
+
+    .fill-dialog-content {
+        padding: 7px 10px;
+
+        border-radius: 18px;
+    }
+
+    .fill-dialog-content h3 {
+        font-size: 17px;
+
+        line-height: 1.2;
+    }
+
+    .fill-title-container {
+        padding-left: 25px;
+    }
+
+    .fill-title-container h3 {
+        margin-bottom: 5px;
+    }
+
+    .fill-dialog-section {
+        gap: 5px;
+    }
+
+    .fill-dialog .option-btn {
+        width: 46%;
+
+        min-height: 34px;
+
+        padding: 3px 7px;
+
+        margin-bottom: 0;
+
+        gap: 5px;
+
+        font-size: 13px;
+
+        line-height: 1.2;
+
+        border-width: 2px;
+        border-radius: 9px;
+    }
+
+    .fill-dialog .option-btn img {
+        width: 12%;
+
+        max-height: 24px;
+    }
+
+    .fill-amount-container {
+        width: 94%;
+
+        margin-top: 7px;
+
+        padding: 5px 0 7px;
+
+        border-radius: 12px;
+    }
+
+    .fill-amount-title-container {
+        padding-left: 15px;
+
+        margin-bottom: 4px;
+    }
+
+    .fill-amount-title-container h3 {
+        font-size: 15px;
+    }
+
+    .amount-btn-container {
+        width: 94%;
+
+        gap: 5px;
+    }
+
+    .fill-dialog .amount-btn {
+        width: auto;
+
+        min-width: 45px;
+
+        height: 30px;
+        min-height: 30px;
+
+        padding: 0 5px;
+
+        font-size: 12px;
+
+        border-radius: 7px;
+    }
+
+    .fill-dialog .confirm-btn {
+        width: 35%;
+
+        height: 32px;
+        min-height: 32px;
+
+        margin-top: 7px;
+        margin-bottom: 0;
+
+        padding: 0 10px;
+
+        font-size: 13px;
+
+        border-radius: 7px;
+    }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .fill-dialog {
+        width: min(580px, 88cqw);
+
+        height: 94cqh;
+
+        padding: 7px;
+
+        border-radius: 20px;
+    }
+
+    .fill-dialog-content {
+        padding: 5px 7px;
+
+        border-radius: 14px;
+    }
+
+    .fill-dialog-content h3 {
+        font-size: 15px;
+    }
+
+    .fill-title-container {
+        padding-left: 18px;
+    }
+
+    .fill-title-container h3 {
+        margin-bottom: 4px;
+    }
+
+    .fill-dialog-section {
+        gap: 4px;
+    }
+
+    .fill-dialog .option-btn {
+        width: 47%;
+
+        min-height: 28px;
+
+        padding: 2px 5px;
+
+        gap: 4px;
+
+        font-size: 11px;
+
+        border-radius: 7px;
+    }
+
+    .fill-dialog .option-btn img {
+        max-height: 19px;
+    }
+
+    .fill-amount-container {
+        margin-top: 5px;
+
+        padding: 4px 0 5px;
+
+        border-radius: 9px;
+    }
+
+    .fill-amount-title-container {
+        padding-left: 12px;
+
+        margin-bottom: 3px;
+    }
+
+    .fill-amount-title-container h3 {
+        font-size: 13px;
+    }
+
+    .amount-btn-container {
+        gap: 4px;
+    }
+
+    .fill-dialog .amount-btn {
+        width: auto;
+
+        min-width: 40px;
+
+        height: 25px;
+        min-height: 25px;
+
+        padding: 0 3px;
+
+        font-size: 10px;
+
+        border-radius: 6px;
+    }
+
+    .fill-dialog .confirm-btn {
+        height: 27px;
+        min-height: 27px;
+
+        margin-top: 5px;
+
+        padding: 0 8px;
+
+        font-size: 12px;
+
+        border-radius: 6px;
+    }
+
+}
+
+
+/* =====================================
+   EXTRA SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 550px)
+or (max-height: 280px) {
+
+    .fill-dialog {
+        width: 92cqw;
+
+        height: 95cqh;
+
+        padding: 5px;
+
+        border-radius: 15px;
+    }
+
+    .fill-dialog-content {
+        padding: 4px 5px;
+
+        border-radius: 10px;
+    }
+
+    .fill-dialog-content h3 {
+        font-size: 13px;
+    }
+
+    .fill-title-container {
+        padding-left: 12px;
+    }
+
+    .fill-dialog-section {
+        gap: 3px;
+    }
+
+    .fill-dialog .option-btn {
+        min-height: 24px;
+
+        padding: 2px 4px;
+
+        font-size: 10px;
+
+        border-width: 1px;
+        border-radius: 6px;
+    }
+
+    .fill-dialog .option-btn img {
+        max-height: 16px;
+    }
+
+    .fill-amount-container {
+        margin-top: 4px;
+
+        padding: 3px 0 4px;
+
+        border-radius: 7px;
+    }
+
+    .fill-amount-title-container h3 {
+        font-size: 11px;
+    }
+
+    .amount-btn-container {
+        gap: 3px;
+    }
+
+    .fill-dialog .amount-btn {
+        min-width: 34px;
+
+        height: 22px;
+        min-height: 22px;
+
+        font-size: 9px;
+
+        border-radius: 5px;
+    }
+
+    .fill-dialog .confirm-btn {
+        height: 24px;
+        min-height: 24px;
+
+        margin-top: 4px;
+
+        font-size: 11px;
+
+        border-radius: 5px;
+    }
+
+}
+
+
+/* =====================================
+   ACTUAL PORTRAIT CONTAINER — FALLBACK
+===================================== */
+
+@container lab (orientation: portrait) {
+
+    .fill-dialog {
+        width: 94cqw;
+
+        height: auto;
+        max-height: 94cqh;
+
+        padding: 10px;
+
+        border-radius: 24px;
+    }
+
+    .fill-dialog-content {
+        height: auto;
+        max-height: calc(94cqh - 20px);
+
+        padding: 12px 8px;
+
+        justify-content: flex-start;
+
+        border-radius: 16px;
+    }
+
+    .fill-dialog-content h3 {
+        font-size: 18px;
+    }
+
+    .fill-title-container {
+        padding-left: 10px;
+    }
+
+    .fill-dialog-section {
+        gap: 6px;
+    }
+
+    .fill-dialog .option-btn {
+        width: 47%;
+
+        min-height: 44px;
+
+        font-size: 12px;
+    }
+
+    .fill-amount-container {
+        width: 96%;
+    }
+
+    .amount-btn-container {
+        flex-wrap: wrap;
+    }
+
+    .fill-dialog .amount-btn {
+        flex: 1 1 25%;
+
+        width: auto;
+
+        height: auto;
+        min-height: 36px;
+    }
+
+    .fill-dialog .confirm-btn {
+        width: 60%;
+
+        height: 40px;
+        min-height: 40px;
+    }
+
+}
+
+
+/* =====================================
+   TOUCHSCREEN BUTTON EFFECTS
+===================================== */
+
+@media (pointer: coarse) {
+
+    .fill-dialog .option-btn:hover {
+        background: white;
+    }
+
+    .fill-dialog .option-btn.selected:hover {
+        background: #2563eb;
+
+        color: white;
+
+        border-color: #2563eb;
+    }
+
+    .fill-dialog .option-btn:active {
+        transform: scale(0.96);
+    }
+
+    .fill-dialog-content {
+        touch-action: pan-y;
+    }
+
 }

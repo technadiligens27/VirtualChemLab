@@ -25,7 +25,7 @@ const MovementGuideline = ({
 
 
   return (
-    <div className="main-guidelines">
+    <div className="main-guidelines movement-guideline">
       <div className="guideline-container">
         <div className="main-guidelines-title">
           <h1>{title}</h1>

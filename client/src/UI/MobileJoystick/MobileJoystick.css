@@ -1,0 +1,64 @@
+.mobile-joystick {
+  position: absolute;
+
+  bottom: 6cqh;
+  left: 4cqw;
+
+  z-index: 100;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  touch-action: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================
+   TOUCHSCREEN LANDSCAPE
+========================================= */
+
+@media (pointer: coarse)
+and (orientation: landscape) {
+
+  .mobile-joystick {
+    display: flex;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 844px)
+or (max-height: 450px) {
+
+  .mobile-joystick {
+    bottom: 5cqh;
+    left: 3cqw;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+  .mobile-joystick {
+    bottom: 3cqh;
+    left: 2cqw;
+  }
+
+}

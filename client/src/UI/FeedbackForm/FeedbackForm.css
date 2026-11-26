@@ -1,590 +1,1343 @@
+/* =========================================================
+   OVERLAY
+========================================================= */
+
 .feedback-form-overlay {
-  position: fixed;
+    position: absolute;
+    inset: 0;
 
-  inset: 0;
+    width: 100%;
+    height: 100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  padding: 24px;
+    padding: 20px;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  background:
-    rgba(42, 26, 92, 0.3);
+    background: rgba(42, 26, 92, 0.3);
 
-  z-index: 1000;
+    z-index: 1000;
 
-  font-family:
-    "Baloo Bhai 2",
-    sans-serif;
+    font-family: "Baloo Bhai 2", sans-serif;
+
+    box-sizing: border-box;
 }
+
 
 .feedback-form-overlay *,
 .feedback-form-overlay *::before,
 .feedback-form-overlay *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
 .feedback-form-container {
-  position: relative;
+    position: relative;
 
-  width: min(1180px, 96vw);
-  height: 92dvh;
-  max-height: 850px;
+    width: min(1180px, 96cqw);
 
-  display: flex;
-  flex-direction: column;
+    height: 92cqh;
+    max-height: 850px;
 
-  padding: 35px 58px 14px;
+    min-height: 0;
 
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fffdf8,
-      #f8f3e8
+    padding: 65px 58px 14px;
+
+    overflow: hidden;
+
+    background: linear-gradient(
+        135deg,
+        #fffdf8,
+        #f8f3e8
     );
 
-  border: 12px solid #f7c64c;
-  border-radius: 34px;
+    border: 12px solid #f7c64c;
+    border-radius: 34px;
 
-  box-shadow:
-    0 20px 45px
-      rgba(38, 22, 93, 0.3);
+    box-shadow:
+        0 20px 45px
+        rgba(38, 22, 93, 0.3);
 }
+
+
+/* =========================================================
+   TITLE TAB
+========================================================= */
 
 .feedback-form-title-tab {
-  position: absolute;
+    position: absolute;
 
-  top: -12px;
-  left: 50%;
+    top: -12px;
+    left: 50%;
 
-  width: 370px;
-  height: 62px;
+    z-index: 2;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: min(370px, 70%);
+    height: 62px;
 
-  background: #ffc448;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  border-radius:
-    0
-    0
-    38px
-    38px;
+    background: #ffc448;
 
-  transform: translateX(-50%);
+    border-radius: 0 0 38px 38px;
+
+    transform: translateX(-50%);
 }
+
 
 .feedback-form-title-tab h1 {
-  margin: 0;
+    margin: 0;
 
-  color: #33208c;
+    color: #33208c;
 
-  font-size: 26px;
-  font-weight: 800;
+    font-size: 26px;
+    font-weight: 800;
 }
+
+
+/* =========================================================
+   SCROLLABLE FORM CONTENT
+========================================================= */
 
 .feedback-form-content {
-  min-height: 0;
+    flex: 1;
 
-  flex: 1;
+    min-height: 0;
+    min-width: 0;
 
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-  overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
-  padding-right: 8px;
+    padding-right: 8px;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c8b1f2 transparent;
 }
 
-/* Scrollbar shown only if screen height is too small */
 
 .feedback-form-content::-webkit-scrollbar {
-  width: 7px;
+    width: 7px;
 }
+
 
 .feedback-form-content::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
+
 
 .feedback-form-content::-webkit-scrollbar-thumb {
-  background: #c8b1f2;
+    background: #c8b1f2;
 
-  border-radius: 100px;
+    border-radius: 100px;
 }
+
 
 .feedback-form-content::-webkit-scrollbar-thumb:hover {
-  background: #8c64df;
+    background: #8c64df;
 }
+
+
+/* =========================================================
+   FORM HEADING
+========================================================= */
 
 .feedback-form-heading {
-  flex-shrink: 0;
+    flex-shrink: 0;
 
-  margin-bottom: 22px;
+    margin-bottom: 22px;
 }
+
 
 .feedback-form-heading p {
-  margin: 0 0 2px;
+    margin: 0 0 2px;
 
-  color: #9386b7;
+    color: #9386b7;
 
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
+
 
 .feedback-form-heading h2 {
-  margin: 0;
+    margin: 0;
 
-  color: #33208c;
+    color: #33208c;
 
-  font-size: 29px;
-  font-weight: 800;
+    font-size: 29px;
+    font-weight: 800;
+
+    line-height: 1.3;
 }
+
 
 .feedback-form-heading span {
-  color: #69708f;
+    color: #69708f;
 
-  font-size: 17px;
-  font-weight: 500;
+    font-size: 17px;
+    font-weight: 500;
 }
+
+
+/* =========================================================
+   MAIN FORM LAYOUT
+========================================================= */
 
 .feedback-form-main {
-  display: grid;
-  grid-template-columns: 1.35fr 0.85fr;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
 
-  gap: 26px;
+    flex-shrink: 0;
+
+    min-width: 0;
+
+    gap: 26px;
 }
+
+
+/* =========================================================
+   QUESTION LIST
+========================================================= */
 
 .feedback-question-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-  gap: 14px;
+    align-content: flex-start;
+
+    flex: 1.35 1 0;
+
+    min-width: 0;
+
+    gap: 14px;
 }
+
+
+/* =========================================================
+   QUESTION CARD
+========================================================= */
 
 .feedback-question-card {
-  min-height: 119px;
+    display: flex;
+    flex-direction: column;
 
-  display: flex;
-  flex-direction: column;
+    flex: 0 0 calc((100% - 14px) / 2);
 
-  padding: 15px 17px;
+    min-width: 0;
+    min-height: 119px;
 
-  background: #ffffff;
+    padding: 15px 17px;
 
-  border: 2px solid #dfd4ff;
-  border-radius: 18px;
+    background: #ffffff;
 
-  box-shadow:
-    0 7px 14px
-      rgba(85, 50, 170, 0.07);
+    border: 2px solid #dfd4ff;
+    border-radius: 18px;
+
+    box-shadow:
+        0 7px 14px
+        rgba(85, 50, 170, 0.07);
 }
+
 
 .feedback-question-number {
-  width: 28px;
-  height: 28px;
+    width: 28px;
+    height: 28px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex-shrink: 0;
 
-  margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  background: #6635c2;
+    margin-bottom: 5px;
 
-  border-radius: 50%;
+    background: #6635c2;
 
-  color: white;
+    border-radius: 50%;
 
-  font-size: 16px;
-  font-weight: 800;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 800;
 }
+
 
 .feedback-question-card p {
-  min-height: 36px;
+    min-height: 36px;
 
-  margin: 0 0 9px;
+    margin: 0 0 9px;
 
-  color: #373d5d;
+    color: #373d5d;
 
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.15;
+    font-size: 16px;
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
 }
+
+
+/* =========================================================
+   ANSWER OPTIONS
+========================================================= */
 
 .feedback-answer-options {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: row;
 
-  gap: 7px;
+    align-items: center;
+
+    margin-top: auto;
+
+    gap: 7px;
 }
+
 
 .feedback-answer-button {
-  min-width: 0;
-  min-height: 31px;
+    flex: 1 1 0;
 
-  padding: 4px 5px;
+    min-width: 0;
+    min-height: 31px;
 
-  background: #f7f3ff;
+    padding: 4px 5px;
 
-  border: 1px solid #d8cbfa;
-  border-radius: 9px;
+    background: #f7f3ff;
 
-  color: #654ba1;
+    border: 1px solid #d8cbfa;
+    border-radius: 9px;
 
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
+    color: #654ba1;
 
-  cursor: pointer;
+    font-family: inherit;
 
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 }
+
 
 .feedback-answer-button:hover {
-  background: #eee5ff;
+    background: #eee5ff;
 
-  border-color: #8c64df;
+    border-color: #8c64df;
 
-  transform: translateY(-1px);
+    transform: translateY(-1px);
 }
 
-.feedback-answer-selected {
-  background: #6635c2;
 
-  border-color: #6635c2;
-
-  color: white;
+.feedback-answer-button:active {
+    transform: scale(0.97);
 }
+
+
+.feedback-answer-selected,
+.feedback-answer-selected:hover {
+    background: #6635c2;
+
+    border-color: #6635c2;
+
+    color: white;
+}
+
+
+/* =========================================================
+   COMMENTS CARD
+========================================================= */
 
 .feedback-comments-card {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-  min-height: 378px;
+    flex: 0.85 1 0;
 
-  padding: 23px;
+    min-width: 0;
+    min-height: 378px;
 
-  background:
-    linear-gradient(
-      145deg,
-      #f5f0ff,
-      #ffffff
+    padding: 23px;
+
+    background: linear-gradient(
+        145deg,
+        #f5f0ff,
+        #ffffff
     );
 
-  border: 2px solid #bda1f7;
-  border-radius: 22px;
+    border: 2px solid #bda1f7;
+    border-radius: 22px;
 }
+
 
 .feedback-comments-heading {
-  display: flex;
-  align-items: flex-start;
+    display: flex;
+    align-items: flex-start;
 
-  gap: 12px;
+    flex-shrink: 0;
 
-  margin-bottom: 18px;
+    gap: 12px;
+
+    margin-bottom: 18px;
 }
+
 
 .feedback-comments-icon {
-  width: 38px;
-  height: 38px;
+    width: 38px;
+    height: 38px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  flex-shrink: 0;
+    flex-shrink: 0;
 
-  background: #6635c2;
+    background: #6635c2;
 
-  border-radius: 50%;
+    border-radius: 50%;
 
-  color: white;
+    color: white;
 
-  font-size: 20px;
+    font-size: 20px;
 }
+
 
 .feedback-comments-heading h3 {
-  margin: 0;
+    margin: 0;
 
-  color: #39218f;
+    color: #39218f;
 
-  font-size: 21px;
-  font-weight: 800;
+    font-size: 21px;
+    font-weight: 800;
+
+    line-height: 1.3;
 }
+
 
 .feedback-comments-heading p {
-  margin: 0;
+    margin: 0;
 
-  color: #707692;
+    color: #707692;
 
-  font-size: 14px;
-  line-height: 1.25;
+    font-size: 14px;
+
+    line-height: 1.25;
 }
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
 
 .feedback-comments-card textarea {
-  min-height: 190px;
+    width: 100%;
 
-  flex: 1;
+    min-width: 0;
+    min-height: 190px;
 
-  resize: none;
+    flex: 1;
 
-  padding: 15px;
+    resize: none;
 
-  background: rgba(255, 255, 255, 0.88);
+    padding: 15px;
 
-  border: 2px solid #dacdf9;
-  border-radius: 14px;
+    background: rgba(255, 255, 255, 0.88);
 
-  color: #424763;
+    border: 2px solid #dacdf9;
+    border-radius: 14px;
 
-  font-family: inherit;
-  font-size: 16px;
-  line-height: 1.4;
+    color: #424763;
 
-  outline: none;
+    font-family: inherit;
+    font-size: 16px;
+
+    line-height: 1.4;
+
+    outline: none;
 }
+
 
 .feedback-comments-card textarea:focus {
-  border-color: #7747d3;
+    border-color: #7747d3;
 
-  box-shadow:
-    0 0 0 4px
-      rgba(119, 71, 211, 0.12);
+    box-shadow:
+        0 0 0 4px
+        rgba(119, 71, 211, 0.12);
 }
+
 
 .feedback-comments-card small {
-  margin-top: 6px;
+    margin-top: 6px;
 
-  color: #8a8fab;
+    color: #8a8fab;
 
-  font-size: 13px;
-  text-align: right;
+    font-size: 13px;
+
+    text-align: right;
 }
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .feedback-form-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
 
-  gap: 16px;
+    align-items: center;
+    justify-content: flex-end;
 
-  margin-top: 25px;
-  padding-bottom: 2px;
+    flex-shrink: 0;
+
+    gap: 16px;
+
+    margin-top: 25px;
+
+    padding-bottom: 5px;
 }
+
+
+/* =========================================================
+   FOOTER BUTTONS
+========================================================= */
 
 .feedback-skip-button,
 .feedback-submit-button {
-  min-width: 150px;
-  min-height: 54px;
+    min-width: 150px;
+    min-height: 54px;
 
-  padding: 7px 25px;
+    padding: 7px 25px;
 
-  border-radius: 16px;
+    border-radius: 16px;
 
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 800;
+    font-family: inherit;
 
-  cursor: pointer;
+    font-size: 18px;
+    font-weight: 800;
 
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
 }
+
 
 .feedback-skip-button {
-  background: transparent;
+    background: transparent;
 
-  border: 2px solid #9d82d9;
+    border: 2px solid #9d82d9;
 
-  color: #5d3cab;
+    color: #5d3cab;
 }
+
 
 .feedback-skip-button:hover {
-  background: #f0e9ff;
+    background: #f0e9ff;
 
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 }
+
 
 .feedback-submit-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  gap: 14px;
+    gap: 14px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #6d35c7,
-      #3e198f
+    background: linear-gradient(
+        135deg,
+        #6d35c7,
+        #3e198f
     );
 
-  border: none;
+    border: none;
 
-  color: white;
-
-  /* box-shadow:
-    0 10px 20px
-      rgba(75, 34, 165, 0.25); */
+    color: white;
 }
+
 
 .feedback-submit-button span {
-  font-size: 29px;
-  line-height: 0;
+    font-size: 29px;
+
+    line-height: 0;
 }
 
-.feedback-submit-button:hover {
-  /* box-shadow:
-    0 13px 25px
-      rgba(75, 34, 165, 0.35); */
 
-  transform: translateY(-3px);
+.feedback-submit-button:hover:not(:disabled) {
+    transform: translateY(-3px);
 }
+
 
 .feedback-submit-button:active,
 .feedback-skip-button:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
-/* =========================================================
-   TABLET
-========================================================= */
 
-@media (max-width: 900px) {
-  .feedback-form-overlay {
-    align-items: flex-start;
+.feedback-submit-button:disabled {
+    opacity: 0.65;
 
-    overflow-y: auto;
+    cursor: not-allowed;
 
-    padding: 18px;
-  }
-
-  .feedback-form-container {
-    width: min(700px, 96vw);
-    height: auto;
-    min-height: 90dvh;
-    max-height: none;
-
-    padding:
-      66px
-      25px
-      26px;
-
-    overflow: visible;
-  }
-
-  .feedback-form-content {
-    overflow: visible;
-
-    padding-right: 0;
-  }
-
-  .feedback-form-main {
-    grid-template-columns: 1fr;
-  }
-
-  .feedback-comments-card {
-    min-height: 260px;
-  }
-
-  .feedback-comments-card textarea {
-    min-height: 125px;
-  }
+    transform: none;
 }
 
+
 /* =========================================================
-   MOBILE
+   SMALL LAPTOP / LARGE TABLET
 ========================================================= */
 
-@media (max-width: 600px) {
-  .feedback-form-overlay {
-    padding: 10px;
-  }
+@container lab (max-width: 1200px) {
 
-  .feedback-form-container {
-    width: 100%;
-    min-height: 0;
+    .feedback-form-container {
+        width: 94cqw;
 
-    padding:
-      58px
-      14px
-      18px;
+        padding: 60px 35px 14px;
 
-    border-width: 7px;
-    border-radius: 25px;
-  }
+        border-width: 10px;
+        border-radius: 30px;
+    }
 
-  .feedback-form-title-tab {
-    width: 78vw;
-    height: 54px;
-  }
+    .feedback-form-title-tab {
+        top: -10px;
 
-  .feedback-form-title-tab h1 {
-    font-size: 22px;
-  }
+        width: min(340px, 70%);
+        height: 58px;
+    }
 
-  .feedback-form-heading {
-    margin-bottom: 16px;
-  }
+    .feedback-form-title-tab h1 {
+        font-size: 24px;
+    }
 
-  .feedback-form-heading p {
-    font-size: 11px;
-  }
+    .feedback-form-main {
+        gap: 18px;
+    }
 
-  .feedback-form-heading h2 {
-    font-size: 23px;
-  }
+    .feedback-question-list {
+        gap: 12px;
+    }
 
-  .feedback-form-heading span {
-    font-size: 14px;
-  }
+    .feedback-question-card {
+        flex-basis: calc((100% - 12px) / 2);
 
-  .feedback-question-list {
-    grid-template-columns: 1fr;
-  }
+        padding: 13px;
+    }
 
-  .feedback-question-card {
-    min-height: 108px;
-  }
+    .feedback-comments-card {
+        padding: 18px;
+    }
 
-  .feedback-question-card p {
-    font-size: 15px;
-  }
+}
 
-  .feedback-answer-button {
-    font-size: 11px;
-  }
 
-  .feedback-comments-card {
-    min-height: 220px;
+/* =========================================================
+   TABLET LANDSCAPE / SHORT LAPTOP
+========================================================= */
 
-    padding: 16px;
-  }
+@container lab (max-width: 1024px)
+or (max-height: 650px) {
 
-  .feedback-form-footer {
-    flex-direction: column-reverse;
+    .feedback-form-overlay {
+        padding: 12px;
+    }
 
-    gap: 10px;
+    .feedback-form-container {
+        width: 94cqw;
 
-    margin-top: 20px;
-  }
+        height: 94cqh;
 
-  .feedback-skip-button,
-  .feedback-submit-button {
-    width: 100%;
-  }
+        padding: 48px 24px 12px;
+
+        border-width: 7px;
+        border-radius: 24px;
+    }
+
+    .feedback-form-title-tab {
+        top: -7px;
+
+        width: min(300px, 70%);
+        height: 45px;
+
+        border-radius: 0 0 25px 25px;
+    }
+
+    .feedback-form-title-tab h1 {
+        font-size: 21px;
+    }
+
+    .feedback-form-heading {
+        margin-bottom: 15px;
+    }
+
+    .feedback-form-heading p {
+        font-size: 12px;
+    }
+
+    .feedback-form-heading h2 {
+        font-size: 24px;
+    }
+
+    .feedback-form-heading span {
+        font-size: 15px;
+    }
+
+    .feedback-form-main {
+        gap: 12px;
+    }
+
+    .feedback-question-list {
+        gap: 10px;
+    }
+
+    .feedback-question-card {
+        flex-basis: calc((100% - 10px) / 2);
+
+        min-height: 110px;
+
+        padding: 10px;
+
+        border-radius: 13px;
+    }
+
+    .feedback-question-number {
+        width: 24px;
+        height: 24px;
+
+        font-size: 14px;
+    }
+
+    .feedback-question-card p {
+        min-height: 32px;
+
+        font-size: 14px;
+    }
+
+    .feedback-answer-options {
+        gap: 5px;
+    }
+
+    .feedback-answer-button {
+        min-height: 30px;
+
+        padding: 3px;
+
+        font-size: 12px;
+
+        border-radius: 7px;
+    }
+
+    .feedback-comments-card {
+        min-height: 300px;
+
+        padding: 14px;
+
+        border-radius: 15px;
+    }
+
+    .feedback-comments-heading {
+        gap: 8px;
+
+        margin-bottom: 12px;
+    }
+
+    .feedback-comments-icon {
+        width: 30px;
+        height: 30px;
+
+        font-size: 16px;
+    }
+
+    .feedback-comments-heading h3 {
+        font-size: 18px;
+    }
+
+    .feedback-comments-heading p {
+        font-size: 13px;
+    }
+
+    .feedback-comments-card textarea {
+        min-height: 140px;
+
+        padding: 10px;
+
+        font-size: 15px;
+
+        border-radius: 10px;
+    }
+
+    .feedback-form-footer {
+        gap: 10px;
+
+        margin-top: 15px;
+    }
+
+    .feedback-skip-button,
+    .feedback-submit-button {
+        min-width: 125px;
+        min-height: 42px;
+
+        padding: 5px 16px;
+
+        font-size: 15px;
+
+        border-radius: 11px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE LANDSCAPE
+========================================================= */
+
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
+    .feedback-form-overlay {
+        padding: 6px;
+    }
+
+    .feedback-form-container {
+        width: 94cqw;
+
+        height: 95cqh;
+
+        padding: 36px 18px 8px;
+
+        border-width: 5px;
+        border-radius: 18px;
+    }
+
+    .feedback-form-title-tab {
+        top: -5px;
+
+        width: min(250px, 70%);
+        height: 33px;
+
+        border-radius: 0 0 20px 20px;
+    }
+
+    .feedback-form-title-tab h1 {
+        font-size: 18px;
+    }
+
+    .feedback-form-content {
+        padding-right: 5px;
+    }
+
+    .feedback-form-heading {
+        margin-bottom: 10px;
+    }
+
+    .feedback-form-heading p {
+        font-size: 10px;
+
+        letter-spacing: 1px;
+    }
+
+    .feedback-form-heading h2 {
+        font-size: 21px;
+    }
+
+    .feedback-form-heading span {
+        font-size: 13px;
+    }
+
+    .feedback-form-main {
+        flex-direction: row;
+
+        gap: 10px;
+    }
+
+    .feedback-question-list {
+        flex: 1.5 1 0;
+
+        gap: 8px;
+    }
+
+    .feedback-question-card {
+        flex-basis: calc((100% - 8px) / 2);
+
+        min-height: 100px;
+
+        padding: 8px;
+
+        border-radius: 10px;
+    }
+
+    .feedback-question-number {
+        width: 22px;
+        height: 22px;
+
+        margin-bottom: 4px;
+
+        font-size: 12px;
+    }
+
+    .feedback-question-card p {
+        min-height: 30px;
+
+        margin-bottom: 6px;
+
+        font-size: 13px;
+
+        line-height: 1.3;
+    }
+
+    .feedback-answer-options {
+        gap: 4px;
+    }
+
+    .feedback-answer-button {
+        min-height: 30px;
+
+        padding: 3px 4px;
+
+        font-size: 11px;
+
+        border-radius: 6px;
+    }
+
+    .feedback-comments-card {
+        flex: 0.85 1 0;
+
+        min-height: 240px;
+
+        padding: 10px;
+
+        border-radius: 12px;
+    }
+
+    .feedback-comments-heading {
+        gap: 7px;
+
+        margin-bottom: 10px;
+    }
+
+    .feedback-comments-icon {
+        width: 25px;
+        height: 25px;
+
+        font-size: 13px;
+    }
+
+    .feedback-comments-heading h3 {
+        font-size: 15px;
+    }
+
+    .feedback-comments-heading p {
+        font-size: 12px;
+    }
+
+    .feedback-comments-card textarea {
+        min-height: 120px;
+
+        padding: 8px;
+
+        font-size: 14px;
+
+        border-radius: 8px;
+    }
+
+    .feedback-comments-card small {
+        font-size: 11px;
+    }
+
+    .feedback-form-footer {
+        gap: 8px;
+
+        margin-top: 12px;
+    }
+
+    .feedback-skip-button,
+    .feedback-submit-button {
+        min-width: 105px;
+
+        height: 36px;
+        min-height: 36px;
+
+        padding: 0 12px;
+
+        font-size: 13px;
+
+        border-radius: 8px;
+    }
+
+    .feedback-submit-button {
+        gap: 7px;
+    }
+
+    .feedback-submit-button span {
+        font-size: 23px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE LANDSCAPE
+========================================================= */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .feedback-form-container {
+        width: 95cqw;
+
+        height: 96cqh;
+
+        padding: 32px 10px 6px;
+
+        border-width: 4px;
+        border-radius: 14px;
+    }
+
+    .feedback-form-title-tab {
+        top: -4px;
+
+        width: min(210px, 70%);
+        height: 28px;
+
+        border-radius: 0 0 15px 15px;
+    }
+
+    .feedback-form-title-tab h1 {
+        font-size: 16px;
+    }
+
+    .feedback-form-heading {
+        margin-bottom: 8px;
+    }
+
+    .feedback-form-heading h2 {
+        font-size: 19px;
+    }
+
+    .feedback-form-heading span {
+        font-size: 12px;
+    }
+
+    .feedback-form-main {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .feedback-question-list {
+        flex: 0 0 auto;
+
+        width: 100%;
+
+        gap: 8px;
+    }
+
+    .feedback-question-card {
+        flex-basis: calc((100% - 8px) / 2);
+
+        min-height: 95px;
+
+        padding: 8px;
+    }
+
+    .feedback-question-card p {
+        font-size: 13px;
+    }
+
+    .feedback-answer-button {
+        min-height: 30px;
+
+        font-size: 12px;
+    }
+
+    .feedback-comments-card {
+        flex: 0 0 auto;
+
+        width: 100%;
+
+        min-height: 180px;
+
+        padding: 10px;
+    }
+
+    .feedback-comments-card textarea {
+        min-height: 100px;
+
+        font-size: 14px;
+    }
+
+    .feedback-form-footer {
+        margin-top: 10px;
+    }
+
+    .feedback-skip-button,
+    .feedback-submit-button {
+        min-width: 95px;
+
+        height: 34px;
+        min-height: 34px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE LANDSCAPE
+========================================================= */
+
+@container lab (max-width: 550px)
+or (max-height: 280px) {
+
+    .feedback-form-container {
+        width: 96cqw;
+
+        height: 96cqh;
+
+        padding: 28px 8px 5px;
+
+        border-width: 3px;
+        border-radius: 11px;
+    }
+
+    .feedback-form-title-tab {
+        top: -3px;
+
+        width: min(180px, 70%);
+        height: 25px;
+    }
+
+    .feedback-form-title-tab h1 {
+        font-size: 14px;
+    }
+
+    .feedback-form-heading h2 {
+        font-size: 17px;
+    }
+
+    .feedback-form-heading span {
+        font-size: 12px;
+    }
+
+    .feedback-question-list {
+        gap: 6px;
+    }
+
+    .feedback-question-card {
+        flex-basis: calc((100% - 6px) / 2);
+
+        padding: 7px;
+
+        border-radius: 8px;
+    }
+
+    .feedback-question-card p {
+        font-size: 12px;
+    }
+
+    .feedback-answer-button {
+        min-height: 28px;
+
+        font-size: 11px;
+    }
+
+    .feedback-comments-card {
+        min-height: 160px;
+    }
+
+    .feedback-comments-card textarea {
+        min-height: 90px;
+    }
+
+    .feedback-skip-button,
+    .feedback-submit-button {
+        min-width: 85px;
+
+        height: 30px;
+        min-height: 30px;
+
+        padding: 0 10px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   ACTUAL PORTRAIT CONTAINER — FALLBACK
+========================================================= */
+
+@container lab (orientation: portrait) {
+
+    .feedback-form-overlay {
+        padding: 8px;
+    }
+
+    .feedback-form-container {
+        width: 95cqw;
+
+        height: 94cqh;
+
+        padding: 45px 12px 10px;
+
+        border-width: 5px;
+        border-radius: 20px;
+    }
+
+    .feedback-form-title-tab {
+        top: -5px;
+
+        width: 80%;
+        height: 40px;
+    }
+
+    .feedback-form-title-tab h1 {
+        font-size: 19px;
+    }
+
+    .feedback-form-heading h2 {
+        font-size: 21px;
+    }
+
+    .feedback-form-heading span {
+        font-size: 14px;
+    }
+
+    .feedback-form-main {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .feedback-question-list {
+        flex: 0 0 auto;
+
+        width: 100%;
+
+        gap: 10px;
+    }
+
+    .feedback-question-card {
+        flex-basis: 100%;
+
+        min-height: 110px;
+
+        padding: 12px;
+    }
+
+    .feedback-question-card p {
+        font-size: 15px;
+    }
+
+    .feedback-answer-button {
+        min-height: 38px;
+
+        font-size: 13px;
+    }
+
+    .feedback-comments-card {
+        flex: 0 0 auto;
+
+        width: 100%;
+
+        min-height: 220px;
+
+        padding: 14px;
+    }
+
+    .feedback-comments-card textarea {
+        min-height: 120px;
+
+        font-size: 16px;
+    }
+
+    .feedback-form-footer {
+        flex-direction: column-reverse;
+
+        gap: 8px;
+    }
+
+    .feedback-skip-button,
+    .feedback-submit-button {
+        width: 100%;
+
+        height: 44px;
+        min-height: 44px;
+
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCHSCREEN INTERACTIONS
+========================================================= */
+
+@media (pointer: coarse) {
+
+    .feedback-form-content {
+        touch-action: pan-y;
+    }
+
+    .feedback-answer-button:hover {
+        transform: none;
+    }
+
+    .feedback-answer-button:active {
+        transform: scale(0.96);
+    }
+
+    .feedback-skip-button:hover,
+    .feedback-submit-button:hover {
+        transform: none;
+    }
+
+    .feedback-skip-button:active,
+    .feedback-submit-button:active {
+        transform: scale(0.97);
+    }
+
 }

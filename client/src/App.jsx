@@ -10,16 +10,20 @@ import Loader01 from "./UI/Loader01/Loader01.jsx";
 const DesktopApp = lazy(() => import("./DesktopApp/DesktopApp.jsx"));
 
 function App() {
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return <MobileNotice />;
-  }
+  // if (isMobile) {
+  //   return <MobileNotice />;
+  // }
 
   return (
-    <Suspense fallback={<Loader01/>}>
-      <DesktopApp />
-    </Suspense>
+  <main className="lab-screen">
+    <div className="lab-view">
+      <Suspense fallback={<Loader01 />}>
+        <DesktopApp />
+      </Suspense>
+    </div>
+  </main>
   );
 }
 

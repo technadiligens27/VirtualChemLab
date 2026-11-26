@@ -23,13 +23,7 @@ function DesktopApp() {
     <>
       {isLoading && <Loader01 />}
 
-      <div
-        className={
-          isLoading
-            ? "experience-loading"
-            : "experience-loaded"
-        }
-      >
+      <div className={ isLoading ? "experience-loading" : "experience-loaded"}>
         <MainExperience />
       </div>
 

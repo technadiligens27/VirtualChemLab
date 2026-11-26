@@ -1,0 +1,210 @@
+.mobile-dialog-box-container {
+    position: absolute;
+
+    top: 3cqh;
+    right: 3cqw;
+
+    z-index: 100;
+
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+
+    background-color: rgba(0, 0, 0, 0.25);
+
+    border-radius: 50px;
+
+    box-sizing: border-box;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        filter 0.25s ease,
+        opacity 0.25s ease;
+}
+
+
+/* ==========================================
+   Z-INDEX AND BLUR
+========================================== */
+
+.mobile-dialog-z-index {
+    z-index: 999;
+}
+
+.mobile-dialog-box-blurred {
+    filter: blur(4px);
+
+    opacity: 0.55;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   MOBILE ACTION BUTTON
+========================================== */
+
+.mobile-result-btn {
+    min-width: 130px;
+    min-height: 44px;
+
+    padding: 8px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #4f7f93;
+
+    color: #ffffff;
+
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50px;
+
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1.2;
+    text-align: center;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* ==========================================
+   BUTTON PRESS ANIMATION
+========================================== */
+
+.mobile-result-btn:active {
+    background-color: #3d6576;
+
+    transform: scale(0.92);
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@container lab (min-width: 951px)
+and (min-height: 451px) {
+
+    .mobile-result-btn {
+        min-width: 150px;
+        min-height: 50px;
+
+        font-size: 18px;
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE LANDSCAPE
+========================================== */
+
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
+    .mobile-dialog-box-container {
+        top: 3cqh;
+        right: 3cqw;
+
+        padding: 4px;
+    }
+
+    .mobile-result-btn {
+        min-width: 120px;
+        min-height: 44px;
+
+        padding: 6px 16px;
+
+        font-size: 15px;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE LANDSCAPE
+========================================== */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .mobile-dialog-box-container {
+        top: 2cqh;
+        right: 2cqw;
+
+        padding: 3px;
+    }
+
+    .mobile-result-btn {
+        min-width: 100px;
+        min-height: 44px;
+
+        padding: 5px 12px;
+
+        font-size: 13px;
+    }
+
+}
+
+
+/* ==========================================
+   EXTRA SMALL MOBILE LANDSCAPE
+========================================== */
+
+@container lab (max-width: 550px)
+or (max-height: 280px) {
+
+    .mobile-dialog-box-container {
+        top: 1.5cqh;
+        right: 2cqw;
+    }
+
+    .mobile-result-btn {
+        min-width: 90px;
+        min-height: 44px;
+
+        padding: 4px 10px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* ==========================================
+   HIDE IN PORTRAIT MODE
+========================================== */
+
+@media (orientation: portrait) {
+
+    .mobile-dialog-box-container {
+        display: none;
+    }
+
+}

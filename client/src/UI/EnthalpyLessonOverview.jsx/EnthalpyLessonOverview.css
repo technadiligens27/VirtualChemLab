@@ -1,10 +1,15 @@
+/* =====================================
+   OVERLAY
+===================================== */
+
 .reaction-one-overlay {
-    position: fixed;
+    position: absolute;
     inset: 0;
+
     z-index: 99999;
 
     width: 100%;
-    min-height: 100dvh;
+    height: 100%;
 
     display: flex;
     align-items: center;
@@ -12,7 +17,7 @@
 
     padding: 16px;
 
-    overflow: auto;
+    overflow: hidden;
 
     background-color: rgba(20, 15, 40, 0.35);
 
@@ -22,20 +27,38 @@
     box-sizing: border-box;
 }
 
+
+.reaction-one-overlay *,
+.reaction-one-overlay *::before,
+.reaction-one-overlay *::after {
+    box-sizing: border-box;
+}
+
+
+/* =====================================
+   MAIN CONTAINER
+===================================== */
+
 .reaction-one-container {
     position: relative;
 
-    width: min(80vw, 1400px);
-    height: min(96dvh, 930px);
-    max-height: calc(100dvh - 32px);
+    width: min(80cqw, 1400px);
+    height: min(96cqh, 930px);
+
+    max-height: calc(100cqh - 32px);
 
     display: flex;
     flex-direction: column;
 
-    padding: 45px 48px 34px;
+    padding: 75px 48px 34px;
 
     overflow-x: hidden;
     overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #a88cff transparent;
 
     background: linear-gradient(
         135deg,
@@ -49,16 +72,39 @@
     box-sizing: border-box;
 }
 
+
+/* =====================================
+   SCROLLBAR
+===================================== */
+
+.reaction-one-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.reaction-one-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.reaction-one-container::-webkit-scrollbar-thumb {
+    background: #a88cff;
+
+    border-radius: 10px;
+}
+
+
 /* =====================================
    TOP TITLE
 ===================================== */
 
 .reaction-one-top-title {
     position: absolute;
+
     top: 0;
     left: 50%;
 
-    width: min(380px, 32vw);
+    width: min(380px, 32cqw);
     height: 55px;
 
     display: flex;
@@ -75,8 +121,11 @@
 
     border-radius: 0 0 38px 38px;
 
-    box-shadow: 0 8px 18px rgba(255, 180, 40, 0.16);
+    box-shadow:
+        0 8px 18px
+        rgba(255, 180, 40, 0.16);
 }
+
 
 .reaction-one-top-title h1 {
     margin: 0;
@@ -85,32 +134,47 @@
 
     font-size: 26px;
     font-weight: 900;
+
+    text-align: center;
 }
+
 
 /* =====================================
    MAIN CONTENT
 ===================================== */
 
 .reaction-one-content {
-    display: grid;
+    display: flex;
+    flex-direction: row;
 
-    grid-template-columns:
-        minmax(0, 1.9fr)
-        minmax(300px, 0.82fr);
+    align-items: flex-start;
+
+    flex-shrink: 0;
+
+    min-width: 0;
 
     gap: 42px;
 }
 
+
 .reaction-one-main {
+    flex: 1.9;
+
     min-width: 0;
 
     display: flex;
     flex-direction: column;
 }
 
+
+/* =====================================
+   HEADING
+===================================== */
+
 .reaction-one-heading {
     margin-bottom: 20px;
 }
+
 
 .reaction-one-label {
     margin: 0 0 6px;
@@ -119,9 +183,11 @@
 
     font-size: 14px;
     font-weight: 800;
+
     letter-spacing: 1.8px;
     text-transform: uppercase;
 }
+
 
 .reaction-one-heading h1 {
     margin: 0;
@@ -130,8 +196,10 @@
 
     font-size: 27px;
     font-weight: 900;
+
     line-height: 1.12;
 }
+
 
 /* =====================================
    REACTION TYPE
@@ -140,11 +208,15 @@
 .reaction-one-type {
     width: fit-content;
 
+    max-width: 100%;
+
     display: flex;
     align-items: center;
+
     gap: 12px;
 
     margin-bottom: 20px;
+
     padding: 8px 22px 8px 10px;
 
     color: #278a32;
@@ -159,9 +231,12 @@
     border-radius: 35px;
 }
 
+
 .reaction-one-fire-icon {
     width: 43px;
     height: 43px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -178,16 +253,19 @@
     border-radius: 50%;
 }
 
+
 /* =====================================
-   EQUATION
+   CHEMICAL EQUATION
 ===================================== */
 
 .reaction-one-equation {
-    width: 90%;
+    width: 100%;
+
     min-height: 85px;
 
     display: flex;
     align-items: center;
+
     gap: 28px;
 
     padding: 12px 18px;
@@ -201,15 +279,19 @@
     border: 2px solid #62ad5d;
     border-radius: 18px;
 
-    box-shadow: 0 10px 25px rgba(69, 151, 66, 0.08);
+    box-shadow:
+        0 10px 25px
+        rgba(69, 151, 66, 0.08);
 
     box-sizing: border-box;
 }
 
+
 .reaction-one-flask-icon {
     width: 78px;
-    min-width: 78px;
     height: 78px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -224,10 +306,16 @@
     border-radius: 50%;
 }
 
+
 .reaction-one-equation-text {
+    flex: 1;
+
+    min-width: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     flex-wrap: wrap;
 
     gap: 10px;
@@ -235,14 +323,18 @@
     color: #1f2a4b;
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 21px;
     font-style: italic;
+
     line-height: 1.4;
 }
+
 
 .reaction-one-equation-text sub {
     font-size: 60%;
 }
+
 
 .reaction-one-arrow {
     padding: 0 4px;
@@ -250,26 +342,31 @@
     font-size: 1.25em;
 }
 
+
 /* =====================================
-   NOTICE
+   WHAT YOU WILL NOTICE
 ===================================== */
 
 .reaction-one-notice {
     margin-top: 25px;
 }
 
+
 .reaction-one-section-heading {
     display: flex;
     align-items: center;
+
     gap: 16px;
 
     margin-bottom: 12px;
 }
 
+
 .reaction-one-eye-icon {
     width: 54px;
-    min-width: 54px;
     height: 54px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -285,6 +382,7 @@
     border-radius: 50%;
 }
 
+
 .reaction-one-section-heading h2 {
     margin: 0;
 
@@ -292,11 +390,14 @@
 
     font-size: 22px;
     font-weight: 900;
-    white-space: nowrap;
 }
 
+
 .reaction-one-heading-line {
-    width: 100%;
+    flex: 1;
+
+    min-width: 0;
+
     height: 2px;
 
     background: linear-gradient(
@@ -306,24 +407,34 @@
     );
 }
 
+
+/* =====================================
+   NOTICE LIST
+===================================== */
+
 .reaction-one-notice-list {
     display: flex;
     flex-direction: column;
+
     gap: 12px;
 
     padding-left: 6px;
 }
 
+
 .reaction-one-notice-item {
     display: flex;
     align-items: center;
+
     gap: 16px;
 }
 
+
 .reaction-one-check {
     width: 28px;
-    min-width: 28px;
     height: 28px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -343,21 +454,30 @@
     border-radius: 50%;
 }
 
+
 .reaction-one-notice-item p {
     margin: 0;
 
     color: #34405f;
 
-    font-size: clamp(16px, 1.2vw, 20px);
+    font-size: clamp(16px, 1.2cqw, 20px);
+
     line-height: 1.45;
+
+    overflow-wrap: anywhere;
 }
+
 
 /* =====================================
    INFORMATION CARD
 ===================================== */
 
 .reaction-one-information {
-    align-self: start;
+    flex: 0.82;
+
+    min-width: 0;
+
+    align-self: flex-start;
 
     margin-top: 6px;
 
@@ -368,17 +488,21 @@
     border: 2px solid #9f7adf;
     border-radius: 20px;
 
-    box-shadow: 0 14px 28px rgba(68, 35, 143, 0.1);
+    box-shadow:
+        0 14px 28px
+        rgba(68, 35, 143, 0.1);
 }
+
 
 .reaction-one-information-header {
     min-height: 78px;
 
     display: flex;
     align-items: center;
+
     gap: 18px;
 
-    padding: 0 28px;
+    padding: 10px 28px;
 
     color: #ffffff;
 
@@ -387,24 +511,30 @@
         #4820a0,
         #6d3dc0
     );
+
+    box-sizing: border-box;
 }
+
 
 .reaction-one-information-icon {
     width: 42px;
-    min-width: 42px;
     height: 42px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 23px;
     font-weight: 800;
 
     border: 3px solid #ffffff;
     border-radius: 50%;
 }
+
 
 .reaction-one-information-header h2 {
     margin: 0;
@@ -413,9 +543,11 @@
     font-weight: 900;
 }
 
+
 .reaction-one-information-content {
     padding: 28px 30px 30px;
 }
+
 
 .reaction-one-information-content p {
     margin: 0 0 16px;
@@ -423,35 +555,52 @@
     color: #3f4a68;
 
     font-size: 18px;
+
     line-height: 1.45;
+
+    overflow-wrap: anywhere;
 }
+
 
 .reaction-one-information-content p:last-child {
     margin-bottom: 0;
 }
+
 
 /* =====================================
    FOOTER
 ===================================== */
 
 .reaction-one-footer {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    display: flex;
+    flex-direction: row;
+
     align-items: center;
+
+    flex-shrink: 0;
 
     gap: 40px;
 
     margin-top: 24px;
 }
 
+
+/* =====================================
+   IMPORTANT INFORMATION
+===================================== */
+
 .reaction-one-important {
+    flex: 1;
+
+    min-width: 0;
     min-height: 82px;
 
     display: flex;
     align-items: center;
+
     gap: 22px;
 
-    padding: 5px 25px;
+    padding: 10px 25px;
 
     background: linear-gradient(
         135deg,
@@ -465,10 +614,12 @@
     box-sizing: border-box;
 }
 
+
 .reaction-one-warning-icon {
     width: 47px;
-    min-width: 47px;
     height: 47px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -485,9 +636,11 @@
     transform: rotate(45deg);
 }
 
+
 .reaction-one-important p {
     display: flex;
     align-items: baseline;
+
     flex-wrap: wrap;
 
     gap: 10px;
@@ -496,32 +649,45 @@
 
     color: #3f4964;
 
-    font-size: clamp(15px, 1vw, 19px);
+    font-size: clamp(15px, 1cqw, 19px);
+
     line-height: 1.5;
 }
+
 
 .reaction-one-important strong {
     color: #765018;
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 22px;
 }
 
+
+/* =====================================
+   NEXT BUTTON
+===================================== */
+
 .reaction-one-next-button {
     min-width: 265px;
-    height: 76px;
+    min-height: 76px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 0 35px;
+    padding: 8px 35px;
 
     color: #ffffff;
 
     font-family: "Baloo Thambi 2", sans-serif;
+
     font-size: 23px;
     font-weight: 900;
+
+    text-align: center;
 
     cursor: pointer;
 
@@ -534,53 +700,67 @@
     border: none;
     border-radius: 40px;
 
-    box-shadow: 0 13px 25px rgba(75, 30, 165, 0.23);
+    box-shadow:
+        0 13px 25px
+        rgba(75, 30, 165, 0.23);
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
 
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
 }
 
+
 .reaction-one-next-button:hover {
     transform: translateY(-3px);
 
-    box-shadow: 0 17px 30px rgba(75, 30, 165, 0.3);
+    box-shadow:
+        0 17px 30px
+        rgba(75, 30, 165, 0.3);
 }
+
 
 .reaction-one-next-button:active {
     transform: translateY(0);
 }
 
+
 /* =====================================
-   LARGE TABLET / SMALL LAPTOP
+   SMALL LAPTOP / LARGE TABLET
 ===================================== */
 
-@media screen and (max-width: 1200px) {
-    .reaction-one-container {
-        width: 90vw;
-        height: min(95dvh, 850px);
+@container lab (max-width: 1200px) {
 
-        padding: 78px 38px 26px;
+    .reaction-one-container {
+        width: 90cqw;
+        height: 95cqh;
+
+        padding: 70px 38px 26px;
 
         border-width: 9px;
     }
 
     .reaction-one-content {
-        grid-template-columns:
-            minmax(0, 1.55fr)
-            minmax(270px, 0.75fr);
-
         gap: 25px;
     }
 
+    .reaction-one-main {
+        flex: 1.55;
+    }
+
+    .reaction-one-information {
+        flex: 0.85;
+    }
+
     .reaction-one-equation {
-        width: 100%;
         gap: 18px;
     }
 
     .reaction-one-flask-icon {
         width: 62px;
-        min-width: 62px;
         height: 62px;
 
         font-size: 28px;
@@ -593,7 +773,9 @@
     .reaction-one-information-header {
         min-height: 68px;
 
-        padding: 0 20px;
+        padding: 10px 20px;
+
+        gap: 12px;
     }
 
     .reaction-one-information-content {
@@ -611,164 +793,85 @@
     .reaction-one-next-button {
         min-width: 210px;
     }
+
 }
+
 
 /* =====================================
-   TABLET
+   TABLET LANDSCAPE / SHORT LAPTOP
 ===================================== */
 
-@media screen and (max-width: 950px) {
-    .reaction-one-container {
-        width: 94vw;
-        height: min(95dvh, 820px);
+@container lab (max-width: 1024px)
+or (max-height: 650px) {
 
-        padding: 76px 28px 22px;
-
-        border-width: 7px;
-    }
-
-    .reaction-one-top-title {
-        width: min(340px, 48vw);
-        height: 50px;
-    }
-
-    .reaction-one-top-title h1 {
-        font-size: 23px;
-    }
-
-@media screen and (max-width: 950px) {
-    .reaction-one-content {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-}
-
-    .reaction-one-information {
-        display: none;
-    }
-
-    .reaction-one-heading {
-        margin-bottom: 14px;
-    }
-
-    .reaction-one-heading h1 {
-        font-size: 29px;
-    }
-
-    .reaction-one-type {
-        margin-bottom: 15px;
-    }
-
-    .reaction-one-equation {
-        min-height: 90px;
-    }
-
-    .reaction-one-notice {
-        margin-top: 18px;
-    }
-
-    .reaction-one-notice-list {
-        gap: 9px;
-    }
-
-    .reaction-one-footer {
-        gap: 18px;
-
-        margin-top: 16px;
-    }
-
-    .reaction-one-important {
-        min-height: 68px;
-
-        gap: 16px;
-        padding: 8px 18px;
-    }
-
-    .reaction-one-next-button {
-        min-width: 180px;
-        height: 64px;
-
-        padding: 0 24px;
-
-        font-size: 19px;
-    }
-}
-
-/* =====================================
-   768PX AND BELOW
-===================================== */
-
-@media screen and (max-width: 768px) {
     .reaction-one-overlay {
         padding: 10px;
     }
 
     .reaction-one-container {
-        width: 96vw;
-        height: min(96dvh, 760px);
-        max-height: calc(100dvh - 20px);
+        width: 94cqw;
+        height: 95cqh;
 
-        padding: 68px 22px 20px;
+        max-height: calc(100cqh - 20px);
 
-        border-width: 6px;
-        border-radius: 22px;
+        padding: 60px 25px 20px;
+
+        border-width: 7px;
+        border-radius: 24px;
     }
 
     .reaction-one-top-title {
-        width: min(310px, 55vw);
-        height: 46px;
+        width: min(340px, 40cqw);
 
-        border-radius: 0 0 30px 30px;
+        height: 45px;
     }
 
     .reaction-one-top-title h1 {
-        font-size: 21px;
+        font-size: 22px;
+    }
+
+    .reaction-one-content {
+        gap: 20px;
     }
 
     .reaction-one-heading {
         margin-bottom: 12px;
     }
 
-    .reaction-one-label {
-        margin-bottom: 4px;
-
-        font-size: 12px;
-        letter-spacing: 1.4px;
+    .reaction-one-heading h1 {
+        font-size: 24px;
     }
 
-    .reaction-one-heading h1 {
-        font-size: 26px;
+    .reaction-one-label {
+        font-size: 12px;
     }
 
     .reaction-one-type {
-        gap: 9px;
+        margin-bottom: 12px;
 
-        margin-bottom: 14px;
-        padding: 6px 16px 6px 8px;
+        padding: 6px 15px 6px 8px;
 
         font-size: 14px;
     }
 
     .reaction-one-fire-icon {
-        width: 36px;
-        height: 36px;
+        width: 35px;
+        height: 35px;
 
         font-size: 22px;
     }
 
     .reaction-one-equation {
-        min-height: 78px;
-        gap: 15px;
+        min-height: 65px;
 
-        padding: 10px 14px;
+        padding: 8px 12px;
 
-        border-radius: 14px;
+        gap: 12px;
     }
 
     .reaction-one-flask-icon {
-        width: 54px;
-        min-width: 54px;
-        height: 54px;
+        width: 48px;
+        height: 48px;
 
         font-size: 25px;
     }
@@ -780,21 +883,20 @@
     }
 
     .reaction-one-notice {
-        margin-top: 16px;
+        margin-top: 15px;
     }
 
     .reaction-one-section-heading {
-        gap: 11px;
+        gap: 10px;
 
-        margin-bottom: 9px;
+        margin-bottom: 8px;
     }
 
     .reaction-one-eye-icon {
-        width: 42px;
-        min-width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
 
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .reaction-one-section-heading h2 {
@@ -803,17 +905,14 @@
 
     .reaction-one-notice-list {
         gap: 8px;
-
-        padding-left: 3px;
     }
 
     .reaction-one-notice-item {
-        gap: 11px;
+        gap: 10px;
     }
 
     .reaction-one-check {
         width: 23px;
-        min-width: 23px;
         height: 23px;
 
         font-size: 15px;
@@ -821,31 +920,58 @@
 
     .reaction-one-notice-item p {
         font-size: 15px;
+
         line-height: 1.35;
     }
 
-    .reaction-one-footer {
-        gap: 14px;
+    .reaction-one-information-header {
+        min-height: 55px;
 
-        margin-top: 14px;
+        padding: 8px 15px;
+    }
+
+    .reaction-one-information-icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 19px;
+
+        border-width: 2px;
+    }
+
+    .reaction-one-information-header h2 {
+        font-size: 17px;
+    }
+
+    .reaction-one-information-content {
+        padding: 16px;
+    }
+
+    .reaction-one-information-content p {
+        margin-bottom: 10px;
+
+        font-size: 14px;
+    }
+
+    .reaction-one-footer {
+        gap: 16px;
+
+        margin-top: 16px;
     }
 
     .reaction-one-important {
         min-height: 60px;
 
-        gap: 12px;
+        gap: 15px;
 
-        padding: 7px 13px;
-
-        border-radius: 13px;
+        padding: 8px 15px;
     }
 
     .reaction-one-warning-icon {
         width: 35px;
-        min-width: 35px;
         height: 35px;
 
-        font-size: 21px;
+        font-size: 22px;
 
         border-width: 2px;
         border-radius: 9px;
@@ -855,59 +981,256 @@
         gap: 5px;
 
         font-size: 13px;
-        line-height: 1.3;
     }
 
     .reaction-one-important strong {
-        font-size: 17px;
+        font-size: 18px;
     }
 
     .reaction-one-next-button {
-        min-width: 150px;
-        height: 56px;
+        min-width: 170px;
+        min-height: 55px;
 
-        padding: 0 18px;
+        padding: 8px 20px;
 
-        font-size: 17px;
+        font-size: 18px;
     }
+
 }
 
+
 /* =====================================
-   SHORT HEIGHT LAPTOPS
+   COMPACT MOBILE LANDSCAPE
 ===================================== */
 
-@media screen and (max-height: 760px) and (min-width: 769px) {
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
     .reaction-one-container {
-        padding-top: 66px;
-        padding-bottom: 18px;
+        width: 90cqw;
+        height: 92cqh;
+
+        padding: 38px 14px 12px;
+    }
+
+    .reaction-one-top-title {
+        height: 30px;
+    }
+
+    .reaction-one-top-title h1 {
+        font-size: 16px;
+    }
+
+    .reaction-one-content {
+        gap: 12px;
     }
 
     .reaction-one-heading {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+    }
+
+    .reaction-one-heading h1 {
+        font-size: 19px;
+    }
+
+    .reaction-one-label {
+        font-size: 10px;
     }
 
     .reaction-one-type {
-        margin-bottom: 10px;
+        font-size: 12px;
+
+        margin-bottom: 8px;
+
+        padding: 4px 10px;
+    }
+
+    .reaction-one-fire-icon {
+        width: 25px;
+        height: 25px;
+
+        font-size: 16px;
+    }
+
+    .reaction-one-equation {
+        min-height: 48px;
+
+        padding: 6px 10px;
+
+        gap: 8px;
+    }
+
+    .reaction-one-flask-icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 18px;
+    }
+
+    .reaction-one-equation-text {
+        font-size: 14px;
+
+        gap: 5px;
     }
 
     .reaction-one-notice {
-        margin-top: 14px;
+        margin-top: 12px;
+    }
+
+    .reaction-one-section-heading {
+        gap: 8px;
+
+        margin-bottom: 6px;
+    }
+
+    .reaction-one-eye-icon {
+        width: 28px;
+        height: 28px;
+
+        font-size: 17px;
+    }
+
+    .reaction-one-section-heading h2 {
+        font-size: 16px;
     }
 
     .reaction-one-notice-list {
-        gap: 7px;
+        gap: 6px;
+    }
+
+    .reaction-one-check {
+        width: 18px;
+        height: 18px;
+
+        font-size: 12px;
     }
 
     .reaction-one-notice-item p {
-        font-size: 15px;
-        line-height: 1.3;
+        font-size: 13px;
+
+        line-height: 1.4;
+    }
+
+    .reaction-one-information-header {
+        min-height: 36px;
+
+        padding: 5px 10px;
+    }
+
+    .reaction-one-information-header h2 {
+        font-size: 14px;
+    }
+
+    .reaction-one-information-icon {
+        width: 23px;
+        height: 23px;
+
+        font-size: 14px;
+    }
+
+    .reaction-one-information-content {
+        padding: 10px;
+    }
+
+    .reaction-one-information-content p {
+        font-size: 13px;
+
+        line-height: 1.4;
+
+        margin-bottom: 8px;
     }
 
     .reaction-one-footer {
+        gap: 10px;
+
         margin-top: 12px;
     }
 
     .reaction-one-important {
-        min-height: 64px;
+        min-height: 42px;
+
+        padding: 6px 10px;
+
+        gap: 10px;
     }
+
+    .reaction-one-warning-icon {
+        width: 24px;
+        height: 24px;
+
+        font-size: 15px;
+    }
+
+    .reaction-one-important p {
+        font-size: 12px;
+    }
+
+    .reaction-one-important strong {
+        font-size: 14px;
+    }
+
+    .reaction-one-next-button {
+        min-width: 120px;
+
+        height: 34px;
+        min-height: 34px;
+
+        padding: 0 14px;
+
+        font-size: 13px;
+    }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .reaction-one-container {
+        width: 94cqw;
+        height: 94cqh;
+
+        padding: 32px 10px 10px;
+    }
+
+    .reaction-one-top-title {
+        height: 26px;
+    }
+
+    .reaction-one-top-title h1 {
+        font-size: 14px;
+    }
+
+    .reaction-one-heading h1 {
+        font-size: 17px;
+    }
+
+    .reaction-one-equation-text {
+        font-size: 13px;
+    }
+
+    .reaction-one-section-heading h2 {
+        font-size: 14px;
+    }
+
+    .reaction-one-notice-item p,
+    .reaction-one-information-content p {
+        font-size: 12px;
+    }
+
+    .reaction-one-information-header h2 {
+        font-size: 13px;
+    }
+
+    .reaction-one-next-button {
+        height: 30px;
+        min-height: 30px;
+
+        font-size: 12px;
+    }
+
 }

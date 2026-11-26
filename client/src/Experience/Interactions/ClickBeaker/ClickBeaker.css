@@ -1,5 +1,6 @@
 .click-btn-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 
@@ -15,14 +16,21 @@
     border: 3px solid #ffbd00;
     border-radius: 12px;
 
-    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+    box-shadow:
+        0 5px 14px
+        rgba(0, 0, 0, 0.18);
 
     box-sizing: border-box;
 }
 
+
 .click-btn-container button {
     min-width: 90px;
+
     height: 34px;
+    min-height: 34px;
+
+    flex-shrink: 0;
 
     padding: 0 12px;
 
@@ -31,6 +39,8 @@
     font-family: "Baloo Bhai 2", sans-serif;
     font-size: 13px;
     font-weight: 700;
+
+    line-height: 1.2;
     white-space: nowrap;
 
     cursor: pointer;
@@ -40,10 +50,17 @@
     border: none;
     border-radius: 7px;
 
+    box-sizing: border-box;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
     transition:
         background-color 0.2s ease,
         transform 0.2s ease;
 }
+
 
 .click-btn-container button:hover {
     background-color: #ffd04a;
@@ -51,43 +68,51 @@
     transform: translateY(-1px);
 }
 
+
 .click-btn-container button:active {
     transform: translateY(0);
 }
 
+
 /* =====================================
-   1024PX AND BELOW
+   SMALL LAPTOP / LARGE TABLET
 ===================================== */
 
-@media screen and (max-width: 1024px) {
+@container lab (max-width: 1200px) {
+
     .click-btn-container {
-        flex-direction: column;
+        min-width: 150px;
 
         gap: 7px;
 
-        min-width: 145px;
-
-        padding: 7px;
+        padding: 6px;
     }
 
     .click-btn-container button {
-        width: 100%;
-        min-width: 0;
+        min-width: 85px;
+
         height: 32px;
+        min-height: 32px;
 
         padding: 0 10px;
 
         font-size: 12px;
     }
+
 }
 
+
 /* =====================================
-   SMALLER TABLETS
+   TABLET LANDSCAPE / SHORT LAPTOP
 ===================================== */
 
-@media screen and (max-width: 784px) {
+@container lab (max-width: 1024px)
+or (max-height: 650px) {
+
     .click-btn-container {
-        min-width: 130px;
+        min-width: 140px;
+
+        gap: 6px;
 
         padding: 6px;
 
@@ -96,10 +121,168 @@
     }
 
     .click-btn-container button {
+        min-width: 75px;
+
         height: 30px;
+        min-height: 30px;
+
+        padding: 0 9px;
+
+        font-size: 12px;
+
+        border-radius: 6px;
+    }
+
+}
+
+
+/* =====================================
+   MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 950px)
+or (max-height: 450px) {
+
+    .click-btn-container {
+        flex-direction: row;
+
+        min-width: 0;
+
+        gap: 5px;
+
+        padding: 5px;
+
+        border-width: 2px;
+        border-radius: 9px;
+    }
+
+    .click-btn-container button {
+        min-width: 65px;
+
+        height: 28px;
+        min-height: 28px;
+
+        padding: 0 8px;
 
         font-size: 11px;
 
         border-radius: 6px;
     }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+    .click-btn-container {
+        min-width: 0;
+
+        gap: 4px;
+
+        padding: 4px;
+
+        border-width: 2px;
+        border-radius: 8px;
+    }
+
+    .click-btn-container button {
+        min-width: 55px;
+
+        height: 24px;
+        min-height: 24px;
+
+        padding: 0 6px;
+
+        font-size: 10px;
+
+        border-radius: 5px;
+    }
+
+}
+
+
+/* =====================================
+   EXTRA SMALL MOBILE LANDSCAPE
+===================================== */
+
+@container lab (max-width: 550px)
+or (max-height: 280px) {
+
+    .click-btn-container {
+        gap: 3px;
+
+        padding: 3px;
+
+        border-width: 1.5px;
+        border-radius: 6px;
+    }
+
+    .click-btn-container button {
+        min-width: 45px;
+
+        height: 22px;
+        min-height: 22px;
+
+        padding: 0 5px;
+
+        font-size: 9px;
+
+        border-radius: 4px;
+    }
+
+}
+
+
+/* =====================================
+   ACTUAL PORTRAIT CONTAINER — FALLBACK
+===================================== */
+
+@container lab (orientation: portrait) {
+
+    .click-btn-container {
+        flex-direction: column;
+
+        min-width: 120px;
+
+        gap: 5px;
+
+        padding: 5px;
+    }
+
+    .click-btn-container button {
+        width: 100%;
+        min-width: 0;
+
+        height: 32px;
+        min-height: 32px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =====================================
+   TOUCHSCREEN BUTTON EFFECTS
+===================================== */
+
+@media (pointer: coarse) {
+
+    .click-btn-container button:hover {
+        background-color: #f1c03c;
+
+        transform: none;
+    }
+
+    .click-btn-container button:active {
+        background-color: #ffd04a;
+
+        transform: scale(0.95);
+    }
+
 }

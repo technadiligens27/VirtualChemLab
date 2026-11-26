@@ -63,6 +63,8 @@ import EndothermicReactionSummary from "./Summary/EndothermicReactionSummary/End
 import HessLiveDataPanel from "./HessLiveDataPanel/HessLiveDataPanel"
 import ConfirmResetLesson from "./ConfirmResetLesson/ConfirmResetLesson"
 import ErrorBox from "./ErrorBox/ErrorBox";
+import useIsMobile from "../useIsMobile/useIsMobile"
+import MobileDialogBox from "./MobileDialogBox/MobileDialogBox"
 
 const mainContent = [
   {
@@ -172,9 +174,13 @@ const UI = () => {
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
     setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo,showFeedBackForm,setShowFeedBackForm,
-    showConfirmAnotherLesson,setShowError,showError
+    showConfirmAnotherLesson,setShowError,showError,isTouchDevice,mobileChairSit,setMobileChairSit,setMobileChairSlide
     
   } = useContext(InteractionContext)
+
+    const isMobile = useIsMobile();
+
+
 
   // ------------------------ Lesson 08 -------------
 
@@ -621,7 +627,7 @@ useEffect(() => {
     <>    
     {/* <LessonDetails/> */}
     {/* <LessonSummary summaryData={saltDissolvingSummary}/> */}
-    {!isSitting && selectedMainGuideline===5 && <SideGuide/>}
+    {!isSitting && selectedMainGuideline===5 && !isMobile && <SideGuide/>}
 
     {isLessonStart && safetyStep===4 && <ResetLessonButton/>}
     
@@ -665,7 +671,7 @@ useEffect(() => {
           <DialogBox text="Walk over to the chair indicated by the arrow" />
         )}
 
-      {selectedMainGuideline === 5 &&
+      {selectedMainGuideline === 5 && !isTouchDevice &&
         chairStep === 1 && (
           <DialogBox text={
             <>
@@ -674,13 +680,25 @@ useEffect(() => {
           } />
         )}
 
-      {chairStep === 2 && (
+      {selectedMainGuideline === 5 && isTouchDevice && 
+        chairStep === 1 && (
+          <MobileDialogBox button1Text="Slide Chair" onbtnClick={()=>{setMobileChairSit(true)}}/>
+        )}        
+
+      {chairStep === 2 && !isTouchDevice && (
         <DialogBox text={
             <>
               Press <strong>E</strong> to <strong>Sit</strong>
             </>
           } />
       )}
+
+      { isTouchDevice && 
+        chairStep === 2 && (
+          <MobileDialogBox button1Text="Sit" onbtnClick={()=>{setMobileChairSlide(true)}}/>
+        )}    
+
+
 
       {(
         (labResetKey > 0 &&

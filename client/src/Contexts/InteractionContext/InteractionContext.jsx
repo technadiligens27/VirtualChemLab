@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 
 export const InteractionContext = createContext()
 
@@ -229,6 +229,32 @@ const [feedbackAnswers,setFeedbackAnswers] = useState({
   const [showConfirmAnotherLesson,setShowConfirmAnotherLesson] = useState(false)
   const [showError,setShowError] = useState(false)
 
+  // =========================================================
+  // DETECT TOUCHSCREEN INPUT
+  // =========================================================
+
+  const [isTouchDevice, setIsTouchDevice] = useState(() => window.matchMedia("(pointer: coarse)").matches);
+  const [mobileChairSit,setMobileChairSit] = useState(false);
+  const [mobileChairSlide,setMobileChairSlide] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)")
+    const handleChange = (event) => {
+      setIsTouchDevice(event.matches)
+    }
+
+    mediaQuery.addEventListener("change",handleChange)
+
+    return () => {
+
+      mediaQuery.removeEventListener(
+        "change",
+        handleChange
+      )
+
+    }
+
+  }, [])
 
 const resetInteractions = () => {
   // =======================================================
@@ -512,8 +538,10 @@ setChairStep(0)
 setIsAddLiquid(false)
 setFeedbackAnswers(false)
 setShowConfirmAnotherLesson(false)
-setShowError(false)
-  
+setShowError(false);
+setIsTouchDevice(false);
+setMobileChairSit(false); 
+setMobileChairSlide(false);
 }
   return (
     <InteractionContext.Provider
@@ -623,7 +651,9 @@ setShowError(false)
         isAirHoleOpen,setIsAirHoleOpen,molarVolumeResultsState,setMolarVolumeResultsState,
         selectedObjectName,setSelectedObjectName,feedbackAnswers,setFeedbackAnswers,
         showFeedBackForm,setShowFeedBackForm,isAddLiquid,setIsAddLiquid,
-        showConfirmAnotherLesson,setShowConfirmAnotherLesson,showError,setShowError
+        showConfirmAnotherLesson,setShowConfirmAnotherLesson,showError,setShowError,
+        isTouchDevice,setIsTouchDevice,mobileChairSit,setMobileChairSit,
+        mobileChairSlide,setMobileChairSlide
       }}
     >
       {children}

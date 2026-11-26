@@ -45,19 +45,32 @@ const ExothermicReactionSummary = ({
   ]
 
   const getClosedPosition = () => {
-    const summary =
-      summaryRef.current
+
+    const summary = summaryRef.current
 
     if (!summary) {
       return 0
     }
 
-    return -(
-      window.innerWidth / 2 +
-      summary.offsetWidth / 2
-    )
-  }
+    const labContainer =
+      summary.closest(".lab-view")
 
+    const labWidth =
+      labContainer?.clientWidth ??
+      window.innerWidth
+
+    const borderWidth =
+      parseFloat(
+        getComputedStyle(summary).borderRightWidth
+      ) || 0
+
+    return -(
+      labWidth / 2 +
+      summary.offsetWidth / 2
+    ) + borderWidth
+
+  }
+  
   useLayoutEffect(() => {
     const summary =
       summaryRef.current

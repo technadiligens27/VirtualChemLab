@@ -4,8 +4,8 @@
 
   z-index: 999;
 
-  width: 100vw;
-  min-height: 100dvh;
+  width: 100cqw;
+  height: 100cqh;
 
   display: flex;
   align-items: center;
@@ -14,6 +14,7 @@
   padding: 20px;
 
   overflow-y: auto;
+  overflow-x: hidden;
 
   background: rgba(0, 0, 0, 0.25);
 
@@ -27,8 +28,12 @@
   width: min(60%, 1000px);
 
   height: auto;
-  min-height: clamp(440px, 60dvh, 680px);
-  max-height: calc(100dvh - 40px);
+  min-height: min(
+    clamp(440px, 60cqh, 680px),
+    100%
+  );
+
+  max-height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -38,13 +43,13 @@
   padding-bottom: 10px;
 
   overflow-y: auto;
+  overflow-x: hidden;
 
-  background:
-    linear-gradient(
-      90deg,
-      #FECC43 0%,
-      #D6AD3B 100%
-    );
+  background: linear-gradient(
+    90deg,
+    #FECC43 0%,
+    #D6AD3B 100%
+  );
 
   border-radius: 30px;
 
@@ -55,14 +60,21 @@
   width: 95%;
 
   height: auto;
-  min-height: clamp(350px, 48dvh, 560px);
+
+  min-height: min(
+    clamp(350px, 48cqh, 560px),
+    max(0px, calc(100cqh - 150px))
+  );
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: safe center;
 
   padding: 20px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
 
   background-color: #F9F9E7;
 
@@ -76,6 +88,8 @@
 
   margin-right: auto;
   padding: 0 20px;
+
+  flex-shrink: 0;
 }
 
 .main-guidelines-title h1 {
@@ -83,21 +97,31 @@
 
   color: #FFFFFF;
 
-  font-size: clamp(23px, 3vw, 45px);
+  font-size: clamp(23px, 3cqw, 45px);
   text-align: left;
+
+  overflow-wrap: anywhere;
 }
 
 .guideline-image-container {
   width: 90%;
+  height: auto;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  flex-shrink: 0;
 }
 
 .guideline-image-container img {
+  display: block;
+
   width: min(20%, 180px);
+  height: auto;
+
   max-width: 100%;
+  max-height: 30cqh;
 
   object-fit: contain;
 }
@@ -109,14 +133,22 @@
   justify-content: center;
 
   width: 100%;
+
+  min-width: 0;
+
+  flex-shrink: 0;
 }
 
 .guideline-description {
   margin: 0;
   padding: 0 40px;
+
   font-size: 26px;
   line-height: 160%;
+
   text-align: center;
+
+  overflow-wrap: anywhere;
 }
 
 .main-guidelines-btn-container {
@@ -126,6 +158,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 
   gap: 10px;
 
@@ -139,7 +172,6 @@
   padding: 10px 16px;
 
   color: white;
-
   background-color: #4f7f93;
 
   border: none;
@@ -147,7 +179,9 @@
 
   cursor: pointer;
 
-  font-size: clamp(15px, 1.5vw, 22px);
+  font-size: clamp(15px, 1.5cqw, 22px);
+
+  overflow-wrap: anywhere;
 
   transition:
     background-color 0.1s ease,
@@ -156,7 +190,6 @@
 
 .main-guidelines-btn:hover {
   background-color: #245970;
-
   transform: translateY(-2px);
 }
 
@@ -166,8 +199,11 @@
   align-items: center;
   justify-content: center;
 
-  gap: 8px;
+  flex-shrink: 0;
 
+  max-width: 100%;
+
+  gap: 8px;
   padding-top: 10px;
 }
 
@@ -175,197 +211,500 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  flex-shrink: 0;
 }
 
 .guide-info-img-container img {
   width: 30px;
   min-width: 30px;
   max-width: 35px;
+
+  height: auto;
+
+  object-fit: contain;
 }
 
 .guide-info p {
   margin: 0;
   padding: 0;
 
-  font-size: clamp(13px, 1.2vw, 16px);
+  min-width: 0;
+
+  font-size: clamp(13px, 1.2cqw, 16px);
   text-align: left;
+
+  overflow-wrap: anywhere;
 }
 
 .highlight {
   font-weight: bold;
 }
 
-/* =========================================================
+
+/* =========================================
    ROW LAYOUT
-========================================================= */
+========================================= */
 
 .guideline-inner-container-row {
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 35%)
+    minmax(0, 1fr);
+
+  align-items: center;
+  align-content: safe center;
 
   gap: 20px;
-
   padding: 20px;
 }
 
-.guideline-inner-container-row .guideline-image-container {
-  width: 35%;
-
-  flex-shrink: 0;
+.guideline-inner-container-row
+.guideline-image-container {
+  width: 100%;
+  height: auto;
 }
 
-.guideline-inner-container-row .guideline-image-container img {
+.guideline-inner-container-row
+.guideline-image-container img {
   width: min(60%, 260px);
+  max-height: 40cqh;
 }
 
-/* =========================================================
-   TABLET
-========================================================= */
+.guideline-inner-container-row
+.guideline-content-container {
+  width: 100%;
+  min-width: 0;
+}
 
-@media (max-width: 1000px) {
+.guideline-inner-container-row
+.guide-info {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@container lab (width > 844px)
+and (width <= 1200px)
+and (height > 450px) {
+
+  .main-guidelines {
+    padding: 10px;
+  }
+
   .guideline-container {
-    width: 82%;
-    min-height: 58vh;
+    width: 85cqw;
+    height: 80cqh;
+
+    min-height: 0;
+    max-height: 100%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 0;
+    margin: 0;
+
+    gap: 0;
+
+    justify-content: flex-end;
   }
 
   .guideline-inner-container {
-    padding: 18px;
+    width: 95%;
+    height: 80%;
+
+    min-height: 0;
+    max-height: 95%;
+
+    flex-shrink: 0;
+
+    padding: 10px;
+    margin: auto;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+  }
+
+  .main-guidelines-title {
+    padding: 10px 10px 0;
+    margin: 0;
+
+    height: auto;
+    min-height: 12%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-guidelines-title h1 {
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+
+    font-size: clamp(26px, 3cqw, 32px);
+    line-height: 120%;
+  }
+
+  .guideline-image-container {
+    width: 90%;
+    height: auto;
+  }
+
+  .guideline-image-container img {
+    max-height: 25cqh;
   }
 
   .guideline-description {
     padding: 0 15px;
+
+    font-size: clamp(18px, 2.2cqw, 22px);
+    line-height: 150%;
   }
 
-  .guideline-inner-container-row .guideline-image-container {
-    width: 38%;
+  .main-guidelines-btn-container {
+    padding-top: 15px;
   }
 
-  .guideline-inner-container-row .guideline-image-container img {
-    width: 75%;
-  }
-  .main-guidelines-btn{
+  .main-guidelines-btn {
+    min-height: 35px;
+    padding: 8px;
+
     font-size: 20px;
+  }
+
+  .guide-info {
+    padding: 8px;
+  }
+
+  .guide-info-img-container img {
+    width: 22px;
+    min-width: 22px;
+    max-width: 22px;
+  }
+
+  .guide-info p {
+    font-size: 16px;
+  }
+
+  .guideline-inner-container-row {
+    grid-template-columns:
+      minmax(0, 38%)
+      minmax(0, 1fr);
+
+    align-content: safe center;
+
+    gap: 10px;
+  }
+
+  .guideline-inner-container-row
+  .guideline-image-container {
+    width: 100%;
+  }
+
+  .guideline-inner-container-row
+  .guideline-image-container img {
+    width: 75%;
+    max-height: 35cqh;
   }
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
 
-@media (max-width: 650px) {
+/* =========================================
+   MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 844px)
+or (max-height: 450px) {
+
   .main-guidelines {
-    align-items: flex-start;
-
-    padding: 14px;
+    padding: 0;
   }
 
   .guideline-container {
-    width: 100%;
-    min-height: auto;
+    width: 85cqw;
+    height: 90cqh;
 
-    margin: auto 0;
+    min-height: 0;
+    max-height: 100%;
 
-    border-radius: 24px;
-  }
+    overflow-y: auto;
+    overflow-x: hidden;
 
-  .main-guidelines-title {
-    padding: 0 16px;
-  }
+    padding: 0;
+    margin: 0;
 
-  .main-guidelines-title h1 {
-    margin: 14px 0 10px;
+    gap: 0;
 
-    font-size: 28px;
-    text-align: center;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .guideline-inner-container {
-    width: 94%;
+    width: 95%;
+    height: 80%;
+
+    min-height: 0;
+    max-height: 95%;
+
+    flex-shrink: 0;
+
+    padding: 0;
+    margin: auto;
+
+
+    gap: 5px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .guide-info-img-container img {
+    width: 15px;
+    min-width: 15px;
+    max-width: 15px;
+  }
+
+  .guide-info {
+    padding: 5px;
+  }
+
+  .guide-info p {
+    font-size: 14px;
+  }
+
+  .main-guidelines-title {
+    padding: 10px 5px 0;
+    margin: 0;
+
     height: auto;
+    min-height: 12%;
 
-    min-height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    padding: 22px 15px;
+  .main-guidelines-title h1 {
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+
+    font-size: 23px;
+    line-height: 120%;
+  }
+
+  .guideline-image-container {
+    width: 90%;
+    height: auto;
+  }
+
+  .guideline-image-container img {
+    max-height: 25cqh;
+  }
+
+  .guideline-description {
+    padding: 0 15px;
+
+    font-size: 17px;
+    line-height: 160%;
+  }
+
+  .main-guidelines-btn-container {
+    gap: 10px;
+    padding-top: 20px;
+  }
+
+  .main-guidelines-btn {
+    min-height: 20px;
+    padding: 5px;
+
+    font-size: 16px;
+  }
+
+  /* Mobile row layout */
+
+  .guideline-inner-container-row {
+    grid-template-columns:
+      minmax(0, 38%)
+      minmax(0, 1fr);
+
+    align-content: start;
+
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .guideline-inner-container-row
+  .guideline-image-container {
+    width: 100%;
+    height: auto;
+  }
+
+  .guideline-inner-container-row
+  .guideline-image-container img {
+    width: 75%;
+    max-height: 35cqh;
+  }
+
+  .guideline-inner-container-row
+  .guideline-description {
+    padding: 0 10px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+  .guideline-container {
+    border-radius: 24px;
+  }
+
+  .guideline-inner-container {
+    gap: 3px;
 
     border-radius: 18px;
   }
 
+  .main-guidelines-title {
+    padding-top: 5px;
+  }
+
+  .main-guidelines-title h1 {
+    font-size: 20px;
+  }
+
+  .guideline-image-container {
+    width: 90%;
+    height: auto;
+  }
+
+  .guideline-image-container img {
+    max-height: 20cqh;
+  }
+
+  .guideline-description {
+    padding: 0 10px;
+
+    font-size: 14px;
+    line-height: 140%;
+  }
+
+  .main-guidelines-btn-container {
+    padding-top: 10px;
+    gap: 8px;
+  }
+
+  .main-guidelines-btn {
+    min-height: 20px;
+    padding: 4px;
+
+    font-size: 14px;
+  }
+
+  .guide-info {
+    padding: 3px;
+    gap: 5px;
+  }
+
+  .guide-info p {
+    font-size: 11px;
+    line-height: 140%;
+  }
+
+  .guide-info-img-container img {
+    width: 12px;
+    min-width: 12px;
+    max-width: 12px;
+  }
+
   .guideline-inner-container-row {
-    flex-direction: column;
+    grid-template-columns:
+      minmax(0, 30%)
+      minmax(0, 1fr);
 
-    align-items: center;
-
-    gap: 14px;
+    gap: 5px;
   }
 
-  .guideline-image-container,
-  .guideline-inner-container-row .guideline-image-container {
-    width: 100%;
+  .guideline-inner-container-row
+  .guideline-image-container img {
+    max-height: 30cqh;
+  }
+}
+
+
+/* =========================================
+   EXTRA SMALL SCREENS
+========================================= */
+
+@container lab (max-width: 520px) {
+
+  .guideline-container {
+    width: 97cqw;
+    height: 94cqh;
+
+    border-radius: 18px;
   }
 
-  .guideline-image-container img,
-  .guideline-inner-container-row .guideline-image-container img {
-    width: min(150px, 45vw);
-    max-height: 130px;
+  .guideline-inner-container {
+    width: 96%;
+
+    border-radius: 14px;
+
+    gap: 3px;
+  }
+
+  .main-guidelines-title h1 {
+    font-size: 18px;
+  }
+
+  .guideline-image-container img {
+    width: min(25%, 100px);
+    max-height: 18cqh;
   }
 
   .guideline-description {
     padding: 0 8px;
 
-    font-size: 16px;
-    line-height: 150%;
+    font-size: 13px;
+    line-height: 140%;
+  }
+
+  .main-guidelines-btn {
+    font-size: 13px;
   }
 
   .main-guidelines-btn-container {
-    flex-direction: column;
-
-    gap: 10px;
-
-    padding-top: 18px;
-  }
-
-  .main-guidelines-btn {
-    width: min(280px, 100%);
-    min-height: 46px;
-
-    font-size: 17px;
-  }
-
-  .guide-info {
-    align-items: flex-start;
-
-    padding: 14px 5px 0;
+    padding-top: 8px;
+    gap: 5px;
   }
 
   .guide-info p {
-    font-size: 13px;
-    line-height: 1.4;
-  }
-}
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 380px) {
-  .main-guidelines {
-    padding: 10px;
+    font-size: 11px;
   }
 
-  .main-guidelines-title h1 {
-    font-size: 24px;
+  .guideline-inner-container-row {
+    grid-template-columns: minmax(0, 1fr);
+
+    align-content: start;
   }
 
-  .guideline-inner-container {
-    padding: 18px 12px;
-  }
-
-  .guideline-description {
-    font-size: 14px;
-  }
-
-  .main-guidelines-btn {
-    font-size: 15px;
+  .guideline-inner-container-row
+  .guideline-image-container img {
+    width: min(25%, 100px);
+    max-height: 18cqh;
   }
 }

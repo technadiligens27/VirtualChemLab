@@ -6,7 +6,8 @@ import {
 import {
   useContext,
   useEffect,
-  useRef,useState
+  useRef,
+  useState,
 } from "react"
 
 import * as THREE from "three"
@@ -16,8 +17,7 @@ import {
 } from "../../Contexts/InteractionContext/InteractionContext"
 
 const PlayerController = ({
-  // Add only models the player
-  // should NOT walk through.
+
   blockedModels = [],
 
   playerRadius = 0.7,
@@ -27,7 +27,12 @@ const PlayerController = ({
   playerSittingHeight = 9,
 
   movementSpeed = 25,
+
+  // MOBILE JOYSTICK
+  mobileMovementRef,
+
 }) => {
+
   const {
     camera,
   } = useThree()
@@ -37,8 +42,6 @@ const PlayerController = ({
   } = useContext(
     InteractionContext
   )
-
-
 
   const keys = useRef({
     forward: false,
@@ -62,32 +65,47 @@ const PlayerController = ({
   const nextPositionRef =
     useRef(new THREE.Vector3())
 
-  const [isCompactScreen, setIsCompactScreen] = useState(
+  const [
+    isCompactScreen,
+    setIsCompactScreen,
+  ] = useState(
     () => window.innerWidth <= 1024
-  );
+  )
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsCompactScreen(window.innerWidth <= 1024);
-    };
 
-    window.addEventListener("resize", handleResize);
+    const handleResize = () => {
+      setIsCompactScreen(
+        window.innerWidth <= 1024
+      )
+    }
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    )
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);    
+      window.removeEventListener(
+        "resize",
+        handleResize
+      )
+    }
+
+  }, [])
+
 
   // =========================================================
   // CHECK IF PLAYER WOULD HIT A BLOCKED MODEL
   // =========================================================
 
-
   const doesPlayerHitBlockedModel = (
     nextPosition
   ) => {
+
     return blockedModels.some(
       (modelRef) => {
+
         const model =
           modelRef?.current
 
@@ -128,14 +146,17 @@ const PlayerController = ({
     )
   }
 
+
   // =========================================================
   // KEYBOARD CONTROLS
   // =========================================================
 
   useEffect(() => {
+
     const handleKeyDown = (
       event
     ) => {
+
       if (event.code === "KeyW") {
         keys.current.forward = true
       }
@@ -156,6 +177,7 @@ const PlayerController = ({
     const handleKeyUp = (
       event
     ) => {
+
       if (event.code === "KeyW") {
         keys.current.forward = false
       }
@@ -173,6 +195,15 @@ const PlayerController = ({
       }
     }
 
+    const resetKeys = () => {
+
+      keys.current.forward = false
+      keys.current.backward = false
+      keys.current.left = false
+      keys.current.right = false
+
+    }
+
     window.addEventListener(
       "keydown",
       handleKeyDown
@@ -183,7 +214,13 @@ const PlayerController = ({
       handleKeyUp
     )
 
+    window.addEventListener(
+      "blur",
+      resetKeys
+    )
+
     return () => {
+
       window.removeEventListener(
         "keydown",
         handleKeyDown
@@ -193,17 +230,30 @@ const PlayerController = ({
         "keyup",
         handleKeyUp
       )
+
+      window.removeEventListener(
+        "blur",
+        resetKeys
+      )
     }
+
   }, [])
+
 
   // =========================================================
   // PLAYER MOVEMENT + COLLISION
   // =========================================================
 
   useFrame((_, delta) => {
+
     // Keep seated user in chair position.
+
     if (hasSat.current) {
-      camera.position.y = isCompactScreen ? 7.5: playerSittingHeight
+
+      camera.position.y =
+        isCompactScreen
+          ? 7.5
+          : playerSittingHeight
 
       return
     }
@@ -220,6 +270,7 @@ const PlayerController = ({
     const nextPosition =
       nextPositionRef.current
 
+
     // ==========================================
     // CAMERA FORWARD DIRECTION
     // ==========================================
@@ -228,10 +279,10 @@ const PlayerController = ({
       forward
     )
 
-    // Do not move up/down when camera looks up.
     forward.y = 0
 
     forward.normalize()
+
 
     // ==========================================
     // CAMERA RIGHT DIRECTION
@@ -244,11 +295,17 @@ const PlayerController = ({
 
     right.normalize()
 
+
     // ==========================================
     // CREATE MOVEMENT VECTOR
     // ==========================================
 
     movement.set(0, 0, 0)
+
+
+    // ==========================================
+    // DESKTOP KEYBOARD MOVEMENT
+    // ==========================================
 
     if (keys.current.forward) {
       movement.add(forward)
@@ -266,24 +323,71 @@ const PlayerController = ({
       movement.add(right)
     }
 
-    // Keep player on floor when not moving.
+
+    // ==========================================
+    // MOBILE JOYSTICK MOVEMENT
+    // ==========================================
+
+    const joystickX =
+      mobileMovementRef?.current?.x ?? 0
+
+    const joystickY =
+      mobileMovementRef?.current?.y ?? 0
+
+    const joystickDistance =
+      Math.hypot(
+        joystickX,
+        joystickY
+      )
+
+    // Ignore very small joystick movements.
+
+    if (joystickDistance > 0.1) {
+
+      movement.addScaledVector(
+        forward,
+        joystickY
+      )
+
+      movement.addScaledVector(
+        right,
+        joystickX
+      )
+    }
+
+
+    // ==========================================
+    // KEEP PLAYER ON FLOOR WHEN NOT MOVING
+    // ==========================================
+
     if (movement.lengthSq() === 0) {
-      camera.position.y = isCompactScreen ? 9:  playerStandingHeight
+
+      camera.position.y =
+        isCompactScreen
+          ? 9
+          : playerStandingHeight
 
       return
     }
 
-    movement.normalize()
+
+    // ==========================================
+    // LIMIT MAXIMUM MOVEMENT SPEED
+    // ==========================================
+
+    if (movement.lengthSq() > 1) {
+
+      movement.normalize()
+
+    }
 
     movement.multiplyScalar(
       movementSpeed * delta
     )
 
+
     // ==========================================
     // MOVE X AXIS
-    //
-    // Separate X and Z checking makes the player
-    // slide smoothly beside a wall.
     // ==========================================
 
     nextPosition.copy(
@@ -298,9 +402,12 @@ const PlayerController = ({
         nextPosition
       )
     ) {
+
       camera.position.x =
         nextPosition.x
+
     }
+
 
     // ==========================================
     // MOVE Z AXIS
@@ -318,12 +425,22 @@ const PlayerController = ({
         nextPosition
       )
     ) {
+
       camera.position.z =
         nextPosition.z
+
     }
 
-    // Keep player at walking height.
-    camera.position.y = isCompactScreen ? 9:  playerStandingHeight
+
+    // ==========================================
+    // KEEP PLAYER AT WALKING HEIGHT
+    // ==========================================
+
+    camera.position.y =
+      isCompactScreen
+        ? 9
+        : playerStandingHeight
+
   })
 
   return null

@@ -1,0 +1,176 @@
+.mobile-look-indicator {
+  position: absolute;
+
+  bottom: 5cqh;
+  right: 3cqw;
+
+  z-index: 100;
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  pointer-events: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mobile-look-circle {
+  position: relative;
+
+  width: 110px;
+  height: 110px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.25);
+
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+}
+
+.look-arrow {
+  position: absolute;
+
+  color: white;
+
+  font-size: 24px;
+  line-height: 100%;
+}
+
+.look-up {
+  top: 10%;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.look-down {
+  bottom: 10%;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.look-left {
+  left: 10%;
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+.look-right {
+  right: 10%;
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+.look-center {
+  width: 15px;
+  height: 15px;
+
+  background-color: #4f7f93;
+
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.mobile-look-label {
+  margin: 0;
+  padding: 0;
+
+  color: white;
+
+  font-size: 13px;
+  text-shadow: 0 1px 4px black;
+}
+
+
+/* =========================================
+   TOUCHSCREEN LANDSCAPE
+========================================= */
+
+@media (pointer: coarse)
+and (orientation: landscape) {
+
+  .mobile-look-indicator {
+    display: flex;
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@container lab (width > 844px)
+and (width <= 1200px)
+and (height > 450px) {
+
+  .mobile-look-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 844px)
+or (max-height: 450px) {
+
+  .mobile-look-indicator {
+    bottom: 5cqh;
+    right: 3cqw;
+  }
+
+  .mobile-look-circle {
+    width: 110px;
+    height: 110px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE LANDSCAPE
+========================================= */
+
+@container lab (max-width: 700px)
+or (max-height: 350px) {
+
+  .mobile-look-indicator {
+    bottom: 3cqh;
+    right: 2cqw;
+  }
+
+  .mobile-look-circle {
+    width: 90px;
+    height: 90px;
+  }
+
+  .look-arrow {
+    font-size: 20px;
+  }
+
+  .look-center {
+    width: 12px;
+    height: 12px;
+  }
+
+  .mobile-look-label {
+    font-size: 11px;
+  }
+
+}
