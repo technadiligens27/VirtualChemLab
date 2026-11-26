@@ -14,6 +14,8 @@ const MobileDialogBox = ({
 
 }) => {
 
+  console.log("Mobilr Dialog Box")
+
   const {
     isTouchDevice,
     isFillBeakerBoxOpen,

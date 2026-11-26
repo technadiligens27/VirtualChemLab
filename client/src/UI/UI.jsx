@@ -175,7 +175,8 @@ const UI = () => {
     isObjectInfo,
     chairStep,setHessGuidelineNumber,hessGuidelineNumber,isReactionTimerRunning,
     setIsReactionTimerRunning,isPouring, showQuestionCardNo,setShowQuestionCardNo,showFeedBackForm,setShowFeedBackForm,
-    showConfirmAnotherLesson,setShowError,showError,isTouchDevice,mobileChairSit,setMobileChairSit,setMobileChairSlide
+    showConfirmAnotherLesson,setShowError,showError,isTouchDevice,mobileChairSit,setMobileChairSit,setMobileChairSlide,
+    showMobilePourButton,mobilePour,setMobilePour,pouringModeHand
     
   } = useContext(InteractionContext)
 
@@ -185,6 +186,19 @@ const UI = () => {
 
 
   // ------------------------ Lesson 08 -------------
+  useEffect(() => {
+
+  console.log("isTouchDevice:", isTouchDevice)
+
+  console.log("showMobilePourButton:", showMobilePourButton)
+
+  console.log("mobilePour:", mobilePour)
+
+}, [
+  isTouchDevice,
+  showMobilePourButton,
+  mobilePour,
+])
 
 
   useEffect(()=>{
@@ -913,9 +927,18 @@ useEffect(() => {
        }
         <AllExplanations/>
 
-              {selectedLesson==14.4 && [144].includes(lessonStep) && <ReactionTimer right={'30%'} isRunning={true} onSkip={()=>{setLessonStep(145)}}/>}
+      {selectedLesson==14.4 && [144].includes(lessonStep) && <ReactionTimer right={'30%'} isRunning={true} onSkip={()=>{setLessonStep(145)}}/>}
 
-     {!isExplanationOpen && showErrorMsgNo ==0 && <SelectedObjectButton/> }   
+      {!isExplanationOpen && showErrorMsgNo ==0 && <SelectedObjectButton/> }   
+
+      {isTouchDevice && showMobilePourButton && !mobilePour && (
+        <MobileDialogBox
+          button1Text="Pour"
+          onbtnClick={() => {
+            setMobilePour(true)
+          }}
+          />
+        )}
 
      {/* <FillBeakerBox/> */}
 

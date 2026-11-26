@@ -8,24 +8,41 @@ import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
 import { ModelContext } from "../../Contexts/ModelContext/ModelContext"
+import { InteractionContext } from "../../Contexts/InteractionContext/InteractionContext"
 
 const StirUsingThermometer = ({
   stirRadius = 0.3,
   stirSpeed = 0.35,
   smoothness = 8,
+
+  mobileStirSpeed = 3,
 }) => {
-  const { mainThermometerRef } =
-    useContext(ModelContext)
+
+  const {
+    mainThermometerRef,
+  } = useContext(ModelContext)
+
+  const {
+    isTouchDevice,
+    isPouring,
+  } = useContext(InteractionContext)
 
   const centreRef = useRef(
     new THREE.Vector3()
   )
 
   const currentAngleRef = useRef(0)
+
   const targetAngleRef = useRef(0)
+
   const centreSavedRef = useRef(false)
 
+  // ==========================================
+  // INITIAL SETUP
+  // ==========================================
+
   useEffect(() => {
+
     const thermometer =
       mainThermometerRef.current
 
@@ -37,12 +54,34 @@ const StirUsingThermometer = ({
 
     centreSavedRef.current = true
 
+    return () => {
+
+      centreSavedRef.current = false
+
+    }
+
+  }, [
+    mainThermometerRef,
+  ])
+
+  // ==========================================
+  // DESKTOP SCROLL CONTROL
+  // ==========================================
+
+  useEffect(() => {
+
+    if (isTouchDevice) return
+
     const handleWheel = (event) => {
+
       if (event.deltaY <= 0) return
+
+      if (!centreSavedRef.current) return
 
       event.preventDefault()
 
       targetAngleRef.current += stirSpeed
+
     }
 
     window.addEventListener(
@@ -54,17 +93,25 @@ const StirUsingThermometer = ({
     )
 
     return () => {
+
       window.removeEventListener(
         "wheel",
         handleWheel
       )
+
     }
+
   }, [
-    mainThermometerRef,
+    isTouchDevice,
     stirSpeed,
   ])
 
-  useFrame((state, delta) => {
+  // ==========================================
+  // STIRRING ANIMATION
+  // ==========================================
+
+  useFrame((_, delta) => {
+
     const thermometer =
       mainThermometerRef.current
 
@@ -74,6 +121,21 @@ const StirUsingThermometer = ({
     ) {
       return
     }
+
+    // ========================================
+    // MOBILE AUTOMATIC STIRRING
+    // ========================================
+
+    if (isTouchDevice && isPouring) {
+
+      targetAngleRef.current +=
+        mobileStirSpeed * delta
+
+    }
+
+    // ========================================
+    // SMOOTH ROTATION
+    // ========================================
 
     currentAngleRef.current =
       THREE.MathUtils.damp(
@@ -89,6 +151,10 @@ const StirUsingThermometer = ({
     const centre =
       centreRef.current
 
+    // ========================================
+    // CIRCULAR MOVEMENT
+    // ========================================
+
     thermometer.position.x =
       centre.x +
       Math.cos(angle) * stirRadius
@@ -98,6 +164,7 @@ const StirUsingThermometer = ({
       Math.sin(angle) * stirRadius
 
     thermometer.rotation.y = angle
+
   })
 
   return null

@@ -29,7 +29,7 @@ const PouringMode = ({
   isFunnelMode,
 }) => {
   const { camera } = useThree()
-
+  console.log("Heloo")
   const {
     selectedRightHand,
     selectedLeftHand,
@@ -51,7 +51,12 @@ const PouringMode = ({
 
     isPottasiumCarobnateInTestube01,
     setShowBubbles,
-    beakerFillFinished,
+    beakerFillFinished,isTouchDevice,
+mobilePour,
+setMobilePour,
+setShowMobilePourButton,
+    mobilePouringModeHand,
+    setMobilePouringModeHand,
   } = useContext(InteractionContext)
 
   const {
@@ -111,10 +116,33 @@ const PouringMode = ({
   const volumetricOriginalScaleRef =
     useRef(null)
 
-  const [
-    activeObject,
-    setActiveObject,
-  ] = useState(null)
+  const [activeObject,setActiveObject] = useState(null)
+
+  useEffect(() => {
+
+  if (
+    !isTouchDevice ||
+    !activeObject ||
+    pouringModeHand !== hand
+  ) {
+    return
+  }
+
+  setMobilePour(false)
+
+  setShowMobilePourButton(true)
+
+  return () => {
+    setShowMobilePourButton(false)
+    setMobilePour(false)
+  }
+
+}, [
+  isTouchDevice,
+  activeObject,
+  pouringModeHand,
+  hand,
+])
 
   // =====================================================
   // FUNNEL MODE
@@ -790,18 +818,8 @@ const PouringMode = ({
         )
       }
 
-    const handleKeyDown =
-      (event) => {
-        if (
-          event.code !== "KeyP"
-        ) {
-          return
-        }
-
-        const requestedHand =
-          event.shiftKey
-            ? "left"
-            : "right"
+    const togglePouringMode =
+      (requestedHand) => {
 
         if (
           requestedHand !==
@@ -1176,6 +1194,21 @@ const PouringMode = ({
         }
       }
 
+    // Both desktop and mobile use the same enter/exit logic.
+    const handleKeyDown = (event) => {
+      if (event.code !== "KeyP" || event.repeat) return
+
+      togglePouringMode(event.shiftKey ? "left" : "right")
+    }
+
+    if (isTouchDevice) {
+      if (mobilePouringModeHand === hand) {
+        togglePouringMode(mobilePouringModeHand)
+        setMobilePouringModeHand(null)
+      }
+      return
+    }
+
     window.addEventListener(
       "keydown",
       handleKeyDown
@@ -1204,6 +1237,11 @@ const PouringMode = ({
     lessonStep,
     isTutorialMode,
     selectedLesson,
+    setIsPouringMode,
+    setShowBubbles,
+    isTouchDevice,
+    mobilePouringModeHand,
+    setMobilePouringModeHand,
   ])
 
   /*
@@ -1244,6 +1282,8 @@ const PouringMode = ({
    */
 
   useEffect(() => {
+      if (isTouchDevice) return
+
     const handleWheel =
       (event) => {
         if (
@@ -1324,48 +1364,108 @@ const PouringMode = ({
   }, [
     activeObject,
     pouringModeHand,
-    hand,
+    hand,  isTouchDevice,
+
   ])
 
   /*
    * Apply pouring rotation
    */
 
-  useFrame(() => {
-    if (
-      !activeObject ||
-      pouringModeHand !== hand
-    ) {
-      return
+useFrame((_, delta) => {
+
+  if (
+    !activeObject ||
+    pouringModeHand !== hand
+  ) {
+    return
+  }
+
+  const pouringAngle = Math.PI / 5
+
+  const rotationSpeed = 0.15
+
+  // ==========================================
+  // MOBILE AUTOMATIC ROTATION
+  // ==========================================
+
+  if (isTouchDevice && mobilePour) {
+
+    if (hand === "left") {
+
+      rotationZRef.current =
+        Math.max(
+          rotationZRef.current -
+            rotationSpeed * delta * 10,
+
+          -pouringAngle
+        )
+
+    } else {
+
+      rotationZRef.current =
+        Math.min(
+          rotationZRef.current +
+            rotationSpeed * delta * 10,
+
+          pouringAngle
+        )
+
     }
 
-    activeObject.rotation.set(
-      baseRotationRef.current.x,
-      baseRotationRef.current.y,
-      baseRotationRef.current.z +
-        rotationZRef.current
-    )
-
-    const pouringAngle =
-      Math.PI / 5
-
-    const pouringNow =
-      (selectedLesson !== 9 ||
-        !beakerFillFinished) &&
-      Math.abs(
-        rotationZRef.current
-      ) >= pouringAngle
+    // Maximum rotation reached
 
     if (
-      pouringNow !==
-      isPouring
+      Math.abs(rotationZRef.current) >=
+      pouringAngle - 0.001
     ) {
-      setIsPouring(
-        pouringNow
-      )
-    }
-  })
 
+      rotationZRef.current =
+        hand === "left"
+          ? -pouringAngle
+          : pouringAngle
+
+      setShowMobilePourButton(false)
+
+      setMobilePour(false)
+
+    }
+
+  }
+
+  // ==========================================
+  // APPLY ROTATION
+  // ==========================================
+
+  activeObject.rotation.set(
+
+    baseRotationRef.current.x,
+
+    baseRotationRef.current.y,
+
+    baseRotationRef.current.z +
+      rotationZRef.current
+
+  )
+
+  // ==========================================
+  // EXISTING POURING LOGIC
+  // ==========================================
+
+  const pouringNow =
+    (selectedLesson !== 9 ||
+      !beakerFillFinished) &&
+    Math.abs(
+      rotationZRef.current
+    ) >= pouringAngle
+
+  if (pouringNow !== isPouring) {
+
+    setIsPouring(pouringNow)
+
+  }
+
+})
   return (
     <>
       {selectedLesson !== 12 &&

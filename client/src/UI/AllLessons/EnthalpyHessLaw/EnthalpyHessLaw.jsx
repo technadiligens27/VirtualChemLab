@@ -18,53 +18,54 @@ import SulfamicGuidelines from "../../SulfamicGuidelines/SulfamicGuidelines";
 import ExothermicReactionSummary from "../../Summary/ExothermicReactionSummary/ExothermicReactionSummary";
 import { useResetLesson } from "../../ResetLessonButton/ResetLessonButton";
 import ApparatusOverview from "../../ApparatusOverview/ApparatusOverview";
+import MobileDialogBox from "../../MobileDialogBox/MobileDialogBox";
 
 const EnthalpyHessLaw = () =>{
 
   const {isFillBeakerBoxOpen,hessGuidelineNumber,setHessGuidelineNumber,
-    showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo,
-  showQuestionCardNo,setShowQuestionCardNo,setShowFeedBackForm} = useContext(InteractionContext)
+    showEnthalyResultOne,setShowEnthalyResultOne,showEnthalyResultTwo,isTouchDevice,pouringModeHand,
+  showQuestionCardNo,setShowQuestionCardNo,setShowFeedBackForm,setMobilePouringModeHand} = useContext(InteractionContext)
     
   const {lessonStep,selectedLesson,setLessonStep,setShowNormalBeakerArrow,setSelectedLesson,setShowApparatus,showApparatus, setIsExplanationOpen
     
   } = useContext(MainGuidelineContext);
 
-const {
-  normalBeakerRef,
-  conicalBeakerRef,
-  roundBeakerRef,
-  graduatedBeakerRef,
+// const {
+//   normalBeakerRef,
+//   conicalBeakerRef,
+//   roundBeakerRef,
+//   graduatedBeakerRef,
 
-  spoonRef,
-  saltRef,
+//   spoonRef,
+//   saltRef,
 
-  redLitmusRef,
-  blueLitmusRef,
+//   redLitmusRef,
+//   blueLitmusRef,
 
-  testube01Ref,
-  testube02Ref,
-  testube03Ref,
+//   testube01Ref,
+//   testube02Ref,
+//   testube03Ref,
 
-  filterPaperRef,
-  filterFoldedPaperRef,
+//   filterPaperRef,
+//   filterFoldedPaperRef,
 
-  funnelRef,
+//   funnelRef,
 
-  mainDropperRef,
+//   mainDropperRef,
 
-  digitalBalanceRef,
+//   digitalBalanceRef,
 
-  mainPolystereneRef,
+//   mainPolystereneRef,
 
-  mainBuiretteRef,
+//   mainBuiretteRef,
 
-  mainThermometerRef,
-  nichromeWireRef,
-  heatingMantleRef,
-  heatingMatRef,
-  kettleRef,
-  seperatingFunnelRef
-} = useContext(ModelContext)
+//   mainThermometerRef,
+//   nichromeWireRef,
+//   heatingMantleRef,
+//   heatingMatRef,
+//   kettleRef,
+//   seperatingFunnelRef
+// } = useContext(ModelContext)
 
   const Enthalpy = [
   {
@@ -879,7 +880,7 @@ const {
         } 
   
         {
-          lessonStep === 12  && (
+          lessonStep === 12 && !isTouchDevice  && (
             <DialogBox
               text={
                 <>
@@ -889,6 +890,19 @@ const {
             />
           )
         } 
+
+        {
+          lessonStep === 12 && isTouchDevice  && (
+            <DialogBox
+              text={
+                <>
+               Click  <strong>Pour </strong> to  Continously Pour From<strong>  Spoon</strong>
+                </>
+              }
+            />
+          )
+        } 
+
  
         {
           lessonStep === 13  && (
@@ -1052,7 +1066,7 @@ const {
           )
         }
         {
-          lessonStep === 27  && (
+          lessonStep === 27 && !isTouchDevice  && (
             <DialogBox
               text={
                 <>
@@ -1062,6 +1076,20 @@ const {
             />
           )
         }
+
+        {
+          lessonStep === 27 && isTouchDevice && (
+            <DialogBox
+              text={
+                <>
+                <strong>Click Pour Button</strong> to <strong>Pour HCL acid</strong> from the <strong>Burette</strong> into the <strong>Polystyrene cup</strong>
+                </>
+              }
+            />
+          )
+        }
+
+
         {
           lessonStep === 28  && (
             <DialogBox
@@ -1140,7 +1168,7 @@ const {
           )
         }
         {
-          lessonStep === 34  && (
+          lessonStep === 34 && !isTouchDevice && (
             <DialogBox
               text={
                 <>
@@ -1150,8 +1178,35 @@ const {
             />
           )
         }
+
         {
-          lessonStep === 35  && (
+          lessonStep === 34 && isTouchDevice && (
+            <DialogBox
+              text={
+                <>
+                Click <strong>Pour Mode </strong> to <strong>Enter Pour Mode</strong>
+                </>
+              }
+            />
+          )
+        }
+
+
+        {isTouchDevice &&
+          selectedLesson === 8 &&
+          lessonStep === 34 &&
+          !pouringModeHand && (
+
+            <MobileDialogBox
+              button1Text="Enter Pouring Mode"
+              onbtnClick={() => {
+                setMobilePouringModeHand("right")
+              }}
+            />
+      )}
+
+        {
+          lessonStep === 35 && !isTouchDevice  && (
             <DialogBox
               text={
                 <>
@@ -1161,8 +1216,23 @@ const {
             />
           )
         }
+
+
         {
-          lessonStep === 36  && (
+          lessonStep === 35 && isTouchDevice && (
+            <DialogBox
+              text={
+                <>
+                <strong>Click Pour</strong> to Pour From Testube
+                </>
+              }
+            />
+          )
+        }
+
+
+        {
+          lessonStep === 36 && !isTouchDevice  && (
             <DialogBox
               text={
                 <>
@@ -1172,6 +1242,30 @@ const {
             />
           )
         }
+        {
+          lessonStep === 36 && isTouchDevice  && (
+            <DialogBox
+              text={
+                <>
+                <strong>Click Exit Pouring Mode</strong>
+                </>
+              }
+            />
+          )
+        }
+      {isTouchDevice &&
+        selectedLesson === 8 &&
+        lessonStep === 36 &&
+        pouringModeHand && (
+
+          <MobileDialogBox
+            button1Text="Exit Pouring Mode"
+            onbtnClick={() => {
+              setMobilePouringModeHand(pouringModeHand)
+            }}
+          />
+
+      )}
         {
           lessonStep === 37  && (
             <DialogBox

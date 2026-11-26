@@ -55,7 +55,10 @@ const PourIntoTestubeFromSpoon = ({
 
     setIsPotassiumTransferred,
 
-    setIsPottasiumCarobnateInTestube01,
+    setIsPottasiumCarobnateInTestube01,  isTouchDevice,
+  mobilePour,
+  setMobilePour,
+  setShowMobilePourButton,
   } = useContext(
     InteractionContext
   )
@@ -102,7 +105,7 @@ const PourIntoTestubeFromSpoon = ({
   // These are completely separate conditions.
   // =====================================================
 
-  const canScrollDown = ([14,14.1,14.2,14.3,14.4] && [29,89].includes(lessonStep)) ||
+  const canScrollDown = ([14,14.1,14.2,14.3,14.4].includes(selectedLesson) && [29,89].includes(lessonStep)) ||
                         (selectedLesson === 12 && lessonStep === 10) ||
                         (selectedLesson ===13 && lessonStep===19) ||
                         (selectedLesson==8 && lessonStep==12) ||
@@ -933,7 +936,27 @@ const PourIntoTestubeFromSpoon = ({
     isPotassiumTransferred,
   ])
 
+useEffect(() => {
 
+  if (!isTouchDevice) return
+
+  setShowMobilePourButton(
+    canScrollDown || canScrollUp
+  )
+
+  setMobilePour(false)
+
+  return () => {
+    setShowMobilePourButton(false)
+    setMobilePour(false)
+  }
+
+}, [
+  isTouchDevice,
+  canScrollDown,
+  canScrollUp,
+  lessonStep,
+])
   // =====================================================
   // SCROLL CONTROL
   // =====================================================
@@ -1119,38 +1142,98 @@ const PourIntoTestubeFromSpoon = ({
       }
 
 
-    window.addEventListener(
-      "wheel",
-      handleWheel,
-      {
-        passive:
-          false,
-      }
-    )
+// ==========================================
+// MOBILE CONTROL
+// ==========================================
 
+if (isTouchDevice) {
 
-    return () => {
+  if (!mobilePour) return
 
-      window.removeEventListener(
-        "wheel",
-        handleWheel
-      )
+  if (!canScrollDown && !canScrollUp) return
+
+  let animationFrame
+
+  const animateMobileRotation = () => {
+
+    handleWheel({
+      deltaY: canScrollDown ? 1 : -1,
+
+      preventDefault: () => {},
+    })
+
+    const rotationCompleted =
+      canScrollDown
+        ? spoonRotationXRef.current >=
+          maximumRotationXRef.current
+        : spoonRotationXRef.current <=
+          minimumRotationXRef.current
+
+    if (rotationCompleted) {
+
+      setShowMobilePourButton(false)
+
+      setMobilePour(false)
+
+      return
+
     }
 
+    animationFrame =
+      requestAnimationFrame(
+        animateMobileRotation
+      )
+
+  }
+
+  animationFrame =
+    requestAnimationFrame(
+      animateMobileRotation
+    )
+
+  return () => {
+
+    cancelAnimationFrame(animationFrame)
+
+  }
+
+}
+
+
+  // ==========================================
+  // DESKTOP CONTROL
+  // ==========================================
+
+  window.addEventListener(
+    "wheel",
+    handleWheel,
+    {
+      passive: false,
+    }
+  )
+
+  return () => {
+
+    window.removeEventListener(
+      "wheel",
+      handleWheel
+    )
+
+  }
+
   }, [
-    spoonRef,
+  spoonRef,
+  selectedLesson,
+  lessonStep,
+  canScrollDown,
+  canScrollUp,
+  isPotassiumTransferred,
+  isPowderLogicBlocked,
 
-    selectedLesson,
-
-    lessonStep,
-
-    canScrollDown,
-
-    canScrollUp,
-
-    isPotassiumTransferred,
-
-    isPowderLogicBlocked,
+  isTouchDevice,
+  mobilePour,
+  setMobilePour,
+  setShowMobilePourButton,
   ])
 
 

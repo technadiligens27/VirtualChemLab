@@ -66,7 +66,9 @@ const PouringMode02 = ({
 
   const [isPouring,setIsPouring] = useState(false)
 
-  const {selectedLeftHand,selectedRightHand,isPottasiumCarobnateInTestube01} = useContext(InteractionContext)
+  const {selectedLeftHand,selectedRightHand,isPottasiumCarobnateInTestube01,
+      isTouchDevice,mobilePour,setMobilePour,setShowMobilePourButton
+  } = useContext(InteractionContext)
 
   const {conicalBeakerRef02,graduatedBeakerRef,roundBeakerRef,testube01Ref,testube02Ref,waterBottleRef,
     volumetricRef,normalBeakerRef,mainBuiretteRef,kettleRef,testube03Ref} = useContext(
@@ -334,6 +336,8 @@ const PouringMode02 = ({
     isReadyRef.current = true
 
     setIsPouring(false)
+    setMobilePour(false)
+    setShowMobilePourButton(true)
 
     console.log(
       "Pour model moved to mouth position:",
@@ -347,7 +351,8 @@ const PouringMode02 = ({
     return () => {
       isReadyRef.current = false
       rotationZRef.current = 0
-
+      setShowMobilePourButton(false)
+      setMobilePour(false)
         if (
           ![12, 12.1, 12.2].includes(
             selectedLesson
@@ -455,6 +460,8 @@ const PouringMode02 = ({
   // ==========================================
 
   useEffect(() => {
+      if (isTouchDevice) return
+
     const handleWheel = (event) => {
       if (
         !isReadyRef.current ||
@@ -511,41 +518,83 @@ const PouringMode02 = ({
   }, [
     pourModelRef,
     maximumRotation,
-    rotationSpeed,
+    rotationSpeed,isTouchDevice
   ])
 
   // ==========================================
   // APPLY SCROLL ROTATION
   // ==========================================
 
-  useFrame(() => {
-    const pourModel =
-      pourModelRef?.current
+useFrame((_, delta) => {
+
+  const pourModel =
+    pourModelRef?.current
+
+  if (
+    !pourModel ||
+    !isReadyRef.current
+  ) {
+    return
+  }
+
+  // ==========================================
+  // MOBILE POURING ROTATION
+  // ==========================================
+
+  if (
+    isTouchDevice &&
+    mobilePour &&
+    !isPouring
+  ) {
+
+    rotationZRef.current =
+      Math.min(
+        rotationZRef.current +
+          rotationSpeed * delta * 10,
+
+        maximumRotation
+      )
 
     if (
-      !pourModel ||
-      !isReadyRef.current
+      rotationZRef.current >=
+      maximumRotation - 0.001
     ) {
-      return
+
+      rotationZRef.current =
+        maximumRotation
+
+      setIsPouring(true)
+
+      setShowMobilePourButton(false)
+
+      setMobilePour(false)
+
     }
 
-    const handRotationDirection =
-      hand?.toLowerCase() === "left"
-        ? -1
-        : 1
+  }
 
-    pourModel.rotation.set(
-      baseRotationRef.current.x,
+  // ==========================================
+  // APPLY ROTATION
+  // ==========================================
 
-      baseRotationRef.current.y,
+  const handRotationDirection =
+    hand?.toLowerCase() === "left"
+      ? -1
+      : 1
 
-      baseRotationRef.current.z +
-        rotationZRef.current *
-          handRotationDirection
-    )
+  pourModel.rotation.set(
+    baseRotationRef.current.x,
 
-    pourModel.updateMatrixWorld(true)
-  })
+    baseRotationRef.current.y,
+
+    baseRotationRef.current.z +
+      rotationZRef.current *
+        handRotationDirection
+  )
+
+  pourModel.updateMatrixWorld(true)
+
+})
 
   return (
     <>
@@ -698,6 +747,7 @@ const PouringMode02 = ({
             }
           />
         )}  
+        
 
 
       {selectedLesson==12.2 && lessonStep===57 &&selectedLeftHand?.name ===

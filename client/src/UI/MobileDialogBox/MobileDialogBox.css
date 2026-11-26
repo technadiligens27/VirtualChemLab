@@ -1,7 +1,7 @@
 .mobile-dialog-box-container {
     position: absolute;
 
-    top: 3cqh;
+    top: 15cqh;
     right: 3cqw;
 
     z-index: 100;
@@ -129,7 +129,7 @@ and (min-height: 451px) {
 or (max-height: 450px) {
 
     .mobile-dialog-box-container {
-        top: 3cqh;
+        top: 13cqh;
         right: 3cqw;
 
         padding: 4px;
@@ -155,7 +155,7 @@ or (max-height: 450px) {
 or (max-height: 350px) {
 
     .mobile-dialog-box-container {
-        top: 2cqh;
+        top: 12cqh;
         right: 2cqw;
 
         padding: 3px;
