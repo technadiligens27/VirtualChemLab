@@ -15,6 +15,7 @@ import * as THREE from "three"
 import {
   MainGuidelineContext,
 } from "../../../Contexts/MainGuidelineContext/MainGuidelineContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 const DipMode = ({
   DipmodelRef,
@@ -45,6 +46,7 @@ const DipMode = ({
 
   scrollSpeed = 0.1,
   animationSpeed = 8,
+  mobileDipSpeed = 0.8,
 }) => {
   const {
     selectedLesson,
@@ -57,6 +59,9 @@ const DipMode = ({
   const {
     gl,
   } = useThree()
+
+  const {isTouchDevice,mobileDip,
+setMobileDip} = useContext(InteractionContext)
 
   // =========================================
   // COMPACT SCREEN CHECK
@@ -397,6 +402,8 @@ const DipMode = ({
   // =========================================
 
   useEffect(() => {
+      if (isTouchDevice) return
+
     const canvas = gl.domElement
 
     const handleWheel = (event) => {
@@ -540,7 +547,15 @@ const DipMode = ({
     selectedLesson,
     lessonStep,
     setLessonStep,
+      isTouchDevice,
+
   ])
+
+  useEffect(() => {
+  return () => {
+    setMobileDip(false)
+  }
+}, [setMobileDip])
 
   // =========================================
   // ANIMATE DIPPING MODEL
@@ -562,6 +577,33 @@ const DipMode = ({
       !dipModel.parent
     ) {
       return
+    }
+
+    // =========================================
+    // MOBILE DIP / LIFT
+    // =========================================
+
+    if (isTouchDevice && mobileDip) {
+
+      if (SCROLL_DOWN_CONDITION) {
+
+        dipProgressRef.current =
+          Math.min(
+            dipProgressRef.current +
+              mobileDipSpeed * delta,
+            1
+          )
+      }
+
+      if (SCROLL_UP_CONDITION) {
+
+        dipProgressRef.current =
+          Math.max(
+            dipProgressRef.current -
+              mobileDipSpeed * delta,
+            0
+          )
+      }
     }
 
     receiveModel.updateWorldMatrix(
@@ -632,6 +674,52 @@ const DipMode = ({
       targetLocalPosition.current,
       smoothing
     )
+
+    // =========================================
+// MOBILE MOVEMENT COMPLETED
+// =========================================
+
+if (isTouchDevice && mobileDip) {
+
+  const hasReachedPosition =
+    dipModel.position.distanceTo(
+      targetLocalPosition.current
+    ) <= 0.01
+
+  if (!hasReachedPosition) return
+
+  // FULLY DIPPED
+
+  if (
+    SCROLL_DOWN_CONDITION &&
+    dipProgressRef.current >= 1 &&
+    !hasFullyDippedRef.current
+  ) {
+
+    hasFullyDippedRef.current = true
+    hasFullyLiftedRef.current = false
+
+    setMobileDip(false)
+
+    setLessonStep(lessonStep + 1)
+  }
+
+  // FULLY LIFTED
+
+  if (
+    SCROLL_UP_CONDITION &&
+    dipProgressRef.current <= 0 &&
+    !hasFullyLiftedRef.current
+  ) {
+
+    hasFullyLiftedRef.current = true
+    hasFullyDippedRef.current = false
+
+    setMobileDip(false)
+
+    setLessonStep(lessonStep + 1)
+  }
+}
   })
 
   return null

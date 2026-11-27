@@ -239,6 +239,10 @@ const [feedbackAnswers,setFeedbackAnswers] = useState({
   const [showMobilePourButton, setShowMobilePourButton] = useState(false)
   const [mobilePour, setMobilePour] = useState(false);
   const [mobilePouringModeHand, setMobilePouringModeHand] = useState(null)
+  const [mobileSwirl,setMobileSwirl] = useState(false);
+  const [mobileDip, setMobileDip] = useState(false);
+  const [mobileMove,setMobileMove] = useState(false);
+
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(pointer: coarse)")
@@ -547,8 +551,11 @@ setMobileChairSlide(false);
 setMobilePour(false);
 setShowMobilePourButton(false);
 setMobilePouringModeHand(null);
-setIsPourIntoTestube(false)
-setShowFeedBackForm(false)
+setIsPourIntoTestube(false);
+setShowFeedBackForm(false);
+setMobileSwirl(false);
+setMobileDip(false);
+setMobileMove(false)
 }
   return (
     <InteractionContext.Provider
@@ -661,7 +668,8 @@ setShowFeedBackForm(false)
         showConfirmAnotherLesson,setShowConfirmAnotherLesson,showError,setShowError,
         isTouchDevice,setIsTouchDevice,mobileChairSit,setMobileChairSit,
         mobileChairSlide,setMobileChairSlide,showMobilePourButton, setShowMobilePourButton,
-        mobilePour, setMobilePour,mobilePouringModeHand, setMobilePouringModeHand
+        mobilePour, setMobilePour,mobilePouringModeHand, setMobilePouringModeHand,
+        mobileSwirl,setMobileSwirl,mobileDip, setMobileDip,mobileDip, setMobileDip,mobileMove,setMobileMove
       }}
     >
       {children}

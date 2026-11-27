@@ -3,15 +3,16 @@
    ========================================================= */
 
 .flame-summary-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
+  box-sizing: border-box;
   z-index: 9999;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: clamp(12px, 2vw, 24px);
+  padding: clamp(12px, 2cqw, 24px);
 
   overflow: hidden;
 
@@ -54,13 +55,13 @@
   display: flex;
   flex-direction: column;
 
-  width: min(85vw, 1550px);
-  height: min(90vh, 920px);
+  width: min(85cqw, 1550px);
+  height: min(90cqh, 920px);
   min-height: 0;
 
-  padding: clamp(68px, 6vh, 78px)
-    clamp(24px, 3vw, 40px)
-    clamp(20px, 2vw, 26px);
+  padding: clamp(68px, 6cqh, 78px)
+    clamp(24px, 3cqw, 40px)
+    clamp(20px, 2cqw, 26px);
 
   overflow: visible;
 
@@ -68,7 +69,7 @@
 
   background: #ffffff;
 
-  border: clamp(6px, 0.7vw, 10px) solid #ffcb4d;
+  border: clamp(6px, 0.7cqw, 10px) solid #ffcb4d;
   border-radius: 34px;
 
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
@@ -88,7 +89,7 @@
   align-items: center;
   justify-content: center;
 
-  width: min(30vw, 480px);
+  width: min(30cqw, 480px);
   min-width: 280px;
   height: 60px;
 
@@ -100,7 +101,7 @@
 
   color: #2d1979;
 
-  font-size: clamp(22px, 1.8vw, 26px);
+  font-size: clamp(22px, 1.8cqw, 26px);
   font-weight: 800;
 }
 
@@ -159,17 +160,19 @@
    ========================================================= */
 
 .flame-summary-layout {
-  display: grid;
-  grid-template-columns:
-    minmax(270px, 0.8fr)
-    minmax(0, 1.35fr);
+  display: flex;
+  align-items: stretch;
 
-  gap: clamp(18px, 2.3vw, 38px);
+  gap: clamp(18px, 2.3cqw, 38px);
 
   flex: 1;
   min-height: 0;
 
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #d8b85e transparent;
 }
 
 /* =========================================================
@@ -177,6 +180,8 @@
    ========================================================= */
 
 .flame-result-card {
+  flex: 0 0 37%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 
@@ -208,7 +213,7 @@
 .flame-result-card-header h2 {
   margin: 0;
 
-  font-size: clamp(17px, 1.45vw, 20px);
+  font-size: clamp(17px, 1.45cqw, 20px);
   font-weight: 800;
 }
 
@@ -253,6 +258,7 @@
 
   width: 100%;
   height: 100%;
+  min-height: 0;
 
   object-fit: contain;
 }
@@ -293,7 +299,7 @@
   color: #ffffff;
 
   font-family: "Baloo Thambi 2", sans-serif;
-  font-size: clamp(15px, 1.25vw, 17px);
+  font-size: clamp(15px, 1.25cqw, 17px);
   font-weight: 800;
 
   cursor: pointer;
@@ -325,31 +331,31 @@
 
   color: #21165e;
 
-  font-size: clamp(14px, 1.15vw, 19px);
+  font-size: clamp(14px, 1.15cqw, 19px);
   line-height: 1.35;
 }
 
-.crimson-text {
+.flame-summary-overlay .crimson-text {
   color: #b91f47;
 }
 
-.yellow-text {
+.flame-summary-overlay .yellow-text {
   color: #db8c00;
 }
 
-.lilac-text {
+.flame-summary-overlay .lilac-text {
   color: #8e5bb5;
 }
 
-.brick-red-text {
+.flame-summary-overlay .brick-red-text {
   color: #b74831;
 }
 
-.blue-green-text {
+.flame-summary-overlay .blue-green-text {
   color: #138f91;
 }
 
-.apple-green-text {
+.flame-summary-overlay .apple-green-text {
   color: #4c9e39;
 }
 
@@ -358,6 +364,7 @@
    ========================================================= */
 
 .flame-summary-content {
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
 
@@ -383,19 +390,19 @@
   flex-shrink: 0;
 
   padding:
-    clamp(14px, 1.5vw, 16px)
-    clamp(18px, 2.5vw, 38px);
+    clamp(14px, 1.5cqw, 16px)
+    clamp(18px, 2.5cqw, 38px);
 }
 
 .flame-learned-card {
-  flex: 1;
+  flex: 1 0 auto;
   min-height: 0;
 
-  margin-top: clamp(8px, 1.2vh, 12px);
+  margin-top: clamp(8px, 1.2cqh, 12px);
 
   padding:
-    clamp(14px, 1.5vw, 16px)
-    clamp(18px, 2.5vw, 38px);
+    clamp(14px, 1.5cqw, 16px)
+    clamp(18px, 2.5cqw, 38px);
 
   overflow: hidden;
 }
@@ -403,22 +410,22 @@
 .flame-conclusion-card {
   flex-shrink: 0;
 
-  margin-top: clamp(8px, 1.2vh, 12px);
+  margin-top: clamp(8px, 1.2cqh, 12px);
 
   padding:
-    clamp(14px, 1.5vw, 16px)
-    clamp(18px, 2.5vw, 38px);
+    clamp(14px, 1.5cqw, 16px)
+    clamp(18px, 2.5cqw, 38px);
 }
 
 .flame-summary-card h2 {
   margin: 0;
 
-  font-size: clamp(17px, 1.4vw, 22px);
+  font-size: clamp(17px, 1.4cqw, 22px);
   font-weight: 800;
 }
 
-.summary-heading-line {
-  width: clamp(55px, 5vw, 76px);
+.flame-summary-overlay .summary-heading-line {
+  width: clamp(55px, 5cqw, 76px);
   height: 5px;
 
   margin: 7px 0 10px;
@@ -437,7 +444,7 @@
 
   color: #273044;
 
-  font-size: clamp(17px, 1vw, 18px);
+  font-size: clamp(17px, 1cqw, 18px);
   line-height: 1.45;
 }
 
@@ -445,7 +452,7 @@
   display: flex;
   flex-direction: column;
 
-  gap: clamp(5px, 1vh, 12px);
+  gap: clamp(5px, 1cqh, 12px);
 
   margin: 0;
   padding: 0;
@@ -461,11 +468,11 @@
 
   color: #273044;
 
-  font-size: clamp(15px, 1vw, 18px);
+  font-size: clamp(15px, 1cqw, 18px);
   line-height: 1.25;
 }
 
-.summary-check {
+.flame-summary-overlay .summary-check {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -497,7 +504,7 @@
 
   gap: 14px;
 
-  margin-top: clamp(10px, 1.5vh, 14px);
+  margin-top: clamp(10px, 1.5cqh, 14px);
 }
 
 .flame-summary-button {
@@ -505,14 +512,14 @@
   align-items: center;
   justify-content: center;
 
-  min-width: clamp(150px, 13vw, 190px);
+  min-width: clamp(150px, 13cqw, 190px);
   min-height: 52px;
   padding: 10px 22px;
 
   border-radius: 999px;
 
   font-family: "Baloo Thambi 2", sans-serif;
-  font-size: clamp(16px, 1.2vw, 18px);
+  font-size: clamp(16px, 1.2cqw, 18px);
   font-weight: 800;
 
   cursor: pointer;
@@ -556,218 +563,147 @@
   line-height: 0.5;
 }
 
-/* =========================================================
-   LAPTOP / SMALL DESKTOP
-   ========================================================= */
-
-@media (max-width: 1300px) {
-  .flame-summary-container {
-    width: 90vw;
-
-    padding:
-      70px
-      28px
-      22px;
-  }
-
-  .flame-summary-layout {
-    grid-template-columns:
-      minmax(260px, 0.8fr)
-      minmax(0, 1.2fr);
-  }
-
-  .flame-summary-card p {
-    line-height: 1.35;
-  }
-
-  .flame-result-text {
-    padding:
-      6px
-      22px
-      16px;
-  }
+/* Keep the external tab visible at the left edge when closed.
+   GSAP uses the same border width to calculate the closed position. */
+.flame-summary-container {
+  --flame-toggle-width: 60px;
+}
+.flame-summary-side-toggle {
+  width: var(--flame-toggle-width);
+  right: calc(-1 * var(--flame-toggle-width));
+}
+.flame-summary-overlay-open {
+  pointer-events: auto;
+}
+.flame-summary-layout::-webkit-scrollbar {
+  width: 6px;
+}
+.flame-summary-layout::-webkit-scrollbar-thumb {
+  background: #d8b85e;
+  border-radius: 999px;
+}
+.flame-summary-overlay .summary-heading-line {
+  flex-shrink: 0;
+}
+.flame-summary-overlay .summary-check {
+  flex-shrink: 0;
 }
 
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1000px) {
-  .flame-summary-overlay {
-    align-items: flex-start;
-    overflow:visible ;
-  }
-
+/* Smaller desktop / laptop */
+@container lab (max-width: 1300px) {
   .flame-summary-container {
-    width: min(88vw, 720px);
-    overflow-y: auto;
-    min-height: 0;
-    overflow:visible;
-    margin: 24px 0;
-    padding:
-      82px
-      26px
-      28px;
+    width: 88cqw;
+    padding: 70px 28px 22px;
+    --flame-toggle-width: 48px;
   }
-
-  .flame-summary-layout {
-    grid-template-columns: 1fr;
-
-    overflow-y: auto;
-  }
-
-  .flame-result-card {
-    min-height: 290px;
-    max-width: 300px;
-    margin: 0 auto;
-  }
-
-  .flame-image-wrapper {
-    min-height: 160px;
-  }
-
-  .flame-learned-card {
-    min-height: 260px;
-  }
-
-  .flame-summary-card h2 {
-    font-size: 24px;
-  }
-
-  .flame-summary-card p,
-  .flame-summary-card li {
-    font-size: 17px;
-  }
-
-  .flame-summary-actions {
-    margin-top: 20px;
-  }
+  .flame-summary-layout { gap: 20px; }
+  .flame-result-text { padding: 6px 22px 16px; }
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 650px) {
-  .flame-summary-overlay {
-    padding: 12px;
-  }
-
+/* Compact laptop / tablet */
+@container lab (max-width: 1024px) or (max-height: 650px) {
+  .flame-summary-overlay { padding: 10px; }
   .flame-summary-container {
-    width: 100%;
-
-    margin: 16px 0;
-
-    padding:
-      70px
-      16px
-      20px;
-
+    width: 88cqw;
+    height: 92cqh;
+    padding: 58px 18px 16px;
     border-width: 6px;
-    border-radius: 24px;
+    border-radius: 26px;
+    --flame-toggle-width: 38px;
   }
-
   .flame-summary-tab {
-    width: 70vw;
-    min-width: 0;
-    height: 58px;
-
-    border-radius: 0 0 28px 28px;
-
-    font-size: 24px;
+    width: 42%; min-width: 0; height: 46px;
+    font-size: 22px; border-radius: 0 0 28px 28px;
   }
+  .flame-summary-side-toggle { height: 110px; border-radius: 0 15px 15px 0; }
+  .flame-summary-side-toggle img { width: 22px; height: 22px; }
+  .flame-summary-layout { align-items: flex-start; gap: 16px; }
+  .flame-result-card { flex-basis: 38%; min-height: 0; }
+  .flame-result-card-header { min-height: 48px; padding: 10px 14px; gap: 10px; }
+  .flame-result-card-header h2 { font-size: 18px; }
+  .flame-result-icon { width: 27px; height: 27px; font-size: 14px; }
+  .flame-image-wrapper { flex: 0 0 auto; height: clamp(150px, 44cqh, 320px); padding: 10px; }
+  .flame-salt-label { width: calc(100% - 24px); margin: 10px auto 8px; }
+  .flame-salt-label select { font-size: 15px; padding: 8px 30px 8px 12px; }
+  .flame-chevron { right: 10px; font-size: 12px; }
+  .flame-result-text { font-size: 16px; padding: 6px 14px 16px; }
+  .flame-summary-content { min-height: 0; }
+  .flame-aim-card, .flame-learned-card, .flame-conclusion-card { padding: 14px 16px; }
+  .flame-learned-card { flex: 0 0 auto; overflow: visible; }
+  .flame-summary-card h2 { font-size: 20px; }
+  .flame-summary-card p, .flame-summary-card li { font-size: 16px; line-height: 1.45; gap: 10px; align-items: flex-start; }
+  .flame-summary-card ul { gap: 8px; }
+  .flame-summary-overlay .summary-check { width: 21px; height: 21px; font-size: 13px; }
+  .flame-summary-actions { flex-wrap: wrap; gap: 10px; }
+  .flame-summary-button { min-width: 130px; min-height: 46px; font-size: 16px; padding: 8px 15px; }
+}
 
-  .flame-summary-side-toggle {
-    right: -48px;
-
-    width: 48px;
-    height: 110px;
-
-    border-radius: 0 16px 16px 0;
+/* Mobile landscape: scroll the content rather than shrink text */
+@container lab (max-width: 950px) or (max-height: 450px) {
+  .flame-summary-container {
+    width: 90cqw; height: 94cqh;
+    padding: 46px 14px 12px;
+    border-width: 5px; border-radius: 20px;
+    --flame-toggle-width: 28px;
   }
+  .flame-summary-tab { height: 36px; font-size: 20px; border-radius: 0 0 22px 22px; }
+  .flame-summary-side-toggle { height: 84px; border-radius: 0 12px 12px 0; }
+  .flame-summary-side-toggle img { width: 18px; height: 18px; }
+  .flame-summary-layout { gap: 12px; padding-right: 4px; }
+  .flame-result-card { flex-basis: 39%; border-radius: 14px; }
+  .flame-result-card-header { min-height: 44px; padding: 8px 12px; }
+  .flame-result-card-header h2 { font-size: 17px; }
+  .flame-image-wrapper { height: clamp(160px, 55cqh, 260px); }
+  .flame-salt-label, .flame-salt-label select { min-height: 44px; }
+  .flame-result-text { font-size: 15px; }
+  .flame-summary-card { border-radius: 14px; }
+  .flame-aim-card, .flame-learned-card, .flame-conclusion-card { padding: 14px; }
+  .flame-summary-card h2 { font-size: 19px; }
+  .flame-summary-card p, .flame-summary-card li { font-size: 15px; }
+  .flame-summary-actions { justify-content: flex-end; }
+  .flame-summary-button { min-width: 120px; min-height: 44px; font-size: 15px; }
+  .flame-summary-finish span { font-size: 28px; }
+}
 
-  .flame-summary-side-toggle img {
-    width: 24px;
-    height: 24px;
+/* Small landscape */
+@container lab (max-width: 700px) or (max-height: 350px) {
+  .flame-summary-container {
+    width: 90cqw; height: 94cqh;
+    padding: 42px 10px 10px;
+    border-width: 4px; border-radius: 16px;
+    --flame-toggle-width: 24px;
   }
+  .flame-summary-tab { height: 33px; font-size: 19px; }
+  .flame-summary-side-toggle { height: 70px; }
+  .flame-summary-side-toggle img { width: 16px; height: 16px; }
+  .flame-summary-layout { gap: 10px; }
+  .flame-result-card { flex-basis: 40%; }
+  .flame-result-card-header { gap: 7px; padding: 8px; }
+  .flame-result-card-header h2 { font-size: 16px; }
+  .flame-result-icon { width: 23px; height: 23px; border-width: 2px; }
+  .flame-aim-card, .flame-learned-card, .flame-conclusion-card { padding: 12px; }
+  .flame-summary-card h2 { font-size: 18px; }
+  .flame-summary-card p, .flame-summary-card li { font-size: 14px; }
+  .flame-summary-button { flex: 1 1 120px; }
+}
 
-  .flame-summary-layout {
-    gap: 20px;
-  }
+/* Narrow widths: stack cards, keep one scrolling area */
+@container lab (max-width: 550px) or (orientation: portrait) {
+  .flame-summary-container { width: 88cqw; height: 92cqh; --flame-toggle-width: 22px; }
+  .flame-summary-layout { flex-direction: column; align-items: stretch; }
+  .flame-result-card { flex: 0 0 auto; width: 100%; }
+  .flame-image-wrapper { height: clamp(180px, 36cqh, 300px); }
+  .flame-summary-content { flex: 0 0 auto; width: 100%; }
+  .flame-summary-actions { flex-direction: column; }
+  .flame-summary-button { flex: 0 0 auto; width: 100%; min-height: 46px; }
+}
 
-  .flame-result-card {
-    min-height: 430px;
-  }
-
-  .flame-result-card-header {
-    min-height: 54px;
-    padding: 10px 16px;
-  }
-
-  .flame-result-card-header h2 {
-    font-size: 20px;
-  }
-
-  .flame-image-wrapper {
-    min-height: 210px;
-  }
-
-  .flame-salt-label {
-    width: calc(100% - 36px);
-  }
-
-  .flame-salt-label select {
-    font-size: 16px;
-  }
-
-  .flame-result-text {
-    padding:
-      6px
-      22px
-      20px;
-
-    font-size: 16px;
-  }
-
-  .flame-aim-card,
-  .flame-learned-card,
-  .flame-conclusion-card {
-    padding: 20px;
-  }
-
-  .flame-summary-card h2 {
-    font-size: 24px;
-  }
-
-  .flame-summary-card p,
-  .flame-summary-card li {
-    gap: 11px;
-
-    font-size: 16px;
-  }
-
-  .flame-summary-card ul {
-    gap: 13px;
-  }
-
-  .summary-check {
-    width: 24px;
-    height: 24px;
-
-    font-size: 16px;
-  }
-
-  .flame-summary-actions {
-    flex-direction: column-reverse;
-
-    gap: 10px;
-  }
-
-  .flame-summary-button {
-    width: 100%;
-    min-width: 0;
-    min-height: 54px;
-
-    font-size: 19px;
-  }
+@media (pointer: coarse) {
+  .flame-summary-layout { touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+  .flame-summary-button, .flame-summary-side-toggle, .flame-salt-label select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .flame-summary-button:hover { transform: none; box-shadow: none; }
+  .flame-summary-button:active { transform: scale(0.98); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flame-summary-button, .flame-summary-overlay { transition: none; }
 }

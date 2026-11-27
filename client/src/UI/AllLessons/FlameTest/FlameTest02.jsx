@@ -11,6 +11,7 @@ import { safetyInstructionData } from "../../Data/SafetyInstruction/SafetyInstru
 import FlameTestSummary from "../../Summary/FlameTestSummary/FlameTestSummary"
 import { useResetLesson } from "../../ResetLessonButton/ResetLessonButton"
 import QuestionCard from "../../QuestionCard/QuestionCard"
+import MobileDialogBox from "../../MobileDialogBox/MobileDialogBox"
 
 const FlameTest02 = ()=>{
 
@@ -26,7 +27,7 @@ const FlameTest02 = ()=>{
 
   const {setSelectedRightHand,setSelectedLeftHand,selectedLeftHand,selectedRightHand,setIsClampTestube,setIsClampInCenter,setIsModelCentre,
     setIsDropperFilled,setIsBeakerNearClamp,setIsDropperPlaced,setIsDipMode,setIsModelInHeatingMat,setShowBunsenFlame,setShowPowderInContainer,
-    setShowQuestionCardNo,showQuestionCardNo,setShowFeedBackForm
+    setShowQuestionCardNo,showQuestionCardNo,setShowFeedBackForm,isTouchDevice,setMobileMove,setMobileDip
   } = useContext(InteractionContext)
 
   const resetLesson = useResetLesson()
@@ -147,19 +148,55 @@ const FlameTest02 = ()=>{
           } 
         />}
 
-        {lessonStep == 29 && <DialogBox text={
+        {lessonStep == 29 && !isTouchDevice && <DialogBox text={
           <>
          <strong>Scroll Down Continously</strong> to <strong>Dip</strong> the <strong>Nichrome Wire</strong>
           </>
           } 
         />}
 
-        {lessonStep == 30 && <DialogBox text={
+          {isTouchDevice &&
+            lessonStep === 29 && (
+              <MobileDialogBox
+                button1Text="Dip"
+                onbtnClick={() => {
+                setMobileDip(true)
+                }}
+              />
+          )} 
+
+
+        {lessonStep == 29 && isTouchDevice &&<DialogBox text={
+          <>
+         <strong>Dip</strong> the <strong>Nichrome Wire </strong>
+          </>
+          } 
+        />}
+
+        {lessonStep == 30 && !isTouchDevice && <DialogBox text={
           <>
          <strong>Scroll Up Continously</strong> to <strong>Remove</strong> the <strong>Nichrome Wire </strong>
           </>
           } 
         />}
+
+        {lessonStep == 30 && isTouchDevice && <DialogBox text={
+          <>
+        <strong>Remove</strong> the <strong>Nichrome Wire </strong>
+          </>
+          } 
+        />}
+
+        {isTouchDevice &&
+            lessonStep === 30 && (
+              <MobileDialogBox
+                button1Text="Remove"
+                onbtnClick={() => {
+                setMobileDip(true)
+                }}
+              />
+          )} 
+
 
         {lessonStep == 31 && <DialogBox text={
           <>
@@ -168,12 +205,29 @@ const FlameTest02 = ()=>{
           } 
         />}
 
-        {lessonStep == 32 && <DialogBox text={
+        {lessonStep == 32 && !isTouchDevice &&  <DialogBox text={
           <>
          <strong>Scroll Down Continously</strong> to <strong>Heat</strong> the Nichrome Wire 
           </>
           } 
         />}
+
+        {lessonStep == 32 && isTouchDevice && <DialogBox text={
+          <>
+         <strong>Heat</strong> the Nichrome Wire 
+          </>
+          } 
+        />}
+         {isTouchDevice &&
+            lessonStep === 32 && (
+              <MobileDialogBox
+                button1Text="Heat"
+                onbtnClick={() => {
+                setMobileMove(true)
+                }}
+              />
+          )} 
+
 
         {lessonStep >= 33 && <DialogBox text={
           <>

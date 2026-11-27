@@ -20,6 +20,7 @@ import ChlorinationSeparatingFunnelColorChange from "../ChlorinationSeparatingFu
 import {
   ModelContext,
 } from "../../../Contexts/ModelContext/ModelContext"
+import { InteractionContext } from "../../../Contexts/InteractionContext/InteractionContext"
 
 
 const SwirlModel = ({
@@ -45,6 +46,9 @@ const SwirlModel = ({
   } = useContext(
     MainGuidelineContext
   )
+
+  const {setMobileSwirl,isTouchDevice,mobileSwirl} = useContext(InteractionContext)
+
 
   const {
     seperatingFunnelRef,
@@ -307,6 +311,58 @@ const SwirlModel = ({
   ])
 
 
+// =========================================
+// MOBILE SWIRL BUTTON
+// =========================================
+
+useEffect(() => {
+  if (!isTouchDevice) return
+
+  if (!allChildrenGroupRef.current) return
+
+  setMobileSwirl(false)
+
+
+  return () => {
+    setMobileSwirl(false)
+  }
+
+}, [
+  isTouchDevice,
+  modelRef,
+  useTargetSwirls,
+  targetSwirls,
+  setMobileSwirl,
+])
+
+// =========================================
+// START MOBILE SWIRLING
+// =========================================
+
+useEffect(() => {
+
+  if (!isTouchDevice) return
+
+  if (!mobileSwirl) return
+
+  if (!modelRef?.current) return
+
+  if (!allChildrenGroupRef.current) return
+
+  if (hasFinishedRef.current) return
+
+  isSwirlingRef.current = true
+
+  setIsSwirling(true)
+
+  timeSinceLastScrollRef.current = 0
+
+
+}, [
+  isTouchDevice,
+  mobileSwirl,
+  modelRef,
+])
   // =========================================
   // MOUSE WHEEL
   // =========================================
@@ -512,15 +568,14 @@ const SwirlModel = ({
       // =========================================
 
       if (
+        !isTouchDevice &&
         timeSinceLastScrollRef.current >=
-        stopDelay
+          stopDelay
       ) {
-        isSwirlingRef.current =
-          false
+        isSwirlingRef.current = false
 
         setIsSwirling(false)
       }
-
 
       return
     }
