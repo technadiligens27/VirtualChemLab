@@ -412,8 +412,10 @@ const UI = () => {
     setIsMainGuideline(false)
     setSelectedMainGuideline(5)
 
-    const canvas = document.querySelector("canvas")
-    canvas?.requestPointerLock?.()
+    if (!isTouchDevice) {
+      const canvas = document.querySelector("canvas")
+      canvas?.requestPointerLock?.()
+    }
   }
 
   const handleSignIn = async () => {
@@ -440,10 +442,26 @@ const UI = () => {
     }
   }
 
+  const enterFullscreen = async () => {
+    if (!isTouchDevice) return
+
+    if (document.fullscreenElement) return
+
+    try {
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen()
+      }
+    } catch (error) {
+      console.log("Fullscreen unavailable:", error)
+    }
+  }
 
   const startTutorial = async () => {
 
     if (isSigningIn) return
+
+    // Enter fullscreen on mobile
+    enterFullscreen()
 
     try {
 
@@ -467,7 +485,6 @@ const UI = () => {
       setIsSigningIn(false)
 
     }
-
   }
 
   const startFreeRoam = () => {
