@@ -35,6 +35,7 @@ import SulfamicGuidelines from "../SulfamicGuidelines/SulfamicGuidelines.jsx"
 import HessReactionTwoResults from "../HessReactionTwoResults.jsx/HessReactionTwoResults.jsx"
 import EndothermicReactionSummary from "../Summary/EndothermicReactionSummary/EndothermicReactionSummary.jsx"
 import ApparatusOverview from "../ApparatusOverview/ApparatusOverview.jsx"
+import MobileDialogBox from "../MobileDialogBox/MobileDialogBox.jsx"
 
 
 const EnthalpyHessReaction02 = () => {
@@ -70,7 +71,7 @@ const EnthalpyHessReaction02 = () => {
     setIsClampInCenter,
 
     setShowQuestionCardNo,
-    showQuestionCardNo,setShowFeedBackForm
+    showQuestionCardNo,setShowFeedBackForm,isTouchDevice,setMobileDip,pouringModeHand,setMobilePouringModeHand
   } = useContext(
     InteractionContext
   )
@@ -1125,7 +1126,16 @@ const EnthalpyHessReaction02 = () => {
               }
         />
       )}
-
+      {isTouchDevice &&
+         lessonStep === 31 &&
+         !pouringModeHand && (
+          <MobileDialogBox
+             button1Text="Enter Pouring Mode"
+             onbtnClick={() => {
+               setMobilePouringModeHand("right")
+             }}
+           />
+     )}
 
       {lessonStep === 32 && (
         <DialogBox
@@ -1147,6 +1157,17 @@ const EnthalpyHessReaction02 = () => {
           }
         />
       )}
+
+      {isTouchDevice &&
+        lessonStep === 33 &&
+        pouringModeHand && (
+          <MobileDialogBox
+            button1Text="Exit Pouring Mode"
+            onbtnClick={() => {
+              setMobilePouringModeHand(pouringModeHand)
+            }}
+          />
+      )}      
 
 
       {lessonStep === 34 && (

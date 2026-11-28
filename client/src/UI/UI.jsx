@@ -355,7 +355,7 @@ const UI = () => {
     setShowBalanceArrow(
       ([14].includes(lessonStep) && selectedLesson === 8) ||
       ([4].includes(lessonStep) && selectedLesson ===12) ||
-      (selectedLesson===9 && [12,20].includes(lessonStep)) ||
+      (selectedLesson===9 && [12].includes(lessonStep)) ||
       (selectedLesson===13 && [22].includes(lessonStep))
 
     )

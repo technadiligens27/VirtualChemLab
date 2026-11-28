@@ -3,7 +3,7 @@
    ========================================================= */
 
 .endothermic-summary-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 9999;
 
@@ -12,6 +12,7 @@
   justify-content: center;
 
   padding: 20px;
+  box-sizing: border-box;
 
   overflow: hidden;
 
@@ -55,8 +56,8 @@
   display: flex;
   flex-direction: column;
 
-  width: min(86vw, 1650px);
-  height: min(90vh, 920px);
+  width: min(86cqw, 1650px);
+  height: min(90cqh, 920px);
   min-height: 0;
 
   padding: 76px 38px 24px;
@@ -88,7 +89,7 @@
   align-items: center;
   justify-content: center;
 
-  width: min(30vw, 480px);
+  width: min(30cqw, 480px);
   min-width: 280px;
   height: 70px;
 
@@ -159,7 +160,7 @@
   min-width: 0;
   min-height: 0;
 
-  gap: clamp(18px, 2vw, 30px);
+  gap: clamp(18px, 2cqw, 30px);
 
   overflow: hidden;
 }
@@ -204,7 +205,7 @@
 .endothermic-result-header h2 {
   margin: 0;
 
-  font-size: clamp(18px, 1.4vw, 21px);
+  font-size: clamp(18px, 1.4cqw, 21px);
   font-weight: 800;
 }
 
@@ -232,7 +233,7 @@
   flex: 1;
   min-height: 0;
 
-  gap: clamp(12px, 1.5vw, 24px);
+  gap: clamp(12px, 1.5cqw, 24px);
 
   padding: 18px 14px;
 
@@ -261,21 +262,21 @@
 }
 
 .endothermic-temperature-info span {
-  font-size: clamp(13px, 1vw, 16px);
+  font-size: clamp(13px, 1cqw, 16px);
   font-weight: 700;
 }
 
 .endothermic-temperature-info strong {
   color: #2671b3;
 
-  font-size: clamp(28px, 3vw, 52px);
+  font-size: clamp(28px, 3cqw, 52px);
   line-height: 1;
 }
 
 .endothermic-temperature-info p {
   margin: 0;
 
-  font-size: clamp(13px, 1vw, 16px);
+  font-size: clamp(13px, 1cqw, 16px);
   line-height: 1.35;
 }
 
@@ -293,7 +294,7 @@
 
   color: #ffffff;
 
-  font-size: clamp(16px, 1.25vw, 19px);
+  font-size: clamp(16px, 1.25cqw, 19px);
   font-weight: 800;
   text-align: center;
 }
@@ -306,7 +307,7 @@
 
   color: #173b74;
 
-  font-size: clamp(14px, 1.1vw, 17px);
+  font-size: clamp(14px, 1.1cqw, 17px);
   line-height: 1.35;
 }
 
@@ -334,7 +335,7 @@
 
   color: #173b74;
 
-  font-size: clamp(13px, 1vw, 15px);
+  font-size: clamp(13px, 1cqw, 15px);
   font-weight: 700;
   text-align: center;
 }
@@ -410,7 +411,7 @@
 
   color: #21165e;
 
-  font-size: clamp(19px, 1.5vw, 22px);
+  font-size: clamp(19px, 1.5cqw, 22px);
   font-weight: 800;
 }
 
@@ -435,7 +436,7 @@
 
   color: #273044;
 
-  font-size: clamp(14px, 1.1vw, 16px);
+  font-size: clamp(14px, 1.1cqw, 16px);
   line-height: 1.5;
 }
 
@@ -487,7 +488,7 @@
 
   color: #273044;
 
-  font-size: clamp(14px, 1.1vw, 16px);
+  font-size: clamp(14px, 1.1cqw, 16px);
   line-height: 1.35;
 }
 
@@ -539,13 +540,13 @@
 .endothermic-observation-list strong {
   color: #3d235e;
 
-  font-size: clamp(14px, 1vw, 15px);
+  font-size: clamp(14px, 1cqw, 15px);
 }
 
 .endothermic-observation-list span {
   color: #506070;
 
-  font-size: clamp(13px, 1vw, 15px);
+  font-size: clamp(13px, 1cqw, 15px);
   line-height: 1.3;
 }
 
@@ -565,7 +566,7 @@
   display: flex;
   align-items: center;
 
-  gap: clamp(16px, 2vw, 24px);
+  gap: clamp(16px, 2cqw, 24px);
 }
 
 .endothermic-calculation-content > div:first-child {
@@ -584,7 +585,7 @@
 
   color: #c84b23;
 
-  font-size: clamp(24px, 2vw, 35px);
+  font-size: clamp(24px, 2cqw, 35px);
   font-weight: 800;
 }
 
@@ -597,7 +598,7 @@
 
   color: #425466;
 
-  font-size: clamp(14px, 1vw, 16px);
+  font-size: clamp(14px, 1cqw, 16px);
   line-height: 1.3;
 }
 
@@ -711,290 +712,125 @@
 }
 
 
-/* =========================================================
-   LAPTOP / SMALL DESKTOP
-   ========================================================= */
-
-@media (max-width: 1250px) {
-  .endothermic-summary-container {
-    width: 94vw;
-
-    padding:
-      76px
-      28px
-      24px;
-  }
-
-  .endothermic-result-card {
-    flex-basis: 34%;
-  }
-
-  .endothermic-temperature-area {
-    flex-direction: column;
-
-    gap: 8px;
-  }
-
-  .endothermic-thermometer-image {
-    width: min(68%, 190px);
-    height: min(65%, 240px);
-  }
-
-  .endothermic-temperature-info {
-    flex: 0 0 auto;
-
-    align-items: center;
-
-    text-align: center;
-  }
-
-  .endothermic-middle-grid {
-    flex-direction: column;
-  }
-
-  .endothermic-learned-card,
-  .endothermic-observation-card {
-    flex: 0 0 auto;
-  }
+/* Keep the original desktop layout, with container-relative sizing. */
+.endothermic-result-card { overflow-y: auto; overflow-x: hidden; }
+.endothermic-temperature-area { min-height: 140px; }
+.endothermic-middle-grid > div { min-width: 0; overflow-wrap: anywhere; }
+.endothermic-calculation-content { flex-wrap: wrap; }
+.endothermic-formula-info { min-width: 0; }
+.endothermic-summary-layout,
+.endothermic-result-card,
+.endothermic-summary-content {
+  scrollbar-width: thin;
+  scrollbar-color: #a88cff #eee8fa;
+  overscroll-behavior: contain;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 950px) {
-  .endothermic-summary-overlay {
-    align-items: flex-start;
-
-  }
-
-  .endothermic-summary-container {
-    width: min(92vw, 760px);
-    min-height: 90vh;
-    overflow-x: visible;
-    margin: 24px 0;
-    padding: 82px 26px 28px;
-  }
-
-  .endothermic-summary-layout {
-    flex-direction: column;
-
-    overflow: auto;
-  }
-
-  .endothermic-result-card {
-    flex: 0 0 auto;
-
-    width: 100%;
-    min-height: 470px;
-    max-width: 560px;
-
-    margin: 0 auto;
-  }
-
-  .endothermic-temperature-area {
-    flex-direction: row;
-
-    min-height: 280px;
-  }
-
-  .endothermic-thermometer-image {
-    width: min(46%, 230px);
-    height: 250px;
-  }
-
-  .endothermic-temperature-info {
-    align-items: flex-start;
-
-    text-align: left;
-  }
-
-  .endothermic-summary-content {
-    overflow: visible;
-
-    padding-right: 0;
-  }
+/* Smaller laptops */
+@container lab (max-width: 1250px) {
+  .endothermic-summary-container { width: 90cqw; padding: 70px 26px 20px; }
+  .endothermic-summary-tab { height: 60px; font-size: 24px; }
+  .endothermic-summary-side-toggle { width: 48px; right: -48px; height: 125px; }
+  .endothermic-result-card { flex-basis: 34%; }
+  .endothermic-temperature-area { flex-direction: column; gap: 8px; }
+  .endothermic-thermometer-image { width: min(68%, 190px); height: min(65%, 240px); }
+  .endothermic-temperature-info { flex: 0 0 auto; align-items: center; text-align: center; }
+  .endothermic-middle-grid { flex-direction: column; }
+  .endothermic-learned-card, .endothermic-observation-card { flex: 0 0 auto; }
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 650px) {
-  .endothermic-summary-overlay {
-    padding: 12px;
-  }
-
-  .endothermic-summary-container {
-    width: 100%;
-    min-height: auto;
-
-    margin: 16px 0;
-
-    padding: 70px 16px 20px;
-
-    border-width: 6px;
-    border-radius: 24px;
-  }
-
-  .endothermic-summary-tab {
-    width: 70vw;
-    min-width: 0;
-    height: 58px;
-
-    border-radius: 0 0 28px 28px;
-
-    font-size: 24px;
-  }
-
-  .endothermic-summary-side-toggle {
-    right: -48px;
-
-    width: 48px;
-    height: 110px;
-
-    border-radius: 0 16px 16px 0;
-  }
-
-  .endothermic-summary-side-toggle img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .endothermic-result-card {
-    min-height: 430px;
-  }
-
-  .endothermic-result-header {
-    padding: 10px 16px;
-  }
-
-  .endothermic-temperature-area {
-    flex-direction: column;
-
-    min-height: 270px;
-
-    gap: 8px;
-  }
-
-  .endothermic-thermometer-image {
-    width: min(56%, 175px);
-    height: 175px;
-  }
-
-  .endothermic-temperature-info {
-    align-items: center;
-
-    text-align: center;
-  }
-
-  .endothermic-temperature-info strong {
-    font-size: 34px;
-  }
-
-  .endothermic-label {
-    width: calc(100% - 36px);
-
-    font-size: 17px;
-  }
-
-  .endothermic-result-text {
-    padding: 8px 20px 16px;
-
-    font-size: 15px;
-  }
-
-  .endothermic-equation-box {
-    margin: 0 12px 16px;
-    padding: 13px;
-
-    font-size: 13px;
-  }
-
-  .endothermic-aim-card,
-  .endothermic-learned-card,
-  .endothermic-observation-card,
-  .endothermic-calculation-card,
-  .endothermic-conclusion-card {
-    padding: 20px;
-  }
-
-  .endothermic-summary-card h2 {
-    font-size: 23px;
-  }
-
-  .endothermic-summary-card p,
-  .endothermic-learned-card li {
-    font-size: 15px;
-  }
-
-  .endothermic-calculation-content {
-    flex-direction: column;
-    align-items: stretch;
-
-    gap: 16px;
-  }
-
-  .endothermic-formula {
-    text-align: center;
-  }
-
-  .endothermic-formula-info {
-    flex-direction: column;
-  }
-
-  .endothermic-formula-info span {
-    flex: 0 0 auto;
-  }
-
-  .endothermic-summary-actions {
-    flex-direction: column-reverse;
-
-    gap: 10px;
-  }
-
-  .endothermic-summary-button {
-    width: 100%;
-  }
+/* Compact containers: one scroll area, fixed frame and tab. */
+@container lab (max-width: 1024px) or (max-height: 650px) {
+  .endothermic-summary-overlay { padding: 8px; }
+  .endothermic-summary-container { width: 90cqw; height: 92cqh; padding: 52px 18px 14px; border-width: 6px; border-radius: 25px; }
+  .endothermic-summary-tab { top: -6px; width: 40%; min-width: 0; height: 44px; font-size: 21px; border-radius: 0 0 26px 26px; }
+  .endothermic-summary-side-toggle { width: 38px; right: -38px; height: 100px; border-radius: 0 14px 14px 0; }
+  .endothermic-summary-side-toggle img { width: 22px; height: 22px; }
+  .endothermic-summary-layout { align-items: flex-start; gap: 14px; overflow-y: auto; overflow-x: hidden; padding-right: 5px; }
+  .endothermic-result-card { flex: 0 0 35%; min-width: 0; overflow: hidden; border-radius: 14px; }
+  .endothermic-result-header { min-height: 44px; padding: 8px 12px; gap: 8px; }
+  .endothermic-result-header h2 { font-size: 17px; }
+  .endothermic-result-icon { width: 26px; height: 26px; font-size: 15px; }
+  .endothermic-temperature-area { flex: 0 0 auto; flex-direction: column; min-height: 0; gap: 8px; padding: 12px 8px; }
+  .endothermic-thermometer-image { width: min(80%, 150px); height: 145px; }
+  .endothermic-temperature-info { flex: 0 0 auto; align-items: center; text-align: center; }
+  .endothermic-temperature-info strong { font-size: 34px; }
+  .endothermic-temperature-info span, .endothermic-temperature-info p { font-size: 14px; }
+  .endothermic-label { width: calc(100% - 20px); margin: 8px auto; padding: 8px; font-size: 15px; }
+  .endothermic-result-text { padding: 6px 12px 12px; font-size: 14px; }
+  .endothermic-equation-box { margin: 0 10px 12px; padding: 10px; gap: 5px; font-size: 13px; }
+  .endothermic-summary-content { flex: 1 1 0; overflow: visible; padding: 0; }
+  .endothermic-summary-card { border-radius: 14px; }
+  .endothermic-aim-card, .endothermic-learned-card, .endothermic-observation-card, .endothermic-calculation-card, .endothermic-conclusion-card { padding: 12px 14px; }
+  .endothermic-summary-card h2 { font-size: 19px; }
+  .endothermic-heading-line { width: 55px; height: 4px; margin: 5px 0 8px; }
+  .endothermic-summary-card p, .endothermic-learned-card li { font-size: 15px; line-height: 1.4; gap: 8px; }
+  .endothermic-middle-grid { flex-direction: column; gap: 10px; margin-top: 10px; }
+  .endothermic-learned-card, .endothermic-observation-card { flex: 0 0 auto; }
+  .endothermic-learned-card ul { gap: 7px; }
+  .endothermic-check { width: 19px; height: 19px; font-size: 12px; }
+  .endothermic-observation-list { gap: 8px; }
+  .endothermic-observation-list div { padding-bottom: 7px; }
+  .endothermic-observation-list strong, .endothermic-observation-list span { font-size: 14px; }
+  .endothermic-calculation-card, .endothermic-conclusion-card { margin-top: 10px; }
+  .endothermic-calculation-content { flex-direction: column; align-items: stretch; gap: 10px; }
+  .endothermic-calculation-content > div:first-child { flex: 0 0 auto; }
+  .endothermic-formula { text-align: center; font-size: 25px; padding: 8px 12px; }
+  .endothermic-formula-info { flex: 0 0 auto; flex-direction: column; font-size: 14px; gap: 5px; }
+  .endothermic-formula-info span { flex: 0 0 auto; }
+  .endothermic-summary-actions { margin-top: 12px; gap: 8px; flex-wrap: wrap; }
+  .endothermic-summary-button { min-width: 120px; min-height: 44px; padding: 8px 14px; font-size: 15px; }
+  .endothermic-finish-button span { font-size: 28px; }
 }
 
+/* Mobile landscape */
+@container lab (max-width: 950px) or (max-height: 450px) {
+  .endothermic-summary-container { width: 92cqw; height: 94cqh; padding: 42px 12px 10px; border-width: 5px; border-radius: 20px; }
+  .endothermic-summary-tab { top: -5px; height: 35px; font-size: 19px; }
+  .endothermic-summary-side-toggle { width: 30px; right: -30px; height: 80px; }
+  .endothermic-summary-side-toggle img { width: 19px; height: 19px; }
+  .endothermic-summary-layout { gap: 10px; }
+  .endothermic-result-card { flex-basis: 38%; }
+  .endothermic-result-header { min-height: 38px; padding: 7px 10px; }
+  .endothermic-result-header h2 { font-size: 16px; }
+  .endothermic-temperature-area { padding: 8px; }
+  .endothermic-thermometer-image { height: 120px; }
+  .endothermic-temperature-info strong { font-size: 30px; }
+  .endothermic-summary-card h2 { font-size: 18px; }
+  .endothermic-summary-card p, .endothermic-learned-card li { font-size: 14px; }
+  .endothermic-aim-card, .endothermic-learned-card, .endothermic-observation-card, .endothermic-calculation-card, .endothermic-conclusion-card { padding: 10px 12px; }
+  .endothermic-summary-button { min-width: 105px; min-height: 40px; font-size: 14px; }
+}
 
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
+/* Short landscape screens, including browser toolbar space. */
+@container lab (max-width: 700px) or (max-height: 350px) {
+  .endothermic-summary-container { width: 92cqw; height: 95cqh; padding: 37px 10px 8px; border-width: 4px; border-radius: 16px; }
+  .endothermic-summary-tab { top: -4px; height: 30px; font-size: 18px; }
+  .endothermic-summary-side-toggle { width: 25px; right: -25px; height: 65px; }
+  .endothermic-summary-side-toggle img { width: 16px; height: 16px; }
+  .endothermic-summary-layout { gap: 8px; }
+  .endothermic-thermometer-image { height: 105px; }
+  .endothermic-summary-card h2 { font-size: 17px; }
+  .endothermic-summary-button { min-height: 38px; }
+}
 
-@media (max-width: 390px) {
-  .endothermic-summary-container {
-    padding-right: 12px;
-    padding-left: 12px;
-  }
+/* Narrow containers: stack the two columns. */
+@container lab (max-width: 550px) or (orientation: portrait) {
+  .endothermic-summary-container { width: 90cqw; height: 92cqh; }
+  .endothermic-summary-layout { flex-direction: column; align-items: stretch; }
+  .endothermic-result-card, .endothermic-summary-content { flex: 0 0 auto; width: 100%; }
+  .endothermic-temperature-area { flex-direction: row; }
+  .endothermic-thermometer-image { width: min(45%, 130px); height: 130px; }
+  .endothermic-temperature-info { align-items: flex-start; text-align: left; }
+  .endothermic-summary-actions { justify-content: stretch; }
+  .endothermic-summary-button { flex: 1 1 120px; }
+}
 
-  .endothermic-summary-tab {
-    width: 74vw;
-
-    font-size: 22px;
-  }
-
-  .endothermic-result-header h2 {
-    font-size: 17px;
-  }
-
-  .endothermic-temperature-info span,
-  .endothermic-temperature-info p {
-    font-size: 13px;
-  }
-
-  .endothermic-temperature-info strong {
-    font-size: 29px;
-  }
-
-  .endothermic-aim-card,
-  .endothermic-learned-card,
-  .endothermic-observation-card,
-  .endothermic-calculation-card,
-  .endothermic-conclusion-card {
-    padding: 17px;
-  }
+@media (pointer: coarse) {
+  .endothermic-summary-layout, .endothermic-summary-content, .endothermic-result-card { touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+  .endothermic-summary-button, .endothermic-summary-side-toggle { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .endothermic-summary-button:hover { transform: none; box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .endothermic-summary-overlay, .endothermic-summary-button { transition: none; }
 }
